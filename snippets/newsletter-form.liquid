@@ -1,0 +1,103 @@
+
+{%- assign newsletter_form_id = 'newsletter-' | append: section_id -%}
+{% form 'customer', id: newsletter_form_id %}
+  {%- if form.posted_successfully? -%}
+    <div class="note note--success">
+      {{ 'general.newsletter_form.newsletter_confirmation' | t }}
+    </div>
+  {%- endif -%}
+  {%- if form.errors and form.context == snippet_context -%}
+    {{ form.errors | default_errors }}
+  {%- endif -%}
+
+  {%- unless form.posted_successfully? -%}
+    <label for="Email-{{ section_id }}" class="hidden-label">{{ 'general.newsletter_form.newsletter_email' | t }}</label>
+    <input type="hidden" name="contact[tags]" value="prospect,newsletter">
+    <input type="hidden" name="contact[context]" value="{{ snippet_context }}">
+    <div class="input-group newsletter__input-group">
+      <input type="email" value="{% if customer %}{{ customer.email }}{% endif %}" 
+        placeholder="{{ 'general.newsletter_form.newsletter_email' | t }}" 
+        name="contact[email]" 
+        id="Email-{{ section_id }}" 
+        class="input-group-field newsletter__input" 
+        autocorrect="off" 
+        autocapitalize="off">
+      <div class="input-group-btn">
+        <button type="submit"
+              class="btn g-recaptcha" 
+              name="commit" 
+              aria-label="Subscribe"
+        >
+          <span class="form__submit--large">{{ 'general.newsletter_form.submit' | t }}</span>
+          <span class="form__submit--small">
+            <svg aria-hidden="true" focusable="false" role="presentation" class="icon icon--wide icon-arrow-right" viewBox="0 0 50 15"><path d="M0 9.63V5.38h35V0l15 7.5L35 15V9.63z"/></svg>
+          </span>
+        </button>
+      </div>
+    </div>
+    {%- if checkbox_text -%}
+    <div class="input-group newsletter__input-group-checkbox">
+      <label for="consent-checkbox">
+        <input type="checkbox" value="1" id="consent-checkbox" />
+        <span>{{ checkbox_text }}</span> 
+      </label>
+    </div>
+    {%- endif -%}
+  {%- endunless -%}
+{% endform %}
+{% comment %}
+<div class="klaviyo-form-TUSnz7"></div>
+{% endcomment %}
+{% style %}
+.foot-news .newsletter__input-group {
+    background: rgba(0, 0, 0, 0.5);
+}
+.foot-news .newsletter__input-group input[type=email], 
+.foot-news .newsletter__input-group button[type=submit] {
+    color: #fff;
+    border: none;
+    font-size: 1em;
+}
+.foot-news .newsletter__input-group input[type=email] {
+    padding-left: 1.5em;
+    background: transparent;
+}
+.foot-news .newsletter__input-group .input-group-btn button[type=submit] {
+    border-radius: 20em;
+    padding: 0.7em 1.4em;
+    background: var(--colorThemePrimary);
+    text-transform: none;
+}
+.foot-news .newsletter__input-group .input-group-btn button[type=submit]:hover {
+    border-radius: 20em;
+    background: transparent;
+    border-left: 1px solid var(--colorThemePrimary);
+    color: var(--colorThemePrimary);
+}
+.newsletter__input-group-checkbox label {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.newsletter__input-group-checkbox input[type=checkbox] {
+    margin-right: 0.5em;
+    width: 1.2em;
+    height: 1.2em;
+    border: 1px solid var(--colorThemePrimary);
+    border-radius: 0.2em;
+}
+.newsletter__input-group-checkbox span {
+    font-size: 1em;
+    color: var(--colorText);
+    line-height: 1.2;
+}
+.newsletter__input-group-checkbox span p {
+    margin: 0;
+}
+.newsletter__input-group-checkbox span a {
+    color: var(--colorLightLink);
+    margin: 0 0.2em;
+    border-bottom: 1px solid currentColor;
+}
+{% endstyle %}

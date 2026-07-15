@@ -1,0 +1,73 @@
+
+
+<div
+  class="manual-section manual-section-{{ section.id }} Tech Specs filtr-item"
+  data-section-id="{{ section.id }}"
+  data-aos style="background-color: #e0eaf4;" data-cat="Tech Specs">
+ {%- unless section.settings.full_width -%}
+    <div class="page-width page-width--narrow">
+  {%- endunless -%}
+    
+   <div>
+     <div class="techs-medium">
+       <div class="te-grid">
+         <div class="te-label">{{ section.settings.label }}</div>
+         <div class="te-info manual_info">
+           <h2>{{ section.settings.title }}</h2>
+           <a href="{{ section.settings.download_link }}">
+             <img src="https://cdn.shopify.com/s/files/1/0536/3390/8911/files/Download_5de30670-b128-4dcc-af22-96531a491b8c.png?v=1647934193" />
+             <span>{{ section.settings.download_txt }}</span>
+           </a>
+         </div>
+       </div>
+     </div>
+   </div>
+   {%- unless section.settings.full_width -%}
+   </div>
+  {%- endunless -%}
+</div>
+
+{% schema %}
+{
+  "name": "manual",
+  "class": "manual-section manual-sec",
+  "settings": [
+     {
+      "type": "checkbox",
+      "id": "full_width",
+      "label": "t:sections.promo-grid.settings.full_width.label",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "label",
+      "label": "t:sections.promo-grid.settings.full_width.label",
+      "default": "User Manual"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "t:sections.promo-grid.settings.full_width.label",
+      "default": "BLUETTI EB3A Portable Power Station | 600W 268Wh User Manual"
+    },
+    {
+      "type": "text",
+      "id": "download_txt",
+      "label": "t:sections.promo-grid.settings.full_width.label",
+      "default": "Download Now >"
+    },
+    {
+      "type": "url",
+      "id": "download_link",
+      "label": "t:sections.promo-grid.settings.full_width.label"
+    }
+  ],
+
+  "presets": [
+    {
+      "name": "manual"
+     
+    }
+  ]
+}
+{% endschema %}

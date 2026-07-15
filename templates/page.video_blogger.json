@@ -1,0 +1,57 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {}
+    },
+    "Topimg": {
+      "type": "support-img",
+      "settings": {
+        "divider": true,
+        "titleh1": "Gain Insights Through Expert Reviews",
+        "titlep": "",
+        "aligntext": "textcenter",
+        "left": 50,
+        "top": 70,
+        "custom_html": "<p class=\"page-width\">Kindly be informed that the features showcased in the video may not correspond with the actual product specs due to updates made to the model, specs on the detail pages shall prevail.</p>"
+      }
+    },
+    "a4f4e9a0-941a-476e-944b-410190291586": {
+      "type": "video-tab",
+      "blocks": {
+        "f069f28d-31e5-4365-b5f1-39d67b4bc596": {
+          "type": "text",
+          "settings": {
+            "subtitle": "Sub Title",
+            "title": "Gemibook XPro Review",
+            "link": "https://www.youtube.com/watch?v=NH_yPpxYe1c&t=122s"
+          }
+        }
+      },
+      "block_order": [
+        "f069f28d-31e5-4365-b5f1-39d67b4bc596"
+      ],
+      "settings": {
+        "collection": "",
+        "title": "Laptop",
+        "viewMore": true,
+        "moreURL": "shopify://pages/laptop-video-blogger"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "Topimg",
+    "a4f4e9a0-941a-476e-944b-410190291586"
+  ]
+}

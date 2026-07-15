@@ -1,0 +1,24 @@
+
+{%- capture pop_title -%}
+{{ product_block.popup.pop_title }}
+  {%- endcapture -%}
+
+
+
+<div class="variant-wrapper js" data-type="button">
+  <label class="variant__label"
+    for="ProductSelect-{{ section_id }}-{{ product.id }}-option-{{ forloop.index0 }}">
+    {{ option.name }}
+      <span class="variant__label-info">
+       
+        {%- render
+          'tool-tip-trigger',
+          title: pop_title,
+          content: section.blocks[sizechart_index].settings.size_chart.content,
+          context: 'size-chart'
+        -%}
+      </span>
+   
+  </label>
+
+</div>

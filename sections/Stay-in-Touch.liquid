@@ -1,0 +1,60 @@
+{%- style -%}
+  .newsletter-{{ section.id }} {
+    background-color: {{ section.settings.color_background }};
+    color: {{ section.settings.color_text }};
+  }
+
+  .newsletter-{{ section.id }} .newsletter__input::-webkit-input-placeholder { color: {{ section.settings.color_text }}; }
+  .newsletter-{{ section.id }} .newsletter__input::-moz-placeholder { color: {{ section.settings.color_text }}; }
+  .newsletter-{{ section.id }} .newsletter__input::-ms-input-placeholder { color: {{ section.settings.color_text }}; }
+{%- endstyle -%}
+
+<div class="newsletter-section newsletter-{{ section.id }}{% if section.settings.color_background == settings.color_body_bg %} newsletter-section--with-divider{% endif %}">
+  <div class="page-width text-center">
+    <div class="stayTouch">
+      <div class="stayTouch-left">
+        {%- if section.settings.title != blank -%}
+          <p class="h3">{{ section.settings.title | escape }}</p>
+        {%- endif -%}
+        {%- if section.settings.text != blank -%}
+          <div class="rte">{{ section.settings.text }}</div>
+        {%- endif -%}
+       </div>
+       <div class="stayTouch-right">
+        {%- render 'newsletter-form', section_id: section.id, snippet_context: 'section' -%}
+       </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Stay in Touch",
+  "class": "index-section-touch",
+   "settings": [
+     
+     {
+      "type": "color",
+      "id": "color_text",
+      "label": "color",
+      "default": "#1c1d1d"
+    },
+      {
+      "type": "text",
+      "id": "title",
+      "label": "title",
+      "default": "Sign up and save"
+    },
+     {
+      "type": "richtext",
+      "id": "text",
+      "label": "text"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Stay in Touch"
+    }
+  ]
+}
+{% endschema %}

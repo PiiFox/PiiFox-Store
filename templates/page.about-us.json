@@ -1,0 +1,274 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {}
+    },
+    "about_us_video_dD7JEt": {
+      "type": "about-us-video",
+      "name": "About US Video",
+      "settings": {
+        "section_title": "PIIFOX",
+        "section_sub_title": "",
+        "section_context": "To become a new-generation keyboard brand where performance meets design and desk culture.",
+        "btn_label": "Learn More",
+        "btn_link": "",
+        "video": "shopify://files/videos/about-us.mp4",
+        "video_m": "shopify://files/videos/about-us-m.mp4",
+        "video_cover": "shopify://shop_images/about-us-thumbnail.jpg",
+        "mobile_img": "shopify://shop_images/about-us-thumbnail.jpg"
+      }
+    },
+    "text_bg_section_7jntX4": {
+      "type": "text-bg-section",
+      "name": "Text with Background",
+      "settings": {
+        "image": "shopify://shop_images/p_2-bg.png",
+        "title": "Where <span class=\"green-text\">performance</span> meets <span class=\"green-text\">personality</span>, and everyday setups feel more complete.",
+        "description": "PIIFOX is built for people who want more than a keyboard. We bring together reliable performance, comfortable feel, and expressive styles — so every setup can feel more personal."
+      }
+    },
+    "carousel_dual_section_eLqia3": {
+      "type": "carousel-dual-section",
+      "blocks": {
+        "row1_hpwTR4": {
+          "type": "row1",
+          "settings": {
+            "image": "shopify://shop_images/ChatGPT_Image_2026_6_11_18_13_03_7.png"
+          }
+        },
+        "row1_gTMxVC": {
+          "type": "row1",
+          "settings": {
+            "image": "shopify://shop_images/ChatGPT_Image_2026_6_11_18_13_02_2.png"
+          }
+        },
+        "row1_89C644": {
+          "type": "row1",
+          "settings": {
+            "image": "shopify://shop_images/0000_2024_03_02_14_15_IMG_0320.jpg"
+          }
+        },
+        "row1_fHWqpk": {
+          "type": "row1",
+          "settings": {
+            "image": "shopify://shop_images/ChatGPT_Image_2026_6_11_18_13_02_3.png"
+          }
+        },
+        "row1_9G7ABp": {
+          "type": "row1",
+          "settings": {
+            "image": "shopify://shop_images/ChatGPT_Image_2026_6_11_18_11_09_1.png"
+          }
+        },
+        "row2_em8Wtg": {
+          "type": "row2",
+          "settings": {
+            "image": "shopify://shop_images/ChatGPT_Image_2026_6_11_16_57_42.png"
+          }
+        },
+        "row2_k83Qep": {
+          "type": "row2",
+          "settings": {
+            "image": "shopify://shop_images/ChatGPT_Image_2026_6_11_18_13_03_6.png"
+          }
+        },
+        "row2_CUiicj": {
+          "type": "row2",
+          "settings": {
+            "image": "shopify://shop_images/20260709-153006.jpg"
+          }
+        },
+        "row2_bG4drm": {
+          "type": "row2",
+          "settings": {
+            "image": "shopify://shop_images/ChatGPT_Image_2026_6_10_17_45_32.png"
+          }
+        },
+        "row2_JiDzDx": {
+          "type": "row2",
+          "settings": {
+            "image": "shopify://shop_images/ChatGPT_Image_2026_6_11_18_13_02_4.png"
+          }
+        }
+      },
+      "block_order": [
+        "row1_hpwTR4",
+        "row1_gTMxVC",
+        "row1_89C644",
+        "row1_fHWqpk",
+        "row1_9G7ABp",
+        "row2_em8Wtg",
+        "row2_k83Qep",
+        "row2_CUiicj",
+        "row2_bG4drm",
+        "row2_JiDzDx"
+      ],
+      "name": "Carousel Dual",
+      "settings": {
+        "title": "Real desks. <span class=\"green-text\">Real moments</span>. Real everyday flow.",
+        "description": "For <span class=\"green-text\">work</span>, <span class=\"green-text\">play</span>, and the moments in between."
+      }
+    },
+    "milestones_section_kEq9Ut": {
+      "type": "milestones-section",
+      "blocks": {
+        "milestone_item_e7i94e": {
+          "type": "milestone_item",
+          "settings": {
+            "date": "2022.03",
+            "image": "shopify://shop_images/ChatGPT_Image_2026_6_12_10_43_22.png",
+            "title": "First PIIFOX Keyboard Projects",
+            "description": "PIIFOX began with early keyboard projects, focusing on better typing feel and cleaner desk setups.",
+            "link": ""
+          }
+        },
+        "milestone_item_B8N4HV": {
+          "type": "milestone_item",
+          "settings": {
+            "date": "2022.11",
+            "image": "shopify://shop_images/ChatGPT_Image_2026_6_12_10_58_29.png",
+            "title": "Keycaps & Setup Details",
+            "description": "With keycap sets and setup accessories, PIIFOX refined colors, legends, textures, and everyday desk details.",
+            "link": ""
+          }
+        },
+        "milestone_item_DtYCNU": {
+          "type": "milestone_item",
+          "settings": {
+            "date": "2023.08",
+            "image": "shopify://shop_images/5_168ff6cd-44a8-4249-a2dd-e4837f0184da.jpg",
+            "title": "Walker Series Takes Shape",
+            "description": "WALKER 68 and WALKER 75 helped define PIIFOX’s compact layouts, refined materials, and desk setup direction.",
+            "link": ""
+          }
+        },
+        "milestone_item_qmh7eT": {
+          "type": "milestone_item",
+          "settings": {
+            "date": "2024.06",
+            "image": "shopify://shop_images/ChatGPT_Image_2026_6_12_10_45_03.png",
+            "title": "Magnetic Performance Expands",
+            "description": "WALKER 75 and DEFENDER 68 brought faster response, adjustable actuation, and stronger gaming control.",
+            "link": ""
+          }
+        },
+        "milestone_item_PUnxKp": {
+          "type": "milestone_item",
+          "settings": {
+            "date": "2025.01",
+            "image": "shopify://shop_images/ChatGPT_Image_2026_6_12_10_58_00.png",
+            "title": "Complete PIIFOX Lineup",
+            "description": "With ER95, WALKER 68, WALKER 75, and DEFENDER 68, PIIFOX connected keyboards, keycaps, switches, and desk essentials.",
+            "link": ""
+          }
+        },
+        "milestone_item_zGAd9B": {
+          "type": "milestone_item",
+          "settings": {
+            "date": "2026.01",
+            "image": "shopify://shop_images/ChatGPT_Image_2026_6_12_10_07_47.png",
+            "title": "The New PIIFOX",
+            "description": "In 2026, PIIFOX enters a new era with VEXRO, LUNA, FORVEX, and CENDA as its complete product matrix.",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "milestone_item_e7i94e",
+        "milestone_item_B8N4HV",
+        "milestone_item_DtYCNU",
+        "milestone_item_qmh7eT",
+        "milestone_item_PUnxKp",
+        "milestone_item_zGAd9B"
+      ],
+      "name": "Milestones",
+      "settings": {
+        "title": "Our Milestones",
+        "btn_label": "Learn More"
+      }
+    },
+    "foot_newsletter_k4tRUa": {
+      "type": "foot-newsletter",
+      "blocks": {
+        "title_36hVFT": {
+          "type": "title",
+          "settings": {
+            "title": "Subsribe for PIIFOX"
+          }
+        },
+        "text_fcnfGc": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Latest Updates<br/><br/></p>"
+          }
+        },
+        "form_nXNCrU": {
+          "type": "form",
+          "settings": {
+            "checkbox_text": "<p>I agree to the <a href=\"/pages/terms-of-service\">Terms of Use</a> and <a href=\"/pages/privacy-policy\">Privacy Policy</a>.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "title_36hVFT",
+        "text_fcnfGc",
+        "form_nXNCrU"
+      ],
+      "disabled": true,
+      "name": "foot Email signup",
+      "settings": {
+        "color_background": "#ffffff",
+        "color_text": "#1c1d1d"
+      }
+    },
+    "dual_cards_section_XYzgxM": {
+      "type": "dual-cards-section",
+      "blocks": {
+        "card_item_mTYGpG": {
+          "type": "card_item",
+          "settings": {
+            "image": "shopify://shop_images/Honey_DSC00266.jpg",
+            "title": "Contact Us",
+            "button_label": "Learn More",
+            "link": "shopify://pages/contact-us"
+          }
+        },
+        "card_item_eTAWBF": {
+          "type": "card_item",
+          "settings": {
+            "image": "shopify://shop_images/m_9.png",
+            "title": "Blog Center",
+            "button_label": "Learn More",
+            "link": "shopify://blogs/news"
+          }
+        }
+      },
+      "block_order": [
+        "card_item_mTYGpG",
+        "card_item_eTAWBF"
+      ],
+      "name": "Dual Cards Section",
+      "settings": {}
+    }
+  },
+  "order": [
+    "main",
+    "about_us_video_dD7JEt",
+    "text_bg_section_7jntX4",
+    "carousel_dual_section_eLqia3",
+    "milestones_section_kEq9Ut",
+    "foot_newsletter_k4tRUa",
+    "dual_cards_section_XYzgxM"
+  ]
+}

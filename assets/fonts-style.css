@@ -1,0 +1,49 @@
+/* change Font */
+@font-face {
+  font-family: 'PF_Extrabold';
+  font-style: normal;
+  font-display: swap;
+  src: url(https://cdn.shopify.com/s/files/1/1001/2383/6697/files/PF_Extrabold_v2.woff2?v=1777715553) format('woff2');
+}
+
+@font-face {
+  font-family: 'PF_Bold';
+  font-style: normal;
+  font-display: swap;
+  src: url(https://cdn.shopify.com/s/files/1/1001/2383/6697/files/PF_Bold_v2.woff2?v=1777629488) format('woff2');
+}
+
+@font-face {
+  font-family: 'PF_Semibold';
+  font-style: normal;
+  font-display: swap;
+  src: url(https://cdn.shopify.com/s/files/1/1001/2383/6697/files/PF_Semibold_v2.woff2?v=1777629488) format('woff2');
+}
+
+@font-face {
+  font-family: 'PF_Medium';
+  font-style: normal;
+  font-display: swap;
+  src: url(https://cdn.shopify.com/s/files/1/1001/2383/6697/files/PF_Medium_v2.woff2?v=1777629488) format('woff2');
+}
+
+@font-face {
+  font-family: 'PF_Normal';
+  font-style: normal;
+  font-display: swap;
+  src: url(https://cdn.shopify.com/s/files/1/1001/2383/6697/files/PF_Normal_v2.woff2?v=1777629488) format('woff2');
+}
+
+@font-face {
+  font-family: 'PF_Light';
+  font-style: normal;
+  font-display: swap;
+  src: url(https://cdn.shopify.com/s/files/1/1001/2383/6697/files/PF_Light_v2.woff2?v=1777715553) format('woff2');
+}
+
+@font-face {
+  font-family: 'PF_Oxanium_ExtraBold';
+  font-style: normal;
+  font-display: swap;
+  src: url(https://cdn.shopify.com/s/files/1/1001/2383/6697/files/PF-Oxanium-ExtraBold.woff2?v=1778060910) format('woff2');
+}

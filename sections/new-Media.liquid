@@ -1,0 +1,162 @@
+<div
+  data-section-id="{{ section.id }}"
+  data-section-type="video-section"
+  class=""
+  data-mobile-natural="false"
+  data-aos="hero__animation">
+  <div class="index-section">
+    <div class="page-width">
+       {%- if section.settings.title != blank -%}
+        <div class="section-header">
+          <h2 class="section-header__title">{{ section.settings.title | escape }}</h2>
+        </div>
+  {%- endif -%}
+  <div class="vw_media">
+      <div class="vw_01">
+            {%- assign link_href = section.settings.link -%}
+              {%- if section.settings.link == blank -%}
+                {%- assign link_href = section.settings.video_url -%}
+              {%- endif -%}
+          <div class="vider_card">
+            <div class="vider_box">
+           {%- if section.settings.image != blank -%}
+            {%- assign img_url = section.settings.image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+            <img class="logo-bar__image lazyload"
+                data-src="{{ img_url }}"
+                data-widths="[180, 360, 540, 720]"
+                data-aspectratio="{{ section.settings.image.aspect_ratio }}"
+                data-sizes="auto"
+                alt="{{ section.settings.image.alt }}">
+         
+          {%- endif -%}
+             <a href="{{ link_href }}" class="open_video {% if section.settings.color_accent and section.settings.color_accent == 'rgba(0,0,0,0)' %} btn--inverse{% endif %}">
+                      {%- if link_href contains 'youtube.com/watch' or link_href contains 'youtu.be/' -%}
+                        <i class="play_icon"></i>
+                      {%- endif -%}
+            </a>
+          </div>
+          </div>
+        </div>
+      <div class="vw_02">
+        <div class="vw_top">
+            {%- assign link_href2 = section.settings.link2 -%}
+              {%- if section.settings.link2 == blank -%}
+                {%- assign link_href2 = section.settings.video_url2 -%}
+              {%- endif -%}
+          <div class="vider_card">
+            <div class="vider_box">
+           {%- if section.settings.image2 != blank -%}
+            {%- assign img_url2 = section.settings.image2 | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+            <img class="logo-bar__image lazyload"
+                data-src="{{ img_url2 }}"
+                data-widths="[180, 360, 540, 720]"
+                data-aspectratio="{{ section.settings.image2.aspect_ratio }}"
+                data-sizes="auto"
+                alt="{{ section.settings.image2.alt }}">
+         
+          {%- endif -%}
+             <a href="{{ link_href2 }}" class="open_video {% if section.settings.color_accent and section.settings.color_accent == 'rgba(0,0,0,0)' %} btn--inverse{% endif %}">
+                      {%- if link_href2 contains 'youtube.com/watch' or link_href2 contains 'youtu.be/' -%}
+                        <i class="play_icon"></i>
+                      {%- endif -%}
+            </a>
+          </div>
+          </div>
+        </div>
+         <a class="vw_tbottom" href="{{ section.settings.link_3 }}">
+          <img class="link__img" src="{{ section.settings.image3 | img_url:"master" }}">
+          <p class="link__title">{{ section.settings.title_3 }}</p>
+        </a>
+      </div>
+      <div class="vw_03">
+        {% for block in section.blocks %}
+        <a class="video__link" href="{{ block.settings.link_t }}">
+          <img class="link__img" src="{{ block.settings.image_t | img_url:"master" }}">
+          <p class="link__title">{{ block.settings.title_t }}</p>
+        </a>
+          {% endfor %}
+      </div>
+  </div>
+    </div>
+  </div>
+</div>
+{% schema %}
+{
+  "name": "video media",
+  "class": "index-section--media",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "t:sections.hero-video.settings.title.label"
+    },
+    {
+      "type": "text",
+      "id": "video_url",
+      "label": "t:sections.hero-video.settings.video_url.label",
+      "default": "https://www.youtube.com/watch?v=_9VUPq3SxOc"
+    },
+         {
+          "type": "image_picker",
+          "id": "image",
+          "label": "image"
+        },
+    {
+      "type": "text",
+      "id": "video_url2",
+      "label": "video url 2",
+      "default": "https://www.youtube.com/watch?v=_9VUPq3SxOc"
+    },
+         {
+          "type": "image_picker",
+          "id": "image2",
+          "label": "image2"
+        },
+    {
+      "type": "text",
+      "id": "title_3",
+      "label": "title 3"
+    },
+     {
+      "type": "text",
+      "id": "link_3",
+      "label": "link 3"
+    },
+    {
+          "type": "image_picker",
+          "id": "image3",
+          "label": "image3"
+        }
+    
+  ],
+   "blocks": [
+    {
+      "type": "video",
+      "name": "video-item",
+      "settings": [
+       {
+      "type": "text",
+      "id": "title_t",
+      "label": "title"
+    },
+     {
+      "type": "text",
+      "id": "link_t",
+      "label": "link"
+    },
+    {
+          "type": "image_picker",
+          "id": "image_t",
+          "label": "image"
+        }
+        
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "video media"
+    }
+  ]
+}
+{% endschema %}

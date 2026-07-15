@@ -1,0 +1,153 @@
+<div class="policy-list-section-{{ section.id }}">
+  <div class="policy-list-section--wrapper page-width wow bounceInUp">
+    <h2 class="policy-list-section-title custom-txt-bold appear-delay{% cycle '','-1','-2','-3','-4' %}"></h2>
+    <div class="policy-list-section--content">
+      {% for block in section.blocks %}
+        <div class="policy-item appear-delay{% cycle '','-1','-2','-3','-4' %}">
+          {% if block.settings.icon != blank %}
+            <div class="policy-item-icon">
+              <img
+                srcset="{{ block.settings.icon | image_url: width: 150, format: 'webp' }}"
+                sizes="150px"
+                width="{{ block.settings.icon.width }}"
+                height="{{ block.settings.icon.height }}"
+                loading="lazy"
+                alt="{{ block.settings.title }}"
+              >
+            </div>
+          {% endif %}
+          <div class="policy-item-info">
+            <h3 class="policy-item-title custom-txt-bold">{{ block.settings.title }}</h3>
+            <p class="policy-item-description">{{ block.settings.description }}</p>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</div> 
+{% style %}
+      .policy-list-section-{{ section.id }} {
+          background-color: #fafafa;
+          padding: 4em 0;
+      }
+      .policy-list-section-{{ section.id }} .policy-list-section-title {
+          font-size: 2.5em;
+          text-align: center;
+      }
+      .policy-list-section-{{ section.id }} .policy-list-section--content {
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: center; /* 整体居中 */
+      }
+      .policy-list-section-{{ section.id }} .policy-item {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          border-right: 1px solid #eee;
+          padding: 1em ;
+          text-align: center;
+          flex: 1 0 19%;
+          min-width: 180px;
+      }
+      .policy-list-section-{{ section.id }} .policy-item:last-child {
+          border-right: none;
+      }
+      .policy-list-section-{{ section.id }} .policy-item-icon {
+          width: 6em;
+          height: 6em;
+          margin-bottom: 1em;
+      }
+      .policy-list-section-{{ section.id }} .policy-item-icon img {
+          width: 100%;
+          height: 100%;
+          object-fit: contain;
+      }
+      .policy-list-section-{{ section.id }} .policy-item-title {
+          font-size: 1.8em;
+          margin: 0;
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
+          word-wrap: break-word;
+          overflow-wrap: break-word;
+          white-space: normal;
+      }
+      .policy-list-section-{{ section.id }} .policy-item-description {
+          margin: 0.5em 0 0;
+          font-size: 1em;
+          color: #666;
+      }
+      @media screen and (max-width: 1440px) {
+            .policy-list-section-{{ section.id }} .policy-list-section--content {
+                font-size: 0.8em;
+            }
+        }
+      @media screen and (max-width: 1024px) {
+            .policy-list-section-{{ section.id }} .policy-list-section--content {
+                font-size: 0.7em;
+            }
+        }
+      @media screen and (max-width: 768px) {
+            .policy-list-section-{{ section.id }} .policy-list-section--content {
+                font-size: 0.8em;
+            }
+            .policy-list-section-{{ section.id }} .policy-item {
+                min-width: 300px;
+            }
+            .policy-list-section-{{ section.id }} .policy-item:nth-child(-n+2) {
+                border-bottom: 1px solid #eee;
+            }
+            .policy-list-section-{{ section.id }} .policy-item-title {
+                display: -webkit-box;
+                -webkit-line-clamp: 3;
+                -webkit-box-orient: vertical;
+            }
+      }
+      @media screen and (max-width: 600px) {
+            .policy-list-section-{{ section.id }} .policy-list-section--content {
+                font-size: 0.6em;
+            }
+            .policy-list-section-{{ section.id }} .policy-item {
+                min-width: 180px;
+            }
+      }
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "Policy List Section",
+  "class": "policy-list-section",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "policy_item",
+      "name": "Policy Item",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "icon",
+          "label": "Icon"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Description"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Policy List Section",
+      "settings": {}
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,111 @@
+<div class="icon-text-list-container">
+  <div class="icon-text-list--wrapper">
+    {% if block.point_1_icon != blank %}
+      <div class="icon-text-item icon-text-item-1">
+        <div class="item-icon">
+          <img class="lazyloaded" src="{{ block.point_1_icon | image_url }}" width="24" height="24" alt="{{ block.point_1_title }}" />
+        </div>
+        <div class="item-title">{{ block.point_1_title }}</div>
+      </div>
+    {% endif %}
+    {% if block.point_2_icon != blank %}
+      <div class="icon-text-item icon-text-item-2">
+        <div class="item-icon">
+          <img class="lazyloaded" src="{{ block.point_2_icon | image_url }}" width="24" height="24" alt="{{ block.point_2_title }}" />
+        </div>
+        <div class="item-title">{{ block.point_2_title }}</div>
+      </div>
+    {% endif %}
+    {% if block.point_3_icon != blank %}
+      <div class="icon-text-item icon-text-item-3">
+        <div class="item-icon">
+          <img class="lazyloaded" src="{{ block.point_3_icon | image_url }}" width="24" height="24" alt="{{ block.point_3_title }}" />
+        </div>
+        <div class="item-title">{{ block.point_3_title }}</div>
+      </div>
+    {% endif %}
+    {% if block.point_4_icon != blank %}
+      <div class="icon-text-item icon-text-item-4">
+        <div class="item-icon">
+          <img class="lazyloaded" src="{{ block.point_4_icon | image_url }}" width="24" height="24" alt="{{ block.point_4_title }}" />
+        </div>
+        <div class="item-title">{{ block.point_4_title }}</div>
+      </div>
+    {% endif %}
+    {% if block.point_5_icon != blank %}
+      <div class="icon-text-item icon-text-item-5">
+        <div class="item-icon">
+          <img class="lazyloaded" src="{{ block.point_5_icon | image_url }}" width="24" height="24" alt="{{ block.point_5_title }}" />
+        </div>
+        <div class="item-title">{{ block.point_5_title }}</div>
+      </div>
+    {% endif %}
+    {% if block.point_6_icon != blank %}
+      <div class="icon-text-item icon-text-item-6">
+        <div class="item-icon">
+          <img class="lazyloaded" src="{{ block.point_6_icon | image_url }}" width="24" height="24" alt="{{ block.point_6_title }}" />
+        </div>
+        <div class="item-title">{{ block.point_6_title }}</div>
+      </div>
+    {% endif %}
+  </div>
+</div>
+{% style %}
+  .icon-text-list--wrapper {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(10em, 1fr));
+    grid-gap: 1em;
+    padding: 1em 0;
+    margin-top: 1em;
+  }
+  .icon-text-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-right: 1px solid #e0e0e0;
+  }
+  .icon-text-item:last-child {
+    border-right: none;
+  }
+  .icon-text-item .item-icon {
+    margin-right: 0.5em
+  }
+  .icon-text-item .item-icon img {
+    width: 2em;
+    height: 2em;
+  }
+  .icon-text-item .item-title {
+    color: #000;
+    font-size: 0.8em;
+  }
+  @media screen and (max-width: 1400px) {
+    .icon-text-list--wrapper {
+      grid-template-columns: repeat(auto-fit, minmax(10em, 1fr));
+    }
+  }
+  @media screen and (max-width: 1100px) {
+    .icon-text-list--wrapper {
+      grid-template-columns: repeat(auto-fit, minmax(10em, 1fr));
+    }
+  }
+  @media screen and (max-width: 768px) {
+    .icon-text-list--wrapper {
+      grid-template-columns: repeat(auto-fit, minmax(10em, 1fr));
+    }
+  }
+  @media screen and (max-width: 450px) {
+    .icon-text-list--wrapper {
+      grid-template-columns: repeat(auto-fit, minmax(6em, 1fr));
+      grid-gap: 0em;
+    }
+    .icon-text-item {
+      flex-direction: column;
+      text-align: center;
+    }
+    .icon-text-item .item-title {
+      font-size: 0.6em;
+      line-height: 0.8em;
+      margin-bottom: 0.8em;
+    }
+  }
+{% endstyle %}

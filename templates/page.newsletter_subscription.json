@@ -1,0 +1,118 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {}
+    },
+    "Topimg": {
+      "type": "support-img",
+      "settings": {
+        "divider": true,
+        "titleh1": "Get 7% off - Subscribe PiiFox E-newsletter Today",
+        "titlep": "",
+        "aligntext": "textcenter",
+        "left": 50,
+        "top": 20,
+        "image": "shopify://shop_images/pc.jpg",
+        "mimage": "shopify://shop_images/mobile.jpg",
+        "custom_html": ""
+      }
+    },
+    "newsletter_subscription_TXDy43": {
+      "type": "newsletter_subscription",
+      "blocks": {
+        "marquee_item_8VDYtT": {
+          "type": "marquee-item",
+          "settings": {
+            "marqueeText": "Get 10% off"
+          }
+        },
+        "marquee_item_QV6ey3": {
+          "type": "marquee-item",
+          "settings": {
+            "marqueeText": "Offers and Discounts"
+          }
+        },
+        "marquee_item_FMNy7n": {
+          "type": "marquee-item",
+          "settings": {
+            "marqueeText": "Extra % off Sale"
+          }
+        },
+        "marquee_item_brJJFx": {
+          "type": "marquee-item",
+          "settings": {
+            "marqueeText": "Exciting Contests"
+          }
+        },
+        "marquee_item_9QbMUP": {
+          "type": "marquee-item",
+          "settings": {
+            "marqueeText": "Surprise Plus offers"
+          }
+        },
+        "marquee_item_qE6FLK": {
+          "type": "marquee-item",
+          "settings": {
+            "marqueeText": "Birthaday Treat"
+          }
+        },
+        "marquee_item_cpjK7P": {
+          "type": "marquee-item",
+          "settings": {
+            "marqueeText": "Unique Access to Special Collections"
+          }
+        },
+        "marquee_item_yezTW7": {
+          "type": "marquee-item",
+          "settings": {
+            "marqueeText": "Invitations to Events"
+          }
+        },
+        "marquee_item_Ug9tBF": {
+          "type": "marquee-item",
+          "settings": {
+            "marqueeText": "Early Access to Upcomming  VIP Membership"
+          }
+        },
+        "marquee_item_8Dckz6": {
+          "type": "marquee-item",
+          "settings": {
+            "marqueeText": "Early Access to Upcomming  Membership Benefits"
+          }
+        }
+      },
+      "block_order": [
+        "marquee_item_8VDYtT",
+        "marquee_item_QV6ey3",
+        "marquee_item_FMNy7n",
+        "marquee_item_brJJFx",
+        "marquee_item_9QbMUP",
+        "marquee_item_qE6FLK",
+        "marquee_item_cpjK7P",
+        "marquee_item_yezTW7",
+        "marquee_item_Ug9tBF",
+        "marquee_item_8Dckz6"
+      ],
+      "settings": {
+        "title": "Get 7% off —SUBSCRIBE PIIFOX — become a member today",
+        "context": "<p>PIIFOX is a technology company that <b>Creates Your Smart Life</b></p><ul>\n<li>Receive a 7% off  Welcome Coupon for first time subscription!</li>\n<li>You can receive the latest news of PIIFOX including new arrivals, limited offers and event details by our E-newsletter.</li>\n<li>Please make sure the email address you provided is correct. Otherwise, you may fail to subscribe our E-newsletter.</li>\n<li>E-newsletter is currently available Traditional ENGLISH/JAPANESE only.</li>\n</ul>"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "Topimg",
+    "newsletter_subscription_TXDy43"
+  ]
+}

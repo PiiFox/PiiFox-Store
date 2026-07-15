@@ -1,0 +1,87 @@
+{%- if section.settings.divider -%}
+
+<div class="page-width">
+  <div class="support-faqlist-box">
+    <h2>{{ section.settings.title }}</h2>
+    <div class="container">
+    {% for block in section.blocks  %}
+      {%- if block.type == 'text' -%}
+        <h3>{{ block.settings.faq_q }}</h3>
+        <p class="faq-a">{{ block.settings.faq_a }}</p>
+      {% endif %}
+    {% endfor %}  
+    </div>
+    <a href="{{ section.settings.url }}">{{ section.settings.learn_more }}</a>
+  </div>
+</div>
+<script>
+$('.support-faqlist-box h3').on('click',function(){
+	$(this).next().stop().toggleClass('on');
+	$(this).toggleClass('on');
+})
+</script>
+<style>
+.support-faqlist-box{margin-top:10rem;text-align:center;}
+.support-faqlist-box h2{font-weight:400;margin-bottom:3rem;}
+.support-faqlist-box h3{padding:4px 20px;border:1px solid #ddd;margin-bottom:0;cursor:pointer;position:relative;font-size:1.2rem;font-weight:400;text-align: left;}
+.support-faqlist-box h3:after{content:"+";font-size:1.2rem;color:#020202;transition:transform .3s;position:absolute;right:20px;}
+.support-faqlist-box h3.on{margin-bottom:0;border-bottom:0px;}
+.support-faqlist-box h3.on:after{transform:rotate(90deg);transition:transform .3s;}
+.support-faqlist-box .faq-a{border-right:1px solid #ddd;border-left:1px solid #ddd;height:0;font-size:16px;padding:5px 20px 5px 25px;opacity:0;border-bottom:1px solid #ddd;background-color:#eee;position:relative;text-align: left;}
+.support-faqlist-box .faq-a:before{content:"";background-color:#aaa;width:5px;height:100%;position:absolute;top:0;left:0px;}
+.support-faqlist-box .faq-a.on{height:auto;opacity:1;}
+.support-faqlist-box a{border-radius: 20px;text-align: center;background-color:{{ settings.color_button }};color:{{ settings.color_button_text }};padding: 0.5rem 1rem;display: inline-block;margin-top: 1rem;}
+@media screen and (max-width: 750px) {
+  .support-faqlist-box{margin-top:5rem;}
+  .support-faqlist-box h2{font-size:1.4rem;}
+}
+</style>
+{%- endif -%}
+
+
+{% schema %}
+{
+  "name": "t:sections.support-faqlist.name",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "divider",
+      "label": "t:sections.support-faqlist.settings.divider",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "t:sections.support-faqlist.settings.title"
+    },
+    {
+      "type": "text",
+      "id": "learn_more",
+      "label": "t:sections.support-faqlist.settings.learn_more"
+    },
+    {
+      "type": "url",
+      "id": "url",
+      "label": "t:sections.support-faqlist.settings.url"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "text",
+      "name": "t:sections.support-faqlist.blocks.column.name",
+      "settings": [
+        {
+          "type": "text",
+          "id": "faq_q",
+          "label": "t:sections.support-faqlist.blocks.column.settings.faq_q.label"
+        },
+        {
+          "type": "text",
+          "id": "faq_a",
+          "label": "t:sections.support-faqlist.blocks.column.settings.faq_a.label"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

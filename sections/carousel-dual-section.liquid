@@ -1,0 +1,197 @@
+{% comment %}
+  双行滚动视差图片墙
+  一行5张 | 滚动时：上行左移、下行右移 | 最大偏移50% | 不外移出视口
+{% endcomment %}
+
+<style>
+  .carousel-dual-section {
+    position: relative;
+    padding: 60px 20px 100px;
+    overflow: hidden;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  }
+
+  .carousel-dual-section__header {
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto 60px;
+  }
+
+  .carousel-dual-section__title {
+    font-size: 36px;
+    font-weight: 600;
+    line-height: 1.4;
+    color: #000;
+    margin: 0 0 16px;
+    padding-bottom: 0.5em;
+    position: relative;
+  }
+
+  .carousel-dual-section__title::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: 0%;
+    transform: translate(-50%, 0) ;
+    width: 4em;
+    height: 2px;
+    background: var(--colorThemePrimary);
+    border-radius: 50%;
+  }
+
+  .carousel-dual-section__title .green-text {
+    color: var(--colorThemePrimary);
+  }
+
+  .carousel-dual-section__desc {
+    font-size: 18px;
+    color: #666;
+    line-height: 1.6;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .carousel-dual-section__desc .green-text {
+    color: var(--colorThemePrimary);
+  }
+
+  /* 图片行容器 */
+  .img-row {
+    display: flex;
+    gap: 1em;
+    will-change: transform;
+    margin-bottom: 1em;
+    overflow: auto;
+  }
+  .img-row::-webkit-scrollbar {
+    display: none;
+  }
+
+  .img-row--1 {
+    transform: translateX(calc(var(--scroll-offset, 0) * -0.5));
+  }
+  .img-row--2 {
+    transform: translateX(calc(var(--scroll-offset, 0) * 0.6));
+  }
+
+  .img-item {
+    flex: 1;
+    width: 25vw;
+    min-width: 220px;
+    aspect-ratio: 4 / 3;
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  .img-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  @media (max-width: 768px) {
+    .carousel-dual-section__title {
+      font-size: 28px;
+    }
+  }
+</style>
+
+<section class="carousel-dual-section">
+  <div class="carousel-dual-section__header">
+    <h2 class="carousel-dual-section__title">{{ section.settings.title }}</h2>
+    <p class="carousel-dual-section__desc">{{ section.settings.description }}</p>
+  </div>
+
+  <!-- 第一行 -->
+  <div class="img-row img-row--1">
+    {% assign row1 = section.blocks | where: 'type', 'row1' | slice: 0, 5 %}
+    {% for block in row1 %}
+      <div class="img-item">
+        <img src="{{ block.settings.image | image_url }}" alt="" loading="lazy" width="100%" height="100%">
+      </div>
+    {% endfor %}
+  </div>
+
+  <!-- 第二行 -->
+  <div class="img-row img-row--2">
+    {% assign row2 = section.blocks | where: 'type', 'row2' | slice: 0, 5 %}
+    {% for block in row2 %}
+      <div class="img-item">
+        <img src="{{ block.settings.image | image_url }}" alt="" loading="lazy" width="100%" height="100%">
+      </div>
+    {% endfor %}
+  </div>
+</section>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const section = document.querySelector('.carousel-dual-section');
+    const row1 = document.querySelector('.img-row--1');
+    const row2 = document.querySelector('.img-row--2');
+
+    function update() {
+      const rect = section.getBoundingClientRect();
+      const viewHeight = window.innerHeight;
+      const top = rect.top;
+      const bottom = rect.bottom;
+
+      let offset = 0;
+
+      if (top < viewHeight && bottom > 0) {
+        // 第一行 → 平滑滚动到最右侧
+        row1.scrollTo({
+          left: row1.scrollWidth - row1.clientWidth,
+          behavior: 'smooth',
+        });
+
+        // 第二行 → 平滑滚动到最左侧（反向）
+        row2.scrollTo({
+          left: 0,
+          behavior: 'smooth',
+        });
+
+        const progress = (viewHeight - top) / (viewHeight + rect.height);
+        offset = Math.min(progress, 1) * 50; // 最大偏移 50%
+      }
+
+      section.style.setProperty('--scroll-offset', offset + '%');
+    }
+
+    window.addEventListener('scroll', update);
+    update();
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Carousel Dual",
+  "settings": [
+    {
+      "type": "html",
+      "id": "title",
+      "label": "标题（HTML）",
+      "default": "Bring more comfort, character, and <span class='green-text'>clarity</span> to your everyday setup."
+    },
+    {
+      "type": "html",
+      "id": "description",
+      "label": "描述",
+      "default": "<span class='green-text'>PIIFOX</span> creates keyboards and accessoriesfor work, play, and the moments in between."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "row1",
+      "name": "第一行图片（最多5张）",
+      "settings": [{ "type": "image_picker", "id": "image", "label": "图片" }]
+    },
+    {
+      "type": "row2",
+      "name": "第二行图片（最多5张）",
+      "settings": [{ "type": "image_picker", "id": "image", "label": "图片" }]
+    }
+  ],
+  "presets": [{ "name": "Carousel Dual", "category": "custom" }]
+}
+{% endschema %}

@@ -1,0 +1,282 @@
+
+{%- if section.settings.divider -%}
+  <div class="section--divider page-width" >
+{%- endif -%}
+    <div class="pay-later-switch-tab-{{ section.id }}-container page-width">
+      <div class="pay-later-switch-tab-meta">
+        <div class="section-header text-left">
+          <h2>{{ section.settings.title }}</h2>
+        </div>
+        {% assign current_step = section.blocks | first %}
+        <div class="step-tab-list">
+          {% for step in section.blocks %}
+            <div class="step-tab-item {% if current_step.id == step.id %}active{% endif %}" 
+              tabindex="{{ forloop.index0 }}"
+              data-step-title="{{ step.settings.title }}"
+              data-step-describe="{{ step.settings.describe }}"
+              data-step-image="{{ step.settings.image | img_url: '700x' }}"
+              data-step-link="{{ step.settings.link }}"
+              data-step-link-label="{{ step.settings.link_label }}"
+            >
+              {{ step.settings.name }}
+            </div>
+          {% endfor %}
+        </div>
+        <div class="current-step-title">{{ current_step.settings.title }}</div>
+        <div class="current-step-describe">{{ current_step.settings.describe }}</div>
+
+        <div class="current-step-link" {% if current_step.settings.link == blank %}style="display: none;"{% endif %}>
+          <a class="btn" href="{{ current_step.settings.link }}">{{ current_step.settings.link_label }}</a>
+        </div>
+      </div>
+      <div class="pay-later-step-demo-img">
+        <img src="{{ current_step.settings.image | img_url: '700x' }}"/>
+      </div>
+    </div>
+{%- if section.settings.divider -%}
+  </div>
+{%- endif -%}
+<script>
+  $(function(){
+    $('.pay-later-switch-tab-{{ section.id }}-container .step-tab-item').click(e => {
+      let el = e.target;
+      console.log(el)
+      for(let i = 0 ; i < {{section.blocks.size}}; i++) {
+        $('.pay-later-switch-tab-{{ section.id }}-container .step-tab-item').eq(i).removeClass('active')
+      }
+      $(el).addClass('active');
+      let title = el.dataset.stepTitle;
+      let describe = el.dataset.stepDescribe;
+      let image = el.dataset.stepImage;
+      let link = el.dataset.stepLink;
+      let link_label = el.dataset.stepLinkLabel || 'Learn More';
+      title && $('.pay-later-switch-tab-{{ section.id }}-container .current-step-title').text(title)
+      describe && $('.pay-later-switch-tab-{{ section.id }}-container .current-step-describe').text(describe)
+      if(!link) {
+        $('.pay-later-switch-tab-{{ section.id }}-container .current-step-link').hide()
+      } else {
+        $('.pay-later-switch-tab-{{ section.id }}-container .current-step-link a').attr('href', link)
+        link_label && $('.pay-later-switch-tab-{{ section.id }}-container .current-step-link a').text(link_label)
+        $('.pay-later-switch-tab-{{ section.id }}-container .current-step-link').show()
+      }
+
+      image && $('.pay-later-switch-tab-{{ section.id }}-container .pay-later-step-demo-img img').attr('src', image)
+    })
+  })
+  
+</script>
+{% style %}
+  .index-section-paylater-switchtab {font-size: 20px;}
+  .pay-later-switch-tab-{{ section.id }}-container .current-step-title,
+  .pay-later-switch-tab-{{ section.id }}-container .current-step-describe,
+  .pay-later-switch-tab-{{ section.id }}-container .current-step-link a,
+  .pay-later-switch-tab-{{ section.id }}-container .pay-later-step-demo-img img {
+      transition: all 0.4s ease;
+  }
+  .pay-later-switch-tab-{{ section.id }}-container {
+      background-image: url({{ section.settings.background | img_url: '2560x' }});
+      background-size: 100% auto;
+      background-position: left top;
+      background-repeat: no-repeat;
+      display: flex;
+      align-items: flex-start;
+      padding: 10em 3em 0 3em;
+      position: relative;
+  }
+  .pay-later-switch-tab-{{ section.id }}-container .pay-later-switch-tab-meta{
+      padding-top: 2rem; 
+      z-index: 9;
+      width: 60%;
+  }
+  .pay-later-switch-tab-{{ section.id }}-container .pay-later-switch-tab-meta .section-header h2 {
+      font-size: 2.4em;
+  }
+  .pay-later-switch-tab-{{ section.id }}-container .step-tab-list  {
+      width: 80%;
+      display: flex;
+      justify-content: space-between;
+      font-size: 1.4em;
+      margin-bottom: 2em;
+  }
+  .pay-later-switch-tab-{{ section.id }}-container .step-tab-list .step-tab-item {
+      font-weight: 800;
+      padding-bottom: 0.2rem;
+      position: relative;
+  }
+  .pay-later-switch-tab-{{ section.id }}-container .step-tab-list .step-tab-item::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 100%;
+      border-bottom: 3px solid var(--colorBtnPrimary);
+      top: 0;
+      left: 0;
+  }
+  .pay-later-switch-tab-{{ section.id }}-container .step-tab-list .step-tab-item.active::after {
+      width: 100%;
+      transition: width 0.4s ease;
+  }
+  .pay-later-switch-tab-{{ section.id }}-container .step-tab-list .step-tab-item:hover::after {
+      width: 100%;
+      transition: width 0.4s ease;
+  }
+  .pay-later-switch-tab-{{ section.id }}-container .current-step-title {
+      padding: 1rem 0;
+      font-size: 1.3em;
+      font-weight: 800;
+  }
+  .pay-later-switch-tab-{{ section.id }}-container .current-step-descrition {
+    font-size: 1.1em;
+  }
+  .pay-later-switch-tab-{{ section.id }}-container .current-step-link {
+      padding: 2rem 0;
+      text-align: right;
+  }
+  .pay-later-switch-tab-{{ section.id }}-container .current-step-link a {
+      color: var(--colorBtnPrimary);
+      background: transparent;
+      text-decoration: underline;
+      text-decoration-color: var(--colorBtnPrimary);
+      text-underline-offset: 0.2rem;
+  }
+  .pay-later-switch-tab-{{ section.id }}-container .current-step-link a.btn:not(.btn--secondary):not(.btn--tertiary):not(.btn--inverse):not(.btn--body):not(.btn--static):hover {
+      background: #fafafa;
+      transition: all 0.4s ease;
+  }
+  .pay-later-switch-tab-{{ section.id }}-container .pay-later-step-demo-img{
+      z-index: 9;
+      width: 40%;
+      padding: 0 4em;
+  }
+  @media screen and (max-width: 1200px) {
+      .index-section-paylater-switchtab {font-size: 12px;}
+  }
+  @media screen and (max-width: 768px) {
+      .index-section-paylater-switchtab {font-size: 10px;}
+      .pay-later-switch-tab-{{ section.id }}-container { padding: 3em 3em 0 3em; }
+      .pay-later-switch-tab-{{ section.id }}-container .pay-later-step-demo-img{
+          padding: 0 1em;
+      }
+  }
+  @media screen and (max-width: 500px) {
+      .index-section-paylater-switchtab {font-size: 8px;}
+      .pay-later-switch-tab-{{ section.id }}-container  {
+          flex-direction: column;
+          padding: 1em;
+      }
+      .pay-later-switch-tab-{{ section.id }}-container .pay-later-switch-tab-meta{
+          width: 100%;
+          padding-top: 0;
+      }
+      .pay-later-switch-tab-{{ section.id }}-container .pay-later-step-demo-img{
+          width: 100%;
+          padding: 0 8em;
+      }
+  }
+{% endstyle %}
+{% schema %}
+  {
+    "name": "t:sections.paylater_switchtab.name",
+    "class": "index-section-paylater-switchtab",
+    "max_blocks": 6,
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "divider",
+        "label": "t:sections.paylater_switchtab.settings.divider.label",
+        "default": true
+      }, {
+        "type": "text",
+        "id": "title",
+        "label": "t:sections.paylater_switchtab.settings.title.label"
+      }, {
+        "type": "image_picker",
+        "id": "background",
+        "label": "Background"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "text",
+        "name": "t:sections.paylater_switchtab.blocks.column.name",
+        "settings": [
+          {
+            "type": "text",
+            "id": "name",
+            "label": "t:sections.paylater_switchtab.blocks.column.settings.name.label"
+          },
+          {
+            "type": "text",
+            "id": "title",
+            "label": "t:sections.paylater_switchtab.blocks.column.settings.title.label"
+          },
+          {
+            "type": "textarea",
+            "id": "describe",
+            "label": "t:sections.paylater_switchtab.blocks.column.settings.describe.label"
+          },
+          {
+            "type": "url",
+            "id": "link",
+            "label": "t:sections.paylater_switchtab.blocks.column.settings.link.label"
+          },
+          {
+            "type": "text",
+            "id": "link_label",
+            "label": "t:sections.paylater_switchtab.blocks.column.settings.link_label.label",
+            "default": "Learn More"
+          },
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "t:sections.paylater_switchtab.blocks.column.settings.image.label"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "t:sections.paylater_switchtab.presets.paylater_switchtab.name",
+        "settings": {
+          "divider": true,
+          "title": "title"
+        },
+        "blocks": [
+          {
+            "type": "text",
+            "settings": {
+              "name": "Step 1",
+              "title": "Enter Title",
+              "describe": "Enter Describe"
+            }
+          },
+          {
+            "type": "text",
+            "settings": {
+              "name": "Step 2",
+              "title": "Enter Title",
+              "describe": "Enter Describe"
+            }
+          },
+          {
+            "type": "text",
+            "settings": {
+              "name": "Step 3",
+              "title": "Enter Title",
+              "describe": "Enter Describe"
+            }
+          },
+          {
+            "type": "text",
+            "settings": {
+              "name": "Step 4",
+              "title": "Enter Title",
+              "describe": "Enter Describe"
+            }
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}
+

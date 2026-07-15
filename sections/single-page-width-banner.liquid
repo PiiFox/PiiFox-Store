@@ -1,0 +1,159 @@
+<div class="single-page-width-banner-section-{{ section.id }} wow bounceInLeft">
+  <div class="single-page-width-banner-section--wrapper page-width">
+    <h2 class="single-page-width-banner-section-title custom-txt-bold appear-delay{% cycle '','-1','-2','-3','-4' %}"></h2>
+    {% assign block = section.blocks[0] %}
+    {%  style %}
+      .single-page-width-banner-section-{{ section.id }} .single-page-width-banner-section--content {
+          background-image: url({{ block.settings.banner | image_url: width: 1920, format: 'webp', crop: 'center' }});
+          background-size: cover;
+          background-position: center;
+          padding: 5em 4em;
+          border-radius: 1em;
+      }
+      .single-page-width-banner-section-{{ section.id }} .single-page-width-banner-section--content--left-btn {
+          background-image: url({{ block.settings.btn_bg | image_url: width: 300, format: 'webp' }});
+      }
+      @media screen and (max-width: 768px) {
+          .single-page-width-banner-section-{{ section.id }} .single-page-width-banner-section--content {
+              background-image: url({{ block.settings.m_banner | image_url: width: 768, format: 'webp', crop: 'center' }});
+          }
+      }
+    {% endstyle %}
+    <div class="single-page-width-banner-section--content">
+        <div class="single-page-width-banner-section--content--left">
+          <h3 class="single-page-width-banner-section--content--left-title custom-txt-oxanium appear-delay{% cycle '','-1','-2','-3','-4' %}">
+            {{ block.settings.banner_title }}
+          </h3>
+          <p class="single-page-width-banner-section--content--left-subtitle custom-txt-oxanium appear-delay{% cycle '','-1','-2','-3','-4' %}">
+            {{ block.settings.sub_title }}
+          </p>
+          <p class="single-page-width-banner-section--content--left-context custom-txt-normal appear-delay{% cycle '','-1','-2','-3','-4' %}">
+            {{ block.settings.context }}
+          </p>
+          {% if block.settings.btn_label != blank %}
+            <a href="{{ block.settings.btn_link }}" class="single-page-width-banner-section--content--left-btn custom-txt-oxanium appear-delay{% cycle '','-1','-2','-3','-4' %}" style="background-image: url({{ block.settings.btn_bg | img_url: 'original' }});">
+              {{ block.settings.btn_label }}
+            </a>
+          {% endif %}
+        </div>
+    </div>
+  </div>
+</div>
+{% style %}
+  .single-page-width-banner-section-{{ section.id }} {
+      padding: 4em 0;
+      background-color: #fff;
+  }
+  .single-page-width-banner-section-{{ section.id }} .single-page-width-banner-section--content {
+      height: 500px;
+  }
+  .single-page-width-banner-section-{{ section.id }} .single-page-width-banner-section--content--left {
+      width: 50%;
+      padding-right: 5em;
+  }
+  .single-page-width-banner-section-{{ section.id }} .single-page-width-banner-section--content--left-title {
+      font-size: 4em;
+      font-weight: 900;
+      margin-bottom: 0em;
+  }
+  .single-page-width-banner-section-{{ section.id }} .single-page-width-banner-section--content--left-subtitle {
+      font-size: 2em;
+      font-weight: 700;
+      margin-bottom: 0.6em;
+  }
+  .single-page-width-banner-section-{{ section.id }} .single-page-width-banner-section--content--left-context {
+      font-size: 1em;
+      margin-bottom: 2em;
+  }
+  .single-page-width-banner-section-{{ section.id }} .single-page-width-banner-section--content--left-btn {
+      display: inline-block;
+      padding: 0.8em 3em 0.8em 1.5em;
+      letter-spacing: 0.05em;
+      color: #fff;
+      font-size: 1.3em;
+      font-weight: 500;
+      text-decoration: none;
+      background-size: 100% 100%;
+      background-position: center;
+  }
+  @media screen and (max-width: 768px) {
+      .single-page-width-banner-section-{{ section.id }} {
+          padding: 2em 0;
+          font-size: 0.7em;
+      }
+      .single-page-width-banner-section-{{ section.id }} .single-page-width-banner-section--content {
+          height: unset;
+          aspect-ratio: 768 / 1000;
+          padding: 3em;
+      }
+      .single-page-width-banner-section-{{ section.id }} .single-page-width-banner-section--content--left {
+          width: 100%;
+          padding-right: 0;
+      }
+  }
+
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "Single Page Width Banner",
+  "class": "single-page-width-banner-section",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "single_page_width_banner",
+      "name": "Single Page Width Banner",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "banner",
+          "label": "Banner Image"
+        },
+        {
+          "type": "image_picker",
+          "id": "m_banner",
+          "label": "Mobile Banner Image"
+        },
+        {
+          "type": "text",
+          "id": "banner_title",
+          "label": "Banner Title"
+        },
+        {
+          "type": "text",
+          "id": "sub_title",
+          "label": "Sub Title"
+        },
+        {
+          "type": "text",
+          "id": "context",
+          "label": "Context"
+        },
+        {
+          "type": "url",
+          "id": "btn_link",
+          "label": "Button Link"
+        },
+        {
+          "type": "image_picker",
+          "id": "btn_bg",
+          "label": "Button Background"
+        },
+        {
+          "type": "text",
+          "id": "btn_label",
+          "label": "Button Label"
+        }
+      ],
+      "limit": 1
+    }
+  ],
+  "presets": [
+    {
+      "name": "Single Page Width Banner",
+      "settings": {},
+      "blocks": []
+    }
+  ]
+}
+{% endschema %}

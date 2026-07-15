@@ -1,0 +1,48 @@
+<div class="page-width page-content no-found-page-container">
+  <img src="{{ '404.svg' | asset_url }}" alt="404 Not Found" width="355" height="200" />
+  <header class="section-header section-header--404">
+    {% comment %}
+    <h1 class="section-header__title">{{ 'general.404.title' | t }}</h1>
+    {% endcomment %}
+    <h1 class="section-header__title">{{ 'general.NotFound.title' | t }}</h1>
+    <div class="rte text-spacing">
+      {% comment %}
+      {{ 'general.404.subtext_html' | t: url: routes.root_url }}
+      {% endcomment %}
+      {{ 'general.NotFound.subtext_html' | t: url: routes.root_url }}
+    </div>
+  </header>
+</div>
+{% style %}
+  .no-found-page-container {
+    text-align: center;
+  }
+  .rte-setting a:not(.rte__image):not(.btn):not(.spr-summary-actions-newreview), .rte a:not(.rte__image):not(.btn):not(.spr-summary-actions-newreview) {
+    border-bottom: 1px solid var(--colorThemePrimary);
+  }
+  .rte-setting a:not(.btn):not(.spr-summary-actions-newreview):after, .rte a:not(.btn):not(.spr-summary-actions-newreview):after {
+    border-bottom: unset;
+  }
+  .rte a.return-home-btn, .rte a.go-sitemap-btn {
+    display: inline-block;
+    padding: 0.5rem 2rem;
+    border: 1px solid var(--colorThemePrimary);
+    outline: 0;
+    border-radius: 8px;
+    margin: 2rem;
+    box-sizing: border-box;
+  }
+  .rte a.return-home-btn, .rte a.go-sitemap-btn:hover {
+    color: var(--colorThemePrimary);
+    background: #fff;
+  }
+  .rte a.go-sitemap-btn, .rte a.return-home-btn:hover {
+    color: #fff;
+    background: var(--colorThemePrimary);
+  }
+{% endstyle %}
+{% schema %}
+{
+  "name": "t:sections.main-404.name"
+}
+{% endschema %}

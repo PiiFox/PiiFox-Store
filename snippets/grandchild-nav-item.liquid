@@ -1,0 +1,65 @@
+{% comment %}
+  link
+  childlink
+  grandchildlink
+  section
+{% endcomment %}
+{% if grandchildlink.url contains '/products/' %}
+  {%- assign subproduct_handle = grandchildlink.url | remove: '/products/' -%}
+  {%- assign product = all_products[subproduct_handle] -%}
+  <img
+    src="{{ product.featured_image | image_url }}"
+    width="{{ product.featured_image.width }}"
+    height="{{ product.featured_image.height }}"
+    alt="{{ grandchildlink.title | escape  }}"
+  >
+  <p class="notranslate">{{ grandchildlink.title | escape }}</p>
+{% elsif grandchildlink.url contains '/collections/' %}
+  {%- assign subcollection_handle = grandchildlink.url | remove: '/collections/' -%}
+  {%- assign subcollection = collections[subcollection_handle] -%}
+
+  {% assign current_item = '' %}
+  {% if subcollection == blank %}
+    {% assign custom_link_imgs = section.blocks | where: 'type', 'nav_item_img' | map: 'settings' %}
+    {% for item in custom_link_imgs %}
+      {% if item.level_1_title == link.title
+        and item.level_2_title == childlink.title
+        and item.level_3_title == grandchildlink.title
+      %}
+        {% assign current_item = item %}
+      {% endif %}
+    {% endfor %}
+  {% endif %}
+  {% if subcollection != blank %}
+    <img
+      src="{{ subcollection.featured_image | image_url }}"
+      width="{{ subcollection.featured_image.width }}"
+      height="{{ subcollection.featured_image.height }}"
+      alt="{{ grandchildlink.title | escape  }}"
+    >
+  {% else %}
+    <img
+      src="{{ current_item.image | image_url }}"
+      width="{{ current_item.image.width }}"
+      height="{{ current_item.image.height }}"
+      alt="{{ grandchildlink.title | escape  }}"
+    >
+  {% endif %}
+  <div class="sub-link-content">
+    <div class="sub-link-title custom-text-semibold">
+      {{ grandchildlink.title | escape }}
+      {% if subcollection.tags contains 'New Arrival' %}
+        <sup> {{ 'products.product.new' | t }} </sup>
+      {% endif %}
+    </div>
+    <div class="sub-link-desc">
+      {% if subcollection.metafields.custom.banner_describe %}
+        {{ subcollection.metafields.custom.banner_describe | escape }}
+      {% elsif current_item.description != blank %}
+        {{ current_item.description | escape }}
+      {% endif %}
+    </div>
+  </div>
+{% else %}
+  {{ grandchildlink.title }}
+{% endif %}

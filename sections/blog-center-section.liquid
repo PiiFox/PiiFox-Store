@@ -1,0 +1,268 @@
+<div class="blog-center-section-{{ section.id }}">
+  <div class="blog-center-section--wrapper page-width wow bounceInUp">
+    <h2 class="blog-center-section-title custom-txt-bold appear-delay{% cycle '','-1','-2','-3','-4' %}">
+      {{ section.settings.blog_center_title }}
+    </h2>
+    <div class="blog-center-section-content swiper-container">
+      <div class="blog-center-list swiper-wrapper">
+        {% for block in section.blocks %}
+          <div class="blog-center-item swiper-slide">
+            <a href="{{ block.settings.blog_article.url }}" target="_blank">
+              <div class="blog-center-item-image">
+                {% if block.settings.blog_article.image %}
+                  <img
+                    srcset="
+                      {{ block.settings.blog_article.image | image_url: width: 1000, format: 'webp' }} 1000w,
+                      {{ block.settings.blog_article.image | image_url: width: 500, format: 'webp' }} 500w,
+                      {{ block.settings.blog_article.image | image_url: width: 300, format: 'webp' }} 300w
+                    "
+                    sizes="(max-width: 768px) 700px, 1000px"
+                    width="1000"
+                    height="auto"
+                    loading="lazy"
+                    alt="{{ block.settings.blog_article.image.alt }}"
+                  >
+                {% else %}
+                  <img
+                    src="{{ block.settings.image | image_url: width: 1000, format: 'webp' }}"
+                    width="1000"
+                    height="auto"
+                    loading="lazy"
+                    alt="{{ block.settings.image.alt }}"
+                  >
+                {% endif %}
+              </div>
+              {% if block.settings.blog_article.title %}
+                <blockquote class="blog-center-item-title">
+                  {{ block.settings.blog_article.title }}
+                </blockquote>
+              {% else %}
+                <blockquote class="blog-center-item-title">
+                  {{ block.settings.title }}
+                </blockquote>
+              {% endif %}
+            </a>
+          </div>
+        {% endfor %}
+      </div>
+      <div class="swiper-button-prev">
+        <svg
+          class="group-hover/svg:scale-[1.3] transition-scale duration-300 "
+          xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+          fill="none"
+          version="1.1"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+        >
+          <g><g transform="matrix(-1,0,0,1,30.833984375,0)"><path d="M15.4169921875,6.166748046875C15.4169921875,6.564568046875,15.5750271875,6.9461080468750005,15.8563321875,7.227408046875L20.6290021875,12.000078046875L15.8563321875,16.772748046875C15.5750271875,17.054048046875,15.4169921875,17.435548046875,15.4169921875,17.833448046875C15.4169921875,18.661848046875,16.0885651875,19.333448046875,16.9169921875,19.333448046875C17.3148121875,19.333448046875,17.6963521875,19.175348046875,17.9776521875,18.894048046875L23.810982187500002,13.060738046875C24.0922921875,12.779438046875,24.2503221875,12.397908046875,24.2503221875,12.000078046875C24.2503221875,11.602258046875,24.0922921875,11.220728046875,23.810982187500002,10.939418046875L17.9776521875,5.106088046875C17.6963521875,4.824783046875,17.3148121875,4.666748046875,16.9169921875,4.666748046875C16.0885651875,4.666748046875,15.4169921875,5.338321046875,15.4169921875,6.166748046875Z" fill-rule="evenodd" fill="#FFFFFF" fill-opacity="1"></path></g></g>
+        </svg>
+      </div>
+      <div class="swiper-button-next">
+        <svg
+          class="group-hover/svg:scale-[1.3] transition-scale duration-300"
+          xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+          fill="none"
+          version="1.1"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+        >
+          <g><g><path d="M8.5830078125,6.166748046875C8.5830078125,6.564568046875,8.7410428125,6.9461080468750005,9.0223478125,7.227408046875L13.7950178125,12.000078046875L9.0223478125,16.772748046875C8.7410428125,17.054048046875,8.5830078125,17.435548046875,8.5830078125,17.833448046875C8.5830078125,18.661848046875,9.2545808125,19.333448046875,10.0830078125,19.333448046875C10.4808278125,19.333448046875,10.8623678125,19.175348046875,11.1436678125,18.894048046875L16.976997812500002,13.060738046875C17.2583078125,12.779438046875,17.4163378125,12.397908046875,17.4163378125,12.000078046875C17.4163378125,11.602258046875,17.2583078125,11.220728046875,16.976997812500002,10.939418046875L11.1436678125,5.106088046875C10.8623678125,4.824783046875,10.4808278125,4.666748046875,10.0830078125,4.666748046875C9.2545808125,4.666748046875,8.5830078125,5.338321046875,8.5830078125,6.166748046875Z" fill-rule="evenodd" fill="#FFFFFF" fill-opacity="1"></path></g></g>
+        </svg>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const nextEl = document.querySelector('.blog-center-section-{{ section.id }} .swiper-button-next');
+    const prevEl = document.querySelector('.blog-center-section-{{ section.id }} .swiper-button-prev');
+    const mobile = isMobile();
+    const feedbackListSwiper = new Swiper('.blog-center-section-{{ section.id }} .swiper-container', {
+      loop: true,
+      autoplay: {
+        delay: 5000,
+        disableOnInteraction: false,
+      },
+      navigation: {
+        nextEl: nextEl,
+        prevEl: prevEl,
+        enabled: mobile,
+      },
+      slidesPerView: 1.5,
+      spaceBetween: 10,
+      breakpoints: {
+        0: {
+          slidesPerView: 1.2,
+          spaceBetween: 10,
+        },
+        768: {
+          slidesPerView: 1.8,
+          spaceBetween: 20,
+        },
+      },
+    });
+    let resizeTimer;
+    window.addEventListener('resize', () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(() => {
+        feedbackListSwiper.update();
+      }, 500);
+    });
+  });
+</script>
+
+{% style %}
+  .blog-center-section-{{ section.id }} {
+      background-color: #fff;
+      padding: 4em 0;
+      overflow: hidden;
+  }
+  .blog-center-section-{{ section.id }} .blog-center-section--wrapper {
+      text-align: left;
+  }
+  .blog-center-section-{{ section.id }} .blog-center-section--wrapper .blog-center-section-title {
+      font-size: 2.4em;
+      font-weight: bold;
+  }
+  .blog-center-section-{{ section.id }} .blog-center-section--wrapper .blog-center-section-content {
+      width: 100%;
+      margin: 0 auto;
+      position: relative;
+  }
+  .blog-center-section-{{ section.id }} .blog-center-section--wrapper .blog-center-list {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      display: flex;
+  }
+  .blog-center-section-{{ section.id }} .blog-center-section--wrapper .blog-center-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      background: #fff;
+      border-radius: 1em;
+      box-shadow: 0 0px 10px rgba(0,0,0,0.1);
+      height: auto;
+      width: auto ;
+      flex-shrink: 0 ;
+      opacity: 1;
+      position: relative;
+  }
+  .blog-center-section-{{ section.id }} .blog-center-section--wrapper .blog-center-item > a {
+      position: relative;
+      display: inline-block;
+      width: 100%;
+      height: 100%;
+  }
+  .blog-center-section-{{ section.id }} .blog-center-section--wrapper .blog-center-item-image {
+      width: 100%;
+      aspect-ratio: 16/9;
+      overflow: hidden;
+      border-radius: 1em;
+  }
+  .blog-center-section-{{ section.id }} .blog-center-section--wrapper .blog-center-item-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+  }
+
+  .blog-center-section-{{ section.id }} .blog-center-section--wrapper .blog-center-item-title {
+      position: relative;
+      font-size: 1.8em;
+      line-height: 1.6;
+      text-align: left;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      padding: 0.5em;
+      text-align: center;
+      color: #fff;
+  }
+  /* 初始状态：所有 Swiper 容器隐藏，避免出现未格式化布局 */
+  .blog-center-section-{{ section.id }} .swiper-container {
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  /* Swiper 初始化完成后显示 */
+  .blog-center-section-{{ section.id }} .swiper-container.swiper-initialized {
+    visibility: visible;
+    opacity: 1;
+  }
+
+  .blog-center-section-{{ section.id }} .swiper-container .swiper-button-next,
+  .blog-center-section-{{ section.id }} .swiper-container .swiper-button-prev {
+    font-size: 1.2em;
+    width: 2.5em;
+    height: 2.5em;
+    display: inline-flex;
+    place-items: center;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.5);
+  }
+  .blog-center-section-{{ section.id }} .swiper-container .swiper-button-next[aria-disabled="true"],
+  .blog-center-section-{{ section.id }} .swiper-container .swiper-button-prev[aria-disabled="true"] {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    visibility: hidden;
+  }
+
+  @media screen and (max-width: 768px) {
+    .blog-center-section-{{ section.id }}  {
+        font-size: 0.8em;
+    }
+    .blog-center-section-{{ section.id }} .blog-center-section--wrapper .blog-center-item-title {
+        font-size: 1.2em;
+    }
+  }
+{% endstyle %}
+{% schema %}
+{
+  "name": "Blog Center Section",
+  "class": "blog-center-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "blog_center_title",
+      "label": "Blog Center Title"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "blog_item",
+      "name": "Blog Item",
+      "settings": [
+        {
+          "type": "article",
+          "id": "blog_article",
+          "label": "Blog Article"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Blog Center Section",
+      "settings": {}
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,288 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {}
+    },
+    "Topimg": {
+      "type": "support-img",
+      "settings": {
+        "divider": true,
+        "titleh1": "Product Videos of Features And Specs",
+        "titlep": "",
+        "aligntext": "textcenter",
+        "left": 50,
+        "top": 76,
+        "image": "shopify://shop_images/3f2d6330fc7638800ca3df988e492fb5_8d0a1adf-3bfb-40bc-a4bc-2de703d22ca0.jpg",
+        "mimage": "shopify://shop_images/3f2d6330fc7638800ca3df988e492fb5_c45fa13c-5610-4307-b921-5fca1376bb9f.jpg",
+        "custom_html": "<p class=\"page-width\">Kindly be informed that the features showcased in the video may not correspond with the actual product specs due to updates made to the model, specs on the detail pages shall prevail.</p>"
+      }
+    },
+    "91fc735c-fd8a-4db5-b5ec-102832488609": {
+      "type": "video-tab",
+      "blocks": {
+        "c9c7fd92-e11d-4a80-847c-4fd6bf502fd9": {
+          "type": "text",
+          "settings": {
+            "subtitle": "Sub Title",
+            "title": "CoreBook X Introduction",
+            "image": "shopify://shop_images/CoreBook_X_1_4924a15d-98bc-4380-8b4b-5139caf6fed0.png",
+            "link": "https://player.vimeo.com/video/813751215?h=5902ff53b4"
+          }
+        },
+        "62b7b08c-7387-45e3-827f-fad7d510fa18": {
+          "type": "text",
+          "settings": {
+            "subtitle": "Sub Title",
+            "title": "FreeBook Introduction",
+            "image": "shopify://shop_images/FreeBook_1.png",
+            "link": "https://player.vimeo.com/video/813751362?h=1379ef629a"
+          }
+        },
+        "1776c428-efe8-429b-a939-4d31f2cdf553": {
+          "type": "text",
+          "settings": {
+            "subtitle": "Sub Title",
+            "title": "GemiBook Pro Usage Scenario",
+            "image": "shopify://shop_images/GemiBook_Pro_eb86f8ee-14f7-46d5-b4b4-859c64e2425f.png",
+            "link": "https://player.vimeo.com/video/813751383?h=3d7f343f1d"
+          }
+        },
+        "1cbada1c-eabb-4ff1-9fcd-7eec1d36f045": {
+          "type": "text",
+          "settings": {
+            "subtitle": "Sub Title",
+            "title": "MiniBook X Features",
+            "image": "shopify://shop_images/MiniBook_X_1_8129a1a5-b264-41fe-b5eb-b23dcd60ab11.png",
+            "link": "https://player.vimeo.com/video/813751612?h=729a752b2f"
+          }
+        },
+        "527e3da8-9971-45fd-8750-fb471118e9d7": {
+          "type": "text",
+          "settings": {
+            "subtitle": "Sub Title",
+            "title": "Minibook X Usage Scenario",
+            "image": "shopify://shop_images/MiniBook_X_2_4707b42c-7e5f-461d-b7b9-355bdf089912.png",
+            "link": "https://player.vimeo.com/video/813751519?h=e69ae5da19"
+          }
+        },
+        "59b0f5eb-5631-4923-a0a8-4451fd3d6cf1": {
+          "type": "text",
+          "settings": {
+            "subtitle": "Sub Title",
+            "title": "Gemibook Usage Scenario",
+            "image": "shopify://shop_images/GemiBook_1.png",
+            "link": "https://player.vimeo.com/video/813751453?h=914cf24070"
+          }
+        },
+        "a460ced7-181a-4a03-976b-95c464dd57fa": {
+          "type": "text",
+          "settings": {
+            "subtitle": "Sub Title",
+            "title": "Gemibook XPro Introduction",
+            "image": "shopify://shop_images/GemiBook_XPro_1.png",
+            "link": "https://player.vimeo.com/video/813751399?h=9b4fd1b61c"
+          }
+        },
+        "15f4697d-60cc-4753-80a9-7debace7a6bd": {
+          "type": "text",
+          "settings": {
+            "subtitle": "Sub Title",
+            "title": "Corebook X Usage Scenario",
+            "image": "shopify://shop_images/CoreBook_X_2_5445693b-e41e-427d-b7d5-28a8e928f159.png",
+            "link": "https://player.vimeo.com/video/813751253?h=7864d866a7"
+          }
+        },
+        "cab6a911-2488-4b60-b109-858dfacf1859": {
+          "type": "text",
+          "settings": {
+            "subtitle": "Sub Title",
+            "title": "CoreBook X Features",
+            "image": "shopify://shop_images/CoreBook_X_3.png",
+            "link": "https://player.vimeo.com/video/813751234?h=1fe6f97b4b"
+          }
+        },
+        "c433c33f-9ec0-48c5-9043-aa9fce2f7091": {
+          "type": "text",
+          "settings": {
+            "subtitle": "Sub Title",
+            "title": "MiniBook X Mighty Yet Portable",
+            "image": "shopify://shop_images/MiniBook_X_3.png",
+            "link": "https://www.youtube.com/watch?v=XuqMRh4Tz4I&ab_channel=ChuwiGlobal"
+          }
+        }
+      },
+      "block_order": [
+        "c9c7fd92-e11d-4a80-847c-4fd6bf502fd9",
+        "62b7b08c-7387-45e3-827f-fad7d510fa18",
+        "1776c428-efe8-429b-a939-4d31f2cdf553",
+        "1cbada1c-eabb-4ff1-9fcd-7eec1d36f045",
+        "527e3da8-9971-45fd-8750-fb471118e9d7",
+        "59b0f5eb-5631-4923-a0a8-4451fd3d6cf1",
+        "a460ced7-181a-4a03-976b-95c464dd57fa",
+        "15f4697d-60cc-4753-80a9-7debace7a6bd",
+        "cab6a911-2488-4b60-b109-858dfacf1859",
+        "c433c33f-9ec0-48c5-9043-aa9fce2f7091"
+      ],
+      "settings": {
+        "collection": "laptop",
+        "title": "laptop",
+        "viewMore": true,
+        "moreURL": "shopify://pages/laptop-video-center"
+      }
+    },
+    "d6e1719c-c785-4c16-90ea-3b9eb46bc408": {
+      "type": "video-tab",
+      "blocks": {
+        "482e7af6-c9b2-4512-ae17-033463844750": {
+          "type": "text",
+          "settings": {
+            "subtitle": "Sub Title",
+            "title": "How can CoreBox support musicians?",
+            "image": "shopify://shop_images/CoreBox_1_3a81e245-aa8e-4c85-9c3c-c8a2cf3c7e7f.png",
+            "link": "https://www.youtube.com/watch?v=ER_LETxC0eY&ab_channel=ChuwiGlobal"
+          }
+        },
+        "template--16707878977767__d6e1719c-c785-4c16-90ea-3b9eb46bc408-16795596870d970df2-2": {
+          "type": "text",
+          "settings": {
+            "subtitle": "Sub Title",
+            "title": "HeroBox Introduction",
+            "image": "shopify://shop_images/HeroBox_1_0eb54500-5c70-4edc-a1a9-ccbafe18aa73.png",
+            "link": "https://player.vimeo.com/video/813751070?h=2fb70fdb44"
+          }
+        },
+        "template--16707878977767__d6e1719c-c785-4c16-90ea-3b9eb46bc408-16795596870d970df2-1": {
+          "type": "text",
+          "settings": {
+            "subtitle": "Sub Title",
+            "title": "LarkBox X Introduction",
+            "image": "shopify://shop_images/LarkBox_X_1_6238c27b-ae99-4947-b9a2-07cf1c991322.png",
+            "link": "https://player.vimeo.com/video/813751094?h=8136914a49"
+          }
+        },
+        "template--16707878977767__d6e1719c-c785-4c16-90ea-3b9eb46bc408-16795596870d970df2-0": {
+          "type": "text",
+          "settings": {
+            "subtitle": "Sub Title",
+            "title": "RzBox Introduction",
+            "image": "shopify://shop_images/RzBox_1_f5027b05-d322-4e97-81de-086c8e487e36.png",
+            "link": "https://player.vimeo.com/video/813751124?h=816e33d9d9"
+          }
+        }
+      },
+      "block_order": [
+        "482e7af6-c9b2-4512-ae17-033463844750",
+        "template--16707878977767__d6e1719c-c785-4c16-90ea-3b9eb46bc408-16795596870d970df2-2",
+        "template--16707878977767__d6e1719c-c785-4c16-90ea-3b9eb46bc408-16795596870d970df2-1",
+        "template--16707878977767__d6e1719c-c785-4c16-90ea-3b9eb46bc408-16795596870d970df2-0"
+      ],
+      "settings": {
+        "collection": "mini-pc",
+        "title": "mini-pc",
+        "viewMore": true,
+        "moreURL": "shopify://pages/mini-pc-video-center"
+      }
+    },
+    "332d96c6-8294-44f7-a624-d6e2749bb665": {
+      "type": "video-tab",
+      "blocks": {
+        "1a5a7b2c-b017-43f4-bc75-c6abcbfc73d4": {
+          "type": "text",
+          "settings": {
+            "subtitle": "Sub Title",
+            "title": "Ubook X Usage Scenario",
+            "image": "shopify://shop_images/UBook_X_1.png",
+            "link": "https://player.vimeo.com/video/813750779?h=45c2f9847e"
+          }
+        },
+        "1cdc708e-a421-44d2-a002-06dcc63ad5f3": {
+          "type": "text",
+          "settings": {
+            "subtitle": "Sub Title",
+            "title": "HiPad Max Introduction",
+            "image": "shopify://shop_images/Hipad_Max_1_84f83949-7d3b-405e-aba5-54344bcfee7e.png",
+            "link": "https://player.vimeo.com/video/813750820?h=5118dd2234"
+          }
+        },
+        "0960d14d-6d5e-4880-b50c-64fa5482ce9f": {
+          "type": "text",
+          "settings": {
+            "subtitle": "Sub Title",
+            "title": "HiPad Pro Introduction",
+            "image": "shopify://shop_images/Hipad_Pro_1_86eaabb0-3400-441d-9508-db473b672cf7.png",
+            "link": "https://player.vimeo.com/video/813750841?h=e5bbaaa675"
+          }
+        },
+        "template--16707878977767__332d96c6-8294-44f7-a624-d6e2749bb665-16795596870d970df2-2": {
+          "type": "text",
+          "settings": {
+            "subtitle": "Sub Title",
+            "title": "Hipad X Introduction",
+            "image": "shopify://shop_images/Hipad_X_1_7c022666-8ba5-474a-8a75-7b4b81b414f5.png",
+            "link": "https://player.vimeo.com/video/813750860?h=3a72a940d6"
+          }
+        },
+        "template--16707878977767__332d96c6-8294-44f7-a624-d6e2749bb665-16795596870d970df2-1": {
+          "type": "text",
+          "settings": {
+            "subtitle": "Sub Title",
+            "title": "HiPad XPro Introduction",
+            "image": "shopify://shop_images/Hipad_XPro_1_35b76b95-a232-4f5e-98c0-a861578d223b.png",
+            "link": "https://player.vimeo.com/video/813750881?h=8ea00722ad"
+          }
+        },
+        "template--16707878977767__332d96c6-8294-44f7-a624-d6e2749bb665-16795596870d970df2-0": {
+          "type": "text",
+          "settings": {
+            "subtitle": "Sub Title",
+            "title": "HiPad XPro Features",
+            "image": "shopify://shop_images/Hipad_XPro_2_f95d2045-8494-4afd-a853-8c3403127067.png",
+            "link": "https://player.vimeo.com/video/813750894?h=41342dd5fb"
+          }
+        },
+        "500daf2c-b459-4bff-8f04-52b858629bd8": {
+          "type": "text",
+          "settings": {
+            "subtitle": "Sub Title",
+            "title": "Hipad XPro Usage Scenario",
+            "image": "shopify://shop_images/Hipad_XPro_3.png",
+            "link": "https://www.youtube.com/watch?v=YLOPbTetNz0&t=3s&ab_channel=ChuwiGlobal"
+          }
+        }
+      },
+      "block_order": [
+        "1a5a7b2c-b017-43f4-bc75-c6abcbfc73d4",
+        "1cdc708e-a421-44d2-a002-06dcc63ad5f3",
+        "0960d14d-6d5e-4880-b50c-64fa5482ce9f",
+        "template--16707878977767__332d96c6-8294-44f7-a624-d6e2749bb665-16795596870d970df2-2",
+        "template--16707878977767__332d96c6-8294-44f7-a624-d6e2749bb665-16795596870d970df2-1",
+        "template--16707878977767__332d96c6-8294-44f7-a624-d6e2749bb665-16795596870d970df2-0",
+        "500daf2c-b459-4bff-8f04-52b858629bd8"
+      ],
+      "settings": {
+        "collection": "tablet",
+        "title": "tablet",
+        "viewMore": true,
+        "moreURL": "shopify://pages/tablet-video-center"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "Topimg",
+    "91fc735c-fd8a-4db5-b5ec-102832488609",
+    "d6e1719c-c785-4c16-90ea-3b9eb46bc408",
+    "332d96c6-8294-44f7-a624-d6e2749bb665"
+  ]
+}

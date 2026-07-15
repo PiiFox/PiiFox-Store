@@ -1,0 +1,64 @@
+{%- if section.settings.divider -%}<div class="section--divider">{%- endif -%}
+
+<div class="swiper_pro-image">
+  <div class="swiper prosSwiper">
+      <div class="swiper-wrapper">
+        {% for block in section.blocks %}
+        <div class="swiper-slide">
+          <img src="{{ block.settings.pic | img_url: '1000x' }}" />
+          <h2>{{ block.settings.title }}</h2>
+        </div>
+        {% endfor %}
+       
+      </div>
+      <div class="swiper-pagination"></div>
+    </div>
+
+   
+</div>
+{%- if section.settings.divider -%}</div>{%- endif -%}
+
+{% schema %}
+{
+  "name": "product image slide",
+  "class": "index-section",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "divider",
+      "label": "t:sections.featured-video.settings.divider.label",
+      "default": false
+    }
+  ],
+   "blocks": [
+    {
+      "type": "product-image",
+      "name": "product image",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "pic",
+          "label": "product image"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "product title"
+        }
+        
+      ]
+    }],
+  "presets": [
+    {
+      "name": "product image slide",
+       "blocks": [
+        {
+          "type": "product-image"
+        }
+        
+      ]
+    }
+  ]
+}
+{% endschema %}
+

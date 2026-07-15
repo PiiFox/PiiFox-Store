@@ -1,0 +1,47 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {}
+    },
+    "Topimg": {
+      "type": "support-img",
+      "settings": {
+        "divider": true,
+        "titleh1": "PIIFOX Download Center",
+        "titlep": "Find Manuals, Software, Firmware, and VIA JSON in one place",
+        "aligntext": "textcenter",
+        "left": 50,
+        "top": 30,
+        "image": "shopify://shop_images/2560_-800.jpg",
+        "mimage": "shopify://shop_images/banner768-500.jpg",
+        "custom_html": ""
+      }
+    },
+    "downloads_center_XyxjaN": {
+      "type": "downloads-center",
+      "name": "Downloads List",
+      "settings": {
+        "support_title": "Still need help?",
+        "support_desc": "Can't find the answer you need? Reach out to our support team.",
+        "support_btn_text": "Contact Support",
+        "support_btn_email": "service@piifox.com"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "Topimg",
+    "downloads_center_XyxjaN"
+  ]
+}

@@ -1,0 +1,531 @@
+
+<div class="container-help-center" data-section-id="{{ section.id }}">
+    <div class="grid">
+      <div class="grid__item medium-up--five-sixths medium-up--push-one-twelfth">
+        {%- assign title_words = page.title | split: '-' -%}
+        {%- assign title_words_1 = page.title | split: '|' -%}
+        <div class="support-breadcrumb-box">
+          <div class="support-breadcrumb page-width">
+            <div class="support-crumb"><a href="/">Home</a></div>
+            <div class="support-crumb"><a href="/pages/support-center">Support</a></div>
+            {% if title_words.size > title_words_1.size %}
+              <div class="support-crumb"><a href="#">{{ title_words | first }}</a></div>
+            {% else %}
+              <div class="support-crumb"><a href="#">{{ title_words_1 | first }}</a></div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="section-header text-center">
+      <h1 class="h2">{{ page.title }}</h1>
+    </div>
+<div class="container12 help-center page-width">
+  <div class="row">
+    <div class="accordion col-md-3 col-12" id="accordionExample">
+      <div class="help-center-menu">
+        <div class="card help-center-payment">
+          <div id="headingOne"><a class="item-content {% if page.url == '/pages/payment-policy' %}active{% endif %}" href="/pages/payment-policy#section-help-payment-methods"
+              data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+              <span>Payment Policy</span> <i class="icon iconfont icon-angledown"></i> </a></div>
+          <div id="collapseOne" class="collapse {% if page.url == '/pages/payment-policy' %}active{% endif %}" aria-labelledby="headingOne" data-parent="#accordionExample">
+            <ul class="sub-container">
+              <li class="sub-item"><a class="sub-item-content"
+                  href="#section-help-payment-methods"><span>Payment methods</span></a></li>
+              <li class="sub-item"><a class="sub-item-content"
+                  href="#section-help-payment-faq"><span>FAQ</span></a></li>
+              <li class="sub-item"><a class="sub-item-content"
+                  href="#section-help-payment-coupon"><span>Coupon</span></a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="card help-center-shipping">
+          <div id="headingTwo"><a class="item-content {% if page.url == '/pages/shipping-policy' %}active{% endif %}" href="/pages/shipping-policy#section-help-shipping-rules"
+              data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+              <span>Shipping and Delivery</span> <i class="icon iconfont icon-angledown"></i> </a></div>
+          <div id="collapseTwo" class="collapse {% if page.url == '/pages/shipping-policy' %}active{% endif %}" aria-labelledby="headingTwo" data-parent="#accordionExample">
+            <ul class="sub-container">
+              <li class="sub-item"><a class="sub-item-content"
+                  href="#section-help-shipping-rules"><span>Order Processing</span></a></li>
+              <li class="sub-item"><a class="sub-item-content"
+                  href="#section-help-shipping-time"><span>Delivery Time</span></a></li>
+              <li class="sub-item"><a class="sub-item-content"
+                  href="#section-help-shipping-fee"><span>Shipping Fee</span></a>
+              </li>
+              <li class="sub-item"><a class="sub-item-content"
+                  href="#section-help-shipping-tariff"><span>Order Information</span></a></li>
+              <li class="sub-item"><a class="sub-item-content"
+                  href="#section-help-shipping-tracking"><span>Order Tracking</span></a></li>
+              <li class="sub-item"><a class="sub-item-content"
+                  href="#section-help-shipping-faq"><span>FAQ</span></a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="card help-center-aftersales">
+          <div id="headingThree"><a class="item-content {% if page.url == '/pages/aftersales-policy' %}active{% endif %}" href="/pages/aftersales-policy#help-center-aftersales-refund"
+              data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+              <span>Aftersales Service</span> <i class="icon iconfont icon-angledown"></i> </a></div>
+          <div id="collapseThree" class="collapse {% if page.url == '/pages/aftersales-policy' %}active{% endif %}" aria-labelledby="headingThree" data-parent="#accordionExample">
+            <ul class="sub-container">
+              <li class="sub-item"><a class="sub-item-content"
+                  href="#help-center-aftersales-refund"><span>Refund Policy</span></a></li>
+              <li class="sub-item"><a class="sub-item-content"
+                  href="#help-center-aftersales-replacement"><span>Replacement Policy</span></a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="card help-center-warranty">
+          <div id="headingFour"><a class="item-content {% if page.url == '/pages/warranty-policy' %}active{% endif %}" href="/pages/warranty-policy"> <span>Warranty Policy</span>
+            </a></div>
+        </div>
+        <div class="card help-center-privacy">
+          <div id="headingFive"><a class="item-content {% if page.url == '/pages/privacy-policy' %}active{% endif %}" href="/pages/privacy-policy"> <span>Privacy Policy</span> </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="list-container col-md-9 col-12">
+      {{ page.content }}
+    </div>
+  </div>
+</div>
+</div>
+<script>
+    var classname = "help-center-{{ page.url | split: '/' | last | split: '-' | first }}",
+      t = $(".help-center-section .help-center-title");
+
+    function nowscroll() {
+      var dt = $(document).scrollTop();
+      if ($(window).width() > 750) {
+        for (i = 0; i < t.length; i++) {
+          if (t.eq(i).offset().top - 1 <= dt) {
+            $("." + classname + " .sub-item-content").removeClass("active");
+            $("." + classname + " .sub-item-content").eq(i).addClass("active");
+          }
+        }
+      }
+    }
+    $(function() {
+      nowscroll();
+      if(window.matchMedia('(max-width: 750px)').matches){
+        let leftOffset = $('.' + classname).offset().left;
+        console.log(leftOffset)
+        document.querySelector('.help-center-menu').scroll(leftOffset, 0)
+      }
+    })
+    
+    $(window).scroll(function (event) {
+      nowscroll();
+    });
+</script>
+<style>
+  .page-width--narrow {
+    max-width: 1480px;
+  }
+
+  .layout-main .container-fluid {
+    padding-right: 0px;
+    padding-left: 0px;
+    background-color: #f0f1f2;
+  }
+
+  .layout-main .container-fluid .con-page-box {
+    padding-top: 0
+  }
+
+  .con-page-box .container12 {
+    max-width: 1200px;
+    margin-right: auto;
+    margin-left: auto;
+    padding-top: 50px;
+  }
+
+  .help-center ul {
+    list-style: none;
+    margin-left: 0;
+  }
+
+  .help-center .row {
+    margin-left: 0;
+    margin-right: 0;
+    position: relative;
+    display: flex;
+  }
+
+  .help-center .row .col-md-3 {
+    padding: 24px 0;
+    max-width: calc(25% - 16px);
+    margin-right: 16px;
+    background-color: #fff;
+  }
+
+  .help-center .card {
+    border-radius: 0;
+    margin-bottom: 0;
+    box-shadow: none;
+    border: 0;
+  }
+
+  .help-center .card .item-content,
+  .sub-container .sub-item-content {
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    font-size: 14px;
+    line-height: 24px;
+  }
+
+  .help-center .card .item-content {
+    padding: 12px 24px;
+    margin-bottom: 0;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .help-center .card .item-content:not([data-toggle="collapse"]).active {
+    color: #333;
+    background: #f7f9fa;
+    border-right: 2px solid #3b3e40;
+  }
+
+  .item-content .icon-angledown {
+    transition: transform .5s ease;
+  }
+
+  .item-content.active .icon-angledown {
+    transform: rotate(180deg);
+    transition: transform .5s ease;
+  }
+
+  .help-center .sub-container {
+    margin-bottom: 0;
+    padding-left: 0;
+    margin-left: 0;
+    list-style: none;
+  }
+
+  .help-center .sub-container .sub-item-content {
+    padding: 12px 24px 12px 48px;
+    display: block;
+  }
+
+  .help-center .sub-container .sub-item-content.active {
+    border-right: 2px solid #3b3e40;
+    background: #f7f9fa;
+    color: #333;
+  }
+
+  .help-center .row .col-md-3 a:hover {
+    background: #f7f9fa;
+    color: #333;
+    text-decoration: none;
+  }
+
+  .help-center .sub-container .sub-item-content:active,
+  .help-center .sub-container .sub-item-content:focus {
+    color: #333;
+  }
+
+  .help-center .list-container {
+    background-color: #fff;
+    padding: 48px;
+    flex: 1;
+  }
+
+  .help-center-title h2 {
+    font-size: 28px;
+  }
+
+  .help-center .divider {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .help-center .hr-h-80 {
+    height: 80px;
+  }
+
+  .help-center .hr-h-35 {
+    height: 35px;
+  }
+
+  .help-center .divider:before {
+    content: " ";
+    position: absolute;
+    left: 0;
+    top: 50%;
+    right: 0;
+    height: 0;
+    border-top: 1px solid #f0f1f2;
+    transform: translateY(-50%);
+  }
+
+  .help-center .list-container .help-center-title {
+    font-size: 24px;
+    line-height: 32px;
+    font-weight: 500;
+    margin-bottom: 30px
+  }
+
+  .help-center .text-section p,
+  .help-center .text-section li {
+    font-size: 16px;
+    margin-bottom: 0;
+    font-weight: 400;
+  }
+
+  .help-center ol {
+    margin-left: 0;
+  }
+
+  .help-center .text-section a {
+    color: #44a8f2;
+  }
+
+  .help-center .help-center-fqa {
+    margin-top: 30px;
+  }
+
+  .help-center .help-center-fqa li {
+    counter-increment: faq;
+    position: relative;
+    margin-top: 20px;
+  }
+
+  .help-center .help-center-fqa .help-center-fqa-content {
+    vertical-align: top;
+    display: inline-block;
+    width: calc(100% - 20px);
+  }
+
+  .help-center .help-center-fqa .help-center-fqa-content:before {
+    content: counter(faq)". ";
+    position: absolute;
+    font-size: 14px;
+    line-height: 24px;
+    font-weight: 500;
+  }
+
+  .help-center .help-center-fqa p {
+    padding-left: 24px;
+  }
+
+  .help-center .help-center-fqa .help-center-question {
+    font-weight: 500;
+    font-size: 16px;
+    color: #3b3e40;
+    line-height: 24px;
+  }
+
+  .help-center .help-center-fqa .help-center-answer {
+    color: #707473;
+    font-size: 14px;
+    margin-top: 10px;
+  }
+
+  .help-center .help-center-menu {
+    position: sticky;
+    top: 44px;
+  }
+
+  .product-section-m {
+    display: none;
+  }
+
+  .help-center .icon {
+    width: auto;
+    height: auto;
+  }
+  .help-center .collapse.active {
+    display: block;
+  }
+
+  .help-center .warranty-policy-center-container {
+    border: 1px solid #ebe5e5;
+    border-radius: 12px;
+    box-shadow: 5px 5px 5px #00000011;
+  }
+
+  .help-center .warranty-policy-center-container ul.warranty-policy-center-list {
+    list-style: disc;
+    list-style-position: inside;
+    padding: 1rem;
+  }
+
+  .help-center .warranty-policy-center-container ul.warranty-policy-center-list .warranty-policy-center-item {
+    padding: 0.8rem 0;
+    border-bottom: 1px dashed #ebe5e5;
+    position: relative;
+    /* display: flex; */
+  }
+
+  .help-center .warranty-policy-center-container ul.warranty-policy-center-list .warranty-policy-center-item .warranty-policy-center-link {
+    display: inline-block;
+    width: calc(100% - 25px);
+  }
+
+  .help-center .warranty-policy-center-container ul.warranty-policy-center-list .warranty-policy-center-link::after {
+    content: '>';
+    position: absolute;
+    width: 20px;
+    right: 0;
+    left: unset;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  @media screen and (max-width: 800px) {
+    .help-center .row .col-md-3 {
+      max-width: calc(35% - 16px);
+    }
+  }
+  @media screen and (max-width: 750px) {
+    .help-center .list-container {
+      padding: 0px;
+    }
+
+    .help-center .divider {
+      display: none;
+    }
+    .help-center .collapse.active {display: none;}
+    .help-center .col-md-3 {display: block;}
+    .help-center .icon {display: none;}
+
+    .help-center-title h2 {
+      font-size: 20px;
+      line-height: 32px;
+      margin-bottom: 0;
+    }
+
+    .container12.help-center.page-width {padding: 0;}
+
+    .help-center .list-container .help-center-title {
+      font-size: 18px;
+      line-height: 24px;
+      margin-bottom: 0;
+      padding: 16px;
+      background-color: #f0f1f2;
+    }
+
+    .help-center .row {flex-direction: column;}
+
+    .help-center .row .col-md-3 {max-width: 100%;margin-right: 0;padding: 0;}
+    .help-center .help-center-menu {display: flex;overflow-x: scroll;}
+    .help-center .help-center-menu::-webkit-scrollbar {display: none;}
+    .help-center .card .item-content {border-bottom: 3px solid transparent;}
+    .help-center .card .item-content.active{border-color: var(--colorBtnPrimary); }
+    .help-center .card .item-content:not([data-toggle="collapse"]).active{border-right: 0px; }
+
+    .help-center .help-center-section {
+      padding: 16px;
+    }
+
+    .help-center .help-center-section .help-center-title {
+      background-color: transparent;
+      padding: 0px;
+      margin-bottom: 10px;
+    }
+
+    .product-section-m {
+      display: block;
+      background-color: #000;
+      background-repeat: no-repeat;
+      padding: 16px
+    }
+
+    .product-section-m h2 {
+      margin-bottom: 0;
+    }
+
+    .product-section-m a {
+      color: #fff;
+      display: flex;
+      align-items: center;
+    }
+  }
+  
+</style>
+<style>
+  .container-help-center {
+    background: #f0f1f2;
+  }
+  .main-content{
+    margin-top: 0;
+  }
+  a.item-content, a.sub-item-content,a span {
+    white-space: nowrap;
+    display: inline-block;
+    width: 100%;
+  }
+  .help-center .help-center-menu {
+    top: 80px;
+  }
+  .help-center .icon {
+    width: 20px;
+    height: 20px;
+    background: #888;
+    position: relative;
+    right: -20px;
+    clip-path: polygon( 20% 10%, 60% 50%, 20% 90%, 20% 80%, 50% 50%, 20% 20%);
+  }
+  .rte-setting a:not(.rte__image):not(.btn):not(.spr-summary-actions-newreview), .rte a:not(.rte__image):not(.btn):not(.spr-summary-actions-newreview) {
+    border-bottom: none;
+  }
+  .rte-setting a:not(.btn):not(.spr-summary-actions-newreview):after, .rte a:not(.btn):not(.spr-summary-actions-newreview):after {
+    border-bottom: none;
+  }
+  .item-content.active .icon-angledown {
+    transform: rotate(90deg);
+  }
+  .collapse {
+    display: none;
+  }
+  .collapse.show {
+    display: block;
+  }
+  .section-header {
+    margin-bottom: 0;
+    margin-top: 2rem;
+  }
+  .con-page-box .container12 {
+    padding-top: 0;
+  }
+  .medium-up--five-sixths {
+    width: 100%;
+    background: #f0f1f2;
+  }
+  .con-page-box .container12 {
+    max-width: unset;
+    margin: unset;
+  }
+  .support-breadcrumb-box {
+      background: #fff;
+    }
+    .support-breadcrumb-box .support-breadcrumb {
+      margin: 0 auto;
+      display: flex;
+      padding: 0 3rem;
+    }
+    .support-breadcrumb-box .support-crumb a {
+      line-height: 2.8rem;
+    }
+    .support-breadcrumb-box .support-crumb a:hover {
+      color: #2673ff;
+    }
+    .support-breadcrumb-box .support-crumb:after {
+      content: ">";
+      padding: 0 0.5rem;
+    }
+    .support-breadcrumb-box .support-crumb:last-child:after {
+      content: "";
+    }
+</style>
+
+{% schema %}
+  {
+    "name": "Help Center",
+    "settings": []
+  }
+{% endschema %}
+
+{% javascript %}
+{% endjavascript %}

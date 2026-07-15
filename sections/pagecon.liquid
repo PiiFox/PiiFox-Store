@@ -1,0 +1,30 @@
+<div class="page-width{% if section.settings.max_width %} page-width--narrow{% endif %} Specs filtr-item" data-cat="Specs">
+    {{ section.settings.page.content }}
+  </div>
+{% schema %}
+{
+  "name": "page",
+  "class": "index-section",
+  "settings": [
+     {
+     "type": "checkbox",
+      "id": "max_width",
+      "label": "t:sections.product-full-width.settings.max_width.label",
+      "info": "t:sections.product-full-width.settings.max_width.info",
+      "default": true
+    },
+    {
+      "type": "page",
+      "id": "page",
+      "label": "page link"
+    }     
+  ],
+  
+  "presets": [
+    {
+      "name": "page"
+      
+    }
+  ]
+}
+{% endschema %}

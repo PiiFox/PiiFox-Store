@@ -1,0 +1,208 @@
+<div class="page-faq-section-{{ section.id }} wow bounceInUp">
+  <div class="page-faq-section--wrapper page-width page-width--narrow FAQ">
+    {%- if section.settings.title != blank -%}
+      <header class="page-faq-section-section-header">
+        <h2 class="page-faq-section-title custom-txt-bold appear-delay{% cycle '','-1','-2','-3','-4' %}">
+          {{ section.settings.title | escape }}
+        </h2>
+      </header>
+    {%- endif -%}
+
+    {%- if section.blocks.size > 0 -%}
+
+      <div class="page-faq-section-content" data-collection="{{ collection.tags }}">
+        {%- for block in section.blocks -%}
+          {% assign enable_faq_item = true %}
+          {% if request.page_type == 'collection' %}
+            {% assign enable_faq_item = false %}
+            {% if collection.tags contains 'keyboards' and block.settings.enable_keyboards == true %}
+              {% assign enable_faq_item = true %}
+            {% elsif collection.tags contains 'keycaps' and block.settings.enable_keycaps == true %}
+              {% assign enable_faq_item = true %}
+            {% elsif collection.tags contains 'switches' and block.settings.enable_switches == true %}
+              {% assign enable_faq_item = true %}
+            {% elsif block.settings.enable_all_collection == true %}
+              {% assign enable_faq_item = true %}
+            {% endif %}
+          {% endif %}
+          {% if enable_faq_item %}
+            <div class="faq-item" {{ block.shopify_attributes }}>
+              <button
+                type="button"
+                class="collapsible-trigger collapsible-trigger--inline collapsible--auto-height text-left"
+                aria-controls="FAQ-content-{{ block.id }}"
+              >
+                <span>{{ block.settings.title }}</span>
+                {%- render 'collapsible-icons-alt', no_circle: true -%}
+              </button>
+              <div id="FAQ-content-{{ block.id }}" class="collapsible-content collapsible-content--all">
+                <div class="collapsible-content__inner collapsible-content__inner--faq rte">
+                  <p>{{ block.settings.text }}</p>
+                </div>
+              </div>
+            </div>
+          {% endif %}
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
+    {%- if section.blocks.size == 0 -%}
+      <div class="placeholder-noblocks">
+        {{ 'home_page.onboarding.no_content' | t }}
+      </div>
+    {%- endif -%}
+  </div>
+</div>
+
+{% style %}
+  .page-faq-section-{{ section.id }} {
+      padding: 4em 0;
+      background-color: #fff;
+
+  }
+  .page-faq-section-{{ section.id }} .page-faq-section-title {
+      font-size: 2.5em;
+      font-weight: bold;
+      text-align: center;
+      margin-bottom: 30px;
+  }
+  .page-faq-section-{{ section.id }} .page-faq-section-content {
+      font-size: 1.2em;
+      padding-top: 2em;
+  }
+  .page-faq-section-{{ section.id }} .faq-item {
+      border-bottom: 1px solid rgba(173, 173, 173, 0.1);
+  }
+  .page-faq-section-{{ section.id }} .collapsible-trigger--inline .collapsible-trigger__icon {
+      right: 0;
+      left: unset;
+  }
+  .page-faq-section-{{ section.id }} button.collapsible-trigger--inline {
+      width: 100%;
+      padding: 1em;
+      font-size: 1.2em;
+      font-weight: 500;
+  }
+  .page-faq-section-{{ section.id }} .collapsible-content__inner--faq {
+      padding: 1em;
+  }
+  .page-faq-section-{{ section.id }} .collapsible-content__inner--faq p {
+      margin-bottom: 0;
+  }
+
+  @media screen and (max-width: 768px) {
+      .page-faq-section-{{ section.id }} {
+          font-size: 0.8em;
+      }
+  }
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "t:sections.faq.name",
+  "class": "index-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "t:sections.faq.settings.title.label",
+      "default": "FAQs"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "rich-text",
+      "name": "t:sections.faq.blocks.rich_text.name",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "t:sections.faq.blocks.rich_text.settings.title.label",
+          "default": "Rich text"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "t:sections.faq.blocks.rich_text.settings.text.label",
+          "default": "<p>Use this section for any descriptive text you need to fill out your pages or to add introductory headings between other blocks.</p>"
+        },
+        {
+          "type": "select",
+          "id": "align_text",
+          "label": "t:sections.faq.blocks.rich_text.settings.align_text.label",
+          "default": "left",
+          "options": [
+            {
+              "value": "left",
+              "label": "t:sections.faq.blocks.rich_text.settings.align_text.options.left.label"
+            },
+            {
+              "value": "center",
+              "label": "t:sections.faq.blocks.rich_text.settings.align_text.options.center.label"
+            },
+            {
+              "value": "right",
+              "label": "t:sections.faq.blocks.rich_text.settings.align_text.options.right.label"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "question",
+      "name": "t:sections.faq.blocks.question.name",
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "enable_keyboards",
+          "label": "Enable Keyboards",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "enable_keycaps",
+          "label": "Enable Keycaps",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "enable_switches",
+          "label": "Enable Switches",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "enable_all_collection",
+          "label": "Enable All Collections",
+          "default": false
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "t:sections.faq.blocks.question.settings.title.label",
+          "default": "Frequently asked question"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "t:sections.faq.blocks.question.settings.text.label",
+          "default": "<p>Use this text to answer questions in as much detail as possible for your customers.</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.faq.presets.faq.name",
+      "blocks": [
+        {
+          "type": "question"
+        },
+        {
+          "type": "question"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,260 @@
+{%- if section.settings.divider -%}<div class="section--divider">{%- endif -%}
+
+<div class="page-width-fills">
+<!--   视频 -->
+  <div class="video_wrapper">
+  {%- if section.settings.bg_video_url != blank -%}
+ <video muted autoplay="autoplay" loop="loop" 
+   src="{{ section.settings.bg_video_url }}" uk-video="autoplay: inview" preload="metadata" uk-cover="" aria-label="" 
+   poster="" style="width:100%">
+
+  </video>
+  {%- endif -%}
+  </div>
+
+<!--   内容 -->
+  <div class="vd_content">
+    <h3 class="e3_vd-title1 wow fadeInUp">{{ section.settings.title1 }}</h3>
+    <div class="vd_center wow fadeInUp">
+      <a href="{{ section.settings.link1 }}">buy now</a>
+    </div>
+    
+    <div class="e3_con2 wow fadeInUp">
+      <span class="tm-title-1">{{ section.settings.title2 }}</span>
+      <div class="tm-title-2">{{ section.settings.subtitle2 }}</div>
+    </div>
+
+    <div class="e3_con3">
+      <div class="tm-title-3 wow fadeInUp">{{ section.settings.title3 }}</div>
+    </div>
+
+    <div class="e3_con4">
+      <div class="tm-title-1 wow fadeInUp">{{ section.settings.title4 }}</div>
+      <ul class="con4_list">
+    
+        {% for block in section.blocks %}
+            {%- case block.type -%}
+         {%- when 'power' -%}
+        <li class="wow fadeInUp">
+          <p>{{ block.settings.icon }}</p>
+          <var></var>
+          <div>
+            <span class="tm-title-1 tms_title">{{ block.settings.tm1 }}</span>
+            <span class="tms_subtitle">{{ block.settings.tm2 }}</span>
+          </div>
+        </li>
+              {%- endcase -%}
+        {% endfor %}
+        
+      </ul>
+    </div>
+
+    <div class="e3_con2 wow fadeInUp">
+      <div class="tm-title-1">{{ section.settings.title5 }}</div>
+      <div class="tm-title-2">{{ section.settings.subtitle5 }}</div>
+    </div>
+
+    <div class="e3_con2 wow fadeInUp">
+       <div class="tm-title-1">{{ section.settings.title6 }}</div>
+       <div class="tm-title-2">{{ section.settings.subtitle6 }}</div>
+    </div>
+
+    <div class="e3_con2 presad wow fadeInUp">
+      <div class="sbsna_sub">{{ section.settings.title7 }}</div>
+      <div class="tm-title-1">{{ section.settings.subtitle7 }}</div>
+      <div class="process_sec">
+        {% for block in section.blocks %}
+             {%- case block.type -%}
+         {%- when 'progress' -%}
+        <div class="e3-position-relative e3-first-column">
+              <div class="e3-grid 3e-grid-small e3-flex-middle tm-progress" uk-grid="">
+                <span class="tm-year tm-year-color">{{ block.settings.year }}</span>
+                <div class="e3-width-5-6 e3-first-column" style="width:{{ block.settings.width }}%">
+                  <div class="tm-progress-container tm-progress-container-1"></div>
+                </div>
+                <div class="e3-width-1">
+                  <div class="e3-flex e3-flex-between">
+                    <span class="e3-margin-small-left@m">{{ block.settings.bottom }}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+               {%- endcase -%}
+      {% endfor %}
+       
+      </div>
+    </div>
+  </div>
+</div>
+
+{%- if section.settings.divider -%}</div>{%- endif -%}
+
+{% schema %}
+{
+  "name": "local video bg",
+  "class": "index-sections",
+  "settings": [
+   
+    {
+      "type": "text",
+      "id": "bg_video_url",
+      "label": "t:sections.featured-video.settings.video_url.label"
+      
+    },
+    {
+      "type": "checkbox",
+      "id": "divider",
+      "label": "t:sections.featured-video.settings.divider.label",
+      "default": false
+    },
+    {
+          "type": "text",
+          "id": "title1",
+          "label": "title1"
+        },
+        {
+          "type": "url",
+          "id": "link1",
+          "label": "btn link1"
+        },
+        {
+          "type": "text",
+          "id": "title2",
+          "label": "title2"
+        },
+        {
+          "type": "text",
+          "id": "subtitle2",
+          "label": "subtitle2"
+        },
+        {
+          "type": "text",
+          "id": "title3",
+          "label": "title3"
+        },
+        {
+          "type": "text",
+          "id": "title4",
+          "label": "title4"
+        },
+        {
+          "type": "text",
+          "id": "title5",
+          "label": "title5"
+        },
+        {
+          "type": "text",
+          "id": "subtitle5",
+          "label": "subtitle5"
+        },
+        {
+          "type": "text",
+          "id": "title6",
+          "label": "title6"
+        },
+        {
+          "type": "text",
+          "id": "subtitle6",
+          "label": "subtitle6"
+        },
+        {
+          "type": "text",
+          "id": "title7",
+          "label": "title7"
+        },
+        {
+          "type": "text",
+          "id": "subtitle7",
+          "label": "subtitle7"
+        }
+  ],
+   "blocks": [
+    {
+      "type": "power",
+      "name": "power",
+      "settings": [
+        {
+          "type": "html",
+          "id": "icon",
+          "label": "icon"
+        },
+        {
+          "type": "text",
+          "id": "tm1",
+          "label": "tm1"
+        },
+        {
+          "type": "text",
+          "id": "tm2",
+          "label": "tm2"
+        }
+      ]
+    },
+     {
+      "type": "progress",
+      "name": "progress",
+      "settings": [
+        {
+          "type": "text",
+          "id": "year",
+          "label": "year"
+        },
+        {
+          "type": "range",
+          "id": "width",
+          "label": "progress",
+          "default": 80,
+          "min": 0,
+          "max": 100,
+          "step": 10,
+          "unit": "%"
+        },
+        {
+          "type": "text",
+          "id": "bottom",
+          "label": "small text"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "local video bg",
+       "blocks": [
+        {
+          "type": "power"
+        },
+         {
+          "type": "progress"
+        }
+        
+      ]
+    }
+  ]
+}
+{% endschema %}
+  <script src="{{ 'jquery.js' | asset_url }}"></script> 
+
+<script>
+  var vtopss = $(".page-width-fills").offset().top;
+$(window).scroll(function(){
+ var headtsss = $(window).scrollTop();
+        
+          if(headtsss>vtopss){
+             $(".page-width-fills .video_wrapper").addClass("sticky-fixeds");
+          }
+            
+  else{
+    $(".page-width-fills .video_wrapper").removeClass("sticky-fixeds");
+  }
+})
+  var presad = $(".presad").offset().top-300;
+$(window).scroll(function(){
+if( $(window).scrollTop()>presad){
+  $('.presad').addClass("tm-active");
+}
+else{
+   $('.presad').removeClass("tm-active");
+}
+})
+</script>

@@ -1,0 +1,767 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "23e7f471-8853-4933-b850-986da236297a": {
+      "type": "homepage_banner",
+      "blocks": {
+        "product_brxGaC": {
+          "type": "product",
+          "settings": {
+            "image": "shopify://shop_images/PIIFOX_LUNA_Grid98_Mechanical_Keyboard_banner.jpg",
+            "image_mobile": "shopify://shop_images/PIIFOX_LUNA_Grid98_Mechanical_Keyboard_M_banner.jpg",
+            "product": "piifox-luna-grid98-mechanical-keyboard",
+            "series_title": "LUNA",
+            "title": "<div style=\"color:#FFFFFF\">Grid98 <sup style=\"color:#FFFFFF\"></sup>\n</div>",
+            "subheading": "98-Key Tri-Mode Mechanical Keyboard",
+            "show_price": false,
+            "text_color": "#ffffff",
+            "nav_text_color": "#ffffff",
+            "h_align": "right",
+            "v_align": "center",
+            "txt_align": "right",
+            "mobile_v_align": "top",
+            "link_text": "Shop Now",
+            "btn_text_color": "#ffffff",
+            "btn_bg_color": "#105f3f",
+            "btn_padding": "0.6em 1em"
+          }
+        },
+        "product_fk7aYU": {
+          "type": "product",
+          "settings": {
+            "image": "shopify://shop_images/DEF68_HE_pro_banner.png",
+            "image_mobile": "shopify://shop_images/DEF68_HE_pro_banner_m.png",
+            "product": "forx-defender68-he-pro-magnetic-keyboard",
+            "series_title": "FORX",
+            "title": "<div style=\"color:#BF15FF\">DEFENDER 68 HE <sup style=\"color:#FFFE1C\">Pro</sup>\n</div>",
+            "subheading": "CNC Aluminum × Carbon Fiber. Flagship Control.",
+            "show_price": false,
+            "text_color": "#ffffff",
+            "nav_text_color": "#ffffff",
+            "h_align": "right",
+            "v_align": "center",
+            "txt_align": "right",
+            "mobile_v_align": "top",
+            "link_text": "Shop Now",
+            "btn_text_color": "#fffe1c",
+            "btn_bg_color": "#bf15ff",
+            "btn_padding": "0.6em 1em"
+          }
+        },
+        "product_BjE6jA": {
+          "type": "product",
+          "settings": {
+            "image": "shopify://shop_images/DEF68_banner.png",
+            "image_mobile": "shopify://shop_images/DEF68_banner_m.png",
+            "product": "forx-defender68-he-magnetic-keyboard",
+            "series_title": "FORX",
+            "title": "Defender 68 HE",
+            "subheading": "8KHz Magnetic Response. One Step Faster.",
+            "show_price": false,
+            "text_color": "#ffffff",
+            "nav_text_color": "#ffffff",
+            "h_align": "left",
+            "v_align": "center",
+            "txt_align": "left",
+            "mobile_v_align": "top",
+            "link_text": "Shop Now",
+            "btn_text_color": "#ffffff",
+            "btn_bg_color": "#2390ff",
+            "btn_padding": "0.6em 1em"
+          }
+        },
+        "product_NMg6gA": {
+          "type": "product",
+          "settings": {
+            "image": "shopify://shop_images/luna75_banner.png",
+            "image_mobile": "shopify://shop_images/luna75_banner_m.png",
+            "product": "luna-muse75-pro-mechanical-keyboard",
+            "series_title": "LUNA",
+            "title": "Muse 75<sup style=\"color:#76FF80 \">Pro</sup>",
+            "subheading": "75% Tri-Mode Mechanical Keyboard",
+            "show_price": false,
+            "text_color": "#ffffff",
+            "nav_text_color": "#ffffff",
+            "h_align": "right",
+            "v_align": "center",
+            "txt_align": "right",
+            "mobile_v_align": "top",
+            "link_text": "Shop Now",
+            "btn_text_color": "#000000",
+            "btn_bg_color": "#76ff80",
+            "btn_padding": "0.6em 1em"
+          }
+        },
+        "product_e8DMB9": {
+          "type": "product",
+          "settings": {
+            "image": "shopify://shop_images/FORX_Final75_HE_banner.png",
+            "image_mobile": "shopify://shop_images/FORX_Final75_HE_banner_m.png",
+            "product": "forx-final75-he-magnetic-keyboard",
+            "series_title": "FORX",
+            "title": "Final75 HE",
+            "subheading": "75% Compact Magnetic Gaming Keyboard",
+            "show_price": false,
+            "text_color": "#ffffff",
+            "nav_text_color": "#ffffff",
+            "h_align": "right",
+            "v_align": "center",
+            "txt_align": "right",
+            "mobile_v_align": "top",
+            "link_text": "Shop Now",
+            "btn_text_color": "#ffffff",
+            "btn_bg_color": "#ee0000",
+            "btn_padding": "0.6em 1em"
+          }
+        },
+        "product_WGtri6": {
+          "type": "product",
+          "settings": {
+            "image": "shopify://shop_images/HERBARY.png",
+            "image_mobile": "shopify://shop_images/HERBARY-m.png",
+            "product": "herbary-cherry-profile-keycap-set",
+            "series_title": "",
+            "title": "HERBARY",
+            "subheading": "130-Key 5-Sided Dye-Sub Keycap Set",
+            "show_price": false,
+            "text_color": "#456232",
+            "nav_text_color": "#456232",
+            "h_align": "left",
+            "v_align": "center",
+            "txt_align": "left",
+            "mobile_v_align": "top",
+            "link_bg_image": "shopify://shop_images/btn-bg.png",
+            "link_text": "Explore  Keycaps",
+            "btn_text_color": "#ffffff",
+            "btn_bg_color": "#000000",
+            "btn_padding": "0.6em 2em 0.6em 0.8em"
+          }
+        },
+        "product_BeqKU3": {
+          "type": "product",
+          "disabled": true,
+          "settings": {
+            "image": "shopify://shop_images/DASHBOARD-BLUE.png",
+            "image_mobile": "shopify://shop_images/DASHBOARD-BLUE-m.png",
+            "product": "dashboard-blue-cherry-profile-keycap-set",
+            "series_title": "",
+            "title": "DASHBOARD-BLUE",
+            "subheading": "138-Key 5-Sided Dye-Sub Keycap Set",
+            "show_price": false,
+            "text_color": "#638d9c",
+            "nav_text_color": "#638d9c",
+            "h_align": "left",
+            "v_align": "center",
+            "txt_align": "left",
+            "mobile_v_align": "top",
+            "link_text": "Explore Keycaps",
+            "btn_text_color": "#ffffff",
+            "btn_bg_color": "#a5c3cf",
+            "btn_padding": "0.6em 1em"
+          }
+        },
+        "normal_rbRVBb": {
+          "type": "normal",
+          "settings": {
+            "little_title": "",
+            "title": "",
+            "alt": "",
+            "subheading": "",
+            "custom_context": "",
+            "h_align": "center",
+            "v_align": "center",
+            "txt_align": "center",
+            "mobile_v_align": "top",
+            "text_color": "#29334b",
+            "nav_text_color": "#29334b",
+            "image": "shopify://shop_images/24H-MART.png",
+            "image_mobile": "shopify://shop_images/24H-MART-m.png",
+            "link": "shopify://products/24h-mart-cherry-profile-keycap-set",
+            "link_text": "",
+            "btn_text_color": "#ffffff",
+            "btn_bg_color": "#b6656d",
+            "btn_padding": "0.6em 1em"
+          }
+        }
+      },
+      "block_order": [
+        "product_brxGaC",
+        "product_fk7aYU",
+        "product_BjE6jA",
+        "product_NMg6gA",
+        "product_e8DMB9",
+        "product_WGtri6",
+        "product_BeqKU3",
+        "normal_rbRVBb"
+      ],
+      "custom_css": [
+        ".block-title sup {font-size: 0.4em; top: -1.2em; padding: 0 0.2em; line-height: 1.1em; display: inline-block; height: 1.3em; margin-left: 0.2em;}"
+      ],
+      "settings": {
+        "divider": false,
+        "aspect_ratio": "192/80",
+        "mobile_aspect_ratio": "768/500",
+        "autoplay": true,
+        "autoplay_speed": 5
+      }
+    },
+    "col2_txt_section_RFrVGf": {
+      "type": "col2-txt-section",
+      "blocks": {
+        "feature_item_pHQkXV": {
+          "type": "feature_item",
+          "settings": {
+            "feature_item_title": "Sate your style",
+            "feature_item_context": "Make every setup feel like yours."
+          }
+        },
+        "feature_item_4gLket": {
+          "type": "feature_item",
+          "settings": {
+            "feature_item_title": "Feel the performance",
+            "feature_item_context": "Smooth. Fast. Comfortable."
+          }
+        },
+        "feature_item_APcm6H": {
+          "type": "feature_item",
+          "settings": {
+            "feature_item_title": "Quality You Can Trust",
+            "feature_item_context": "Tested for everyday use."
+          }
+        }
+      },
+      "block_order": [
+        "feature_item_pHQkXV",
+        "feature_item_4gLket",
+        "feature_item_APcm6H"
+      ],
+      "name": "Col2 Txt Section",
+      "settings": {
+        "title": "Type your style"
+      }
+    },
+    "collection_list_LPzqx3": {
+      "type": "collection-list",
+      "blocks": {
+        "collection_dgEgp4": {
+          "type": "collection",
+          "settings": {
+            "collection": "new-arrivals",
+            "collection_title": "New arrivals"
+          }
+        },
+        "collection_KMnRdc": {
+          "type": "collection",
+          "settings": {
+            "collection": "best-sellers",
+            "collection_title": "Best Sellers"
+          }
+        },
+        "collection_aCcJcd": {
+          "type": "collection",
+          "disabled": true,
+          "settings": {
+            "collection": "deals",
+            "collection_title": "Deals"
+          }
+        },
+        "collection_K8zLam": {
+          "type": "collection",
+          "disabled": true,
+          "settings": {
+            "collection": "recommended",
+            "collection_title": "Recommended"
+          }
+        }
+      },
+      "block_order": [
+        "collection_dgEgp4",
+        "collection_KMnRdc",
+        "collection_aCcJcd",
+        "collection_K8zLam"
+      ],
+      "name": "Collection List Section",
+      "settings": {
+        "title": "Discover What's Popular on PIIFOX"
+      }
+    },
+    "main_collection_list_tAJGQJ": {
+      "type": "main-collection-list",
+      "blocks": {
+        "collection_wyacq7": {
+          "type": "collection",
+          "settings": {
+            "collection": "keyboards",
+            "cover_image": "shopify://shop_images/37efe26d5b548dfbbb336d3c655a770a.jpg",
+            "cover_image_m": "shopify://shop_images/37efe26d5b548dfbbb336d3c655a770a_a3797839-5436-4acf-ab6f-19ec815f2367.jpg",
+            "collection_title": "Keyboards"
+          }
+        },
+        "collection_NeL9xF": {
+          "type": "collection",
+          "settings": {
+            "collection": "keycaps",
+            "cover_image": "shopify://shop_images/8ec6848585de83611ee764cfa45c5f68_215d3fba-6ff2-45e4-9dd9-aeb64d959838.jpg",
+            "cover_image_m": "shopify://shop_images/8ec6848585de83611ee764cfa45c5f68_b4109303-452f-4a68-b119-60818ba6a54d.jpg",
+            "collection_title": "Keycaps"
+          }
+        },
+        "collection_Ax8BCa": {
+          "type": "collection",
+          "settings": {
+            "collection": "switches",
+            "cover_image": "shopify://shop_images/2b8608a79cf0d7cc63e7a6866811edaa.jpg",
+            "cover_image_m": "shopify://shop_images/2b8608a79cf0d7cc63e7a6866811edaa_7b4b6346-a61a-41a4-884f-b7cca85fa098.jpg",
+            "collection_title": "Switches"
+          }
+        },
+        "collection_iYdex4": {
+          "type": "collection",
+          "settings": {
+            "collection": "mice",
+            "cover_image": "shopify://shop_images/118493700f7e3293efadf6b957758203_8a9c4b66-45cc-410a-9db5-bb0c838a9c6a.jpg",
+            "cover_image_m": "shopify://shop_images/118493700f7e3293efadf6b957758203_0ef842c9-042c-4868-896f-7812d2d89fcb.jpg",
+            "collection_title": "Mice"
+          }
+        },
+        "collection_gFK3Wa": {
+          "type": "collection",
+          "settings": {
+            "collection": "accessories",
+            "cover_image": "shopify://shop_images/3_acfe87dd-5c72-4a71-b279-a4e78fb3b21d.jpg",
+            "cover_image_m": "shopify://shop_images/05c749914ceb6f0e401d50aac1cec636.jpg",
+            "collection_title": "Accessories"
+          }
+        }
+      },
+      "block_order": [
+        "collection_wyacq7",
+        "collection_NeL9xF",
+        "collection_Ax8BCa",
+        "collection_iYdex4",
+        "collection_gFK3Wa"
+      ],
+      "name": "Main Collection List",
+      "settings": {
+        "title": "SHOP BY CATEGORY"
+      }
+    },
+    "single_page_width_banner_ihTf8b": {
+      "type": "single-page-width-banner",
+      "blocks": {
+        "single_page_width_banner_btfwM4": {
+          "type": "single_page_width_banner",
+          "settings": {
+            "banner": "shopify://shop_images/20260626-163954.jpg",
+            "m_banner": "shopify://shop_images/20260626-164003.jpg",
+            "banner_title": "Smart Keys.Nice Life.",
+            "sub_title": "Keycaps Made for Your Daily Setup.",
+            "context": "Premium PBT keycaps designed to bring personality, comfort, and style to every keystroke.",
+            "btn_link": "shopify://collections",
+            "btn_bg": "shopify://shop_images/about_us_btn.png",
+            "btn_label": "Explore Keycaps"
+          }
+        }
+      },
+      "block_order": [
+        "single_page_width_banner_btfwM4"
+      ],
+      "disabled": true,
+      "name": "Single Page Width Banner",
+      "settings": {}
+    },
+    "about_us_section_nGTcfQ": {
+      "type": "about-us-section",
+      "blocks": {
+        "con2_content_JR4TqN": {
+          "type": "con2_Content",
+          "settings": {
+            "subtitle": "Where <b>performance</b> meets <b>personality</b>",
+            "title": "YOUR SETUP. YOUR STYLE.",
+            "context": ""
+          }
+        },
+        "con1_video_UEfMHp": {
+          "type": "con1_video",
+          "settings": {
+            "video": "shopify://files/videos/about-us.mp4",
+            "video_m": "shopify://files/videos/about-us-m.mp4",
+            "video_thumbnail": "shopify://shop_images/about-us-thumbnail.jpg"
+          }
+        },
+        "con3_video_97YpPF": {
+          "type": "con3_video",
+          "settings": {
+            "video_thumbnail": "shopify://shop_images/about-us-bg-thumbnail.jpg"
+          }
+        },
+        "con4_video_QkDTQG": {
+          "type": "con4_video",
+          "settings": {
+            "video_thumbnail": "shopify://shop_images/app_logo.png",
+            "context": "To become a <b>new-generation keyboard brand</b> where performance meets design and desk culture.",
+            "btn_label": "See Brand Story"
+          }
+        },
+        "con4_content_aA4f3D": {
+          "type": "con4_content",
+          "disabled": true,
+          "settings": {
+            "block1": "<b>120+</b> Countries &amp; Regions",
+            "block2": "<b>30</b> Subsidiaries",
+            "block3": "<b>13</b> Years of Innovation",
+            "block4": "<b>22</b> Global Service Stations",
+            "block5": "<b>5M+</b> Trusted Global Users",
+            "block6": "<b>847</b> Patents"
+          }
+        }
+      },
+      "block_order": [
+        "con2_content_JR4TqN",
+        "con1_video_UEfMHp",
+        "con3_video_97YpPF",
+        "con4_video_QkDTQG",
+        "con4_content_aA4f3D"
+      ],
+      "name": "About Us Section",
+      "settings": {
+        "about_us_title": ""
+      }
+    },
+    "joinus_section_YB8Mm3": {
+      "type": "joinus_section",
+      "name": "Join Us Section",
+      "settings": {
+        "joinus_image": "shopify://shop_images/ChatGPT_Image_2026_7_8_12_46_34_1.png",
+        "banner_title": "JOIN OUR DISCORD COMMUNITY",
+        "sub_title": "PIIFOX Community",
+        "context": "Get early access to drops, setup inspiration, support, giveaways, and real-time chatwith fellow keyboard fans.",
+        "btn_link": "https://discord.gg/u7tQGZe3A",
+        "btn_bg": "shopify://shop_images/join_us_btn.png",
+        "btn_label": "Join Discord"
+      }
+    },
+    "policy_list_section_pP8Ewa": {
+      "type": "policy-list-section",
+      "blocks": {
+        "policy_item_UPE3Bb": {
+          "type": "policy_item",
+          "settings": {
+            "icon": "shopify://shop_images/policy-icon1-b.png",
+            "title": "SECURE & FAST DELIVERY",
+            "description": ""
+          }
+        },
+        "policy_item_rqPUHt": {
+          "type": "policy_item",
+          "settings": {
+            "icon": "shopify://shop_images/policy-icon2-b.png",
+            "title": "1-YEAR FREE WARRANTY",
+            "description": ""
+          }
+        },
+        "policy_item_F7zQnH": {
+          "type": "policy_item",
+          "settings": {
+            "icon": "shopify://shop_images/policy-icon3-b.png",
+            "title": "30-Day Return",
+            "description": ""
+          }
+        },
+        "policy_item_pd9zy6": {
+          "type": "policy_item",
+          "settings": {
+            "icon": "shopify://shop_images/policy-icon4-b.png",
+            "title": "MEMBERSHIP BENEFITS",
+            "description": ""
+          }
+        },
+        "policy_item_BgYiD4": {
+          "type": "policy_item",
+          "disabled": true,
+          "settings": {
+            "icon": "shopify://shop_images/web-icon-headset.svg",
+            "title": "BUY NOW PAY LATER",
+            "description": ""
+          }
+        }
+      },
+      "block_order": [
+        "policy_item_UPE3Bb",
+        "policy_item_rqPUHt",
+        "policy_item_F7zQnH",
+        "policy_item_pd9zy6",
+        "policy_item_BgYiD4"
+      ],
+      "name": "Policy List Section",
+      "settings": {}
+    },
+    "as_seen_on_section_VfrbVB": {
+      "type": "as-seen-on-section",
+      "blocks": {
+        "media_item_PKz9b8": {
+          "type": "media_item",
+          "settings": {
+            "icon": "shopify://shop_images/qwe1.png",
+            "context": "\"Built for users who want more than a basic keyboard — PIIFOX combines performance, comfort, and visual style.\""
+          }
+        },
+        "media_item_qQPCbz": {
+          "type": "media_item",
+          "settings": {
+            "icon": "shopify://shop_images/456.png",
+            "context": "\"A thoughtful balance of speed, feel, and everyday usability.\""
+          }
+        },
+        "media_item_UEKyWJ": {
+          "type": "media_item",
+          "settings": {
+            "icon": "shopify://shop_images/qwe2.png",
+            "context": "\"Clean layouts, reliable performance, and a design language made for modern desk setups.\""
+          }
+        },
+        "media_item_czwErw": {
+          "type": "media_item",
+          "disabled": true,
+          "settings": {
+            "icon": "shopify://shop_images/as-seen-on-4.png",
+            "context": "“Team Fosi does clear, controlled, clean-as-a-whistle ‘hi-fi’ like a dream”"
+          }
+        }
+      },
+      "block_order": [
+        "media_item_PKz9b8",
+        "media_item_qQPCbz",
+        "media_item_UEKyWJ",
+        "media_item_czwErw"
+      ],
+      "name": "As Seen On Section",
+      "settings": {
+        "as_seen_on_title": "As Seen On"
+      }
+    },
+    "feedback_list_section_UM7Y6f": {
+      "type": "feedback-list-section",
+      "blocks": {
+        "feedback_item_3TyKip": {
+          "type": "feedback_item",
+          "settings": {
+            "image": "shopify://shop_images/20260709-153006.jpg",
+            "context": "Fast response, smooth control, and a solid feel for gaming.",
+            "author_name": "Daniel K.",
+            "series": "HE KEYBOARD"
+          }
+        },
+        "feedback_item_Abm8zz": {
+          "type": "feedback_item",
+          "settings": {
+            "image": "shopify://shop_images/ChatGPT_Image_2026_6_10_17_45_32.png",
+            "context": "Switching between devices is easy, and the typing feel is excellent.",
+            "author_name": "Emily S",
+            "series": "KEYBOARD"
+          }
+        },
+        "feedback_item_Vy6T9x": {
+          "type": "feedback_item",
+          "settings": {
+            "image": "shopify://shop_images/ChatGPT_Image_2026_6_11_18_13_02_4.png",
+            "context": "Great sound, smooth typing, and a layout I can use every day.",
+            "author_name": "Luis R.",
+            "series": "MECHANICAL KEYBOARD"
+          }
+        },
+        "feedback_item_yL7WbW": {
+          "type": "feedback_item",
+          "settings": {
+            "image": "shopify://shop_images/ChatGPT_Image_2026_6_11_18_13_03_6.png",
+            "context": "It looks clean on my desk and feels comfortable through long work sessions.",
+            "author_name": "Mina J.",
+            "series": "DESK SETUP"
+          }
+        },
+        "feedback_item_JzdJQc": {
+          "type": "feedback_item",
+          "settings": {
+            "image": "shopify://shop_images/0000_2024_03_02_14_15_IMG_0320.jpg",
+            "context": "Crisp legends, nice texture, and a colorway that brings the board to life.",
+            "author_name": "Ethan W.",
+            "series": "KEYCAPS"
+          }
+        },
+        "feedback_item_gh4npG": {
+          "type": "feedback_item",
+          "settings": {
+            "image": "shopify://shop_images/20260611164729_27_11.jpg",
+            "context": "Smooth surface, stable grip, and a perfect match for my setup.",
+            "author_name": "Nathan W.",
+            "series": "Mice"
+          }
+        }
+      },
+      "block_order": [
+        "feedback_item_3TyKip",
+        "feedback_item_Abm8zz",
+        "feedback_item_Vy6T9x",
+        "feedback_item_yL7WbW",
+        "feedback_item_JzdJQc",
+        "feedback_item_gh4npG"
+      ],
+      "name": "Feedback List Section",
+      "settings": {
+        "enable_author": true,
+        "feedback_list_title": "What Our Users Say",
+        "feedback_list_subtitle": "Real Setups, Real Feedback.",
+        "feedback_list_context": "",
+        "feedback_list_note": "All reviews are from verified PIIFOX customers. | Updated May 30, 2026"
+      }
+    },
+    "blog_center_section_qL7Qfw": {
+      "type": "blog-center-section",
+      "blocks": {
+        "blog_item_RRCMcF": {
+          "type": "blog_item",
+          "settings": {
+            "blog_article": "news/the-art-of-workspace-curation-how-to-design-a-desk-setup-that-inspires-focus",
+            "title": ""
+          }
+        },
+        "blog_item_CxRwpy": {
+          "type": "blog_item",
+          "settings": {
+            "blog_article": "news/from-feel-to-sound-the-advanced-guide-to-tuning-and-modding-your-piifox-keyboard-1",
+            "title": ""
+          }
+        },
+        "blog_item_6pFdgQ": {
+          "type": "blog_item",
+          "settings": {
+            "blog_article": "news/find-your-rhythm-how-to-match-your-piifox-keyboard-to-your-desk-setup-scenario",
+            "title": ""
+          }
+        },
+        "blog_item_Pqh7Wd": {
+          "type": "blog_item",
+          "settings": {
+            "blog_article": "news/from-dancing-fingertips-the-ultimate-beginners-guide-to-piifox-mechanical-keyboards",
+            "title": ""
+          }
+        }
+      },
+      "block_order": [
+        "blog_item_RRCMcF",
+        "blog_item_CxRwpy",
+        "blog_item_6pFdgQ",
+        "blog_item_Pqh7Wd"
+      ],
+      "name": "Blog Center Section",
+      "settings": {
+        "blog_center_title": "Blog Center"
+      }
+    },
+    "d1067f4b-b19f-43f3-a994-5755b880a327": {
+      "type": "slideshow",
+      "blocks": {
+        "template--17260442714388__d1067f4b-b19f-43f3-a994-5755b880a327-16712720944c4345db-0": {
+          "type": "image",
+          "settings": {
+            "top_subheading": "",
+            "title": "About PiiFox",
+            "title_size": 48,
+            "tcolor": "",
+            "subheading": "Innovation, Technology, High Quality And Cost-effective",
+            "link": "shopify://pages/about-us",
+            "link_text": "Learn More>",
+            "link_2": "",
+            "link_text_2": "",
+            "color_accent": "#ec6521",
+            "text_align": "vertical-center horizontal-left",
+            "overlay_opacity": 0,
+            "focal_point": "center center"
+          }
+        }
+      },
+      "block_order": [
+        "template--17260442714388__d1067f4b-b19f-43f3-a994-5755b880a327-16712720944c4345db-0"
+      ],
+      "disabled": true,
+      "custom_css": [
+        "@media (min-width: 648px) and (max-width: 1440px) {.index-section--hero .slideshow-wrapper > div {height: auto; background-size: auto auto; } .hero__subtitle {font-size: 1rem; }}",
+        ".hero__text-wrap .hero__link .btn {background: transparent; color: #ec6521; text-decoration: underline; text-underline-offset: 4px;}",
+        ".hero__subtitle {font-size: 1.2rem;}",
+        "@media screen and (max-width: 768px) {.hero__text-content.vertical-center {vertical-align: unset; } .hero__text-content .hero__link {margin-top: 0; } .hero__text-content {padding: 20px 0; }}"
+      ],
+      "settings": {
+        "section_height": "natural",
+        "mobile_height": "auto",
+        "parallax": false,
+        "style": "bars",
+        "autoplay": false,
+        "autoplay_speed": 5
+      }
+    },
+    "0d562896-99f8-401d-ac8a-3209b635eb7f": {
+      "type": "Stay-in-Touch",
+      "disabled": true,
+      "settings": {
+        "color_text": "#ffffff",
+        "title": "Stay in Touch",
+        "text": "<p>Stay up to date on PiiFox product news and offers</p>"
+      }
+    },
+    "9dad0aa8-758a-4a98-9a5f-6085668c1cec": {
+      "type": "newsletter",
+      "blocks": {
+        "template--17260442714388__9dad0aa8-758a-4a98-9a5f-6085668c1cec-1673807482644184bd-0": {
+          "type": "title",
+          "settings": {
+            "title": "Sign up and save"
+          }
+        },
+        "template--17260442714388__9dad0aa8-758a-4a98-9a5f-6085668c1cec-1673807482644184bd-1": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Subscribe to get special offers, free giveaways, and once-in-a-lifetime deals.</p>"
+          }
+        },
+        "template--17260442714388__9dad0aa8-758a-4a98-9a5f-6085668c1cec-1673807482644184bd-2": {
+          "type": "form",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "template--17260442714388__9dad0aa8-758a-4a98-9a5f-6085668c1cec-1673807482644184bd-0",
+        "template--17260442714388__9dad0aa8-758a-4a98-9a5f-6085668c1cec-1673807482644184bd-1",
+        "template--17260442714388__9dad0aa8-758a-4a98-9a5f-6085668c1cec-1673807482644184bd-2"
+      ],
+      "disabled": true,
+      "settings": {
+        "color_background": "#f9f9f9",
+        "color_text": "#1c1d1d"
+      }
+    }
+  },
+  "order": [
+    "23e7f471-8853-4933-b850-986da236297a",
+    "col2_txt_section_RFrVGf",
+    "collection_list_LPzqx3",
+    "main_collection_list_tAJGQJ",
+    "single_page_width_banner_ihTf8b",
+    "about_us_section_nGTcfQ",
+    "joinus_section_YB8Mm3",
+    "policy_list_section_pP8Ewa",
+    "as_seen_on_section_VfrbVB",
+    "feedback_list_section_UM7Y6f",
+    "blog_center_section_qL7Qfw",
+    "d1067f4b-b19f-43f3-a994-5755b880a327",
+    "0d562896-99f8-401d-ac8a-3209b635eb7f",
+    "9dad0aa8-758a-4a98-9a5f-6085668c1cec"
+  ]
+}

@@ -1,0 +1,264 @@
+ {%- assign products_count = section.settings.products_count -%}
+
+{%- if section.settings.divider -%}<div class="section--divider">{%- endif -%}
+
+<div
+  id="CollectionSection-{{ section.id }}"
+  data-section-id="{{ section.id }}"
+  data-section-type="collection-grid">
+  {%- if section.settings.title != blank -%}
+    <div class="page-width">
+      <div class="section-header{% if section.settings.view_all %}{% unless settings.type_headers_align_text %} section-header--with-link{% endunless %}{% endif %}">
+        <h2 class="section-header__title">
+          {{ section.settings.title }}
+        </h2>
+      </div>
+    </div>
+  {%- endif -%}
+
+  <div class="{% if section.settings.mobile_scrollable %} page-width--flush-small{% endif %}">
+    <div class="tabs-nav__item-list">
+       {%- for block in section.blocks -%}
+          {%- capture on_boarding_title -%}{{ 'general.onboarding.collection_title' | t }} {{ forloop.index }}{%- endcapture -%}
+  
+          <a href="javascript:;" class="tabs-nav__item {% if forloop.index==1 %} active {% endif %}">
+            {{- block.settings.label | default: block.settings.collection.title | default: on_boarding_title -}}
+          </a>
+        {%- endfor -%}
+    </div>
+      {% style %}
+        @media screen and (max-width: 768px) {
+          #CollectionSection-{{ section.id }} .view_features-product {
+            padding: 0;
+          }
+        }
+      {% endstyle %}
+  <div class="featured-collections fc_va">
+        {%- for block in section.blocks -%}
+         
+          {%- assign collection = block.settings.collection -%}
+    <div{% if section.settings.mobile_scrollable %} class="grid-overflow-wrapper"{% endif %}>
+          <div class="view_features-product">
+          {% style %}
+            #CollectionSection-{{ section.id }} .vfp_info {
+              padding-left: 0;
+              left: 10vw;
+              width: 35%;
+            }
+            #CollectionSection-{{ section.id }} .vfp_info.h-align-right{
+              padding-left: 0;
+              left: 40vw;
+            }
+            #CollectionSection-{{ section.id }} .pc-hide { display: none; }
+            #CollectionSection-{{ section.id }} .mobile-hide {display: block;}
+            @media screen and (max-width: 768px) {
+              #CollectionSection-{{ section.id }} .vfp_info.h-align-right{padding-left: 0;left: 0;}
+              #CollectionSection-{{ section.id }} .pc-hide {display: block;}
+              #CollectionSection-{{ section.id }} .mobile-hide {display: none;}
+              #CollectionSection-{{ section.id }} .vfp_img img{height: 100%;}
+              #CollectionSection-{{ section.id }} .vfp_info{justify-content:unset;padding-left: 0rem;left: 0;width: 100%;padding-top: 2rem;align-items: center;width: 100%;}
+              #CollectionSection-{{ section.id }} .vfp_info > p {font-size: 1.1em; text-align:center; }
+              #CollectionSection-{{ section.id }} .vfp_info h2 {font-size: 1.4rem;}
+              #CollectionSection-{{ section.id }} a.btn.f_shopnow{padding:5px 10px;}
+            }
+            #CollectionSection-{{ section.id }} .f_price .f_price--original { text-decoration: line-through; }
+          {% endstyle %}
+          <div class="vfp_info h-align-{{ block.settings.h_align }}">
+            <h2 class="notranslate">{{ block.settings.product_title }}</h2>
+            <p>{{ block.settings.product_subtitle }}</p>
+            <div class="f_price">
+              <span class="f_price--price notranslate">{{ block.settings.product.price  | money }}</span>
+              <span class="f_price--original" >{{  block.settings.product.compare_at_price | money }}</span>
+            </div>
+            <a href="{{ block.settings.product.url }}" class="btn f_shopnow">{{ 'general.custom.buy_now' | t }}</a>
+          </div>
+          <div class="vfp_img">
+            <img class="mobile-hide" src="{{ block.settings.feature_proimg | img_url:"master" }}" />
+            <img class="pc-hide" src="{{ block.settings.feature_mobile_proimg | img_url:"master" }}" />
+          </div>
+          </div>
+       <div class="pc_show">
+      <div class="grid grid--uniform"{% if section.settings.mobile_scrollable %} data-aos="overflow__animation"{% endif %}>
+        
+        {%- liquid
+          assign grid_item_width = 'small--one-half medium-up--one-third'
+
+          case products_count
+            when 1
+              assign grid_item_width = ''
+            when 2
+              assign grid_item_width = 'medium-up--one-half'
+            when 3
+              assign grid_item_width = 'small--one-half medium-up--one-third'
+            when 4
+              assign grid_item_width = 'small--one-half medium-up--one-quarter'
+            when 5
+              assign grid_item_width = 'small--one-half medium-up--one-fifth'
+          endcase
+        -%}
+          {% assign sales_products = collection.products | where: 'available' %}
+          {% assign out_products = collection.products | where: 'available', false %}
+          {% assign all_collection_products = sales_products | concat: out_products %}
+          {%- for product in all_collection_products limit: section.settings.products_count -%}
+            {%- render 'product-grid-item-collection',
+              product: product,
+              collection: collection,
+              quick_shop_enable: settings.quick_shop_enable
+            -%}
+          {%- endfor -%}
+
+         <div class="grid__item grid-product small--one-half medium-up--one-quarter aos-init aos-animate grid__item_more" data-aos="row-of-4">
+           <a href="{{ collection.url }}">
+             <span>{{ 'general.custom.button_label' | t }} &gt;</span>
+             <img src="{{ block.settings.viewAll_image | img_url:"master" }}" />
+             <div>{{ block.settings.view_all }}</div>
+           </a>
+         </div>
+
+      </div>
+    </div>
+       <div class="mobile_show">
+           <div class="swiper featureListsSwiper">
+                <div class="swiper-wrapper">
+                  {% assign sales_products = collection.products | where: 'available' %}
+                  {% assign out_products = collection.products | where: 'available', false %}
+                  {% assign all_collection_products = sales_products | concat: out_products %}
+                   {%- for product in all_collection_products limit: section.settings.products_count -%}
+                      <div class="swiper-slide swiper_featust">
+                        {%- render 'product-grid-item-collection',
+                            product: product,
+                            collection: collection,
+                            quick_shop_enable: settings.quick_shop_enable
+                        -%}
+                      </div>
+                    {%- endfor -%} 
+                </div>
+             <div class="swiper-button-next ans">
+               <svg class="flickity-button-icon" viewBox="0 0 100 100">
+                 <path d="M 10,50 L 60,100 L 70,90 L 30,50  L 70,10 L 60,0 Z" class="arrow" transform="translate(100, 100) rotate(180) "></path>
+               </svg>
+             </div>
+      <div class="swiper-button-prev aps"><svg class="flickity-button-icon" viewBox="0 0 100 100"><path d="M 10,50 L 60,100 L 70,90 L 30,50  L 70,10 L 60,0 Z" class="arrow"></path></svg></div>
+          
+           </div>
+         </div>
+  </div>
+ {%- endfor -%}
+      </div>
+    
+  </div>
+</div>
+
+{%- if section.settings.divider -%}</div>{%- endif -%}
+
+{% schema %}
+{
+  "name": "collection Tab All",
+  "class": "index-section",
+  "settings": [
+   {
+      "type": "text",
+      "id": "title",
+      "label": "Head"
+    },
+    {
+      "type": "checkbox",
+      "id": "mobile_scrollable",
+      "label": "t:sections.featured-collection.settings.mobile_scrollable.label",
+      "default": true
+    },
+     {
+      "type": "range",
+      "id": "products_count",
+      "label": "t:sections.featured-collection.settings.per_row.label",
+      "default": 5,
+      "min": 1,
+      "max": 10,
+      "step": 1
+    },
+   
+    {
+      "type": "checkbox",
+      "id": "divider",
+      "label": "t:sections.featured-collection.settings.divider.label",
+      "default": false
+    }
+  ],
+  "presets": [
+    {
+      "name": "collection Tab All"
+    }
+  ],
+  "blocks": [
+    {
+       "type": "collection",
+      "name": "Collection",
+      "settings": [
+         {
+      "type": "text",
+      "id": "title",
+      "label": "t:sections.featured-collection.settings.title.label",
+      "default": "Featured collection"
+    },
+        {
+      "type": "text",
+      "id": "view_all",
+      "label": "View All",
+      "default": "View All"
+    },
+         {
+          "type": "product",
+          "id": "product",
+          "label": "product"
+        },
+        {
+          "type": "select",
+          "id": "h_align",
+          "label": "Horizontal Align",
+          "default": "left",
+          "options": [
+            {
+              "label": "left",
+              "value": "left"
+            },{
+              "label": "right",
+              "value": "right"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "product_title",
+          "label": "feature product title"
+        },
+        {
+          "type": "text",
+          "id": "product_subtitle",
+          "label": "feature product subtitle"
+        },
+         {
+          "type": "image_picker",
+          "id": "feature_proimg",
+          "label": "feature product image"
+        },
+        {
+          "type": "image_picker",
+          "id": "feature_mobile_proimg",
+          "label": "feature mobile product image"
+        },
+     {
+          "type": "collection",
+          "id": "collection",
+          "label": "Collection"
+        },
+        {
+          "type": "image_picker",
+          "id": "viewAll_image",
+          "label": "more product image"
+        }
+  
+      ]
+    }
+  ]
+}
+{% endschema %}

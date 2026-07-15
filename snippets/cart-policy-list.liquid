@@ -1,0 +1,75 @@
+{% style %}
+  .payment-policy-list-container {
+    padding: 1em 0;
+  }
+  .payment-policy-list-container .payment-policy-list-title {
+    font-size: 1.4em;
+    margin-bottom: 0.5em;
+  }
+  .payment-policy-list-container .payment-policy-list {
+  }
+  .payment-policy-list-container .payment-policy-list .payment-policy-item {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 0.2em 0;
+  }
+  .payment-policy-list-container .payment-policy-item .payment-policy-item-icon img {
+    height: 1.2em;
+    width: unset;
+    margin-right: 0.5em;
+  }
+  .payment-policy-list-container .payment-policy-item .payment-policy-item-title {
+    color: #777;
+  }
+{% endstyle %}
+
+<div class="payment-policy-list-container">
+  <div class="payment-policy-list-title custom-txt-semibold">{{ 'cart.general.payment_policy_title' | t }}</div>
+  <div class="payment-policy-list">
+    <div class="payment-policy-item">
+      <div class="payment-policy-item-icon">
+        <img
+          src="https://cdn.shopify.com/s/files/1/1001/2383/6697/files/icon.png?v=1779699183"
+          alt="Shipping Icon"
+          width="24"
+          height="24"
+        >
+      </div>
+      <div class="payment-policy-item-title">{{ 'cart.general.payment_policy1' | t }}</div>
+    </div>
+    <div class="payment-policy-item">
+      <div class="payment-policy-item-icon">
+        <img
+          src="https://cdn.shopify.com/s/files/1/1001/2383/6697/files/icon_1.png?v=1779699183"
+          alt="Shipping Icon"
+          width="24"
+          height="24"
+        >
+      </div>
+      <div class="payment-policy-item-title">{{ 'cart.general.payment_policy2' | t }}</div>
+    </div>
+    <div class="payment-policy-item">
+      <div class="payment-policy-item-icon">
+        <img
+          src="https://cdn.shopify.com/s/files/1/1001/2383/6697/files/icon_2.png?v=1779699183"
+          alt="Shipping Icon"
+          width="24"
+          height="24"
+        >
+      </div>
+      <div class="payment-policy-item-title">{{ 'cart.general.payment_policy3' | t }}</div>
+    </div>
+    <div class="payment-policy-item">
+      <div class="payment-policy-item-icon">
+        <img
+          src="https://cdn.shopify.com/s/files/1/1001/2383/6697/files/icon_3.png?v=1779699183"
+          alt="Shipping Icon"
+          width="24"
+          height="24"
+        >
+      </div>
+      <div class="payment-policy-item-title">{{ 'cart.general.payment_policy4' | t }}</div>
+    </div>
+  </div>
+</div>

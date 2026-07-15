@@ -1,0 +1,172 @@
+{% if product.metafields.custom.downloads_list != blank %}
+  <div class="product-download-list-block">
+    {% if request.page_type == 'product' %}
+      <div class="product-download-list-title product-block-title">Downloads</div>
+    {% endif %}
+
+    {% assign type_order = 'Manuals,Software,Firmware,VIA JSON' | split: ',' %}
+    {% assign file_list = product.metafields.custom.downloads_list.value %}
+
+    {% assign manuals_has_file = false %}
+    {% assign software_has_file = false %}
+    {% assign firmware_has_file = false %}
+    {% assign via_json_has_file = false %}
+
+    {% for file_item in file_list %}
+      {% if file_item.filetype.value == 'Manuals' or file_item.filetype.value == '' %}
+        {% assign manuals_has_file = true %}
+      {% elsif file_item.filetype.value == 'Software' %}
+        {% assign software_has_file = true %}
+      {% elsif file_item.filetype.value == 'Firmware' %}
+        {% assign firmware_has_file = true %}
+      {% elsif file_item.filetype.value == 'VIA JSON' %}
+        {% assign via_json_has_file = true %}
+      {% endif %}
+    {% endfor %}
+
+    <div class="product-download-list--type-nav-list">
+      {% if manuals_has_file %}
+        <a href="#download-Manuals" class="product-download-list--type-nav-item" data-type="Manuals">Manuals</a>
+      {% endif %}
+      {% if software_has_file %}
+        <a href="#download-Software" class="product-download-list--type-nav-item" data-type="Software">Software</a>
+      {% endif %}
+      {% if firmware_has_file %}
+        <a href="#download-Firmware" class="product-download-list--type-nav-item" data-type="Firmware">Firmware</a>
+      {% endif %}
+      {% if via_json_has_file %}
+        <a href="#download-VIA-JSON" class="product-download-list--type-nav-item" data-type="VIA JSON">VIA JSON</a>
+      {% endif %}
+    </div>
+
+    <div class="product-download-list--wrapper">
+      {% for type in type_order %}
+        {% assign file_count = 0 %}
+        {% for file_item in file_list %}
+          {% if file_item.filetype.value == type %}
+            {% assign file_count = file_count | plus: 1 %}
+          {% endif %}
+        {% endfor %}
+
+        {% if file_count > 0 %}
+          <div id="download-{{ type | replace: ' ', '-' }}" class="product-download-list--type" data-type="{{ type }}">
+            <div class="product-download-list--title custom-txt-bold">{{ type }}</div>
+            {% for file_item in file_list %}
+              {% assign is_manuals_type = false %}
+              {% if forloop.index0 == 0 and file_item.filetype.value == '' %}
+                {% assign is_manuals_type = true %}
+              {% endif %}
+              {% if file_item.filetype.value == type or is_manuals_type %}
+                <a
+                  href="{% if file_item.file %}{{ file_item.file | file_url }}{% else %}{{ file_item.url.value.url }}{% endif %}"
+                  class="product-download-item--link"
+                  download="{{ file_item.label.value }}"
+                  data-download-url="{% if file_item.file %}{{ file_item.file | file_url }}{% else %}{{ file_item.url.value.url }}{% endif %}"
+                  data-download-name="{{ file_item.label.value }}"
+                >
+                  <div class="product-download-item--icon">
+                    <img
+                      src="https://cdn.shopify.com/s/files/1/1001/2383/6697/files/icon_download_3840x_d177d840-1142-458f-bea8-28caeb014096.svg?v=1776926613"
+                      alt="Download"
+                      width="40"
+                      height="40"
+                    >
+                  </div>
+                  <div class="product-download-item--content">
+                    <div class="product-download-item--title">{{ file_item.title.value }}</div>
+                    <div class="product-download-item--description">{{ file_item.description.value }}</div>
+                  </div>
+                  <div class="product-download-item--btn">Download</div>
+                </a>
+              {% endif %}
+            {% endfor %}
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+{% endif %}
+
+<style>
+  .product-download-list--type-nav-list {
+    display: flex;
+    gap: 2rem;
+    border-bottom: 1px solid #eee;
+    margin-bottom: 1.5rem;
+  }
+  .product-download-list--type-nav-item {
+    padding: 0.75rem 0;
+    text-decoration: none;
+    color: #666;
+    position: relative;
+    transition: color 0.2s;
+    cursor: pointer;
+  }
+  .product-download-list--type-nav-item:hover,
+  .product-download-list--type-nav-item.active {
+    color: #000;
+  }
+  .product-download-list--type-nav-item.active::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: var(--colorThemePrimary);
+  }
+
+  .product-download-list--type {
+    display: block !important;
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const navItems = document.querySelectorAll('.product-download-list--type-nav-item');
+
+    function setActive(type) {
+      navItems.forEach((i) => i.classList.remove('active'));
+      const el = document.querySelector(`.product-download-list--type-nav-item[data-type="${type}"]`);
+      if (el) el.classList.add('active');
+    }
+
+    function getTypeFromHash() {
+      const h = window.location.hash.replace('#download-', '').replace('-', ' ');
+      const map = {
+        Manuals: 'Manuals',
+        Software: 'Software',
+        Firmware: 'Firmware',
+        'VIA JSON': 'VIA JSON',
+      };
+      return map[h] || null;
+    }
+
+    const initType = getTypeFromHash() || (navItems[0] ? navItems[0].dataset.type : null);
+    if (initType) setActive(initType);
+
+    navItems.forEach((item) => {
+      item.addEventListener('click', function (e) {
+        e.preventDefault();
+        const type = this.dataset.type;
+        const hash = '#download-' + type.replace(' ', '-');
+        history.replaceState(null, null, hash);
+
+        const target = document.getElementById(hash.substring(1));
+        if (target) {
+          window.scrollTo({
+            top: target.getBoundingClientRect().top + window.scrollY - 100,
+            behavior: 'smooth',
+          });
+        }
+
+        setActive(type);
+      });
+    });
+
+    window.addEventListener('hashchange', () => {
+      const t = getTypeFromHash();
+      if (t) setActive(t);
+    });
+  });
+</script>

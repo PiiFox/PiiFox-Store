@@ -1,0 +1,996 @@
+
+{% style %}
+  .custom-swiper--title {
+    margin-bottom: 0rem;
+  }
+  .homepage-swiper-{{ section.id }} {
+      width: 100%;
+      /* aspect-ratio: {{ section.settings.aspect_ratio }}; */
+      height: 800px;
+      contain: layout paint size;
+  }
+  .homepage-swiper-{{ section.id }} .h1, .homepage-swiper-{{ section.id }} .h2, .homepage-swiper-{{ section.id }} .h3, .homepage-swiper-{{ section.id }} .h4, .homepage-swiper-{{ section.id }} .h5, .homepage-swiper-{{ section.id }} .h6,
+  .homepage-swiper-{{ section.id }} h1, .homepage-swiper-{{ section.id }} h2, .homepage-swiper-{{ section.id }} h3, .homepage-swiper-{{ section.id }} h4, .homepage-swiper-{{ section.id }} h5, .homepage-swiper-{{ section.id }} h6 {
+    margin: 0;
+  }
+  .custom-swiper-item {
+    background: url({{ 'placeholder.svg' | asset_url }}) center center / cover no-repeat #f5f5f5;
+    position: relative;
+    padding: 2em 8em;
+    display: flex;
+    flex-direction: column;
+  }
+  .custom-swiper-item .custom-swiper-slide-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+  }
+  .custom-swiper-item .custom-swiper-slide-bg img {
+    object-fit: cover;
+    object-position: center;
+  }
+  .custom-swiper-item .custom-swiper-slide-bg img.pc--hide {
+    display: none;
+  }
+  .custom-swiper-item .custom-swiper-slide-bg img.small--hide {
+    display: block;
+  }
+  .swiper-slide {
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .swiper-slide-active {
+    opacity: 1;
+  }
+  .homepage-swiper-{{ section.id }} .swiper-slide .slide-content {
+    display: none;
+    position: relative;
+    padding: 0 1rem;
+    width: 100%;
+  }
+  .homepage-swiper-{{ section.id }} .swiper-slide.swiper-slide-active .slide-content {
+    display: inline-block;
+  }
+
+  .homepage-swiper-{{ section.id }} .block-title {
+    padding-top: 1.3em;
+  }
+  .homepage-swiper-{{ section.id }} .product-series-title {
+    display: inline-block;
+    padding: 0.2em 1em;
+    border-radius: 20px;
+    border: 1px solid currentColor;
+  }
+  .homepage-swiper-{{ section.id }} .block-title h2 {
+    letter-spacing: 0em;
+    font-size: 4em;
+  }
+  .homepage-swiper-{{ section.id }} .block-title p {
+    font-size: 1.4em;
+    margin-bottom: 0em;
+    letter-spacing: 0.05em;
+  }
+  .homepage-swiper-{{ section.id }} .block-sub-title h3 {
+    font-size: 1.5em;
+    line-height: 1.5em;
+    letter-spacing: 0.05em;
+    font-weight: 300;
+  }
+  .homepage-swiper-{{ section.id }} .block-mobile-tag {
+    display: none;
+  }
+  .homepage-swiper-{{ section.id }} .block-price {
+    line-height: 2em;
+    padding: 3em 0;
+    display: flex;
+    align-items: flex-end;
+  }
+  .homepage-swiper-{{ section.id }} .block-price .price-label {
+    font-size: 0.6em;
+    line-height: 1em;
+    padding: 0.4em;
+    border-radius: 4px;
+    background: linear-gradient(to right, #ec4a48 0%, #a93731 50%, #902e2f);
+    margin-right: 1em;
+  }
+  .homepage-swiper-{{ section.id }} .block-price .price-value {
+    font-size: 2.5em;
+    font-weight: bold;
+  }
+  .homepage-swiper-{{ section.id }} .bottom-btn-list {
+    padding-top: 1rem;
+  }
+  .homepage-swiper-{{ section.id }} .bottom-btn-list a.block-btn {
+    letter-spacing: 0.1rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2em;
+  }
+  .homepage-swiper-{{ section.id }} .bottom-btn-list a.block-btn .btn-icon {
+    margin-left: 2em;
+    height: 3em;
+    width: 3em;
+    display: flex;
+    border-radius: 50%;
+  }
+  .homepage-swiper-{{ section.id }} .bottom-btn-list a.block-btn .btn-icon svg {
+    width: 1.5em;
+    height: 1.5em;
+    margin: auto;
+  }
+  .homepage-swiper-{{ section.id }} .swiper-button-prev,
+  .homepage-swiper-{{ section.id }} .swiper-button-next {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    visibility: hidden;
+  }
+
+  /* 鼠标悬停在 swiper 容器上时，按钮显示 */
+  .homepage-swiper-{{ section.id }}:hover .swiper-button-prev,
+  .homepage-swiper-{{ section.id }}:hover .swiper-button-next {
+    opacity: 1;
+    visibility: visible;
+  }
+  .homepage-swiper-{{ section.id }} .swiper-button-next,
+  .homepage-swiper-{{ section.id }} .swiper-button-prev {
+    font-size: 1.2em;
+    width: 2.5em;
+    height: 2.5em;
+    display: inline-flex;
+    place-items: center;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.5);
+  }
+  .homepage-swiper-{{ section.id }} span.my-custom-bullet {
+    background: rgba(255, 255, 255, 0.3);
+    opacity: 1;
+    width: 2em;
+    height: 0.2em;
+    border-radius: 2em;
+    position: relative;
+    z-index: 0;
+    --homepage-banner-bullet-progress: 0;
+  }
+  @keyframes progressBarAnim {
+    from {
+      width: 0%;
+    }
+    to {
+      width: 100%;
+    }
+  }
+  .homepage-swiper-{{ section.id }} span.my-custom-bullet.my-bullet-active {
+    background: rgba(255, 255, 255, 0.3);
+    width: 4em;
+    border-radius: 5px;
+    position: relative;
+    z-index: 0;
+  }
+  .homepage-swiper-{{ section.id }} span.my-custom-bullet.my-bullet-active::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 0%;
+    height: 100%;
+    z-index: 1;
+    animation: progressBarAnim linear {{ section.settings.autoplay_speed }}s forwards;
+    background: rgba(255, 255, 255, 1);
+    border-radius: 5px;
+  }
+    @media screen and (max-width: 1400px) {
+      .custom-swiper-item {
+        padding: 2rem ;
+      }
+      .swiper-slide .slide-content {
+        padding: 1rem 0.7rem;
+      }
+    }
+    @media screen and (max-width: 768px) {
+      .homepage-swiper-{{ section.id }} {
+        /* aspect-ratio: {{ section.settings.mobile_aspect_ratio }}; */
+        height: 500px;
+      }
+      .homepage-swiper-{{ section.id }} .custom-swiper-item {
+        padding: 0rem ;
+        background-size: cover;
+      }
+      .custom-swiper-item .custom-swiper-slide-bg img.pc--hide {
+        display: block;
+      }
+      .custom-swiper-item .custom-swiper-slide-bg img.small--hide {
+        display: none;
+      }
+      .homepage-swiper-{{ section.id }} .swiper-slide .slide-content {
+        padding: 1rem;
+        width: 100%;
+        backdrop-filter: blur(0px);
+      }
+      .homepage-swiper-{{ section.id }} .block-price {padding: 1em 0;}
+      .homepage-swiper-{{ section.id }} .custom-swiper-item {
+        /* aspect-ratio: {{ section.settings.mobile_aspect_ratio }}; */
+        font-size: 8px;
+      }
+      .homepage-swiper-{{ section.id }} .block-title {
+        padding-top: 0;
+      }
+      .homepage-swiper-{{ section.id }} .block-title h2 {
+        font-size: 2.5em;
+      }
+      .homepage-swiper-{{ section.id }} .block-price {justify-content: center;}
+      .homepage-swiper-{{ section.id }} .block-price .price-label {
+        padding: 1em;
+      }
+      .homepage-swiper-{{ section.id }} .bottom-btn-list {
+        padding-top: 1em;
+        margin: 0 auto;
+        bottom: 3em;
+        display: flex;
+        justify-content: center;
+        font-size: 1.2em;
+        width: calc(100% - 2rem);
+        border-radius: 30px ;
+      }
+      .homepage-swiper-{{ section.id }} .swiper-button-prev,
+      .homepage-swiper-{{ section.id }} .swiper-button-next {
+        opacity: 1;
+        visibility: visible;
+      }
+    }
+    @media screen and (max-width: 450px) {
+      .custom-swiper-item {
+        padding: 0.3rem ;
+      }
+      .swiper-slide .slide-content {
+        padding: 0.5rem 0rem 0rem 0.5rem;
+      }
+      .homepage-swiper-{{ section.id }} .swiper-button-next, .homepage-swiper-{{ section.id }} .swiper-button-prev {
+        width: 30px;
+        height: 30px;
+      }
+    }
+{% endstyle %}
+
+<div class="custom-swiper-list-container homepage-swiper-{{ section.id }} swiper" data-section-id="{{ section.id }}">
+  <div class="custom-swiper-list--wrapper swiper-wrapper">
+    {% for block in section.blocks %}
+      {% style %}
+        .homepage-swiper-{{ section.id }} .slide-{{ block.id }} {
+            /* background-image: url({{ block.settings.image | image_url }}); */
+        }
+        .homepage-swiper-{{ section.id }} .custom-swiper-item.slide-{{ block.id }} {
+          {% case block.settings.h_align %}
+            {% when 'left' %}
+              align-items: flex-start;
+            {% when 'right' %}
+              align-items: flex-end;
+            {% else %}
+              align-items: center;
+          {% endcase %}
+          {% case block.settings.v_align %}
+            {% when 'top' %}
+              justify-content: flex-start;
+              padding-top: 10em;
+            {% when 'bottom' %}
+              justify-content: flex-end;
+              padding-bottom: 2em;
+            {% else %}
+              justify-content: center;
+          {% endcase %}
+        }
+        .homepage-swiper-{{ section.id }} .slide-{{ block.id }} .slide-content {
+            {% case block.settings.txt_align %}
+              {% when 'left' %}
+                text-align: left;
+              {% when 'right' %}
+                text-align: right;
+              {% else %}
+                text-align: center;
+            {% endcase %}
+        }
+        .homepage-swiper-{{ section.id }} .slide-{{ block.id }} .slide-content,
+        .homepage-swiper-{{ section.id }} .slide-{{ block.id }} .slide-content a {
+            color: {{ block.settings.text_color }}
+        }
+        @media screen and (max-width: 768px) {
+            .homepage-swiper-{{ section.id }} .custom-swiper-item.slide-{{ block.id }} {
+              /* background-image: url({{ block.settings.image_mobile | image_url }}); */
+              align-items: center;
+              justify-content: flex-start;
+              text-align: center;
+              padding-top: 1em;
+            }
+            .homepage-swiper-{{ section.id }} .slide-{{ block.id }} .slide-content {
+              left: 0;
+              text-align: center;
+            }
+        }
+      {% endstyle %}
+      <div
+        data-link="{% if block.type == 'product' %}{{ block.settings.product.url }}{% else %}{{ block.settings.link }}{% endif %}"
+        data-header-color="{{ block.settings.nav_text_color }}"
+        class="custom-swiper-item slide-{{ block.id }} swiper-slide place-items-middle"
+      >
+        {% liquid
+          assign image_alt = block.settings.alt 
+          if image_alt == blank
+            if block.type == 'product' and block.settings.product != blank
+              assign block_product = block.settings.product
+              if block_product.category == 'Keyboard Keycaps'
+                assign image_alt = block_product.title  | append: 'mounted on a mechanical keyboard with RGB backlight'
+              elsif block_product.category == 'Keyboards'
+                assign image_alt = block_product.title  | append: 'hero banner for gaming peripherals'
+              else
+                assign image_alt = block_product.title
+              endif
+            else
+              assign image_alt = block.settings.title
+            endif
+          endif
+         %}
+        <div class="custom-swiper-slide-bg">
+          <img 
+            alt="{{ image_alt }}" 
+            width="100%" 
+            height="100%" 
+            fetchpriority="high"
+            class="small--hide"
+            srcset=" 
+            {{ block.settings.image | image_url: width: 1024, format: 'webp' }} 1024w, 
+            {{ block.settings.image | image_url: width: 1920, format: 'webp' }} 1920w, 
+            {{ block.settings.image | image_url: width: 2560, format: 'webp' }} 2560w"
+            sizes="100vw"
+            loading="eager"
+          >
+          <img 
+            alt="{{ image_alt }}" 
+            width="100%" 
+            height="100%" 
+            fetchpriority="high"
+            class="pc--hide"
+            srcset="{{ block.settings.image_mobile | image_url: width: 370, format: 'webp' }} 370w, 
+            {{ block.settings.image_mobile | image_url: width: 768, format: 'webp' }} 768w"
+            sizes="100vw"
+            loading="eager"
+          >
+        </div>
+        <div
+          class="slide-content"
+          data-link="{% if block.type == 'product' %}{{ block.settings.product.url }}{% else %}{{ block.settings.link }}{% endif %}"
+        >
+          {% if block.type == 'normal' and block.settings.custom_context != blank %}
+            <div class="block-custom-html--wrapper">{{ block.settings.custom_context }}</div>
+          {% endif %}
+          <div
+            class="block-title appear-delay{% cycle '','-1','-2','-3','-4' %}"
+            data-link="{% if block.type == 'product' %}{{ block.settings.product.url }}{% else %}{{ block.settings.link }}{% endif %}"
+            href="{% if block.type == 'product' %}{{ block.settings.product.url }}{% else %}{{ block.settings.link }}{% endif %}"
+          >
+            {% if block.type == 'product' and block.settings.product != blank %}
+              {% if block.settings.series_title != blank %}
+                <div class="product-series-title custom-txt-semibold">{{ block.settings.series_title }}</div>
+              {% endif %}
+              <h2 class="custom-txt-extrabold" data-link="{% if block.type == 'product' %}{{ block.settings.product.url }}{% else %}{{ block.settings.link }}{% endif %}">
+                {% if block.settings.title != blank %}
+                  {{ block.settings.title }}
+                {% else %}
+                  {{ block.settings.product.title }}
+                {% endif %}
+              </h2>
+            {% else %}
+              <p>
+                {% if block.settings.little_title != blank %}{{ block.settings.little_title }}{% endif %}
+              </p>
+              <h2 class="custom-txt-extrabold" data-link="{% if block.type == 'product' %}{{ block.settings.product.url }}{% else %}{{ block.settings.link }}{% endif %}">
+                {% if block.settings.title != blank %}{{ block.settings.title }}{% endif %}
+              </h2>
+            {% endif %}
+          </div>
+          {% if block.settings.subheading != blank %}
+          <div
+            class="block-sub-title appear-delay{% cycle '','-1','-2','-3','-4' %}"
+            data-link="{% if block.type == 'product' %}{{ block.settings.product.url }}{% else %}{{ block.settings.link }}{% endif %}"
+            href="{% if block.type == 'product' %}{{ block.settings.product.url }}{% else %}{{ block.settings.link }}{% endif %}"
+          >
+              <h3 data-link="{% if block.type == 'product' %}{{ block.settings.product.url }}{% else %}{{ block.settings.link }}{% endif %}">
+                {{ block.settings.subheading }}
+              </h3>
+          </div>
+          {% endif %}
+          {% if block.type == 'product' and block.settings.show_price %}
+            <div
+              class="block-price appear-delay{% cycle '','-1','-2','-3','-4' %}"
+              data-link="{% if block.type == 'product' %}{{ block.settings.product.url }}{% else %}{{ block.settings.link }}{% endif %}"
+              href="{% if block.type == 'product' %}{{ block.settings.product.url }}{% else %}{{ block.settings.link }}{% endif %}"
+            >
+              {% assign current_variant = block.settings.product.selected_or_first_available_variant %}
+              <div
+                class="price-label"
+                data-link="{% if block.type == 'product' %}{{ block.settings.product.url }}{% else %}{{ block.settings.link }}{% endif %}"
+              >
+                Price:
+              </div>
+              <div
+                class="price-value"
+                data-link="{% if block.type == 'product' %}{{ block.settings.product.url }}{% else %}{{ block.settings.link }}{% endif %}"
+              >
+                {{ current_variant.price | money }}
+              </div>
+            </div>
+          {% endif %}
+          <div
+            class="bottom-btn-list appear-delay{% cycle '','-1','-2','-3','-4' %}"
+            data-link="{% if block.type == 'product' %}{{ block.settings.product.url }}{% else %}{{ block.settings.link }}{% endif %}"
+          >
+            {% style %}
+              .homepage-swiper-{{ section.id }} .slide-{{ block.id }} .bottom-btn-list a.block-btn {
+                padding: {{ block.settings.btn_padding }};
+                background: {{ block.settings.btn_bg_color }};
+                border-radius: 35px;
+                color: {{ block.settings.btn_text_color }}
+              }
+              .homepage-swiper-{{ section.id }} .bottom-btn-list a.block-btn.bg-btn {
+                box-shadow: unset;
+                border-radius: unset;
+              }
+            {% endstyle %}
+
+            {% if block.settings.link_bg_image != blank %}
+              <a
+                class="block-btn bg-btn"
+                href="{% if block.type == 'product' %}{{ block.settings.product.url }}{% else %}{{ block.settings.link }}{% endif %}"
+                style="background: url({{ block.settings.link_bg_image | img_url: '380x' }}) center/100% no-repeat;"
+              >
+                {{ block.settings.link_text }}
+              </a>
+            {% elsif block.settings.link_text != blank %}
+              <a
+                class="block-btn"
+                href="{% if block.type == 'product' %}{{ block.settings.product.url }}{% else %}{{ block.settings.link }}{% endif %}"
+              >
+                {{ block.settings.link_text }}
+              </a>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+  <div class="swiper-pagination"></div>
+  <!-- If we need navigation buttons -->
+  <div class="swiper-button-prev">
+    <svg
+      class="group-hover/svg:scale-[1.3] transition-scale duration-300 "
+      xmlns="http://www.w3.org/2000/svg"
+      xmlns:xlink="http://www.w3.org/1999/xlink"
+      fill="none"
+      version="1.1"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+    >
+      <g><g transform="matrix(-1,0,0,1,30.833984375,0)"><path d="M15.4169921875,6.166748046875C15.4169921875,6.564568046875,15.5750271875,6.9461080468750005,15.8563321875,7.227408046875L20.6290021875,12.000078046875L15.8563321875,16.772748046875C15.5750271875,17.054048046875,15.4169921875,17.435548046875,15.4169921875,17.833448046875C15.4169921875,18.661848046875,16.0885651875,19.333448046875,16.9169921875,19.333448046875C17.3148121875,19.333448046875,17.6963521875,19.175348046875,17.9776521875,18.894048046875L23.810982187500002,13.060738046875C24.0922921875,12.779438046875,24.2503221875,12.397908046875,24.2503221875,12.000078046875C24.2503221875,11.602258046875,24.0922921875,11.220728046875,23.810982187500002,10.939418046875L17.9776521875,5.106088046875C17.6963521875,4.824783046875,17.3148121875,4.666748046875,16.9169921875,4.666748046875C16.0885651875,4.666748046875,15.4169921875,5.338321046875,15.4169921875,6.166748046875Z" fill-rule="evenodd" fill="#FFFFFF" fill-opacity="1"></path></g></g>
+    </svg>
+  </div>
+  <div class="swiper-button-next">
+    <svg
+      class="group-hover/svg:scale-[1.3] transition-scale duration-300"
+      xmlns="http://www.w3.org/2000/svg"
+      xmlns:xlink="http://www.w3.org/1999/xlink"
+      fill="none"
+      version="1.1"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+    >
+      <g><g><path d="M8.5830078125,6.166748046875C8.5830078125,6.564568046875,8.7410428125,6.9461080468750005,9.0223478125,7.227408046875L13.7950178125,12.000078046875L9.0223478125,16.772748046875C8.7410428125,17.054048046875,8.5830078125,17.435548046875,8.5830078125,17.833448046875C8.5830078125,18.661848046875,9.2545808125,19.333448046875,10.0830078125,19.333448046875C10.4808278125,19.333448046875,10.8623678125,19.175348046875,11.1436678125,18.894048046875L16.976997812500002,13.060738046875C17.2583078125,12.779438046875,17.4163378125,12.397908046875,17.4163378125,12.000078046875C17.4163378125,11.602258046875,17.2583078125,11.220728046875,16.976997812500002,10.939418046875L11.1436678125,5.106088046875C10.8623678125,4.824783046875,10.4808278125,4.666748046875,10.0830078125,4.666748046875C9.2545808125,4.666748046875,8.5830078125,5.338321046875,8.5830078125,6.166748046875Z" fill-rule="evenodd" fill="#FFFFFF" fill-opacity="1"></path></g></g>
+    </svg>
+  </div>
+</div>
+
+{% style %}
+  .is-light #SiteHeader:hover a.site-nav__link {
+    color: #000 !important;
+  }
+  .is-light #SiteHeader.light_bg a.site-nav__link {
+    color: #000 !important;
+  }
+{% endstyle %}
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    requestIdleCallback(() => {
+      const homepage_swiper = new Swiper(`.homepage-swiper-{{ section.id }}`, {
+        loop: true,
+        slidesPerView: 1,
+        effect: "fade",
+        fadeEffect: {
+          crossFalse: true 
+        },
+        autoplay: {
+          enabled: {{ section.settings.autoplay }},
+          delay: {{ section.settings.autoplay_speed }} * 1000,
+          disableOnInteraction: false, // 优化：切换后不停止自动轮播
+        }, 
+        on: {
+          slideChangeTransitionEnd: function(){
+            changeHeaderColor();
+          },
+        },
+        navigation: {
+          nextEl: `.homepage-swiper-{{ section.id }} .swiper-button-next`,
+          prevEl: `.homepage-swiper-{{ section.id }} .swiper-button-prev`,
+          enabled: {% if section.blocks.size > 1 %} true {% else %} false {% endif %}, 
+        },
+        pagination: {
+          el: `.homepage-swiper-{{ section.id }} .swiper-pagination`,
+          bulletActiveClass: 'my-bullet-active',
+          renderBullet: function (index, className) {
+            return '<span class="' + className + ' my-custom-bullet"></span>';
+          },
+        },
+      });
+
+      // 窗口变化 → 正确重置 Swiper（fade 轮播专用）
+      let homepage_resizeTimer;
+      window.addEventListener('resize', () => {
+        clearTimeout(homepage_resizeTimer);
+        homepage_resizeTimer = setTimeout(() => {
+          if (homepage_swiper) {
+            // 核心修复：fade 轮播必须用 updateSize 而不是单纯 update
+            homepage_swiper.updateSize();
+            homepage_swiper.update();
+          }
+        }, 400);
+      });
+    });
+
+    document.querySelectorAll('.custom-swiper-item').forEach(item => {
+      item.addEventListener('click', event => {
+        // 阻止冒泡
+        event.stopPropagation();
+        // 向上查找最近的 .custom-swiper-item
+        const targetItem = event.target.closest('.custom-swiper-item');
+        const link = targetItem?.dataset.link || '';
+        if (link) {
+          window.open(link, '_self');
+        }
+      });
+    });
+    function changeHeaderColor() {
+        let color = $('.swiper-slide-active').eq(0).data('header-color');
+        $('.is-light .site-nav__link').css('color', color);
+        $('.is-light .light_bg .site-nav__link').css('color', '#000');
+        if(window.matchMedia('(max-width: 768px)').matches) return;
+    }
+    changeHeaderColor()
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Homepage Banner",
+  "class": "homepage-banner",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "divider",
+      "label": "t:sections.custom_swiper.settings.divider.label",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "aspect_ratio",
+      "label": "Aspect Ratio",
+      "default": "192/80"
+    },
+    {
+      "type": "text",
+      "id": "mobile_aspect_ratio",
+      "label": "Mobile Aspect Ratio",
+      "default": "768/500"
+    },
+    {
+      "type": "checkbox",
+      "id": "autoplay",
+      "label": "t:sections.slideshow.settings.autoplay.label",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "autoplay_speed",
+      "label": "t:sections.slideshow.settings.autoplay_speed.label",
+      "default": 7,
+      "min": 5,
+      "max": 10,
+      "step": 1,
+      "unit": "s"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "product",
+      "name": "t:sections.slideshow.blocks.slide.name",
+      "settings": [
+        {
+          "type": "header",
+          "content": "Banner Background"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "t:sections.slideshow.blocks.slide.settings.image.label"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_mobile",
+          "label": "t:sections.slideshow.blocks.slide.settings.image_mobile.label"
+        },
+        {
+          "type": "header",
+          "content": "Banner Context"
+        },
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Product"
+        },
+        {
+          "type": "text",
+          "id": "series_title",
+          "label": "Series Title"
+        },
+        {
+          "type": "textarea",
+          "id": "title",
+          "label": "t:sections.slideshow.blocks.slide.settings.title.label"
+        },
+        {
+          "type": "textarea",
+          "id": "subheading",
+          "label": "t:sections.slideshow.blocks.slide.settings.subheading.label"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_price",
+          "label": "Show Price",
+          "default": true
+        },
+        {
+          "type": "color",
+          "id": "text_color",
+          "label": "Context Color",
+          "default": "rgba(255,255,255,1)"
+        },
+        {
+          "type": "color",
+          "id": "nav_text_color",
+          "label": "Nav Context Color",
+          "default": "rgba(255, 255, 255,1)"
+        },
+        {
+          "type": "header",
+          "content": "Context Position"
+        },
+        {
+          "type": "select",
+          "id": "h_align",
+          "label": "Horizontal Align",
+          "default": "left",
+          "options": [
+            {
+              "label": "left",
+              "value": "left"
+            },
+            {
+              "label": "center",
+              "value": "center"
+            },
+            {
+              "label": "right",
+              "value": "right"
+            }
+          ]
+        },
+        {
+          "type": "select",
+          "id": "v_align",
+          "label": "Vertical Align",
+          "default": "center",
+          "options": [
+            {
+              "label": "top",
+              "value": "top"
+            },
+            {
+              "label": "center",
+              "value": "center"
+            },
+            {
+              "label": "bottom",
+              "value": "bottom"
+            }
+          ]
+        },
+        {
+          "type": "select",
+          "id": "txt_align",
+          "label": "Text Align",
+          "default": "center",
+          "options": [
+            {
+              "label": "left",
+              "value": "left"
+            },
+            {
+              "label": "center",
+              "value": "center"
+            },
+            {
+              "label": "right",
+              "value": "right"
+            }
+          ]
+        },
+        {
+          "type": "select",
+          "id": "mobile_v_align",
+          "label": "Mobile Vertical Align",
+          "default": "top",
+          "options": [
+            {
+              "label": "top",
+              "value": "top"
+            },
+            {
+              "label": "center",
+              "value": "center"
+            },
+            {
+              "label": "bottom",
+              "value": "bottom"
+            }
+          ]
+        },
+        {
+          "type": "header",
+          "content": "Button"
+        },
+        {
+          "type": "image_picker",
+          "id": "link_bg_image",
+          "label": "Link Background Image"
+        },
+        {
+          "type": "text",
+          "id": "link_text",
+          "label": "t:sections.slideshow.blocks.slide.settings.link_text.label"
+        },
+        {
+          "type": "color",
+          "id": "btn_text_color",
+          "label": "Button Context Color",
+          "default": "#000"
+        },
+        {
+          "type": "color",
+          "id": "btn_bg_color",
+          "label": "Button Background Color",
+          "default": "#12eb9d"
+        },
+        {
+          "type": "text",
+          "id": "btn_padding",
+          "label": "Button Padding",
+          "default": "0.6em 1em"
+        }
+      ]
+    },
+    {
+      "type": "normal",
+      "name": "Normal",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "link_bg_image",
+          "label": "Link Background Image"
+        },
+        {
+          "type": "image_picker",
+          "id": "link_mobile_bg_image",
+          "label": "Link Mobile Background Image"
+        },
+        {
+          "type": "textarea",
+          "id": "little_title",
+          "label": "t:sections.slideshow.blocks.slide.settings.little_title.label"
+        },
+        {
+          "type": "textarea",
+          "id": "title",
+          "label": "t:sections.slideshow.blocks.slide.settings.title.label"
+        },
+        {
+          "type": "textarea",
+          "id": "alt",
+          "label": "Alt Text"
+        },
+        {
+          "type": "textarea",
+          "id": "subheading",
+          "label": "t:sections.slideshow.blocks.slide.settings.subheading.label"
+        },
+        {
+          "type": "liquid",
+          "id": "custom_context",
+          "label": "Custom Context"
+        },
+        {
+          "type": "header",
+          "content": "Context Position"
+        },
+        {
+          "type": "select",
+          "id": "h_align",
+          "label": "Horizontal Align",
+          "default": "center",
+          "options": [
+            {
+              "label": "left",
+              "value": "left"
+            },
+            {
+              "label": "center",
+              "value": "center"
+            },
+            {
+              "label": "right",
+              "value": "right"
+            }
+          ]
+        },
+        {
+          "type": "select",
+          "id": "v_align",
+          "label": "Vertical Align",
+          "default": "top",
+          "options": [
+            {
+              "label": "top",
+              "value": "top"
+            },
+            {
+              "label": "center",
+              "value": "center"
+            },
+            {
+              "label": "bottom",
+              "value": "bottom"
+            }
+          ]
+        },
+        {
+          "type": "select",
+          "id": "txt_align",
+          "label": "Text Align",
+          "default": "center",
+          "options": [
+            {
+              "label": "left",
+              "value": "left"
+            },
+            {
+              "label": "center",
+              "value": "center"
+            },
+            {
+              "label": "right",
+              "value": "right"
+            }
+          ]
+        },
+        {
+          "type": "select",
+          "id": "mobile_v_align",
+          "label": "Mobile Vertical Align",
+          "default": "top",
+          "options": [
+            {
+              "label": "top",
+              "value": "top"
+            },
+            {
+              "label": "center",
+              "value": "center"
+            },
+            {
+              "label": "bottom",
+              "value": "bottom"
+            }
+          ]
+        },
+        {
+          "type": "color",
+          "id": "text_color",
+          "label": "Context Color",
+          "default": "rgba(255,255,255,1)"
+        },
+        {
+          "type": "color",
+          "id": "nav_text_color",
+          "label": "Nav Context Color",
+          "default": "rgba(255, 255, 255,1)"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "t:sections.slideshow.blocks.slide.settings.image.label"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_mobile",
+          "label": "t:sections.slideshow.blocks.slide.settings.image_mobile.label"
+        },
+        {
+          "type": "header",
+          "content": "Button"
+        },
+
+        {
+          "type": "url",
+          "id": "link",
+          "label": "t:sections.slideshow.blocks.slide.settings.link.label"
+        },
+        {
+          "type": "text",
+          "id": "link_text",
+          "label": "t:sections.slideshow.blocks.slide.settings.link_text.label"
+        },
+        {
+          "type": "color",
+          "id": "btn_text_color",
+          "label": "Button Context Color",
+          "default": "rgba(255,255,255,1)"
+        },
+        {
+          "type": "color",
+          "id": "btn_bg_color",
+          "label": "Button Background Color",
+          "default": "#292c35"
+        },
+        {
+          "type": "text",
+          "id": "btn_padding",
+          "label": "Button Padding",
+          "default": "0.6em 1em"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Homepage Banner",
+      "settings": {
+        "autoplay": false,
+        "autoplay_speed": 5
+      },
+      "blocks": [
+        {
+          "type": "normal",
+          "settings": {
+            "title": "Homepage Banner",
+            "subheading": "Homepage Banner Subheading",
+            "custom_context": "Powering a Cleaner Future A Global Leader in Clean Energy",
+            "text_color": "rgba(0, 0, 0, 1)",
+            "nav_text_color": "rgba(0, 0, 0, 1)"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

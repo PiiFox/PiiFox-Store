@@ -1,0 +1,194 @@
+{% comment %}
+  product
+{% endcomment %}
+
+{% liquid
+  assign product_share_url = product.url | prepend: request.origin
+  assign product_share_title = product.title
+
+  if product.featured_image
+    assign product_share_image = product.featured_image | image_url: width: 1200
+
+    unless product_share_image contains 'http'
+      assign product_share_image = product_share_image | prepend: 'https:'
+    endunless
+  endif
+%}
+
+<ul class="no-bullets social-share-icons {{ additional_classes }} social-sharing">
+  <span class="product-share__label custom-txt-bold">{{ 'general.social.share' | t }}:&nbsp;</span>
+  <li>
+    <a
+      target="_blank"
+      rel="noopener noreferrer nofollow"
+      class="product-share__link product-share__link--x"
+      href="https://twitter.com/intent/tweet?text={{ product_share_title | url_param_escape }}&amp;url={{ product_share_url | url_param_escape }}"
+      title="{{ 'layout.customer.social_share' | t: platform: 'Twitter' }}"
+      aria-label="{{ 'general.social.share_on_twitter' | t }}"
+    >
+      <svg
+        class="icon icon-twitter"
+        xmlns="http://www.w3.org/2000/svg"
+        width="16"
+        height="16"
+        viewBox="0 0 20 20"
+        aria-hidden="true"
+        focusable="false"
+        role="presentation"
+      >
+        <path d="M15.2213 3H17.9803L11.9224 9.78967L19 19H13.4459L9.0973 13.403L4.11896 19H1.35988L7.77774 11.738L1 3H6.6921L10.6208 8.11292L15.2213 3ZM14.2556 17.4059H15.7851L5.88837 4.53506H4.24492L14.2556 17.4059Z" fill="currentColor"></path>
+      </svg>
+      <span class="visually-hidden">{{ 'general.social.alt_text.share_on_twitter' | t }}</span>
+    </a>
+  </li>
+  <li>
+    <a
+      target="_blank"
+      class="product-share__link product-share__link--facebook"
+      rel="noopener noreferrer nofollow"
+      href="https://www.facebook.com/sharer/sharer.php?u={{ product_share_url | url_param_escape }}"
+      title="{{ 'layout.customer.social_share' | t: platform: 'Facebook' }}"
+      aria-label="{{ 'general.social.share_on_facebook' | t }}"
+    >
+      <svg
+        class="icon icon-facebook"
+        width="16"
+        height="16"
+        viewBox="0 0 16 16"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+        focusable="false"
+        role="presentation"
+      >
+        <path d="M6.02103 15.3333L6.00001 8.66663H3.33334V5.99996H6.00001V4.33329C6.00001 1.85903 7.53222 0.666626 9.73944 0.666626C10.7967 0.666626 11.7054 0.745339 11.9702 0.780526V3.36628L10.4394 3.36697C9.23898 3.36697 9.00655 3.93739 9.00655 4.77443V5.99996H12.5L11.1667 8.66663H9.00655V15.3333H6.02103Z" fill="currentColor"></path>
+      </svg>
+      <span class="visually-hidden">{{ 'general.social.alt_text.share_on_facebook' | t }}</span>
+    </a>
+  </li>
+  <li>
+    <a
+      target="_blank"
+      rel="noopener noreferrer nofollow"
+      class="product-share__link product-share__link--pinterest"
+      href="https://pinterest.com/pin/create/button/?url={{ product_share_url | url_param_escape }}&amp;media={{ product_share_image | url_param_escape }}&amp;description={{ product_share_title | url_param_escape }}"
+      title="{{ 'layout.customer.social_share' | t: platform: 'Pinterest' }}"
+      aria-label="{{ 'general.social.share_on_pinterest' | t }}"
+    >
+      <svg
+        class="icon icon-pinterest"
+        width="16"
+        height="16"
+        viewBox="0 0 16 16"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+        focusable="false"
+        role="presentation"
+      >
+        <path d="M8 0C3.6 0 0 3.6 0 8C0 11.4 2.13333 14.2667 5.06667 15.4667C5 14.8667 4.93333 13.8667 5.06667 13.2C5.2 12.6 6 9.2 6 9.2C6 9.2 5.8 8.66667 5.8 8C5.8 6.86667 6.46667 6.06667 7.26667 6.06667C7.93333 6.06667 8.26667 6.6 8.26667 7.2C8.26667 7.86667 7.8 8.93333 7.6 9.86667C7.4 10.6667 8 11.3333 8.8 11.3333C10.2 11.3333 11.3333 9.86667 11.3333 7.66667C11.3333 5.73333 9.93333 4.4 8 4.4C5.73333 4.4 4.4 6.13333 4.4 7.86667C4.4 8.53333 4.66667 9.26667 5 9.66667C5.06667 9.73333 5.06667 9.8 5.06667 9.86667C5 10.1333 4.86667 10.6667 4.86667 10.8C4.8 10.9333 4.73333 11 4.6 10.9333C3.6 10.4667 3 9 3 7.86667C3 5.33333 4.86667 3 8.26667 3C11.0667 3 13.2 5 13.2 7.6C13.2 10.3333 11.4667 12.6 9.06667 12.6C8.26667 12.6 7.46667 12.2 7.2 11.6667C7.2 11.6667 6.8 13.2 6.73333 13.6C6.53333 14.2667 6.06667 15.1333 5.73333 15.6667C6.4 15.8667 7.2 16 8 16C12.4 16 16 12.4 16 8C16 3.6 12.4 0 8 0Z" fill="currentColor"></path>
+      </svg>
+      <span class="visually-hidden">{{ 'general.social.alt_text.share_on_pinterest' | t }}</span>
+    </a>
+  </li>
+  <li>
+    <a
+      target="_blank"
+      rel="noopener noreferrer nofollow"
+      class="product-share__link product-share__link--tumblr"
+      href="https://www.tumblr.com/share/link?url={{ product_share_url | url_param_escape }}&amp;name={{ product_share_title | url_param_escape }}"
+      title="{{ 'layout.customer.social_share' | t: platform: 'Tumblr' }}"
+      aria-label="{{ 'general.social.share_on_tumblr' | t }}"
+    >
+      <svg
+        class="icon icon-tumblr"
+        width="16"
+        height="16"
+        viewBox="0 0 16 16"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+        focusable="false"
+        role="presentation"
+      >
+        <path d="M10.1129 11.191V10.0941C9.75821 10.3323 9.41243 10.4497 9.07643 10.4497C8.91821 10.4497 8.74132 10.399 8.5431 10.3021C8.42398 10.2221 8.35554 10.1341 8.33509 10.0345C8.27643 9.91632 8.24621 9.65943 8.24621 9.26388V7.51632H9.87643V6.42032H8.24621V4.67188H7.29865C7.21954 5.08699 7.14043 5.38299 7.06132 5.56076C6.96354 5.77765 6.80532 5.97588 6.58754 6.15276C6.36976 6.33143 6.1431 6.45943 5.90576 6.53854V7.51721H6.64621V9.91721C6.64621 10.1937 6.68532 10.4292 6.76532 10.6274C6.82398 10.7857 6.94221 10.943 7.12087 11.1012C7.25776 11.2399 7.45598 11.3581 7.71287 11.4568C8.02843 11.5368 8.30487 11.575 8.5431 11.575C8.81954 11.575 9.07643 11.5457 9.31287 11.4861C9.59021 11.4265 9.85687 11.3279 10.1129 11.191Z" fill="currentColor"></path>
+        <path d="M8 16C3.58844 16 0 12.4116 0 8C0 3.58844 3.58844 0 8 0C12.4116 0 16 3.58844 16 8C16 12.4116 12.4116 16 8 16ZM8 1.77778C4.56978 1.77778 1.77778 4.56978 1.77778 8C1.77778 11.4302 4.56978 14.2222 8 14.2222C11.4302 14.2222 14.2222 11.4302 14.2222 8C14.2222 4.56978 11.4302 1.77778 8 1.77778Z" fill="currentColor"></path>
+      </svg>
+      <span class="visually-hidden">{{ 'general.social.alt_text.share_on_tumblr' | t }}</span>
+    </a>
+  </li>
+  <li>
+    <a
+      target="_blank"
+      rel="noopener noreferrer nofollow"
+      class="product-share__link product-share__link--linkedin"
+      href="https://www.linkedin.com/sharing/share-offsite/?url={{ product_share_url | url_param_escape }}"
+      title="{{ 'layout.customer.social_share' | t: platform: 'LinkedIn' }}"
+      aria-label="{{ 'general.social.share_on_linkedin' | t }}"
+    >
+      <svg
+        class="icon icon-linkedin"
+        viewBox="0 0 24 24"
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        fill="none"
+        aria-hidden="true"
+        focusable="false"
+        role="presentation"
+      >
+        <path d="M7.5 8.75C8.19036 8.75 8.75 8.19036 8.75 7.5C8.75 6.80964 8.19036 6.25 7.5 6.25C6.80964 6.25 6.25 6.80964 6.25 7.5C6.25 8.19036 6.80964 8.75 7.5 8.75Z" fill="#0A66C2"></path>
+        <path d="M6 10.5H9V18H6V10.5Z" fill="#0A66C2"></path>
+        <path d="M11 10.5H13.94V11.43H13.97C14.42 10.5 15.58 9.5 17.29 9.5C20.19 9.5 20.5 11.5 20.5 13.49V18H17.59V13.78C17.59 12.86 17.53 11.67 16.46 11.67C15.35 11.67 15.18 12.68 15.18 13.72V18H12.27V10.5H11Z" fill="#0A66C2"></path>
+      </svg>
+      <span class="visually-hidden">{{ 'general.social.alt_text.share_on_linkedin' | t }}</span>
+    </a>
+  </li>
+  <li>
+    <a
+      href="#"
+      rel="noopener noreferrer nofollow"
+      class="product-share__link product-share__link--copy"
+      data-copy-product-url="{{ product_share_url }}"
+      title="{{ 'layout.customer.social_share' | t: platform: 'Others' }}"
+      aria-label="Copy product link"
+    >
+      <svg class="icon icon-share" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" aria-hidden="true" focusable="false" role="presentation">
+        <path d="M2.668 12.666V12.5a.665.665 0 0 1 1.33 0v.166c0 .711.001 1.205.033 1.588.03.376.087.587.167.745l.07.127c.177.288.43.522.732.676l.13.056c.144.051.333.089.615.112.384.031.877.031 1.588.031h5.333c.711 0 1.205 0 1.588-.031.376-.03.587-.088.745-.168l.127-.071c.288-.176.522-.43.676-.732l.056-.13c.051-.143.089-.333.112-.615.031-.383.031-.877.031-1.588V12.5a.665.665 0 0 1 1.33 0v.166c0 .69 0 1.246-.036 1.697-.033.4-.098.762-.242 1.098l-.066.143c-.266.52-.67.957-1.165 1.26l-.218.123c-.377.192-.783.27-1.241.308-.45.037-1.008.036-1.697.036H7.333c-.689 0-1.246.001-1.696-.036-.4-.033-.761-.097-1.098-.241l-.142-.067a3.17 3.17 0 0 1-1.262-1.165l-.122-.218c-.192-.377-.271-.783-.309-1.241-.036-.45-.036-1.008-.036-1.697m6.667-.166V4.94L7.137 7.137a.665.665 0 0 1-.94-.94L9.53 2.863l.101-.083a.666.666 0 0 1 .839.083l3.334 3.334a.666.666 0 0 1-.941.94L10.665 4.94v7.56a.666.666 0 0 1-1.33 0"/>
+      </svg>
+      <svg class="icon icon-success hidden" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" aria-hidden="true" focusable="false" role="presentation">
+        <path d="M18.5382 8.47414C18.4993 8.56805 18.4422 8.65331 18.3701 8.72498L10.9522 16.143C10.6935 16.4008 10.3432 16.5456 9.97797 16.5456C9.61276 16.5456 9.26229 16.4006 9.00363 16.1428L5.63073 12.7699L5.62972 12.7689C5.55721 12.6969 5.49963 12.6113 5.46028 12.517C5.42092 12.4227 5.40057 12.3215 5.40039 12.2194C5.40021 12.1172 5.42021 12.016 5.45923 11.9215C5.49825 11.8271 5.55553 11.7413 5.62779 11.669C5.70004 11.5968 5.78585 11.5395 5.88029 11.5005C5.97473 11.4614 6.07594 11.4415 6.17813 11.4416C6.28031 11.4418 6.38145 11.4622 6.47576 11.5015C6.57006 11.5409 6.65566 11.5985 6.72766 11.671L9.97797 14.9213L17.2715 7.62779C17.3801 7.51921 17.5184 7.44527 17.669 7.41531C17.8196 7.38535 17.9757 7.40073 18.1175 7.45949C18.2594 7.51825 18.3806 7.61777 18.4659 7.74544C18.5512 7.87312 18.5967 8.02322 18.5967 8.17676L18.5967 8.17791C18.597 8.27955 18.5771 8.38024 18.5382 8.47414Z" fill="#fff"></path>
+      </svg>
+      <span class="visually-hidden">Copy Link</span>
+    </a>
+  </li>
+</ul>
+<script>
+  document.querySelector('.product-share__link--copy').addEventListener('click', function (event) {
+    event.preventDefault();
+    const copyButton = event.target.closest('[data-copy-product-url]');
+    if (!copyButton) return;
+
+    const url = copyButton.getAttribute('data-copy-product-url');
+
+    if (navigator.share && isMobile()) {
+      navigator.share({
+        title: {{ page_title | json }},
+        text: {{ page_description | truncate: 80 | json }},
+        url: url
+      }).catch(() => {});
+      return;
+    }
+
+    if (navigator.clipboard && url) {
+      navigator.clipboard.writeText(url).then(function () {
+        copyButton.querySelector('.icon-share').classList.add('hidden');
+        copyButton.querySelector('.icon-success').classList.remove('hidden');
+        setTimeout(function () {
+          copyButton.querySelector('.icon-success').classList.add('hidden');
+          copyButton.querySelector('.icon-share').classList.remove('hidden');
+        }, 1600);
+      });
+    }
+  });
+</script>

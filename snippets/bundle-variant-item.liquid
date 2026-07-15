@@ -1,0 +1,56 @@
+{% comment %} 
+ variant
+{% endcomment %}
+
+<div
+  class="
+    bundle-product-item
+    {% if variant.available %}available{% else %}sold-out{% endif %}
+  "
+  data-bundle-product="{{ variant.id }}"
+>
+  {% assign variant_image = '' %}
+  {% if variant.featured_image %}
+    {% assign variant_image = variant.featured_image | image_url %}
+  {% elsif variant.image %}
+    {% assign variant_image = variant.image | image_url %}
+  {% elsif variant.product.featured_image %}
+    {% assign variant_image = variant.product.featured_image | image_url %}
+  {% else %}
+    {% assign variant_image = variant.product.images.first | img_url: '250x250' %}
+  {% endif %}
+  <div class="bundle-product-checked">
+    <input type="checkbox" 
+        id="{{ variant.id }}" 
+        class="bundle-product-checkbox" 
+        data-bundle-product="{{ variant.id }}"
+        {% if variant.available == false %} disabled {% endif %} 
+    />
+    <label for="{{ variant.id }}" class="bundle-product-checkbox-label"></label>
+  </div>
+  <div class="bundle-product-image">
+    <img
+      src="{{ variant_image }}"
+      alt="{{ variant.product.title }}-{{ variant.title }}"
+      loading="lazy"
+      width="250"
+      height="250"
+    >
+  </div>
+  <div class="bundle-product-info">
+    <div class="bundle-product-name">{{ variant.product.title }}</div>
+    <div class="bundle-product-variant">
+      {% if variant.title == 'Default Title' %}
+        {{ 'products.general.default_variant' | t }}
+      {% else %}
+        {{ variant.title }}
+      {% endif %}
+    </div>
+    <div class="bundle-product-options">
+      <div class="bundle-product-price">{{ variant.price | money }}</div>
+      {% assign qty_id = 'bundle-variant-form-' | append: variant.id %}
+      {%- render 'quantity-input', form_id: qty_id, id: variant.id, qty: 1, min: 1 -%}
+    </div>
+    
+  </div>
+</div>

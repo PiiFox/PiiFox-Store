@@ -1,0 +1,406 @@
+{% schema %}
+{
+  "name": "FAQ Center",
+  "class": "faq-list-section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Support Banner 设置"
+    },
+    {
+      "type": "text",
+      "id": "support_title",
+      "label": "标题",
+      "default": "Still need help?"
+    },
+    {
+      "type": "text",
+      "id": "support_desc",
+      "label": "描述文字",
+      "default": "Can't find the answer you need? Reach out to our support team."
+    },
+    {
+      "type": "text",
+      "id": "support_btn_text",
+      "label": "按钮文字",
+      "default": "Contact Support"
+    },
+    {
+      "type": "text",
+      "id": "support_btn_email",
+      "label": "客服邮箱"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "collection",
+      "name": "Collection Faq",
+      "settings": [
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Collection"
+        },
+        {
+          "type": "html",
+          "id": "icon",
+          "label": "Icon"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "FAQ Center"
+    }
+  ]
+}
+{% endschema %}
+
+<style>
+  .faq-container {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 0 20px;
+  }
+  .faq-item {
+    border-bottom: 1px solid #eee;
+    padding: 16px 0;
+    cursor: pointer;
+  }
+  .faq-question {
+    font-size: 18px;
+    font-weight: 600;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .faq-answer {
+    margin-top: 12px;
+    font-size: 16px;
+    color: #555;
+    display: none;
+  }
+  .faq-answer.active {
+    display: block;
+  }
+</style>
+
+<div class="faq-list-{{ section.id }}">
+  <button class="mobile-filter-toggle">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M4 6h16M4 12h16M4 18h16"></path>
+    </svg>
+    Product List
+  </button>
+
+  {% assign faq_types = '' %}
+  {% assign faq_entries = shop.metaobjects.product_faq.values %}
+
+  {% if faq_entries.size > 0 %}
+    {% for item in faq_entries %}
+      {% assign type = item.faq_type | strip %}
+      {% unless faq_types contains type %}
+        {% assign faq_types = faq_types | append: type | append: ',' %}
+      {% endunless %}
+    {% endfor %}
+  {% else %}
+    未读到任何数据
+  {% endif %}
+  {% assign faq_types = faq_types %}
+  {% assign faq_types = faq_types | split: ',' %}
+
+  <div class="collection-list-block">
+    <div class="filter-close">&times;</div>
+
+    <div class="collection-group">
+      <div class="collection-group-title">Policy FAQ</div>
+      <div class="collection-product-list">
+        {% for type in faq_types %}
+          <div class="collection-product-item" data-product-id="{{ type }}">
+            <span>{{ type }}</span>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    {% for block in section.blocks %}
+      {% assign collection = block.settings.collection %}
+      <div class="collection-group">
+        <div class="collection-group-title">
+          {% if block.settings.icon %}
+            {{ block.settings.icon }}
+          {% else %}
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#427347" stroke-width="2">
+              <rect x="2" y="4" width="20" height="16" rx="2" />
+              <path d="M6 8h.01M10 8h.01M14 8h.01M18 8h.01M6 12h.01M10 12h.01M14 12h.01M18 12h.01M8 16h8" />
+            </svg>
+          {% endif %}
+          {{ collection.title }}
+        </div>
+        <div class="collection-product-list">
+          {% for product in collection.products %}
+            <div class="collection-product-item" data-product-id="{{ product.id }}">
+              {% if product.featured_image %}
+                <img src="{{ product.featured_image | image_url }}" width="80" height="80" alt="{{ product.title }}">
+              {% endif %}
+              <span>{{ product.title }}</span>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+
+  <div class="product-faq-list-block">
+    {% for type in faq_types %}
+      {% assign type_faq_entries = faq_entries | where: 'faq_type', type %}
+      <div class="product-faq-list--wrapper">
+        {% for item in type_faq_entries %}
+          {% assign custom_index = type | strip | append: '-type-' | append: forloop.index0 %}
+          <div class="product-faq-list" data-collection="{{ type }}" data-product-id="{{ type }}">
+            {% render 'faq-item', item: item, index: custom_index %}
+          </div>
+        {% endfor %}
+      </div>
+    {% endfor %}
+    {% for block in section.blocks %}
+      {% assign collection = block.settings.collection %}
+      {% for product in collection.products %}
+        <div class="product-faq-list" data-collection="{{ collection.title }}" data-product-id="{{ product.id }}">
+          <div class="product-info-card">
+            {% if product.featured_image %}
+              <img src="{{ product.featured_image | image_url }}" width="100" height="100" alt="{{ product.title }}">
+            {% endif %}
+            <div class="product-info-card-text">
+              <h3>{{ product.title }}</h3>
+              <a href="{{ product.url }}" class="learn-more-btn">Learn More</a>
+            </div>
+          </div>
+          {% render 'product-faq-list', product: product %}
+        </div>
+      {% endfor %}
+    {% endfor %}
+    {% render 'support-contact-section', section: section %}
+  </div>
+</div>
+
+{% style %}
+    .product-faq-list--wrapper {
+        padding-bottom: 0;
+    }
+    .faq-list-{{ section.id }} {
+      max-width: 1100px;
+      margin: 40px auto;
+      padding: 0 20px;
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 40px;
+      position: relative;
+    }
+
+    /* 移动端开关 */
+    .mobile-filter-toggle {
+      display: none;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 16px;
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 500;
+      cursor: pointer;
+      margin-bottom: 20px;
+    }
+
+    /* 左侧列表 - 电脑端正常 */
+    .collection-list-block {
+      border-right: 1px solid #eee;
+      padding-right: 20px;
+      position: relative;
+    }
+
+    .filter-close {
+      display: none;
+    }
+
+    .collection-group {
+      margin-bottom: 24px;
+    }
+
+    .collection-group-title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 20px;
+      font-weight: 600;
+      padding-bottom: 0.8em;
+      color: #111;
+    }
+
+    .collection-product-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      max-height: calc(2 * 72px);
+      overflow-y: auto;
+      padding-right: 4px;
+    }
+
+    .collection-product-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 14px;
+      cursor: pointer;
+      border-radius: 8px;
+      border: 2px solid transparent;
+      transition: all 0.2s;
+      min-height: 60px;
+    }
+
+    .collection-product-item img {
+      width: 48px;
+      height: 48px;
+      object-fit: contain;
+      border-radius: 4px;
+      flex-shrink: 0;
+    }
+
+    .collection-product-item span {
+      font-size: 15px;
+      font-weight: 500;
+      line-height: 1.3;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .collection-product-item:hover {
+      background: #f5f5f5;
+    }
+
+    .collection-product-item.active {
+      background: #edf9f5;
+      border-color: var(--colorThemePrimary);
+    }
+
+    /* 右侧内容 */
+    .product-faq-list { display: none; }
+    .product-faq-list.active { display: block; }
+
+    .product-info-card {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      background: #edf9f5;
+      padding: 16px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      border: 2px solid var(--colorThemePrimary);
+    }
+    .product-info-card img {
+      width: 80px;
+      height: 80px;
+      object-fit: contain;
+    }
+    .product-info-card-text {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex: 1;
+    }
+    .product-info-card-text h3 { margin: 0; font-size: 18px; font-weight: 600; }
+    .learn-more-btn { color: #009688; text-decoration: none; font-size: 14px; font-weight: 500; }
+    .learn-more-btn:hover { text-decoration: underline; }
+
+    .faq-list-{{ section.id }} .faq-item {
+      padding: 16px 20px;
+      border: 1px solid #eee;
+      border-radius: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .faq-list-{{ section.id }} .faq-title { font-size: 16px; font-weight: 500; }
+    .faq-list-{{ section.id }} .faq-desc { font-size: 14px; color: #666; margin-top: 4px; }
+    .faq-list-{{ section.id }} .faq-btn { padding: 8px 16px; background: #000; color: #fff; border-radius: 6px; text-decoration: none; font-size: 14px; white-space: nowrap; }
+    .faq-list-{{ section.id }} .faq-btn:hover { opacity: 0.8; }
+
+    /* ====================== 手机端弹窗模式 ====================== */
+    @media (max-width: 768px) {
+      .faq-list-{{ section.id }} {
+        display: block;
+      }
+      .mobile-filter-toggle {
+        display: flex;
+      }
+      .collection-list-block {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 280px;
+        height: 100vh;
+        background: #fff;
+        z-index: 9999;
+        padding: 20px;
+        box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+        overflow-y: auto;
+        border-right: none;
+      }
+      .collection-list-block.open {
+        transform: translateX(0);
+      }
+      .filter-close {
+        display: block;
+        font-size: 28px;
+        text-align: right;
+        cursor: pointer;
+        margin-bottom: 16px;
+      }
+      .collection-product-list {
+        max-height: none;
+      }
+      .learn-more-btn {
+          display: none;
+      }
+    }
+{% endstyle %}
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const productItems = document.querySelectorAll('.collection-product-item');
+    const faqLists = document.querySelectorAll('.product-faq-list');
+    const filter = document.querySelector('.collection-list-block');
+    const toggle = document.querySelector('.mobile-filter-toggle');
+    const close = document.querySelector('.filter-close');
+
+    productItems.forEach((item) => {
+      item.onclick = function () {
+        const pid = this.dataset.productId;
+        productItems.forEach((i) => i.classList.remove('active'));
+        this.classList.add('active');
+        faqLists.forEach((list) => {
+          list.classList.toggle('active', list.dataset.productId === pid);
+        });
+        if (window.innerWidth <= 768) {
+          filter.classList.remove('open');
+        }
+      };
+    });
+
+    if (toggle) {
+      toggle.onclick = () => filter.classList.add('open');
+      close.onclick = () => filter.classList.remove('open');
+    }
+
+    if (productItems.length > 0) {
+      productItems[0].onclick();
+    }
+  });
+</script>

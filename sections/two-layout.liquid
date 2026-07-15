@@ -1,0 +1,188 @@
+{%- if section.settings.divider -%}<div class="section--divider">{%- endif -%}
+
+<div class="e3-container">
+  <div class="e3-grid">
+    {% for block in section.blocks %}
+       {%- case block.type -%}
+          {%- when 'box1' -%}
+    <div class="e3-first-column wow bounceInUp">
+      <section id="js-container-5" class="e3-section tm-section-5">
+        <h3 class="e3-text-700">{{ block.settings.etitle1 }}</h3>
+        <div class="tm-contain">
+          <p class="e3-text-500 tm-subtitle">{{ block.settings.recharge }}</p>
+          <div class="e3-grid-small e3-flex-top tm-progress" e3-grid="">
+            <div class="e3-width-expand e3-visible@m">
+              <span class="e3-text-700 tm-text-time">{{ block.settings.hour1 }}</span>
+            </div>
+            <div class="e3-width-4-5 e3-flex-first@m e3-first-column"  style="width:{{ block.settings.width1 }}%">
+              <div class="tm-progress-container tm-progress-container-1"></div>
+            </div>
+            <div class="e3-width-1 e3-grid-margin e3-first-column">
+              <div class="e3-flex">
+                <span class="e3-margin-small-left@m tm-text-5">{{ block.settings.em1 }}</span>
+              </div>
+            </div>
+          </div>
+          <div class="e3-grid-small tm-contain-top e3-grid-collapse e3-flex-top tm-progress" e3-grid="">
+            <div class="e3-width-expand e3-visible@m">
+              <span class="e3-text-700 tm-text-time">{{ block.settings.hour2 }}</span>
+            </div>
+            <div class="e3-width-4-5 e3-flex-first@m e3-first-column" style="width:{{ block.settings.width2 }}%">
+              <div class="tm-progress-container tm-progress-container-2"></div>
+            </div>
+            <div class="e3-width-1 e3-grid-margin e3-first-column">
+              <div class="e3-flex">
+                <span class="e3-margin-small-left@m tm-text-5">{{ block.settings.em2 }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="e3-text-center tm-image-area">
+          <img loading="lazy" data-src="{{ block.settings.img11 }}" e3-img="" src="{{ block.settings.img11 | img_url: '1000x'}}">
+        </div>
+      </section>
+    </div>
+      {%- endcase -%}
+    {% endfor %}
+    {% for block in section.blocks %}
+       {%- case block.type -%}
+          {%- when 'box2' -%}
+    <div class="wow bounceInUp" data-wow-delay=".5s">
+      <section style="background: url({{ block.settings.bgaimg2 | img_url: '1000x' }}) center center no-repeat;" id="js-container-6" class="e3-position-relative e3-section-muted tm-section-6 e3-scrollspy-inview " e3-scrollspy="cls:e3-animation-slide-bottom;repeat:true;" style="">
+        <div class="e3-position-top-center tm-content">
+          <h3 class="e3-text-700 e3-margin-remove">Up To <span>{{ block.settings.etitle2 }}</span> </h3>
+          <p class="e3-text-500">{{ block.settings.esubtitle2 }}</p>
+        </div>
+      </section>
+    </div>
+     {%- endcase -%}
+    {% endfor %}
+  </div>
+</div>
+  {%- if section.settings.divider -%}</div>{%- endif -%}
+
+{% schema %}
+{
+  "name": "two layout",
+  "class": "index-section",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "divider",
+      "label": "t:sections.featured-video.settings.divider.label",
+      "default": false
+    }
+  ],
+   "blocks": [
+    {
+      "type": "box1",
+      "name": "box1",
+      "settings": [
+        {
+          "type": "text",
+          "id": "etitle1",
+          "label": "title1"
+        },
+        {
+          "type": "text",
+          "id": "recharge",
+          "label": "recharge"
+        },
+        {
+          "type": "text",
+          "id": "hour1",
+          "label": "hour1"
+        },
+        {
+          "type": "range",
+          "id": "width1",
+          "label": "hour1",
+          "default": 80,
+          "min": 0,
+          "max": 100,
+          "step": 2,
+          "unit": "%"
+        },
+        {
+          "type": "text",
+          "id": "em1",
+          "label": "em1"
+        },
+        {
+          "type": "text",
+          "id": "hour2",
+          "label": "hour2"
+        },
+        {
+          "type": "range",
+          "id": "width2",
+          "label": "width2",
+          "default": 80,
+          "min": 0,
+          "max": 100,
+          "step": 2,
+          "unit": "%"
+        },
+        {
+          "type": "text",
+          "id": "em2",
+          "label": "em2"
+        },
+        {
+          "type": "image_picker",
+          "id": "img11",
+          "label": "img1"
+        }
+        
+      ]
+    },
+     {
+      "type": "box2",
+      "name": "box2",
+      "settings": [
+        {
+          "type": "text",
+          "id": "etitle2",
+          "label": "title2"
+        },
+        {
+          "type": "image_picker",
+          "id": "bgaimg2",
+          "label": "img2"
+        },
+        {
+          "type": "text",
+          "id": "esubtitle2",
+          "label": "subtitle2"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "two layout",
+       "blocks": [
+        {
+          "type": "box1"
+        },
+         {
+          "type": "box2"
+        }
+        
+      ]
+    }
+  ]
+}
+{% endschema %}
+<script>
+    var presads = $(".e3-container").offset().top-200;
+// var presadend = $(".feature-row__item").offset().top-10;
+$(window).scroll(function(){
+if( $(window).scrollTop()>presads){
+  $('.e3-container').addClass("tm-active");
+}
+else{
+   $('.e3-container').removeClass("tm-active");
+}
+})
+</script>

@@ -1,0 +1,83 @@
+
+{%- if section.settings.divider -%}
+  <div class="section--divider page-width" >
+{%- endif -%}
+    <div class="collapse-faqs-{{ section.id }}">
+      <h2>{{ section.settings.title }}</h2>
+      {% for faq in section.blocks %}
+        {% assign item_title = forloop.index | append: '. ' | append: faq.settings.question %}
+        {%- render 'tab', id: forloop.index, title: item_title, content: faq.settings.answer -%}
+      {% endfor %}
+    </div>
+{%- if section.settings.divider -%}
+  </div>
+{%- endif -%}
+
+{% style %}
+.collapse-faqs-{{ section.id }} .collapsible-trigger-btn {
+  text-transform: none;
+  letter-spacing: .1em;
+}
+@media screen and (max-width: 550px) {
+  .collapse-faqs-{{ section.id }} h2 {
+    font-size: 1.3rem;
+  }
+  .collapse-faqs-{{ section.id }} .collapsible-trigger-btn.collapsible-trigger-btn--borders.collapsible--auto-height {
+    padding: 0.5rem;
+  }
+}
+{% endstyle %}
+
+{% schema %}
+  {
+    "name": "t:sections.collapse_faq.name",
+    "class": "index-section-collapse-faq",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "divider",
+        "label": "t:sections.collapse_faq.settings.divider.label",
+        "default": true
+      }, {
+        "type": "text",
+        "id": "title",
+        "label": "t:sections.collapse_faq.settings.title.label"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "text",
+        "name": "t:sections.collapse_faq.blocks.column.name",
+        "settings": [
+          {
+            "type": "text",
+            "id": "question",
+            "label": "t:sections.collapse_faq.blocks.column.settings.question.label"
+          },{ 
+            "type": "richtext",
+            "id": "answer",
+            "label": "t:sections.collapse_faq.blocks.column.settings.answer.label"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "t:sections.collapse_faq.presets.collapse_faq.name",
+        "settings": {
+          "divider": true,
+          "title": "FAQ"
+        },
+        "blocks": [
+          {
+            "type": "text",
+            "settings": {
+              "question": "Enter question",
+              "answer": "<p>Enter answer</p>"
+            }
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

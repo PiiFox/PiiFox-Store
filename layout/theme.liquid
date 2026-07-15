@@ -1,0 +1,206 @@
+<!doctype html>
+<html class="no-js" lang="{{ request.locale.iso_code }}" dir="{{ settings.text_direction }}">
+  <head>
+    <!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-P7MQDVN4');</script>
+<!-- End Google Tag Manager -->
+
+    {%- render 'layouthub_header' -%}
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="manifest" href="{{ 'manifest.json' | asset_url }}">
+    <meta name="theme-color" content="{{ settings.color_theme_primary }}">
+    {% render 'noindex-meta' %}
+
+    <link rel="dns-prefetch" href="https://productreviews.shopifycdn.com">
+    <link rel="dns-prefetch" href="https://ajax.googleapis.com">
+    <link rel="dns-prefetch" href="https://maps.googleapis.com">
+    <link rel="dns-prefetch" href="https://maps.gstatic.com">
+
+    {%- if settings.favicon != blank -%}
+      <link rel="shortcut icon" href="{{ settings.favicon | img_url: '32x32' }}" type="image/png">
+    {%- endif -%}
+
+    {%- render 'seo-title' -%}
+    {%- if page_description -%}
+      <meta name="description" content="{{ page_description | escape }}">
+    {%- endif -%}
+    
+    {%- render 'social-meta-tags' -%}
+
+    {{ 'swiper.css' | asset_url | stylesheet_tag: preload: true }}
+    {{ 'fonts-style.css' | asset_url | stylesheet_tag: preload: true }}
+    {{ 'theme.css' | asset_url | stylesheet_tag: preload: true }}
+    {{ 'custom.css' | asset_url | stylesheet_tag: preload: true }}
+    {{ 'css_tool.css' | asset_url | stylesheet_tag: preload: true }}
+    {%- render 'css-variables' -%}
+    <script>
+      document.documentElement.className = document.documentElement.className.replace('no-js', 'js');
+
+      window.theme = window.theme || {};
+      theme.routes = {
+        home: "{{ routes.root_url }}",
+        cart: "{{ routes.cart_url | append: '.js' }}",
+        cartPage: "{{ routes.cart_url }}",
+        cartAdd: "{{ routes.cart_add_url | append: '.js' }}",
+        cartChange: "{{ routes.cart_change_url | append: '.js' }}",
+        search: "{{ routes.search_url }}"
+      };
+      theme.strings = {
+        soldOut: {{ 'products.product.sold_out' | t | json }},
+        unavailable: {{ 'products.product.unavailable' | t | json }},
+        inStockLabel: {{ 'products.product.in_stock_label' | t | json }},
+        stockLabel: {{ 'products.product.stock_label' | t: count: '[count]' | json }},
+        willNotShipUntil: {{ 'products.product.will_not_ship_until' | t: date: '[date]' | json }},
+        willBeInStockAfter: {{ 'products.product.will_be_in_stock_after' | t: date: '[date]' | json }},
+        waitingForStock: {{ 'products.product.waiting_for_stock' | t | json }},
+        savePrice: {{ 'products.general.save_html' | t: saved_amount: '[saved_amount]' | json }},
+        cartEmpty: {{ 'cart.general.empty' | t | json }},
+        cartTermsConfirmation: {{ 'cart.general.terms_confirm' | t | json }},
+        searchCollections: {{ 'general.search.collections' | t | json }},
+        searchPages: {{ 'general.search.pages' | t | json }},
+        searchArticles: {{ 'general.search.articles' | t | json }}
+      };
+      theme.settings = {
+        dynamicVariantsEnable: true,
+        cartType: {{ settings.cart_type | json }},
+        isCustomerTemplate: {% if request.page_type contains 'customers/' %}true{% else %}false{% endif %},
+        moneyFormat: {{ shop.money_format | json }},
+        saveType: {{ settings.product_save_type | json }},
+        productImageSize: {{ settings.product_grid_image_size | json }},
+        productImageCover: {{ settings.product_grid_image_fill }},
+        predictiveSearch: {{ settings.predictive_search_enabled }},
+        predictiveSearchType: {{ settings.search_type | json }},
+        quickView: {{ settings.quick_shop_enable }},
+        themeName: 'Dawn',
+        themeVersion: "9.0.0"
+      };
+    </script>
+
+    {{ content_for_header }}
+
+    <script src="{{ 'jquery.js' | asset_url }}" ></script>
+    <script src="{{ 'swiper.js' | asset_url }}" ></script>
+
+    <script src="{{ 'vendor-scripts-v11.js' | asset_url | split: '?' | first }}" defer="defer"></script>
+
+    {% comment %} {%- if shop.enabled_currencies.size > 1 -%}
+      <link rel="stylesheet" href="{{ 'country-flags.css' | asset_url | split: '?' | first }}">
+    {%- endif -%} {% endcomment %}
+
+    <script src="{{ 'wow.js' | asset_url }}" defer="defer"></script>
+    <script src="{{ 'filter.js' | asset_url }}" defer="defer"></script>
+    <script src="{{ 'theme.js' | asset_url }}" defer="defer"></script>
+
+    {%- if request.page_type contains 'customers/' -%}
+      <script src="{{ 'shopify_common.js' | shopify_asset_url }}" defer="defer"></script>
+    {%- endif -%}
+
+    {{ shop.metafields.loox.global_html_head }}
+  </head>
+
+  <body
+    class="template-{{ template | replace: '.', ' ' | truncatewords: 1, '' | handle }}{% if request.path == '/challenge' %} template-challange{% endif %}"
+    data-center-text="{{ settings.type_body_align_text }}"
+    data-button_style="{{ settings.button_style }}"
+    data-type_header_capitalize="{{ settings.type_header_capitalize }}"
+    data-type_headers_align_text="{{ settings.type_headers_align_text }}"
+    data-type_product_capitalize="{{ settings.type_product_capitalize }}"
+    data-swatch_style="{{ settings.swatch_style }}"
+    {% if settings.disable_animations %}
+      data-disable-animations="true"
+    {% endif %}
+  >
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-P7MQDVN4"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+    <script>
+      $(function () {
+        // 把逻辑封装成函数，方便多次调用
+        function handleHeaderLayout() {
+          let bodyClass = $('body').attr('class');
+          if (bodyClass === 'template-index') {
+            $('#ActivityBar-header').show();
+            $('#shopify-section-activity-bar').hide();
+          } else {
+            $('#ActivityBar-header').hide();
+            $('#shopify-section-activity-bar').show();
+            $('#StickyHeaderWrap').css('height', '35px');
+
+            // 调用你的获取可见高度函数
+            $('.template-collection .collection-filter').css('top', getVisibleHeight($('#SiteHeader')) - 1 + 'px');
+          }
+        }
+
+        // 1. 页面加载时执行一次
+        handleHeaderLayout();
+
+        // 2. 窗口 resize 时执行（加防抖，不卡顿）
+        $(window).on(
+          'resize',
+          theme.utils.debounce(function () {
+            handleHeaderLayout();
+          }, 500)
+        ); // 500ms 防抖，非常顺滑
+      });
+    </script>
+    <div id="PageContainer" class="page-container">
+      <div class="transition-body">
+        {%- section 'activity-bar' -%}
+        {%- section 'header' -%}
+        <main class="main-content" id="MainContent">
+          {% if request.page_type != 'product' and request.page_type != 'collection' and request.page_type != 'article' %}
+            <h1 style="display: none;">PIIFOX | Mechanical Keyboards, Gaming Mice & PC Accessories. </h1>
+          {% elsif request.page_type == 'collection' %}
+            <h1 style="display: none;">PIIFOX | {{ collection.title }}</h1>
+          {% elsif request.page_type == 'article' %}
+            <h1 style="display: none;">PIIFOX | {{ article.title }}</h1>
+          {% endif %}
+          <!-- LayoutHub-Workspace-Start -->
+          {{ content_for_layout }}
+          <!-- LayoutHub-Workspace-End -->
+        </main>
+        {%- section 'foot-newsletter' -%}
+        {%- section 'footer-promotions' -%}
+        {%- section 'footer' -%}
+      </div>
+    </div>
+
+    {% render 'tool-tip' %}
+
+    {%- render 'layouthub_footer' -%}
+   
+    {% if shop.metafields.loox.global_html_body != empty %}
+      {{ shop.metafields.loox.global_html_body }}
+    {% endif %}
+
+    <div class="footer-opera--wrapper">
+      <div class="footer-function-list">
+        <a href="javascript:;" class="icon-box return-top" aria-label="Return to top">
+          <svg
+            class="return-top-icon"
+            xmlns="http://www.w3.org/2000/svg"
+            width="30"
+            height="30"
+            viewBox="0 0 24 24"
+            fill="none"
+          >
+            <path d="M12.707 5.293a1 1 0 0 0-1.414 0l-4 4a1 1 0 0 0 1.414 1.414L11 8.414V18a1 1 0 1 0 2 0V8.414l2.293 2.293a1 1 0 0 0 1.414-1.414l-4-4Z" fill="currentColor"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+
+    <!-- **BEGIN** Hextom SPM Integration // Main Include - DO NOT MODIFY -->
+    {% render 'hextom_spm_main', product: product, customer: customer %}
+    <!-- **END** Hextom SPM Integration // Main Include - DO NOT MODIFY -->
+
+    {% render 'seo-jsonld' %}
+  </body>
+</html>

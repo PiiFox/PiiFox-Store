@@ -1,0 +1,148 @@
+{% style %}
+    .support-background-box {width: 100%;position: relative;color: #fff;box-sizing: border-box;overflow: hidden; height: 500px;}
+    .support-background-box.no-image{color: #000;border-bottom: 1px solid rgba(0,0,0,0.1);}
+    .support-background-box .conbg{
+      position:relative;
+      top:0;
+      left:50%;
+      transform:translate(-50%,0);
+      z-index:0;
+      -moz-user-select:none;
+      -webkit-user-select:none;
+      -ms-user-select:none;
+      -khtml-user-select:none;
+      user-select:none;
+      aspect-ratio: 2560/800;
+      height: 100%;
+      width: 100%;
+      min-width: unset;
+      object-fit: cover;
+      object-position: center;
+    }
+    .support-background-box .context{
+      position:absolute;
+      height:100%;
+      width:100%;
+      left: 0; 
+      top: 0;
+    }
+    
+    .support-background-box .context .container12 {display: inline-block;position: relative;left: {{ section.settings.left }}%; top: {{ section.settings.top }}%;transform: translate(-50%, -50%);}
+    .support-background-box .textcenter{text-align: center;}
+    .support-background-box .textleft {text-align: left;} 
+    .support-background-box .textright {text-align: right;}
+    .support-background-box h2 {font-weight:600;font-size:3em;}
+    .support-background-box p {font-size:calc(var(--typeHeaderSize)*0.8);font-weight:400;}
+
+    @media screen and (max-width: 768px) {
+      .support-background-box .conbg{aspect-ratio: 768/500;}
+      .support-background-box .context{bottom: 0;right: 0;z-index: 1;margin: 0 auto;display:block;}
+      .support-background-box h2{font-size:2em;}
+      .support-background-box p{font-size:1.2em;}
+    }
+  {% endstyle %}
+{% if section.settings.image and section.settings.mimage  %}
+  {% assign has_image = true | default: false %}
+{% endif %}
+{%- if section.settings.divider -%}
+  <div class="support-background-box {% if has_image == false %} no-image {% endif %}">
+    {% if has_image %}
+    <picture class="conbg-img">
+      <source srcset="{{ section.settings.mimage | img_url: 'master' }}" media="(max-width:768px)">
+      <source srcset="{{ section.settings.image | img_url: 'master' }}" media="(max-width:1200px)">
+      <img src="{{ section.settings.image | img_url: 'master' }}" alt="{{ section.settings.mimage.alt }}" class="conbg">
+    </picture>
+    {% endif %}
+    <div class="context" >
+      <div class="container12 {{ section.settings.aligntext }}">
+        <h2>{{ section.settings.titleh1 }}</h2>
+        <p>{{ section.settings.titlep }}</p>
+      </div>
+    </div>
+  </div>
+  {{ section.settings.custom_html }} 
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "t:sections.support-img.name",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "divider",
+      "label": "t:sections.support-img.divider",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "titleh1",
+      "label": "t:sections.support-img.settings.titleh1.label"
+    },
+    {
+      "type": "text",
+      "id": "titlep",
+      "label": "t:sections.support-img.settings.titlep.label"
+    },
+    {
+      "type": "select",
+      "id": "aligntext",
+      "label": "t:sections.support-img.settings.align_text.label",
+      "default": "textcenter",
+      "options": [
+        {
+          "value": "textleft",
+          "label": "t:sections.support-img.settings.align_text.options.left.label"
+        },
+        {
+          "value": "textcenter",
+          "label": "t:sections.support-img.settings.align_text.options.center.label"
+        },
+        {
+          "value": "textright",
+          "label": "t:sections.support-img.settings.align_text.options.right.label"
+        }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "left",
+      "label": "Left",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "top",
+      "label": "Top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 50
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "t:sections.support-img.settings.image.label"
+    },
+    {
+      "type": "image_picker",
+      "id": "mimage",
+      "label": "t:sections.support-img.settings.image_mobile.label"
+    },
+    {
+      "type": "textarea",
+      "id": "custom_html",
+      "label": "HTML Code"
+    }
+  ]
+}
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+{% javascript %}
+{% endjavascript %}

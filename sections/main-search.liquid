@@ -1,0 +1,212 @@
+<div class="search-content" data-section-id="{{ section.id }}" data-section-type="collection-grid">
+  <div class="page-width page-content">
+    {%- render 'breadcrumbs' -%}
+
+    <header class="section-header">
+      <h1 class="section-header__title">
+        {% comment %}{{ 'general.search.title' | t }}{% endcomment %}
+        {{ search.results_count }}&nbsp;{{ 'general.search.title' | t: terms: search.terms }}
+      </h1>
+    </header>
+
+    {%- render 'search-bar', search_btn_style: 'btn', search_bar_location: 'search-bar--page' -%}
+
+    {%- if search.performed -%}
+      <hr class="hr--medium">
+
+      <div class="section-header">
+        {%- if search.results_count == 0 -%}
+          <p>
+            {{ 'general.search.no_results_html' | t: terms: search.terms | replace: '*', '' }}
+          </p>
+        {%- endif -%}
+      </div>
+
+      {%- if search.results_count != 0 -%}
+        {% paginate search.results by 100 %}
+        {% assign search_products = search.results | where: 'object_type', 'product' %}
+        {% assign search_others = search.results | reject: 'object_type', 'product' %}
+
+        <div class="search-tab-list appear-delay{% cycle '','-1','-2','-3','-4' %}">
+          <div
+            class="tab-item tab-item-products appear-delay{% cycle '','-1','-2','-3','-4' %} active"
+            data-trigger-tab="products"
+          >
+            <div class="tab-item-title">Products({{ search_products.size }})</div>
+          </div>
+          <div
+            class="tab-item tab-item-products appear-delay{% cycle '','-1','-2','-3','-4' %} "
+            data-trigger-tab="others"
+          >
+            <div class="tab-item-title">Others({{ search_others.size }})</div>
+          </div>
+        </div>
+
+        <div id="CollectionAjaxContent" class="grid grid--uniform" data-scroll-to>
+          <div class="grid__item medium-up--four-fifths grid__item--content" data-collection-content="products" style="display:block;">
+            {% render 'collection-grid',
+              collection: search,
+              items: search_products,
+              enable_sidebar: section.settings.enable_sidebar,
+              filter_style: section.settings.filter_style,
+              enable_sort: true,
+              enable_collection_count: false,
+              per_row: section.settings.per_row,
+              mobile_flush_grid: section.settings.mobile_flush_grid,
+              quick_shop_enable: settings.quick_shop_enable
+            %}
+          </div>
+          <div class="grid__item medium-up--four-fifths grid__item--content" data-collection-content="others" style="display:none;">
+            {% render 'collection-grid',
+              collection: search,
+              items: search_others,
+              enable_sidebar: section.settings.enable_sidebar,
+              filter_style: section.settings.filter_style,
+              enable_sort: true,
+              enable_collection_count: false,
+              per_row: section.settings.per_row,
+              mobile_flush_grid: section.settings.mobile_flush_grid,
+              quick_shop_enable: settings.quick_shop_enable
+            %}
+          </div>
+        </div>
+
+        {% endpaginate %}
+      {% endif %}
+    {%- endif -%}
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const tabItems = document.querySelectorAll('.search-tab-list .tab-item');
+    const contentItems = document.querySelectorAll('[data-collection-content]');
+
+    tabItems.forEach((tab) => {
+      tab.addEventListener('click', function () {
+        const target = this.getAttribute('data-trigger-tab');
+
+        // Toggle active class on tabs
+        tabItems.forEach((t) => t.classList.remove('active'));
+        this.classList.add('active');
+
+        // Show/hide content based on the clicked tab
+        contentItems.forEach((content) => {
+          if (content.getAttribute('data-collection-content') === target) {
+            content.style.display = 'block';
+          } else {
+            content.style.display = 'none';
+          }
+        });
+      });
+    });
+  });
+</script>
+
+{% style %}
+  .search-content .search-tab-list {
+    display: inline-flex;
+    justify-content: flex-start;
+    margin-bottom: 30px;
+    background-color: #eaeaec;
+    border-radius: 20em;
+    padding: 0.4em;
+  }
+  .search-content .tab-item {
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 20em;
+  }
+  .search-content .tab-item.active {
+    background-color: #fff;
+  }
+{% endstyle %}
+
+{%- if section.settings.enable_sidebar == false or section.settings.filter_style == 'drawer' -%}
+  {% comment %}
+    Override grid styles if sidebar is disabled
+  {% endcomment %}
+  <style>
+    .search-content .grid__item--sidebar {
+      width: 0;
+    }
+    .search-content .grid__item--content {
+      width: 100%;
+    }
+    .grid__item--sidebar {
+      position: static;
+      overflow: hidden;
+    }
+  </style>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "t:sections.main-search.name",
+  "settings": [
+    {
+      "type": "header",
+      "content": "t:sections.main-search.settings.header_filtering_and_sorting"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_sidebar",
+      "label": "t:sections.main-search.settings.enable_sidebar.label",
+      "default": true,
+      "info": "t:sections.main-search.settings.enable_sidebar.info"
+    },
+    {
+      "type": "checkbox",
+      "id": "collapsed",
+      "label": "t:sections.main-search.settings.collapsed.label",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "filter_style",
+      "label": "t:sections.main-search.settings.filter_style.label",
+      "default": "sidebar",
+      "options": [
+        {
+          "value": "sidebar",
+          "label": "t:sections.main-search.settings.filter_style.options.sidebar.label"
+        },
+        {
+          "value": "drawer",
+          "label": "t:sections.main-search.settings.filter_style.options.drawer.label"
+        }
+      ]
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_color_swatches",
+      "label": "t:sections.main-search.settings.enable_color_swatches.label",
+      "info": "t:sections.main-search.settings.enable_color_swatches.info"
+    },
+    {
+      "type": "range",
+      "id": "per_row",
+      "label": "t:sections.main-search.settings.per_row.label",
+      "default": 4,
+      "min": 2,
+      "max": 5,
+      "step": 1
+    },
+    {
+      "type": "range",
+      "id": "rows_per_page",
+      "label": "t:sections.main-search.settings.rows_per_page.label",
+      "default": 7,
+      "min": 3,
+      "max": 20,
+      "step": 1
+    },
+    {
+      "type": "checkbox",
+      "id": "mobile_flush_grid",
+      "label": "t:sections.main-search.settings.mobile_flush_grid.label",
+      "default": false
+    }
+  ]
+}
+{% endschema %}

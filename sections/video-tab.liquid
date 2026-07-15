@@ -1,0 +1,256 @@
+{%- if section.settings.divider -%}
+  <div class="section--divider">
+  {%- endif -%}
+  <div class="{{ section.id }}-video-show-model">
+    <button class="video-visible-btn">X</button>
+    <iframe class="video-show-model--wrapper" src="" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
+  </div>
+  <div class="page-width video-tab--wrapper">
+
+    {%- if section.settings.title != blank -%}
+      <header class="section-header custom-left-header">
+        <div class="header-line">
+          <h2 class="section-header__title">
+            {% assign firstItem = section.blocks | first %}
+              {% if section.settings.collection != blank %}    
+                {{ section.settings.collection.title | escape }}
+              {% else %}
+                {{ section.settings.title | escape }}
+              {% endif %}
+          </h2>
+          {% if section.settings.viewMore %}
+            <div class="header-opera">
+              <a href="{{ section.settings.moreURL }}">View More&nbsp;&gt;</a>
+            </div>
+          {% endif %}
+        </div>
+        <p style="display: none">Due to the high resolution of the samples, playback may freeze when the computer configuration is not high.</p>
+      </header>
+    {%- endif -%}
+
+    {%- if section.blocks.size > 0 -%}
+      <div class="tab_lists">
+        <div class="tabspan">
+          <div class="ts_item">
+            <div class="grid video-list">
+              {%- for block in section.blocks -%}
+                {% if section.settings.viewMore != true or forloop.index0 < 8  %}
+                <div class="grid__item medium-up--one-quarter video-item">
+                  <div class="pv_info">
+                  {% assign link_split_arr = block.settings.link | split: 'youtu' %}
+                    <a {% if link_split_arr.size > 1 %}href="{{ block.settings.link }}"{% endif %} class="video-item-link" data-key="{{ block.settings.link }}" data-link="{{ block.settings.link }}" data-section-id="{{ section.id }}">
+                      {% if block.settings.image != blank %}
+                        <img src="{{ block.settings.image | img_url:"master" }}" alt="{{ block.settings.title }}">
+                      {% else %}
+                        {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+                      {% endif %}
+                      <div class="pv_play" data-key="{{ block.settings.link }}" data-link="{{ block.settings.link }}" data-section-id="{{ section.id }}">
+                        <div class="pv_icon" data-key="{{ block.settings.link }}" data-link="{{ block.settings.link }}" data-section-id="{{ section.id }}">
+                          <svg t="1679111578799" data-key="{{ block.settings.link }}" data-link="{{ block.settings.link }}" data-section-id="{{ section.id }}" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2872" id="mx_n_1679111578800" xmlns:xlink="http://www.w3.org/1999/xlink">
+                            <path d="M264.566 203a15 15 0 0 0-15.014 14.986l-0.552 589.358a15 15 0 0 0 22.646 12.92l497.348-294.7a15 15 0 0 0 0.004-25.806L272.204 205.1a15 15 0 0 0-7.64-2.098z m53.55-75.31l496.796 294.66c49.876 29.584 66.328 93.998 36.744 143.874a105 105 0 0 1-36.784 36.768l-497.346 294.7c-49.89 29.56-114.298 13.08-143.86-36.808A105 105 0 0 1 159 807.26l0.552-589.36c0.054-57.988 47.108-104.954 105.098-104.9a105 105 0 0 1 53.466 14.69z" fill="currentColor" p-id="2873"></path>
+                          </svg>
+                        </div>
+                      </div>
+                    </a>
+                    <div class="pv_text" >
+                      <h3>
+                        <div class="video-item-link" data-key="{{ block.settings.link }}" data-link="{{ block.settings.link }}" data-section-id="{{ section.id }}">{{ block.settings.title }}</div>
+                      </h3>
+                    </div>
+                  </div>
+                </div>
+                {% endif %}
+              {%- endfor -%}
+            </div>
+          </div>
+        </div>
+      </div>
+    {%- endif -%}
+    {%- if section.blocks.size == 0 -%}
+      <div class="placeholder-noblocks">
+        {{ 'home_page.onboarding.no_content' | t }}
+      </div>
+    {%- endif -%}
+  </div>
+  {%- if section.settings.divider -%}
+  </div>
+{%- endif -%}
+{% javascript %}
+  $(function(){  
+    let linkTagList = document.querySelectorAll('.video-item-link');
+    for(let i = 0; i < linkTagList.length; i++) {
+      let linkAddress = linkTagList[i].dataset.link;
+      linkTagList[i].addEventListener('click',(event) => {
+          if(!linkAddress.includes('youtu')) {
+            modelVisible(event)
+          }else {
+            console.log(theme)
+            theme.videoModal()
+          }
+      })
+    }
+  })
+  function modelVisible(event){
+      let el = event.target;
+      let linkAddress = el.dataset.link;
+      let sectionId = el.dataset.sectionId;
+      let model = $('.'+sectionId+'-video-show-model')
+      $('.'+sectionId+'-video-show-model iframe.video-show-model--wrapper').attr('src', linkAddress);
+      // model.css('display', 'block')
+      model.show();
+      $('.'+sectionId+'-video-show-model .video-visible-btn').click((e) => {
+        $('.'+sectionId+'-video-show-model iframe.video-show-model--wrapper').attr('src', '');
+        // model.css('display', 'none')
+        model.hide();
+      })
+      
+  }
+{% endjavascript %}
+{% style %}
+  .{{ section.id }}-video-show-model {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left 0: ;
+    background: rgba(0,0,0,0.8);
+    z-index: 9999999;
+    transition: all 0.4s ease;
+    display: none;
+  }
+  .video-visible-btn {
+    position: relative;
+    top: 2rem;
+    left: calc(100% - 4rem);
+    /* right: 2rem; */
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    background: #ccc;
+    color: #fff;
+  }
+  .video-show-model--wrapper {
+    margin: 0 auto;
+    position: relative;
+    top: 4rem;
+    width: 100%;
+    height: 70%;
+  }
+  .video-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr));
+    grid-gap: 1rem;
+  }
+  .video-item {
+    width: 100%;
+    max-width: 20rem;
+    padding-left: 0px;
+    margin: 0 auto;
+  }
+  .video-tab--wrapper {
+    padding-bottom: 2rem;
+  }
+  .custom-left-header .header-line {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    border-bottom: 2px solid #ccc;
+  }
+  .header-line .header-opera {
+    font-size: 1rem;
+  }
+  .section-header.custom-left-header {
+    color: rgba(0,0,0,.7);
+    font-size: 2rem;
+    font-weight: 500;
+    line-height: 3rem;
+    text-align: left;
+  }
+  .section-header.custom-left-header h2 {
+    font-weight: 600;
+  }
+  .section-header.custom-left-header p {
+    font-size: 1rem;
+    line-height: 2rem;
+    font-weight: 400;
+  }
+  .pv_text h3 a {
+    color: rgba(0,0,0,.7);
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 2rem;
+    margin-top: 0.3rem;
+    text-align: left;
+}
+{% endstyle %}
+
+{% schema %}
+  {
+    "name": "Video Tab",
+    "settings": [
+      {
+        "type": "collection",
+        "id": "collection",
+        "label": "Collection"
+      },
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Title"
+      },
+      {
+        "type": "checkbox",
+        "id": "viewMore",
+        "label": "View More"
+      },
+      {
+        "type": "url",
+        "id": "moreURL",
+        "label": "More URL"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "text",
+        "name": "Column",
+        "settings": [
+          {
+            "type": "text",
+            "id": "subtitle",
+            "label": "Sub Title",
+            "default": "Sub Title"
+          }, {
+            "type": "text",
+            "id": "title",
+            "label": "Title",
+            "default": "Title"
+          }, {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image"
+          }, {
+            "type": "url",
+            "id": "link",
+            "label": "Link"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Video tab",
+        "blocks": [
+          {
+          "type": "text"
+          },
+          {
+          "type": "text"
+          },
+          {
+          "type": "text"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

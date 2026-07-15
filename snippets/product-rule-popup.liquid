@@ -1,0 +1,173 @@
+{% assign block = section.blocks | find: 'type', 'collapse_rule_list' %}
+
+<div
+  id="ProductRuleListPopup-{{ section.id }}"
+  class="modal modal--square modal--mobile-friendly notranslate"
+  data-section-id="{{ section.id }}"
+  data-section-type="ProductRuleList-popup"
+>
+  <div class="modal__inner">
+    <div class="modal__centered medium-up--text-center">
+      <div class="modal__title">Key Features</div>
+      <button type="button" class="modal__close js-modal-close text-link">
+        <svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-close" viewBox="0 0 64 64">
+          <path d="M19 17.61l27.12 27.13m0-27.12L19 44.74"/>
+        </svg>
+        <span class="icon__fallback-text">{{ 'general.accessibility.close_modal' | t | json }}</span>
+      </button>
+      <div class="modal__centered-content">
+        <div class="product-rule-list--wrapper">
+          <div class="product-rule-item" data-index="1">
+            <div class="product-rule-item-header">
+              <div class="collapse-rule-item-icon">
+                <img
+                  src="{{ block.settings.rule_item1_icon | img_url: "45x45" }}"
+                  alt="{{ product.title }}"
+                  title="{{ product.title }}"
+                >
+              </div>
+              <div class="collapse-rule-item-title">{{ block.settings.rule_item1_title }}</div>
+              <div class="collapse-rule-item-collapse">&gt;</div>
+            </div>
+            <div class="product-rule-item-body">
+                {{ block.settings.rule_item1_context }}
+            </div>
+          </div>
+          <div class="product-rule-item" data-index="2">
+            <div class="product-rule-item-header">
+              <div class="collapse-rule-item-icon">
+                <img
+                  src="{{ block.settings.rule_item2_icon | img_url: "45x45" }}"
+                  alt="{{ product.title }}"
+                  title="{{ product.title }}"
+                >
+              </div>
+              <div class="collapse-rule-item-title">{{ block.settings.rule_item2_title }}</div>
+              <div class="collapse-rule-item-collapse">&gt;</div>
+            </div>
+            <div class="product-rule-item-body">
+                {{ block.settings.rule_item2_context }}
+            </div>
+          </div>
+          <div class="product-rule-item" data-index="3">
+            <div class="product-rule-item-header">
+              <div class="collapse-rule-item-icon">
+                <img
+                  src="{{ block.settings.rule_item3_icon | img_url: "45x45" }}"
+                  alt="{{ product.title }}"
+                  title="{{ product.title }}"
+                >
+              </div>
+              <div class="collapse-rule-item-title">{{ block.settings.rule_item3_title }}</div>
+              <div class="collapse-rule-item-collapse">&gt;</div>
+            </div>
+            <div class="product-rule-item-body">
+                {{ block.settings.rule_item3_context }}
+            </div>
+          </div>
+          <div class="product-rule-item" data-index="4">
+            <div class="product-rule-item-header">
+              <div class="collapse-rule-item-icon">
+                <img
+                  src="{{ block.settings.rule_item1_icon | img_url: "45x45" }}"
+                  alt="{{ product.title }}"
+                  title="{{ product.title }}"
+                >
+              </div>
+              <div class="collapse-rule-item-title">{{ block.settings.rule_item4_title }}</div>
+              <div class="collapse-rule-item-collapse">&gt;</div>
+            </div>
+            <div class="product-rule-item-body">
+                {{ block.settings.rule_item4_context }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  window.ProductRuleListModel = new theme.Modals('ProductRuleListPopup-{{ section.id }}', 'product-template-rule-list');
+  
+  const cancelBtn = document.querySelector(`#ProductRuleListPopup-{{ section.id }} .cancel-btn`);
+  if (cancelBtn) {
+    cancelBtn.addEventListener('click', function() {
+      window.ProductRuleListModel.close();
+    });
+  }
+
+  const popupId = 'ProductRuleListPopup-{{ section.id }}';
+  const items = document.querySelectorAll(`#${popupId} .product-rule-item`);
+  
+  items.forEach(item => {
+    item.addEventListener('click', function(e) {
+      const activeBody = this.querySelector('.product-rule-item-body');
+      
+      const allBodies = document.querySelectorAll(`#${popupId} .product-rule-item .product-rule-item-body`);
+      allBodies.forEach(body => body.classList.remove('active'));
+      
+      if (activeBody) {
+        activeBody.classList.add('active');
+      }
+    });
+  });
+});
+</script>
+{% style %}
+  div#ProductRuleListPopup-{{ section.id }} .modal__inner {border-radius: 6px;}
+  div#ProductRuleListPopup-{{ section.id }}.modal--square .modal__centered-content {
+    max-width: 700px;
+    box-sizing: border-box;
+  }
+  div#ProductRuleListPopup-{{ section.id }}.modal--square .modal__close {
+    padding: 2em 3em;
+  }
+  div#ProductRuleListPopup-{{ section.id }}.modal--square .modal__title {
+    text-align: left;
+    font-size: 2em;
+    font-weight: 700;
+    padding: 0.8em 1.5em;
+  }
+  div#ProductRuleListPopup-{{ section.id }}.modal--square .modal__centered-content {
+    padding: 0em 2em 2em 2em;
+  }
+  div#ProductRuleListPopup-{{ section.id }} .product-rule-item {
+    padding: 1em ;
+    border-bottom: 1px solid var(--colorBorder);
+    cursor: pointer;
+  }
+  div#ProductRuleListPopup-{{ section.id }} .product-rule-item-header {
+    display: flex;
+    align-items: center;
+  }
+  div#ProductRuleListPopup-{{ section.id }} .product-rule-item .collapse-rule-item-icon img {
+    width: 1.3em;
+    margin-right: 1em;
+  }
+  div#ProductRuleListPopup-{{ section.id }} .product-rule-item .collapse-rule-item-title {
+    font-size: 1.1em;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    flex: 1;
+    text-align: left;
+  }
+  div#ProductRuleListPopup-{{ section.id }} .product-rule-item .collapse-rule-item-collapse {
+    font-size: 1.3em;
+    color: #bfbfc3;
+    margin-left: 1em;
+  }
+  div#ProductRuleListPopup-{{ section.id }} .product-rule-item .product-rule-item-body {
+    height: 0;
+    opacity: 0;
+    font-size: 1.1em;
+    font-weight: 400;
+    color: var(--color-second-text);
+    text-align: left;
+  }
+  div#ProductRuleListPopup-{{ section.id }} .product-rule-item.active .product-rule-item-body {
+    height: unset;
+    opacity: 1;
+  }
+{% endstyle %}

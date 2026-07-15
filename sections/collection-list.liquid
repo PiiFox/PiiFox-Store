@@ -1,0 +1,432 @@
+<div class="collection-list-section-{{ section.id }} wow bounceInUp">
+  <div class="collection-list-section--wrapper page-width">
+    <h2 class="collection-list-section-title custom-txt-bold appear-delay{% cycle '','-1','-2','-3','-4' %}">
+      {{ section.settings.title }}
+    </h2>
+    {% comment %} Tab导航点击切换集合 {% endcomment %}
+    <div class="collection-tab-list appear-delay{% cycle '','-1','-2','-3','-4' %}">
+      {% for block in section.blocks %}
+        <div class="tab-item tab-item-{{ block.settings.collection_title }} appear-delay{% cycle '','-1','-2','-3','-4' %} {% if forloop.first %}active{% endif %}">
+          <div class="tab-item-title">{{ block.settings.collection_title }}</div>
+        </div>
+      {% endfor %}
+    </div>
+    {% comment %} 集合产品展示 swiper {% endcomment %}
+    <div class="collection-list appear-delay{% cycle '','-1','-2','-3','-4' %}">
+      {% for block in section.blocks %}
+        <div
+          class="
+            collection-product-list collection-item-{{ block.settings.collection.id }}  swiper-container
+            appear-delay{% cycle '','-1','-2','-3','-4' %}
+             {% if forloop.first %}active{% endif %}
+          "
+          data-collection-id="{{ block.settings.collection.id }}"
+        >
+          <div class="swiper-wrapper">
+            {% for product in block.settings.collection.products %}
+              {% if forloop.index0 < 10 %}
+                {% liquid
+                  assign on_sale = false
+                  if product.compare_at_price > product.price
+                    assign on_sale = true
+                  endif
+                %}
+                {% style %}
+                  .collection-list-section-{{ section.id }} .collection-product-item-{{ product.id }} .product-image {
+                    background: url({{ product.featured_image | image_url: width: 1000, height: 1000, format: 'webp'}}) center center / cover no-repeat;
+                  }
+                {% endstyle %}
+                <div class="collection-product-item swiper-slide collection-product-item-{{ product.id }}">
+                  <a href="{{ product.url }}" class="collection-product-link">
+                    <div class="collection-product-title custom-txt-semibold">{{ product.title }}</div>
+                    <div class="collection-product-introduction">
+                      {{ product.metafields.custom.short_introduction }}
+                    </div>
+                    <div class="collection-product-features">{{ product.metafields.custom.short_features }}</div>
+                    <div class="product-image"></div>
+                    <div class="collection-product-options">
+                      <div class="collection-product-price custom-txt-semibold">
+                        {%- if on_sale -%}
+                          <span class="visually-hidden">{{ 'products.general.sale_price' | t }}</span>
+                        {% endif %}
+                        {%- if product.price_varies -%}
+                          {%- assign price = product.price_min | money -%}
+                          {{ 'products.general.from_text_html' | t: price: price }}
+                        {%- else -%}
+                          {{ product.price | money }}
+                        {%- endif -%}
+
+                        {%- if on_sale -%}
+                          <span class="visually-hidden">{{ 'products.general.regular_price' | t }}</span>
+                          <span class="grid-product__price--original">{{ product.compare_at_price | money }}</span>
+                        {%- endif -%}
+
+                        {%- if on_sale -%}
+                          {%- if settings.product_save_amount -%}
+                            {%- if settings.product_save_type == 'dollar' -%}
+                              {%- capture saved_amount -%}{{ product.compare_at_price | minus: product.price | money }}{%- endcapture -%}
+                            {%- else -%}
+                              {%- capture saved_amount -%}{{ product.compare_at_price | minus: product.price | times: 100.0 | divided_by: product.compare_at_price | round }}%{%- endcapture -%}
+                            {%- endif -%}
+                            <span class="grid-product__price--savings">
+                              {{ 'products.general.save_html' | t: saved_amount: saved_amount }}
+                            </span>
+                          {%- endif -%}
+                        {%- endif -%}
+
+                        {%- assign product_variant = product.selected_or_first_available_variant -%}
+                        {%- if product_variant.unit_price_measurement -%}
+                          <div class="product__unit-price">
+                            {%- capture unit_price_base_unit -%}
+                            {%- if product_variant.unit_price_measurement -%}
+                              {%- if product_variant.unit_price_measurement.reference_value != 1 -%}
+                                {{ product_variant.unit_price_measurement.reference_value }}
+                              {%- endif -%}
+                              {{ product_variant.unit_price_measurement.reference_unit }}
+                            {%- endif -%}
+                          {%- endcapture -%}
+
+                            {{ product_variant.unit_price | money }}/{{ unit_price_base_unit }}
+                          </div>
+                        {%- endif -%}
+                      </div>
+                      <div class="collection-product-btn custom-txt-medium custom-btn">
+                        {{ 'general.custom.button_label' | t }}
+                      </div>
+                    </div>
+                  </a>
+                </div>
+              {% endif %}
+            {% endfor %}
+          </div>
+
+          <div class="swiper-button-prev">
+            <svg
+              class="group-hover/svg:scale-[1.3] transition-scale duration-300 "
+              xmlns="http://www.w3.org/2000/svg"
+              xmlns:xlink="http://www.w3.org/1999/xlink"
+              fill="none"
+              version="1.1"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+            >
+              <g><g transform="matrix(-1,0,0,1,30.833984375,0)"><path d="M15.4169921875,6.166748046875C15.4169921875,6.564568046875,15.5750271875,6.9461080468750005,15.8563321875,7.227408046875L20.6290021875,12.000078046875L15.8563321875,16.772748046875C15.5750271875,17.054048046875,15.4169921875,17.435548046875,15.4169921875,17.833448046875C15.4169921875,18.661848046875,16.0885651875,19.333448046875,16.9169921875,19.333448046875C17.3148121875,19.333448046875,17.6963521875,19.175348046875,17.9776521875,18.894048046875L23.810982187500002,13.060738046875C24.0922921875,12.779438046875,24.2503221875,12.397908046875,24.2503221875,12.000078046875C24.2503221875,11.602258046875,24.0922921875,11.220728046875,23.810982187500002,10.939418046875L17.9776521875,5.106088046875C17.6963521875,4.824783046875,17.3148121875,4.666748046875,16.9169921875,4.666748046875C16.0885651875,4.666748046875,15.4169921875,5.338321046875,15.4169921875,6.166748046875Z" fill-rule="evenodd" fill="#FFFFFF" fill-opacity="1"></path></g></g>
+            </svg>
+          </div>
+          <div class="swiper-button-next">
+            <svg
+              class="group-hover/svg:scale-[1.3] transition-scale duration-300"
+              xmlns="http://www.w3.org/2000/svg"
+              xmlns:xlink="http://www.w3.org/1999/xlink"
+              fill="none"
+              version="1.1"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+            >
+              <g><g><path d="M8.5830078125,6.166748046875C8.5830078125,6.564568046875,8.7410428125,6.9461080468750005,9.0223478125,7.227408046875L13.7950178125,12.000078046875L9.0223478125,16.772748046875C8.7410428125,17.054048046875,8.5830078125,17.435548046875,8.5830078125,17.833448046875C8.5830078125,18.661848046875,9.2545808125,19.333448046875,10.0830078125,19.333448046875C10.4808278125,19.333448046875,10.8623678125,19.175348046875,11.1436678125,18.894048046875L16.976997812500002,13.060738046875C17.2583078125,12.779438046875,17.4163378125,12.397908046875,17.4163378125,12.000078046875C17.4163378125,11.602258046875,17.2583078125,11.220728046875,16.976997812500002,10.939418046875L11.1436678125,5.106088046875C10.8623678125,4.824783046875,10.4808278125,4.666748046875,10.0830078125,4.666748046875C9.2545808125,4.666748046875,8.5830078125,5.338321046875,8.5830078125,6.166748046875Z" fill-rule="evenodd" fill="#FFFFFF" fill-opacity="1"></path></g></g>
+            </svg>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    // Tab 切换逻辑
+    const tabItems = document.querySelectorAll('.tab-item');
+    const collectionLists = document.querySelectorAll('.collection-product-list');
+
+    tabItems.forEach((item, index) => {
+      item.addEventListener('click', () => {
+        tabItems.forEach((tab) => tab.classList.remove('active'));
+        item.classList.add('active');
+        collectionLists.forEach((list) => list.classList.remove('active'));
+        collectionLists[index].classList.add('active');
+
+        // 切换后刷新当前激活的 Swiper
+        const activeContainer = collectionLists[index];
+        if (activeContainer && activeContainer.swiper) {
+          activeContainer.swiper.update();
+        }
+      });
+    });
+
+    requestIdleCallback(() => {
+      // 初始化 Swiper
+      const swiperContainers = document.querySelectorAll('.collection-list-section-{{ section.id }} .swiper-container');
+      const collectionListSwiper = {};
+
+      // 封装 Swiper 初始化（方便 resize 时重新初始化）
+      function initSwiper() {
+        swiperContainers.forEach((container) => {
+          const collectionId = container.getAttribute('data-collection-id');
+          // 先销毁旧实例
+          if (collectionListSwiper[collectionId]) {
+            collectionListSwiper[collectionId].destroy();
+          }
+
+          const nextEl = container.querySelector('.swiper-button-next');
+          const prevEl = container.querySelector('.swiper-button-prev');
+          const pageEl = container.querySelector('.swiper-pagination');
+          const mobile = isMobile();
+
+          // 初始化新实例
+          collectionListSwiper[collectionId] = new Swiper(container, {
+            loop: false,
+            navigation: {
+              nextEl: nextEl,
+              prevEl: prevEl,
+            },
+            breakpoints: {
+              0: {
+                slidesPerView: 1.5, // 你要的 1.5 个
+                spaceBetween: 10,
+              },
+              640: {
+                slidesPerView: 2.5, // 建议改成 2.5 更美观
+                spaceBetween: 10,
+              },
+              768: {
+                slidesPerView: 3,
+                spaceBetween: 20,
+              },
+              1600: {
+                slidesPerView: 3.2, // 1024 比 2560 更合理
+                spaceBetween: 20,
+              },
+              2560: {
+                slidesPerView: 4, // 1024 比 2560 更合理
+                spaceBetween: 30,
+              },
+            },
+          });
+
+          container.swiper = collectionListSwiper[collectionId];
+        });
+      }
+
+      initSwiper();
+
+      let resizeTimer;
+      window.addEventListener('resize', () => {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(() => {
+          initSwiper();
+        }, 500);
+      });
+    });
+  });
+</script>
+{% style %}
+  .collection-list-section-{{ section.id }} {
+    padding: 4em 0;
+    background-color: #fff;
+  }
+  .collection-list-section-{{ section.id }} .collection-list-section-title {
+    font-size: 2.5em;
+    font-weight: bold;
+    text-align: left;
+    margin-bottom: 30px;
+  }
+  .collection-list-section-{{ section.id }} .collection-tab-list {
+    display: inline-flex;
+    justify-content: flex-start;
+    margin-bottom: 30px;
+    background-color: #eaeaec;
+    border-radius: 20em;
+    padding: 0.4em;
+  }
+  .collection-list-section-{{ section.id }} .tab-item {
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 20em;
+  }
+  .collection-list-section-{{ section.id }} .tab-item.active {
+    background-color: #fff;
+  }
+  .collection-list-section-{{ section.id }} .collection-list {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .collection-list-section-{{ section.id }} .collection-product-list {
+    display: none;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+  }
+  .collection-list-section-{{ section.id }} .collection-product-list.active {
+    display: flex;
+  }
+  .collection-list-section-{{ section.id }} .collection-product-list .swiper-slide {
+    opacity: 1;
+  }
+  .collection-list-section-{{ section.id }} .collection-product-item {
+    text-align: left;
+    background-color: #fff;
+    padding: 1em;
+    border-radius: 1em;
+    border-top: 5px solid var(--colorThemePrimary);
+    box-shadow: inset 0 0 5px 0px #ccc;
+  }
+  .collection-list-section-{{ section.id }} .collection-product-link {
+    text-decoration: none;
+    color: #000;
+  }
+  .collection-list-section-{{ section.id }} .collection-product-title {
+    font-size: 1.6em;
+    margin: 10px 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;          /* 最多显示两行 */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;        /* 超出部分显示省略号 */
+    line-height: 1.5em;
+    height: 3.0em;
+    max-height: 3.0em;
+  }
+  .collection-list-section-{{ section.id }} .collection-product-introduction {
+    font-size: 1em;
+    color: #666;
+    margin-top: 0.5em;
+    min-height: 1.5em;
+    max-height: 1.5em;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+  .collection-list-section-{{ section.id }} .collection-product-features {
+    min-height: 1.3em;
+  }
+  .collection-list-section-{{ section.id }} .collection-product-short-features {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    margin-top: 0.5em;
+  }
+  .collection-list-section-{{ section.id }} .collection-product-short-features .collection-product-feature-item {
+    font-size: 0.8em;
+    padding: 0 0.5em;
+    padding: 0 1em;
+    border-right: 1px solid #ccc;
+    display: flex;
+    align-items: center;
+  }
+  .collection-list-section-{{ section.id }} .collection-product-short-features .collection-product-feature-item img {
+    width: 1.5em;
+    aspect-ratio: 1 / 1;
+    padding-right: 0.5em;
+    box-sizing: content-box;
+  }
+  .collection-list-section-{{ section.id }} .collection-product-short-features .collection-product-feature-item:last-child {
+    border-right: none;
+  }
+  .collection-list-section-{{ section.id }} .collection-product-short-features .collection-product-feature-item:first-child {
+    padding-left: 0;
+  }
+  .collection-list-section-{{ section.id }} .product-image {
+    width: 90%;
+    margin: 2em auto;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+  }
+  .collection-list-section-{{ section.id }} .collection-product-item:hover .product-image {
+    background-size: 150%;
+    transition: background-size 0.5s linear;
+  }
+  .collection-list-section-{{ section.id }} .collection-product-options {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding-bottom: 1em;
+  }
+  .collection-list-section-{{ section.id }} .collection-product-price {
+    font-size: 1.4em;
+    color: var(--colorPrice);
+    margin: 5px 0;
+  }
+  .collection-list-section-{{ section.id }} .collection-product-btn {
+    display: inline-block;
+    padding: 0.5em 1em;
+    /* text-transform: uppercase; */
+    font-size: 1em;
+    margin-top: 10px;
+    border-radius: 20em;
+  }
+  /* 初始状态：所有 Swiper 容器隐藏，避免出现未格式化布局 */
+  .collection-list-section-{{ section.id }} .swiper-container {
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  /* Swiper 初始化完成后显示 */
+  .collection-list-section-{{ section.id }} .swiper-container.swiper-initialized {
+    visibility: visible;
+    opacity: 1;
+  }
+  @media screen and (max-width: 1024px) {
+    .collection-list-section-{{ section.id }} .collection-product-features {
+      display: none;
+    }
+  }
+  @media screen and (max-width: 768px) {
+    .collection-list-section-{{ section.id }} {
+      font-size: 0.8em;
+    }
+    .collection-list-section-{{ section.id }} .collection-product-item {
+      font-size: 0.8em;
+    }
+    .collection-list-section-{{ section.id }} .collection-product-btn {
+      padding: 0.5em;
+    }
+  }
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "Collection List Section",
+  "class": "collection-list-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Discover What's Popular on soundcore"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "collection",
+      "name": "Collection",
+      "settings": [
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Collection"
+        },
+        {
+          "type": "text",
+          "id": "collection_title",
+          "label": "Collection Title"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Collection List Section",
+      "settings": {
+        "title": "Discover What's Popular on soundcore"
+      },
+      "blocks": []
+    }
+  ]
+}
+{% endschema %}

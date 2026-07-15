@@ -1,0 +1,9 @@
+{% if product.metafields.custom.short_point_desc != blank %}
+  <ul class="short-descrbe-list--wrapper">
+    {% for item in product.metafields.custom.short_point_desc.value %}
+      <li class="short-point-descrbe-item">
+        {{ item }}
+      </li>
+    {% endfor %}
+  </ul>
+{% endif %}

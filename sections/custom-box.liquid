@@ -1,0 +1,47 @@
+{%- if section.settings.divider -%}<div class="section--divider">{%- endif -%}
+<div class="cus_section" style="background:{{ section.settings.bg }}">
+  <h2>{{ section.settings.title }}</h2>
+  <a href="{{ section.settings.link }}">{{ section.settings.text }}</a>
+</div>
+
+  {%- if section.settings.divider -%}</div>{%- endif -%}
+
+{% schema %}
+{
+  "name": "custom box",
+  "class": "indexs-section",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "divider",
+      "label": "t:sections.featured-video.settings.divider.label",
+      "default": false
+    },
+    {
+      "type": "color",
+      "id": "bg",
+      "label": "backgrund color"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "title"
+    },
+    {
+      "type": "text",
+      "id": "text",
+      "label": "button text"
+    },
+    {
+      "type": "url",
+      "id": "link",
+      "label": "button link"
+    }
+  ],
+  "presets": [
+    {
+      "name": "custom box"
+    }
+  ]
+}
+{% endschema %}

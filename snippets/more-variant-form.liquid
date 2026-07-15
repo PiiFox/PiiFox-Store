@@ -1,0 +1,201 @@
+<script>
+  $(function () {
+    $('.custom-shopify-buy-btn').click(() => {
+      console.log('click');
+      $('.shopify-payment-button button.shopify-payment-button__more-options').click();
+    });
+  });
+</script>
+<div class="bundle-list">
+  <div class="bundle-tab-list">
+    {% assign bundle_list_labels = product.metafields.custom.bundle_list_labels.value %}
+    {% for label in bundle_list_labels %}
+      <div class="bundle-tab-item" data-bundle-product-list="{{ label }}">
+        {{ label }}
+      </div>
+    {% endfor %}
+  </div>
+  <div class="bundle-product-list-container">
+    <div class="bundle-product-list--wrapper">
+      {% assign bundle_1_variants = product.metafields.custom.bundle_1_variants.value %}
+      {% assign bundle_2_variants = product.metafields.custom.bundle_2_variants.value %}
+      {% assign bundle_3_variants = product.metafields.custom.bundle_3_variants.value %}
+
+      <div class="bundle-product-list bundle-product-list--1" data-bundle-product-list="{{ bundle_list_labels[0] }}">
+        {% for variant in bundle_1_variants %}
+          {% render 'bundle-variant-item' variant: variant %}
+        {% endfor %}
+      </div>
+
+      <div class="bundle-product-list bundle-product-list--2" data-bundle-product-list="{{ bundle_list_labels[1] }}">
+        {% for variant in bundle_2_variants %}
+          {% render 'bundle-variant-item' variant: variant %}
+        {% endfor %}
+      </div>
+
+      <div class="bundle-product-list bundle-product-list--3" data-bundle-product-list="{{ bundle_list_labels[2] }}">
+        {% for variant in bundle_3_variants %}
+          {% render 'bundle-variant-item' variant: variant %}
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+
+{%- form 'product', product, id: form_id, class: 'product-single__form' -%}
+  {%- liquid
+    assign enable_dynamic_buttons = false
+    if show_dynamic_checkout and template != 'product.preorder'
+      assign enable_dynamic_buttons = true
+    endif
+  -%}
+
+  {%- if enable_dynamic_buttons -%}
+    <div class="payment-buttons">
+  {%- endif -%}
+
+  {%- liquid
+    assign default_text = 'products.product.add_to_cart' | t
+    assign button_text = 'products.product.add_to_cart' | t
+    if template == 'product.preorder'
+      assign default_text = 'products.product.preorder' | t
+      assign button_text = 'products.product.preorder' | t
+    endif
+    unless current_variant.available
+      assign button_text = 'products.product.sold_out' | t
+    endunless
+  -%}
+
+  <button
+    {% if product.empty? %}
+      type="button"
+    {% else %}
+      type="submit"
+    {% endif %}
+    name="add"
+    data-add-to-cart
+    class="btn btn--full add-to-cart{% if enable_dynamic_buttons and product.selling_plan_groups == empty %} btn--secondary{% endif %}"
+    {% unless current_variant.available %}
+      disabled="disabled"
+    {% endunless %}
+  >
+    <span data-add-to-cart-text data-default-text="{{ default_text }}">
+      {{ button_text }}
+    </span>
+  </button>
+
+  {% style %}
+    .shopify-payment-button[data-shopify="payment-button"] .shopify-payment-button__more-options::after {
+      content: "{{ 'general.custom.shop_now' | t }}";
+    }
+  {% endstyle %}
+  {%- if enable_dynamic_buttons -%}
+    <button class="custom-shopify-buy-btn btn shopify-payment-button" type="button" data-testid="sheet-open-button">
+      {{ 'general.custom.buy_now' | t }}
+    </button>
+    {{ form | payment_button }}
+  {%- endif -%}
+
+  {%- if enable_dynamic_buttons -%}
+    </div>
+  {%- endif -%}
+
+  <div class="shopify-payment-terms product__policies">{{ form | payment_terms }}</div>
+
+  <select name="id" data-product-select class="product-single__variants no-js">
+    {%- for variant in product.variants -%}
+      {%- if variant.available -%}
+        <option
+          {% if variant == product.selected_or_first_available_variant %}
+            selected="selected"
+          {% endif %}
+          value="{{ variant.id }}"
+        >
+          {{ variant.title }} - {{ variant.price | money_with_currency }}
+        </option>
+      {%- else -%}
+        <option disabled="disabled">{{ variant.title }} - {{ 'products.product.sold_out' | t }}</option>
+      {%- endif -%}
+    {%- endfor -%}
+  </select>
+
+  <textarea id="product-json" data-variant-json class="hide" aria-hidden="true" aria-label="Product JSON">
+    {{ product.variants | json }}
+  </textarea>
+  {%- if product.options.size > 1 -%}
+    <textarea data-current-variant-json class="hide" aria-hidden="true" aria-label="Variant JSON">
+      {{ current_variant | json }}
+    </textarea>
+  {%- endif -%}
+{%- endform -%}
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    function initBundleTabs() {
+      const bundleTabs = document.querySelectorAll('.bundle-tab-item');
+      const bundleLists = document.querySelectorAll('.bundle-product-list');
+
+      bundleTabs.forEach(tab => tab.addEventListener('click', function(){
+        bundleTabs.forEach(tab => tab.classList.remove('active'));
+        this.classList.add('active');
+        const currentLabel = this.dataset['bundleProductList'];
+        bundleLists.forEach(list => list.classList.remove('active'));
+        const targetList = document.querySelector(`.bundle-product-list[data-bundle-product-list="${currentLabel}"]`);
+        if(targetList) targetList.classList.add('active');
+      }));
+
+      const firstList = document.querySelector('.bundle-product-list--1');
+      if(firstList) firstList.classList.add('active');
+    }
+    function getCurrentVariantId() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const variantId = urlParams.get('variant');
+      if (variantId) {
+        return variantId;
+      }
+      const idInput = JSON.parse(document.querySelector('textarea[data-current-variant-json]').innerHTML);
+      if (idInput) {
+        return idInput.id;
+      }
+      const select = document.querySelector('select.product-single__variants');
+      if (select) {
+        return select.value;
+      }
+      return null;
+    }
+    function getAppendVariantIds() {
+      let appendVariantIds = [];
+      let allVariants = document.querySelectorAll('.bundle-product-checkbox');
+      for(let i = 0; i < allVariants.length; i++) {
+        if(allVariants[i].checked) {
+          const qtyInput = document.getElementById(`Quantity-${allVariants[i].id}`);
+          const quantity = qtyInput ? Math.max(1, Number(qtyInput.value)) : 1;  
+          let selectedVariant = {id: allVariants[i].id, quantity: quantity};
+          appendVariantIds.push(selectedVariant);
+        }
+      }
+      console.log('appendVariantIds', appendVariantIds);
+      return appendVariantIds;
+    }
+    function initAddToCart() {
+      const addBtn = document.querySelector('button.add-to-cart');
+      const ajaxCart = new theme.AjaxProduct(addBtn);
+      
+      addBtn.addEventListener('click', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        const currentVariantId = getCurrentVariantId();
+        const items = [
+          { id: currentVariantId, quantity: 1 }
+        ];
+        const appendVariantIds = getAppendVariantIds();
+        if(appendVariantIds) {
+          items.push(...appendVariantIds);
+        }
+        ajaxCart.MoreProductAddToCart(addBtn, items);
+      });
+    }
+    initBundleTabs();
+    initAddToCart();
+  });
+</script>

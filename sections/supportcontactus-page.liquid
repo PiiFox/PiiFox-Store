@@ -1,0 +1,183 @@
+{%- if section.settings.divider -%}<div class="section--divider">{%- endif -%}
+<div class="page-width grid-list-container">
+  {% for block in section.blocks %}
+    <div class="grid-item" style="background-image: url({{ block.settings.image | img_url: '750x' }})">
+      <div class="grid-item-title">{{ block.settings.title }}</div>
+      <div class="grid-item-describe">{{ block.settings.text }}</div>
+      {% if block.settings.button_mail != blank %}
+        <a class="grid-item-opera" href="mailto:{{ block.settings.button_mail }}">{{ block.settings.button_label }}</a>
+      {% else %}
+        <a class="grid-item-opera" href="{{ block.settings.button_link }}">{{ block.settings.button_label }}</a>
+      {% endif %}
+    </div>
+  {% endfor %}
+</div>
+{% if section.settings.extend != blank %}
+  <div class="extend-section-{{ section.id }}">
+    <h2 class="section-title-{{ section.id }}">Email US</h2>
+    <p>Support Email: <a href="mailto:store@piifox.com">store@piifox.com</a></p>
+  </div>
+{% endif %}
+{%- if section.settings.divider -%}</div>{%- endif -%}
+<style>
+.text-with-icons__block-title h3 {transform: scaleY(1.2);}
+.extend-section-{{ section.id }} {text-align: center;border-top: 1px solid #ccc;padding-top: 1em;}
+.extend-section-{{ section.id }} p a {color: #ec6521;text-decoration: underline;}
+.grid-list-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(30rem, 1fr));
+  grid-gap: 1rem;
+}
+.grid-list-container .grid-item {
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  background-position: center;
+  color: #fff;
+  width: 100%;
+  aspect-ratio: 23/16;
+  padding: 1rem;
+}
+.grid-list-container .grid-item:hover {
+  background-size: 102% 102%;
+  trasnsition: all 0.2s ease;
+}
+.grid-list-container .grid-item .grid-item-title {
+  font-weight: bold;
+  font-size: 2rem;
+  line-height: 4rem;
+  margin-bottom: 2rem;
+  transform: scaleY(1.2);
+}
+.grid-list-container .grid-item .grid-item-describe {
+  line-height: 2rem;
+}
+.grid-list-container .grid-item .grid-item-opera {
+  line-height: 2rem;
+  color: #fff;
+  background: #ec6521;
+  padding: 0.4rem 1.2rem 0.4rem 1.2rem;
+  border-radius: 20px;
+  border: 1px solid #ec6521;
+  transition: all 0.5s ease;
+}
+.grid-list-container .grid-item .grid-item-opera:hover {
+  background: #fff;
+  color: #ec6521;
+  border-color: #ec6521;
+}
+@media screen and (max-width: 1100px) {
+  .grid-list-container {
+    grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+  }
+}
+@media screen and (max-width: 700px) {
+  .rte h2 {
+    font-size: 1.3rem;
+  }
+  .text-with-icons__block-title h3 {
+    font-size: 0.8rem;
+  }
+  #shopify-section-template--18199437345072__e22643ff-488a-4139-9a9a-e47468f2d677 .has-2-per-row .text-with-icons__block {
+    width: 100%;
+  }
+  .grid-list-container .grid-item .grid-item-title {
+    font-size: 1.1rem;
+    line-height: 3rem;
+  }
+}
+@media screen and (max-width: 300px) {
+  .grid-list-container {
+    grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  }
+}
+</style>
+{% schema %}
+  {
+  "name": "t:sections.grid-list.name",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "t:sections.grid-list.settings.title.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "extend",
+      "label": "Extend",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "divider",
+      "label": "t:sections.grid-list.settings.divider.label",
+      "default": true
+    }
+  ],
+  "blocks": [
+    {
+      "type": "text_block",
+      "name": "t:sections.grid-list.blocks.column.name",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "t:sections.grid-list.blocks.column.settings.image.label"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "t:sections.grid-list.blocks.column.settings.title.label",
+          "default": "Example title"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "t:sections.grid-list.blocks.column.settings.text.label",
+          "default": "<p>Use this section to explain a set of product features, to link to a series of pages, or to answer common questions about your products. Add images for emphasis.</p>"
+        },
+        {
+          "type": "text",
+          "id": "button_label",
+          "label": "t:sections.grid-list.blocks.column.settings.button_label.label",
+          "default": "Optional button"
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "t:sections.grid-list.blocks.column.settings.button_link.label"
+        },
+        {
+          "type": "text",
+          "id": "button_mail",
+          "label": "t:sections.grid-list.blocks.column.settings.button_mail.label"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.grid-list.presets.text_columns_with_images.name",
+      "blocks": [
+        {
+          "type": "text_block"
+        },
+        {
+          "type": "text_block"
+        },
+        {
+          "type": "text_block"
+        },
+        {
+          "type": "text_block"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

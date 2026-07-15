@@ -1,0 +1,25 @@
+{% for group in robots.default_groups %}
+{{- group.user_agent }}
+
+{%- for rule in group.rules %}
+{{ rule }}
+{%- endfor %}
+
+{%- if group.user_agent.value == '*' %}
+Disallow: /search
+Disallow: /search?*
+Disallow: /account
+Disallow: /account/*
+Disallow: /cart
+Disallow: /cart/*
+Disallow: /checkout
+Disallow: /checkout/*
+Disallow: /blogs/*/tagged/*
+Disallow: /product/*?add-to-cart=
+{%- endif %}
+
+{%- if group.sitemap != blank %}
+{{ group.sitemap }}
+{%- endif %}
+
+{% endfor %}

@@ -1,0 +1,91 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {}
+    },
+    "Topimg": {
+      "type": "support-img",
+      "settings": {
+        "divider": true,
+        "titleh1": "PIIFOX FAQ Center",
+        "titlep": "Find answers for keyboards and mice in one place",
+        "aligntext": "textcenter",
+        "left": 50,
+        "top": 20,
+        "image": "shopify://shop_images/2560_-800.jpg",
+        "mimage": "shopify://shop_images/banner768-500.jpg",
+        "custom_html": ""
+      }
+    },
+    "faq_center_zgPGdU": {
+      "type": "faq-center",
+      "blocks": {
+        "collection_PKUVAz": {
+          "type": "collection",
+          "settings": {
+            "collection": "keyboards",
+            "icon": "<svg width=\"24\" height=\"24\" viewbox=\"0 0 24 24\" fill=\"none\" stroke=\"#427347\" stroke-width=\"2\">\n              <rect x=\"2\" y=\"4\" width=\"20\" height=\"16\" rx=\"2\"></rect>\n              <path d=\"M6 8h.01M10 8h.01M14 8h.01M18 8h.01M6 12h.01M10 12h.01M14 12h.01M18 12h.01M8 16h8\"></path>\n            </svg>"
+          }
+        },
+        "collection_mWWCUr": {
+          "type": "collection",
+          "settings": {
+            "collection": "keycaps",
+            "icon": "<svg width=\"20\" height=\"20\" viewbox=\"0 0 24 24\" fill=\"none\" stroke=\"#427347\" stroke-width=\"2\">\n      <rect x=\"4\" y=\"4\" width=\"16\" height=\"16\" rx=\"2\"></rect>\n      <rect x=\"9\" y=\"9\" width=\"6\" height=\"6\" rx=\"1\"></rect>\n    </svg>"
+          }
+        },
+        "collection_4RnBaR": {
+          "type": "collection",
+          "settings": {
+            "collection": "switches",
+            "icon": "<svg width=\"20\" height=\"20\" viewbox=\"0 0 24 24\" fill=\"none\" stroke=\"#427347\" stroke-width=\"2\">\n      <circle cx=\"12\" cy=\"12\" r=\"10\"></circle>\n      <line x1=\"12\" y1=\"8\" x2=\"12\" y2=\"16\"></line>\n      <line x1=\"8\" y1=\"12\" x2=\"16\" y2=\"12\"></line>\n    </svg>"
+          }
+        },
+        "collection_LzbVDY": {
+          "type": "collection",
+          "settings": {
+            "collection": "mice",
+            "icon": "<svg width=\"20\" height=\"20\" viewbox=\"0 0 24 24\" fill=\"none\" stroke=\"#427347\" stroke-width=\"2\">\n      <rect x=\"5\" y=\"3\" width=\"14\" height=\"18\" rx=\"7\"></rect>\n      <line x1=\"12\" y1=\"7\" x2=\"12\" y2=\"11\"></line>\n    </svg>"
+          }
+        },
+        "collection_QHcE6A": {
+          "type": "collection",
+          "settings": {
+            "collection": "accessories",
+            "icon": "<svg width=\"20\" height=\"20\" viewbox=\"0 0 24 24\" fill=\"none\" stroke=\"#427347\" stroke-width=\"2\">\n      <path d=\"M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z\"></path>\n      <path d=\"M7.5 4.21v15.58\"></path>\n      <path d=\"M16.5 4.21v15.58\"></path>\n    </svg>"
+          }
+        }
+      },
+      "block_order": [
+        "collection_PKUVAz",
+        "collection_mWWCUr",
+        "collection_4RnBaR",
+        "collection_LzbVDY",
+        "collection_QHcE6A"
+      ],
+      "name": "FAQ Center",
+      "settings": {
+        "support_title": "Still need help?",
+        "support_desc": "Can't find the answer you need? Reach out to our support team.",
+        "support_btn_text": "Contact Support",
+        "support_btn_email": "service@piifox.com"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "Topimg",
+    "faq_center_zgPGdU"
+  ]
+}

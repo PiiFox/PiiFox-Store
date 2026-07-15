@@ -1,0 +1,511 @@
+<style>
+  @layer con-switches-spec {
+    .con.con-switches-spec .container.page-width {
+      overflow: hidden;
+    }
+    .con.con-switches-spec .container .con-title {
+      font-size: 2.8em;
+      text-align: center;
+    }
+    .con.con-switches-spec .con-switches-spec-content {
+      width: 100%;
+      max-width: 100%;
+      overflow-x: auto;
+      scroll-behavior: auto;
+      display: inline-block;
+      scrollbar-width: none; /* Firefox */
+      -ms-overflow-style: none; /* IE/Edge */
+      cursor: grab;
+      border-spacing: 0px !important;
+    }
+    .con.con-switches-spec .con-switches-spec-content:active {
+      cursor: grabbing;
+    }
+    .con.con-switches-spec .grid-col-title,
+    .con.con-switches-spec .grid-cell.switch-name {
+      font-weight: 600;
+    }
+    .con.con-switches-spec .con-switches-spec-content::-webkit-scrollbar {
+      display: none;
+    }
+    .con.con-switches-spec .grid-col-switches .grid-cell,
+    .con.con-switches-spec .grid-col-title .grid-cell {
+      padding: 0.5em 1em;
+      text-align: center;
+      white-space: nowrap;
+      user-select: none;
+    }
+    .con.con-switches-spec .grid-col-title .grid-cell {
+      padding: 1em;
+    }
+    .con.con-switches-spec .grid-col-switches .grid-cell.grid-cell--1,
+    .con.con-switches-spec .grid-col-title .grid-cell.grid-cell--1 {
+      position: sticky;
+      left: 0;
+      z-index: 9;
+    }
+    .con.con-switches-spec .grid-col-switches .grid-cell span,
+    .con.con-switches-spec .grid-col-title .grid-cell span {
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .con.con-switches-spec td.grid-cell {
+      background: #fff !important;
+      border-bottom: 1px solid #f5f5f5 !important;
+    }
+    .con.con-switches-spec td.grid-cell.dark-cell {
+      background: #f5f5f5 !important;
+    }
+    .con.con-switches-spec .grid-cell .switch-img {
+      height: unset;
+      width: 5em;
+      min-width: 5em;
+      object-fit: contain;
+    }
+    .con-switches-spec--table {
+      position: relative;
+    }
+    .con-switches-spec--table .drag-right {
+      position: absolute;
+      height: 3em;
+      width: auto;
+      top: 50%;
+      right: 0;
+      z-index: 9;
+      transform: translateY(-50%);
+      cursor: none;
+      user-select: none;
+      pointer-events: none;
+    }
+    .con-switches-spec--table .drag-right img {
+      height: 100%;
+      width: auto;
+    }
+    @media screen and (max-width: 1200px) {
+    }
+    @media screen and (max-width: 768px) {
+      .con.con-switches-spec {
+        font-size: 0.8em;
+      }
+    }
+  }
+</style>
+<div class="con con-switches-spec">
+  <div class="container">
+    <div class="con-switches-spec--wrapper">
+      <div class="con-title">Switch Specifications</div>
+      <div class="con-context"></div>
+    </div>
+    {% assign switches_compare = product.metafields.custom.switches_compare.value %}
+    {% assign first_switch = switches_compare | first %}
+    <div class="con-switches-spec--table">
+      <div class="drag-right">
+        {{ 'right-arrow.svg' | asset_url | img_tag: 'draw to right', 'right-arrow-icon' }}
+      </div>
+    {% if first_switch.system.type == 'mechanical_switch' %}
+        <table class="con-switches-spec-content">
+          <thead>
+            <tr class="grid-col grid-col-title">
+              <td class="grid-cell grid-cell--1"></td>
+              <td
+                class="grid-cell grid-cell-0"
+                data-label="Switch Name"
+              >
+                Switch Name
+              </td>
+              <td
+                class="grid-cell grid-cell-1 dark-cell"
+                data-label="Brand"
+              >
+                Brand
+              </td>
+              <td class="grid-cell grid-cell-2" data-label="Switch Type">Switch Type</td>
+              <td
+                class="grid-cell grid-cell-3 dark-cell"
+                data-label="Switch Feel"
+              >
+                Switch Feel
+              </td>
+              <td class="grid-cell grid-cell-4" data-label="Operating Force">Operating Force</td>
+              <td
+                class="grid-cell grid-cell-5 dark-cell"
+                data-label="Bottom-out Force"
+              >
+                Bottom-out Force
+              </td>
+              <td
+                class="grid-cell grid-cell-6"
+                data-label="Pre-Travel"
+              >
+                Pre-Travel
+              </td>
+              <td
+                class="grid-cell grid-cell-7 dark-cell"
+                data-label="Total Travel"
+              >
+                Total Travel
+              </td>
+              <td class="grid-cell grid-cell-8" data-label="Sound Level">Sound Level</td>
+              <td
+                class="grid-cell grid-cell-9 dark-cell"
+                data-label="Factory Lubed"
+              >
+                Factory Lubed
+              </td>
+              <td
+                class="grid-cell grid-cell-10"
+                data-label="Pins"
+              >
+                Pins
+              </td>
+              <td
+                class="grid-cell grid-cell-11 dark-cell"
+                data-label="Stem Material"
+              >
+                Stem Material
+              </td>
+              <td
+                class="grid-cell grid-cell-12"
+                data-label="Top Housing Material"
+              >
+                Top Housing Material
+              </td>
+              <td
+                class="grid-cell grid-cell-13 dark-cell"
+                data-label="Bottom Housing Material"
+              >
+                Bottom Housing Material
+              </td>
+              <td
+                class="grid-cell grid-cell-14"
+                data-label="Spring"
+              >
+                Spring
+              </td>
+              <td
+                class="grid-cell grid-cell-15 dark-cell"
+                data-label="Light Support"
+              >
+                Light Support
+              </td>
+              <td
+                class="grid-cell grid-cell-16"
+                data-label="Operation Life"
+              >
+                Operation Life
+              </td>
+            </tr>
+          </thead>
+          <tbody>
+            {% for switch in switches_compare %}
+              <tr
+                class="grid-col grid-col-{{ forloop.index }} grid-col-switches"
+                data-switch="{{ switch.switch_name }}"
+                data-switch-type="{{ switch.system.type }}"
+              >
+                <td class="grid-cell grid-cell--1">
+                  {% if switch.switch_img %}
+                    <img
+                      class="switch-img"
+                      src="{{ switch.switch_img | image_url: width: 400, height: 400 }}"
+                      alt="{{ switch.switch_name }}"
+                      width="400"
+                      height="400"
+                      loading="lazy"
+                    >
+                  {% endif %}
+                </td>
+                <td class="grid-cell grid-cell-0">
+                  <span>{{ switch.switch_name }}</span>
+                </td>
+                <td class="grid-cell grid-cell-1 dark-cell">
+                  <span>{{ switch.brand.value.label }}</span>
+                </td>
+                <td class="grid-cell grid-cell-2">
+                  <span>{{ switch.switch_type.value.label }}</span>
+                </td>
+                <td class="grid-cell grid-cell-3 dark-cell">
+                  <span>{{ switch.switch_feel.value.label }}</span>
+                </td>
+                <td class="grid-cell grid-cell-4">
+                  <span>{{ switch.operating_force }}</span>
+                </td>
+                <td class="grid-cell grid-cell-5 dark-cell">
+                  <span>{{ switch.bottom_out_force }}</span>
+                </td>
+                <td class="grid-cell grid-cell-6">
+                  <span>{{ switch.pre_travel }}</span>
+                </td>
+                <td class="grid-cell grid-cell-7 dark-cell">
+                  <span>{{ switch.total_travel }}</span>
+                </td>
+                <td class="grid-cell grid-cell-8">
+                  <span>{{ switch.sound_level }}</span>
+                </td>
+                <td class="grid-cell grid-cell-9 dark-cell">
+                  <span>{{ switch.factory_lubed }}</span>
+                </td>
+                <td class="grid-cell grid-cell-10">
+                  <span>{{ switch.pins }}</span>
+                </td>
+                <td class="grid-cell grid-cell-11 dark-cell">
+                  <span>{{ switch.stem_material }}</span>
+                </td>
+                <td class="grid-cell grid-cell-12">
+                  <span>{{ switch.top_housing_material }}</span>
+                </td>
+                <td class="grid-cell grid-cell-13 dark-cell">
+                  <span>{{ switch.bottom_housing_material }}</span>
+                </td>
+                <td class="grid-cell grid-cell-14">
+                  <span>{{ switch.spring }}</span>
+                </td>
+                <td class="grid-cell grid-cell-15 dark-cell">
+                  <span>{{ switch.light_support }}</span>
+                </td>
+                <td class="grid-cell grid-cell-16">
+                  <span>{{ switch.operation_life }}</span>
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+    {% endif %}
+    {% if first_switch.system.type == 'magnetic_switch' %}
+        <table class="con-switches-spec-content">
+          <thead>
+            <tr class="grid-col grid-col-title">
+              <td class="grid-cell grid-cell--1"></td>
+              <td
+                class="grid-cell grid-cell-0"
+                data-label="Switch Name"
+              >
+                Switch Name
+              </td>
+              <td
+                class="grid-cell grid-cell-1 dark-cell"
+                data-label="Brand"
+              >
+                Brand
+              </td>
+              <td
+                class="grid-cell grid-cell-2"
+                data-label="Switch Type"
+              >
+                Switch Type
+              </td>
+              <td
+                class="grid-cell grid-cell-3 dark-cell"
+                data-label="Switch Feel"
+              >
+                Switch Feel
+              </td>
+              <td
+                class="grid-cell grid-cell-4"
+                data-label="Operating Force"
+              >
+                Operating Force
+              </td>
+              <td
+                class="grid-cell grid-cell-5 dark-cell"
+                data-label="Bottom-out Force"
+              >
+                Bottom-out Force
+              </td>
+              <td
+                class="grid-cell grid-cell-6"
+                data-label="Total Travel"
+              >
+                Total Travel
+              </td>
+              <td
+                class="grid-cell grid-cell-7 dark-cell"
+                data-label="Sound Level"
+              >
+                Sound Level
+              </td>
+              <td
+                class="grid-cell grid-cell-8"
+                data-label="Factory Lubed"
+              >
+                Factory Lubed
+              </td>
+              <td
+                class="grid-cell grid-cell-9 dark-cell"
+                data-label="Stem Material"
+              >
+                Stem Material
+              </td>
+              <td
+                class="grid-cell grid-cell-10"
+                data-label="Top Housing Material"
+              >
+                Top Housing Material
+              </td>
+              <td
+                class="grid-cell grid-cell-11 dark-cell"
+                data-label="Bottom Housing Material"
+              >
+                Bottom Housing Material
+              </td>
+              <td
+                class="grid-cell grid-cell-12"
+                data-label="Spring"
+              >
+                Spring
+              </td>
+              <td
+                class="grid-cell grid-cell-13 dark-cell"
+                data-label="Light Support"
+              >
+                Light Support
+              </td>
+              <td
+                class="grid-cell grid-cell-14"
+                data-label="Operation Life"
+              >
+                Operation Life
+              </td>
+              <td
+                class="grid-cell grid-cell-15 dark-cell"
+                data-label="Initial Magnetic Flux"
+              >
+                Initial Magnetic Flux
+              </td>
+              <td
+                class="grid-cell grid-cell-16"
+                data-label="Bottom-out Magnetic Flux"
+              >
+                Bottom-out Magnetic Flux
+              </td>
+              <td
+                class="grid-cell grid-cell-17 dark-cell"
+                data-label="Adjustable Actuation/Pre-Travel"
+              >
+                Adjustable Actuation/Pre-Travel
+              </td>
+              <td
+                class="grid-cell grid-cell-18"
+                data-label="Precision Sensitivity"
+              >
+                Precision Sensitivity
+              </td>
+            </tr>
+          </thead>
+
+          <tbody>
+            {% for switch in switches_compare %}
+              <tr
+                class="grid-col grid-col-{{ forloop.index }} grid-col-switches"
+                data-switch="{{ switch.switch_name }}"
+                data-switch-type="{{ switch.system.type }}"
+              >
+                <td class="grid-cell grid-cell--1">
+                  {% if switch.switch_img %}
+                    <img
+                      class="switch-img"
+                      src="{{ switch.switch_img | image_url: width: 400, height: 400 }}"
+                      alt="{{ switch.switch_name }}"
+                      width="400"
+                      height="400"
+                      loading="lazy"
+                    >
+                  {% endif %}
+                </td>
+                <td class="grid-cell grid-cell-0">
+                  <span>{{ switch.switch_name }}</span>
+                </td>
+                <td class="grid-cell grid-cell-1 dark-cell">
+                  <span>{{ switch.brand_1.value.label }}</span>
+                </td>
+                <td class="grid-cell grid-cell-2">
+                  <span>{{ switch.switch_type.value.label }}</span>
+                </td>
+                <td class="grid-cell grid-cell-3 dark-cell">
+                  <span>{{ switch.switch_feel.value.label }}</span>
+                </td>
+                <td class="grid-cell grid-cell-4">
+                  <span>{{ switch.operating_force }}</span>
+                </td>
+                <td class="grid-cell grid-cell-5 dark-cell">
+                  <span>{{ switch.bottom_out_force }}</span>
+                </td>
+                <td class="grid-cell grid-cell-6">
+                  <span>{{ switch.total_travel }}</span>
+                </td>
+                <td class="grid-cell grid-cell-7 dark-cell">
+                  <span>{{ switch.sound_level }}</span>
+                </td>
+                <td class="grid-cell grid-cell-8">
+                  <span>{{ switch.factory_lubed }}</span>
+                </td>
+                <td class="grid-cell grid-cell-9 dark-cell">
+                  <span>{{ switch.stem_material }}</span>
+                </td>
+                <td class="grid-cell grid-cell-10">
+                  <span>{{ switch.top_housing_material }}</span>
+                </td>
+                <td class="grid-cell grid-cell-11 dark-cell">
+                  <span>{{ switch.bottom_housing_material }}</span>
+                </td>
+                <td class="grid-cell grid-cell-12">
+                  <span>{{ switch.spring }}</span>
+                </td>
+                <td class="grid-cell grid-cell-13 dark-cell">
+                  <span>{{ switch.light_support }}</span>
+                </td>
+                <td class="grid-cell grid-cell-14">
+                  <span>{{ switch.operation_life }}</span>
+                </td>
+                <td class="grid-cell grid-cell-15 dark-cell">
+                  <span>{{ switch.initial_magnetic_flux_1 }}</span>
+                </td>
+                <td class="grid-cell grid-cell-16">
+                  <span>{{ switch.bottom_out_magnetic_flux_1 }}</span>
+                </td>
+                <td class="grid-cell grid-cell-17 dark-cell">
+                  <span>{{ switch.adjustable_actuation_pre_travel }}</span>
+                </td>
+                <td class="grid-cell grid-cell-18">
+                  <span>{{ switch.precision_sensitivity }}</span>
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+    {% endif %}
+    </div>
+  </div>
+</div>
+<script>
+  (function () {
+    const wrap = document.querySelector('.con.con-switches-spec .con-switches-spec-content');
+    let isDrag = false;
+    let startX = 0;
+    let scrollLeft = 0;
+
+    wrap.addEventListener('mousedown', (e) => {
+      isDrag = true;
+      startX = e.pageX - wrap.offsetLeft;
+      scrollLeft = wrap.scrollLeft;
+      wrap.style.cursor = 'grabbing';
+    });
+
+    wrap.addEventListener('mousemove', (e) => {
+      if (!isDrag) return;
+      e.preventDefault(); // 防止选中文本、默认行为
+      const x = e.pageX - wrap.offsetLeft;
+      const move = x - startX;
+      wrap.scrollLeft = scrollLeft - move;
+    });
+
+    ['mouseup', 'mouseleave'].forEach((evt) => {
+      wrap.addEventListener(evt, () => {
+        isDrag = false;
+        wrap.style.cursor = 'grab';
+      });
+    });
+  })();
+</script>

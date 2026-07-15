@@ -1,0 +1,84 @@
+{%- comment -%}
+  Reusable theme action.
+
+  Parameters:
+  - label: visible text
+  - url: renders an <a> when present, otherwise renders a <button>
+  - variant: primary, secondary, tertiary, inverse, body
+  - size: small, large, full
+  - class: extra class names
+  - type: button, submit, reset
+  - name/value: optional button attributes
+  - aria_label: accessible label override
+  - disabled: disables the action
+  - target_blank: opens links in a new tab
+{%- endcomment -%}
+
+{%- liquid
+  assign action_label = label | default: text
+  assign action_url = url | default: href
+  assign action_variant = variant | default: 'primary'
+  assign action_size = size | default: ''
+  assign action_type = type | default: 'button'
+  assign action_class = 'btn'
+  assign extra_class = class | default: ''
+  assign action_aria = aria_label | default: action_label | strip_html | escape
+  assign rel_value = rel | default: 'noopener noreferrer'
+
+  case action_variant
+    when 'secondary'
+      assign action_class = action_class | append: ' btn--secondary'
+    when 'tertiary'
+      assign action_class = action_class | append: ' btn--tertiary'
+    when 'inverse'
+      assign action_class = action_class | append: ' btn--inverse'
+    when 'body'
+      assign action_class = action_class | append: ' btn--body'
+  endcase
+
+  case action_size
+    when 'small'
+      assign action_class = action_class | append: ' btn--small'
+    when 'large'
+      assign action_class = action_class | append: ' btn--large'
+    when 'full'
+      assign action_class = action_class | append: ' btn--full'
+  endcase
+
+  if full == true
+    assign action_class = action_class | append: ' btn--full'
+  endif
+
+  if disabled == true
+    assign action_class = action_class | append: ' disabled'
+  endif
+
+  if extra_class != blank
+    assign action_class = action_class | append: ' ' | append: extra_class
+  endif
+-%}
+
+{%- if action_label != blank -%}
+  {%- if action_url != blank -%}
+    <a
+      class="{{ action_class }}"
+      {% unless disabled == true %}href="{{ action_url }}"{% endunless %}
+      aria-label="{{ action_aria }}"
+      {% if disabled == true %}aria-disabled="true" tabindex="-1"{% endif %}
+      {% if target_blank == true %}target="_blank" rel="{{ rel_value }}"{% endif %}
+    >
+      {{ action_label }}
+    </a>
+  {%- else -%}
+    <button
+      type="{{ action_type }}"
+      class="{{ action_class }}"
+      aria-label="{{ action_aria }}"
+      {% if disabled == true %}disabled{% endif %}
+      {% if name != blank %}name="{{ name }}"{% endif %}
+      {% if value != blank %}value="{{ value }}"{% endif %}
+    >
+      {{ action_label }}
+    </button>
+  {%- endif -%}
+{%- endif -%}

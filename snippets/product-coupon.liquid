@@ -1,0 +1,176 @@
+{% comment %}
+  product
+  timezone
+  current_variant
+{% endcomment %}
+
+{% liquid
+  assign coupon_data = product.metafields.custom.coupon
+  if current_variant == blank
+    assign current_variant = product.variants | first
+  endif
+  assign current_variant_id = current_variant.id
+%}
+{% if coupon_data != blank %}
+  <div class="custom-coupon-section-container coupon-container-{{ current_variant_id }}"></div>
+{% endif %}
+<script>
+  {% if coupon_data != blank %}
+    $(function() {
+      const COUPON_LIST = {{ coupon_data }}, TIMEZONE = {{ timezone }};
+      for(let i = 0; i < COUPON_LIST.length; i++) {
+        initCouponNode(COUPON_LIST[i])
+      }
+
+      $('.variant-wrapper .variant-input').click(()=>{
+        document.querySelector('.custom-coupon-section-container').innerHTML = ''
+        setTimeout(()=>{
+          let variant = location.search.split('?')[1].split('=')[1];
+          console.log('selected_variant:',  variant)
+          for(let i = 0; i < COUPON_LIST.length; i++) {
+            initCouponNode(COUPON_LIST[i])
+          }
+        }, 2000)
+      })
+      
+      function copyCouponCode(e) {
+        let el = e.target, control = el.dataset['control'];
+        let code = $(`.${control} .custom-coupon-container`).data('code');
+        console.log(code)
+
+        $(`.${control} .coupon-code-value`).attr('disabled', false)
+        $(`.${control} .coupon-code-value`).select()
+        let res = document.execCommand("Copy"); 
+        console.log('Copy Reault:', res)
+        $(`.${control} .coupon-code-value`).attr('disabled', true)
+        if(res) {
+          $(`.${control}  .custom-coupon-copy-tip`).show()
+          setTimeout(() => {
+            $(`.${control}  .custom-coupon-copy-tip`).hide()
+          }, 3000)
+        }
+      }
+
+      function initCouponNode(coupondata, select_variant = 0) {
+        if(!verifyTime(coupondata)) return ''
+        console.log('verifyTime', 'true')
+        if(!isVariant(coupondata, select_variant)) return ''
+        console.log('isVariant', 'true')
+        $('.custom-coupon-section-container').append(createCouponNode(coupondata))
+      }
+      function formatPSTTime(dateTime, _timeZone = -8) {
+    	let _dateTime = new Date(dateTime)
+        let timeZone = _dateTime.getTimezoneOffset();
+        if (timeZone === -1 * Number(_timeZone) * 60) return _dateTime;
+        return new Date(_dateTime.getTime() + ((timeZone + Number(_timeZone) * 60) * 60 * 1000))
+      }
+      function earlyTargetDateTime(targetDateTime, currentDateTime) {
+        return targetDateTime.getTime() < currentDateTime.getTime()
+      }
+      function verifyTime(coupon_data) {
+        let currentDateTime = formatPSTTime(+new Date(), TIMEZONE);
+        console.log('format to timezone', TIMEZONE, currentDateTime)
+        let startDate = new Date(coupon_data.time[0]), endDate = new Date(coupon_data.time[1])
+        console.log('startDate', startDate, 'endDate', endDate)
+        return earlyTargetDateTime(startDate, currentDateTime) && earlyTargetDateTime(currentDateTime, endDate)
+      }
+      function isVariant(coupon_data, select_variant = 0) {
+        console.log('variant', coupon_data.variant )
+        if({{ product.variants.size }} == 1) return true
+        else if(coupon_data.variant === '') return true
+        else if(coupon_data.variant === '{{ current_variant_id }}') return true
+        else if(coupon_data.variant == select_variant) return true
+        else return false;
+      }
+      function createCouponNode(coupondata) {
+        let node = document.createElement('div')
+        node.setAttribute('class', `custom-coupon-${coupondata.variant}-${coupondata.code}`);
+        node.innerHTML = `
+    <div class="custom-coupon-container" data-code="${coupondata.code}">
+      <div class="coupon--wrapper">
+        <div class="coupon-label">${coupondata.label}</div>
+        <div class="coupon-code">
+          Code:
+          <input class="coupon-code-value" value="${coupondata.code}">
+        </div>
+        <div class="coupon-divide"></div>
+        <div class="coupon-time">
+          <div class="start-time">${coupondata.timeLabel[0]}</div>
+          -
+          <div class="end-time">${coupondata.timeLabel[1]}</div>
+        </div>
+      </div>
+      <div class="coupon-divide-dashed"></div>
+      <div class="coupon-usage-box" data-control="custom-coupon-${coupondata.variant}-${coupondata.code}" >
+        <div class="coupon-usage">COPY&USE</div>
+      </div>
+    </div>
+    <div class="custom-coupon-copy-tip">Copy Succeeded!</div>`;
+        $(`.custom-coupon-${coupondata.variant}-${coupondata.code} .coupon-usage-box`).click((e) => copyCouponCode(e))
+        return node
+      }
+    })
+  {% endif %}
+</script>
+{% style %}
+  .custom-coupon-section-container {
+    margin: 1em 0;
+    max-width: 500px;
+  }
+  .custom-coupon-section-container .custom-coupon-container {
+    display: flex;
+    color: #fff;
+  }
+  .custom-coupon-section-container .custom-coupon-container .coupon--wrapper {
+    padding: 1em 1.5em;
+    margin-right: 0em;
+    background: radial-gradient(circle at 0 0, #fff 10px, transparent 10px), radial-gradient(circle at 100% 0, #fff 10px, transparent 10px), radial-gradient(circle at 0 100%, #fff 10px, transparent 10px), radial-gradient(circle at 100% 100%, #fff 10px, transparent 10px), linear-gradient(to right, #f5ab69, #ec6521);
+    text-align: center;
+  }
+  .custom-coupon-section-container .custom-coupon-container .coupon--wrapper .coupon-label {
+    font-size: 1.3em;
+  }
+  .custom-coupon-section-container .custom-coupon-container .coupon--wrapper .coupon-code {
+    line-height: 2em;
+  }
+  .custom-coupon-section-container .custom-coupon-container .coupon--wrapper .coupon-code .coupon-code-value {
+    border: none;
+    padding: 0;
+    text-align: center;
+    display: inline-block;
+    background: transparent;
+  }
+  .custom-coupon-section-container .custom-coupon-container .coupon--wrapper .coupon-divide {
+    width: 100%;
+    border-bottom: 1px solid #fff;
+  }
+  .custom-coupon-section-container .custom-coupon-container .coupon--wrapper .coupon-time {
+    display: flex;
+    justify-content: center;
+    font-size: 0.6em;
+    margin-top: 0.5em;
+  }
+  .custom-coupon-section-container .custom-coupon-container .coupon-divide-dashed {
+    width: 2px;
+    background: radial-gradient(circle at 100% 100%, #fff 10px, transparent 10px), radial-gradient(circle at 0% 0%, #fff 10px, transparent 10px), repeating-linear-gradient(#fff 0%, #fff 6%, #ec6521 6%, #ec6521 10%);
+  }
+  .custom-coupon-section-container .custom-coupon-container .coupon-usage-box {
+    padding: 1em 2em;
+    background: radial-gradient(circle at 0 0, #fff 10px, transparent 10px), radial-gradient(circle at 100% 0, #fff 10px, transparent 10px), radial-gradient(circle at 0 100%, #fff 10px, transparent 10px), radial-gradient(circle at 100% 100%, #fff 10px, transparent 10px), #ffd3bf;
+    color: #ec6521;
+    font-weight: bold;
+  }
+  .custom-coupon-section-container .custom-coupon-container .coupon-usage-box .coupon-usage {
+    writing-mode: vertical-lr;
+    -webkit-writing-mode: vertical-rl;
+    direction: rtl;
+    transform: scale(-1);
+  }
+  .custom-coupon-section-container .custom-coupon-copy-tip {
+    color: green;
+    line-height: 2em;
+    font-weight: bold;
+    /* visibility: hidden; */
+    display: none;
+  }
+{% endstyle %}

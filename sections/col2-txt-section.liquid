@@ -1,0 +1,132 @@
+<div class="col-txt-section-{{ section.id }} wow bounceInUp">
+  <div class="col-txt-section--wrapper page-width">
+    <h2 class="col-txt-section-title custom-txt-bold appear-delay{% cycle '','-1','-2','-3','-4' %}">{{ section.settings.title }}</h2>
+    <div class="col-txt-section-content appear-delay{% cycle '','-1','-2','-3','-4' %}">
+      {% for block in section.blocks %}
+        <div class="col-txt-section-item appear-delay{% cycle '','-1','-2','-3','-4' %}">
+          <h3 class="col-txt-section-item-title custom-txt-semibold">{{ block.settings.feature_item_title }}</h3>
+          <p class="col-txt-section-item-context">{{ block.settings.feature_item_context }}</p>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+{% style %}
+    .col-txt-section-{{ section.id }} {
+      background-color: #fff;
+    }
+    .col-txt-section-{{ section.id }} .col-txt-section--wrapper {
+        padding: 3em 2em;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .col-txt-section-{{ section.id }} .col-txt-section--wrapper .col-txt-section-title {
+        font-size: 2.5em;
+        font-weight: 700;
+    }
+    .col-txt-section-{{ section.id }} .col-txt-section--wrapper .col-txt-section-content {
+        display: flex;
+    }
+    .col-txt-section-{{ section.id }} .col-txt-section--wrapper .col-txt-section-item {
+        font-size: 0.9em;
+        font-weight: 500;
+        text-align: left;
+        padding: 0 1em;
+        border-right: 1px solid #e5e7eb;
+    }
+    .col-txt-section-{{ section.id }} .col-txt-section--wrapper .col-txt-section-item:last-child {
+        border-right: none;
+    }
+    @media (max-width: 768px) {
+        .col-txt-section-{{ section.id }} .col-txt-section--wrapper {
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: flex-start;
+        }
+        .col-txt-section-{{ section.id }} .col-txt-section--wrapper .col-txt-section-title {
+            margin-bottom: 0.5em;
+            font-size: 2em;
+        }
+        .col-txt-section-{{ section.id }} .col-txt-section--wrapper .col-txt-section-item {
+          font-size: 0.8em;
+        }
+        .col-txt-section-{{ section.id }} .col-txt-section--wrapper .col-txt-section-item:first-child {
+            padding-left: 0;
+        }
+        .col-txt-section-{{ section.id }} .col-txt-section--wrapper .col-txt-section-item  h3.col-txt-section-item-title {
+            font-size: 1em;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            line-height: 1.2em;
+            height: 2.4em;
+        }
+    }
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "Col2 Txt Section",
+  "class": "col2-txt-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Sound On. Move On."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "feature_item",
+      "name": "Feature Item",
+      "settings": [
+        {
+          "type": "html",
+          "id": "feature_item_title",
+          "label": "Feature Item"
+        }, 
+        {
+          "type": "html",
+          "id": "feature_item_context",
+          "label": "Feature Item Context"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Col2 Txt Section",
+      "settings": {
+        "title": "Sound On. Move On."
+      },
+      "blocks": [
+        {
+          "type": "feature_item",
+          "settings": {
+            "feature_item_title": "85 Million+",
+            "feature_item_context": "Units Sold"
+          }
+        },
+        {
+          "type": "feature_item",
+          "settings": {
+            "feature_item_title": "52 Million",
+            "feature_item_context": "Global Users"
+          }
+        },
+        {
+          "type": "feature_item",
+          "settings": {
+            "feature_item_title": "World's Leading*",
+            "feature_item_context": "Wireless Headphone Brand"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

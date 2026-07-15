@@ -1,0 +1,173 @@
+{%- if section.settings.divider -%}
+  <div class="section--divider">
+  {%- endif -%}
+  <div class="icon-text-list-container page-width text-center section-header">
+    {% if section.settings.title %}
+      <h2 class="title">{{ section.settings.title }}</h3>
+    {% endif %}
+    <div class="icon-text-list--wrapper">
+      {% for block in section.blocks %}
+        {% if block.settings.icon != blank %}
+          <div class="icon-text-item">
+            <div class="item-icon">
+              <img class="lazyloaded" src="{{ block.settings.icon | img_url: '40x40' }}" />
+            </div>
+            <div class="item-title">{{ block.settings.title }}</div>
+            <div class="item-describe">{{ block.settings.desc }}</div>
+          </div>
+        {% endif %}
+      {% endfor %}
+
+    </div>
+  </div>
+  {%- if section.settings.divider -%}
+  </div>
+{%- endif -%}
+{% style %}
+  .icon-text-list-container {
+    margin-bottom: 2rem;
+  }
+  .icon-text-list-container .title {
+/*     font-size: 2rem; */
+    color: #232323;
+    margin-bottom:2rem;
+  }
+  .icon-text-list--wrapper {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(25rem, 1fr));
+    grid-gap: 1rem;
+    background: #fff;
+    box-shadow: 0 0 5px 5px #ddd;
+    padding: 0 3rem 4rem;
+    border-radius: 10px;
+  }
+  .icon-text-item {
+    padding-top: 4rem;
+    font-size: 0.9rem;
+    line-height: 1.4rem;
+  }
+  .icon-text-item img{
+    margin-bottom:.8rem;
+  }
+  .icon-text-item .item-title {
+    color: #434547;
+    font-weight: 600;
+    font-size: 1.2rem;
+    margin-bottom: .5rem;
+  }
+  .icon-text-item .item-describe {
+    color: #757575;
+    font-weight: 500;
+    font-size: 0.8rem;
+  }
+  @media screen and (max-width: 1100px) {
+    .icon-text-list--wrapper {
+      grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+    }
+  }
+  @media screen and (max-width: 550px) {
+    .icon-text-list--wrapper {
+      grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+    }
+    .icon-text-item { 
+      padding-top: 1rem;
+    }
+  }
+  @media screen and (max-width: 450px) {
+    .icon-text-list--wrapper {
+      grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
+      padding: 1rem;
+    }
+  }
+{% endstyle %}
+{% schema %}
+  {
+    "name": "t:sections.icon_text.name",
+    "class": "index-section-icon-text",
+    "max_blocks": 6,
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "divider",
+        "label": "t:sections.icon_text.settings.divider.label",
+        "default": true
+      }, {
+        "type": "text",
+        "id": "title",
+        "label": "t:sections.icon_text.settings.title.label"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "text",
+        "name": "t:sections.icon_text.blocks.column.name",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "icon",
+            "label": "t:sections.icon_text.blocks.column.settings.icon.label"
+          }, {
+            "type": "text",
+            "id": "title",
+            "label": "t:sections.icon_text.blocks.column.settings.title.label"
+          }, {
+            "type": "text",
+            "id": "desc",
+            "label": "t:sections.icon_text.blocks.column.settings.desc.label"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "t:sections.icon_text.presets.icon_text.name",
+        "settings": {
+          "divider": true,
+          "title": "title"
+        },
+        "blocks": [
+          {
+            "type": "text",
+            "settings": {
+              "title": "Enter Title",
+              "desc": "Enter Describe"
+            }
+          },
+          {
+            "type": "text",
+            "settings": {
+              "title": "Enter Title",
+              "desc": "Enter Describe"
+            }
+          },
+          {
+            "type": "text",
+            "settings": {
+              "title": "Enter Title",
+              "desc": "Enter Describe"
+            }
+          },
+          {
+            "type": "text",
+            "settings": {
+              "title": "Enter Title",
+              "desc": "Enter Describe"
+            }
+          }, {
+            "type": "text",
+            "settings": {
+              "title": "Enter Title",
+              "desc": "Enter Describe"
+            }
+          }, {
+            "type": "text",
+            "settings": {
+              "title": "Enter Title",
+              "desc": "Enter Describe"
+            }
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

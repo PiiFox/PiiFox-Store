@@ -1,0 +1,285 @@
+{% if section.settings.show_activity_bar %}
+<div id="ActivityBar-{{ section.id }}" class="activity-bar-section" data-section-id="{{ section.id }}" data-section-type="activity-bar">
+  <a class="activity-bar-section-container" href="{{ section.settings.activity_page }}" >
+    <div class="page-width" style="overflow-x: hidden;">
+    <div class="activity-bar--wrapper">
+      <div class="activity-bar-text">
+        {% if section.settings.activity_text != blank %}
+        <span>{{ section.settings.activity_text }}</span>
+        {% endif %}
+        {% if section.settings.activity_btn != blank %}
+        <button class="activity-bar-button">{{ section.settings.activity_btn }}</button>
+        {% endif %}
+      </div>
+      {% if section.settings.is_activity_downcount == true %}
+      <div class="activity-bar-time-downcount">
+        <div class="activity-bar-day-downcount activity-bar-item-downcount">
+          <div class="activity-bar-day-value activity-bar-item-value">
+            <div class="activity-bar-day-ten-value activity-bar-value-box">0</div>
+            <div class="activity-bar-day-one-value activity-bar-value-box">0</div>
+          </div>
+          <div class="activity-bar-day-label activity-bar-item-label">DAYS</div>
+        </div>
+        <div class="activity-bar-hour-downcount activity-bar-item-downcount">
+          <div class="activity-bar-hour-value activity-bar-item-value">
+            <div class="activity-bar-hour-ten-value activity-bar-value-box">0</div>
+            <div class="activity-bar-hour-one-value activity-bar-value-box">0</div>
+          </div>
+          <div class="activity-bar-hour-label activity-bar-item-label">HOURS</div>
+        </div>
+        <div class="activity-bar-minute-downcount activity-bar-item-downcount">
+          <div class="activity-bar-minute-value activity-bar-item-value">
+            <div class="activity-bar-minute-ten-value activity-bar-value-box">0</div>
+            <div class="activity-bar-minute-one-value activity-bar-value-box">0</div>
+          </div>
+          <div class="activity-bar-minute-label activity-bar-item-label">MINUTES</div>
+        </div>
+        <div class="activity-bar-second-downcount activity-bar-item-downcount">
+          <div class="activity-bar-second-value activity-bar-item-value">
+            <div class="activity-bar-second-ten-value activity-bar-value-box">0</div>
+            <div class="activity-bar-second-one-value activity-bar-value-box">0</div>
+          </div>
+          <div class="activity-bar-second-label activity-bar-item-label">SECONDS</div>
+        </div>
+      </div>
+      {% endif %}
+    </div>
+    </div>
+  </a>
+</div>
+{% endif %}
+<script>
+  {% if section.settings.show_activity_bar %}
+  $(function() {
+    let activitybar_offsetTop = parseInt($('#SiteHeader').css('top')), isCollapse = true;
+    var wheelUp = function () {
+      !isCollapse && gsap.fromTo("#SiteHeader", {y: activitybar_offsetTop * -1}, {y: 0}).then(() => {
+        isCollapse = true
+        $('#shopify-section-header .toolbar').css('z-index', '999')
+      });
+    }
+    var wheelDown = function () {
+      $('#shopify-section-activity-bar').css('z-index', '8')
+      isCollapse && gsap.fromTo("#SiteHeader", {y: 0 * -1}, {y: activitybar_offsetTop * -1}).then(() => {
+        isCollapse = false
+      });
+    }
+    let scrollFunc = function(e) {
+      var e = e || window.event;
+      if(window.scrollY === 0) wheelUp()
+      else wheelDown()
+    }
+    $(window).on('scroll', scrollFunc);
+  })
+  {% endif %}
+</script>
+
+<script>
+{% if section.settings.show_activity_bar %}
+$(function() {
+  const TIMEZONE = {{ section.settings.activity_timezone }}, DOWNCOUNTTIME = "{{ section.settings.activity_end_time }}";
+  
+  function formatPSTTime(dateTime, _timeZone = TIMEZONE) {
+	let _dateTime = new Date(dateTime)
+	let timeZone = _dateTime.getTimezoneOffset();
+	if (timeZone === -1 * Number(_timeZone) * 60) return _dateTime;
+	return new Date(_dateTime.getTime() + ((timeZone + Number(_timeZone) * 60) * 60 * 1000))
+  }
+  
+  function downCountStartTime() {
+	let today = formatPSTTime(new Date(), TIMEZONE);
+	if (today.getTime() > new Date(DOWNCOUNTTIME).getTime() ) {
+      $(".activity-bar-section").hide()
+      return;
+    }
+  
+	function reloadTime(_endDate) {
+		let endDate = new Date(_endDate);
+		var timer;
+		timer = setInterval(function () {
+			var time = endDate.getTime() - (formatPSTTime(new Date(), TIMEZONE).getTime());
+			if (time >= 0) {
+				var d = Math.floor(time / (1000 * 60 * 60 * 24));
+				d = d > 9 ? '' + d : '0' + d;
+				$('#ActivityBar-{{ section.id }} .activity-bar-day-downcount .activity-bar-day-ten-value').text(d.slice(0, 1));
+                $('#ActivityBar-{{ section.id }} .activity-bar-day-downcount .activity-bar-day-one-value').text(d.slice(1));
+				var h = Math.floor(time / 1000 / 60 / 60 % 24);
+				h = h > 9 ? '' + h : '0' + h;
+				$('#ActivityBar-{{ section.id }} .activity-bar-hour-downcount .activity-bar-hour-ten-value').text(h.slice(0, 1));
+                $('#ActivityBar-{{ section.id }} .activity-bar-hour-downcount .activity-bar-hour-one-value').text(h.slice(1));
+				var m = Math.floor(time / 1000 / 60 % 60);
+				m = m > 9 ? '' + m : '0' + m;
+				$('#ActivityBar-{{ section.id }} .activity-bar-minute-downcount .activity-bar-minute-ten-value').text(m.slice(0, 1));
+                $('#ActivityBar-{{ section.id }} .activity-bar-minute-downcount .activity-bar-minute-one-value').text(m.slice(1));
+				var s = Math.floor(time / 1000 % 60);
+				s = s > 9 ? '' + s : '0' + s;
+				$('#ActivityBar-{{ section.id }} .activity-bar-second-downcount .activity-bar-second-ten-value').text(s.slice(0, 1));
+                $('#ActivityBar-{{ section.id }} .activity-bar-second-downcount .activity-bar-second-one-value').text(s.slice(1));
+			} else {
+				clearInterval(timer);
+			}
+		}, 1000);
+	}
+    reloadTime(DOWNCOUNTTIME);
+  }
+  {% if section.settings.is_activity_downcount == true %}
+  downCountStartTime()
+  {% endif %}
+})
+{% endif %}
+</script>
+{% if section.settings.show_activity_bar %}
+{% style %}
+  .activity-bar-section {
+    {% if section.settings.background != blank %}
+      background: url({{ section.settings.background | img_url: '1920x' }}) left top/100% 100% no-repeat;
+    {% else %}
+      background: {{ section.settings.background_color }};
+    {% endif %}
+  }
+  .is-light .light_bg .activity-bar-section a.activity-bar-section-container {color: {{ section.settings.activity_text_color }} !important;}
+  .is-light .light_bg .activity-bar-section a.activity-bar-section-container:hover {color: {{ section.settings.activity_text_color }} !important;}
+  .activity-bar-section .activity-bar-section-container {}
+  .activity-bar-section-container .activity-bar--wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .activity-bar--wrapper .activity-bar-text {min-height: 47px;min-width: 1px;color: {{ section.settings.activity_text_color }};}
+  .activity-bar--wrapper .activity-bar-button {
+    {% if section.settings.activity_btn_bg != blank %}
+      background: url('{{ section.settings.activity_btn_bg | img_url: '161x' }}') left top/100% 100% no-repeat;
+    {% else %}
+      background: {{ section.settings.activity_btn_bgcolor }};
+    {% endif %}    
+    aspect-ratio: 161/38;
+    height: 40px;
+    color: {{ section.settings.activity_btn_textcolor }};
+    border-radius: 6px;
+    font-weight: bold;
+    margin-left: 0.3em;
+    padding: 0.1em 0.4em;
+  }
+  .activity-bar--wrapper .activity-bar-time-downcount {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: {{ section.settings.activity_text_color }};
+  }
+  .activity-bar-time-downcount .activity-bar-item-downcount {
+    text-align: center;
+    margin: 0 0.2em;
+  }
+  .activity-bar-time-downcount .activity-bar-item-downcount .activity-bar-item-value {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: "Courier New", monospace;
+  }
+  .activity-bar-time-downcount .activity-bar-item-downcount .activity-bar-item-value .activity-bar-value-box {
+    background: {{ section.settings.activity_downcount_bgcolor }};
+    color: {{ section.settings.activity_downcount_text_color }};
+    border-radius: 6px;
+    padding: 0.1em 0.4em;
+    font-weight: bolder;
+    font-size: 1.2em;
+    margin: 0 0.1em;
+    transition: all 0.4s ease;
+  }
+  .activity-bar-time-downcount .activity-bar-item-downcount .activity-bar-item-label {
+    font-size: 0.6em;
+    font-weight: 700;
+  }
+  @media screen and (max-width: 768px) {
+    .activity-bar-section {
+      {% if section.settings.mobile_background != blank %}
+        background: url({{ section.settings.mobile_background | img_url: '750x' }}) left top/100% 100% no-repeat;
+      {% else %}
+        background: {{ section.settings.background_color }};
+      {% endif %}
+    }
+    .activity-bar-section-container .activity-bar--wrapper {display: inline-block;}
+    .activity-bar--wrapper .activity-bar-text {margin-bottom: 0.2em;min-height: 47px;}
+  }
+{% endstyle %}
+{% endif %}
+
+{% schema %}
+  {
+    "name": "Activity Bar",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "show_activity_bar",
+        "label": "Show Activity Bar"
+      },
+      {
+        "type": "image_picker",
+        "id": "background",
+        "label": "Background"
+      }, {
+        "type": "image_picker",
+        "id": "mobile_background",
+        "label": "Mobile Background"
+      }, {
+        "type": "color",
+        "id": "background_color",
+        "label": "Background Color"
+      }, {
+        "type": "url",
+        "id": "activity_page",
+        "label": "Activity Page"
+      }, {
+        "type": "html",
+        "id": "activity_text",
+        "label": "Activity Text"
+      }, {
+        "type": "color",
+        "id": "activity_text_color",
+        "label": "Activity Text Color"
+      },{
+        "type": "text",
+        "id": "activity_btn",
+        "label": "Activity Button Text"
+      },{
+        "type": "image_picker",
+        "id": "activity_btn_bg",
+        "label": "Activity Button Background"
+      },{
+        "type": "color",
+        "id": "activity_btn_bgcolor",
+        "label": "Activity Button Background Color"
+      },{
+        "type": "color",
+        "id": "activity_btn_textcolor",
+        "label": "Activity Button Text Color"
+      },{
+        "type": "checkbox",
+        "id": "is_activity_downcount",
+        "label": "Is Activity Downcount"
+      },{
+        "type": "color",
+        "id": "activity_downcount_bgcolor",
+        "label": "Activity Downcount Background Color"
+      }, {
+        "type": "color",
+        "id": "activity_downcount_text_color",
+        "label": "Activity Downcount Text Color"
+      }, {
+        "type": "number",
+        "id": "activity_timezone",
+        "label": "Activity Time Zone"
+      }, {
+        "type": "text",
+        "id": "activity_end_time",
+        "label": "Activity End Time"
+      }
+    ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

@@ -1,0 +1,460 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {}
+    },
+    "1662181105e3a49815": {
+      "type": "local_video",
+      "settings": {
+        "video_url": "https://cdn.shopify.com/videos/c/o/v/f20867bf4b114d3c81d410c4c6d437cf.mp4",
+        "divider": false
+      }
+    },
+    "1662581299c62cd44e": {
+      "type": "bg_video-content",
+      "blocks": {
+        "166258129933e4ba31-0": {
+          "type": "power",
+          "settings": {
+            "icon": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"20\" height=\"37\" viewbox=\"0 0 125 232\" fill=\"#ffffff\">\n                    <g>\n                      <path d=\"M96 0l-66 0c-16,0 -30,7 -30,24l0 180c0,16 13,28 30,28l66 0c17,0 30,-14 30,-31l0 -179c0,-16 -13,-23 -30,-23zm-31 4c1,0 2,1 2,2 0,1 -1,2 -2,2 -1,0 -2,-1 -2,-2 0,-1 1,-2 2,-2zm-10 11c0,-1 1,-2 2,-2l17 0c1,0 2,1 2,2l0 0c0,1 -1,2 -2,2l-17 0c-1,0 -2,-1 -2,-2l0 0zm-7 -2c1,0 2,1 2,2 0,1 -1,2 -2,2 -1,0 -2,-1 -2,-2 0,-1 1,-2 2,-2zm15 212c-6,0 -10,-4 -10,-10 0,-6 4,-10 10,-10 6,0 10,4 10,10 0,5 -4,10 -10,10zm52 -30c0,2 -1,3 -3,3l-99 0c-2,0 -3,-1 -3,-3l0 -168c0,-2 1,-3 3,-3l99 0c2,0 3,1 3,3l0 168z\"></path>\n                    </g>\n                  </svg>",
+            "tm1": "65+ Charges",
+            "tm2": "Mobile Phone (15W)"
+          }
+        },
+        "54b00743-54b7-4906-b514-84c54daa9af3": {
+          "type": "power",
+          "settings": {
+            "icon": "<svg style=\"max-width: 60%;\" xmlns=\"http://www.w3.org/2000/svg\" width=\"61\" height=\"42\" version=\"1.1\" viewbox=\"0 0 6541 4459\" fill=\"#ffffff\">\n                    <g>\n                      <path d=\"M0 4162c0,297 289,297 289,297l5954 0c0,0 298,0 298,-297 0,-297 -298,-297 -298,-297l-5954 0c0,0 -289,0 -289,297zm2527 -149l1189 0c0,0 149,0 149,149 0,149 -149,149 -149,149l-1189 0c0,0 -149,0 -149,-149 0,-149 149,-149 149,-149z\"></path>\n                      <path d=\"M6243 3568l0 -2973c0,-595 -595,-595 -595,-595l-4757 0c0,0 -595,0 -595,595l0 2973 324 0 -27 -2974c0,-269 321,-296 321,-296l4703 0c0,0 327,27 327,296l0 2974 297 0z\"></path>\n                    </g>\n                  </svg>",
+            "tm1": "16.6+ Hours",
+            "tm2": "Laptop (60W)"
+          }
+        },
+        "a56a49b6-d94c-4edb-828c-7b933f3882d6": {
+          "type": "power",
+          "settings": {
+            "icon": "<svg style=\"max-width: 60%;\" xmlns=\"http://www.w3.org/2000/svg\" width=\"60\" height=\"50\" viewbox=\"0 0 478 395\" fill=\"#ffffff\">\n                    <g>\n                      <path d=\"M434 0l-391 0c-24,0 -43,19 -43,43l0 248c0,24 19,43 43,43l142 0 0 30 -41 0c-8,0 -15,7 -15,15 0,8 7,15 15,15l189 0c8,0 15,-7 15,-15 0,-8 -7,-15 -15,-15l-41 0 0 -30 143 0c24,0 43,-19 43,-43l0 -248c0,-24 -20,-44 -44,-44zm-391 30l391 0c8,0 14,6 14,14l0 180 -419 0 0 -180c0,-8 6,-14 14,-14zm219 336l-48 0 0 -30 48 0 0 30zm172 -60l-391 0c-8,0 -14,-6 -14,-14l0 -39 419 0 0 39c0,8 -6,14 -14,14z\"></path>\n                    </g>\n                  </svg>",
+            "tm1": "3.3 Hours",
+            "tm2": "Desktop (300W)"
+          }
+        },
+        "60348f2f-0d8c-4223-9e63-188fdcf91134": {
+          "type": "power",
+          "settings": {
+            "icon": "<svg style=\"max-width: 60%;\" xmlns=\"http://www.w3.org/2000/svg\" width=\"63\" height=\"35\" viewbox=\"0 0 6752 3781\" fill=\"#ffffff\">\n                    <g>\n                      <path class=\"fil0\" d=\"M6579 1949c95,0 172,-77 172,-172l0 -1102c0,-373 -302,-675 -675,-675l-5401 0c-373,0 -675,302 -675,675l0 2431c0,373 302,675 675,675l5401 0c373,0 675,-302 675,-675l0 -520c0,-93 -76,-169 -169,-169l-5401 0c-93,0 -169,76 -169,169l0 7c0,93 76,169 169,169l5226 0 0 135c0,298 -242,540 -540,540l-4983 0c-298,0 -540,-242 -540,-540l0 -2012c0,-298 242,-540 540,-540l4983 0c298,0 540,242 540,540l0 892c0,95 77,172 172,172z\"></path>\n                      <path class=\"fil0\" d=\"M4764 1351c185,21 361,-35 497,-143 66,-53 153,-80 243,-70 91,10 169,56 222,123l0 0c27,34 68,58 115,63 94,11 180,-57 190,-152 6,-51 -11,-98 -42,-134 -108,-131 -264,-222 -446,-242 -185,-21 -362,35 -497,143 -66,53 -153,80 -243,70 -91,-10 -169,-56 -222,-123l0 0c-27,-36 -69,-61 -117,-66 -94,-11 -180,57 -190,152 -6,48 10,94 39,129l0 0c108,135 267,229 452,250z\"></path>\n                    </g>\n                  </svg>",
+            "tm1": "16+ Hours",
+            "tm2": "Car Fridge (60W)"
+          }
+        },
+        "11112d4e-5ff3-4c51-9bde-311d4400ec4b": {
+          "type": "power",
+          "settings": {
+            "icon": "<svg style=\"max-width: 60%;\" xmlns=\"http://www.w3.org/2000/svg\" width=\"69\" height=\"55\" viewbox=\"0 0 621 497\" fill=\"#ffffff\">\n                    <g>\n                      <path class=\"fil0\" d=\"M614 62l-211 0 0 -31c0,-17 -14,-31 -31,-31l-31 0c-17,0 -31,14 -31,31l0 31 -31 0 0 -31c0,-17 -14,-31 -31,-31l-31 0c-17,0 -31,14 -31,31l0 31 -31 0 0 -31c0,-17 -14,-31 -31,-31l-31 0c-17,0 -31,14 -31,31l0 31 -56 0c-2,0 -3,1 -4,2 -1,1 -2,3 -2,4l0 19c0,2 1,3 2,4 1,1 3,2 4,2l56 0 0 31c0,17 14,31 31,31l31 0c8,0 16,-3 22,-9 6,-6 9,-14 9,-22l0 -31 31 0 0 31c0,8 3,16 9,22 6,6 14,9 22,9l31 0c17,0 31,-14 31,-31l0 -31 31 0 0 31c0,17 14,31 31,31l31 0c17,0 31,-14 31,-31l0 -31 211 0c2,0 3,-1 4,-2 1,-1 2,-3 2,-4l0 -19c0,-2 -1,-3 -2,-4 -1,-1 -3,-2 -4,-2zm-490 0l0 62 -31 0 0 -93 31 0 0 31zm124 0l0 62 -31 0 0 -93 31 0 0 31zm124 0l0 62 -31 0 0 -93 31 0 0 31zm242 124l-608 0c-2,0 -3,1 -4,2 -1,1 -2,3 -2,4l0 19c0,2 1,3 2,4 1,1 3,2 4,2l56 0 0 155c0,16 7,32 18,44 12,12 27,18 44,18l0 56c0,3 3,6 6,6l19 0c2,0 3,-1 4,-2 1,-1 2,-3 2,-4l0 -56 310 0 0 56c0,2 1,3 2,4 1,1 3,2 4,2l19 0c3,0 6,-3 6,-6l0 -56c16,0 32,-7 44,-18 12,-12 18,-27 18,-44l0 -155 56 0c2,0 3,-1 4,-2 1,-1 2,-3 2,-4l0 -19c0,-2 -1,-3 -2,-4 -1,-1 -3,-2 -4,-2zm-87 186c0,17 -14,31 -31,31l-372 0c-17,0 -31,-14 -31,-31l0 -155 434 0 0 155z\"></path>\n                    </g>\n                  </svg>",
+            "tm1": "0.6 Hours",
+            "tm2": "Induction Cooker (1500W)"
+          }
+        },
+        "d3ae308c-1336-4f93-a7e2-783115d67f60": {
+          "type": "power",
+          "settings": {
+            "icon": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"26\" height=\"36\" version=\"1.1\" viewbox=\"0 0 4668 6494\" fill=\"#ffffff\">\n                    <g>\n                      <path d=\"M2354 0c-1258,0 -2354,1096 -2354,2435 0,731 731,1826 1339,2679 41,41 81,81 122,81l1745 0c41,0 81,-41 122,-81 609,-852 1339,-1948 1339,-2679 0,-1339 -1055,-2435 -2313,-2435zm771 4870l-1542 0c-528,-771 -1218,-1826 -1218,-2435 0,-1136 934,-2111 2029,-2111 1096,0 2029,974 2029,2111 -41,609 -731,1664 -1299,2435zm-81 609l-1421 0c-81,0 -162,81 -162,162 0,81 81,162 162,162l1421 0c81,0 162,-81 162,-162 0,-81 -81,-162 -162,-162zm0 528l-1421 0c-81,0 -162,81 -162,162 0,81 81,162 162,162l446 0c41,122 284,162 284,162 0,0 244,-41 244,-162l446 0c81,0 162,-81 162,-162 0,-81 -81,-162 -162,-162z\"></path>\n                    </g>\n                  </svg>",
+            "tm1": "100 Hours",
+            "tm2": "Camping Light (10W)"
+          }
+        },
+        "959ebee6-0363-4870-801b-c01543910348": {
+          "type": "power",
+          "settings": {
+            "icon": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"34\" viewbox=\"0 0 200 285\" fill=\"#ffffff\">\n                    <g>\n                      <path d=\"M164 0l-128 0c-20,0 -36,16 -36,36l0 214c0,20 16,36 36,36l128 0c20,0 36,-16 36,-36l0 -214c0,-20 -16,-36 -36,-36zm-128 21l128 0c8,0 14,6 14,14l0 52 -157 0 0 -52c0,-8 6,-14 14,-14zm128 242l-128 0c-8,0 -14,-6 -14,-14l0 -140 157 0 0 140c0,8 -6,14 -14,14z\"></path>\n                    </g>\n                  </svg>",
+            "tm1": "0.6 Hours",
+            "tm2": "Household Fridge (1500W)"
+          }
+        },
+        "7ff305c6-0864-4286-9861-747f01655d02": {
+          "type": "power",
+          "settings": {
+            "icon": "<svg style=\"max-width: 60%;\" xmlns=\"http://www.w3.org/2000/svg\" width=\"67\" height=\"67\" viewbox=\"0 0 699 699\" fill=\"#ffffff\">\n                    <g>\n                      <path d=\"M693 400c-9,-9 -22,-9 -31,0l-66 66c-2,-17 -8,-34 -17,-49l-116 -201c-20,-35 -53,-57 -92,-64l0 -50 140 -60c7,-3 12,-10 13,-18 1,-8 -2,-15 -9,-20 -6,-5 -15,-6 -22,-3l-144 62 -144 -62c-7,-3 -15,-2 -22,3 -6,5 -10,12 -9,20 1,8 6,14 13,17l140 60 0 50c-38,6 -72,29 -92,64l-116 201c-9,15 -14,32 -17,49l-66 -66c-9,-9 -22,-9 -31,0 -9,9 -9,22 0,31l109 109c0,0 0,0 1,1 1,2 2,5 4,7 24,41 66,66 114,66l50 0 0 64c0,12 10,22 22,22l87 0c12,0 22,-10 22,-22l0 -64 50 0c47,0 90,-25 114,-66 1,-2 3,-5 4,-7 0,0 0,0 1,-1l109 -109c4,-4 6,-10 6,-15 0,-6 -2,-11 -6,-15zm-278 59c0,-36 -29,-66 -66,-66 -36,0 -66,29 -66,66l0 54c-29,-35 -26,-86 7,-117 33,-31 84,-31 117,0 33,31 36,82 7,117l0 -54zm-44 0c0,12 -10,22 -22,22 -12,0 -22,-10 -22,-22 0,-12 10,-22 22,-22 6,0 11,2 15,6 4,4 6,10 6,15zm0 197l-44 0 0 -135c14,5 30,5 44,0l0 135zm94 -86l-50 0c39,-23 64,-66 64,-111 0,-71 -58,-129 -129,-129 -71,0 -129,58 -129,129 0,46 24,88 64,111l-50 0c-31,0 -60,-17 -76,-44 -16,-27 -16,-60 0,-87l116 -201c16,-27 44,-44 76,-44 31,0 60,17 76,44l116 201c16,27 16,60 0,87 -16,27 -44,44 -76,44z\"></path>\n                    </g>\n                  </svg>",
+            "tm1": "16+ Charges",
+            "tm2": "Drone (60W)"
+          }
+        },
+        "f7043808-1729-44d1-846b-a0e287137bd4": {
+          "type": "power",
+          "settings": {
+            "icon": "<svg style=\"max-width: 60%;\" xmlns=\"http://www.w3.org/2000/svg\" width=\"52\" height=\"52\" viewbox=\"0 0 412 412\" fill=\"#ffffff\">\n                    <g>\n                      <path d=\"M304 412l-196 0c-60,0 -108,-48 -108,-108l0 -196c0,-60 48,-108 108,-108l196 0c60,0 108,48 108,108l0 196c0,60 -48,108 -108,108zm-196 -393c-49,0 -88,39 -88,88l0 196c0,49 39,88 88,88l196 0c49,0 88,-39 88,-88l0 -196c0,-49 -39,-88 -88,-88l-196 0z\"></path>\n                      <path d=\"M200 368c-86,0 -157,-71 -157,-157 0,-86 71,-157 157,-157 86,0 157,71 157,157 0,87 -70,157 -157,157zm0 -294c-76,0 -137,62 -137,137 0,76 62,137 137,137 76,0 137,-62 137,-137 0,-76 -61,-137 -137,-137z\"></path>\n                      <path d=\"M213 240c-1,-1 -2,-1 -2,-2l-13 -6c-4,-2 -9,-1 -12,3 -14,17 -33,27 -55,28 -4,0 -8,1 -11,3 -1,1 -2,1 -2,2 -3,3 -4,7 -3,10 2,10 8,20 17,25 13,10 27,15 43,15l3 0c25,0 42,-11 50,-29 4,-17 -1,-35 -16,-48zm-5 42c-4,10 -16,16 -31,16l-2 0c-12,0 -23,-4 -32,-11 -2,-1 -4,-3 -5,-5 23,-2 43,-13 59,-29l5 2c8,8 10,19 7,27zm95 -104c-8,-17 -25,-27 -44,-29 -20,0 -35,14 -41,36l0 4 1 14c0,5 4,8 8,9 22,3 40,16 52,33 2,4 6,8 10,9 1,0 2,1 4,1 1,0 2,0 3,-1 6,-2 11,-7 13,-12 10,-22 8,-45 -5,-64zm-11 51c-14,-18 -32,-30 -54,-36l0 -5c4,-13 12,-20 22,-20 12,1 23,8 27,19 0,0 0,1 1,1 6,13 8,27 4,41zm-99 -111c0,-2 -2,-4 -3,-6 -5,-4 -11,-6 -17,-5 -23,2 -43,16 -53,36 -10,16 -12,35 -4,52 0,0 0,1 1,1 8,12 21,20 35,20l2 0c5,0 10,-1 15,-2 1,0 2,-1 3,-2l12 -8c4,-3 5,-7 4,-12 -8,-20 -7,-42 3,-62 1,-3 3,-8 2,-13zm-27 75l-4 3c-3,1 -6,1 -9,1l-1 0c-7,0 -15,-3 -19,-10 -5,-11 -4,-24 3,-32l1 -1c6,-13 19,-23 32,-26 -9,20 -10,43 -4,65z\"></path>\n                      <path d=\"M201 253c-22,0 -39,-18 -39,-39 0,-22 18,-39 39,-39 22,0 39,18 39,39 0,22 -18,39 -39,39zm0 -59c-11,0 -20,9 -20,20 0,11 9,20 20,20 11,0 20,-9 20,-20 0,-11 -9,-20 -20,-20z\"></path>\n                    </g>\n                  </svg>",
+            "tm1": "62+ Charges",
+            "tm2": "Digital camera (16W)"
+          }
+        },
+        "232f899c-155f-477c-acb5-da231424b25f": {
+          "type": "power",
+          "settings": {
+            "icon": "",
+            "tm1": "",
+            "tm2": "The calculation results are for reference only. The actual results may vary between different loads."
+          }
+        },
+        "9c79a45b-b30e-432c-8b0f-08d7e1af91c5": {
+          "type": "progress",
+          "settings": {
+            "year": "3 Years",
+            "width": 80,
+            "bottom": "3EPOWERS P15 & P25  1500W 2000W"
+          }
+        },
+        "ee41b2ac-f95c-4f73-8565-31128947c6fa": {
+          "type": "progress",
+          "settings": {
+            "year": "2 Years",
+            "width": 50,
+            "bottom": "3EPOWERS Portable Power Station"
+          }
+        },
+        "d38c6848-34f7-41bf-9421-23c7f3883f76": {
+          "type": "progress",
+          "settings": {
+            "year": "2 Years",
+            "width": 20,
+            "bottom": "Other Brands Portable Power Station"
+          }
+        }
+      },
+      "block_order": [
+        "166258129933e4ba31-0",
+        "54b00743-54b7-4906-b514-84c54daa9af3",
+        "a56a49b6-d94c-4edb-828c-7b933f3882d6",
+        "60348f2f-0d8c-4223-9e63-188fdcf91134",
+        "11112d4e-5ff3-4c51-9bde-311d4400ec4b",
+        "d3ae308c-1336-4f93-a7e2-783115d67f60",
+        "959ebee6-0363-4870-801b-c01543910348",
+        "7ff305c6-0864-4286-9861-747f01655d02",
+        "f7043808-1729-44d1-846b-a0e287137bd4",
+        "232f899c-155f-477c-acb5-da231424b25f",
+        "9c79a45b-b30e-432c-8b0f-08d7e1af91c5",
+        "ee41b2ac-f95c-4f73-8565-31128947c6fa",
+        "d38c6848-34f7-41bf-9421-23c7f3883f76"
+      ],
+      "settings": {
+        "bg_video_url": "https://cdn.shopify.com/videos/c/o/v/2432597e8bb746de8bdacee1755a69b0.mp4",
+        "divider": false,
+        "title1": "Get Your Now With Straight $300 OFF",
+        "link1": "",
+        "title2": "Durable And Massive",
+        "subtitle2": "NCM 18650 Battery Pack",
+        "title3": "1008Wh",
+        "title4": "Ideal Outdoors Backup Power",
+        "title5": "800 Cycles",
+        "subtitle5": "To 80% Battery Health",
+        "title6": "50000 Hours",
+        "subtitle6": "of Electronic Life Expectancy",
+        "title7": "P15 portable power station",
+        "subtitle7": "3 Years Warranty"
+      }
+    },
+    "166230279636891009": {
+      "type": "product-image-slide",
+      "blocks": {
+        "37a5e70b-6359-4870-a6bf-60b092c29902": {
+          "type": "product-image",
+          "settings": {
+            "pic": "shopify://shop_images/03_ec39604f-179d-4466-bce0-4d488eed10d5.jpg",
+            "title": "940W Max AC Input"
+          }
+        },
+        "bd6f4933-4c93-4fba-9b9d-d133bb5e8703": {
+          "type": "product-image",
+          "settings": {
+            "pic": "shopify://shop_images/03_22c3a4f3-312d-437e-a088-855766ded941.jpg",
+            "title": "300W Max Solar Input"
+          }
+        },
+        "caaf24b2-d534-457a-a629-2695a9dce086": {
+          "type": "product-image",
+          "settings": {
+            "pic": "shopify://shop_images/03_47ee7f23-024f-4d5e-80a8-e5504394296f.jpg",
+            "title": "300W Max Car Charger Input"
+          }
+        }
+      },
+      "block_order": [
+        "37a5e70b-6359-4870-a6bf-60b092c29902",
+        "bd6f4933-4c93-4fba-9b9d-d133bb5e8703",
+        "caaf24b2-d534-457a-a629-2695a9dce086"
+      ],
+      "settings": {
+        "divider": false
+      }
+    },
+    "16625166952ff06b0d": {
+      "type": "two-layout",
+      "blocks": {
+        "f8c45179-602b-45c3-bc26-6dc1a176b1b3": {
+          "type": "box1",
+          "settings": {
+            "etitle1": "No outdoors power anxiety Just have fun with the P15",
+            "recharge": "Fast charging from 0~80%",
+            "hour1": "1 Hour",
+            "width1": 80,
+            "em1": "3EPOWERS P15 1500W",
+            "hour2": "3 Hours",
+            "width2": 40,
+            "em2": "Others Portable Power Station",
+            "img11": "shopify://shop_images/009.png"
+          }
+        },
+        "d9cda66f-d412-4901-9b8d-e69ee40eea07": {
+          "type": "box2",
+          "settings": {
+            "etitle2": "220V 1500W Output, Intelligent Inverter 2500W",
+            "bgaimg2": "shopify://shop_images/5.jpg",
+            "esubtitle2": "Power Anything You Want"
+          }
+        }
+      },
+      "block_order": [
+        "f8c45179-602b-45c3-bc26-6dc1a176b1b3",
+        "d9cda66f-d412-4901-9b8d-e69ee40eea07"
+      ],
+      "settings": {
+        "divider": false
+      }
+    },
+    "166252354047c4c1be": {
+      "type": "img-txt-bgcolor",
+      "settings": {
+        "image": "shopify://shop_images/06-1.jpg",
+        "image_width": 530,
+        "subtitle": "",
+        "title": "220V 1500W",
+        "text": "<p>What Can You Power With</p>",
+        "button_label": "",
+        "button_link": "",
+        "button_style": "primary",
+        "align_text": "left",
+        "layout": "left",
+        "divider": false
+      }
+    },
+    "16625236220d3a4c81": {
+      "type": "img-txt-bgcolor",
+      "settings": {
+        "image": "shopify://shop_images/010_dc0f9271-f540-4a6f-9507-9fa0fbef44e4.png",
+        "image_width": 410,
+        "subtitle": "",
+        "title": "Green Power Solution Try The Solar way",
+        "text": "",
+        "button_label": "",
+        "button_link": "",
+        "button_style": "primary",
+        "align_text": "left",
+        "layout": "right",
+        "divider": false
+      }
+    },
+    "1662585711859503df": {
+      "type": "text-and-image",
+      "settings": {
+        "image": "shopify://shop_images/8.jpg",
+        "image_width": 700,
+        "subtitle": "",
+        "title": "Make sure to enjoy each outdoors moment with your love",
+        "text": "",
+        "button_label": "",
+        "button_link": "",
+        "button_style": "primary",
+        "align_text": "left",
+        "layout": "left",
+        "divider": false
+      }
+    },
+    "16625357123a8bb7e6": {
+      "type": "slideshow",
+      "blocks": {
+        "1662535712fdb51ffd-0": {
+          "type": "image",
+          "settings": {
+            "top_subheading": "",
+            "title": "Durable and Stable\n Continuous stable pure \nsine wave output with E-UPS",
+            "title_size": 50,
+            "subheading": "",
+            "link": "",
+            "link_text": "",
+            "link_2": "",
+            "link_text_2": "",
+            "color_accent": "rgba(0,0,0,0)",
+            "text_align": "vertical-center horizontal-right",
+            "image": "shopify://shop_images/9.jpg",
+            "overlay_opacity": 0,
+            "focal_point": "center center"
+          }
+        }
+      },
+      "block_order": [
+        "1662535712fdb51ffd-0"
+      ],
+      "settings": {
+        "section_height": "natural",
+        "mobile_height": "auto",
+        "parallax": false,
+        "style": "bars",
+        "autoplay": false,
+        "autoplay_speed": 5
+      }
+    },
+    "1662571936e2ca835a": {
+      "type": "table-product",
+      "blocks": {
+        "166257193457efe970-0": {
+          "type": "product_item",
+          "settings": {
+            "title": "EP500Pro",
+            "image": "shopify://shop_images/1.png",
+            "Power": "1500W",
+            "Max_ACInput": "940W",
+            "Max_SolarInput": "300W",
+            "Battery_Capacity": "1008Wh",
+            "Battery_Cell_Type": "NCM 18650",
+            "Fast_Charging": "YES",
+            "Battery_Life_Cycle": "800",
+            "Warranty": "3 YEARS",
+            "Price": "$1299",
+            "href": "shopify://products/3epowers-p15-1500w-portable-power-station"
+          }
+        },
+        "e9ce95fa-0eec-4978-88b7-7ff3246d6de2": {
+          "type": "product_item",
+          "settings": {
+            "title": "EP500",
+            "image": "shopify://shop_images/2.png",
+            "Power": "2000W",
+            "Max_ACInput": "1450W",
+            "Max_SolarInput": "300W",
+            "Battery_Capacity": "1573Wh",
+            "Battery_Cell_Type": "NCM 18650",
+            "Fast_Charging": "NO",
+            "Battery_Life_Cycle": "800",
+            "Warranty": "3 YEARS",
+            "Price": "$1599",
+            "href": "shopify://products/3epowers-p15-1500w-portable-power-station"
+          }
+        }
+      },
+      "block_order": [
+        "166257193457efe970-0",
+        "e9ce95fa-0eec-4978-88b7-7ff3246d6de2"
+      ],
+      "settings": {
+        "divider": false
+      }
+    },
+    "1662575082dfa57c71": {
+      "type": "other-table",
+      "blocks": {
+        "1662575082b4dbcff0-0": {
+          "type": "product_item",
+          "settings": {
+            "title": "E2 Mini 213Wh",
+            "image": "shopify://shop_images/E2.jpg",
+            "DC_Output": "300W",
+            "AC_Input": "/",
+            "Solar_Input": " /  ",
+            "Charging": "No",
+            "Capacity": "213Wh",
+            "Cell_Type": "Lithium",
+            "Prices": "$299",
+            "hrefs": "shopify://products/3epowers-p15-1500w-portable-power-station"
+          }
+        },
+        "d614064e-8845-4cf1-b58b-ea2c4d221abc": {
+          "type": "product_item",
+          "settings": {
+            "title": "E7 600W MAX",
+            "image": "shopify://shop_images/E7.jpg",
+            "DC_Output": "600W",
+            "AC_Input": "100~120VAC 940W MAX",
+            "Solar_Input": "300W",
+            "Charging": "Yes",
+            "Capacity": "524Wh",
+            "Cell_Type": "NCM 18650",
+            "Prices": "$718",
+            "hrefs": "shopify://products/3epowers-p15-1500w-portable-power-station"
+          }
+        },
+        "8fc9e2ec-f190-4bf4-9952-205387050bc0": {
+          "type": "product_item",
+          "settings": {
+            "title": "P25 2000W",
+            "image": "shopify://shop_images/P25_8ef52361-0dab-4508-b52d-a28fdf0bc02c.jpg",
+            "DC_Output": "2500W",
+            "AC_Input": "100~120VAC 1800W MAX",
+            "Solar_Input": "300W",
+            "Charging": "Yes",
+            "Capacity": "1935Wh",
+            "Cell_Type": "NCM 18650",
+            "Prices": "$1599",
+            "hrefs": "shopify://products/3epowers-p15-1500w-portable-power-station"
+          }
+        },
+        "4d5fbc60-bc70-4688-a835-fe0c7d90e366": {
+          "type": "product_item",
+          "settings": {
+            "title": "Expansion Battery PS15",
+            "image": "shopify://shop_images/159bd56a4c3f2a1e6e9f54dd4bb5a7b6.jpg",
+            "DC_Output": "1500W",
+            "AC_Input": "100~120VAC 940W MAX",
+            "Solar_Input": "/",
+            "Charging": "No",
+            "Capacity": "1008Wh",
+            "Cell_Type": "NCM 18650",
+            "Prices": "$480",
+            "hrefs": "shopify://products/3epowers-p15-1500w-portable-power-station"
+          }
+        }
+      },
+      "block_order": [
+        "1662575082b4dbcff0-0",
+        "d614064e-8845-4cf1-b58b-ea2c4d221abc",
+        "8fc9e2ec-f190-4bf4-9952-205387050bc0",
+        "4d5fbc60-bc70-4688-a835-fe0c7d90e366"
+      ],
+      "settings": {
+        "divider": false,
+        "titles": "YOU MAY ALSO LIKE:"
+      }
+    },
+    "166257653888e3314d": {
+      "type": "custom-box",
+      "settings": {
+        "divider": false,
+        "bg": "#000000",
+        "title": "Hangout With Fellow Users Online",
+        "text": "JOIN THE CLUB",
+        "link": "https://www.facebook.com/groups/224073499859060"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "1662181105e3a49815",
+    "1662581299c62cd44e",
+    "166230279636891009",
+    "16625166952ff06b0d",
+    "166252354047c4c1be",
+    "16625236220d3a4c81",
+    "1662585711859503df",
+    "16625357123a8bb7e6",
+    "1662571936e2ca835a",
+    "1662575082dfa57c71",
+    "166257653888e3314d"
+  ]
+}

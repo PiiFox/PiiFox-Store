@@ -1,0 +1,62 @@
+{%- if section.settings.divider -%}<div class="section--divider">{%- endif -%}
+<div class="link-list-section-{{ section.id }} page-width">
+    {%- if section.settings.title != blank -%}
+      <div class="compare-page__title section-header" >
+        <h2 class="text-center">{{ section.settings.title }}</h2>
+      </div>
+    {% endif %}
+    <ul>
+    {% for link in section.blocks %}
+      <li>
+        <a class="link-btn" href="{{ link.settings.url }}">{{ link.settings.link_label }}</a>
+      </li>
+    {% endfor %}
+    </ul>
+</div>
+{% style %}
+.link-list-section-{{ section.id }}.page-width .link-btn {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    color: var(--colorBtnPrimary);
+}
+.link-list-section-{{ section.id }}.page-width ul li {
+  line-height: 2rem;
+}
+{% endstyle %}
+{%- if section.settings.divider -%}</div>{%- endif -%}
+{% schema %}
+  {
+    "name": "Link List",
+    "settings": [
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Title"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "text",
+        "name": "Column",
+        "settings": [
+          {
+            "type": "url",
+            "id": "url",
+            "label": "Link URL"
+          },
+          {
+            "type": "text",
+            "id": "link_label",
+            "label": "Link Label"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

@@ -1,0 +1,22 @@
+<div class="empty-page-template">
+  <div class="page-width page-width--narrow page-content">
+    <div class="rte rte--nomargin">
+      {{ page.content }}
+    </div>
+  </div>
+</div>
+{% style %}
+  #shopify-section-header { display: none; }
+  .activity-bar-section { display: none; }
+  #shopify-section-foot-newsletter { display: none; }
+  #shopify-section-footer { display: none; }
+  .footer-left-button { display: none; }
+  #shopify-section-switch-site-warntip { display: none; }
+  .empty-page-template { height: 100%; display: grid; place-items: center; }
+{% endstyle %}
+{% schema %}
+{
+  "name": "Empty-Page",
+  "tag": "section"
+}
+{% endschema %}

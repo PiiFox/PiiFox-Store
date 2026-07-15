@@ -1,0 +1,152 @@
+<div class="about-us-video-section-{{ section.id }}">
+
+  {% if template.name == 'mobile' or request.device_type == 'mobile' %}
+    {% assign video_sources = section.settings.video_m.sources | first | map: 'url' %}
+    {% assign video_poster = section.settings.video.preview_image | default: section.settings.mobile_img %}
+  {% else %}
+    {% assign video_sources = section.settings.video.sources | first | map: 'url' %}
+    {% assign video_poster = section.settings.video.preview_image | default: section.settings.video_cover %}
+  {% endif %}
+  {% assign video_url = video_sources %}
+
+  
+  <div class="about-us-video--wrapper">
+    <video 
+      autoplay
+      muted
+      loop
+      class="about-us-video"
+      src="{{ video_url }}" 
+      width="100%" 
+      {% if video_poster != blank %}poster="{{ video_poster | image_url: '2560x' }}"{% endif %}
+    ></video>
+    <div class="about-us-video-content">
+      <div class="page-width">
+        <h2 class="about-us-video-title section-header__title">{{ section.settings.section_title }}</h2>
+        <div class="about-us-video-context">{{ section.settings.section_context }}</div>
+        <a href="{{ section.settings.btn_link }}" class="about-us-video-button">{{ section.settings.btn_label }}</a>
+      </div>
+    </div>
+  </div>
+</div>
+{% style %}
+  .about-us-video-section-{{ section.id }} {}
+  .about-us-video-section-{{ section.id }} .about-us-video--wrapper {
+    position: relative;
+  }
+  .about-us-video-section-{{ section.id }} .about-us-video--wrapper .about-us-video {}
+  .about-us-video-section-{{ section.id }} .about-us-video--wrapper .pc--hide { display: none; }
+  .about-us-video-section-{{ section.id }} .about-us-video--wrapper .about-us-video-content {
+    position: absolute;
+    left: 0;
+    top: 0;
+    color: #fff;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    display: grid;
+    place-items: center;
+  }
+  .about-us-video-section-{{ section.id }} .about-us-video--wrapper .about-us-video-content .about-us-video-title {}
+  .about-us-video-section-{{ section.id }} .about-us-video--wrapper .about-us-video-content .about-us-video-context {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .about-us-video-section-{{ section.id }} .about-us-video--wrapper .about-us-video-content a.about-us-video-button {
+    margin-top: 2em;
+    color: #fff !important;
+    border: 2px solid var(--colorThemePrimary) !important;
+    background: transparent;
+    border-radius: 22px;
+    overflow: hidden;
+    position: relative;
+    display: inline-block;
+    padding: 0.5em 2em;
+    z-index: 1;
+    box-sizing: border-box;
+  }
+  .about-us-video-section-{{ section.id }} .about-us-video--wrapper .about-us-video-content .about-us-video-button:after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    background: var(--colorThemePrimary);
+    border: 2px solid var(--colorThemePrimary) !important;
+    z-index: -1;
+    transform: translateX(-100%);
+    border-radius: 22px;
+    box-sizing: border-box;
+  }
+  .about-us-video-section-{{ section.id }} .about-us-video--wrapper .about-us-video-content .about-us-video-button:hover:after {
+    transform: translateX(0%);
+    transition: all .3s ease-in;
+  }
+  @media screen and (max-width: 768px) {
+    .about-us-video-section-{{ section.id }} .about-us-video--wrapper .pc--hide { display: block; object-fit: cover; width: 100%; height: 100%; }
+  }
+{% endstyle %}
+
+{% schema %}
+  {
+    "name": "About US Video",
+    "settings": [
+      {
+        "type": "text",
+        "id": "section_title",
+        "label": "Section Title",
+        "default": "About PiiFox"
+      },
+      {
+        "type": "text",
+        "id": "section_sub_title",
+        "label": "Section Sub Title"
+      },
+      {
+        "type": "html",
+        "id": "section_context",
+        "label": "Section Context",
+        "default": "Innovation, Technology, High Quality And Cost-effective"
+      },
+      {
+        "type": "text",
+        "id": "btn_label",
+        "label": "Btn Label",
+        "default": "Learn More>"
+      },
+      {
+        "type": "url",
+        "id": "btn_link",
+        "label": "Btn Link "
+      },
+      {
+        "type": "video",
+        "id": "video",
+        "label": "Video"
+      },
+      {
+        "type": "video",
+        "id": "video_m",
+        "label": "Video Mobile"
+      },
+      {
+        "type": "image_picker",
+        "id": "video_cover",
+        "label": "Video Cover"
+      },
+      {
+        "type": "image_picker",
+        "id": "mobile_img",
+        "label": "Mobile Image"
+      }
+    ],
+    "blocks": [],
+    "presets": [
+      {
+        "name": "About US Video"
+      }
+    ]
+  }
+{% endschema %}

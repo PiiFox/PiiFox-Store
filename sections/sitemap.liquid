@@ -1,0 +1,106 @@
+{%- if section.settings.divider -%}
+  <div class="section--divider">
+{%- endif -%}
+    <div class="site-map-component-page-container page-width">
+      <h2 class="title">{{ section.settings.title }}</h2>
+      {% assign blocks = section.blocks | map: 'settings' %}
+      {% assign col_list = blocks | map: 'group_title' | uniq %}
+      <div class="site-map-component--wrapper">
+      {% for col in col_list %}
+        <div class="group-item--wrapper">
+        {% if section.settings.show_col_title %}<h4 class="col-title">{{ col }}</h4>{% endif %}
+        <ul class="site-map-list" data-group="col-{{ col }}">
+        {% for block in blocks %}
+          {% if block.group_title == col %}
+            {% if block.url.type == 'product_link' and  block.url.object.available %} 
+              <li class="site-map-item"><a href="{{ block.url }}">{{ block.title }}</a></li>
+            {% elsif block.url.type != 'product_link' %}
+              <li class="site-map-item"><a href="{{ block.url }}">{{ block.title }}</a></li>
+            {% endif %}
+          {% endif %}
+        {% endfor %}
+        </ul>
+        </div>
+      {% endfor %}
+      </div>
+    </div>
+{%- if section.settings.divider -%}
+  </div>
+{%- endif -%}
+{% style %}
+  .site-map-component--wrapper {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr));
+  }
+  ul.site-map-list {
+    list-style: none;
+    line-height: 2rem;
+    margin-left: 0;
+  }
+  ul.site-map-list .site-map-item a {
+    display: inline-block;
+    width: 100%;
+    text-decoration: underline;
+    text-decoration-color: #000;
+    text-underline-offset: 2px;
+    transition: all 0.4s ease;
+  }
+  ul.site-map-list .site-map-item a:hover {
+    color: var(--colorThemePrimary);
+    text-decoration-color: var(--colorThemePrimary);
+    text-underline-offset: 5px;
+  }
+{% endstyle %}
+{% schema %}
+  {
+    "name": "t:sections.site-map.name",
+    "class": "index-section-site-map",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "divider",
+        "label": "t:sections.site-map.settings.divider.label",
+        "default": true
+      }, {
+        "type": "text",
+        "id": "title",
+        "label": "t:sections.site-map.settings.title.label"
+      }, {
+        "type": "checkbox",
+        "id": "show_col_title",
+        "label": "Show Column"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "text",
+        "name": "t:sections.site-map.blocks.column.name",
+        "settings": [
+          {
+            "type": "text",
+            "id": "title",
+            "label": "t:sections.site-map.blocks.column.settings.title.label"
+          }, {
+            "type": "url",
+            "id": "url",
+            "label": "t:sections.site-map.blocks.column.settings.url.label"
+          }, {
+            "type": "text",
+            "id": "group_title",
+            "label": "t:sections.site-map.blocks.column.settings.column_no.label"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "t:sections.site-map.presets.site_map.name",
+        "settings": {
+          "divider": true,
+          "title": "Title"
+        },
+        "blocks": []
+      }
+    ]
+  }
+{% endschema %}

@@ -1,0 +1,72 @@
+<!-- wooview carousel -->
+<div id="review-section-{{ section.id }}">
+  <div class="wooview_section wooview_box wooview-base" data-layout="">
+    <div class="wooview_header">
+      <div class="static-carousel-header">
+        <h2 class="title">{{ section.settings.title | escape }}</h2>
+        <h3 class="sub-title">{{ section.settings.sub_title | escape }}</h3>
+      </div>
+    </div>
+    <div class="wooview_content static_carousel" style="max-width:{{ section.settings.max_width | escape }}px">
+      <div
+        class="carousel-review popup-review-js"
+        review_quantity="{{ section.settings.review_quantity  | escape }}"
+        autoplay_speed="{{ section.settings.autoplay_speed  | times: 1000 | escape }}"
+      >
+        <div class="wvloading loader">
+          <div class="loader-inner ball-pulse">
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Wooview Review Carousel",
+  "class": "index-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "WHAT OUR CUSTOMERS SAY"
+    },
+    { "type": "text", "id": "sub_title", "label": "Sub heading" },
+    {
+      "type": "range",
+      "id": "max_width",
+      "min": 480,
+      "max": 1920,
+      "step": 40,
+      "unit": "px",
+      "label": "Max width",
+      "default": 1280
+    },
+    {
+      "type": "range",
+      "id": "review_quantity",
+      "label": "Max reviews displayed",
+      "min": 2,
+      "max": 7,
+      "step": 1,
+      "default": 4,
+      "info": "The number of reviews displayed is adapted according to the screen width, only one is displayed on the mobile phone"
+    },
+    {
+      "type": "range",
+      "id": "autoplay_speed",
+      "label": "Rotation interval",
+      "min": 1,
+      "max": 10,
+      "step": 0.5,
+      "default": 5
+    }
+  ],
+  "presets": [{ "name": "Wooview Review Carousel", "category": "Wooview Sections" }]
+}
+{% endschema %}

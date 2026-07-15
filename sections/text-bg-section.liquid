@@ -1,0 +1,110 @@
+{% comment %}
+  带背景的文字介绍组件
+  - 背景图：center bottom / 100% auto no-repeat
+  - 标题支持 HTML，可设置绿色高亮文字
+  - 支持后台上传背景图、编辑标题和描述
+{% endcomment %}
+
+<style>
+  .text-bg-section {
+    position: relative;
+    padding: 10em 0;
+    text-align: center;
+    background: no-repeat center bottom / 100% auto;
+  }
+
+  .text-bg-section__overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(255, 255, 255, 0.6);
+    z-index: 0;
+  }
+
+  .text-bg-section__content {
+    position: relative;
+    z-index: 1;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .text-bg-section__title {
+    font-size: 48px;
+    font-weight: 700;
+    line-height: 1.3;
+    color: #000;
+    margin: 0 0 24px;
+  }
+
+  .text-bg-section__title .green-text {
+    color: var(--colorThemePrimary);
+  }
+
+  .text-bg-section__desc {
+    font-size: 18px;
+    line-height: 1.7;
+    color: #666;
+    margin: 0;
+  }
+
+  @media (max-width: 768px) {
+    .text-bg-section {
+      padding: 80px 20px 60px;
+    }
+    .text-bg-section__title {
+      font-size: 32px;
+    }
+    .text-bg-section__desc {
+      font-size: 16px;
+    }
+  }
+</style>
+
+<section
+  class="text-bg-section text-bg-section--{{ section.id }}"
+  {% if section.settings.image != blank %}
+    style="background-image: url('{{ section.settings.image | image_url }}');"
+  {% endif %}
+>
+  <div class="text-bg-section__overlay"></div>
+  <div class="text-bg-section__content">
+    <h2 class="text-bg-section__title">
+      {{ section.settings.title }}
+    </h2>
+    {% if section.settings.description != blank %}
+      <p class="text-bg-section__desc">
+        {{ section.settings.description }}
+      </p>
+    {% endif %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Text with Background",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "背景图"
+    },
+    {
+      "type": "html",
+      "id": "title",
+      "label": "标题（支持HTML）",
+      "default": "Designed for focused work, built for <span class='green-text'>smooth flow</span>, and made to feel right <span class='green-text'>every day.</span>"
+    },
+    {
+      "type": "text",
+      "id": "description",
+      "label": "描述文本",
+      "default": "From compact keyboards to everyday accessories, PIIFOX blends thoughtful design, clean aesthetics, and dependable performance for modern desks."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Text with Background",
+      "category": "custom"
+    }
+  ]
+}
+{% endschema %}

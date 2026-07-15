@@ -1,0 +1,42 @@
+<div class="page-width page-width--narrow page-content">
+  <header class="section-header">
+    <h1 class="section-header__title">{{ page.title }}</h1>
+  </header>
+
+  <div class="rte rte--nomargin">
+    {{ page.content }}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Support Center",
+  "class": "support-center",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "TopImage",
+      "label": "Top Image",
+      "info": "10x10"
+    },
+    {
+      "type": "image_picker",
+      "id": "mTopImage",
+      "label": "Mobile Top Image",
+      "info": "20x20"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title"
+    }
+  ]
+}
+{% endschema %}
+  
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

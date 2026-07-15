@@ -1,0 +1,102 @@
+{%- style -%}
+  .testimonials-{{ section.id }} {
+    background-color: {{ section.settings.color_background }};
+    color: {{ section.settings.color_text }};
+  }
+}
+{%- endstyle -%}
+
+<div id="features"
+  class="filters-section testimonials-{{ section.id }}{% if section.settings.color_background == settings.color_body_bg %} testimonials-section--with-divider{% endif %} text-{{ section.settings.align_text }}"
+  data-section-id="{{ section.id }}"
+  data-section-type="testimonials"
+  data-aos>
+ {%- unless section.settings.full_width -%}
+    <div class="page-width">
+  {%- endunless -%}
+<div class="fil_box">
+  {%- if section.blocks.size > 0 -%}
+    <div class="slideshow-wrapper">
+      <div
+        class="testimonials-slider"
+        id="Testimonials-{{ section.id }}"
+        data-dots="false"
+        data-count="{{ section.blocks.size }}">
+        {%- for block in section.blocks -%}
+          <div
+            class="testimonials-slide testimonials-slide--{{ block.id }}"
+            data-index="{{ forloop.index0 }}"
+            data-aos="row-of-{{ section.blocks.size }}"
+            {{ block.shopify_attributes }}>
+            <blockquote class="testimonials-slider__text">
+             
+
+              {%- if block.settings.title != blank -%}
+                <div class="filter {% if block.settings.title=="Features" %}active first-click{% endif %}" data-filter="{{ block.settings.title }}">
+                 
+                 {{ block.settings.title }}
+                </div>
+              {%- endif -%}
+
+              
+              
+            </blockquote>
+          </div>
+        {%- endfor -%}
+      </div>
+    </div>
+     <a href="javascript:;" class="pc_product_addToCart btn btn--full add-to-cart">add to cart</a>
+    </div>
+  {%- endif -%}
+   {%- unless section.settings.full_width -%}
+   </div>
+  {%- endunless -%}
+</div>
+
+{% schema %}
+{
+  "name": "filter",
+  "class": "index-section filter-sec",
+  "max_blocks": 9,
+  "settings": [
+     {
+      "type": "checkbox",
+      "id": "full_width",
+      "label": "t:sections.promo-grid.settings.full_width.label",
+      "default": false
+    }
+  ],
+  "blocks": [
+    {
+      "type": "filter",
+      "name": "filter name",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "filter title"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "filter",
+      "blocks": [
+        {
+          "type": "filter"
+        },
+        {
+          "type": "filter"
+        },
+        {
+          "type": "filter"
+        },
+        {
+          "type": "filter"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

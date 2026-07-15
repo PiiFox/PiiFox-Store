@@ -1,0 +1,497 @@
+{%- liquid
+  unless limit
+    assign limit = main_menu.links.size
+  endunless
+  unless offset
+    assign offset = 0
+  endunless
+-%}
+{% assign service_list = section.blocks | where: 'type', 'service_item' %}
+{% style %}
+  @media screen and (max-width: 1100px) {
+    ul.site-navigation.small--hide {
+      display: none;
+    }
+  }
+{% endstyle %}
+<ul
+  class="site-nav site-navigation small--hide"
+  {% unless disable_aria %}
+    aria-label="Primary"
+  {% endunless %}
+>
+  {%- for link in main_menu.links limit: limit offset: offset -%}
+    {%- liquid
+      assign has_dropdown = false
+      assign is_megamenu = false
+      if link.links != blank
+        assign has_dropdown = true
+        if link.levels > 2
+          assign is_megamenu = true
+        endif
+      endif
+    -%}
+    {%- assign mega1 = section.settings.main_menu1 -%}
+    {%- assign mega2 = section.settings.main_menu2 -%}
+    {%- assign mega3 = section.settings.main_menu3 -%}
+    {%- assign mega4 = section.settings.main_menu4 -%}
+    {%- assign mega5 = section.settings.main_menu5 -%}
+    {% liquid
+      assign mega1_tag = section.settings.main_menu1_tag
+      assign mega2_tag = section.settings.main_menu2_tag
+      assign mega3_tag = section.settings.main_menu3_tag
+      assign mega4_tag = section.settings.main_menu4_tag
+      assign mega5_tag = section.settings.main_menu5_tag
+    %}
+    {% liquid
+      assign mega_tag = ''
+      if link.title == mega1
+        assign mega_tag = mega1_tag
+      elsif link.title == mega2
+        assign mega_tag = mega2_tag
+      elsif link.title == mega3
+        assign mega_tag = mega3_tag
+      elsif link.title == mega4
+        assign mega_tag = mega4_tag
+      elsif link.title == mega5
+        assign mega_tag = mega5_tag
+      else
+        assign mega_tag = ''
+      endif
+    %}
+
+    <li
+      class="site-nav__item site-nav__expanded-item{% if has_dropdown %} site-nav--has-dropdown{% endif %}{% if is_megamenu or mega1 == link.title or mega2 == link.title or mega3 == link.title or mega4 == link.title or mega5 == link.title %} site-nav--is-megamenu{% endif %}"
+      {% if has_dropdown %}
+        aria-haspopup="true"
+      {% endif %}
+    >
+      <a
+        href="{{ link.url }}"
+        class="site-nav__link site-nav__link--underline{% if has_dropdown %} site-nav__link--has-dropdown{% endif %}"
+        data-tag="{{ mega_tag }}"
+      >
+        {{ link.title }}
+      </a>
+      {%- if is_megamenu -%}
+        {%- assign previous_column_type = '' -%}
+        {%- assign animation_column = 1 -%}
+
+        <div class="site-nav__dropdown megamenu text-left">
+          <div class="page-width">
+            <div class="grid{% if dropdown_alignment == 'center' %} grid--center{% endif %}">
+              <div class="grid__item medium-up--one-fifth">
+                {%- assign animation_column = animation_column | plus: 1 -%}
+
+                {%- for childlink in link.links -%}
+                  {%- liquid
+                    assign create_new_column = false
+
+                    if childlink.levels > 0 and forloop.index != 1
+                      assign create_new_column = true
+                    endif
+
+                    if childlink.levels == 0 and previous_column_type == 'full'
+                      assign create_new_column = true
+                    endif
+                  -%}
+
+                  {%- assign subcollection_drop = false -%}
+                  {%- if childlink.levels > 0 and childlink.url contains '/collections/' -%}
+                    {%- liquid
+                      assign lang_code_string = request.locale.iso_code | prepend: '/' | downcase
+                      assign subcollection_handle = childlink.url | remove: '/collections/' | remove: lang_code_string
+                      assign subcollection_drop = collections[subcollection_handle]
+                    -%}
+                    {%- if subcollection_drop.image != blank -%}
+                      <a
+                        href="{{ childlink.url }}"
+                        class="megamenu__colection-image"
+                        aria-label="{{collections[subcollection_handle].title}}"
+                        style="background-image: url({{ collections[subcollection_handle].image | img_url: '400x' }})"
+                      ></a>
+                    {%- endif -%}
+                  {%- endif -%}
+
+                  <div class="h5">
+                    <a href="{{ childlink.url }}" class="site-nav__dropdown-link site-nav__dropdown-link--top-level">
+                      {{- childlink.title -}}
+                    </a>
+                  </div>
+
+                  {%- liquid
+                    if childlink.levels > 0
+                      assign previous_column_type = 'full'
+                    else
+                      assign previous_column_type = 'single'
+                    endif
+                  -%}
+
+                  {%- for grandchildlink in childlink.links -%}
+                    <div>
+                      <a href="{{ grandchildlink.url }}" class="site-nav__dropdown-link">
+                        {{ grandchildlink.title }}
+                      </a>
+                    </div>
+                  {%- endfor -%}
+                {%- endfor -%}
+              </div>
+            </div>
+          </div>
+        </div>
+      {%- elsif mega1 == link.title
+        or mega2 == link.title
+        or mega3 == link.title
+        or mega4 == link.title
+        or mega5 == link.title
+      -%}
+        <div class="site-nav__dropdown megamenu mega_title text-center">
+          <div class="page-width">
+            <div class="megamenu-filter-list">
+              {% for childlink in link.links %}
+                <a
+                  {% if forloop.index0 == 0 %} href="{{ childlink.url }}" {% endif %}
+                  class="megamenu-filter-item custom-text-light{% if forloop.index0 == 1 %} megamenu-filter-item--active  {% endif %}{% if forloop.first %} megamenu-item-all {% endif %}"
+                  data-trigger-title="{{ childlink.title }}"
+                >
+                  {{ childlink.title }}
+                </a>
+              {% endfor %}
+            </div>
+            <div class="mm-content {% if has_sub_dropdown %} site-nav__dropdown-link--has-children{% endif %} {% if forloop.index == 1 %} site-nav__dropdown-active{% endif %}">
+              {%- assign collection_handle = link.url | remove: '/collections/' -%}
+              {%- assign collection = collections[collection_handle] -%}
+              <div class="mm-info">
+                <img
+                  src="{{ collection.featured_image | image_url }}"
+                  width="{{ collection.featured_image.width }}"
+                  height="{{ collection.featured_image.height }}"
+                  alt="{{ collection.title | escape  }}"
+                >
+                <div class="parent-link-content">
+                  <div class="parent-link-title custom-text-semibold">{{ collection.title }}</div>
+                  <div class="parent-link-desc">
+                    {{ collection.metafields.custom.banner_describe | escape }}
+                  </div>
+                </div>
+              </div>
+              <div class="mm_menus">
+                {% for childlink in link.links %}
+                  <div
+                    class="mega-filter-content {% if forloop.index == 1 %} mega-filter-content--active{% endif %}"
+                    data-filter-title="{{ childlink.title }}"
+                  >
+                    {%- assign has_sub_dropdown = false -%}
+                    {% if childlink.links != blank %}
+                      {%- assign has_sub_dropdown = true -%}
+                    {% endif %}
+                    {% if childlink.title == 'New Arrival' %}
+                      {% render 'new-arrival-nav-item',
+                        childlink: childlink,
+                        mega_tag: mega_tag
+                      -%}
+                    {% else %}
+                      {% for grandchildlink in childlink.links %}
+                        <div class="mega__item">
+                          <a
+                            href="{{ grandchildlink.url }}"
+                            class="site-nav__dropdown-link site-nav__dropdown-link--second-level site-nav__dropdown-link-{{ grandchildlink.title }} "
+                            {% if grandchildlink.url contains '/products/' %}
+                              {%- assign subproduct_handle = grandchildlink.url | remove: '/products/' -%}
+                              {%- assign product = all_products[subproduct_handle] -%}
+                              {% if product.tags contains 'New Arrivals' %}
+                                data-tag="{{ mega_tag }}"
+                              {% endif %}
+                            {% endif %}
+                            {% if grandchildlink.url contains '/collections/' and grandchildlink.url contains 'filter' %}
+                              rel="nofollow"
+                            {% endif %}
+                          >
+                            {% render 'grandchild-nav-item',
+                              grandchildlink: grandchildlink,
+                              link: link,
+                              childlink: childlink,
+                              section: section
+                            -%}
+                          </a>
+                        </div>
+                      {% endfor %}
+                    {% endif %}
+                  </div>
+                {% endfor %}
+              </div>
+            </div>
+            {% if service_list.size > 0 %}
+              <div class="megamenu-bottom" style="display: none;">
+                {% for service_item in service_list %}
+                  <div class="service-item">
+                    <img
+                      src="{{ service_item.settings.icon | image_url }}"
+                      width="{{ service_item.settings.icon.width }}"
+                      height="{{ service_item.settings.icon.height }}"
+                      alt="{{ service_item.settings.service_title | escape  }}"
+                    >
+                    <div class="service-item-content">
+                      <div class="service-item-title custom-text-semibold">
+                        {{ service_item.settings.service_title | escape }}
+                      </div>
+                      <div class="service-item-desc">
+                        {{ service_item.settings.service_desc | escape }}
+                      </div>
+                    </div>
+                  </div>
+                {% endfor %}
+              </div>
+            {% endif %}
+          </div>
+        </div>
+      {%- elsif has_dropdown -%}
+        <ul class="site-nav__dropdown text-left">
+          {%- for childlink in link.links -%}
+            {%- liquid
+              assign has_sub_dropdown = false
+              if childlink.links != blank
+                assign has_sub_dropdown = true
+              endif
+            -%}
+            <li class="{% if has_sub_dropdown %} site-nav__deep-dropdown-trigger{% endif %}">
+              <a
+                href="{{ childlink.url }}"
+                class="site-nav__dropdown-link site-nav__dropdown-link--second-level{% if has_sub_dropdown %} site-nav__dropdown-link--has-children{% endif %}"
+              >
+                {{ childlink.title | escape }}
+                {%- if has_sub_dropdown -%}
+                  <svg
+                    aria-hidden="true"
+                    focusable="false"
+                    role="presentation"
+                    class="icon icon--wide icon-chevron-down"
+                    viewBox="0 0 28 16"
+                  >
+                    <path d="M1.57 1.59l12.76 12.77L27.1 1.59" stroke-width="2" stroke="#000" fill="none" fill-rule="evenodd"/>
+                  </svg>
+                {%- endif -%}
+              </a>
+              {%- if has_sub_dropdown -%}
+                <ul class="site-nav__deep-dropdown">
+                  {%- for grandchildlink in childlink.links -%}
+                    <li>
+                      <a href="{{ grandchildlink.url }}" class="site-nav__dropdown-link">
+                        {{- grandchildlink.title | escape -}}
+                      </a>
+                    </li>
+                  {%- endfor -%}
+                </ul>
+              {%- endif -%}
+            </li>
+          {%- endfor -%}
+        </ul>
+      {%- endif -%}
+    </li>
+  {%- endfor -%}
+</ul>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const menuFilterList = document.querySelectorAll(
+      '.megamenu .megamenu-filter-list .megamenu-filter-item:not(.megamenu-item-all)'
+    );
+
+    menuFilterList.forEach((trigger) => {
+      trigger.addEventListener('click', function (e) {
+        e.preventDefault();
+
+        const currentItem = e.target.closest('.megamenu-filter-item');
+        if (!currentItem) return;
+
+        const currentMegaMenu = e.target.closest('.site-nav--has-dropdown.site-nav--is-megamenu .megamenu');
+
+        menuFilterList.forEach((item) => item.classList.remove('megamenu-filter-item--active'));
+        currentMegaMenu
+          .querySelectorAll('.mega-filter-content')
+          .forEach((item) => item.classList.remove('mega-filter-content--active'));
+
+        const triggerTitle = currentItem.dataset.triggerTitle;
+        currentItem.classList.add('megamenu-filter-item--active');
+
+        const targetContent = currentMegaMenu.querySelector(
+          `.mega-filter-content[data-filter-title="${triggerTitle}"]`
+        );
+        if (targetContent) targetContent.classList.add('mega-filter-content--active');
+      });
+    });
+  });
+
+  document.querySelectorAll('.site-nav--has-dropdown.site-nav--is-megamenu').forEach((item) => {
+    item.addEventListener('mouseenter', function (e) {
+      e.preventDefault();
+      let activeItem = item.querySelector('.megamenu .megamenu-filter-list .megamenu-filter-item:nth-child(2)');
+      let activeUrl = activeItem.href;
+      if(window.location.href == activeUrl) {
+        activeItem.classList.add('megamenu-filter-item--active');
+        return;
+      }
+      activeItem.click();
+    });
+  });
+</script>
+{% style %}
+  #SiteHeader .site-navigation li.site-nav__item .site-nav__link::before {
+    content: attr(data-tag);
+    position: absolute;
+    left: 100%;
+    bottom: 100%;
+    transform: translate(-70%, 80%) scale(0.8);
+    color: var(--colorLightLink);
+    font-style: italic;
+  }
+  .megamenu .megamenu-filter-list {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    gap: 1em;
+    padding-bottom: 1em;
+  }
+  .megamenu .megamenu-filter-list .megamenu-filter-item {
+    text-align: center;
+    padding: 0.4em 2em;
+    font-weight: 100;
+    letter-spacing: 0.02em;
+    box-sizing: border-box;
+    border-radius: 20em;
+    background-color: #f6f6f6;
+    color: #000;
+    user-select: none;
+    cursor: pointer;
+  }
+  .megamenu .megamenu-filter-list .megamenu-filter-item--active {
+    background-color: #181818;
+    color: #fff;
+  }
+  .megamenu .mm-content {
+    display: grid;
+    grid-template-columns: 3fr 7fr;
+    align-items: flex-start;
+    overflow-y: hidden;
+    padding-bottom: 0.5em;
+  }
+  .megamenu .mm-content .mm-info {
+    position: relative;
+    padding-right: 1em;
+    height: 100%;
+  }
+  .megamenu .mm-content .mm-info img {
+    height: 100%;
+    border-radius: 1em;
+    object-fit: cover;
+  }
+  .megamenu .mm-content .mm-info .parent-link-content {
+    position: absolute;
+    bottom: 0%;
+    text-align: left;
+    padding: 1em;
+    color: #fff;
+  }
+  .megamenu .mm-content .mm-info .parent-link-content .parent-link-title {
+    font-size: 1.6em;
+  }
+  .megamenu .mm_menus {
+    flex-direction: column;
+    height: 50vh;
+    overflow-y: auto;
+  }
+  .megamenu .mm_menus .mega-filter-content {
+    display: none;
+    flex-wrap: wrap;
+  }
+  .megamenu .mm_menus .mega-filter-content.mega-filter-content--active {
+    display: flex;
+  }
+
+  .megamenu .mega__item {
+    flex: 0 1 48%;
+    margin: 0.5em;
+    padding: 0.5em 1em;
+    box-sizing: border-box;
+    border-radius: 1em;
+    box-shadow: 0 0 2px rgba(0, 0, 0, 0.1);
+  }
+  .megamenu .mega__item .sub-link-content {
+    text-align: left;
+  }
+  .megamenu .mega__item .sub-link-content .sub-link-title {
+    font-size: 1.4em;
+    font-weight: 600;
+  }
+  .megamenu .mega__item .sub-link-content .sub-link-title sup {
+    color: var(--colorLightLink);
+    border: 1px solid currentColor;
+    padding: 0.2em 0.5em;
+    border-radius: 20em;
+    font-size: 0.6em;
+    font-weight: 400;
+  }
+  .megamenu .mega__item .sub-link-content .sub-link-desc {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    word-break: break-all;
+  }
+  .megamenu .mega__item .site-nav__dropdown-link {
+    display: flex;
+    align-items: center;
+  }
+  .megamenu .mega__item .site-nav__dropdown-link img {
+    height: unset;
+    max-width: 7vw;
+    aspect-ratio: 1/1;
+    margin-right: 1em;
+    object-fit: contain;
+  }
+  .megamenu .site-nav__dropdown-link:hover {
+    color: unset;
+  }
+  .megamenu .mega__item:hover {
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
+    color: #0a0a0a;
+  }
+  .megamenu .megamenu-bottom {
+    display: flex;
+    align-items: center;
+    gap: 1em;
+    padding-top: 0.5em;
+  }
+  .megamenu .megamenu-bottom .service-item {
+    flex: 0 1 25%;
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+    box-shadow: 0 0 2px rgba(0, 0, 0, 0.1);
+    border-radius: 1em;
+    padding: 0.5em;
+    box-sizing: border-box;
+  }
+  .megamenu .megamenu-bottom .service-item img {
+    width: 8em;
+    aspect-ratio: 1/1;
+    border-radius: 1em;
+    object-fit: contain;
+    padding-right: 1em;
+  }
+  .megamenu .megamenu-bottom .service-item-content {
+    flex: 1;
+    text-align: left;
+  }
+  .megamenu .megamenu-bottom .service-item-content .service-item-title {
+    font-size: 1.2em;
+  }
+  @media screen and (max-width: 1400px) {
+    .megamenu {
+      font-size: 0.8em;
+    }
+    .megamenu .mm_menus {
+      max-height: 40vh;
+    }
+  }
+{% endstyle %}

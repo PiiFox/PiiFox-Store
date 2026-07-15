@@ -1,0 +1,102 @@
+<div class="activity-product-list-{{ section.id }} page-width">
+  <div class="activity-product-list-header">
+    <h2 class="activity-product-list-title">{{ section.settings.title }}</h2>
+  </div>
+  <div class="activity-product-list-body">
+    {% for block in section.blocks %}
+      <div class="activity-product">
+        <a class="activity-product-item" href="{{ block.settings.product.url }}">
+          <img src="{{ block.settings.product_image | img_url: '1000x' }}" />
+          <div class="activity-product-item-title notranslate">{{ block.settings.product_title }}</div>
+        </a>
+        <a href="{{ block.settings.product.url }}">
+          <div class="text-center notranslate">{{ block.settings.product_title }}</div>
+        </a>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+{% style %}
+  .activity-product-list-{{ section.id }} {
+    padding: 2em 0;
+  }
+  .activity-product-list-{{ section.id }} .text-center {
+    text-align: center;
+  }
+  .activity-product-list-{{ section.id }} .activity-product-list-body {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    gap: 1em;
+  }
+  .activity-product-list-{{ section.id }} .activity-product-item {
+    position: relative;
+    display: grid;
+    aspect-ratio: 4/3;
+    /* place-content: center; */
+    place-items: center;
+  }
+  .activity-product-list-{{ section.id }} .activity-product-item:hover .activity-product-item-title {
+    display: grid;
+    transition: all 0.4s ease;
+  }
+  .activity-product-list-{{ section.id }} .activity-product-item .activity-product-item-title {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    display: grid;
+    place-items: center;
+    background-color: rgba(255, 255, 255, 0.6);
+    display: none;
+  }
+  @media screen and (max-width: 768px) {
+    .activity-product-list-{{ section.id }} .activity-product-list-body {
+      display: block;
+    }
+  }
+{% endstyle %}
+{% schema %}
+  {
+    "name": "Activity Product List",
+    "settings": [
+      {
+        "type": "text",
+        "id": "title",
+        "label": "t:sections.activity_product_list.settings.title.label"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "column",
+        "name": "t:sections.activity_product_list.blocks.column.name",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "product_image",
+            "label": "t:sections.activity_product_list.blocks.column.settings.product_image.label"
+          },
+          {
+            "type": "text",
+            "id": "product_title",
+            "label": "t:sections.activity_product_list.blocks.column.settings.product_title.label"
+          },
+          {
+            "type": "product",
+            "id": "product",
+            "label": "t:sections.activity_product_list.blocks.column.settings.product.label"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "t:sections.activity_product_list.presets.demo.name",
+        "settings": {
+          "title": "More From The New Arrival"
+        }
+      }
+    ]
+  }
+{% endschema %}

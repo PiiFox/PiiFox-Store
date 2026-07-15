@@ -1,0 +1,40 @@
+<div class="collapsibles-wrapper collapsibles-wrapper--border-bottom">
+  <button
+    type="button"
+    class="label collapsible-trigger collapsible-trigger-btn collapsible-trigger-btn--borders collapsible--auto-height"
+    aria-controls="Product-content-{{ index }}"
+    aria-expanded="false"
+  >
+    {{ item.question }}
+    <span
+      class="collapsible-trigger__icon collapsible-trigger__icon--open"
+      role="presentation"
+    >
+      <svg
+        aria-hidden="true"
+        focusable="false"
+        role="presentation"
+        class="icon icon--wide icon-chevron-down"
+        viewBox="0 0 28 16"
+      >
+        <path
+          d="M1.57 1.59l12.76 12.77L27.1 1.59"
+          stroke-width="2"
+          stroke="#000"
+          fill="none"
+          fill-rule="evenodd"
+        ></path>
+      </svg>
+    </span>
+  </button>
+  <div
+    id="Product-content-{{ index }}"
+    class="collapsible-content collapsible-content--all"
+  >
+    <div class="collapsible-content__inner rte">
+      <p>
+        {{ item.answer }}
+      </p>
+    </div>
+  </div>
+</div>

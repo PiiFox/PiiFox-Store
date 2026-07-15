@@ -1,0 +1,312 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "blocks": {
+        "judge_me_reviews_preview_badge_NCAxDg": {
+          "type": "shopify://apps/judge-me-reviews/blocks/preview_badge/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+          "disabled": true,
+          "settings": {}
+        },
+        "c3cef06d-c80e-4a3d-9711-c1c6298184d4": {
+          "type": "text",
+          "settings": {
+            "text": "{{ product.metafields.custom.short_introduction.value }}"
+          }
+        },
+        "price": {
+          "type": "price",
+          "settings": {}
+        },
+        "separator": {
+          "type": "separator",
+          "settings": {}
+        },
+        "114a8bf7-bfcb-40b5-bc54-44c8a468e495": {
+          "type": "point_desc",
+          "settings": {}
+        },
+        "variant_picker": {
+          "type": "variant_picker",
+          "settings": {
+            "variant_labels": true,
+            "picker_type": "button",
+            "color_swatches": true
+          }
+        },
+        "8bfda07b-08e2-4929-bd33-d1288c14b8f9": {
+          "type": "custom",
+          "disabled": true,
+          "settings": {
+            "code": "<li>Standard power: 1500W</li>\n<li>Size: 33x28.5x21 CM</li>\n<li>G.W.:12.5KG</li>\n<li>Battery capacity: 1008Wh 50.4V</li>\n<li>AC Charger input: 100~120VAC E-Speed 940W MAX</li>\n<li>3*AC Output Voltage: AC 110V 1500W MAX</li>\n<li>2*DC Output: 12V3A</li>\n<li>2*USB-A Output: 5V/9V/12V DC, 24W MAX</li>\n<li>1*Type-C Output: 5V/9V /12V/15V/20V DC,100W MAX</li>\n<li>1*Cigarette lighter Output: 13.6V DC,10A 136W MAX</li>\n<li>Battery Type: NCM 18650</li>\n<li>Pack: 14S8P(2.5Ah*3.6V)</li>\n<li>Discharge Temperature: -20℃~+60℃ ± 3℃</li>\n<li>Charge Temperature: 0℃~45℃ ± 3℃</li>\n<li>Continuous stable pure sine wave output with inbuilt, E-UPS, inbuilt automatic AC charger and AC mains</li>\n<li>Fast charging, intelligent E-speed technology 0-80% in 1hours. E-VSZ 2500W Constant Power MAX</li>\n<li>Accessories: 1*Anderson to Cigarette lighter cable, 1*AC cable, 1*User guide</li>"
+          }
+        },
+        "305ed3aa-d1d3-4b24-a07d-b1efc23c4d2f": {
+          "type": "quantity_selector",
+          "settings": {}
+        },
+        "50aa095d-a2eb-4675-a70f-779c033b08ca": {
+          "type": "separator",
+          "disabled": true,
+          "settings": {}
+        },
+        "138ac04d-724c-4b80-b0f1-8ff275ada303": {
+          "type": "coupon",
+          "settings": {
+            "timezone": -8,
+            "coupon_template": "valentine"
+          }
+        },
+        "custom_XpJe4X": {
+          "type": "custom",
+          "disabled": true,
+          "settings": {
+            "code": "<div style=\"box-shadow: 0 0 5px  #ddd;padding: 0.5em 1em;display: inline-block;color: red;\">\nHoliday delay: Orders placed from Feb 8–Feb 28 will start shipping on Mar 2. Thank you for your understanding.\n</div>"
+          }
+        },
+        "buy_buttons": {
+          "type": "buy_buttons",
+          "settings": {
+            "show_dynamic_checkout": true,
+            "surface_pickup_enable": true
+          }
+        },
+        "rule_note_YRjr63": {
+          "type": "rule_note",
+          "disabled": true,
+          "settings": {
+            "rule_text1": "Spend $100 and save 8%",
+            "rule_text2": "$20 Off Orders Over $235",
+            "rule_text3": "$14 Off Orders Over $145",
+            "rule_text4": "$7 Off Orders Over $99"
+          }
+        },
+        "8b89d97f-65d6-4fda-a00c-3f23a460893d": {
+          "type": "tab",
+          "disabled": true,
+          "settings": {
+            "title": "Shipping information",
+            "content": "<p>Use collapsible tabs for more detailed information that will help customers make a purchasing decision.</p><p>Ex: Shipping and return policies, size guides, and other common questions.</p>",
+            "page": "delivery-return"
+          }
+        },
+        "74f3c2ae-b2b5-4177-a3c4-c43f472adc09": {
+          "type": "contact",
+          "disabled": true,
+          "settings": {
+            "title": "Ask a question",
+            "phone": false
+          }
+        },
+        "collapse_rule_list_4LHtpy": {
+          "type": "collapse_rule_list",
+          "settings": {
+            "popup_title": "Key Features",
+            "rule_item1_icon": "shopify://shop_images/1.svg",
+            "rule_item1_title": "Shipping & Warranty Policy",
+            "rule_item1_context": "<b>Shipping</b>: In-stock orders ship within 1-3 business days. Standard delivery takes 7-15 business days. Customers are responsible for customs fees. <br>\n\n<b>Warranty</b>: 12-month warranty for keyboards, kits, switches, keycaps, and mice; 3-month for batteries. Free accessories are not covered. Damage from unauthorized mods or improper charging (e.g., fast chargers) voids the warranty.",
+            "rule_item2_icon": "shopify://shop_images/4.svg",
+            "rule_item2_title": "Contact Support",
+            "rule_item2_context": "Need help? Contact us at <a href=\"mailto:service@piifox.com\">service@piifox.com</a>. We typically respond within 24-48 business hours. <br>\n\nTo speed up the process, please include your <b>order number</b>, <b>product model</b>, and a <b>short video or photo</b> of the issue in your email.",
+            "rule_item3_title": "",
+            "rule_item3_context": "",
+            "rule_item4_title": "",
+            "rule_item4_context": ""
+          }
+        },
+        "909b5578-0882-45e5-a7a2-fe046b398980": {
+          "type": "icon_text",
+          "settings": {
+            "point_1_icon": "shopify://shop_images/icon1_a1f43373-c340-49ba-b0ca-d509f4f8a1f8.png",
+            "point_1_title": "Secure Payments",
+            "point_2_icon": "shopify://shop_images/icon2_c18665c9-c2c4-4745-9c36-8e494965d9db.png",
+            "point_2_title": "Fast Delivery",
+            "point_3_icon": "shopify://shop_images/icon3_2691b9ac-cdf0-4a02-85b3-dcb6705d8bb3.png",
+            "point_3_title": "Global Warranty",
+            "point_4_icon": "shopify://shop_images/icon4_d52500d7-c012-4a29-8e40-77bee7c65c6c.png",
+            "point_4_title": "24/7 Support",
+            "point_5_title": "",
+            "point_6_title": ""
+          }
+        },
+        "af0d8d68-399e-4e03-a410-f08becab3d8f": {
+          "type": "share",
+          "settings": {}
+        },
+        "ddeae6e0-8d17-451f-abf8-de7814de443d": {
+          "type": "payment_icon",
+          "settings": {
+            "code": "<ul class=\"inline-list payment-icons footer__section\"><li class=\"icon--payment\">\n              <svg viewBox=\"0 0 38 24\" xmlns=\"http://www.w3.org/2000/svg\" width=\"38\" height=\"24\" role=\"img\" aria-labelledby=\"pi-paypal\"><title id=\"pi-paypal\">PayPal</title><path opacity=\".07\" d=\"M35 0H3C1.3 0 0 1.3 0 3v18c0 1.7 1.4 3 3 3h32c1.7 0 3-1.3 3-3V3c0-1.7-1.4-3-3-3z\"></path><path fill=\"#fff\" d=\"M35 1c1.1 0 2 .9 2 2v18c0 1.1-.9 2-2 2H3c-1.1 0-2-.9-2-2V3c0-1.1.9-2 2-2h32\"></path><path fill=\"#003087\" d=\"M23.9 8.3c.2-1 0-1.7-.6-2.3-.6-.7-1.7-1-3.1-1h-4.1c-.3 0-.5.2-.6.5L14 15.6c0 .2.1.4.3.4H17l.4-3.4 1.8-2.2 4.7-2.1z\"></path><path fill=\"#3086C8\" d=\"M23.9 8.3l-.2.2c-.5 2.8-2.2 3.8-4.6 3.8H18c-.3 0-.5.2-.6.5l-.6 3.9-.2 1c0 .2.1.4.3.4H19c.3 0 .5-.2.5-.4v-.1l.4-2.4v-.1c0-.2.3-.4.5-.4h.3c2.1 0 3.7-.8 4.1-3.2.2-1 .1-1.8-.4-2.4-.1-.5-.3-.7-.5-.8z\"></path><path fill=\"#012169\" d=\"M23.3 8.1c-.1-.1-.2-.1-.3-.1-.1 0-.2 0-.3-.1-.3-.1-.7-.1-1.1-.1h-3c-.1 0-.2 0-.2.1-.2.1-.3.2-.3.4l-.7 4.4v.1c0-.3.3-.5.6-.5h1.3c2.5 0 4.1-1 4.6-3.8v-.2c-.1-.1-.3-.2-.5-.2h-.1z\"></path></svg>\n            </li>\n              <li class=\"icon--payment\">\n                <img src=\"//www.piifox.com/cdn/shopifycloud/shopify/assets/payment_icons/visa-319d545c6fd255c9aad5eeaad21fd6f7f7b4fdbdb1a35ce83b89cca12a187f00.svg\" data-src=\"//www.piifox.com/cdn/shopifycloud/shopify/assets/payment_icons/visa-319d545c6fd255c9aad5eeaad21fd6f7f7b4fdbdb1a35ce83b89cca12a187f00.svg\" class=\"footer-payment-logo lazyloaded\" alt=\"visa\">\n              </li>\n              <li class=\"icon--payment\">\n                <img src=\"//www.piifox.com/cdn/shopifycloud/shopify/assets/payment_icons/master-173035bc8124581983d4efa50cf8626e8553c2b311353fbf67485f9c1a2b88d1.svg\" data-src=\"//www.piifox.com/cdn/shopifycloud/shopify/assets/payment_icons/master-173035bc8124581983d4efa50cf8626e8553c2b311353fbf67485f9c1a2b88d1.svg\" class=\"footer-payment-logo lazyloaded\" alt=\"master\">\n              </li>\n              <li class=\"icon--payment\">\n                <img src=\"//www.piifox.com/cdn/shopifycloud/shopify/assets/payment_icons/american_express-2264c9b8b57b23b0b0831827e90cd7bcda2836adc42a912ebedf545dead35b20.svg\" data-src=\"//www.piifox.com/cdn/shopifycloud/shopify/assets/payment_icons/american_express-2264c9b8b57b23b0b0831827e90cd7bcda2836adc42a912ebedf545dead35b20.svg\" class=\"footer-payment-logo lazyloaded\" alt=\"american_express\">\n              </li>\n              <li class=\"icon--payment\">\n                <img src=\"//www.piifox.com/cdn/shopifycloud/shopify/assets/payment_icons/discover-cc9808e50193c7496e7a5245eb86d5e06f02e2476c0fe70f2c40016707d35461.svg\" data-src=\"//www.piifox.com/cdn/shopifycloud/shopify/assets/payment_icons/discover-cc9808e50193c7496e7a5245eb86d5e06f02e2476c0fe70f2c40016707d35461.svg\" class=\"footer-payment-logo lazyloaded\" alt=\"discover\">\n              </li>\n              <li class=\"icon--payment\">\n                <img src=\"//www.piifox.com/cdn/shopifycloud/shopify/assets/payment_icons/jcb-ab0f5a1739704f1ab039f19ac8c28895af5c39a3f54ee9b748ea051986b0bd36.svg\" data-src=\"//www.piifox.com/cdn/shopifycloud/shopify/assets/payment_icons/jcb-ab0f5a1739704f1ab039f19ac8c28895af5c39a3f54ee9b748ea051986b0bd36.svg\" class=\"footer-payment-logo lazyloaded\" alt=\"jcb\">\n              </li>\n              <li class=\"icon--payment\">\n                <img src=\"//www.piifox.com/cdn/shopifycloud/shopify/assets/payment_icons/diners_club-16436b9fb6dd9060edb51f1c7c44e23941e544ad798282d6aef1604319562fba.svg\" data-src=\"//www.piifox.com/cdn/shopifycloud/shopify/assets/payment_icons/diners_club-16436b9fb6dd9060edb51f1c7c44e23941e544ad798282d6aef1604319562fba.svg\" class=\"footer-payment-logo lazyloaded\" alt=\"diners_club\">\n              </li>\n              <li class=\"icon--payment\">\n                <img src=\"//www.piifox.com/cdn/shopifycloud/shopify/assets/payment_icons/maestro-d2055c6b416c46cf134f393e1df6e0ba31722b623870f954afd392092207889c.svg\" data-src=\"//www.piifox.com/cdn/shopifycloud/shopify/assets/payment_icons/maestro-d2055c6b416c46cf134f393e1df6e0ba31722b623870f954afd392092207889c.svg\" class=\"footer-payment-logo lazyloaded\" alt=\"maestro\">\n              </li>\n              <li class=\"icon--payment\">\n                <img src=\"//www.piifox.com/cdn/shopifycloud/shopify/assets/payment_icons/klarna-389801c6056cb5600b4f05f72ebc2c58e4947688c6c4f5e6ccea41f7973d3a28.svg\" data-src=\"//www.piifox.com/cdn/shopifycloud/shopify/assets/payment_icons/klarna-389801c6056cb5600b4f05f72ebc2c58e4947688c6c4f5e6ccea41f7973d3a28.svg\" class=\"footer-payment-logo lazyloaded\" alt=\"klarna\">\n              </li></ul>"
+          }
+        }
+      },
+      "block_order": [
+        "judge_me_reviews_preview_badge_NCAxDg",
+        "c3cef06d-c80e-4a3d-9711-c1c6298184d4",
+        "price",
+        "separator",
+        "114a8bf7-bfcb-40b5-bc54-44c8a468e495",
+        "variant_picker",
+        "8bfda07b-08e2-4929-bd33-d1288c14b8f9",
+        "305ed3aa-d1d3-4b24-a07d-b1efc23c4d2f",
+        "50aa095d-a2eb-4675-a70f-779c033b08ca",
+        "138ac04d-724c-4b80-b0f1-8ff275ada303",
+        "custom_XpJe4X",
+        "buy_buttons",
+        "rule_note_YRjr63",
+        "8b89d97f-65d6-4fda-a00c-3f23a460893d",
+        "74f3c2ae-b2b5-4177-a3c4-c43f472adc09",
+        "collapse_rule_list_4LHtpy",
+        "909b5578-0882-45e5-a7a2-fe046b398980",
+        "ddeae6e0-8d17-451f-abf8-de7814de443d",
+        "af0d8d68-399e-4e03-a410-f08becab3d8f"
+      ],
+      "custom_css": [
+        "p.con-width.wow.fadeInUp.delay-6s.animated {font-size: 15px;}"
+      ],
+      "settings": {
+        "sku_enable": false,
+        "image_position": "left",
+        "image_size": "medium",
+        "product_zoom_enable": true,
+        "thumbnail_position": "below",
+        "thumbnail_arrows": true,
+        "mobile_layout": "partial",
+        "enable_video_looping": true,
+        "product_video_style": "muted"
+      }
+    },
+    "1778720958190e635c": {
+      "type": "apps",
+      "blocks": {
+        "judge_me_reviews_review_widget_Czaxk3": {
+          "type": "shopify://apps/judge-me-reviews/blocks/review_widget/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+          "settings": {
+            "review_data": "sample_data",
+            "max_width": 1200,
+            "show_shop_reviews": false,
+            "empty_state": "empty_widget"
+          }
+        }
+      },
+      "block_order": [
+        "judge_me_reviews_review_widget_Czaxk3"
+      ],
+      "settings": {
+        "full_width": false,
+        "space_around": true
+      }
+    },
+    "sub": {
+      "type": "product-full-width",
+      "blocks": {
+        "bcf11338-04ed-4bc0-859d-364c38795646": {
+          "type": "description",
+          "settings": {
+            "is_tab": false
+          }
+        }
+      },
+      "block_order": [
+        "bcf11338-04ed-4bc0-859d-364c38795646"
+      ],
+      "disabled": true,
+      "settings": {
+        "max_width": true
+      }
+    },
+    "recently-viewed": {
+      "type": "recently-viewed",
+      "disabled": true,
+      "settings": {
+        "recent_count": 5
+      }
+    },
+    "collection-return": {
+      "type": "collection-return",
+      "disabled": true,
+      "settings": {}
+    },
+    "product-recommendations": {
+      "type": "product-recommendations",
+      "custom_css": [
+        ".custom-short_point_desc {display: none;}",
+        "@media screen and (max-width: 768px) {.grid-overflow-wrapper .grid__item {flex: 0 0 calc(50% - 17px); } .grid-product__meta {padding: 1rem; } .bottom_btn a {white-space: nowrap; font-size: 1rem; }}",
+        "@media screen and (max-width: 500px) {.grid-product__meta {padding: 0.5rem; } .bottom_btn a {font-size: 0.6rem; }}"
+      ],
+      "settings": {
+        "show_product_recommendations": true,
+        "short_introduction_enable": false,
+        "short_point_desc_enable": false,
+        "product_recommendations_heading": "Other Top Rated Products",
+        "related_count": 4
+      }
+    },
+    "shop_with_confidence_section_PGLWzQ": {
+      "type": "shop-with-confidence-section",
+      "blocks": {
+        "service_item_b9PBKH": {
+          "type": "service_item",
+          "settings": {
+            "service_img": "shopify://shop_images/footer-icon1_1c7e0e71-312c-45ba-841d-143686c63e07.png",
+            "service_title": "Secure & Fast Delivery",
+            "service_description": "Fast shipping with safety you can count on."
+          }
+        },
+        "service_item_yKYpbL": {
+          "type": "service_item",
+          "settings": {
+            "service_img": "shopify://shop_images/footer-icon2_ae165278-8567-4f3a-ad49-e2c526c8498b.png",
+            "service_title": "1-Year Free Warranty",
+            "service_description": "All PiiFox keyboards come with a 1-year limited warranty."
+          }
+        },
+        "service_item_imMPWq": {
+          "type": "service_item",
+          "settings": {
+            "service_img": "shopify://shop_images/footer-icon3_8076622e-27c0-49a3-aa04-a93ddb8e6477.png",
+            "service_title": "30-Day Returns",
+            "service_description": "Not the right fit? Return any item within 30 days of delivery."
+          }
+        },
+        "service_item_gVnri8": {
+          "type": "service_item",
+          "settings": {
+            "service_img": "shopify://shop_images/footer-icon4_ec25736e-ddc5-4aee-9832-defeb336309e.png",
+            "service_title": "Expert Support",
+            "service_description": "Our mechanical keyboard experts are here to help, 7 days a week."
+          }
+        }
+      },
+      "block_order": [
+        "service_item_b9PBKH",
+        "service_item_yKYpbL",
+        "service_item_imMPWq",
+        "service_item_gVnri8"
+      ],
+      "name": "Shop With Confidence Section",
+      "settings": {
+        "shop_confidence_title": "Shop With Confidence",
+        "shop_confidence_description": "Premium quality. Reliable service. Every step of the way."
+      }
+    }
+  },
+  "order": [
+    "main",
+    "1778720958190e635c",
+    "sub",
+    "recently-viewed",
+    "collection-return",
+    "product-recommendations",
+    "shop_with_confidence_section_PGLWzQ"
+  ]
+}

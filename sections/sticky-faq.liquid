@@ -1,0 +1,105 @@
+<div
+  class="filterstyck-section filterstyck-{{ section.id }}"
+  data-section-id="{{ section.id }}"
+  data-aos>
+ 
+    <div class="{%- unless section.settings.full_width -%} page-width {%- endunless -%}">
+  
+<div class="styck_filter">
+<ul class="s_nav">
+	<li class="active filtera" data-filter="shipping">SHIPPING & DELIVERY</li>
+	<li class="filtera " data-filter="Payment">Payment</li>
+	<li class="filtera " data-filter="Product">Product</li>
+</ul>
+
+<div class="faq_box">
+{%- for block in section.blocks -%}
+	<div class="filtr-item {{ block.settings.category }}" data-cat="{{ block.settings.category }}">
+		 <button type="button" class="collapsible-trigger collapsible-trigger--inline collapsible--auto-height text-left" aria-controls="FAQ-content-{{ block.id }}">
+                {%- render 'collapsible-icons-alt', no_circle: true -%}
+                <span>{{ block.settings.title }}</span>
+              </button>
+              <div id="FAQ-content-{{ block.id }}" class="collapsible-content collapsible-content--all">
+                <div class="collapsible-content__inner collapsible-content__inner--faq rte">
+                  {{ block.settings.text }}
+                </div>
+              </div>
+	</div>
+	{%- endfor -%}
+</div>
+</div>
+</div>
+</div>
+{% schema %}
+{
+  "name": "sticky-faq",
+  "class": "index-section sticky-faqs",
+  "max_blocks": 10,
+  "settings": [
+     {
+      "type": "checkbox",
+      "id": "full_width",
+      "label": "t:sections.promo-grid.settings.full_width.label",
+      "default": false
+    }
+  ],
+  "blocks": [
+    {
+      "type": "question",
+      "name": "t:sections.faq.blocks.question.name",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "t:sections.faq.blocks.question.settings.title.label",
+          "default": "Frequently asked question"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "t:sections.faq.blocks.question.settings.text.label",
+          "default": "<p>Use this text to answer questions in as much detail as possible for your customers.</p>"
+        },
+{
+          "type": "select",
+          "id": "category",
+          "label": "t:sections.faq.blocks.question.settings.text.label",
+           "options": [
+        {
+          "value": "shipping",
+          "label": "shipping"
+        },
+{
+          "value": "Payment",
+          "label": "Payment"
+        },
+{
+          "value": "Product",
+          "label": "Product"
+        }
+]
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "sticky-faq",
+      "blocks": [
+        {
+          "type": "question"
+        },
+        {
+          "type": "question"
+        },
+        {
+          "type": "question"
+        },
+        {
+          "type": "question"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

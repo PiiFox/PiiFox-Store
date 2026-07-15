@@ -1,0 +1,498 @@
+{% comment %}
+  物流查询页面 - track-status.liquid
+  功能：
+  1. 自动读取用户订单号/邮箱
+  2. 支持订单号查询/运单号查询双模式
+  3. 自动根据订单号取运单号再查轨迹
+  4. 友好的状态提示 + 时间线物流轨迹展示
+{% endcomment %}
+
+{% assign email_link = '<a href="mailto:' | append: settings.support_email | append: '">' | append: settings.support_email | append: '</a>' %}
+{% assign track_link = '<a href="https://www.17track.com/" target="_blank" rel="noopener noreferrer">17TRACK</a>' %}
+
+<div class="track-status-page">
+  <div class="track-status-page-container page-width">
+    <style>
+      .track-status-page {
+        padding: 2em 0;
+      }
+      .track-status-page .track-status-page-container.page-width {
+        max-width: 1000px;
+      }
+      /* 基础样式 */
+      .track-tabs {
+        display: flex;
+        gap: 1em;
+        margin-bottom: 2em;
+        justify-content: flex-start;
+        align-items: center;
+      }
+      .tab-btn {
+        padding: 0.6em 1.5em;
+        border: 1px solid #ccc;
+        border-radius: 999px;
+        background: #fff;
+        cursor: pointer;
+        font-size: 1em;
+      }
+      .tab-btn.active {
+        border-color: var(--colorThemePrimary);
+        color: var(--colorThemePrimary);
+        background: #f0f7ff;
+      }
+      .track-form {
+        display: flex;
+        flex-direction: column;
+        gap: 1em;
+        margin-bottom: 2em;
+        margin: 0 auto 2em auto;
+      }
+      .track-form input {
+        padding: 0.85em;
+        width: 100%;
+        margin-bottom: 1em;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        font-size: 1em;
+      }
+      .submit-btn {
+        background: var(--colorThemePrimary);
+        color: white;
+        border: none;
+        padding: 0.85em;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 1em;
+      }
+      .submit-btn:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+      }
+
+      /* 状态卡片 */
+      .status-card {
+        margin: 0 auto;
+        padding: 2em;
+        border: 1px solid #eee;
+        border-radius: 8px;
+        text-align: center;
+      }
+      .status-card .notice-context {
+        color: #ff00008c;
+      }
+      .status-card .notice-context a {
+        color: #ff00008c;
+        text-decoration: underline;
+      }
+      .status-icon {
+        font-size: 3em;
+        margin-bottom: 1em;
+      }
+      .status-title {
+        font-size: 1.5em;
+        margin-bottom: 0.5em;
+      }
+      .status-desc {
+        color: #666;
+      }
+      .statuc-note a {
+        text-decoration: underline;
+      }
+
+      /* 物流轨迹时间线 */
+      .timeline-container {
+        margin: 2em auto;
+      }
+      .timeline-item {
+        position: relative;
+        padding-left: 2em;
+        padding-bottom: 1.5em;
+        border-left: 2px solid #eee;
+      }
+      .timeline-item .timeline-header {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        flex-wrap: wrap;
+      }
+      .timeline-item:last-child {
+        border-left: none;
+        padding-bottom: 0;
+      }
+      .timeline-dot {
+        position: absolute;
+        left: -7px;
+        top: 0;
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background: var(--colorThemePrimary);
+      }
+      .timeline-date {
+        font-size: 0.85em;
+        color: #666;
+        margin-bottom: 0.3em;
+      }
+      .timeline-status {
+        font-size: 1em;
+        font-weight: 500;
+        margin-bottom: 0.3em;
+        background: rgba(0, 112, 243, 0.1);
+        padding: 0.2em 0.5em ;
+        margin: 0 0.5em;
+      }
+      .timeline-location {
+        font-size: 0.9em;
+        color: #666;
+      }
+      .loading-text {
+        text-align: center;
+        color: #666;
+        margin: 2em 0;
+      }
+    </style>
+
+    {% comment %} 自动读取用户订单号/邮箱 {% endcomment %}
+    {% if customer %}
+      {% assign customer_email = customer.email %}
+      {% assign customer_order = customer.last_order %}
+      {% if customer_order and customer_order.fulfillments.size > 0 %}
+        {% for fulfillment in customer_order.fulfillments %}
+          {% if fulfillment.tracking_numbers.size > 0 %}
+            {% assign tracking_number = fulfillment.tracking_numbers | first %}
+          {% endif %}
+        {% endfor %}
+      {% endif %}
+    {% endif %}
+
+    <!-- 双模式切换 -->
+    <div class="track-tabs">
+      <button class="tab-btn" data-mode="order" style="display: none">{{ section.settings.tab_order_text }}</button>
+      <button class="tab-btn active" data-mode="tracking">{{ section.settings.tab_tracking_text }}</button>
+    </div>
+
+    <!-- 查询表单 -->
+    <form class="track-form" id="trackForm">
+      <div id="orderFields" style="display: none;">
+        <input
+          type="email"
+          id="email"
+          placeholder="{{ section.settings.email_placeholder }}"
+          required
+          {% if customer_email %}
+            value="{{ customer_email }}"
+          {% endif %}
+        >
+        <input
+          type="text"
+          id="orderNumber"
+          placeholder="{{ section.settings.order_placeholder }}"
+          required
+          {% if customer_order %}
+            value="{{ customer_order.id }}"
+          {% endif %}
+        >
+      </div>
+      <div id="trackingFields">
+        <input
+          type="text"
+          id="trackingNumber"
+          placeholder="{{ section.settings.tracking_placeholder }}"
+          required
+          {% if tracking_number %}
+            value="{{ tracking_number }}"
+          {% endif %}
+        >
+      </div>
+      <button type="button" class="submit-btn">{{ section.settings.submit_btn_text }}</button>
+    </form>
+
+    <!-- 状态提示卡片 -->
+    <div class="status-card" id="statusCard">
+      <p class="notice-context">
+        {% assign note = "Please check your shipping number in your confirmation email or your account. If you still need help, feel free to contact our support team -- customer support" %}
+        {{ note | replace: 'customer support', email_link }}
+      </p>
+      <div class="status-icon">🚚</div>
+      <h2 class="status-title">{{ section.settings.default_title }}</h2>
+      <p class="status-desc">{{ section.settings.default_desc }}</p>
+    </div>
+
+    <!-- 物流轨迹时间线 -->
+    <div class="timeline-container" id="timelineContainer" style="display: none;"></div>
+  </div>
+  <script>
+    // ====================== 配置项 ======================
+    const API_BASE_URL = 'https://serverless.piifox.com/track_status';
+    const APP_KEY = 'piifox_2025';
+    
+    // ===================================================
+
+    // 模式切换逻辑
+    document.querySelectorAll('.tab-btn').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.tab-btn').forEach((b) => b.classList.emove('active'));
+        btn.classList.add('active');
+
+        const mode = btn.dataset.mode;
+        document.getElementById('orderFields').style.display = mode === 'order' ? 'flex' : 'none';
+        document.getElementById('trackingFields').style.display = mode === 'tracking' ? 'block' : 'none';
+      });
+    });
+
+    // 表单提交查询
+    document.querySelector('.submit-btn').addEventListener('click', async (e) => {
+      e.preventDefault();
+      const form = document.querySelector('#trackForm');
+      const submitBtn = form.querySelector('.submit-btn');
+      const statusCard = document.getElementById('statusCard');
+      const timelineContainer = document.getElementById('timelineContainer');
+
+      // 获取当前模式
+      const activeTab = document.querySelector('.tab-btn.active');
+      const mode = activeTab.dataset.mode;
+
+      // 显示加载状态
+      submitBtn.disabled = true;
+      statusCard.innerHTML = `
+        <div class="status-icon">⏳</div>
+        <h2 class="status-title">{{ section.settings.loading_title }}</h2>
+        <p class="status-desc">{{ section.settings.loading_desc }}</p>
+      `;
+      timelineContainer.style.display = 'none';
+
+      console.log('Submitting tracking query, mode:', mode);
+
+      let trackingNumber = '';
+
+      try {
+        if (mode === 'order') {
+          // 订单号模式：先根据订单号取运单号（这里用模拟逻辑，实际可对接订单接口）
+          const orderNumber = document.getElementById('orderNumber').value.trim();
+          // 这里假设订单号和运单号关联，实际可通过订单接口获取
+          // 模拟：订单号作为运单号查询，也可以改成真实的订单查询逻辑
+          trackingNumber = orderNumber;
+        } else {
+          // 运单号模式：直接取输入的运单号
+          trackingNumber = document.getElementById('trackingNumber').value.trim();
+        }
+
+      console.log('Submitting tracking query, trackingNumber:', trackingNumber);
+
+
+        // 调用物流查询接口
+        const response = await fetch(`${API_BASE_URL}`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            appKey: APP_KEY,
+          },
+          body: JSON.stringify({
+            trackingNumbers: [{ number: trackingNumber }],
+            lang: 'en',
+            actionFunc: 'query',
+          }),
+        });
+
+        const result = await response.json();
+
+        console.log('Tracking query result:', result);
+
+        if (result?.code === 200 && Array.isArray(result?.data?.accepted) && result?.data?.accepted.length > 0) {
+          const trackData = result?.data || {};
+          const acceptedList = Array.isArray(trackData?.accepted) ? trackData.accepted : [];
+          console.log('Tracking query acceptedList:', acceptedList);
+
+          // 状态卡片：统一显示
+          statusCard.innerHTML = `
+            <div class="status-icon">✅</div>
+            <h2 class="status-title">{{ section.settings.success_title }}</h2>
+            <p class="status-desc">Tracking successful. ${acceptedList.length} shipments found.</p>
+          `;
+
+          // 清空时间线容器
+          timelineContainer.innerHTML = '';
+
+          // 遍历每一段（头程/尾程）
+          acceptedList.forEach((trackItem, idx) => {
+            console.log(`-----------Processing trackItem ${idx}-----------------`);
+            const trackProviders = trackItem?.track_info?.tracking?.providers;
+            console.log('Tracking query trackItem trackProviders:', trackProviders);
+            console.log('Tracking query trackItem trackProviders[0].events:', trackProviders[0]?.events);
+
+            // ✅ 提升到外层作用域，用 let/const 声明一次
+            const events = (trackProviders && Array.isArray(trackProviders))
+              ? trackProviders[0]?.events || []
+              : [];
+            console.log('Tracking query trackItem events:', events);
+
+            const label = idx === 0 ? 'Head Transport' : 'Last Mile Delivery';
+
+            // 每一段的标题
+            timelineContainer.innerHTML += `
+              <div style="margin:16px 0 8px;font-weight:bold;color:#333;">
+                — ${label}: ${trackItem.number || ''} —
+              </div>
+            `;
+
+            // 该段的轨迹
+            if (events.length > 0) {
+              timelineContainer.innerHTML += events
+                .map(
+                  (event) => `
+                    <div class="timeline-item">
+                      <div class="timeline-header">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-date">${new Date(event.time_utc).toLocaleString()}</div>
+                        <div class="timeline-status">${event.stage || event.sub_status || ''}</div>
+                        <div class="timeline-location">${event.location || ''}</div>
+                      </div>
+                      <div class="timeline-description">${event.description || ''}</div>
+                    </div>
+                  `
+                )
+                .join('');
+            } else {
+              timelineContainer.innerHTML += `<div style="color:#999;">No tracking information available</div>`;
+            }
+          });
+          timelineContainer.style.display = acceptedList.length > 0 ? 'block' : 'none';
+        } else {
+          // 查询无果
+          if(result?.data?.rejected?.error?.message) {
+            statusCard.innerHTML = `
+              <div class="status-icon">❌</div>
+              <h2 class="status-title">{{ section.settings.error_title }}</h2>
+              <p class="status-desc">${result?.data?.rejected?.error?.message || ''}</p>
+              <p class="status-note">{{ section.settings.error_note | replace: '17TRACK', track_link | replace: 'customer support', email_link }}</p>
+            `;
+          } else {
+            statusCard.innerHTML = `
+              <div class="status-icon">❌</div>
+              <h2 class="status-title">{{ section.settings.error_title }}</h2>
+              <p class="status-desc">{{ section.settings.error_desc }}</p>
+              <p class="status-note">{{ section.settings.error_note | replace: '17TRACK', track_link | replace: 'customer support', email_link }}</p>
+            `;
+          }
+          
+          timelineContainer.style.display = 'none';
+        }
+      } catch (err) {
+        // 接口错误
+        statusCard.innerHTML = `
+          <div class="status-icon">❌</div>
+          <h2 class="status-title">{{ section.settings.error_title }}</h2>
+          <p class="status-desc">{{ section.settings.error_desc }}</p>
+          <p class="status-note">{{ section.settings.error_note | replace: '17TRACK', track_link | replace: 'customer support', email_link }}</p>
+        `;
+        timelineContainer.style.display = 'none';
+      } finally {
+        submitBtn.disabled = false;
+      }
+    });
+  </script>
+</div>
+
+{% schema %}
+{
+  "name": "Track Status",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "tab_order_text",
+      "label": "订单模式按钮文字",
+      "default": "Order number"
+    },
+    {
+      "type": "text",
+      "id": "tab_tracking_text",
+      "label": "运单模式按钮文字",
+      "default": "Tracking Number"
+    },
+    {
+      "type": "text",
+      "id": "email_placeholder",
+      "label": "邮箱输入框占位文字",
+      "default": "Email"
+    },
+    {
+      "type": "text",
+      "id": "order_placeholder",
+      "label": "订单号输入框占位文字",
+      "default": "Order number"
+    },
+    {
+      "type": "text",
+      "id": "tracking_placeholder",
+      "label": "运单号输入框占位文字",
+      "default": "Tracking Number"
+    },
+    {
+      "type": "text",
+      "id": "submit_btn_text",
+      "label": "提交按钮文字",
+      "default": "Track Order"
+    },
+    {
+      "type": "text",
+      "id": "default_title",
+      "label": "初始状态标题",
+      "default": "Track Your Order"
+    },
+    {
+      "type": "text",
+      "id": "default_desc",
+      "label": "初始状态描述",
+      "default": "Welcome to our order tracking service."
+    },
+    {
+      "type": "text",
+      "id": "loading_title",
+      "label": "加载状态标题",
+      "default": "Loading..."
+    },
+    {
+      "type": "text",
+      "id": "loading_desc",
+      "label": "加载状态描述",
+      "default": "Fetching your tracking information"
+    },
+    {
+      "type": "text",
+      "id": "success_title",
+      "label": "查询成功标题",
+      "default": "Tracking Info Found"
+    },
+    {
+      "type": "text",
+      "id": "success_desc",
+      "label": "查询成功描述",
+      "default": "Current status:"
+    },
+    {
+      "type": "text",
+      "id": "error_title",
+      "label": "查询失败标题",
+      "default": "Tracking Info Not Found"
+    },
+    {
+      "type": "text",
+      "id": "error_desc",
+      "label": "查询失败描述",
+      "default": "Please check if the order info is correct. Unshipped order can not be tracked."
+    },
+    {
+      "type": "html",
+      "id": "error_note",
+      "label": "失败提示(保留customer support关键词, 方便替换为邮箱)",
+      "default": "<p class=\"notice-context\">If your tracking number doesn't work here, you can try looking it up on 17TRACK, or reach out to us at customer support and we’ll help you out.</p>"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Track Status"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,1151 @@
+<style>
+  @layer con-spec-table {
+    .con.con-spec-table .section {
+      display: grid;
+      grid-template-columns: 3fr 7fr;
+      grid-gap: 2em;
+      border-bottom: 1px solid #ccc;
+      padding: 2em 0;
+    }
+    .con.con-spec-table .section .section-title {
+      font-size: 1.6em;
+      font-weight: 600;
+    }
+    .con.con-spec-table .section .product-title {
+      font-size: 1.4em;
+      font-weight: 500;
+      padding-bottom: 0.4em;
+      border-bottom: 1px solid #ccc;
+      position: relative;
+    }
+    .con.con-spec-table .section .product-title::before {
+      content: '';
+      display: inline-block;
+      width: 4.5em;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      border-bottom: 2px solid #000;
+    }
+    .con.con-spec-table .section .product-img {
+      max-width: 25vw;
+      padding-top: 1em;
+    }
+    .con.con-spec-table .section .product-img img {
+      width: 100%;
+      height: auto;
+      aspect-ratio: 1 / 1;
+      object-fit: contain;
+    }
+    .con.con-spec-table .section .section-content {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      grid-gap: 2em;
+    }
+    .con.con-spec-table .section.section-0 .section-content {
+      display: block;
+    }
+    .con.con-spec-table .section .section-content .feature-item-title {
+      font-size: 1.2em;
+      font-weight: 400;
+    }
+    .con.con-spec-table .section .section-content .feature-item-context {
+      font-size: 1em;
+      font-weight: 300;
+      color: rgb(110, 110, 115);
+    }
+    @media screen and (max-width: 768px) {
+      .con.con-spec-table {
+        font-size: 0.8em;
+      }
+      .con.con-spec-table .section {
+        grid-template-columns: unset;
+      }
+    }
+  }
+</style>
+<div class="con con-spec-table" data-product-category="{{ product.category }}">
+  <div class="container">
+    {% if product.category == 'Keyboards' %}
+      <div class="con-spec-table--wrapper">
+        <div class="section section-0">
+          <div class="section-title">Tech Specs</div>
+          <div class="section-content">
+            <div
+              class="product-title"
+              data-label="Product Title"
+              data-value="{{ product.title }}"
+            >
+              {{ product.title }}
+            </div>
+            <div class="product-img" data-product="{{ product.title }}">
+              <img
+                src="{{ product.featured_image | image_url }}"
+                alt="{{ product.title }}"
+                width="400"
+                height="400"
+                loading="lazy"
+              >
+            </div>
+          </div>
+        </div>
+        <div class="section section-1">
+          <div class="section-title">BASIC INFO</div>
+          <div class="section-content">
+            <div class="feature-item">
+              <div class="feature-item-title" data-label="Model">Model</div>
+              <div class="feature-item-context" data-value="{{ product.metafields.custom.model }}">
+                {{ product.metafields.custom.model }}
+              </div>
+            </div>
+            <div class="feature-item">
+              <div class="feature-item-title" data-label="Layout">Layout</div>
+              <div
+                class="feature-item-context"
+                data-value="{{ product.metafields.custom.layout_size.value | map: 'label' | join: ', ' }}"
+              >
+                {{ product.metafields.custom.layout_size.value | map: 'label' | join: ', ' }}
+              </div>
+            </div>
+            <div class="feature-item">
+              <div class="feature-item-title" data-label="Number of Keys">Number of Keys</div>
+              <div
+                class="feature-item-context"
+                data-value="{{ product.metafields.custom.number_of_keys.value | map: 'label' | join: ', ' }}"
+              >
+                {{ product.metafields.custom.number_of_keys.value | map: 'label' | join: ', ' }}
+              </div>
+            </div>
+            <div class="feature-item">
+              <div class="feature-item-title" data-label="Switch Type">Switch Type</div>
+              <div
+                class="feature-item-context"
+                data-value="{{ product.metafields.custom.switch_type.value | map: 'label' | join: ', ' }}"
+              >
+                {{ product.metafields.custom.switch_type.value | map: 'label' | join: ', ' }}
+              </div>
+            </div>
+            <div class="feature-item">
+              <div class="feature-item-title" data-label="Screen">Screen</div>
+              <div
+                class="feature-item-context"
+                data-value="{{ product.metafields.custom.screen.value | map: 'label' | join: ', ' }}"
+              >
+                {{ product.metafields.custom.screen.value | map: 'label' | join: ', ' }}
+              </div>
+            </div>
+            <div class="feature-item">
+              <div class="feature-item-title" data-label="Knob">Knob</div>
+              <div
+                class="feature-item-context"
+                data-value="{{ product.metafields.custom.knob.value | map: 'label' | join: ', ' }}"
+              >
+                {{ product.metafields.custom.knob.value | map: 'label' | join: ', ' }}
+              </div>
+            </div>
+            <div class="feature-item">
+              <div class="feature-item-title" data-label="Language">Language</div>
+              <div
+                class="feature-item-context"
+                data-value="{{ product.metafields.custom.language.value | map: 'label' }}"
+              >
+                {{ product.metafields.custom.language.value | map: 'label' }}
+              </div>
+            </div>
+            <div class="feature-item">
+              <div class="feature-item-title" data-label="Switch Feel">Switch Feel</div>
+              <div
+                class="feature-item-context"
+                data-value="{{ product.metafields.custom.switch_feel.value | map: 'label' | join: ', ' }}"
+              >
+                {{ product.metafields.custom.switch_feel.value | map: 'label' | join: ', ' }}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="section section-2">
+          <div class="section-title">CONNECTIVITY & CONTROL</div>
+          <div class="section-content">
+            <div class="feature-item">
+              <div class="feature-item-title" data-label="Battery">Battery</div>
+              <div
+                class="feature-item-context"
+                data-value="{{ product.metafields.custom.battery.value | map: 'label' | join: ', ' }}"
+              >
+                {{ product.metafields.custom.battery.value | map: 'label' | join: ', ' }}
+              </div>
+            </div>
+            <div class="feature-item">
+              <div class="feature-item-title" data-label="Connectivity">Connectivity</div>
+              <div
+                class="feature-item-context"
+                data-value="{{ product.metafields.custom.connectivity.value | map: 'label' | join: ', ' }}"
+              >
+                {{ product.metafields.custom.connectivity.value | map: 'label' | join: ', ' }}
+              </div>
+            </div>
+            <div class="feature-item">
+              <div class="feature-item-title" data-label="Compatibility">Compatibility</div>
+              <div
+                class="feature-item-context"
+                data-value="{{ product.metafields.custom.compatibility.value | map: 'label' | join: ', ' }}"
+              >
+                {{ product.metafields.custom.compatibility.value | map: 'label' | join: ', ' }}
+              </div>
+            </div>
+            <div class="feature-item">
+              <div class="feature-item-title" data-label="Hot-Swappable">Hot-Swappable</div>
+              <div
+                class="feature-item-context"
+                data-value="{{ product.metafields.custom.hot_swappable.value | map: 'label' | join: ', ' }}"
+              >
+                {{ product.metafields.custom.hot_swappable.value | map: 'label' | join: ', ' }}
+              </div>
+            </div>
+            <div class="feature-item">
+              <div class="feature-item-title" data-label="RGB">RGB</div>
+              <div
+                class="feature-item-context"
+                data-value="{{ product.metafields.custom.rgb.value | map: 'label' | join: ', ' }}"
+              >
+                {{ product.metafields.custom.rgb.value | map: 'label' | join: ', ' }}
+              </div>
+            </div>
+            <div class="feature-item">
+              <div class="feature-item-title" data-label="Polling Rate">Polling Rate</div>
+              <div
+                class="feature-item-context"
+                data-value="{{ product.metafields.custom.polling_rate.value | map: 'label' | join: ', ' }}"
+              >
+                {{ product.metafields.custom.polling_rate.value | map: 'label' | join: ', ' }}
+              </div>
+            </div>
+            <div class="feature-item">
+              <div class="feature-item-title" data-label="Latency">Latency</div>
+              <div
+                class="feature-item-context"
+                data-value="{{ product.metafields.custom.latency.value | map: 'label' | join: ', ' }}"
+              >
+                {{ product.metafields.custom.latency.value | map: 'label' | join: ', ' }}
+              </div>
+            </div>
+            <div class="feature-item">
+              <div class="feature-item-title" data-label="Anti-Ghosting">Anti-Ghosting</div>
+              <div
+                class="feature-item-context"
+                data-value="{{ product.metafields.custom.anti_ghosting.value | map: 'label' | join: ', ' }}"
+              >
+                {{ product.metafields.custom.anti_ghosting.value | map: 'label' | join: ', ' }}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="section section-3">
+          <div class="section-title">STRUCTURE & MATERIALS</div>
+          <div class="section-content">
+            <div class="feature-item">
+              <div class="feature-item-title" data-label="Case Material">Case Material</div>
+              <div
+                class="feature-item-context"
+                data-value="{{ product.metafields.custom.case_material.value | map: 'label' | join: ', ' }}"
+              >
+                {{ product.metafields.custom.case_material.value | map: 'label' | join: ', ' }}
+              </div>
+            </div>
+            <div class="feature-item">
+              <div class="feature-item-title" data-label="Plate Material">Plate Material</div>
+              <div
+                class="feature-item-context"
+                data-value="{{ product.metafields.custom.plate_material.value | map: 'label' | join: ', ' }}"
+              >
+                {{ product.metafields.custom.plate_material.value | map: 'label' | join: ', ' }}
+              </div>
+            </div>
+            <div class="feature-item">
+              <div class="feature-item-title" data-label="Flex-Cut">Flex-Cut</div>
+              <div
+                class="feature-item-context"
+                data-value="{{ product.metafields.custom.flex_cut.value | map: 'label' | join: ', ' }}"
+              >
+                {{ product.metafields.custom.flex_cut.value | map: 'label' | join: ', ' }}
+              </div>
+            </div>
+            <div class="feature-item">
+              <div class="feature-item-title" data-label="Stabilizers">Stabilizers</div>
+              <div
+                class="feature-item-context"
+                data-value="{{ product.metafields.custom.stabilizers.value | map: 'label' | join: ', ' }}"
+              >
+                {{ product.metafields.custom.stabilizers.value | map: 'label' | join: ', ' }}
+              </div>
+            </div>
+            <div class="feature-item">
+              <div class="feature-item-title" data-label="Mounting Structure">Mounting Structure</div>
+              <div
+                class="feature-item-context"
+                data-value="{{ product.metafields.custom.mounting_structure.value | map: 'label' | join: ', ' }}"
+              >
+                {{ product.metafields.custom.mounting_structure.value | map: 'label' | join: ', ' }}
+              </div>
+            </div>
+            <div class="feature-item">
+              <div class="feature-item-title" data-label="Sound Dampening">Sound Dampening</div>
+              <div
+                class="feature-item-context"
+                data-value="{{ product.metafields.custom.sound_dampening.value | map: 'label' | join: ', ' }}"
+              >
+                {{ product.metafields.custom.sound_dampening.value | map: 'label' | join: ', ' }}
+              </div>
+            </div>
+            <div class="feature-item">
+              <div class="feature-item-title" data-label="Keycaps Profile">Keycaps Profile</div>
+              <div
+                class="feature-item-context"
+                data-value="{{ product.metafields.custom.keycap_profile1.value | map: 'label' | join: ', ' }}"
+              >
+                {{ product.metafields.custom.keycap_profile1.value | map: 'label' | join: ', ' }}
+              </div>
+            </div>
+            <div class="feature-item">
+              <div class="feature-item-title" data-label="Keycap Material">Keycap Material</div>
+              <div
+                class="feature-item-context"
+                data-value="{{ product.metafields.custom.keycap_material.value | map: 'label' | join: ', ' }}"
+              >
+                {{ product.metafields.custom.keycap_material.value | map: 'label' | join: ', ' }}
+              </div>
+            </div>
+            <div class="feature-item">
+              <div
+                class="feature-item-title"
+                data-label="Keycap Manufacturing Process"
+              >
+                Keycap Manufacturing Process
+              </div>
+              <div
+                class="feature-item-context"
+                data-value="{{ product.metafields.custom.keycap_manufacturing_process.value | map: 'label' | join: ', ' }}"
+              >
+                {{ product.metafields.custom.keycap_manufacturing_process.value | map: 'label' | join: ', ' }}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="section section-4">
+          <div class="section-title">SIZE & ERGONOMICS</div>
+          <div class="section-content">
+            <div class="feature-item">
+              <div
+                class="feature-item-title"
+                data-label="Height (Spacebar Side)"
+              >
+                Height (Spacebar Side)
+              </div>
+              <div
+                class="feature-item-context"
+                data-value="{{ product.metafields.custom.height_spacebar_side.value | map: 'label' | join: ', ' }}"
+              >
+                {{ product.metafields.custom.height_spacebar_side.value | map: 'label' | join: ', ' }}
+              </div>
+            </div>
+            <div class="feature-item">
+              <div class="feature-item-title" data-label="Height (ESC Side)">Height (ESC Side)</div>
+              <div
+                class="feature-item-context"
+                data-value="{{ product.metafields.custom.height_esc_side.value | map: 'label' | join: ', ' }}"
+              >
+                {{ product.metafields.custom.height_esc_side.value | map: 'label' | join: ', ' }}
+              </div>
+            </div>
+            <div class="feature-item">
+              <div class="feature-item-title" data-label="Kickstand">Kickstand</div>
+              <div
+                class="feature-item-context"
+                data-value="{{ product.metafields.custom.kickstand.value | map: 'label' | join: ', ' }}"
+              >
+                {{ product.metafields.custom.kickstand.value | map: 'label' | join: ', ' }}
+              </div>
+            </div>
+            <div class="feature-item">
+              <div class="feature-item-title" data-label="Typing Angle">Typing Angle</div>
+              <div
+                class="feature-item-context"
+                data-value="{{ product.metafields.custom.typing_angle.value | map: 'label' | join: ', ' }}"
+              >
+                {{ product.metafields.custom.typing_angle.value | map: 'label' | join: ', ' }}
+              </div>
+            </div>
+            <div class="feature-item">
+              <div
+                class="feature-item-title"
+                data-label="Keyboard Dimensions"
+              >
+                Keyboard Dimensions
+              </div>
+              <div
+                class="feature-item-context"
+                data-value="{{ product.metafields.custom.keyboard_dimensions.value | map: 'label' }}"
+              >
+                {{ product.metafields.custom.keyboard_dimensions.value | map: 'label' }}
+              </div>
+            </div>
+            <div class="feature-item">
+              <div class="feature-item-title" data-label="Keyboard Weight">Keyboard Weight</div>
+              <div
+                class="feature-item-context"
+                data-value="{{ product.metafields.custom.keyboard_weight.value | map: 'label' | join: ', ' }}"
+              >
+                {{ product.metafields.custom.keyboard_weight.value | map: 'label' | join: ', ' }}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="section section-5">
+          <div class="section-title">GAMING FEATURES</div>
+          <div class="section-content">
+            <div class="feature-item">
+              <div
+                class="feature-item-title"
+                data-label="Adjustable Actuation"
+              >
+                Adjustable Actuation
+              </div>
+              <div
+                class="feature-item-context"
+                data-value="{{ product.metafields.custom.adjustable_actuation.value | map: 'label' | join: ', ' }}"
+              >
+                {{ product.metafields.custom.adjustable_actuation.value | map: 'label' | join: ', ' }}
+              </div>
+            </div>
+            <div class="feature-item">
+              <div class="feature-item-title" data-label="Trigger Precision">Trigger Precision</div>
+              <div
+                class="feature-item-context"
+                data-value="{{ product.metafields.custom.trigger_precision.value | map: 'label' | join: ', ' }}"
+              >
+                {{ product.metafields.custom.trigger_precision.value | map: 'label' | join: ', ' }}
+              </div>
+            </div>
+            <div class="feature-item">
+              <div class="feature-item-title" data-label="Rapid Trigger">Rapid Trigger</div>
+              <div
+                class="feature-item-context"
+                data-value="{{ product.metafields.custom.rapid_trigger.value | map: 'label' | join: ', ' }}"
+              >
+                {{ product.metafields.custom.rapid_trigger.value | map: 'label' | join: ', ' }}
+              </div>
+            </div>
+            <div class="feature-item">
+              <div
+                class="feature-item-title"
+                data-label="Per-key Adjustable Actuation"
+              >
+                Per-key Adjustable Actuation
+              </div>
+              <div
+                class="feature-item-context"
+                data-value="{{ product.metafields.custom.per_key_adjustable_actuation.value | map: 'label' | join: ', ' }}"
+              >
+                {{ product.metafields.custom.per_key_adjustable_actuation.value | map: 'label' | join: ', ' }}
+              </div>
+            </div>
+            <div class="feature-item">
+              <div class="feature-item-title" data-label="SOCD / Snap Key">SOCD / Snap Key</div>
+              <div
+                class="feature-item-context"
+                data-value="{{ product.metafields.custom.socd_snap_key.value | map: 'label' | join: ', ' }}"
+              >
+                {{ product.metafields.custom.socd_snap_key.value | map: 'label' | join: ', ' }}
+              </div>
+            </div>
+            <div class="feature-item">
+              <div
+                class="feature-item-title"
+                data-label="Dynamic Keystroke (DKS)"
+              >
+                Dynamic Keystroke (DKS)
+              </div>
+              <div
+                class="feature-item-context"
+                data-value="{{ product.metafields.custom.dynamic_keystroke_dks.value | map: 'label' | join: ', ' }}"
+              >
+                {{ product.metafields.custom.dynamic_keystroke_dks.value | map: 'label' | join: ', ' }}
+              </div>
+            </div>
+            <div class="feature-item">
+              <div class="feature-item-title" data-label="Mod-Tap">Mod-Tap</div>
+              <div
+                class="feature-item-context"
+                data-value="{{ product.metafields.custom.mod_tap.value | map: 'label' | join: ', ' }}"
+              >
+                {{ product.metafields.custom.mod_tap.value | map: 'label' | join: ', ' }}
+              </div>
+            </div>
+            <div class="feature-item">
+              <div class="feature-item-title" data-label="Toggle Key">Toggle Key</div>
+              <div
+                class="feature-item-context"
+                data-value="{{ product.metafields.custom.toggle_key.value | map: 'label' | join: ', ' }}"
+              >
+                {{ product.metafields.custom.toggle_key.value | map: 'label' | join: ', ' }}
+              </div>
+            </div>
+            <div class="feature-item">
+              <div class="feature-item-title" data-label="Dead Zone">Dead Zone</div>
+              <div
+                class="feature-item-context"
+                data-value="{{ product.metafields.custom.dead_zone.value | map: 'label' | join: ', ' }}"
+              >
+                {{ product.metafields.custom.dead_zone.value | map: 'label' | join: ', ' }}
+              </div>
+            </div>
+            <div class="feature-item">
+              <div class="feature-item-title" data-label="Macro Support">Macro Support</div>
+              <div
+                class="feature-item-context"
+                data-value="{{ product.metafields.custom.macro_support.value | map: 'label' | join: ', ' }}"
+              >
+                {{ product.metafields.custom.macro_support.value | map: 'label' | join: ', ' }}
+              </div>
+            </div>
+            <div class="feature-item">
+              <div class="feature-item-title" data-label="Onboard Memory">Onboard Memory</div>
+              <div
+                class="feature-item-context"
+                data-value="{{ product.metafields.custom.onboard_memory.value | map: 'label' | join: ', ' }}"
+              >
+                {{ product.metafields.custom.onboard_memory.value | map: 'label' | join: ', ' }}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    {% elsif product.category == 'Keyboard Keycaps' or product.category == 'Keyboard Switches' %}
+      {% assign product_spec = product.metafields.custom.product_spec.value %}
+      {% if product_spec.system.type == 'keycap_spec' %}
+        <div class="con-spec-table--wrapper">
+          <div class="section section-0">
+            <div class="section-title">Tech Specs</div>
+            <div class="section-content">
+              <div class="product-title" data-label="Product Title" data-value="{{ product.title }}" >
+                {{ product.title }}
+              </div>
+              <div class="product-img" data-product="{{ product.title }}">
+                <img
+                  src="{% if product_spec.keycap_img %}{{ product_spec.keycap_img | image_url }}{% else %}{{ product.featured_image | image_url }}{% endif %}"
+                  alt="{{ product.title }}"
+                  width="400"
+                  height="400"
+                  loading="lazy"
+                >
+              </div>
+            </div>
+          </div>
+          <div class="section section-1">
+            <div class="section-title">BASIC INFO</div>
+            <div class="section-content">
+              <div class="feature-item">
+                <div class="feature-item-title" data-label="Theme">Theme</div>
+                {% if product.metafields.custom.theme.value != blank %}
+                  <div
+                    class="feature-item-context"
+                    data-value="{{ product.metafields.custom.theme.value | map: 'label' | join: ', ' }}"
+                  >
+                    {{ product.metafields.custom.theme.value | map: 'label' | join: ', ' }}
+                  </div>
+                {% elsif product_spec.theme.value != blank %}
+                  <div
+                    class="feature-item-context"
+                    data-value="{{ product_spec.theme.value | map: 'label' | join: ', ' }}"
+                  >
+                    {{ product_spec.theme.value | map: 'label' | join: ', ' }}
+                  </div>
+                {% endif %}
+              </div>
+              <div class="feature-item">
+                <div class="feature-item-title" data-label="Number of Keys">Number of Keys</div>
+                <div
+                  class="feature-item-context"
+                  data-value="{{ product_spec.number_of_keys.value | map: 'label' | join: ', ' }}"
+                >
+                  {{ product_spec.number_of_keys.value | map: 'label' | join: ', ' }}
+                </div>
+              </div>
+              <div class="feature-item">
+                <div class="feature-item-title" data-label="Keycap Profile">Keycap Profile</div>
+                {% if product.metafields.custom.keycap_profile.value != blank %}
+                  <div
+                    class="feature-item-context"
+                    data-value="{{ product.metafields.custom.keycap_profile.value | map: 'label' | join: ', ' }}"
+                  >
+                    {{ product.metafields.custom.keycap_profile.value | map: 'label' | join: ', ' }}
+                  </div>
+                {% elsif product_spec.keycap_profile.value != blank %}
+                  <div
+                    class="feature-item-context"
+                    data-value="{{ product_spec.keycap_profile.value | map: 'label' | join: ', ' }}"
+                  >
+                    {{ product_spec.keycap_profile.value | map: 'label' | join: ', ' }}
+                  </div>
+                {% endif %}
+              </div>
+              <div class="feature-item">
+                <div class="feature-item-title" data-label="Keycap Material">Keycap Material</div>
+                {% if product.metafields.custom.keycap_material.value != blank %}
+                  <div
+                    class="feature-item-context"
+                    data-value="{{ product.metafields.custom.keycap_material.value | map: 'label' | join: ', ' }}"
+                  >
+                    {{ product.metafields.custom.keycap_material.value | map: 'label' | join: ', ' }}
+                  </div>
+                {% elsif product_spec.keycap_material.value != blank %}
+                  <div
+                    class="feature-item-context"
+                    data-value="{{ product_spec.keycap_material.value | map: 'label' | join: ', ' }}"
+                  >
+                    {{ product_spec.keycap_material.value | map: 'label' | join: ', ' }}
+                  </div>
+                {% endif %}
+              </div>
+              <div class="feature-item">
+                <div class="feature-item-title" data-label="Manufacturing Process">Manufacturing Process</div>
+                <div
+                  class="feature-item-context"
+                  data-value="{{ product_spec.manufacturing_proces.value | map: 'label' | join: ', ' }}"
+                >
+                  {{ product_spec.manufacturing_proces.value | map: 'label' | join: ', ' }}
+                </div>
+              </div>
+              <div class="feature-item">
+                <div class="feature-item-title" data-label="Thickness">Thickness</div>
+                <div
+                  class="feature-item-context"
+                  data-value="{{ product_spec.thickness.value }}"
+                >
+                  {{ product_spec.thickness.value }}
+                </div>
+              </div>
+              <div class="feature-item">
+                <div class="feature-item-title" data-label="Stem">Stem</div>
+                <div
+                  class="feature-item-context"
+                  data-value="{{ product_spec.stem.value }}"
+                >
+                  {{ product_spec.stem.value }}
+                </div>
+              </div>
+              <div class="feature-item">
+                <div class="feature-item-title" data-label="Legend Type">
+                  Legend Type / Shine-through / Printed Direction
+                </div>
+                <div
+                  class="feature-item-context"
+                  data-value="{{ product_spec.legend_type.value }}"
+                >
+                  {{ product_spec.legend_type.value }}
+                </div>
+              </div>
+              <div class="feature-item">
+                <div class="feature-item-title" data-label="Switch Compatibility">Switch Compatibility</div>
+                <div
+                  class="feature-item-context"
+                  data-value="{{ product_spec.switch_compatibility.value }}"
+                >
+                  {{ product_spec.switch_compatibility.value }}
+                </div>
+              </div>
+              <div class="feature-item">
+                <div class="feature-item-title" data-label="Layout Compatibility">Layout Compatibility</div>
+                <div
+                  class="feature-item-context"
+                  data-value="{{ product_spec.layout_compatibility.value | map: 'label' | join: ', ' }}"
+                >
+                  {{ product_spec.layout_compatibility.value | map: 'label' | join: ', ' }}
+                </div>
+              </div>
+              <div class="feature-item">
+                <div class="feature-item-title" data-label="Layout Standard">Layout Standard</div>
+                <div
+                  class="feature-item-context"
+                  data-value="{{ product_spec.layout_standard.value | map: 'label' | join: ', ' }}"
+                >
+                  {{ product_spec.layout_standard.value | map: 'label' | join: ', ' }}
+                </div>
+              </div>
+              <div class="feature-item">
+                <div class="feature-item-title" data-label="Compatible LED">Compatible LED</div>
+                <div
+                  class="feature-item-context"
+                  data-value="{{ product_spec.compatible_led.value }}"
+                >
+                  {{ product_spec.compatible_led.value }}
+                </div>
+              </div>
+              <div class="feature-item">
+                <div class="feature-item-title" data-label="Keycap Colors">Keycap Colors</div>
+                <div
+                  class="feature-item-context"
+                  data-value="{{ product_spec.keycap_colors.value }}"
+                >
+                  {{ product_spec.keycap_colors.value }}
+                </div>
+              </div>
+              <div class="feature-item">
+                <div class="feature-item-title" data-label="Package Size">Package Size</div>
+                <div
+                  class="feature-item-context"
+                  data-value="{{ product_spec.package_size.value }}"
+                >
+                  {{ product_spec.package_size.value }}
+                </div>
+              </div>
+              <div class="feature-item">
+                <div class="feature-item-title" data-label="Product Weight">Product Weight</div>
+                <div
+                  class="feature-item-context"
+                  data-value="{{ product_spec.product_weight.value }}"
+                >
+                  {{ product_spec.product_weight.value }}
+                </div>
+              </div>
+              <div class="feature-item">
+                <div class="feature-item-title" data-label="Note">Note</div>
+                <div
+                  class="feature-item-context"
+                  data-value="{{ product_spec.note.value }}"
+                >
+                  {{ product_spec.note.value }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      {% elsif product_spec.system.type == 'magnetic_switch' %}
+        <div class="con-spec-table--wrapper">
+          <div class="section section-0">
+            <div class="section-title">Tech Specs</div>
+            <div class="section-content">
+              <div
+                class="product-title"
+                data-label="Product Title"
+                data-value="{{ product.title }}"
+              >
+                {{ product.title }}
+              </div>
+              <div class="product-img" data-product="{{ product.title }}">
+                <img
+                  src="{% if product_spec.switch_img %}{{ product_spec.switch_img | image_url }}{% else %}{{ product.featured_image | image_url }}{% endif %}"
+                  alt="{{ product.title }}"
+                  width="400"
+                  height="400"
+                  loading="lazy"
+                >
+              </div>
+            </div>
+          </div>
+          <div class="section section-1">
+            <div class="section-title">BASIC INFO</div>
+            <div class="section-content">
+              <div class="feature-item">
+                <div class="feature-item-title" data-label="Brand">Brand</div>
+                {% if product.metafields.custom.switch_brand.value != blank %}
+                  <div
+                    class="feature-item-context"
+                    data-value="{{ product.metafields.custom.switch_brand.value | map: 'label' }}"
+                  >
+                    {{ product.metafields.custom.switch_brand.value | map: 'label' }}
+                  </div>
+                {% elsif product_spec.brand_1.value != blank %}
+                  <div
+                    class="feature-item-context"
+                    data-value="{{ product_spec.brand_1.value | map: 'label' }}"
+                  >
+                    {{ product_spec.brand_1.value | map: 'label' }}
+                  </div>
+                {% endif %}
+              </div>
+              <div class="feature-item">
+                <div class="feature-item-title" data-label="Switch Type">Switch Type</div>
+                {% if product.metafields.custom.switch_type.value != blank %}
+                  <div
+                    class="feature-item-context"
+                    data-value="{{ product.metafields.custom.switch_type.value | map: 'label' | join: ', ' }}"
+                  >
+                    {{ product.metafields.custom.switch_type.value | map: 'label' | join: ', ' }}
+                  </div>
+                {% elsif product_spec.switch_type.value != blank %}
+                  <div
+                    class="feature-item-context"
+                    data-value="{{ product_spec.switch_type.value | map: 'label' | join: ', ' }}"
+                  >
+                    {{ product_spec.switch_type.value | map: 'label' | join: ', ' }}
+                  </div>
+                {% endif %}
+              </div>
+              <div class="feature-item">
+                <div class="feature-item-title" data-label="Switch Feel">Switch Feel</div>
+                {% if product.metafields.custom.switch_feel.value != blank %}
+                  <div
+                    class="feature-item-context"
+                    data-value="{{ product.metafields.custom.switch_feel.value | map: 'label' | join: ', ' }}"
+                  >
+                    {{ product.metafields.custom.switch_feel.value | map: 'label' | join: ', ' }}
+                  </div>
+                {% elsif product_spec.switch_feel.value != blank %}
+                  <div
+                    class="feature-item-context"
+                    data-value="{{ product_spec.switch_feel.value | map: 'label' | join: ', ' }}"
+                  >
+                    {{ product_spec.switch_feel.value | map: 'label' | join: ', ' }}
+                  </div>
+                {% endif %}
+              </div>
+              <div class="feature-item">
+                <div class="feature-item-title" data-label="Operating Force">Operating Force</div>
+                <div
+                  class="feature-item-context"
+                  data-value="{{ product_spec.operating_force.value }}"
+                >
+                  {{ product_spec.operating_force.value }}
+                </div>
+              </div>
+              <div class="feature-item">
+                <div class="feature-item-title" data-label="Bottom-out Force">Bottom-out Force</div>
+                <div
+                  class="feature-item-context"
+                  data-value="{{ product_spec.bottom_out_force.value }}"
+                >
+                  {{ product_spec.bottom_out_force.value }}
+                </div>
+              </div>
+              <div class="feature-item">
+                <div class="feature-item-title" data-label="Total Travel">Total Travel</div>
+                <div
+                  class="feature-item-context"
+                  data-value="{{ product_spec.total_travel.value }}"
+                >
+                  {{ product_spec.total_travel.value }}
+                </div>
+              </div>
+              <div class="feature-item">
+                <div class="feature-item-title" data-label="Sound Level">Sound Level</div>
+                <div
+                  class="feature-item-context"
+                  data-value="{{ product_spec.sound_level.value }}"
+                >
+                  {{ product_spec.sound_level.value }}
+                </div>
+              </div>
+              <div class="feature-item">
+                <div class="feature-item-title" data-label="Factory Lubed">Factory Lubed</div>
+                <div
+                  class="feature-item-context"
+                  data-value="{{ product_spec.factory_lubed.value }}"
+                >
+                  {{ product_spec.factory_lubed.value }}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="section section-2">
+            <div class="section-title">MATERIALS & STRUCTURE</div>
+            <div class="section-content">
+              <div class="feature-item">
+                <div class="feature-item-title" data-label="Stem Material">Stem Material</div>
+                <div class="feature-item-context" data-value="{{ product_spec.stem_material.value }}">
+                  {{ product_spec.stem_material.value }}
+                </div>
+              </div>
+              <div class="feature-item">
+                <div class="feature-item-title" data-label="Top Housing Material">Top Housing Material</div>
+                <div
+                  class="feature-item-context"
+                  data-value="{{ product_spec.top_housing_material.value }}"
+                >
+                  {{ product_spec.top_housing_material.value }}
+                </div>
+              </div>
+              <div class="feature-item">
+                <div class="feature-item-title" data-label="Bottom Housing Material">Bottom Housing Material</div>
+                <div
+                  class="feature-item-context"
+                  data-value="{{ product_spec.bottom_housing_material.value }}"
+                >
+                  {{ product_spec.bottom_housing_material.value }}
+                </div>
+              </div>
+              <div class="feature-item">
+                <div class="feature-item-title" data-label="Spring">Spring</div>
+                <div
+                  class="feature-item-context"
+                  data-value="{{ product_spec.spring.value }}"
+                >
+                  {{ product_spec.spring.value }}
+                </div>
+              </div>
+              <div class="feature-item">
+                <div class="feature-item-title" data-label="Light Support">Light Support</div>
+                <div
+                  class="feature-item-context"
+                  data-value="{{ product_spec.light_support.value }}"
+                >
+                  {{ product_spec.light_support.value }}
+                </div>
+              </div>
+              <div class="feature-item">
+                <div class="feature-item-title" data-label="Operation Life">Operation Life</div>
+                <div
+                  class="feature-item-context"
+                  data-value="{{ product_spec.operation_life.value }}"
+                >
+                  {{ product_spec.operation_life.value }}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="section section-3">
+            <div class="section-title">MAGNETIC PERFORMANCE</div>
+            <div class="section-content">
+              <div class="feature-item">
+                <div class="feature-item-title" data-label="Initial Magnetic Flux">Initial Magnetic Flux</div>
+                <div class="feature-item-context" data-value="{{ product_spec.initial_magnetic_flux_1.value }}">
+                  {{ product_spec.initial_magnetic_flux_1.value | join: ', ' }}
+                </div>
+              </div>
+              <div class="feature-item">
+                <div class="feature-item-title" data-label="Bottom-out Magnetic Flux">Bottom-out Magnetic Flux</div>
+                <div
+                  class="feature-item-context"
+                  data-value="{{ product_spec.bottom_out_magnetic_flux_1.value }}"
+                >
+                  {{ product_spec.bottom_out_magnetic_flux_1.value | join: ', ' }}
+                </div>
+              </div>
+              <div class="feature-item">
+                <div class="feature-item-title" data-label="Adjustable Actuation/Pre-Travel">Adjustable Actuation/Pre-Travel</div>
+                <div
+                  class="feature-item-context"
+                  data-value="{{ product_spec.adjustable_actuation_pre_travel.value }}"
+                >
+                  {{ product_spec.adjustable_actuation_pre_travel.value }}
+                </div>
+              </div>
+              <div class="feature-item">
+                <div class="feature-item-title" data-label="Precision Sensitivity">Precision Sensitivity</div>
+                <div
+                  class="feature-item-context"
+                  data-value="{{ product_spec.precision_sensitivity.value }}"
+                >
+                  {{ product_spec.precision_sensitivity.value }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      {% elsif product_spec.system.type == 'mechanical_switch' %}
+        <div class="con-spec-table--wrapper">
+          <div class="section section-0">
+            <div class="section-title">Tech Specs</div>
+            <div class="section-content">
+              <div
+                class="product-title"
+                data-label="Product Title"
+                data-value="{{ product.title }}"
+              >
+                {{ product.title }}
+              </div>
+              <div class="product-img" data-product="{{ product.title }}">
+                <img
+                  src="{% if product_spec.switch_img %}{{ product_spec.switch_img | image_url }}{% else %}{{ product.featured_image | image_url }}{% endif %}"
+                  alt="{{ product.title }}"
+                  width="400"
+                  height="400"
+                  loading="lazy"
+                >
+              </div>
+            </div>
+          </div>
+          <div class="section section-1">
+            <div class="section-title">BASIC INFO</div>
+            <div class="section-content">
+              <div class="feature-item">
+                <div class="feature-item-title" data-label="Brand">Brand</div>
+                {% if product.metafields.custom.switch_brand.value != blank %}
+                  <div
+                    class="feature-item-context"
+                    data-value="{{ product.metafields.custom.switch_brand.value | map: 'label' }}"
+                  >
+                    {{ product.metafields.custom.switch_brand.value | map: 'label' }}
+                  </div>
+                {% elsif product_spec.brand.value != blank %}
+                  <div
+                    class="feature-item-context"
+                    data-value="{{ product_spec.brand.value | map: 'label' }}"
+                  >
+                    {{ product_spec.brand.value | map: 'label' }}
+                  </div>
+                {% endif %}
+              </div>
+              <div class="feature-item">
+                <div class="feature-item-title" data-label="Switch Type">Switch Type</div>
+                {% if product.metafields.custom.switch_type.value != blank %}
+                  <div
+                    class="feature-item-context"
+                    data-value="{{ product.metafields.custom.switch_type.value | map: 'label' | join: ', ' }}"
+                  >
+                    {{ product.metafields.custom.switch_type.value | map: 'label' | join: ', ' }}
+                  </div>
+                {% elsif product_spec.switch_type.value != blank %}
+                  <div
+                    class="feature-item-context"
+                    data-value="{{ product_spec.switch_type.value | map: 'label' | join: ', ' }}"
+                  >
+                    {{ product_spec.switch_type.value | map: 'label' | join: ', ' }}
+                  </div>
+                {% endif %}
+              </div>
+              <div class="feature-item">
+                <div class="feature-item-title" data-label="Switch Feel">Switch Feel</div>
+                {% if product.metafields.custom.switch_feel.value != blank %}
+                  <div
+                    class="feature-item-context"
+                    data-value="{{ product.metafields.custom.switch_feel.value | map: 'label' | join: ', ' }}"
+                  >
+                    {{ product.metafields.custom.switch_feel.value | map: 'label' | join: ', ' }}
+                  </div>
+                {% elsif product_spec.switch_feel.value != blank %}
+                  <div
+                    class="feature-item-context"
+                    data-value="{{ product_spec.switch_feel.value | map: 'label' | join: ', ' }}"
+                  >
+                    {{ product_spec.switch_feel.value | map: 'label' | join: ', ' }}
+                  </div>
+                {% endif %}
+              </div>
+              <div class="feature-item">
+                <div class="feature-item-title" data-label="Operating Force">Operating Force</div>
+                <div
+                  class="feature-item-context"
+                  data-value="{{ product_spec.operating_force.value }}"
+                >
+                  {{ product_spec.operating_force.value }}
+                </div>
+              </div>
+              <div class="feature-item">
+                <div class="feature-item-title" data-label="Bottom-out Force">Bottom-out Force</div>
+                <div
+                  class="feature-item-context"
+                  data-value="{{ product_spec.bottom_out_force.value }}"
+                >
+                  {{ product_spec.bottom_out_force.value }}
+                </div>
+              </div>
+              <div class="feature-item">
+                <div class="feature-item-title" data-label="Pre-Travel">Pre-Travel</div>
+                <div
+                  class="feature-item-context"
+                  data-value="{{ product_spec.pre_travel.value }}"
+                >
+                  {{ product_spec.pre_travel.value }}
+                </div>
+              </div>
+              <div class="feature-item">
+                <div class="feature-item-title" data-label="Total Travel">Total Travel</div>
+                <div
+                  class="feature-item-context"
+                  data-value="{{ product_spec.total_travel.value }}"
+                >
+                  {{ product_spec.total_travel.value }}
+                </div>
+              </div>
+              <div class="feature-item">
+                <div class="feature-item-title" data-label="Sound Level">Sound Level</div>
+                <div
+                  class="feature-item-context"
+                  data-value="{{ product_spec.sound_level.value }}"
+                >
+                  {{ product_spec.sound_level.value }}
+                </div>
+              </div>
+              <div class="feature-item">
+                <div class="feature-item-title" data-label="Factory Lubed">Factory Lubed</div>
+                <div
+                  class="feature-item-context"
+                  data-value="{{ product_spec.factory_lubed.value }}"
+                >
+                  {{ product_spec.factory_lubed.value }}
+                </div>
+              </div>
+              <div class="feature-item">
+                <div class="feature-item-title" data-label="Pins">Pins</div>
+                <div
+                  class="feature-item-context"
+                  data-value="{{ product_spec.pins.value }}"
+                >
+                  {{ product_spec.pins.value }}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="section section-2">
+            <div class="section-title">MATERIALS & STRUCTURE</div>
+            <div class="section-content">
+              <div class="feature-item">
+                <div class="feature-item-title" data-label="Stem Material">Stem Material</div>
+                <div class="feature-item-context" data-value="{{ product_spec.stem_material.value }}">
+                  {{ product_spec.stem_material.value }}
+                </div>
+              </div>
+              <div class="feature-item">
+                <div class="feature-item-title" data-label="Top Housing Material">Top Housing Material</div>
+                <div
+                  class="feature-item-context"
+                  data-value="{{ product_spec.top_housing_material.value }}"
+                >
+                  {{ product_spec.top_housing_material.value }}
+                </div>
+              </div>
+              <div class="feature-item">
+                <div class="feature-item-title" data-label="Bottom Housing Material">Bottom Housing Material</div>
+                <div
+                  class="feature-item-context"
+                  data-value="{{ product_spec.bottom_housing_material.value }}"
+                >
+                  {{ product_spec.bottom_housing_material.value }}
+                </div>
+              </div>
+              <div class="feature-item">
+                <div class="feature-item-title" data-label="Spring">Spring</div>
+                <div
+                  class="feature-item-context"
+                  data-value="{{ product_spec.spring.value }}"
+                >
+                  {{ product_spec.spring.value }}
+                </div>
+              </div>
+              <div class="feature-item">
+                <div class="feature-item-title" data-label="Light Support">Light Support</div>
+                <div
+                  class="feature-item-context"
+                  data-value="{{ product_spec.light_support.value }}"
+                >
+                  {{ product_spec.light_support.value }}
+                </div>
+              </div>
+              <div class="feature-item">
+                <div class="feature-item-title" data-label="Operation Life">Operation Life</div>
+                <div
+                  class="feature-item-context"
+                  data-value="{{ product_spec.operation_life.value }}"
+                >
+                  {{ product_spec.operation_life.value }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      {% endif %}
+    {% endif %}
+  </div>
+</div>

@@ -1,0 +1,64 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "16596393690a7dbb82": {
+      "type": "video-list",
+      "blocks": {
+        "78c1667e-d1d9-46f6-94db-235ebc5db859": {
+          "type": "video",
+          "settings": {
+            "video_url": "https://www.youtube.com/watch?v=qjkPCS-AEik",
+            "image": "shopify://shop_images/P25.jpg"
+          }
+        },
+        "df58ec68-c878-4a61-b3fe-629e17cae5ba": {
+          "type": "video",
+          "settings": {
+            "video_url": "https://www.youtube.com/watch?v=tl2HipDFdHU",
+            "image": "shopify://shop_images/P15.jpg"
+          }
+        },
+        "f04b1c66-71f5-4a21-b2e1-f07c0368eb97": {
+          "type": "video",
+          "settings": {
+            "video_url": "https://www.youtube.com/watch?v=0G8FhdM7HrE",
+            "image": "shopify://shop_images/faa8f7fd5fb3e0218d4f3348d374cf8a.jpg"
+          }
+        },
+        "9ccdfabc-6cd9-4b99-a166-1c3ff4847b20": {
+          "type": "video",
+          "settings": {
+            "video_url": "https://www.youtube.com/watch?v=FROFFkxyP9A",
+            "image": "shopify://shop_images/78cfca028b30692e4fdf26de2996e6bc.jpg"
+          }
+        }
+      },
+      "block_order": [
+        "78c1667e-d1d9-46f6-94db-235ebc5db859",
+        "df58ec68-c878-4a61-b3fe-629e17cae5ba",
+        "f04b1c66-71f5-4a21-b2e1-f07c0368eb97",
+        "9ccdfabc-6cd9-4b99-a166-1c3ff4847b20"
+      ],
+      "settings": {
+        "title": "Product User Guides",
+        "subheading": "Get detailed video instructions, technical specifications on BULLTTI product."
+      }
+    },
+    "main": {
+      "type": "main-page",
+      "settings": {}
+    }
+  },
+  "order": [
+    "16596393690a7dbb82",
+    "main"
+  ]
+}

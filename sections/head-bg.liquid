@@ -1,0 +1,51 @@
+<div data-section-id="{{ section.id }}">
+  <div class="tm-content">
+    <picture class="e-display-block">
+      <source srcset="{{ section.settings.src | img_url: '600x' }}" media="(max-width: 599px) and (orientation: portrait), (max-width: 899px) and (orientation: landscape)">
+      <source srcset="{{ section.settings.src | img_url: '600x' }}" media="(min-width: 600px) and (orientation:portrait)">
+      <source srcset="{{ section.settings.src | img_url: '1920x' }}" media="(min-width: 900px) and (orientation: landscape)">
+      <img class="tm-image" src="{{ section.settings.src | img_url: '2560x' }}">
+    </picture>
+    <div class="e-position-center">
+        {%- style -%}
+                .e-position-center {
+                  font-size: {{ section.settings.title_size }}px;
+                }
+        {%- endstyle -%}
+       {{ section.settings.title }}
+    </div>
+  </div>
+</div>
+{% schema %}
+{
+  "name": "head-bg",
+  "class": "section section-1",
+  "settings": [
+    {
+      "type": "richtext",
+      "id": "title",
+      "label": "Head",
+       "default": "<p>Add Title.</p>"
+    },
+     {
+          "type": "range",
+          "id": "title_size",
+          "label": "Title size",
+          "default": 40,
+          "min": 40,
+          "max": 100,
+          "unit": "px"
+        },
+    {
+      "type": "image_picker",
+      "id": "src",
+      "label": "Backround image"
+    }
+  ],
+  "presets": [
+    {
+      "name": "head-bg"
+    }
+  ]
+}
+{% endschema %}

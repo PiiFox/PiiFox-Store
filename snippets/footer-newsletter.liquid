@@ -1,0 +1,77 @@
+
+<div class="footer__item-padding">
+  {% if block.settings.show_footer_newsletter_subscribe !=blank %}
+    <div class="newsletter-subscribe-container" style="margin-bottom: 1em;">
+      <h4>{{ block.settings.footer_newsletter_subscribe_title }}</h4>
+      <p style="margin: 0;color: #b8b8b8;">{{ block.settings.footer_newsletter_subscribe_text }}</p>
+      <a style="text-decoration: underline;" href="{{ block.settings.footer_newsletter_subscribe_url }}">{{ block.settings.footer_newsletter_subscribe_btn }}</a>
+    </div>
+  {% endif %}
+  {% if block.settings.foot_logo !=blank %} 
+    <img src="{{ block.settings.foot_logo | image_url }}" 
+      alt="{{ shop.name }}" 
+      width="{{ block.settings.foot_logo.width }}" 
+      height="{{ block.settings.foot_logo.height }}" />
+  {% endif %}
+  {%- if block.settings.show_footer_title -%}
+    <p class="h4 footer__title small--hide">{{ block.settings.title }}</p>
+    <button type="button" class="h4 footer__title collapsible-trigger collapsible-trigger-btn medium-up--hide" aria-controls="Footer-{{ block.id }}">
+      {{ block.settings.title }}
+      {%- render 'collapsible-icons' -%}
+    </button>
+  {%- endif -%}
+  <div
+    {% if block.settings.show_footer_title %}
+      id="Footer-{{ block.id }}" class="collapsible-content collapsible-content--small"
+    {% endif %}>
+    <div class="collapsible-content__inner">
+      <div class="footer__collapsible{% unless block.settings.show_footer_title %} footer_collapsible--disabled{% endunless %}">
+        {%- if block.settings.text -%}
+          {{ block.settings.text }}
+        {%- endif -%}
+  {%- if block.settings.show_newsletter -%}
+      
+        {%- form 'customer', id: 'newsletter-foot-newsletter' -%}
+          {%- if form.posted_successfully? -%}
+            <div class="note note--success">{{ 'general.newsletter_form.newsletter_confirmation' | t }}</div>
+          {%- endif -%}
+          {%- if form.context == 'footer' -%}
+            {%- if form.errors -%}
+              {{ form.errors | default_errors }}
+            {%- endif -%}
+          {%- endif -%}
+
+          <label for="Email-{{ block.id }}" class="hidden-label">{{ 'general.newsletter_form.newsletter_email' | t }}</label>
+          <input type="hidden" name="contact[tags]" value="prospect,newsletter">
+          <input type="hidden" name="contact[context]" value="footer">
+          <div class="footer__newsletter">
+            <input type="email" value="{% if customer %}{{ customer.email }}{% endif %}" 
+              placeholder="{{ 'general.newsletter_form.newsletter_email' | t }}" 
+              name="contact[email]" 
+              id="Email-{{ block.id }}" 
+              class="footer__newsletter-input" 
+              autocorrect="off" 
+              autocapitalize="off">
+            <button type="submit"
+              class="footer__newsletter-btn g-recaptcha" 
+              name="commit" 
+              aria-label="{{ 'general.newsletter_form.submit' | t }}"
+            >
+              <svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-email" viewBox="0 0 64 64"><path d="M63 52H1V12h62zM1 12l25.68 24h9.72L63 12M21.82 31.68L1.56 51.16m60.78.78L41.27 31.68"/></svg>
+              <span class="footer__newsletter-btn-label">
+                {{ 'general.newsletter_form.submit' | t }}
+              </span>
+            </button>
+          </div>
+        {%- endform -%}
+      
+      {% comment %}
+       <div class="klaviyo-form-TUSnz7"></div>
+      {% endcomment %}
+ {%- endif -%}
+        {% render 'social-icons', additional_classes: 'footer__social' %}
+
+      </div>
+    </div>
+  </div>
+</div>

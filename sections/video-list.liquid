@@ -1,0 +1,88 @@
+<div
+  data-section-id="{{ section.id }}"
+  data-section-type="video-section"
+  class=""
+  data-mobile-natural="false"
+  data-aos="hero__animation">
+  <div class="index-section video_lists">
+    <div class="page-width">
+       {%- if section.settings.title != blank -%}
+    <div class="section-header">
+      <h2 class="section-header__title">{{ section.settings.title | escape }}</h2>
+      <p class="section-header__subtitle">{{ section.settings.subheading | escape }}</p>
+    </div>
+  {%- endif -%}
+        <div class="video_lists-media">
+          {%- for block in section.blocks -%}
+            {%- assign link_href = block.settings.link -%}
+              {%- if block.settings.link == blank -%}
+                {%- assign link_href = block.settings.video_url -%}
+              {%- endif -%}
+          <div class="vider_card">
+            <div class="vider_box">
+           {%- if block.settings.image != blank -%}
+            {%- assign img_url = block.settings.image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+            <img class="logo-bar__image lazyload"
+                data-src="{{ img_url }}"
+                data-widths="[180, 360, 540, 720]"
+                data-aspectratio="{{ block.settings.image.aspect_ratio }}"
+                data-sizes="auto"
+                alt="{{ block.settings.image.alt }}">
+         
+          {%- endif -%}
+             <a href="{{ link_href }}" class="open_video {% if block.settings.color_accent and block.settings.color_accent == 'rgba(0,0,0,0)' %} btn--inverse{% endif %}">
+                      {%- if link_href contains 'youtube.com/watch' or link_href contains 'youtu.be/' -%}
+                        <i class="play_icon"></i>
+                      {%- endif -%}
+            </a>
+          </div></div>
+            {%- endfor -%}
+        </div>
+    </div>
+  </div>
+</div>
+{% schema %}
+{
+  "name": "video list",
+  "class": "index-section--videoList",
+  "settings": [
+    {
+      "type": "textarea",
+      "id": "title",
+      "label": "t:sections.hero-video.settings.title.label",
+      "default": "Bring your\nbrand to life."
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "t:sections.hero-video.settings.subheading.label",
+      "default": "Seamless hero videos"
+    } 
+  ],
+   "blocks": [
+    {
+      "type": "video",
+      "name": "video-item",
+      "settings": [
+       
+        {
+      "type": "text",
+      "id": "video_url",
+      "label": "t:sections.hero-video.settings.video_url.label",
+      "default": "https://www.youtube.com/watch?v=_9VUPq3SxOc"
+    },
+         {
+          "type": "image_picker",
+          "id": "image",
+          "label": "image"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "video list"
+    }
+  ]
+}
+{% endschema %}

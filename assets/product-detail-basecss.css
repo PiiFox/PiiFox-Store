@@ -1,0 +1,120 @@
+@layer base {
+  root {
+    font-size: 16px;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+  * {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+  }
+  .product-detail-block {
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+  .con {
+    padding: 4em 0;
+  }
+  .con .container {
+    max-width: unset;
+  }
+  .con .page-width {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 1em;
+  }
+  .con .con--wrapper {
+    text-align: center;
+  }
+  .con .con-title {
+    font-size: 4em;
+    font-weight: bold;
+    line-height: 1.2;
+    max-width: 100%;
+    text-transform: uppercase;
+  }
+  .con .con-sub-title {
+    font-size: 1.5em;
+    font-weight: 600;
+    line-height: 2;
+    max-width: 100%;
+  }
+  .con .con-context {
+    font-size: 1.125em;
+    line-height: 1.6;
+    max-width: 100%;
+    margin-bottom: 2em;
+    overflow: hidden;
+  }
+  .con img {
+    width: 100%;
+    border-radius: 12px;
+  }
+  @media screen and (max-width: 1024px) {
+    .product-detail-block {
+      font-size: 0.8em;
+    }
+  }
+  @media screen and (max-width: 768px) {
+    .product-detail-block {
+      font-size: 0.5em;
+    }
+  }
+}
+@layer con14 {
+  .con.con14 .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .con.con14 .img-list img {
+    display: none;
+    transition: all 0.3s ease;
+  }
+  .con.con14 .img-list img.active {
+    display: block;
+  }
+  .con.con14 .tab-list {
+    display: inline-grid;
+    place-items: center;
+    margin: 2em auto;
+    grid-template-columns: repeat(4, 1fr);
+    padding: 0.5em 0;
+    font-size: 1.1em;
+    color: rgb(110, 110, 115);
+    border-bottom: 1px solid currentColor;
+    position: relative;
+  }
+  .con.con14 .tab-list .tab-item {
+    text-align: center;
+    padding: 0em 2em;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  .con.con14 .tab-list .tab-item.active {
+    color: #000;
+  }
+  .con.con14 .tab-list::before {
+    content: "";
+    position: absolute;
+    left: var(--tab-left, 0);
+    top: calc(100% + 0.5px);
+    width: 25%;
+    height: 2px;
+    background-color: #000;
+    z-index: 1;
+    transition: all 0.3s ease;
+  }
+  .con.con14 .context-list .con-context {
+    display: none;
+    transition: all 0.3s ease;
+  }
+  .con.con14 .context-list .con-context.active {
+    display: block;
+  }
+  @media screen and (max-width: 768px) {
+    .con.con14 .tab-list .tab-item {
+      padding: 0 0.5em;
+    }
+  }
+}

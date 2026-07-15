@@ -1,0 +1,77 @@
+{% comment %}
+- collection: Liquid 'collection' or 'search' object
+- enable_sidebar: boolean
+- filter_style: 'sidebar' or 'drawer'
+- enable_color_swatches: boolean
+- collapsed: boolean
+{% endcomment %}
+{% style %}
+  #FilterDrawer button.collapsible-trigger {
+    padding: 0.5rem 0;
+  }
+  button.collapsible-trigger span.collapsible-trigger__icon {
+    pointer-events: none;
+    transition: opacity .3s cubic-bezier(.25,.46,.45,.94),height .3s cubic-bezier(.25,.46,.45,.94);
+  }
+  .collection-sidebar__group .collapsible-content--sidebar {
+    transition: opacity .3s cubic-bezier(.25,.46,.45,.94),height .3s cubic-bezier(.25,.46,.45,.94);
+  }
+  .drawer__scrollable.appear-animation.appear-delay-2>button.clear-tags-btn {
+    display: inline-flex;
+    color: #959090;
+    text-decoration: underline;
+    text-decoration-color: currentcolor;
+    text-underline-offset: 2px;
+    display: none;
+    text-align: left;
+  }
+  .drawer__scrollable.appear-animation.appear-delay-2>button.clear-tags-btn:active {
+    color: var(--colorThemePrimary);
+  }
+  .drawer.drawer--bottom {
+    width: 100%;
+    max-width: 100%;
+    top: 100%;
+    height: 0%;
+    transition: all .3s cubic-bezier(.25,.46,.45,.94);
+  } 
+  .drawer.drawer--bottom.drawer--is-open {
+    display: block;
+    top: 30%;
+    left: 0;
+    height: 70%;
+  }
+{% endstyle %} 
+{%- assign animation_row = 1 -%}
+{%- if enable_sidebar -%}
+<div id="CollectionSidebar" data-style="{{ filter_style }}" >
+    {%- if filter_style == 'sidebar' -%}
+    <div class="collection-sidebar small--hide" >
+      {%- render 'collection-grid-filters-form', location: 'CollectionSidebar', collection: collection, filters: collection.filters, collapsed: collapsed, enable_color_swatches: enable_color_swatches -%}
+    </div>
+    {%- endif -%}  
+
+    <div id="FilterDrawer" class="drawer drawer--bottom">
+      <div class="drawer__contents">
+        <div class="drawer__fixed-header">
+          <div class="drawer__header appear-animation appear-delay-{{ animation_row }}">
+            <div class="h2 drawer__title">
+              {{ 'collections.filters.title_tags' | t }}
+            </div>
+            <div class="drawer__close">
+              <button type="button" class="drawer__close-button js-drawer-close">
+                <svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-close" viewBox="0 0 64 64"><path d="M19 17.61l27.12 27.13m0-27.12L19 44.74"/></svg>
+                <span class="icon__fallback-text">{{ 'general.drawers.close_menu' | t }}</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {%- assign animation_row = animation_row | plus: 1 -%}
+        <div class="drawer__scrollable appear-animation appear-delay-{{ animation_row }}">
+          {%- render 'collection-grid-filters-form', location: 'SidebarDrawer', filters: collection.filters, collapsed: collapsed, enable_color_swatches: enable_color_swatches -%}
+        </div>
+      </div>
+    </div>
+</div>
+{%- endif -%}

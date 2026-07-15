@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="180" height="80" viewBox="0 0 180 80" aria-hidden="true">
+  <!-- 拖影箭头（阴影） -->
+  <g id="arrow-shadow" fill="none" stroke="#427347" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" opacity="0">
+    <path d="M45 40H105" />
+    <path d="M85 20L105 40L85 60" />
+    <animateTransform attributeName="transform" attributeType="XML" type="translate" dur="1.4s" repeatCount="indefinite" values="-18 0;0 0;22 0" keyTimes="0;0.45;1" calcMode="spline" keySplines="0.42 0 0.58 1;0.42 0 0.58 1" />
+    <animate attributeName="opacity" dur="1.4s" repeatCount="indefinite" values="0;0.25;0" keyTimes="0;0.45;1" calcMode="spline" keySplines="0.42 0 0.58 1;0.42 0 0.58 1" />
+  </g>
+
+  <!-- 主箭头 -->
+  <g id="arrow" fill="none" stroke="#427347" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" opacity="0.35">
+    <path d="M45 40H105" />
+    <path d="M85 20L105 40L85 60" />
+    <animateTransform attributeName="transform" attributeType="XML" type="translate" dur="1.4s" repeatCount="indefinite" values="0 0;22 0;42 0" keyTimes="0;0.45;1" calcMode="spline" keySplines="0.42 0 0.58 1;0.42 0 0.58 1" />
+    <animate attributeName="opacity" dur="1.4s" repeatCount="indefinite" values="0.35;1;0" keyTimes="0;0.45;1" calcMode="spline" keySplines="0.42 0 0.58 1;0.42 0 0.58 1" />
+  </g>
+</svg>

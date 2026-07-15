@@ -1,0 +1,38 @@
+<div class="product-preorder-coupon-container">
+  <div class="product-preorder-coupon--wrapper">
+    <div class="product-preorder-coupon-label"> {{ block.coupon_label }} </div>
+    <div class="product-preorder-coupon-btn"> {{ block.coupon_btn }} </div>
+  </div>
+</div>
+{% style %}
+.product-preorder-coupon-container {
+    color: #fff;
+    display: inline-block;
+    box-sizing: border-box;
+    padding: 1em 0;
+}
+.product-preorder-coupon-container .product-preorder-coupon--wrapper {
+    background: url('https://cdn.shopify.com/s/files/1/0766/2000/5675/files/coupon_10a4aaa0-b664-49a7-972e-018554fe1a8c.png?v=1763373942') left top/ 100% 100% no-repeat;
+    aspect-ratio: 423/94;
+    box-sizing: border-box;
+    padding: 0.5em 2em;
+    display: grid;
+    grid-template-columns: 7fr 4fr;
+    grid-gap: 2em;
+}
+.product-preorder-coupon--wrapper .product-preorder-coupon-label {
+    font-size: 1em;
+    text-align: center;
+}
+.product-preorder-coupon--wrapper .product-preorder-coupon-label b {
+    font-size: 2em;
+    font-weight: 800;
+}
+.product-preorder-coupon--wrapper .product-preorder-coupon-btn {
+    font-size: 1.3em;
+    font-weight: 600;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+{% endstyle %}

@@ -1,0 +1,65 @@
+{%- if section.settings.divider -%}
+
+<div class="page-width">
+  <div class="support-iconlink-box container">
+    <div class="row">
+      {% for block in section.blocks  %}
+        {%- if block.type == 'image' -%}
+          <a class="col-sm-20 col-4" href="{{ block.settings.link }}">
+            <img src="{{ block.settings.icon | img_url: 'master' }}" alt="{{ block.settings.icon.alt }}" class="conicon">
+            <p class="">{{ block.settings.text }}</p>
+          </a>
+        {% endif %}
+      {% endfor %}  
+    </div>
+  </div>
+</div>
+
+<style>
+.support-iconlink-box{padding-top: 10rem;}
+.support-iconlink-box .row{display:flex;width:100%;margin-right:0;margin-left:0;flex-wrap: wrap;}
+.support-iconlink-box .col-sm-20{max-width:20%;text-align:center;-ms-flex: 0 0 20%;flex: 0 0 20%;}
+.support-iconlink-box .conicon{width:64px;}
+@media screen and (max-width: 750px) {
+.support-iconlink-box{padding-top:5rem;}
+.support-iconlink-box .col-4{max-width:33.33333%;-ms-flex: 0 0 33.33333%;flex: 0 0 33.33333%;}
+}
+</style>
+
+{%- endif -%}
+{% schema %}
+{
+  "name": "t:sections.support-svg.name",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "divider",
+      "label": "t:sections.support-svg.settings.divider",
+      "default": true
+    }
+  ],
+  "blocks": [
+    {
+      "type": "image",
+      "name": "t:sections.support-svg.blocks.column.name",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "icon",
+          "label": "t:sections.support-svg.blocks.column.settings.image.label"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "t:sections.support-svg.blocks.column.settings.text.label"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "t:sections.support-svg.blocks.column.settings.icon_link.label"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

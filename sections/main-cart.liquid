@@ -1,0 +1,145 @@
+<div class="page-width page-content">
+  {%- render 'breadcrumbs' -%}
+  {% style %}
+    @media screen and (max-width: 450px) {
+      .cart__item {
+        display: grid;
+        grid-template-columns: 30% 70%;
+      }
+      .cart__item-details {
+        width: 100%;
+      }
+    }
+  {% endstyle %}
+  <header class="section-header text-center">
+    <h1 class="section-header__title">{{ 'cart.general.title' | t }} ({{ cart.item_count }})</h1>
+    <div class="rte text-spacing">
+      {%- if cart.item_count == 0 -%}
+        {% style %}
+          .rte.text-spacing img.empty-cart-img {
+            padding: 2rem 0;
+          }
+        {% endstyle %}
+        <img
+          class="empty-cart-img"
+          src="{{ 'Empty_Shopping_Cart.svg' | asset_url }}"
+          width="500"
+          height="377"
+          alt="{{ 'cart.general.empty' | t }}"
+        >
+        <p>{{ 'cart.general.empty' | t }}</p>
+        {% comment %}<p>{{ 'cart.general.continue_browsing_html' | t: url: routes.all_products_collection_url }}</p>{% endcomment %}
+        <p>{{ 'cart.general.continue_browsing_html' | t: url: routes.root_url }}→</p>
+      {%- endif -%}
+    </div>
+  </header>
+
+  {%- if cart.item_count > 0 -%}
+    <form action="{{ routes.cart_url }}" method="post" novalidate data-location="page" id="CartPageForm">
+      <div class="cart__page">
+        <div data-products class="cart__page-col">
+          {% for item in cart.items %}
+            {%- render 'cart-item', product: item -%}
+          {%- endfor -%}
+        </div>
+        <div class="cart__page-col">
+          <div class="cart-checkout-card">
+            {% if settings.cart_notes_enable %}
+              <div>
+                <label for="CartNote">{{ 'cart.general.note' | t }}</label>
+                <textarea
+                  name="note"
+                  class="input-full cart-notes"
+                  id="CartNote"
+                  placeholder="{{ 'cart.general.note_placeholder' | t }}"
+                >{{ cart.note }}</textarea>
+              </div>
+            {% endif %}
+
+            <div data-discounts>
+              {% if cart.cart_level_discount_applications != blank %}
+                <div class="cart__discounts cart__item-sub cart__item-row">
+                  <div>{{ 'cart.general.discounts' | t }}</div>
+                  <div class="text-right">
+                    {% for cart_discount in cart.cart_level_discount_applications %}
+                      <div class="cart__discount">
+                        {{ cart_discount.title }} (-{{ cart_discount.total_allocated_amount | money }})
+                      </div>
+                    {% endfor %}
+                  </div>
+                </div>
+              {% endif %}
+            </div>
+
+            {% render 'cart-price-detail', section_id: section.id %}
+
+            <div class="cart__item-sub cart__item-row">
+              <div>{{ 'cart.general.subtotal' | t }}</div>
+              <div data-subtotal>{{ cart.total_price | money }}</div>
+            </div>
+
+            {% if settings.cart_terms_conditions_enable %}
+              <div class="cart__item-row cart__terms">
+                <input type="checkbox" id="CartTerms" class="cart__terms-checkbox">
+                <label for="CartTerms">
+                  {% if settings.cart_terms_conditions_page != blank %}
+                    {{ 'cart.general.terms_html' | t: url: settings.cart_terms_conditions_page.url }}
+                  {% else %}
+                    {{ 'cart.general.terms' | t }}
+                  {% endif %}
+                </label>
+              </div>
+            {% endif %}
+
+            <div class="cart__item-row text-center">
+              <small>
+                {{ 'cart.general.shipping_at_checkout' | t -}}
+                <br>
+              </small>
+            </div>
+
+            <div class="cart__item-row cart__checkout-wrapper">
+              {% style %}
+                #CartPageForm .cart__checkout-wrapper .cart__shopping-continue-btn {
+                  padding: 0.5em 1em;
+                  border-radius: 20em;
+                  background: #ababab;
+                }
+                #CartPageForm .cart__checkout-wrapper .cart__shopping-continue-btn a {
+                  display: inline-block;
+                  width: 100%;
+                  text-align: center;
+                  color: var(--colorBtnPrimaryText);
+                }
+              {% endstyle %}
+              <p class="cart__shopping-continue-btn">
+                {{ 'cart.general.continue_browsing_html' | t: url: routes.root_url }}
+              </p>
+              <button
+                type="submit"
+                name="checkout"
+                data-terms-required="{{ settings.cart_terms_conditions_enable }}"
+                class="btn cart__checkout"
+              >
+                {{ 'cart.general.checkout' | t }}
+              </button>
+
+              {% if additional_checkout_buttons and settings.cart_additional_buttons %}
+                <div class="additional-checkout-buttons">{{ content_for_additional_checkout_buttons }}</div>
+              {% endif %}
+            </div>
+          </div>
+          <div class="cart-policy-card">
+            {% render 'cart-policy-list' %}
+          </div>
+        </div>
+      </div>
+    </form>
+  {%- endif -%}
+</div>
+
+{% schema %}
+{
+  "name": "t:sections.main-cart.name"
+}
+{% endschema %}

@@ -1,0 +1,14 @@
+<div class="policy-page policy-page-{{ section.id }}">
+    <div class="policy-page-content page-width page-width--narrow">
+        {% case page.handle %}
+            {% when 'privacy-policy' %}
+                {{ shop.privacy_policy.body }}
+            {% when 'shipping-policy' %}
+                {{ shop.shipping_policy.body }}
+            {% when 'warranty-return-policy' %}
+                {{ shop.refund_policy.body }}
+            {% when 'terms-of-service' %}
+                {{ shop.terms_of_service.body }}
+        {% endcase %}   
+    </div>
+</div>

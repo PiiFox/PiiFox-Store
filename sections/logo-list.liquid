@@ -1,0 +1,159 @@
+{%- style -%}
+.logo-bar--{{ section.id }} {
+  opacity: {{ section.settings.logo_opacity | divided_by: 100.0 }};
+}
+{%- endstyle -%}
+
+{%- if section.settings.divider -%}<div class="section--divider">{%- endif -%}
+
+<div class="page-width" data-aos="logo__animation">
+  {%- if section.settings.title != blank -%}
+    <div class="section-header">
+      <h2 class="section-header__title">{{ section.settings.title | escape }}</h2>
+    </div>
+  {%- endif -%}
+
+  {%- if section.blocks.size > 0 -%}
+    <div class="logo-bar logo-bar--{{ section.id }}">
+      {%- for block in section.blocks -%}
+        <div class="logo-bar__item" {{ block.shopify_attributes }}>
+          {%- if block.settings.link != blank -%}
+            <a href="{{ block.settings.link }}" class="logo-bar__link">
+          {%- endif -%}
+          {%- if block.settings.image != blank -%}
+            {%- assign img_url = block.settings.image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+            <img class="logo-bar__image lazyload"
+                data-src="{{ img_url }}"
+                data-widths="[180, 360, 540, 720]"
+                data-aspectratio="{{ block.settings.image.aspect_ratio }}"
+                data-sizes="auto"
+                alt="{{ block.settings.image.alt }}">
+            {% style %}
+              .logo-bar .logo-bar__item {
+                position: relative;
+              }
+              .logo-bar .logo-bar__item .content--wrapper {
+                position: absolute;
+                bottom: 0;
+                text-align: left;
+                padding: 1rem;
+              }
+              .logo-bar .logo-bar__item .content--wrapper a.learn-more-btn {
+                color: var(--colorBtnPrimary);
+                text-decoration: underline;
+                text-underline-offset: 4px;
+              }
+              @media screen and (max-width: 768px) {
+                .logo-bar .logo-bar__item .content--wrapper {
+                  padding: 0.5rem;
+                }
+                .logo-bar .logo-bar__item .content--wrapper h3 {
+                  padding: 0;
+                  font-size: 0.6rem; 
+                  line-height: 1rem;
+                }
+                .logo-bar .logo-bar__item .content--wrapper a.learn-more-btn {
+                  font-size: 0.6rem;
+                }
+              }
+            {% endstyle %}
+            <div class="content--wrapper">
+              {% if block.settings.title %}
+                <h3>{{ block.settings.title }}</h3>
+              {% endif %}
+              {% if block.settings.btn_label %}
+                <a class="learn-more-btn" href="{{ block.settings.link }}">{{ block.settings.btn_label }}</a>
+              {% endif %}
+            </div>
+          {%- else -%}
+            {{ 'logo' | placeholder_svg_tag: 'placeholder-svg' }}
+          {%- endif -%}
+          {%- if block.settings.link != blank -%}
+            </a>
+          {%- endif -%}
+        </div>
+      {%- endfor -%}
+    </div>
+  {%- endif -%}
+</div>
+
+{%- if section.settings.divider -%}</div>{%- endif -%}
+
+{% schema %}
+{
+  "name": "t:sections.logo-list.name",
+  "class": "index-section",
+  "max_blocks": 10,
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "t:sections.logo-list.settings.title.label"
+    },
+    {
+      "type": "range",
+      "id": "logo_opacity",
+      "label": "t:sections.logo-list.settings.logo_opacity.label",
+      "default": 76,
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "%"
+    },
+    {
+      "type": "checkbox",
+      "id": "divider",
+      "label": "t:sections.logo-list.settings.divider.label",
+      "default": false
+    }
+  ],
+  "blocks": [
+    {
+      "type": "logo_image",
+      "name": "t:sections.logo-list.blocks.logo.name",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "t:sections.logo-list.blocks.logo.settings.image.label"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title"
+        },
+        {
+          "type": "text",
+          "id": "btn_label",
+          "label": "Button Label"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "t:sections.logo-list.blocks.logo.settings.link.label",
+          "info": "t:sections.logo-list.blocks.logo.settings.link.info"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.logo-list.presets.logo_list.name",
+      "blocks": [
+        {
+          "type": "logo_image"
+        },
+        {
+          "type": "logo_image"
+        },
+        {
+          "type": "logo_image"
+        },
+        {
+          "type": "logo_image"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,257 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "collection-header": {
+      "type": "collection-header",
+      "disabled": true,
+      "settings": {
+        "enable": false,
+        "collection_image_enable": false,
+        "parallax": false
+      }
+    },
+    "165906982958700ecf": {
+      "type": "collection-nav",
+      "blocks": {
+        "1659069829743410d3-0": {
+          "type": "col-tab",
+          "settings": {
+            "title": "Laptop",
+            "link": "shopify://collections/laptop"
+          }
+        },
+        "1659069829743410d3-1": {
+          "type": "col-tab",
+          "settings": {
+            "title": "Mini PC",
+            "link": "shopify://collections/mini-pc"
+          }
+        },
+        "1659069829743410d3-2": {
+          "type": "col-tab",
+          "settings": {
+            "title": "Tablet",
+            "link": "shopify://collections/tablet"
+          }
+        },
+        "1659069829743410d3-3": {
+          "type": "col-tab",
+          "settings": {
+            "title": "Phone",
+            "link": ""
+          }
+        },
+        "dee89ecc-b423-43c9-a156-e83485f02192": {
+          "type": "col-tab",
+          "settings": {
+            "title": "Phone",
+            "link": ""
+          }
+        },
+        "02af04f4-4b79-465e-9862-813e868e75aa": {
+          "type": "col-tab",
+          "settings": {
+            "title": "Phone",
+            "link": ""
+          }
+        },
+        "70de4f66-2990-417c-94e1-5c8e77078b73": {
+          "type": "col-tab",
+          "settings": {
+            "title": "Phone",
+            "link": ""
+          }
+        },
+        "471ae1d4-81d7-497f-813b-bc7fcd162899": {
+          "type": "col-tab",
+          "settings": {
+            "title": "Phone",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "1659069829743410d3-0",
+        "1659069829743410d3-1",
+        "1659069829743410d3-2",
+        "1659069829743410d3-3",
+        "dee89ecc-b423-43c9-a156-e83485f02192",
+        "02af04f4-4b79-465e-9862-813e868e75aa",
+        "70de4f66-2990-417c-94e1-5c8e77078b73",
+        "471ae1d4-81d7-497f-813b-bc7fcd162899"
+      ],
+      "disabled": true,
+      "settings": {
+        "full_width": false
+      }
+    },
+    "ab0ae01d-c453-46ff-afd0-91368d57f96b": {
+      "type": "slideshow_1",
+      "blocks": {
+        "template--17260442255636__ab0ae01d-c453-46ff-afd0-91368d57f96b-1673772778df1f8192-0": {
+          "type": "image",
+          "settings": {
+            "top_subheading": "",
+            "title": "THE ORIGINAL ACCESSORIES",
+            "title_size": 50,
+            "tcolor": "#ffffff",
+            "subheading": "Piifox offers a comprehensive selection of spare parts for laptops, tablets, and other electronic devices, enabling customers to easily repair or upgrade their devices. We provide genuine spare parts that are specifically designed to be compatible with each device, ensuring optimal performance and longevity.",
+            "link": "",
+            "link_text": "",
+            "link_2": "",
+            "link_text_2": "",
+            "color_accent": "#ffffff",
+            "text_align": "vertical-center horizontal-left",
+            "overlay_opacity": 38,
+            "focal_point": "center center"
+          }
+        }
+      },
+      "block_order": [
+        "template--17260442255636__ab0ae01d-c453-46ff-afd0-91368d57f96b-1673772778df1f8192-0"
+      ],
+      "custom_css": [
+        ".swiper-slide .slide-content {width: 50%;}",
+        ".swiper-slide.h-align-left .slide-content {left: -28%;}",
+        ".hero__title h1 {font-size: 40px;}",
+        ".hero__subtitle h2 {font-size: 20px; line-height: 1.2; font-weight: 400;}",
+        "@media screen and (max-width: 768px) {.swiper-slide.h-align-left .slide-content {left: 0; width: 100%; box-sizing: border-box; } .swiper-slide .slide-content .item-title {color: #fff; }}",
+        "@media screen and (max-width: 750px) {.hero__title h1 {font-size: 2rem; }}"
+      ],
+      "settings": {
+        "pc_aspect_ratio": "192/60",
+        "mobile_aspect_ratio": "1/1",
+        "divider": false,
+        "section_height": "550px",
+        "mobile_height": "500px",
+        "parallax": false,
+        "style": "bars",
+        "autoplay": false,
+        "autoplay_speed": 5
+      }
+    },
+    "main-collection": {
+      "type": "main-collection",
+      "blocks": {
+        "collection_description": {
+          "type": "collection_description",
+          "disabled": true,
+          "settings": {}
+        },
+        "subcollections": {
+          "type": "subcollections",
+          "disabled": true,
+          "settings": {
+            "subcollections_per_row": 5
+          }
+        },
+        "product_grid": {
+          "type": "product_grid",
+          "settings": {
+            "enable_collection_count": true,
+            "per_row": 4,
+            "rows_per_page": 12,
+            "mobile_flush_grid": true
+          }
+        }
+      },
+      "block_order": [
+        "collection_description",
+        "subcollections",
+        "product_grid"
+      ],
+      "settings": {
+        "enable_sidebar": true,
+        "collapsed": true,
+        "filter_style": "sidebar",
+        "enable_color_swatches": false,
+        "short_introduction_enable": false,
+        "short_point_desc_enable": false,
+        "enable_sort": true
+      }
+    },
+    "2050bef3-0e20-4f79-a9e0-d3086e7598dd": {
+      "type": "featured-collections",
+      "blocks": {
+        "template--17260442255636__2050bef3-0e20-4f79-a9e0-d3086e7598dd-167377811281a140ca-0": {
+          "type": "collection",
+          "settings": {
+            "collection": "best-sellers",
+            "title": "ACCESSORIES",
+            "focal_point": "center center"
+          }
+        },
+        "template--17260442255636__2050bef3-0e20-4f79-a9e0-d3086e7598dd-167377811281a140ca-1": {
+          "type": "collection",
+          "settings": {
+            "collection": "mini-pc",
+            "title": "REFURBISHED",
+            "focal_point": "center center"
+          }
+        },
+        "template--17260442255636__2050bef3-0e20-4f79-a9e0-d3086e7598dd-167377811281a140ca-2": {
+          "type": "collection",
+          "settings": {
+            "collection": "mini-pc",
+            "title": "BEST SELLER",
+            "focal_point": "center center"
+          }
+        },
+        "template--17260442255636__2050bef3-0e20-4f79-a9e0-d3086e7598dd-167377811281a140ca-3": {
+          "type": "collection",
+          "settings": {
+            "collection": "mini-pc",
+            "title": "MINI PC",
+            "focal_point": "center center"
+          }
+        },
+        "a0b754a6-3431-483d-b73f-f00f101d2329": {
+          "type": "collection",
+          "settings": {
+            "collection": "mini-pc",
+            "title": "LAPTOP",
+            "focal_point": "center center"
+          }
+        },
+        "72eddc28-aa27-443c-8293-a17c034739db": {
+          "type": "collection",
+          "settings": {
+            "collection": "mini-pc",
+            "title": "TABLET PC",
+            "focal_point": "center center"
+          }
+        }
+      },
+      "block_order": [
+        "template--17260442255636__2050bef3-0e20-4f79-a9e0-d3086e7598dd-167377811281a140ca-0",
+        "template--17260442255636__2050bef3-0e20-4f79-a9e0-d3086e7598dd-167377811281a140ca-1",
+        "template--17260442255636__2050bef3-0e20-4f79-a9e0-d3086e7598dd-167377811281a140ca-2",
+        "template--17260442255636__2050bef3-0e20-4f79-a9e0-d3086e7598dd-167377811281a140ca-3",
+        "a0b754a6-3431-483d-b73f-f00f101d2329",
+        "72eddc28-aa27-443c-8293-a17c034739db"
+      ],
+      "disabled": true,
+      "settings": {
+        "title": "Collection list",
+        "divider": true,
+        "per_row": 3,
+        "enable_gutter": true
+      }
+    }
+  },
+  "order": [
+    "collection-header",
+    "165906982958700ecf",
+    "ab0ae01d-c453-46ff-afd0-91368d57f96b",
+    "main-collection",
+    "2050bef3-0e20-4f79-a9e0-d3086e7598dd"
+  ]
+}

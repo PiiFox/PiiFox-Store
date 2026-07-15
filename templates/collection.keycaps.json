@@ -1,0 +1,669 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "collection-header": {
+      "type": "collection-header",
+      "disabled": true,
+      "settings": {
+        "enable": false,
+        "collection_image_enable": false,
+        "parallax": false
+      }
+    },
+    "ab0ae01d-c453-46ff-afd0-91368d57f96b": {
+      "type": "slideshow_1",
+      "blocks": {
+        "template--17260442255636__ab0ae01d-c453-46ff-afd0-91368d57f96b-1673772778df1f8192-0": {
+          "type": "image",
+          "settings": {
+            "top_subheading": "",
+            "title": "",
+            "title_size": 50,
+            "tcolor": "#ffffff",
+            "subheading": "",
+            "link": "",
+            "link_text": "",
+            "link_2": "",
+            "link_text_2": "",
+            "color_accent": "#ffffff",
+            "text_align": "vertical-center horizontal-left",
+            "overlay_opacity": 38,
+            "focal_point": "center center"
+          }
+        }
+      },
+      "block_order": [
+        "template--17260442255636__ab0ae01d-c453-46ff-afd0-91368d57f96b-1673772778df1f8192-0"
+      ],
+      "custom_css": [],
+      "settings": {
+        "pc_aspect_ratio": "2560/640",
+        "mobile_aspect_ratio": "780/960",
+        "divider": false,
+        "section_height": "550px",
+        "mobile_height": "500px",
+        "parallax": false,
+        "style": "bars",
+        "autoplay": false,
+        "autoplay_speed": 5
+      }
+    },
+    "icon_list_marquee_section_DJLTVc": {
+      "type": "icon-list-marquee-section",
+      "blocks": {
+        "icon_item_HCpajM": {
+          "type": "icon_item",
+          "settings": {
+            "icon": "shopify://shop_images/header-icon1.png",
+            "context": "Hassle-Free Warranty"
+          }
+        },
+        "icon_item_4J8Ey3": {
+          "type": "icon_item",
+          "settings": {
+            "icon": "shopify://shop_images/header-icon2.png",
+            "context": "Pay with Ease"
+          }
+        },
+        "icon_item_ARFQT9": {
+          "type": "icon_item",
+          "settings": {
+            "icon": "shopify://shop_images/header-icon3.png",
+            "context": "Secure-Fast Delivery"
+          }
+        },
+        "icon_item_gyQz4z": {
+          "type": "icon_item",
+          "settings": {
+            "icon": "shopify://shop_images/header-icon4.png",
+            "context": "30-Day Money-Back Guarantee"
+          }
+        },
+        "icon_item_GWf6Qe": {
+          "type": "icon_item",
+          "settings": {
+            "icon": "shopify://shop_images/header-icon4.png",
+            "context": "Certified Compatibility"
+          }
+        }
+      },
+      "block_order": [
+        "icon_item_HCpajM",
+        "icon_item_4J8Ey3",
+        "icon_item_ARFQT9",
+        "icon_item_gyQz4z",
+        "icon_item_GWf6Qe"
+      ],
+      "name": "Icon List Marquee Section",
+      "settings": {
+        "icon_list_title": "",
+        "scroll_speed": 18
+      }
+    },
+    "card_list_section_ebjLwc": {
+      "type": "card-list-section",
+      "blocks": {
+        "collection_item_LYJA3M": {
+          "type": "collection_item",
+          "settings": {
+            "collection": "art-culture-theme-keycaps",
+            "card_bg": "shopify://shop_images/series-bg4.png",
+            "card_img": "shopify://shop_images/4fff6fab2e959b1e0178a635c4be5b96.png",
+            "card_tag": "",
+            "card_text_color": "#1b2e1b",
+            "card_title": "Art & Culture",
+            "card_description": "Artistic themes crafted for meaningful desk style."
+          }
+        },
+        "collection_item_pc6gBD": {
+          "type": "collection_item",
+          "settings": {
+            "collection": "clean-minimal-theme-keycaps",
+            "card_bg": "shopify://shop_images/series-bg2.png",
+            "card_img": "shopify://shop_images/1_243c9484-8175-4e89-a5ec-64bf60c36673.png",
+            "card_tag": "",
+            "card_text_color": "#1b2e1b",
+            "card_title": "Clean & Minimal",
+            "card_description": "Minimal keycaps with a refined modern feel."
+          }
+        },
+        "collection_item_n986Yw": {
+          "type": "collection_item",
+          "settings": {
+            "collection": "cute-colorful-theme-keycaps",
+            "card_bg": "shopify://shop_images/series-bg1.png",
+            "card_img": "shopify://shop_images/a87a50676013be81a117debfa1a32e93.png",
+            "card_tag": "",
+            "card_text_color": "#1b2e1b",
+            "card_title": "Cute & Colorful",
+            "card_description": "Playful colors shaped for joyful everyday typing."
+          }
+        },
+        "collection_item_gBJwrD": {
+          "type": "collection_item",
+          "settings": {
+            "collection": "game-playful-theme-keycaps",
+            "card_bg": "shopify://shop_images/series-bg3.png",
+            "card_img": "shopify://shop_images/7bd308a2ce4282cb8f54809ba23b97d8.png",
+            "card_tag": "",
+            "card_text_color": "#1b2e1b",
+            "card_title": "Game & Playful",
+            "card_description": "Expressive keycaps for setups with character."
+          }
+        },
+        "collection_item_Lz6afi": {
+          "type": "collection_item",
+          "settings": {
+            "collection": "retro-daily-theme-keycaps",
+            "card_bg": "shopify://shop_images/card1.png",
+            "card_img": "shopify://shop_images/time.png",
+            "card_tag": "",
+            "card_text_color": "#1b2e1b",
+            "card_title": "Retro & Daily",
+            "card_description": "Familiar tones with a comfortable daily rhythm."
+          }
+        },
+        "collection_item_bKpVjw": {
+          "type": "collection_item",
+          "settings": {
+            "collection": "nature-soft-theme-keycaps",
+            "card_bg": "shopify://shop_images/card4.png",
+            "card_img": "shopify://shop_images/88a40ba6438a8021ee4c3204bd0135fb.png",
+            "card_tag": "",
+            "card_text_color": "#1b2e1b",
+            "card_title": "Nature & Soft",
+            "card_description": "Calm palettes inspired by nature and soft living."
+          }
+        },
+        "product_item_ikp7LL": {
+          "type": "product_item",
+          "disabled": true,
+          "settings": {
+            "product": "forx-defender68-he-magnetic-keyboard",
+            "card_bg": "shopify://shop_images/card1.png",
+            "card_img": "shopify://shop_images/FORXDefender68HE1.png",
+            "card_tag": "NEW",
+            "card_text_color": "#1b2e1b",
+            "card_title": "PIIFOX FORX Defender68 HE Magnetic",
+            "card_description": "Magnetic Switch Gaming Keyboard"
+          }
+        },
+        "product_item_7GknNP": {
+          "type": "product_item",
+          "disabled": true,
+          "settings": {
+            "product": "forx-defender68-he-pro-magnetic-keyboard",
+            "card_bg": "shopify://shop_images/card2.png",
+            "card_img": "shopify://shop_images/FORXDefender68HEPro0.png",
+            "card_tag": "HOT",
+            "card_text_color": "#000",
+            "card_title": "FORX Defender68 HE Pro",
+            "card_description": "CNC Aluminum Magnetic Gaming Keyboard"
+          }
+        },
+        "product_item_UV7dCW": {
+          "type": "product_item",
+          "disabled": true,
+          "settings": {
+            "product": "forx-final75-he-magnetic-keyboard",
+            "card_bg": "shopify://shop_images/card3.png",
+            "card_img": "shopify://shop_images/20260610-153509.png",
+            "card_tag": "",
+            "card_text_color": "#000000",
+            "card_title": "FORX Final75 HE",
+            "card_description": "75% Compact Magnetic Gaming Keyboard"
+          }
+        },
+        "product_item_EXzAbC": {
+          "type": "product_item",
+          "disabled": true,
+          "settings": {
+            "product": "test-product4",
+            "card_bg": "shopify://shop_images/card4.png",
+            "card_img": "shopify://shop_images/product4.png",
+            "card_tag": "",
+            "card_text_color": "#000",
+            "card_title": "PIIFOX Summit 65",
+            "card_description": "65% Aluminum Mechanical Keyboard"
+          }
+        }
+      },
+      "block_order": [
+        "collection_item_LYJA3M",
+        "collection_item_pc6gBD",
+        "collection_item_n986Yw",
+        "collection_item_gBJwrD",
+        "collection_item_Lz6afi",
+        "collection_item_bKpVjw",
+        "product_item_ikp7LL",
+        "product_item_7GknNP",
+        "product_item_UV7dCW",
+        "product_item_EXzAbC"
+      ],
+      "name": "Card List Section",
+      "settings": {
+        "card_list_title": "Shop by Top Picks",
+        "card_list_description": "",
+        "collection_btn_label": "Explore series",
+        "product_btn_label": "Shop Now",
+        "btn_right_icon": "shopify://shop_images/icon1_4879244e-5d2d-4fcb-9c5a-ef9d3759a729.png"
+      }
+    },
+    "main-collection": {
+      "type": "main-collection",
+      "blocks": {
+        "collection_description_VLVVit": {
+          "type": "collection_description",
+          "settings": {}
+        },
+        "subcollections": {
+          "type": "subcollections",
+          "disabled": true,
+          "settings": {
+            "subcollections_per_row": 5
+          }
+        },
+        "product_grid": {
+          "type": "product_grid",
+          "settings": {
+            "enable_collection_count": true,
+            "per_row": 4,
+            "rows_per_page": 12,
+            "mobile_flush_grid": true
+          }
+        }
+      },
+      "block_order": [
+        "collection_description_VLVVit",
+        "subcollections",
+        "product_grid"
+      ],
+      "settings": {
+        "enable_sidebar": true,
+        "collapsed": true,
+        "filter_style": "sidebar",
+        "enable_color_swatches": false,
+        "short_introduction_enable": true,
+        "short_point_desc_enable": true,
+        "enable_sort": true,
+        "product_card_btn_label": "Choose Options"
+      }
+    },
+    "faq_YaXkAC": {
+      "type": "page-faq-section",
+      "blocks": {
+        "question_RxjYDj": {
+          "type": "question",
+          "settings": {
+            "enable_keyboards": true,
+            "enable_keycaps": false,
+            "enable_switches": true,
+            "enable_all_collection": false,
+            "title": "What is a magnetic switch?",
+            "text": "<p>Magnetic switches utilize the Hall Effect, actuating by sensing changes in magnetic flux. With no physical contact, they offer long lifespan and lightning-fast response.<br/></p>"
+          }
+        },
+        "question_QiRWab": {
+          "type": "question",
+          "settings": {
+            "enable_keyboards": true,
+            "enable_keycaps": false,
+            "enable_switches": false,
+            "enable_all_collection": false,
+            "title": "Are your keyboards hot-swappable?",
+            "text": "<p>Most of our mechanical keyboards feature hot-swappable PCBs, meaning you can easily change switches without soldering. However, please double-check the \"Specifications\" section on the specific product page to confirm.<br/></p>"
+          }
+        },
+        "question_JanctP": {
+          "type": "question",
+          "settings": {
+            "enable_keyboards": false,
+            "enable_keycaps": false,
+            "enable_switches": false,
+            "enable_all_collection": false,
+            "title": "Linear vs. Tactile vs. Clicky?",
+            "text": "<p>Linear: Smooth and quiet; Tactile: Noticeable bump for feedback; Clicky: Crisp \"click\" sound with a rhythmic feel.<br/><br/></p>"
+          }
+        },
+        "question_7x7cnr": {
+          "type": "question",
+          "settings": {
+            "enable_keyboards": false,
+            "enable_keycaps": false,
+            "enable_switches": false,
+            "enable_all_collection": false,
+            "title": "Is it a Gasket Mount?",
+            "text": "<p>It uses gaskets between the plate and case to eliminate hollow sounds, providing a bouncier feel and a \"thocky\" sound profile.<br/></p>"
+          }
+        },
+        "question_qaGTEW": {
+          "type": "question",
+          "settings": {
+            "enable_keyboards": true,
+            "enable_keycaps": false,
+            "enable_switches": true,
+            "enable_all_collection": false,
+            "title": "Can I use standard mechanical switches?",
+            "text": "<p>No. The PCB is designed for Hall Effect sensors and lacks pin sockets. They are only hot-swappable with other compatible magnetic switches.<br/></p>"
+          }
+        },
+        "question_YfAYP8": {
+          "type": "question",
+          "settings": {
+            "enable_keyboards": true,
+            "enable_keycaps": false,
+            "enable_switches": false,
+            "enable_all_collection": false,
+            "title": "Does it have a warranty?",
+            "text": "<p>We offer a 1-Year Limited Warranty covering PCB failures and non-man-made damage. See our Warranty Policy for details.</p>"
+          }
+        },
+        "question_QFBVVC": {
+          "type": "question",
+          "settings": {
+            "enable_keyboards": true,
+            "enable_keycaps": true,
+            "enable_switches": false,
+            "enable_all_collection": false,
+            "title": "PBT vs. ABS keycaps?",
+            "text": "<p>PBT is durable and resistant to wear, avoiding the \"greasy shine.\" ABS is smoother but tends to become shiny after prolonged use.<br/></p>"
+          }
+        },
+        "question_6YxqEA": {
+          "type": "question",
+          "settings": {
+            "enable_keyboards": true,
+            "enable_keycaps": true,
+            "enable_switches": false,
+            "enable_all_collection": false,
+            "title": "What does \"Double-shot\" mean?",
+            "text": "<p>The legends are molded using a second layer of plastic rather than printed. This guarantees the legends will never wear off or fade.</p>"
+          }
+        },
+        "question_PNGQAp": {
+          "type": "question",
+          "settings": {
+            "enable_keyboards": true,
+            "enable_keycaps": false,
+            "enable_switches": false,
+            "enable_all_collection": false,
+            "title": "What is a CNC Aluminum case?",
+            "text": "<p>Precision-milled from a solid aluminum block. It offers superior weight, stability, and a premium metallic aesthetic compared to plastic.</p>"
+          }
+        },
+        "question_BRwPpy": {
+          "type": "question",
+          "settings": {
+            "enable_keyboards": true,
+            "enable_keycaps": false,
+            "enable_switches": false,
+            "enable_all_collection": false,
+            "title": "Does the PCB feature flex cuts?",
+            "text": "<p>Yes, per-key flex cuts allow keystroke force to be distributed evenly, increasing the soft feel and reducing finger fatigue.</p>"
+          }
+        },
+        "question_dWiMNR": {
+          "type": "question",
+          "settings": {
+            "enable_keyboards": true,
+            "enable_keycaps": false,
+            "enable_switches": true,
+            "enable_all_collection": false,
+            "title": "Do you support Rapid Trigger (RT)?",
+            "text": "<p>Yes. RT allows keys to reset the instant they travel upwards and actuate the instant they travel downwards, perfect for games like Valorant.</p>"
+          }
+        },
+        "question_TUWr8N": {
+          "type": "question",
+          "settings": {
+            "enable_keyboards": true,
+            "enable_keycaps": false,
+            "enable_switches": true,
+            "enable_all_collection": false,
+            "title": "What is the response latency of magnetic switches?",
+            "text": "<p>Our magnetic keyboards feature ultra-low latency down to 0.125ms (1000Hz-8000Hz). They eliminate \"Debounce Delay\" for true instant actuation.<br/><br/></p>"
+          }
+        },
+        "question_7mBfJb": {
+          "type": "question",
+          "settings": {
+            "enable_keyboards": true,
+            "enable_keycaps": false,
+            "enable_switches": true,
+            "enable_all_collection": false,
+            "title": "What does \"Hot-swappable\" mean?",
+            "text": "<p>This means you can pull out and replace the switches directly without any soldering. This gives you freedom to mix and match different switches at any time.</p>"
+          }
+        },
+        "question_pa9RCU": {
+          "type": "question",
+          "settings": {
+            "enable_keyboards": true,
+            "enable_keycaps": false,
+            "enable_switches": false,
+            "enable_all_collection": false,
+            "title": "Is this keyboard compatible with macOS and Windows?",
+            "text": "<p>Fully compatible. There is a system toggle switch. We include replacement keycaps for both Windows and Mac to ensure your visual layout matches your OS perfectly.<br/></p>"
+          }
+        },
+        "question_AJWbLY": {
+          "type": "question",
+          "settings": {
+            "enable_keyboards": true,
+            "enable_keycaps": false,
+            "enable_switches": false,
+            "enable_all_collection": false,
+            "title": "What connection modes does the keyboard support?",
+            "text": "<p>Our keyboards typically support tri-mode connections: Wired (USB-C), Bluetooth 5.0, and 2.4GHz Wireless. You can pair multiple devices and switch seamlessly.</p>"
+          }
+        },
+        "question_nM96Lg": {
+          "type": "question",
+          "settings": {
+            "enable_keyboards": true,
+            "enable_keycaps": false,
+            "enable_switches": false,
+            "enable_all_collection": false,
+            "title": "What if I spill liquid on it?",
+            "text": "<p>Disconnect power immediately. Air dry upside down for 48+ hours. Avoid high heat. Ensure it's completely dry before powering on.</p>"
+          }
+        },
+        "question_ihN7kw": {
+          "type": "question",
+          "settings": {
+            "enable_keyboards": true,
+            "enable_keycaps": false,
+            "enable_switches": false,
+            "enable_all_collection": false,
+            "title": "Can I disassemble to mod it?",
+            "text": "<p>We encourage DIY! However, be careful with ribbon cables. Physical damage from improper disassembly may void the warranty.</p>"
+          }
+        },
+        "question_nF47KL": {
+          "type": "question",
+          "settings": {
+            "enable_keyboards": false,
+            "enable_keycaps": false,
+            "enable_switches": false,
+            "enable_all_collection": true,
+            "title": "Does it have a warranty?",
+            "text": "<p>We offer a 1-Year Limited Warranty covering PCB failures and non-man-made damage. See our Warranty Policy for details.</p>"
+          }
+        },
+        "question_rFyxbA": {
+          "type": "question",
+          "settings": {
+            "enable_keyboards": false,
+            "enable_keycaps": false,
+            "enable_switches": false,
+            "enable_all_collection": true,
+            "title": "When will my order be shipped?",
+            "text": "<p>In-stock items are typically shipped within 1-3 business days. For pre-order or group-buy items, please refer to the specific timeline on the product page.</p>"
+          }
+        },
+        "question_9qeLwA": {
+          "type": "question",
+          "settings": {
+            "enable_keyboards": false,
+            "enable_keycaps": false,
+            "enable_switches": false,
+            "enable_all_collection": true,
+            "title": "Can I change or cancel my order after placing it?",
+            "text": "<p>Yes. If you need to change your shipping address or product model, or cancel your order, please email our customer service team at <a href=\"mailto:service@piifox.com\" target=\"_blank\">service@piifox.com</a> before the item is dispatched. We will help you make these changes. Once shipped, no changes can be made.</p>"
+          }
+        },
+        "question_yXxkQ7": {
+          "type": "question",
+          "settings": {
+            "enable_keyboards": false,
+            "enable_keycaps": false,
+            "enable_switches": false,
+            "enable_all_collection": true,
+            "title": "How long is the warranty period?",
+            "text": "<p>We provide a 12-month warranty for keyboards, DIY kits, switches, keycap sets, and mice. Built-in batteries are covered for 3 months.</p>"
+          }
+        },
+        "question_HaXAe6": {
+          "type": "question",
+          "settings": {
+            "enable_keyboards": true,
+            "enable_keycaps": false,
+            "enable_switches": false,
+            "enable_all_collection": false,
+            "title": "What are the differences between 60%, 75%, and TKL layouts?",
+            "text": "<p>Full-size has all keys. TKL (80%) omits the numpad. 75% is compact but keeps the F-row and arrows. 60% is ultra-compact, removing the F-row and arrows. PIIFOX offers various layouts to fit your desk space.</p>"
+          }
+        },
+        "question_hbTTrN": {
+          "type": "question",
+          "settings": {
+            "enable_keyboards": true,
+            "enable_keycaps": false,
+            "enable_switches": false,
+            "enable_all_collection": false,
+            "title": "How should I charge my wireless keyboard? Can I use a fast charger?",
+            "text": "<p>We strongly recommend using the included cable to connect to your PC's USB port. <strong>DO NOT use fast chargers (above 5V/1A)</strong>, as high voltage can fry the PCB power IC and void your warranty.<br/><br/></p>"
+          }
+        },
+        "question_xhWLfW": {
+          "type": "question",
+          "settings": {
+            "enable_keyboards": false,
+            "enable_keycaps": false,
+            "enable_switches": false,
+            "enable_all_collection": false,
+            "title": "",
+            "text": ""
+          }
+        },
+        "question_Mcfdqn": {
+          "type": "question",
+          "settings": {
+            "enable_keyboards": false,
+            "enable_keycaps": false,
+            "enable_switches": false,
+            "enable_all_collection": false,
+            "title": "",
+            "text": ""
+          }
+        }
+      },
+      "block_order": [
+        "question_RxjYDj",
+        "question_QiRWab",
+        "question_JanctP",
+        "question_7x7cnr",
+        "question_qaGTEW",
+        "question_YfAYP8",
+        "question_QFBVVC",
+        "question_6YxqEA",
+        "question_PNGQAp",
+        "question_BRwPpy",
+        "question_dWiMNR",
+        "question_TUWr8N",
+        "question_7mBfJb",
+        "question_pa9RCU",
+        "question_AJWbLY",
+        "question_nM96Lg",
+        "question_ihN7kw",
+        "question_nF47KL",
+        "question_rFyxbA",
+        "question_9qeLwA",
+        "question_yXxkQ7",
+        "question_HaXAe6",
+        "question_hbTTrN",
+        "question_xhWLfW",
+        "question_Mcfdqn"
+      ],
+      "name": "t:sections.faq.presets.faq.name",
+      "settings": {
+        "title": "FAQ"
+      }
+    },
+    "shop_with_confidence_section_PGLWzQ": {
+      "type": "shop-with-confidence-section",
+      "blocks": {
+        "service_item_b9PBKH": {
+          "type": "service_item",
+          "settings": {
+            "service_img": "shopify://shop_images/footer-icon1_1c7e0e71-312c-45ba-841d-143686c63e07.png",
+            "service_title": "Secure & Fast Delivery",
+            "service_description": "Fast, secure shipping you can count on."
+          }
+        },
+        "service_item_yKYpbL": {
+          "type": "service_item",
+          "settings": {
+            "service_img": "shopify://shop_images/footer-icon2_ae165278-8567-4f3a-ad49-e2c526c8498b.png",
+            "service_title": "1-Year Free Warranty",
+            "service_description": "All PIIFOX keyboards come with a 1-year limited warranty."
+          }
+        },
+        "service_item_imMPWq": {
+          "type": "service_item",
+          "settings": {
+            "service_img": "shopify://shop_images/footer-icon3_8076622e-27c0-49a3-aa04-a93ddb8e6477.png",
+            "service_title": "30-Day Returns",
+            "service_description": "Not the right fit? Return any item within 30 days of delivery."
+          }
+        },
+        "service_item_gVnri8": {
+          "type": "service_item",
+          "settings": {
+            "service_img": "shopify://shop_images/footer-icon4_ec25736e-ddc5-4aee-9832-defeb336309e.png",
+            "service_title": "Expert Support",
+            "service_description": "Our mechanical keyboard experts are here to help 7 days a week."
+          }
+        }
+      },
+      "block_order": [
+        "service_item_b9PBKH",
+        "service_item_yKYpbL",
+        "service_item_imMPWq",
+        "service_item_gVnri8"
+      ],
+      "name": "Shop With Confidence Section",
+      "settings": {
+        "shop_confidence_title": "Shop With Confidence",
+        "shop_confidence_description": "Premium quality. Reliable service. Every step of the way."
+      }
+    }
+  },
+  "order": [
+    "collection-header",
+    "ab0ae01d-c453-46ff-afd0-91368d57f96b",
+    "icon_list_marquee_section_DJLTVc",
+    "card_list_section_ebjLwc",
+    "main-collection",
+    "faq_YaXkAC",
+    "shop_with_confidence_section_PGLWzQ"
+  ]
+}

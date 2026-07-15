@@ -1,0 +1,43 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-cart",
+      "settings": {}
+    },
+    "recently-viewed": {
+      "type": "recently-viewed",
+      "settings": {
+        "recent_count": 5
+      }
+    },
+    "featured-collection": {
+      "type": "featured-collection",
+      "custom_css": [
+        ".grid__item.grid__item--view-all.text-center.small--one-half.medium-up--one-quarter.medium-up--hide {display: none;}"
+      ],
+      "settings": {
+        "title": "Popular picks",
+        "home_featured_products": "best-sellers",
+        "per_row": 4,
+        "rows": 1,
+        "mobile_scrollable": true,
+        "view_all": true,
+        "divider": false
+      }
+    }
+  },
+  "order": [
+    "main",
+    "recently-viewed",
+    "featured-collection"
+  ]
+}

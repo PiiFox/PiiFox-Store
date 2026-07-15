@@ -1,0 +1,91 @@
+{%- if linklists[block.settings.menu].links.size > 0 -%}
+  <div class="footer-column-list--wrapper">
+    {% for link in linklists[block.settings.menu].links %}
+      <div class="footer-column--wrapper">
+        {%- if block.settings.show_footer_title -%}
+          <p class="h4 footer__title small--hide">
+            {{ link.title }}
+          </p>
+          <button
+            type="button"
+            class="h4 footer__title collapsible-trigger collapsible-trigger-btn medium-up--hide"
+            aria-controls="Footer-{{ link.title }}"
+          >
+            {{ link.title }}
+            <span class="collapsible-trigger__icon collapsible-trigger__icon--open" role="presentation"></span>
+          </button>
+        {%- endif -%}
+        <div
+          {% if block.settings.show_footer_title %}
+            id="Footer-{{ link.title }}" class="collapsible-content collapsible-content--small"
+          {% endif %}
+        >
+          <div class="collapsible-content__inner">
+            <div class="footer__collapsible{% unless block.settings.show_footer_title %} footer_collapsible--disabled{% endunless %}">
+              <ul class="no-bullets site-footer__linklist">
+                {%- for sub in link.links -%}
+                  <li>
+                    <a href="{{ sub.url }}">{{ sub.title }}</a>
+                  </li>
+                {%- endfor -%}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+{%- endif -%}
+{% style %}
+  .footer-column-list--wrapper {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+  }
+  .footer-column--wrapper {
+    padding: 0.6rem 0;
+  }
+  .footer-column--wrapper .h4 {
+    margin: 0;
+  }
+  @media screen and (max-width: 768px) {
+    .footer-column-list--wrapper {
+      grid-template-columns: repeat(auto-fit, minmax(30em, 1fr));
+    }
+    .footer-column--wrapper {
+      text-align: left;
+      border-bottom: 1px solid #313030;
+    }
+    .footer-column--wrapper .h4 {
+      text-align: left;
+      font-size: 1.2em;
+    }
+    .collapsible-content--small .collapsible-content__inner {
+      transform: translateY(0px);
+    }
+    .site-footer__linklist a {
+      color: #aeaeae;
+    }
+    .footer-column--wrapper .collapsible-trigger__icon {
+      right: 1em;
+      transform: translateY(-100%);
+    }
+    .footer-column--wrapper .collapsible-trigger__icon::before {
+      content: '+';
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2em;
+      position: absolute;
+    }
+    .footer-column--wrapper button.is-open .collapsible-trigger__icon::before {
+      content: '-';
+    }
+  }
+  @media screen and (max-width: 550px) {
+    .footer-column-list--wrapper {
+      grid-template-columns: repeat(auto-fit, minmax(20em, 1fr));
+    }
+  }
+{% endstyle %}

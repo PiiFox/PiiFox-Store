@@ -1,0 +1,51 @@
+<section class="custom-demo">
+  <div class="page-width">
+    {% if section.settings.title != blank %}
+      <h2>{{ section.settings.title }}</h2>
+    {% endif %}
+
+    {% if section.settings.text != blank %}
+      <div class="rte">
+        {{ section.settings.text }}
+      </div>
+    {% endif %}
+
+    {% render 'custom-demo', label: 'Submit', type: 'submit', variant: 'primary', full: true %}
+  </div>
+</section>
+
+<style>
+  .custom-demo {
+    padding: 60px 0;
+    background: #f7f7f7;
+  }
+
+  .custom-demo h2 {
+    margin-bottom: 16px;
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Custom Demo",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Demo title"
+    },
+    {
+      "type": "html",
+      "id": "text",
+      "label": "Text",
+      "default": "<p>Demo content1.</p>"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Custom Demo"
+    }
+  ]
+}
+{% endschema %}

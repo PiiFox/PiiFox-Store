@@ -1,0 +1,176 @@
+<div class="as-seen-on-section-{{ section.id }}">
+  <div class="as-seen-on-section--wrapper page-width wow bounceInUp">
+    <h2 class="as-seen-on-section-title custom-txt-bold appear-delay{% cycle '','-1','-2','-3','-4' %}">
+      {{ section.settings.as_seen_on_title }}
+    </h2>
+    <div class="as-seen-on-section-content swiper-container">
+      <div class="as-seen-on-list swiper-wrapper">
+        {% for block in section.blocks %}
+          <div class="as-seen-on-item swiper-slide">
+            <blockquote class="as-seen-on-item-context">
+              {{ block.settings.context }}
+            </blockquote>
+            <div class="as-seen-on-item-icon">
+              {% if block.settings.icon %}
+                <img
+                  src="{{ block.settings.icon | image_url }}"
+                  width="{{ block.settings.icon.width }}"
+                  height="{{ block.settings.icon.height }}"
+                  loading="lazy"
+                  alt="{{ block.settings.icon.alt }}"
+                >
+              {% else %}
+                <img
+                  src="{{ 'placeholder-img.svg' | asset_url }}"
+                  width="200"
+                  height="200"
+                  loading="lazy"
+                  alt="As Seen On"
+                >
+              {% endif %}
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+      <div class="swiper-pagination"></div>
+    </div>
+  </div>
+</div>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+      const asSeenOnSwiper = new Swiper('.as-seen-on-section-{{ section.id }} .swiper-container', {
+        autoHeight: true,
+        loop: true,
+        pagination: {
+          el: '.as-seen-on-section-{{ section.id }} .swiper-pagination',
+          clickable: true,
+          bulletActiveClass: 'my-bullet-active',
+          renderBullet: function (index, className) {
+            return '<span class="' + className + ' my-custom-bullet"></span>';
+          },
+        },
+        autoplay: {
+          delay: 5000,
+          disableOnInteraction: false,
+        },
+        // 响应式显示数量（你要的一行5个）
+        breakpoints: {
+          0: {
+            slidesPerView: 1,
+            spaceBetween: 40,
+          },
+        },
+      });
+      let resizeTimer;
+      window.addEventListener('resize', () => {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(() => {
+          asSeenOnSwiper.update();
+        }, 500);
+      });
+  });
+</script>
+{% style %}
+  .as-seen-on-section-{{ section.id }} {
+      background-color: #fafafa;
+      padding: 4em 0;
+  }
+  .as-seen-on-section-{{ section.id }} .as-seen-on-section--wrapper {
+
+  }
+  .as-seen-on-section-{{ section.id }} .as-seen-on-section--wrapper .as-seen-on-section-title {
+      font-size: 2.4em;
+      font-weight: bold;
+      text-align: center;
+  }
+  .as-seen-on-section-{{ section.id }} .as-seen-on-section--wrapper .as-seen-on-section-content {
+      width: 100%;
+      margin: 0 auto;
+      overflow: hidden;
+      position: relative;
+  }
+  .as-seen-on-section-{{ section.id }} .as-seen-on-section--wrapper .as-seen-on-list {}
+  .as-seen-on-section-{{ section.id }} .as-seen-on-section--wrapper .as-seen-on-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2em 0;
+  }
+  .as-seen-on-section-{{ section.id }} .as-seen-on-section--wrapper .as-seen-on-item-context {
+      font-size: 1.6em;
+      margin-bottom: 1em;
+      text-align: center;
+  }
+  .as-seen-on-section-{{ section.id }} .as-seen-on-section--wrapper .as-seen-on-item-icon {
+      width: 20em;
+      margin-bottom: 2em;
+      display: grid;
+      place-items: center;
+  }
+  .as-seen-on-section-{{ section.id }} .as-seen-on-section--wrapper .as-seen-on-item-icon img {
+        width: 100%;
+        height: auto;
+  }
+  .as-seen-on-section-{{ section.id }} .swiper-container span.my-custom-bullet,
+  .as-seen-on-section-{{ section.id }} .swiper-container span.my-custom-bullet.my-bullet-active {
+    background-color: rgba(0, 0, 0, 0.3);
+  }
+  .as-seen-on-section-{{ section.id }} .swiper-container span.my-custom-bullet.my-bullet-active::before {
+    background: rgba(0, 0, 0, 0.8);
+  }
+  @media screen and (max-width: 768px) {
+    .as-seen-on-section-{{ section.id }}  {
+        font-size: 0.8em;
+    }
+  }
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "As Seen On Section",
+  "class": "as-seen-on-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "as_seen_on_title",
+      "label": "As Seen OnTitle"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "media_item",
+      "name": "Media Item",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "icon",
+          "label": "Icon"
+        },
+        {
+          "type": "html",
+          "id": "context",
+          "label": "Context"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "As Seen On Section",
+      "settings": {
+        "as_seen_on_title": "As Seen On"
+      },
+      "blocks": [
+        {
+          "type": "media_item",
+          "settings": {
+            "icon": "",
+            "context": "Team Fosi does clear, controlled, clean-as-a-whistle "
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

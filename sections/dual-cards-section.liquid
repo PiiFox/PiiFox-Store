@@ -1,0 +1,173 @@
+{% comment %}
+  双列图文卡片组件
+  - 桌面端两列布局，可配置多行
+  - 手机端（≤500px）自动变为单列
+  - 标题、按钮文案、背景图、链接均由后台配置
+{% endcomment %}
+
+<style>
+  .dual-cards-section {
+    padding: 60px 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  }
+
+  .dual-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+
+  .dual-card-item {
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    aspect-ratio: 16 / 10;
+  }
+
+  .dual-card-item__bg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .dual-card-item__overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.6) 0%, transparent 50%);
+  }
+
+  .dual-card-item__content {
+    position: absolute;
+    left: 30px;
+    bottom: 30px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    width: calc(100% - 60px);
+  }
+
+  .dual-card-item__title {
+    font-size: 32px;
+    font-weight: 600;
+    color: #fff;
+    margin: 0;
+  }
+
+  .dual-card-item__btn {
+    padding: 12px 24px;
+    background: var(--colorThemePrimary);
+    color: #fff;
+    border-radius: 30px;
+    text-decoration: none;
+    font-size: 18px;
+    font-weight: 500;
+    white-space: nowrap;
+    transition: opacity 0.2s;
+  }
+
+  .dual-card-item__btn:hover {
+    opacity: 0.9;
+  }
+
+  /* 手机端适配：≤500px 变为单列 */
+  @media (max-width: 500px) {
+    .dual-cards-grid {
+      grid-template-columns: 1fr;
+    }
+    .dual-card-item__title {
+      font-size: 24px;
+    }
+    .dual-card-item__btn {
+      font-size: 16px;
+      padding: 10px 20px;
+    }
+    .dual-card-item__content {
+      left: 20px;
+      bottom: 20px;
+      width: calc(100% - 40px);
+    }
+  }
+</style>
+
+<section class="dual-cards-section dual-cards-section--{{ section.id }} wow bounceInUp">
+  <div class="dual-cards-grid">
+    {% for block in section.blocks %}
+      <div class="dual-card-item">
+        {% if block.settings.image != blank %}
+          <img
+            src="{{ block.settings.image | image_url }}"
+            alt="{{ block.settings.title }}"
+            class="dual-card-item__bg"
+            loading="lazy"
+            width="600"
+            height="375"
+          >
+        {% else %}
+          <img
+            src="{{ 'placeholder-img.svg' | asset_url }}"
+            alt="{{ block.settings.title }}"
+            class="dual-card-item__bg"
+            loading="lazy"
+            width="600"
+            height="375"
+          >
+        {% endif %}
+        <div class="dual-card-item__overlay"></div>
+        <div class="dual-card-item__content">
+          <h3 class="dual-card-item__title">{{ block.settings.title }}</h3>
+          {% if block.settings.link != blank %}
+            <a href="{{ block.settings.link }}" class="dual-card-item__btn">
+              {{ block.settings.button_label }}
+            </a>
+          {% endif %}
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Dual Cards Section",
+
+  "blocks": [
+    {
+      "type": "card_item",
+      "name": "Card Item",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "背景图"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "卡片标题",
+          "default": "Contact Us"
+        },
+        {
+          "type": "text",
+          "id": "button_label",
+          "label": "按钮文案",
+          "default": "Learn More"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "跳转链接"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Dual Cards Section",
+      "category": "custom"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,167 @@
+{%- style -%}
+  .testimonials-{{ section.id }} {
+    background-color: {{ section.settings.color_background }};
+    color: {{ section.settings.color_text }};
+  }
+}
+{%- endstyle -%}
+
+<div
+  class="articles-section testimonials-{{ section.id }}{% if section.settings.color_background == settings.color_body_bg %} testimonials-section--with-divider{% endif %} text-{{ section.settings.align_text }}"
+  data-section-id="{{ section.id }}"
+  data-section-type="testimonials"
+  data-aos>
+  {%- unless section.settings.full_width -%}
+    <div class="page-width">
+  {%- endunless -%}
+  {%- if section.settings.title != blank -%}
+    <div class="page-width">
+      <div class="section-header">
+        <h2>{{ section.settings.title | escape }}</h2>
+      </div>
+    </div>
+  {%- endif -%}
+
+  {%- if section.blocks.size > 0 -%}
+    <div class="slideshow-wrapper">
+      <div
+        class="testimonials-slider"
+        id="Testimonials-{{ section.id }}"
+        data-dots="true"
+        data-count="{{ section.blocks.size }}"> 
+        {%- for block in section.blocks -%}
+          <div
+            class="testimonials-slide testimonials-slide--{{ block.id }}"
+            data-index="{{ forloop.index0 }}"
+            data-aos="row-of-{{ section.blocks.size }}"
+            {{ block.shopify_attributes }}>
+            <a href="{{ block.settings.article.url}}" class="testimonials-slider__text" style="display:block">
+              {%- if block.settings.image != blank -%}
+                <div class="testimonail-image{% if section.settings.round_images %} testimonail-image--round{% endif %}">
+                  <div class="image-wrap" style="height: 0; padding-bottom: {{ 100 | divided_by: block.settings.image.aspect_ratio }}%;">
+                    {%- assign img_url = block.settings.image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+                    <img class="lazyload"
+                        data-src="{{ img_url }}"
+                        data-widths="[180, 360, 540, 720]"
+                        data-aspectratio="{{ block.settings.image.aspect_ratio }}"
+                        data-sizes="auto"
+                        alt="{{ block.settings.image.alt }}">
+                    <noscript>
+                      <img class="lazyloaded" src="{{ block.settings.image | img_url: '480x385' }}" alt="{{ block.settings.image.alt }}">
+                    </noscript>
+                  </div>
+                </div>
+              {%- endif -%}
+                <div class="rte-setting text-spacing features_blog">
+                  <div class="f_arti_tags"><span>{{ block.settings.article.tags }}</span></div>
+                  <div class="f_arti_title">{{ block.settings.article.title }}</div>
+                  <div class="f_arti_link">Read More</div>
+                  <div class="f_arti_date"> {{ block.settings.article.published_at | time_tag: format: 'month_day_year' }}</div>
+                </div>
+            </a>
+          </div>
+        {%- endfor -%}
+      </div>
+    </div>
+  {%- endif -%}
+  {%- unless section.settings.full_width -%}
+   </div>
+  {%- endunless -%}
+</div>
+
+{% schema %}
+{
+  "name": "blog-slider",
+  "class": "index-section blogs-section",
+  "max_blocks": 9,
+  "settings": [
+   {
+      "type": "checkbox",
+      "id": "full_width",
+      "label": "t:sections.promo-grid.settings.full_width.label",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "t:sections.testimonials.settings.title.label",
+      "default": "Testimonials"
+    },
+    {
+      "type": "select",
+      "id": "align_text",
+      "label": "t:sections.testimonials.settings.align_text.label",
+      "default": "center",
+      "options": [
+        {
+          "value": "left",
+          "label": "t:sections.testimonials.settings.align_text.options.left.label"
+        },
+        {
+          "value": "center",
+          "label": "t:sections.testimonials.settings.align_text.options.center.label"
+        },
+        {
+          "value": "right",
+          "label": "t:sections.testimonials.settings.align_text.options.right.label"
+        }
+      ]
+    },
+    {
+      "type": "checkbox",
+      "id": "round_images",
+      "label": "t:sections.testimonials.settings.round_images.label",
+      "info": "t:sections.testimonials.settings.round_images.info",
+      "default": true
+    },
+    {
+      "type": "color",
+      "id": "color_background",
+      "label": "t:sections.testimonials.settings.color_background.label",
+      "default": "#f9f9f9"
+    },
+    {
+      "type": "color",
+      "id": "color_text",
+      "label": "t:sections.testimonials.settings.color_text.label",
+      "default": "#1c1d1d"
+    } 
+  ],
+  "blocks": [
+    {
+      "type": "article",
+      "name": "article-slider",
+      "settings": [
+       {
+          "id": "article",
+          "type": "article",
+          "label": "Select blog"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        }
+        
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "blog-slider",
+      "blocks": [
+        {
+          "type": "article"
+        },
+        {
+          "type": "article"
+        },
+        {
+          "type": "article"
+        }
+        
+      ]
+    }
+  ]
+}
+{% endschema %}

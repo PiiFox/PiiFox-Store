@@ -1,0 +1,103 @@
+<div class="cart__item-sub price-detail-container price-detail-container-{{ section_id }}">
+  {% style %}
+    .cart-price-detail {
+      height: 0;
+      opacity: 0;
+      visibility: hidden;
+      overflow: hidden;
+      transform: translateY(-50%);
+      transition: all 0.3s cubic-bezier(0.2, 0.6, 0.4, 1);
+    }
+    .cart-price-detail.active {
+      height: auto;
+      opacity: 1;
+      transform: translateY(0%);
+      visibility: visible;
+    }
+    .cart__item-sub.price-detail-container {
+      flex-direction: column;
+    }
+    .cart__item-sub.price-detail-container .cart__item-row {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.9em;
+    }
+    .cart__item-row .price-detail-item-title {
+    }
+    .cart__item-row .price-detail-item-context {
+      color: #000;
+    }
+    .price-detail-toggle {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      user-select: none;
+    }
+    .price-detail-toggle .price-detail-toggle-line {
+      flex: 1;
+      height: 1px;
+      background-color: #777;
+      margin: 0 0.5em;
+    }
+    .price-detail-toggle .price-detail-toggle-icon svg {
+      margin-left: 0.5em;
+      color: #777;
+      transform: rotate(180deg);
+      transition: transform 0.3s cubic-bezier(0.2, 0.6, 0.4, 1);
+    }
+    .price-detail-toggle.active .price-detail-toggle-icon svg {
+      transform: rotate(0deg);
+    }
+  {% endstyle %}
+  <div class="cart-price-detail active">
+    <div class="price-detail-item cart__item-row">
+      <div class="price-detail-item-title">{{ 'cart.general.subtotal' | t }}</div>
+      <div class="price-detail-item-context">{{ cart.total_price | money }}</div>
+    </div>
+    <div class="price-detail-item cart__item-row">
+      <div class="price-detail-item-title">{{ 'cart.general.shipping' | t }}</div>
+      <div class="price-detail-item-context">{{ 'cart.general.shipping' | t }}</div>
+    </div>
+    <div class="price-detail-item cart__item-row">
+      <div class="price-detail-item-title">{{ 'cart.general.taxes' | t }}</div>
+      <div class="price-detail-item-context">{{ 'cart.general.is_taxes' | t }}</div>
+    </div>
+  </div>
+  <div class="price-detail-toggle cart__item-row active">
+    <div class="price-detail-toggle-line"></div>
+    <div class="price-detail-toggle-text">{{ 'cart.general.checkout_details' | t }}</div>
+    <div class="price-detail-toggle-icon">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 20 20"
+        fill="currentColor"
+        aria-hidden="true"
+        data-slot="icon"
+        class="rotate-180 transition-all"
+        width="20"
+        height="20"
+      >
+        <path fill-rule="evenodd"
+            d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z"
+            clip-rule="evenodd"></path>
+      </svg>
+    </div>
+    <div class="price-detail-toggle-line"></div>
+  </div>
+</div>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const toggle = document.querySelector('.price-detail-container-{{ section_id }} .price-detail-toggle');
+    const detail = document.querySelector('.price-detail-container-{{ section_id }} .cart-price-detail');
+    if (toggle && detail) {
+      toggle.addEventListener('click', function () {
+        toggle.classList.toggle('active');
+        detail.classList.toggle('active');
+      });
+    }
+  });
+</script>

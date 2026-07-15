@@ -1,0 +1,120 @@
+{%- style -%}
+  .section-contact-us {
+    padding: 6rem 2rem;
+    text-align: center;
+  }
+  .section-contact-us__title {
+    font-size: 3rem;
+    font-weight: 600;
+    margin: 0 0 4rem;
+    color: #111;
+  }
+  .section-contact-us__grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 桌面端固定2列 */
+    gap: 2rem;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+  /* 手机端一行1个 */
+  @media (max-width: 768px) {
+    .section-contact-us__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+  .contact-email-item {
+    font-size: 1.1rem;
+    color: var(--colorLightLink);
+    text-decoration: none;
+  }
+  .contact-email-item:hover {
+    text-decoration: underline;
+  }
+  .contact-email-label {
+    color: #333;
+    margin-right: 0.5rem;
+  }
+{%- endstyle -%}
+
+<div class="section-contact-us">
+  <h2 class="section-contact-us__title">{{ section.settings.title }}</h2>
+
+  <div class="section-contact-us__grid">
+    {%- for block in section.blocks -%}
+      {%- if block.settings.email != blank -%}
+        <div>
+          {%- if block.settings.label != blank -%}
+            <span class="contact-email-label">{{ block.settings.label }}:</span>
+          {%- endif -%}
+          <a href="mailto:{{ block.settings.email }}" class="contact-email-item">
+            {{ block.settings.email }}
+          </a>
+        </div>
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Contact Us - Email Us",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "标题",
+      "default": "Email Us"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "email_item",
+      "name": "邮箱条目",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "标签（如 Official / Marketing）"
+        },
+        {
+          "type": "text",
+          "id": "email",
+          "label": "邮箱地址",
+          "placeholder": "support@example.com"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Email Us",
+      "settings": {
+        "title": "Email Us"
+      },
+      "blocks": [
+        {
+          "type": "email_item",
+          "settings": {
+            "label": "Official Email",
+            "email": "store@piifox.com"
+          }
+        },
+        {
+          "type": "email_item",
+          "settings": {
+            "label": "Marketing Email",
+            "email": "market@piifox.com"
+          }
+        },
+        {
+          "type": "email_item",
+          "settings": {
+            "label": "Support Email",
+            "email": "service@piifox.com"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

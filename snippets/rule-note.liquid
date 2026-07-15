@@ -1,0 +1,20 @@
+<div class="rule-note-section-container">
+  <ul class="rule-list">
+    <li class="rule-item rule-item-1">{{ block.rule_text1 }}</li>
+    <li class="rule-item rule-item-2">{{ block.rule_text2 }}</li>
+    <li class="rule-item rule-item-3">{{ block.rule_text3 }}</li>
+    <li class="rule-item rule-item-4">{{ block.rule_text4 }}</li>
+  </ul>
+</div>
+
+{% style %}
+  .rule-note-section-container {
+    box-shadow: 0 0 4px #ddd;
+    padding: 0.5em ;
+  }
+  .rule-note-section-container .rule-list {
+    margin-bottom: 0 !important;
+    color: #e18357;
+  }
+  .rule-note-section-container .rule-list .rule-item {}
+{% endstyle %}

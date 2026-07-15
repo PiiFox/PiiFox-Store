@@ -1,0 +1,129 @@
+
+<div class="container-fluid" data-section-id="{{ section.id }}">
+    <div class="grid">
+      <div class="grid__item medium-up--five-sixths medium-up--push-one-twelfth">
+        {%- assign title_words = page.title | split: '-' -%}
+        {%- assign title_words_1 = page.title | split: '|' -%}
+        <div class="support-breadcrumb-box">
+          <div class="support-breadcrumb page-width">
+            <div class="support-crumb"><a href="/">Home</a></div>
+            <div class="support-crumb"><a href="/pages/support-center">Support</a></div>
+            {% if title_words.size > title_words_1.size %}
+              <div class="support-crumb"><a href="#">{{ title_words | first }}</a></div>
+            {% else %}
+              <div class="support-crumb"><a href="#">{{ title_words_1 | first }}</a></div>
+            {% endif %}
+          </div>
+        </div>
+        <div class="section-header text-center">
+          <h1 class="h2">{{ page.title  }}</h1>
+        </div>
+        <div class="rte con-page-box page-width">
+          {{ page.content }}
+        </div>
+      </div>
+    </div>
+</div>
+<script>
+  //$(function() {collapseAll()})
+  function collapseAll() {
+    let itemList = document.querySelectorAll("#accordionExample .item-content");
+      for(let i = 0; i < itemList.length; i++) {
+        let dataset = itemList[i].dataset;
+        dataset && dataset.target && $(dataset.target).removeClass('show')
+      }
+    let dataset = document.querySelector('#accordionExample .item-content.active').dataset;
+    console.log(dataset)
+    dataset && dataset.target && $(dataset.target).addClass("show");
+  }
+  $("#accordionExample").on("click", ".item-content", function () {
+      collapseAll()
+    });
+</script>
+<style>
+  .main-content{
+    margin-top: 0;
+  }
+  a.item-content, a.sub-item-content,a span {
+    white-space: nowrap;
+    display: inline-block;
+    width: 100%;
+  }
+  .help-center .help-center-menu {
+    top: 80px;
+  }
+  .help-center .icon {
+    width: 20px;
+    height: 20px;
+    background: #888;
+    position: relative;
+    right: 4px;
+    clip-path: polygon( 20% 10%, 60% 50%, 20% 90%, 20% 80%, 50% 50%, 20% 20%);
+  }
+  .rte-setting a:not(.rte__image):not(.btn):not(.spr-summary-actions-newreview), .rte a:not(.rte__image):not(.btn):not(.spr-summary-actions-newreview) {
+    border-bottom: none;
+  }
+  .rte-setting a:not(.btn):not(.spr-summary-actions-newreview):after, .rte a:not(.btn):not(.spr-summary-actions-newreview):after {
+    border-bottom: none;
+  }
+  .item-content.active .icon-angledown {
+    transform: rotate(90deg);
+  }
+  .collapse {
+    display: none;
+  }
+  .collapse.show {
+    display: block;
+  }
+  .section-header {
+    margin-bottom: 0;
+    margin-top: 2rem;
+  }
+  .con-page-box .container12 {
+    padding-top: 0;
+  }
+  .medium-up--five-sixths {
+    width: 100%;
+    background: #f0f1f2;
+    padding-bottom: 5rem;
+  }
+  .con-page-box .container12 {
+    max-width: unset;
+    margin: unset;
+  }
+  .support-breadcrumb-box {
+      background: #fff;
+    }
+    .support-breadcrumb-box .support-breadcrumb {
+      margin: 0 auto;
+      display: flex;
+      padding: 0 3rem;
+    }
+    .support-breadcrumb-box .support-crumb a {
+      line-height: 2.8rem;
+    }
+    .support-breadcrumb-box .support-crumb a:hover {
+      color: #2673ff;
+    }
+    .support-breadcrumb-box .support-crumb:after {
+      content: ">";
+      padding: 0 0.5rem;
+    }
+    .support-breadcrumb-box .support-crumb:last-child:after {
+      content: "";
+    }
+  @media screen and (max-width: 500px) {
+    .support-breadcrumb-box .support-breadcrumb {
+      padding: 0;
+    }
+  }
+</style>
+{% schema %}
+  {
+    "name": "Help Center",
+    "settings": []
+  }
+{% endschema %}
+
+{% javascript %}
+{% endjavascript %}

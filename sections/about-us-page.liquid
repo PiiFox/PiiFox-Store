@@ -1,0 +1,474 @@
+
+{% if section.settings.divider %}
+<div class="about-us-container-{{ section.id }}">
+ <div class="con con1">
+    <div class="container14">
+      <p>{{ section.settings.abustextp1 }}</p>
+      <h2 class="t-color">{{ section.settings.abustexth1 }}</h2>
+    </div>
+  </div>
+  <div class="con con2">
+    <div class="container14">
+      <div class="row">
+        <div class="col-4">
+          <div class="row">
+            <div class="col-12">
+              <img src="{{ section.settings.abusimg1 | img_url: 'master' }}" alt="{{ section.settings.abusimg1.alt }}" class="scroll-img scroll-img1">
+            </div>
+          </div>
+        </div>
+        <div class="col-4">
+          <div class="row">
+            <div class="col-12">
+              <img src="{{ section.settings.abusimg2 | img_url: 'master' }}" alt="{{ section.settings.abusimg2.alt }}" class="scroll-img scroll-img2">
+            </div>
+            <div class="col-12">
+              <img src="{{ section.settings.abusimg3 | img_url: 'master' }}" alt="{{ section.settings.abusimg3.alt }}" class="scroll-img scroll-img2">
+            </div>
+          </div>
+        </div>
+        <div class="col-4">
+          <div class="row">
+            <div class="col-12">
+              <img src="{{ section.settings.abusimg4 | img_url: 'master' }}" alt="{{ section.settings.abusimg4.alt }}" class="scroll-img scroll-img3">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="con con3">
+    <div class="container14">
+      <div class="row">
+        <div class="col-48">
+          <img src="{{ section.settings.abusimg5 | img_url: 'master' }}" alt="{{ section.settings.abusimg5.alt }}" class="scroll-img scroll-img4">
+        </div>
+        <div class="col-52">
+          <img src="{{ section.settings.abusimg6 | img_url: 'master' }}" alt="{{ section.settings.abusimg6.alt }}" class="scroll-img scroll-img5">
+        </div>
+      </div>
+    </div>
+    <div class="con-text con-text1">
+      <h3>{{ section.settings.abustexth2 }}</h3>
+      <p>{{ section.settings.abustextp2 }}</p>
+    </div>
+  </div>
+  <div class="con con4">
+    <div class="container14">
+      <div class="row">
+        <div class="col-52">
+          <img src="{{ section.settings.abusimg7 | img_url: 'master' }}" alt="{{ section.settings.abusimg7.alt }}" class="scroll-img scroll-img6">
+        </div>
+        <div class="col-48">
+          <img src="{{ section.settings.abusimg8 | img_url: 'master' }}" alt="{{ section.settings.abusimg8.alt }}" class="scroll-img scroll-img7">
+        </div>
+      </div>
+    </div>
+    <div class="con-text con-text2">
+      <h3>{{ section.settings.abustexth3 }}</h3>
+      <p>{{ section.settings.abustextp3 }}</p>
+    </div>
+  </div>
+  <div class="con con5">
+    <img src="{{ section.settings.abusimg9 | img_url: 'master' }}" alt="{{ section.settings.abusimg9.alt }}" class="conbg">
+    <div class="container14 con-bounty">
+      <div class="con-num-box">
+        <p>{{ section.settings.abustextp4 }}</p>
+        <div class="bounty">{{ section.settings.abustextp5 }}</div>
+      </div>
+      <div class="con-num-box">
+        <p>{{ section.settings.abustextp6 }}</p>
+        <div class="bounty">{{ section.settings.abustextp7 }}</div>
+      </div>
+    </div>
+  </div>
+
+  
+  <div class="milestone">
+    <h3 class="milestone-title page-width">{{ section.settings.title }}</h3>
+    <div class="progressbar-track page-width">
+      <div class="progressbar-slide"></div>
+    </div>
+    <div class="swiper page-width">
+        <div class="swiper-wrapper">
+          {% for block in section.blocks%}
+            <div class="swiper-slide" data-time="{{ block.settings.Date }}">
+              <div class="thumb-img">
+                <img src="{{ block.settings.img | img_url: 'grande' }}" alt="{{ block.settings.title }}" title="{{ block.settings.title }}" />
+              </div>
+              <div class="time-node-info">
+                <div class="title">{{ block.settings.title }}</div>
+                <div class="describe">{{ block.settings.describe }}</div>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+        <div class="swiper-pagination"></div>
+        <!-- If we need navigation buttons -->
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-button-next"></div>
+    </div>
+  </div>
+</div>
+<style>
+.about-us-container-{{ section.id }} .page-width--narrow{max-width:1400px}
+.about-us-container-{{ section.id }} .page-full,.about-us-container-{{ section.id }} .page-width{padding:0}
+.text-left.page-width{padding:0 1rem;box-sizing:content-box}
+.milestone{background:#000;color:#fff}
+.milestone h3{font-size: 3rem;padding: 4rem 1.3rem 2rem;font-weight: 600;}
+.progressbar-track{background:linear-gradient(to bottom,transparent,#fff);height:4px;margin:0 auto;overflow-x:hidden;position:relative;top:3rem}
+.progressbar-slide{width:calc(100% / 8);height:4px;background:#eb6f20;transform:translateX(0);transition:all .6s ease}
+h3{width:100%;margin:0 auto;padding:1rem 0}
+.swiper{width:100%;height:100%;overflow-x:hidden}
+.swiper-slide{display:flex;align-items:center;padding:8rem 0 6rem 0}
+.swiper-slide .thumb-img{margin:0 3rem 0 1rem;width:30rem;min-width:30rem;height:30rem;background:#fff;border-radius:1.5rem}
+.swiper-slide .time-node-info{width:calc(100% - 26rem);max-width:calc(100% - 26rem);word-wrap:break-word;margin:0 1rem}
+.swiper-slide .thumb-img img{width:100%;height:100%;border-radius:1.5rem;object-fit:contain}
+.swiper-slide .time-node-info .title{padding:.8rem 0 1rem;font-size:1.8rem;font-weight:600}
+.swiper-slide .time-node-info .describe{line-height:1.8rem;font-weight:400;color:#bbb}
+.swiper-pagination{bottom:unset;top:.3rem;left:0;position:absolute;white-space:nowrap;transform:translateX(0);transition:all .6s ease}
+.swiper-pagination-bullet{width:calc(100% / 8);height:20px;text-align:center;line-height:20px;font-size:1.2rem;color:rgba(255,255,255,.6);opacity:1;border-radius:0;background:0 0;margin:0!important}
+.swiper-pagination-bullet-active{color:#fff;background:0 0}
+@media screen and (max-width:980px){.text-left.page-width{padding:0 1rem}
+.milestone-title,.progressbar-track{width:96%}
+.swiper-horizontal>.swiper-pagination-bullets,.swiper-pagination-bullets.swiper-pagination-horizontal,.swiper-pagination-custom,.swiper-pagination-fraction{width:96%;margin:0 2%}
+.swiper-slide .thumb-img{margin-right:2%;margin-left:1rem}
+.swiper-slide .time-node-info{margin-right:1rem}
+.text-with-icons__blocks{flex-direction:row}
+.text-with-icons__blocks .text-with-icons__block{width:50%}
+}
+@media screen and (max-width:750px){
+.support-background-box .context{display:grid;place-items:center;text-align:center}
+.swiper-pagination-bullet{font-size:1rem}
+.swiper-slide{padding:6rem 1rem 2rem}
+.swiper-pagination{height:4rem;}
+}
+@media screen and (max-width:650px){.swiper-slide{display:block}
+.swiper-slide .thumb-img{margin:0;width:100%;aspect-ratio:1/1;height:unset;border-radius:0;min-width:auto;border-radius:1rem;}
+.swiper-slide .thumb-img img{border-radius:0}
+.swiper-slide .time-node-info{width:calc(100% - 2rem);max-width:calc(100% - 2rem);margin:0 1rem;}
+}
+@media screen and (max-width:450px){.swiper-pagination-bullet{font-size:.6rem}
+}
+
+.con{position: relative;font-family: "Mont";overflow:hidden;box-sizing:border-box;}
+.con .conbg{position:absolute;top:0;left:50%;transform:translate(-50%,0);z-index:0;-moz-user-select:none;-webkit-user-select:none;-ms-user-select:none;-khtml-user-select:none;user-select:none;}
+.container14{max-width: 1480px;margin: auto;position: relative;}
+.container14 .row{display: -ms-flexbox;display: flex;-ms-flex-wrap: wrap;flex-wrap: wrap;}
+.container14 .col-4{-ms-flex: 0 0 33.3333%;flex: 0 0 33.3333%;max-width: 33.3333%;}
+.container14 .col-6{-ms-flex: 0 0 50%;flex: 0 0 50%;max-width: 50%;}
+.container14 .col-5{-ms-flex: 0 0 33.3333%;flex: 0 0 33.3333%;max-width: 33.3333%;}
+.container14 .col-7{-ms-flex: 0 0 50%;flex: 0 0 50%;max-width: 50%;}
+.container14 .col-46{-ms-flex: 0 0 46%;flex: 0 0 46%;max-width: 46%;}
+.container14 .col-54{-ms-flex: 0 0 54%;flex: 0 0 54%;max-width: 54%;}
+.container14 .col-48{-ms-flex: 0 0 48%;flex: 0 0 48%;max-width: calc(48% - 10px);padding:0 5px;}
+.container14 .col-52{-ms-flex: 0 0 52%;flex: 0 0 52%;max-width: calc(52% - 10px);padding:0 5px;}
+.container14 .col-48 img{width: 100%}
+.container14 .col-52 img{width: 100%}
+.container14 .col-12{-ms-flex: 0 0 100%;flex: 0 0 100%;max-width: 100%;}
+.scroll-img{border-radius:25px;}
+.con-text{box-shadow:0px 0px 20px rgb(0 0 0 / 30%);font-size: 42px;padding:90px 40px;border-radius: 25px;box-sizing: border-box;background-color: #fff;width: 540px;position: absolute;top: 20%;}
+.con-text h3{margin: 0 0 30px;border-bottom: 1px solid #ccc;padding-bottom: 30px;}
+.con-text p{font-size: 22px;color: #03060b;line-height: 34px;}
+.con-text strong{font-weight: 600;color: #f06e1e;}
+.con-text1{left: 23%;}
+.con-text2{right: 20%;width: 640px;top: 25%;}
+.con-bounty{display: flex;justify-content:space-around;}
+.con-num-box{text-align: center;}
+.con-num-box p{font-size: 22px;color: #738791;}
+.con-num-box .bounty{font-size:80px;font-weight: 600;position: relative;background: repeating-linear-gradient(90deg,#ff6400 0%,#ff6400 15%,#942cd0 62%,#5b62e2 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;color: #fff;display: inline-block;}
+.con-num-box .bounty:after{content:"+";font-size:50px;position: absolute;-webkit-text-fill-color:#5b62e2}
+.t-color{background: repeating-linear-gradient(90deg,#ff6400 0%,#ff6400 15%,#942cd0 62%,#5b62e2 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;color: #fff;display: inline-block;transition: all .2s linear;}
+.t-color1{background-image: repeating-linear-gradient(90deg,#ff6400 0%,#ff6400 100%);transition: all .2s linear;}
+
+.con1{margin-top:80px;}
+.con1 p{font-size: 22px;}
+.con1 h2{font-size: 80px;font-weight:600}
+.con2{height: 1300px;}
+.con2 .col-4{padding:0 5px;max-width: calc(33.3333% - 10px);}
+.con2 .col-4 img{width: 100%}
+.scroll-img1{margin-top: 50px;}
+.scroll-img2{margin-top: 150px;}
+.col-12+.col-12 .scroll-img2{margin-top: 10px;}
+.scroll-img3{margin-top: 50px;}
+.scroll-img5{margin-top: 50px;}
+.scroll-img6{margin-top: 150px;}
+.con3{height: 1600px;}
+.con4{height: 1400px;}
+.con5{height: 976px;padding-top:15%;}
+@media screen and (max-width:750px){
+.con .container14{width: 130vw;-webkit-transform: translateX(-15vw);transform: translateX(-15vw);}
+.con-text h3{font-size: 1.75rem}
+.con-text p{font-size: 1rem;line-height: 1.5;}
+.con1 .container14{width: 88vw;-webkit-transform:none;transform:none}
+.con1 p{font-size:1rem}
+.con1 h2{font-size:3.5rem}
+.scroll-img{border-radius:.5rem;}
+.con2{height: auto;padding-bottom:10rem;}
+.con3{height: auto;padding-bottom: 15rem}
+.con-text{width: 88vw;top:0;padding:2.5rem 1.25rem;border-radius:1rem;}
+.con-text1{left:6vw}
+.con-text2{right:6vw;top: -10%}
+.con4{height: auto;padding-bottom:35rem}
+.con5{height: auto;padding-bottom:10rem;}
+.con5 .conbg{position: relative;width: 100vw}
+.con-num-box .bounty{font-size: 3.5rem}
+.con-bounty{flex-direction: column;position: absolute;top: 15%}
+.con-num-box .bounty:after{position:relative;font-size: 3rem}
+}
+</style>
+<script src="{{ 'gsap.min.js' | asset_url }}" ></script>
+<script src="{{ 'MotionPathPlugin.min.js' | asset_url }}" ></script>
+<script src="{{ 'ScrollTrigger.min.js' | asset_url }}" ></script>
+<script src="{{ 'waypoints.js' | asset_url }}" ></script>
+
+<script>
+  !function(t){"use strict";t.fn.countUp=function(e){var a=t.extend({time:2e3,delay:10},e);return this.each(function(){var e=t(this),n=a,u=function(){e.data("counterupTo")||e.data("counterupTo",e.text());var t=parseInt(e.data("counter-time"))>0?parseInt(e.data("counter-time")):n.time,a=parseInt(e.data("counter-delay"))>0?parseInt(e.data("counter-delay")):n.delay,u=t/a,r=e.data("counterupTo"),o=[r],c=/[0-9]+,[0-9]+/.test(r);r=r.replace(/,/g,"");for(var d=(/^[0-9]+$/.test(r),/^[0-9]+\.[0-9]+$/.test(r)),s=d?(r.split(".")[1]||[]).length:0,i=u;i>=1;i--){var p=parseInt(Math.round(r/u*i));if(d&&(p=parseFloat(r/u*i).toFixed(s)),c)for(;/(\d+)(\d{3})/.test(p.toString());)p=p.toString().replace(/(\d+)(\d{3})/,"$1,$2");o.unshift(p)}e.data("counterup-nums",o),e.text("0");var f=function(){e.text(e.data("counterup-nums").shift()),e.data("counterup-nums").length?setTimeout(e.data("counterup-func"),a):(delete e.data("counterup-nums"),e.data("counterup-nums",null),e.data("counterup-func",null))};e.data("counterup-func",f),setTimeout(e.data("counterup-func"),a)};e.waypoint(u,{offset:"100%",triggerOnce:!0})})}}(jQuery);
+</script>
+<script type="text/javascript">$('.bounty').countUp();</script>
+<script type="text/javascript">
+gsap.registerPlugin(ScrollTrigger);
+
+
+gsap.timeline({scrollTrigger:{
+    trigger:'.con2',
+    start:'-150 top',
+    end:'+=1000',
+    scrub:0,
+}})
+.from('.con2 .scroll-img1',{y:200})
+gsap.timeline({scrollTrigger:{
+    trigger:'.con2',
+    start:'-150 top',
+    end:'+=1000',
+    scrub:0,
+}})
+.from('.con2 .scroll-img2',{y:-100})
+gsap.timeline({scrollTrigger:{
+    trigger:'.con3',
+    start:'-150 top',
+    end:'+=1000',
+    scrub:0,
+}})
+.from('.con3 .scroll-img5',{y:80})
+gsap.timeline({scrollTrigger:{
+    trigger:'.con3',
+    start:'-40 top',
+    end:'+=1000',
+    scrub:0,
+}})
+.from('.con3 .con-text1',{y:300})
+gsap.timeline({scrollTrigger:{
+    trigger:'.con4',
+    start:'-40 top',
+    end:'+=1000',
+    scrub:0,
+}})
+.from('.con4 .con-text2',{y:400})
+</script>
+  <script>
+const slider_bar = document.querySelector(".progressbar-slide");
+const swiperItems = document.querySelectorAll(".swiper-slide");
+function scrollRule(activeBullet) {
+  let activeIndex = activeBullet.dataset.index;
+  let activeLeft = activeBullet.offsetLeft;
+
+  let paginationEl = document.querySelector(".swiper-pagination");
+  let swiperList = document.querySelectorAll(".swiper-pagination-bullet");
+
+  if(activeIndex < 4) {
+    paginationEl.style.transform = 'translateX(0px)';
+    slider_bar.style.transform = 'translateX('+ activeLeft +'px)';
+  } else if(swiperList.length - 1 - activeIndex < 4) {
+    let diff = swiperList.length < 8 ? 0 : swiperList.length - 8;
+    let pageLeft = diff * activeBullet.clientWidth;
+    paginationEl.style.transform = 'translateX('+ (-1 * pageLeft) +'px)';
+    slider_bar.style.transform = 'translateX('+ (activeLeft - pageLeft) +'px)';
+  } else {
+    slider_bar.style.transform = 'translateX('+ (3 * activeBullet.clientWidth) +'px)';
+    paginationEl.style.transform = 'translateX('+ (-1 * (activeIndex - 3) * activeBullet.clientWidth) +'px)';
+    
+  }
+}
+const swiper = new Swiper(".swiper", {
+  loop: true,
+  autoplay: {
+    delay: 5000,
+    disableOnInteraction: false
+  },
+  on:{
+    autoplay: () => {
+      scrollRule(document.querySelector(".swiper-pagination-bullet.swiper-pagination-bullet-active"));
+    },
+    slideChangeTransitionStart: function(){
+      let activeBullet = document.querySelector(".swiper-pagination-bullet.swiper-pagination-bullet-active");
+      activeBullet && scrollRule(activeBullet);
+    },
+  }, 
+  navigation: {
+    nextEl: ".swiper-button-next",
+    prevEl: ".swiper-button-prev",
+    enabled: false
+  },
+  pagination: {
+    el: ".swiper-pagination",
+    clickable: true, 
+    renderBullet: function (index, className) {
+      let data = window.matchMedia('(max-width: 550px)').matches ? swiperItems[index].dataset.time.slice(2) : swiperItems[index].dataset.time;
+      return '<div class="' + className + '" data-index="' + index + '">' + data + "</div>";
+    }
+  },
+});
+$(function() {
+  let slide_left = document.querySelector(".swiper-pagination-bullet:first-child").offsetLeft;
+  slider_bar.style.transform = 'translateX(' + slide_left + "px)";
+})
+let bullets = document.querySelectorAll('.swiper-pagination-bullet');
+for(let i = 0; i < bullets.length; i++ ) {
+  bullets[i].addEventListener('click', (event) => {
+    scrollRule(event.target);
+  })
+}
+  </script>
+{% endif %}
+{% schema %}
+  {
+    "name": "t:sections.timeline-swiper.name",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "divider",
+        "label": "t:sections.timeline-swiper.settings.divider",
+        "default": true
+      },{
+        "type": "text",
+        "id": "abustextp1",
+        "label": "t:sections.timeline-swiper.settings.textp1"
+      },{
+        "type": "text",
+        "id": "abustexth1",
+        "label": "t:sections.timeline-swiper.settings.texth1"
+      },{
+        "type": "image_picker",
+        "id": "abusimg1",
+        "label": "t:sections.timeline-swiper.settings.img1"
+      },{
+        "type": "image_picker",
+        "id": "abusimg2",
+        "label": "t:sections.timeline-swiper.settings.img2"
+      },{
+        "type": "image_picker",
+        "id": "abusimg3",
+        "label": "t:sections.timeline-swiper.settings.img3"
+      },{
+        "type": "image_picker",
+        "id": "abusimg4",
+        "label": "t:sections.timeline-swiper.settings.img4"
+      },{
+        "type": "image_picker",
+        "id": "abusimg5",
+        "label": "t:sections.timeline-swiper.settings.img5"
+      },{
+        "type": "image_picker",
+        "id": "abusimg6",
+        "label": "t:sections.timeline-swiper.settings.img6"
+      },{
+        "type": "text",
+        "id": "abustexth2",
+        "label": "t:sections.timeline-swiper.settings.texth2"
+      },{
+        "type": "text",
+        "id": "abustextp2",
+        "label": "t:sections.timeline-swiper.settings.textp2"
+      },{
+        "type": "image_picker",
+        "id": "abusimg7",
+        "label": "t:sections.timeline-swiper.settings.img7"
+      },{
+        "type": "image_picker",
+        "id": "abusimg8",
+        "label": "t:sections.timeline-swiper.settings.img8"
+      },{
+        "type": "text",
+        "id": "abustexth3",
+        "label": "t:sections.timeline-swiper.settings.texth3"
+      },{
+        "type": "text",
+        "id": "abustextp3",
+        "label": "t:sections.timeline-swiper.settings.textp3"
+      },{
+        "type": "image_picker",
+        "id": "abusimg9",
+        "label": "t:sections.timeline-swiper.settings.img9"
+      },{
+        "type": "text",
+        "id": "abustextp4",
+        "label": "t:sections.timeline-swiper.settings.textp4"
+      },{
+        "type": "text",
+        "id": "abustextp5",
+        "label": "t:sections.timeline-swiper.settings.textp5"
+      },{
+        "type": "text",
+        "id": "abustextp6",
+        "label": "t:sections.timeline-swiper.settings.textp6"
+      },{
+        "type": "text",
+        "id": "abustextp7",
+        "label": "t:sections.timeline-swiper.settings.textp7"
+      },{
+        "type": "text",
+        "id": "title",
+        "label": "t:sections.timeline-swiper.settings.title"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "timeline_swiper_slider",
+        "name": "t:sections.timeline-swiper.blocks.column.name",
+        "settings": [{
+            "type": "text",
+            "id": "Date",
+            "label": "t:sections.timeline-swiper.blocks.column.settings.date"
+          }, {
+            "type": "image_picker",
+            "id": "img",
+            "label": "t:sections.timeline-swiper.blocks.column.settings.img"
+          }, {
+            "type": "text",
+            "id": "title",
+            "label": "t:sections.timeline-swiper.blocks.column.settings.title"
+          }, {
+            "type": "text",
+            "id": "describe",
+            "label": "t:sections.timeline-swiper.blocks.column.settings.describe"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "timeline_swiper_slider",
+        "blocks": [
+          {
+            "type": "timeline_swiper_slider"
+          },{
+            "type": "timeline_swiper_slider"
+          },{
+            "type": "timeline_swiper_slider"
+          },{
+            "type": "timeline_swiper_slider"
+          },{
+            "type": "timeline_swiper_slider"
+          },{
+            "type": "timeline_swiper_slider"
+          },{
+            "type": "timeline_swiper_slider"
+          },{
+            "type": "timeline_swiper_slider"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

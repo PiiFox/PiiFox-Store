@@ -1,0 +1,40 @@
+{% if product.metafields.custom.faq_list != blank %}
+  <div class="product-faq-list-block">
+    {% if request.page_type == 'product' %}
+      <div class="product-faq-list-title product-block-title">FAQ</div>
+    {% endif %}
+    <div class="product-faq-list--wrapper">
+      {% if product.metafields.custom.faq_list.value != blank %}
+        {% if request.page_type == 'product' %}
+        <script type="application/ld+json">
+          {
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "@id": {{ canonical_url | append: "#product-faq" | json }},
+            "mainEntityOfPage": {
+              "@type": "WebPage",
+              "@id": {{ canonical_url | json }}
+            },
+            "mainEntity": [
+              {% for item in product.metafields.custom.faq_list.value %}
+                {
+                  "@type": "Question",
+                  "name": {{ item.question | strip_html | json }},
+                  "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": {{ item.answer | strip_html | json }}
+                  }
+                }{% unless forloop.last %},{% endunless %}
+              {% endfor %}
+            ]
+          }
+        </script>
+        {% endif %}
+        {% for item in product.metafields.custom.faq_list.value %}
+          {% assign custom_index = product.id | append: '-' | append: forloop.index0 %}
+          {% render 'faq-item', item: item, index: custom_index %}
+        {% endfor %}
+      {% endif %}
+    </div>
+  </div>
+{% endif %}

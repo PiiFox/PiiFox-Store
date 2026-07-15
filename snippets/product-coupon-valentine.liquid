@@ -1,0 +1,218 @@
+{% comment %}
+  product
+  timezone
+  current_variant
+{% endcomment %}
+
+{% liquid
+  assign coupon_data = product.metafields.custom.coupon
+  if current_variant == blank
+    assign current_variant = product.variants | first
+  endif
+  assign current_variant_id = current_variant.id
+%}
+{% if coupon_data != blank %}
+  <div class="custom-coupon-section-container coupon-container-{{ current_variant_id }}" data-coupon-type="Chiristmas Day"></div>
+{% endif %}
+<script>
+  {% if coupon_data != blank %}
+    $(function() {
+      const COUPON_LIST = {{ coupon_data }}, TIMEZONE = {{ timezone }};
+      for(let i = 0; i < COUPON_LIST.length; i++) {
+        initCouponNode(COUPON_LIST[i])
+      }
+      function copyCouponCode(e) {
+        let el = e.target, control = el.dataset['control'];
+        let code = $(`.${control} .custom-coupon-container`).data('code');
+        console.log(code)
+
+        $(`.${control} .coupon-code-value`).attr('disabled', false)
+        $(`.${control} .coupon-code-value`).select()
+        let res = document.execCommand("Copy"); 
+        console.log('Copy Reault:', res)
+        $(`.${control} .coupon-code-value`).attr('disabled', true)
+        if(res) {
+          $(`.${control}  .custom-coupon-copy-tip`).show()
+          setTimeout(() => {
+            $(`.${control}  .custom-coupon-copy-tip`).hide()
+          }, 3000)
+        }
+      }
+
+      function initCouponNode(coupondata, select_variant = 0) {
+        if(!verifyTime(coupondata)) return ''
+        console.log('verifyTime', 'true')
+        if(!isVariant(coupondata, select_variant)) return ''
+        console.log('isVariant', 'true')
+        createCouponNode(coupondata).then( node => {
+          $('.custom-coupon-section-container').append(node)
+          console.log($(`.custom-coupon-${coupondata.code} .coupon-btn`))
+          $(`.custom-coupon-${coupondata.code} .coupon-btn`).click( (e) => {
+            console.log('click', e)
+            copyCouponCode(e)
+          })
+        })
+      }
+      function formatPSTTime(dateTime, _timeZone = -8) {
+    	let _dateTime = new Date(dateTime)
+        let timeZone = _dateTime.getTimezoneOffset();
+        if (timeZone === -1 * Number(_timeZone) * 60) return _dateTime;
+        return new Date(_dateTime.getTime() + ((timeZone + Number(_timeZone) * 60) * 60 * 1000))
+      }
+      function earlyTargetDateTime(targetDateTime, currentDateTime) {
+        return targetDateTime.getTime() < currentDateTime.getTime()
+      }
+      function verifyTime(coupon_data) {
+        let currentDateTime = formatPSTTime(+new Date(), TIMEZONE);
+        console.log('format to timezone', TIMEZONE, currentDateTime)
+        let startDate = new Date(coupon_data.time[0]), endDate = new Date(coupon_data.time[1])
+        console.log('startDate', startDate, 'endDate', endDate)
+        return earlyTargetDateTime(startDate, currentDateTime) && earlyTargetDateTime(currentDateTime, endDate)
+      }
+      function isVariant(coupon_data, select_variant = 0) {
+        console.log('variant', coupon_data.variant )
+        if({{ product.variants.size }} == 1) return true
+        else if(coupon_data.variant === '') return true
+        else if(coupon_data.variant === '{{ current_variant_id }}') return true
+        else if(coupon_data.variant == select_variant) return true
+        else return false;
+      }
+      function createCouponNode(coupondata) {
+        return new Promise((resolve, reject) => {
+          let node = document.createElement('div')
+          node.setAttribute('class', `custom-coupon-${coupondata.code}`);
+          node.innerHTML = `
+    <div class="custom-coupon-container coupon-btn" data-code="${coupondata.code}" data-control="custom-coupon-${coupondata.code}">
+      <div class="coupon--wrapper" data-control="custom-coupon-${coupondata.code}">
+        <div class="coupon-code" data-control="custom-coupon-${coupondata.code}">
+          <div class="coupon-code-label" data-control="custom-coupon-${coupondata.code}">CODE:</div>
+          <input class="coupon-code-value" value="${coupondata.code}" data-control="custom-coupon-${coupondata.code}">
+        </div>
+      </div>
+    </div>
+    <div class="custom-coupon-copy-tip">COPY SUCCEEDED!</div>`;
+          resolve(node)
+        })
+      }
+    })
+  {% endif %}
+</script>
+{% style %}
+  .custom-coupon-section-container {
+    font-size: 17px;
+    max-width: 15em;
+    margin: 1em 0;
+  }
+  .custom-coupon-section-container .custom-coupon-container {
+    display: grid;
+    width: 100%;
+    color: #a23b47;
+  }
+  
+  .custom-coupon-section-container .custom-coupon-container .coupon--wrapper {
+    margin-right: 0em;
+    text-align: center;
+    display: flex;
+    align-items: center;
+  }
+  .custom-coupon-section-container .custom-coupon-container .coupon--wrapper .coupon-label {
+    font-size: 4em;
+    font-weight: 900;
+    color: #a23b47;
+    line-height: 1em;
+    display: grid;
+    place-items: center;
+  }
+  .custom-coupon-section-container .custom-coupon-container .coupon--wrapper .coupon-label .coupon-label--extra {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-left: 0.5em;
+    line-height: 1em;
+    font-size: 0.5em;
+  }
+  .custom-coupon-section-container .custom-coupon-container .coupon-code {
+    line-height: 1em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* background: url('https://cdn.shopify.com/s/files/1/0766/2000/5675/files/p_product-coupon_a4b23159-1113-49fb-a7fa-38d778d5eb8a.png?v=1731898184') left top / 100% 100% no-repeat; */
+    padding: 0.2em 1em;
+    height: 3em;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 0 2px #ddd;
+  }
+  .custom-coupon-section-container .custom-coupon-container .coupon-discount {
+    line-height: 1em;
+    /* background: url('https://cdn.shopify.com/s/files/1/0766/2000/5675/files/p_product-discount_88dff689-ddf3-40d9-97fb-1554f7297b11.png?v=1731898168') left top / 100% 100% no-repeat; */
+    padding: 0.2em 1em;
+    white-space: nowrap;
+    height: 3em;
+    display: flex;
+    align-items: center;
+    font-size: 1.3em;
+  }
+  .custom-coupon-section-container .custom-coupon-container .coupon-code .coupon-code-label {
+    font-weight: 700;
+    font-size: 1.3em;
+  }
+  .custom-coupon-section-container .custom-coupon-container .coupon-code .coupon-code-value {
+    border: none;
+    padding: 0 1em !important;
+    text-align: center;
+    display: inline-block;
+    background: transparent;
+    width: 6em !important;
+    min-width: unset !important;
+    font-weight: 700;
+    font-size: 1.3em;
+    position: relative;
+    z-index: 0;
+  }
+  .custom-coupon-section-container .custom-coupon-container .coupon-title {
+    background-image: radial-gradient(7em 7em at center,#fee8ae, #f09f56 );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-size: 1.5em;
+    font-weight: 800;
+  }
+  .custom-coupon-section-container .custom-coupon-container .coupon-time {
+    font-size: 0.6em;
+    margin: 0.5em;
+    white-space: nowrap;
+    font-size: 0.8em;
+    font-weight: 600;
+    color: #fff;
+    display: grid;
+    place-items: center;
+  }
+  .custom-coupon-section-container .custom-coupon-container .coupon-usage-box {
+    font-weight: bold;
+    width: 100%;
+    padding: 1em 0em 1em 0;
+    display: grid;
+    place-items: center;
+  }
+  .custom-coupon-section-container .custom-coupon-container .coupon-usage-box .coupon-usage {
+      cursor: pointer;
+      font-size: 1.6em;
+      font-weight: 700;
+      display: grid;
+      place-items: center;
+      /* background: url('https://cdn.shopify.com/s/files/1/0766/2000/5675/files/p_product-coupon-btn-bg.png?v=1705383985') left top/100% 100% no-repeat; */
+      color: #fff;
+  }
+
+  .custom-coupon-section-container .custom-coupon-copy-tip {
+    color: #c32419;
+    line-height: 2em;
+    font-weight: bold;
+    display: none;
+  }
+  @media screen and (max-width: 768px) {
+    .custom-coupon-section-container .custom-coupon-container .coupon-usage-box .coupon-usage {
+      padding: 0.5em 0.2em;
+    }
+  }
+{% endstyle %}

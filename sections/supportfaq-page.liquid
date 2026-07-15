@@ -1,0 +1,225 @@
+{% if section.settings.divider %}
+
+<div class="support-breadcrumb-box">
+  <div class="support-breadcrumb">
+    <div class="support-crumb"><a href="/">Home</a></div>
+    <div class="support-crumb"><a href="/pages/support-center">Support</a></div>
+    <div class="support-crumb"><a href="#">{{ section.settings.title }}</a></div>
+  </div>
+</div>
+<div class="page-width">
+  <div class="support-faqpage-box">
+    <h2>{{ section.settings.title }}</h2>
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-3 col-12">
+          {% for block in section.blocks  %}
+            {% if block.type == 'text' %}
+              <div data-key="p{{ forloop.index }}" data-index="{{ forloop.index0 }}" {% if forloop.index == 1 %}class="on"{% endif %}>
+                {{ block.settings.pagetitle }}
+              </div>
+            {% endif %}
+          {% endfor %}
+          <div class="tabs-ink-bar"></div>
+        </div>
+        <div class="col-sm-9 col-12">
+          {% for block in section.blocks  %}
+            {% if block.type == 'text' %}
+              <div id="p{{ forloop.index }}" class="block-key {% if forloop.index == 1 %}on{% endif %}">
+                <div class="block-page-box">
+                  {% if block.settings.show_module == 'pagebox' %}
+                    {{ block.settings.pagebox }}
+                  {% else %}
+                    {{ block.settings.collapsed_box }}
+                  {% endif %}
+                </div>
+              </div>
+            {% endif %}
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+var p1top = $('.support-faqpage-box .col-sm-3 .on').offset().top,
+  p1height = $('.support-faqpage-box .col-sm-3 .on').outerHeight(),
+  tabbar = $('.support-faqpage-box .tabs-ink-bar');
+console.log(p1top);
+$('.support-faqpage-box .col-sm-3 div').on('click',function(event){
+  var _this = $(this),
+    data_key = _this.attr('data-key'),
+    nowheight = _this.outerHeight(),
+    // nowtop = _this.offset().top;
+  nowtop = event.target.offsetTop;
+  tabbar.height(nowheight);
+  // console.log(nowtop - p1top - nowheight);
+  // tabbar.css('transform','translateY('+( nowtop - tab_top -  ( (nowheight - 19) / 2 ) )+'px)');
+  tabbar.css('transform','translateY('+( nowtop )+'px)');
+  $('.support-faqpage-box .col-sm-3 div').removeClass('on');
+  _this.addClass('on');
+  $('.support-faqpage-box .block-key').removeClass('on');
+  $('.support-faqpage-box .col-sm-9 #'+data_key).addClass('on');
+  var p2top = $('.support-faqpage-box .col-sm-3 .on').offset().top;
+  console.log(p2top);
+})
+</script>
+
+<style>
+.support-breadcrumb-box{background:#ededed;}
+.support-breadcrumb-box .support-breadcrumb{max-width:1400px;margin:0 auto;display:flex;padding:0 3rem;}
+.support-breadcrumb-box .support-crumb a{line-height:2.8rem;}
+.support-breadcrumb-box .support-crumb a:hover{color:#2673ff;}
+.support-breadcrumb-box .support-crumb:after{content:">";padding:0 .5rem;}
+.support-breadcrumb-box .support-crumb:last-child:after{content:"";}
+.support-faqpage-box{margin-top:5rem;}
+.support-faqpage-box h2{font-weight:400;font-size:1.4rem;padding: 0 3rem;}
+.support-faqpage-box .container{border-top:1px solid #e9e9e9;}
+.support-faqpage-box a{padding:0 2rem;}
+.container .row{display:flex;}
+.container .row .col-sm-3{max-width: 25%;-ms-flex: 0 0 25%;flex: 0 0 25%;border-right:1px solid #e9e9e9;position: relative;}
+.container .row .col-sm-3>div{font-size: 1rem;font-weight: 500;cursor: pointer;line-height: 1.5;outline: none;transition: all .3s;padding:22px;white-space: normal;text-align: left;}
+.container .row .col-sm-3>div.on{color:{{ settings.color_button }};background-color:hsla(0,0%,93%,.3);}
+.support-faqpage-box .container .col-sm-3 .tabs-ink-bar{left:0;width:4px;position:absolute;background:{{ settings.color_button }};pointer-events:none;padding:0;height:68px;top:0}
+.container .row .col-sm-9{max-width: 75%;-ms-flex: 0 0 75%;flex: 0 0 75%;padding:6.5rem 1rem 1rem 6rem;}
+.support-faqpage-box .block-key{display:none;}
+.support-faqpage-box .block-key.on{display:block;}
+.block-page-box h3{font-weight:400;font-size:1.2rem;margin-bottom:.2rem;}
+.block-page-box p{color:#000;font-size:1rem;margin-bottom:2rem;font-weight:200;}
+@media screen and (max-width: 750px) {
+  .support-faqpage-box{}
+  .support-faqpage-box h2{font-size:1.4rem;margin-bottom:2rem;}
+}
+</style>
+<style>
+    @media screen and (max-width: 750px) {
+      .support-faqpage-box {}
+      .support-faqpage-box h2 {
+        font-size: 1.4rem;
+        margin-bottom: 2rem;
+      }
+    }
+    @media screen and (max-width: 500px) {
+      .support-faqpage-box h2 {
+        padding: 0;
+      }
+      .container .row {
+        display: block;
+      }
+      .container .row .col-sm-3 {
+        display: flex;
+        border-right: 0px;
+        border-bottom: 1px solid #e9e9e9;
+        max-width: 100%;
+        overflow-x: auto;
+        overflow-y: hidden;
+      }
+      .container .row .col-sm-3 > div {
+        padding: 1rem;
+        white-space: nowrap;
+        border-bottom: 3px solid transparent;
+      }
+      .container .row .col-sm-9 {
+        padding: 1rem;
+      }
+      .file--wrapper {
+        padding: 0;
+      }
+      .container .row .col-sm-9, .container .row .col-sm-3 {
+        max-width: 100%;
+      }
+      .file-opera .file-brower-btn {
+        padding: 0.2rem 2rem 0.2rem 1rem;
+      }
+      .support-faqpage-box .container .col-sm-3 .tabs-ink-bar {
+        background: transparent;
+      }
+      .container .row .col-sm-3 > div.on {
+        border-bottom: 3px solid #ec6521;
+      }
+      .container .row .col-sm-3::-webkit-scrollbar {
+        height: 0px;
+        width: 0px;
+      }
+      .support-faqpage-box {
+        margin-top: 2rem;
+      }
+      .support-breadcrumb-box .support-breadcrumb {
+        padding: 0 1rem;
+      }
+    }
+    @media screen and (max-width: 350px) {
+      .container .row .col-sm-3 > div {
+        font-size: 0.8rem;
+        padding: 0.5rem 1rem;
+      }
+      .file--wrapper .file-img, .file--wrapper .file-opera {
+        padding: 0.5rem;
+        margin: 0;
+      }
+      .file-opera .file-brower-btn {
+        padding: 0rem 1.2rem 0rem 0.2rem;
+      }
+      .support-faqpage-box h2 {
+        margin-bottom: 1rem;
+      }
+    }
+</style>
+{% endif %}
+
+
+{% schema %}
+{
+  "name": "t:sections.support-faqpage.name",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "divider",
+      "label": "t:sections.support-faqpage.settings.divider",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "t:sections.support-faqpage.settings.title"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "text",
+      "name": "t:sections.support-faqpage.blocks.column.name",
+      "settings": [
+        {
+          "type": "text",
+          "id": "pagetitle",
+          "label": "t:sections.support-faqpage.blocks.column.settings.pagetitle"
+        },{
+          "type": "select",
+          "id": "show_module",
+          "label": "t:sections.support-faqpage.blocks.column.settings.show_module",
+          "default": "pagebox",
+          "options": [
+            {
+              "value": "pagebox",
+              "label": "pagebox"
+            },
+            {
+              "value": "collapsed_box",
+              "label": "collapsed_box"
+            }
+          ]
+        },{
+          "type": "html",
+          "id": "pagebox",
+          "label": "t:sections.support-faqpage.blocks.column.settings.pagebox"
+        },{
+          "type": "html",
+          "id": "collapsed_box",
+          "label": "t:sections.support-faqpage.blocks.column.settings.collapsed_box"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

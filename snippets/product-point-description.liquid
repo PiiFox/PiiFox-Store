@@ -1,0 +1,11 @@
+{% if product.metafields.custom.point_description != blank %}
+  <ul class="point-descrbe-list--wrapper">
+    {% for item in product.metafields.custom.point_description.value %}
+      {% assign point = item | split: ':' %}
+      <li class="point-descrbe-item">
+        <h2>{{ point[0] }}:</h2>
+        {{ point[1] | newline_to_br }}
+      </li>
+    {% endfor %}
+  </ul>
+{% endif %}

@@ -1,0 +1,64 @@
+{% capture description %}
+  {%- if product.empty? -%}
+    {{ 'home_page.onboarding.product_description' | t }}
+  {%- else -%}
+    {{ product.description }}
+  {%- endif -%}
+{% endcapture %}
+
+{% if product.category == 'Keyboard Keycaps' %}
+  {{ 'keycap-detail-basecss.css' | asset_url | stylesheet_tag: preload: true }}
+{% elsif product.category == 'Keyboard Switches' %}
+  {{ 'switch-detail-basecss.css' | asset_url | stylesheet_tag: preload: true }}
+{% endif %}
+
+{%- if is_tab -%}
+  {% assign title = 'products.product.description' | t %}
+  {%- render 'tab', id: id, title: title, content: description -%}
+{%- else -%}
+  <div class="rte">
+    {% if product.category == 'Keyboard Switches' %}
+      <div class="page-width">
+    {% endif %}
+    {{ description }}
+    {% if product.category == 'Keyboard Switches' %}
+      </div>
+    {% endif %}
+
+    {% if product.category == 'Keyboard Keycaps' %}
+      <script>
+        document.addEventListener('DOMContentLoaded', function () {
+          const con5_swiper = new Swiper(`.con5-img-list.swiper-container`, {
+            loop: true,
+            slidesPerView: 1,
+            effect: 'fade',
+            fadeEffect: {
+              crossFade: true, 
+            },
+            autoplay: {
+              enabled: true,
+              delay: 3000,
+              disableOnInteraction: false,
+            },
+            navigation: {
+              nextEl: `.con5-img-list.swiper-container .swiper-button-next`,
+              prevEl: `.con5-img-list.swiper-container .swiper-button-prev`,
+            },
+          });
+
+          // 窗口变化重置
+          let con5_resizeTimer;
+          window.addEventListener('resize', () => {
+            clearTimeout(con5_resizeTimer);
+            con5_resizeTimer = setTimeout(() => {
+              if (con5_swiper) {
+                con5_swiper.updateSize();
+                con5_swiper.update();
+              }
+            }, 400);
+          });
+        });
+      </script>
+    {% endif %}
+  </div>
+{%- endif -%}

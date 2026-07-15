@@ -1,0 +1,1118 @@
+{% if section.settings.divider %}
+    <div class="track-status-page-container page-width page-width--narrow">
+      <div class="track-status-container">
+        {% for block in section.blocks %} {% case block.type %} {% when 'track_order_card' %} {% assign active_tab = 'order' %}
+        <div class="card--wrapper track_order_card--wrapper">
+          <div class="card-title order-card-title active">{{ block.settings.orderCardTitle }}</div>
+          <div class="card-title track-card-title">{{ block.settings.trackCardTitle }}</div>
+          <div class="card-tab-list">
+            <div class="order-card-tab card-tab {% if active_tab == 'order' %}active{% endif %}" data-tab="order">{{ block.settings.orderTabTitle }}</div>
+            <div class="track-card-tab card-tab {% if active_tab == 'track' %}active{% endif %}" data-tab="track">{{ block.settings.trackTabTitle }}</div>
+          </div>
+          <div class="order-card-form card-form active">
+            <div class="card-form-item">
+              <input name="orderNumber" type="text" placeholder="{{ block.settings.orderNumLabel }}" />
+              <div class="error-tip order-number-error-tip">* Order Number is Required!</div>
+            </div>
+            <div class="card-form-item">
+              <input name="orderEmail" type="text" placeholder="{{ block.settings.orderEmailLabel }}" />
+              <div class="error-tip order-email-error-tip">* Email is Required and must be Correctly!</div>
+            </div>
+            <div class="card-form-item">
+              <button class="query-order-detail-btn">{{ block.settings.orderButtonLabel }}</button>
+            </div>
+          </div>
+          <div class="track-card-form card-form">
+            <div class="card-form-item">
+              <input name="trackNumber" type="text" placeholder="{{ block.settings.trackNumLabel }}" />
+              <div class="error-tip track-number-error-tip">* Track Number is Required!</div>
+            </div>
+            <div class="card-form-item">
+              {% comment %}
+              <input name="trackCarrier" list="carrier-list" placeholder="{{ block.settings.trackCarrierLabel }}" />
+              <datalist id="carrier-list"></datalist>
+              {% endcomment %}
+              <input name="trackEmail" type="text" placeholder="{{ block.settings.trackEmailLabel }}" />
+              <div class="error-tip track-email-error-tip">* Email is Required and must be Correctly!</div>
+            </div>
+            <div class="card-form-item">
+              <button class="query-track-status-btn">{{ block.settings.trackButtonLabel }}</button>
+            </div>
+          </div>
+        </div>
+        <div class="track-status-query-result">
+        <div class="order-query-list query-list active">
+          <table class="table--responsive table--small-text">
+            <thead>
+              <tr>
+                <th>{{ 'customer.orders.order_number' | t }}</th>
+                <th>{{ 'customer.orders.email' | t }}</th>
+                <th>{{ 'customer.orders.date' | t }}</th>
+                <th>{{ 'customer.orders.payment_status' | t }}</th>
+                <th>{{ 'customer.orders.fulfillment_status' | t }}</th>
+                <th>{{ 'customer.orders.total' | t }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              {%- for order in customer.orders -%}
+              <tr class="order-row-detail" data-number="{{ order.order_number }}">
+                <td data-label="{{ 'customer.orders.order_number' | t }}">{{ order.name | link_to: order.customer_url }}</td>
+                <td data-label="{{ 'customer.orders.email' | t }}">{{ order.email }}</td>
+                <td data-label="{{ 'customer.orders.date' | t }}">{{ order.created_at | time_tag: format: 'date' }}</td>
+                <td data-label="{{ 'customer.orders.payment_status' | t }}">{{ order.financial_status_label }}</td>
+                <td data-label="{{ 'customer.orders.fulfillment_status' | t }}">{{ order.fulfillment_status_label }}</td>
+                <td data-label="{{ 'customer.orders.total' | t }}">{{ order.total_price | money }}</td>
+              </tr>
+              {%- endfor -%}
+            </tbody>
+          </table>
+        </div>
+        <div class="track-query-list query-list">
+          <div class="query-header">
+            <div class="tracking-info">
+              <img src="{{ "ico-tracking.svg" | asset_url | split: '?' | first }}" width="48" height="48"/>
+              <div class="tracking-info--wrapper">
+                <div class="tracking-number"></div>
+                <div class="latest-msg">Receive Message(0 days)</div>
+              </div>
+            </div>
+            <div class="tracking-address">
+              <div class="tracking-carrier"></div>
+              <div class="from-address"></div>
+              <svg t="1679277825550" class="icon" style="color: #ef6e1f" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="9610" width="28" height="28" xmlns:xlink="http://www.w3.org/1999/xlink">
+                <path d="M552.18 353.31H65.583v325.46H552.18v183.778L960.744 512.06 552.18 161.576V353.31z m0 0" fill="currentColor" p-id="9611"></path>
+              </svg>
+              <div class="to-address"></div>
+            </div>
+            <div class="tracking-latest-status">
+              <div class="status-time"></div>
+              <div class="status-desc"></div>
+            </div>
+          </div>
+
+          <div class="expect-arrive-time">Estimated arrival time：<span class="from"></span>~<span class="to"></span></div>
+          <div class="tracking-progress"></div>
+          <div class="tracking-timeline">
+          
+            <ul class="timeline">
+              <li data-key="InfoReceived">
+                <div class="direction-r">
+                  <div class="flag-wrapper">
+                    <span class="flag">InfoReceived</span>
+                    <span class="time-wrapper"><span class="time"></span></span>
+                  </div>
+                  <div class="desc">Waiting for door-to-door pickup</div>
+                </div>
+              </li>
+
+              <li data-key="PickedUp">
+                <div class="direction-r">
+                  <div class="flag-wrapper">
+                    <span class="flag">PickedUp</span>
+                    <span class="time-wrapper"><span class="time"></span></span>
+                  </div>
+                  <div class="desc">Received.</div>
+                </div>
+              </li>
+
+              <li data-key="Departure">
+                <div class="direction-r">
+                  <div class="flag-wrapper">
+                    <span class="flag">Departure</span>
+                    <span class="time-wrapper"><span class="time"></span></span>
+                  </div>
+                  <div class="desc">Departure from the port of the country of origin</div>
+                </div>
+              </li>
+
+              <li data-key="Arrival">
+                <div class="direction-r">
+                  <div class="flag-wrapper">
+                    <span class="flag">Arrival</span>
+                    <span class="time-wrapper"><span class="time"></span></span>
+                  </div>
+                  <div class="desc">Arrival at the port of the receiving country</div>
+                </div>
+              </li>
+
+              <li data-key="AvailableForPickup">
+                <div class="direction-r">
+                  <div class="flag-wrapper">
+                    <span class="flag">AvailableForPickup</span>
+                    <span class="time-wrapper"><span class="time"></span></span>
+                  </div>
+                  <div class="desc">The package has arrived at the delivery point of the destination and needs to be picked up by the recipient</div>
+                </div>
+              </li>
+
+              <li data-key="OutForDelivery">
+                <div class="direction-r">
+                  <div class="flag-wrapper">
+                    <span class="flag">OutForDelivery</span>
+                    <span class="time-wrapper"><span class="time"></span></span>
+                  </div>
+                  <div class="desc">On the way to delivery</div>
+                </div>
+              </li>
+
+              <li data-key="Delivered">
+                <div class="direction-r">
+                  <div class="flag-wrapper">
+                    <span class="flag">Delivered</span>
+                    <span class="time-wrapper"><span class="time"></span></span>
+                  </div>
+                  <div class="desc">Successfully signed for</div>
+                </div>
+              </li>
+
+              <li data-key="Returned">
+                <div class="direction-r">
+                  <div class="flag-wrapper">
+                    <span class="flag">Returned</span>
+                    <span class="time-wrapper"><span class="time"></span></span>
+                  </div>
+                  <div class="desc">Return</div>
+                </div>
+              </li>
+
+              <li data-key="Returning">
+                <div class="direction-r">
+                  <div class="flag-wrapper">
+                    <span class="flag">Returning</span>
+                    <span class="time-wrapper"><span class="time"></span></span>
+                  </div>
+                  <div class="desc">Returning</div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="loading"></div>
+        <div class="empty-tip-data tip-line">
+            <svg t="1679292404353" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="7659" xmlns:xlink="http://www.w3.org/1999/xlink" width="32" height="32">
+                <path d="M855.6 427.2H168.5c-12.7 0-24.4 6.9-30.6 18L4.4 684.7C1.5 689.9 0 695.8 0 701.8v287.1c0 19.4 15.7 35.1 35.1 35.1H989c19.4 0 35.1-15.7 35.1-35.1V701.8c0-6-1.5-11.8-4.4-17.1L886.2 445.2c-6.2-11.1-17.9-18-30.6-18zM673.4 695.6c-16.5 0-30.8 11.5-34.3 27.7-12.7 58.5-64.8 102.3-127.2 102.3s-114.5-43.8-127.2-102.3c-3.5-16.1-17.8-27.7-34.3-27.7H119c-26.4 0-43.3-28-31.1-51.4l81.7-155.8c6.1-11.6 18-18.8 31.1-18.8h622.4c13 0 25 7.2 31.1 18.8l81.7 155.8c12.2 23.4-4.7 51.4-31.1 51.4H673.4zM819.9 209.5c-1-1.8-2.1-3.7-3.2-5.5-9.8-16.6-31.1-22.2-47.8-12.6L648.5 261c-17 9.8-22.7 31.6-12.6 48.4 0.9 1.4 1.7 2.9 2.5 4.4 9.5 17 31.2 22.8 48 13L807 257.3c16.7-9.7 22.4-31 12.9-47.8zM375.4 261.1L255 191.6c-16.7-9.6-38-4-47.8 12.6-1.1 1.8-2.1 3.6-3.2 5.5-9.5 16.8-3.8 38.1 12.9 47.8L337.3 327c16.9 9.7 38.6 4 48-13.1 0.8-1.5 1.7-2.9 2.5-4.4 10.2-16.8 4.5-38.6-12.4-48.4zM512 239.3h2.5c19.5 0.3 35.5-15.5 35.5-35.1v-139c0-19.3-15.6-34.9-34.8-35.1h-6.4C489.6 30.3 474 46 474 65.2v139c0 19.5 15.9 35.4 35.5 35.1h2.5z" p-id="7660"></path>
+            </svg>
+            <p>No data currently, please verify whether the parameters are</p>
+        </div>
+        <div class="error-tip-data tip-line">
+            <svg t="1679292805895" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="9479" xmlns:xlink="http://www.w3.org/1999/xlink" width="32" height="32">
+                <path d="M721.877333 303.104a48.469333 48.469333 0 0 0-68.437333 0l-141.909333 141.909333-136.277334-136.234666a46.933333 46.933333 0 1 0-66.432 66.432l136.277334 136.277333-141.952 141.952a48.384 48.384 0 0 0 68.394666 68.352l141.952-141.909333 137.045334 137.002666a46.933333 46.933333 0 1 0 66.432-66.432l-137.045334-137.002666 141.952-141.952a48.469333 48.469333 0 0 0 0-68.394667M512 1024C229.248 1024 0 794.752 0 512 0 229.205333 229.248 0 512 0c282.794667 0 512 229.205333 512 512 0 282.752-229.205333 512-512 512" fill="#FA5555" p-id="9480"></path>
+            </svg>
+            <p>Query error</p>
+        </div>
+        </div>
+        {% else %}
+          {% style %}
+            .link_img_card-{{ forloop.index }} {
+              background-image: url({{  block.settings.img | img_url: '300x' }}) ;
+              aspect-ratio: 296/640;
+            }
+            @media screen and (max-width: 500px) {
+              .link_img_card-{{ forloop.index }} {
+                background-image: url({{  block.settings.mobile_img | img_url: '300x' }}) ;
+                aspect-ratio: 1/1;
+              }
+            }
+          {% endstyle %}
+        <div 
+          class="card--wrapper link_img_card--wrapper link_img_card-{{ forloop.index }}" 
+        >
+          <a href="{{ block.settings.link }}" style="color: {{ block.settings.color }}">
+            <div class="title" style="top: {{ block.settings.title_offset_top }}%">{{ block.settings.title }}</div>
+            <div class="describe" style="top: {{ block.settings.title_offset_top }}%">{{ block.settings.describe }}</div>
+            <a href="{{ block.settings.link }}" class="learn-btn" style="top: {{ block.settings.btn_offset_top }}%">{{ block.settings.buttonLabel }}</a>
+          </a>
+        </div>
+        {% endcase %} {% endfor %}
+      </div>
+      
+    </div>
+<script>
+const cardTabList = document.querySelectorAll('.card-tab');
+for(let i = 0; i < cardTabList.length; i++) {
+  cardTabList[i].addEventListener('click', (event) => {
+    let el = event.target;
+    let currentTab = el.dataset.tab;
+    let cardTitleList = document.querySelectorAll('.card-title');
+    let cardFormList = document.querySelectorAll('.card-form');
+    let queryList = document.querySelectorAll('.query-list');
+    let domList = [cardTabList, cardTitleList, cardFormList, queryList]
+    let list = ['card-tab', 'card-title', 'card-form', 'query-list' ]
+    setBeforeQueryLayout()
+    for(let j = 0; j < cardTitleList.length; j++) {
+      for(let item of domList) {
+        item[j].setAttribute('class', item[j].getAttribute('class').split(' active')[0])
+      }
+    }
+    for(let item of list) {
+      let currentDom = document.querySelector('.'+currentTab+'-'+item)
+      currentDom.setAttribute('class', currentDom.getAttribute('class')+' active')
+    }
+  })
+}
+/* 获取物流运输商代码 */
+function getCarrierList() {
+  const CarrierSelect = document.querySelector('.card-form-item #carrier-list')
+$.ajax({
+  url: 'https://res.17track.net/asset/carrier/info/apicarrier.all.json',
+  method: "GET",
+  success: (res) => {
+    res.forEach(item => {
+      let optNode = document.createElement('option');
+      optNode.value = item._name+'——'+item.key
+      CarrierSelect.appendChild(optNode);
+    })
+  },
+  error: (err) => {
+    console.log(err)
+  }
+})
+}
+document.querySelector('.query-order-detail-btn').addEventListener('click', () => queryOrder())
+document.querySelector('.query-track-status-btn').addEventListener('click', () => queryTrack())
+function formatDateTime(_date) {
+  let date = new Date(_date);
+  let y = date.getFullYear();
+  let M = (date.getMonth() + 1).toString().padStart(2, '0')
+  let d = (date.getDate()).toString().padStart(2, '0')
+
+  let h = (date.getHours()).toString().padStart(2, '0')
+  let m = (date.getMinutes()).toString().padStart(2, '0')
+  let s = (date.getSeconds()).toString().padStart(2, '0')
+  return `${y}-${M}-${d} ${h}:${m}:${s}`
+}
+function setQueryRes(status = '', tipData = null) {
+  let tipLineList = document.querySelectorAll('.tip-line');
+  for(let i = 0; i < tipLineList.length; i++ ) {
+    tipLineList[i].style.display = 'none';
+  }
+  if(!status && !tipData) return;
+  document.querySelector('.' + status + '-tip-data').style.display = 'flex'
+  if(status === 'error' && tipData) {
+    document.querySelector('.error-tip-data p').innerHTML = 'Query error.' + tipData;
+  }
+}
+function setTrackMileStone(list) {
+  let mileStoneList = document.querySelectorAll('.tracking-timeline li');
+  let progress = document.querySelector('.tracking-progress')
+  progress.style.background = 'linear-gradient(45deg, #e0e0e0 24%, transparent 24%, #e0e0e0 25%, #e0e0e0 49%, transparent 49%, #e0e0e0 50%, #e0e0e0 74%, transparent 74%, #e0e0e0 75%)';
+  if(!list.length) {
+    for(let i = 0; i < mileStoneList.length; i++ ) {
+      mileStoneList[i].style.display = 'none'
+    }
+    return;
+  }
+  for(let i = 0; i < mileStoneList.length; i++ ) {
+    let key = mileStoneList[i].dataset.key;
+    if(list[i].time_utc) {
+      if(i === 0) {
+        progress.style.background = 'linear-gradient(45deg, #ef6e1f 24%, transparent 24%, #e0e0e0 25%, #e0e0e0 49%, transparent 49%, #e0e0e0 50%, #e0e0e0 74%, transparent 74%, #e0e0e0 75%)';
+      } else if(i === 1) {
+        progress.style.background = 'linear-gradient(45deg, #ef6e1f 24%, transparent 24%, #ef6e1f 25%, #ef6e1f 49%, transparent 49%, #e0e0e0 50%, #e0e0e0 74%, transparent 74%, #e0e0e0 75%)';
+      } else if(i > 3) {
+        progress.style.background = 'linear-gradient(45deg, #ef6e1f 24%, transparent 24%, #ef6e1f 25%, #ef6e1f 49%, transparent 49%, #ef6e1f 50%, #ef6e1f 74%, transparent 74%, #e0e0e0 75%)';
+      } else {
+        progress.style.background = 'linear-gradient(45deg, #ef6e1f 24%, transparent 24%, #ef6e1f 25%, #ef6e1f 49%, transparent 49%, #ef6e1f 50%, #ef6e1f 74%, transparent 74%, #ef6e1f 75%)';
+      }
+      document.querySelector(`[data-key="${key}"] .time-wrapper .time`).innerHTML = formatDateTime(list[i].time_utc);
+      mileStoneList[i].style.display = 'block'
+    }
+  }
+}
+function setBeforeQueryLayout() {
+  $('.track-status-query-result').css('display', 'none');
+}
+function setQueryLayout() {
+  $('.track-status-query-result').css('display', 'block');
+  if (window.scrollTo) {
+    window.scrollTo({"behavior": "smooth", "top": document.querySelector('.track-status-query-result').offsetTop - (document.querySelector('#shopify-section-header').clientHeight || 0)});
+  }
+}
+function queryOrder() {
+  let orderNum = $('input[name="orderNumber"]').val().trim();
+  let orderEmail = $('input[name="orderEmail"]').val().trim();
+  if(!orderNum.length) {
+    $('.card-form-item .error-tip.order-number-error-tip').css('display', "block") 
+    return;
+  } else {
+    $('.card-form-item .error-tip.order-number-error-tip').css('display', "none") 
+  }
+  if(!orderEmail.length) {
+    $('.card-form-item .error-tip.order-email-error-tip').css('display', "block") 
+    return;
+  } else {
+    $('.card-form-item .error-tip.order-email-error-tip').css('display', "none") 
+  }
+  setQueryLayout();
+  let orderList = document.querySelectorAll('.order-row-detail');
+  for(let i = 0; i < orderList.length; i++) {
+    let rowNumber = orderList[i].dataset.number.trim();
+    let rowEmail = orderList[i].dataset.email.trim()
+    orderList[i].setAttribute('class', orderList[i].getAttribute('class').split(' active')[0])
+    if(!orderNum || !orderEmail) return;
+    if(orderNum == rowNumber && orderEmail == rowEmail) {
+      orderList[i].setAttribute('class', orderList[i].getAttribute('class')+' active')
+    }
+  }
+}
+function queryTrack() {
+  document.querySelector('.loading').style.display = 'block'
+  let data = {
+      "number": $('input[name="trackNumber"]').val(),
+      "email": $('input[name="trackEmail"]').val(),
+    };
+  if(!data.number.length) {
+    $('.card-form-item .error-tip.track-number-error-tip').css('display', "block") 
+    return;
+  } else {
+    $('.card-form-item .error-tip.track-number-error-tip').css('display', "none") 
+  }
+  if(!data.email.length) {
+    $('.card-form-item .error-tip.track-email-error-tip').css('display', "block") 
+    return;
+  } else {
+    $('.card-form-item .error-tip.track-email-error-tip').css('display', "none") 
+  }
+  setQueryLayout();
+  queryTrackStatus(JSON.stringify(data), (res) => {
+    console.log(res);
+    /* 拿到数据重新渲染界面 */
+    let { accepted, rejected } = res.data;
+    if( rejected.length ) {
+      setQueryRes('error', rejected[0].error.message)
+      setTrackMileStone([])
+      document.querySelector('.loading').style.display = 'none'
+    } else {
+      $('.track-query-list .tracking-info--wrapper .tracking-number').html(accepted[0].number);
+      $('.track-query-list .tracking-info--wrapper .latest-msg').html('Receive Message ('+ accepted[0].track_info.time_metrics.days_after_last_update +'days)')
+      $('.track-query-list .expect-arrive-time .from').html(formatDateTime(accepted[0].track_info.time_metrics.estimated_delivery_date.from))
+      $('.track-query-list .expect-arrive-time .to').html(formatDateTime(accepted[0].track_info.time_metrics.estimated_delivery_date.to))
+      $('.track-query-list .tracking-address .from-address').html(accepted[0].track_info.shipping_info.shipper_address.country)
+      $('.track-query-list .tracking-address .to-address').html(accepted[0].track_info.shipping_info.recipient_address.country)
+
+      $('.track-query-list .tracking-latest-status .status-time').html(formatDateTime(accepted[0].track_info.latest_event.time_utc)+':')
+      $('.track-query-list .tracking-latest-status .status-desc').html((accepted[0].track_info.latest_event.stag ? '['+ accepted[0].track_info.latest_event.stage +']': '')+ accepted[0].track_info.latest_event.description.slice(0, 20) + '...')
+      $('.track-query-list .tracking-address .tracking-carrier').html('('+accepted[0].track_info.tracking.providers[0].provider.name+')')
+      setQueryRes()
+      setTrackMileStone(accepted[0].track_info.milestone);
+      document.querySelector('.loading').style.display = 'none'
+    }
+  }, (err) => {
+    console.log(err)
+  })
+}
+var requestHeader = {
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Credentials": "true",
+      "Access-Control-Allow-Methods": "POST, PUT, PATCH, GET, DELETE, OPTIONS",
+      "Access-Control-Allow-Headers": "Content-Type",
+    }
+function queryTrackStatus(data, resolve, reject) {
+  $.ajax({
+    url: 'https://api.piifox.com/17track/index.php',
+    method: 'POST',
+    headers: requestHeader,
+    crossDomain: true,
+    dataType: "json",
+    data: data,
+    success: (res) => {
+      resolve(res)
+    },
+    error: (err) => {
+      reject(err)
+    }
+  })
+}
+</script>
+<style>
+/* order-track-card */
+.card-form-item .error-tip {
+  display: none;
+  color: red;
+  font-size: 0.6rem;
+  line-height: 0.8rem;
+}
+.card--wrapper .card-title {
+  padding: 1.5rem 0;
+  font-weight: 600;
+  font-size: 1.5rem;
+  display: none;
+  transition: all 0.6s ease;
+}
+.card--wrapper .card-title.active {
+  display: block;
+}
+.card--wrapper .card-tab-list {
+  display: flex;
+  justify-content: space-around;
+  padding: 0.5rem 0;
+}
+.card--wrapper .card-tab-list .card-tab {
+  border-bottom: 3px solid transparent;
+  width: 100%;
+  font-size: 0.9rem;
+  transition: all 0.6s ease;
+}
+.card--wrapper .card-tab-list .card-tab.active {
+  border-bottom-color: #999;
+}
+.card-form .card-form-item {
+  padding: 1rem 0;
+}
+.card-form {
+  display: none;
+  transition: all 0.6s ease;
+}
+.card-form.active {
+  display: block;
+}
+.query-list {
+  display: none;
+  transition: all 0.6s ease;
+}
+.query-list.active {
+  display: block;
+}
+
+.card-form .card-form-item input,.card-form .card-form-item datalist, .card-form .card-form-item button {
+  width: 100%;
+  border-radius: 4px;
+  line-height: 2.5rem;
+  height: 2.5rem;
+  box-sizing: border-box;
+}
+.card-form .card-form-item button {
+  background-color: #000;
+  color: #fff;
+  transition: all 0.6s ease;
+  border: 2px solid transparent;
+}
+.track-status-query-result {
+  display: none;
+}
+</style>
+<style>
+/* img-button-card */
+.track-status-container {
+  width: 100%;
+  margin: 1rem auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  grid-template-rows: 40rem;
+  grid-gap: 1rem;
+  scroll-behavior: smooth;
+}
+.track-status-container .track_order_card--wrapper {
+  grid-area: 1 / 1 / 2 / 2;
+}
+.track-status-container .link_img_card-2 {
+  grid-area: 1 / 2 / 2 / 3;
+}
+.track-status-container .link_img_card-3 {
+  grid-area: 1 / 3 / 2 / 4;
+}
+.track-status-query-result {
+  border: 1px solid #ccc;
+  border-radius: 1rem;
+  width: 100%;
+  padding: 1.5rem;
+  position: relative;
+  grid-area: 2 / 1 / 3 / 4;
+}
+.card--wrapper {
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 100% 100%;
+  border: 1px solid #ccc;
+  border-radius: 1rem;
+  padding: 1rem;
+  text-align: center;
+  position: relative;
+}
+.card--wrapper a {
+  color: #000;
+  text-decoration: none;
+}
+.card--wrapper a .title {
+  padding-top: 1.5rem;
+  font-weight: 700;
+  font-size: 1.5rem;
+  position: relative;
+}
+.card--wrapper a .describe {
+  line-height: 2rem;
+  font-size: 1.1rem;
+  position: relative;
+}
+.card--wrapper a .describe p {
+  margin: 0;
+  padding: 0;
+}
+.card--wrapper a .describe p strong {
+  color: #ef6e1f;
+}
+.card--wrapper a.learn-btn {
+  color: #fff;
+  display: inline-block;
+  padding: 0.5rem 3rem;
+  margin-top: 1.4rem;
+  border-radius: 20px;
+  transition: all 0.6s ease;
+  background-color: #000;
+  border: 2px solid transparent;
+  position: relative;
+}
+.card--wrapper button:hover,.card--wrapper a.learn-btn:hover {
+  color: #000;
+  background: #fff ;
+  background-color: #fff ;
+  border: 2px solid #000;
+}
+</style>
+<style>
+/* track-query */
+.loading {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  background: rgba(0,0,0,0.3);
+  backdrop-filter: blur(2px);
+  display: none;
+}
+.tip-line {
+  display: flex;
+  align-items: center;
+  padding: 1rem 0;
+  display: none;
+}
+.tip-line p {
+  margin: 0 1rem;
+}
+.track-query-list .query-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  padding: 1rem 0;
+  border-bottom: 1px solid #ccc;
+}
+.query-header .tracking-info {
+  display: flex;
+  align-items: flex-end;
+}
+
+.query-header .tracking-info .tracking-info--wrapper {
+  margin-left: 1rem;
+}
+.query-header .tracking-address {
+  display: flex;
+  align-items: center;
+}
+.expect-arrive-time b {
+  color: #ef6e1f;
+}
+.expect-arrive-time {
+  padding: 1rem 0;
+  border-bottom: 1px solid #ccc;
+}
+.tracking-progress {
+  height: 1rem;
+  width: 100%;
+  background: linear-gradient(45deg, #ef6e1f 24%, transparent 24%, #e0e0e0 25%, #e0e0e0 49%, transparent 49%, #e0e0e0 50%, #e0e0e0 74%, transparent 74%, #e0e0e0 75%);
+}
+
+</style>
+<style>
+/* timeline */
+.timeline {
+  position: relative;
+  width: 100%;
+  margin: 0 auto;
+  margin-top: 20px;
+  // padding: 1em 0;
+  list-style-type: none;
+}
+
+.timeline:before {
+  position: absolute;
+  left: 0%;
+  top: 0;
+  content: ' ';
+  display: block;
+  width: 0.5rem;
+  height: 100%;
+  margin-left: -3px;
+  background: rgb(80,80,80);
+  background: -moz-linear-gradient(top, rgba(80,80,80,0) 0%, rgb(80,80,80) 8%, rgb(80,80,80) 92%, rgba(80,80,80,0) 100%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(30,87,153,1)), color-stop(100%,rgba(125,185,232,1)));
+  background: -webkit-linear-gradient(top, rgba(80,80,80,0) 0%, rgb(80,80,80) 8%, rgb(80,80,80) 92%, rgba(80,80,80,0) 100%);
+  background: -o-linear-gradient(top, rgba(80,80,80,0) 0%, rgb(80,80,80) 8%, rgb(80,80,80) 92%, rgba(80,80,80,0) 100%);
+  background: -ms-linear-gradient(top, rgba(80,80,80,0) 0%, rgb(80,80,80) 8%, rgb(80,80,80) 92%, rgba(80,80,80,0) 100%);
+  background: linear-gradient(to bottom, rgba(80,80,80,0) 0%, rgb(80,80,80) 8%, rgb(80,80,80) 92%, rgba(80,80,80,0) 100%);
+  
+  z-index: 5;
+}
+
+.timeline li {
+  padding: 1em 0;
+  display: none;
+}
+
+.timeline li:after {
+  content: "";
+  display: block;
+  height: 0;
+  clear: both;
+  visibility: hidden;
+}
+
+.direction-l {
+  position: relative;
+  width: 300px;
+  float: left;
+  text-align: right;
+}
+
+.direction-r {
+  position: relative;
+  /* width: 300px; */
+  left: 30px;
+  /* float: right; */
+}
+
+.flag-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  text-align: center;
+}
+
+.flag {
+  position: relative;
+  display: inline;
+  background: rgb(248,248,248);
+  padding: 3px 10px;
+  border-radius: 5px;
+  
+  font-weight: 600;
+  text-align: left;
+}
+
+.direction-l .flag {
+  -webkit-box-shadow: -1px 1px 1px rgba(0,0,0,0.15), 0 0 1px rgba(0,0,0,0.15);
+  -moz-box-shadow: -1px 1px 1px rgba(0,0,0,0.15), 0 0 1px rgba(0,0,0,0.15);
+  box-shadow: -1px 1px 1px rgba(0,0,0,0.15), 0 0 1px rgba(0,0,0,0.15);
+}
+
+.direction-r .flag {
+  -webkit-box-shadow: 1px 1px 1px rgba(0,0,0,0.15), 0 0 1px rgba(0,0,0,0.15);
+  -moz-box-shadow: 1px 1px 1px rgba(0,0,0,0.15), 0 0 1px rgba(0,0,0,0.15);
+  box-shadow: 1px 1px 1px rgba(0,0,0,0.15), 0 0 1px rgba(0,0,0,0.15);
+}
+
+.direction-l .flag:before,
+.direction-r .flag:before {
+  position: absolute;
+  top: 50%;
+  right: -2.3rem;
+  content: ' ';
+  display: block;
+  width: 1rem;
+  height: 1rem;
+  margin-top: -10px;
+  background: #fff;
+  border-radius: 10px;
+  border: 4px solid #ef6e1f;
+  z-index: 10;
+}
+
+.direction-r .flag:before {
+  left: -2.3rem;
+}
+
+.direction-l .flag:after {
+  content: "";
+  position: absolute;
+  left: 100%;
+  top: 50%;
+  height: 0;
+  width: 0;
+  margin-top: -8px;
+  border: solid transparent;
+  border-left-color: rgb(248,248,248);
+  border-width: 8px;
+  pointer-events: none;
+}
+
+.direction-r .flag:after {
+  content: "";
+  position: absolute;
+  right: 100%;
+  top: 50%;
+  height: 0;
+  width: 0;
+  margin-top: -8px;
+  border: solid transparent;
+  border-right-color: rgb(248,248,248);
+  border-width: 8px;
+  pointer-events: none;
+}
+
+.time-wrapper {
+  display: inline;
+  line-height: 1em;
+  font-size: 0.66666em;
+  color: #ef6e1f;
+  vertical-align: middle;
+}
+
+.direction-l .time-wrapper {
+  float: left;
+}
+
+.direction-r .time-wrapper {
+  float: right;
+}
+
+.time {
+  display: inline-block;
+  padding: 4px 6px;
+  background: rgb(248,248,248);
+}
+
+.desc {
+  margin: 1em 0.75em 0 0;
+  
+  font-size: 0.77777em;
+  font-style: italic;
+  line-height: 1.5em;
+}
+
+.direction-r .desc {
+  margin: 1em 0 0 0.75em;
+}
+
+/* ================ Timeline Media Queries ================ */
+
+@media screen and (max-width: 660px) {
+
+.timeline {
+ 	width: 100%;
+	padding: 4em 0 1em 0;
+}
+.timeline:before {
+  left: 1%;
+  width: 0.3rem;
+}
+
+.timeline li {
+	padding: 1em 0;
+}
+
+.direction-l,
+.direction-r {
+	float: none;
+	width: 100%;
+    left: 10px;
+	text-align: center;
+}
+
+.flag-wrapper {
+	text-align: center;
+}
+
+.flag {
+	background: rgb(255,255,255);
+	z-index: 15;
+}
+
+.direction-l .flag:before,
+.direction-r .flag:before {
+  position: absolute;
+  top: 0px;
+    left: -0.3rem;
+	content: ' ';
+	display: block;
+	width: 12px;
+	height: 12px;
+	margin-left: -9px;
+	background: #fff;
+	border-radius: 10px;
+	border: 4px solid rgb(255,80,80);
+	z-index: 10;
+}
+
+.direction-l .flag:after,
+.direction-r .flag:after {
+	content: "";
+	position: absolute;
+	left: 50%;
+	top: -8px;
+	height: 0;
+	width: 0;
+	margin-left: -8px;
+	border: solid transparent;
+	border-bottom-color: rgb(255,255,255);
+	border-width: 8px;
+	pointer-events: none;
+}
+
+.time-wrapper {
+	display: block;
+	position: relative;
+	margin: 4px 0 0 0;
+	z-index: 14;
+}
+
+.direction-l .time-wrapper {
+	float: none;
+}
+
+.direction-r .time-wrapper {
+	float: none;
+}
+
+.desc {
+	position: relative;
+	margin: 1em 0 0 0;
+	padding: 1em;
+	background: rgb(245,245,245);
+	-webkit-box-shadow: 0 0 1px rgba(0,0,0,0.20);
+	-moz-box-shadow: 0 0 1px rgba(0,0,0,0.20);
+	box-shadow: 0 0 1px rgba(0,0,0,0.20);
+	
+  z-index: 15;
+}
+
+.direction-l .desc,
+.direction-r .desc {
+	position: relative;
+	margin: 1em 1em 0 1em;
+	padding: 1em;
+    z-index: 15;
+}
+
+}
+
+@media screen and (min-width: 400px ?? max-width: 660px) {
+
+.direction-l .desc,
+.direction-r .desc {
+	margin: 1em 4em 0 4em;
+}
+
+}
+@media screen and (max-width: 850px) {
+  .card--wrapper:first-child {
+    grid-column: 1/3;
+  }
+  .card--wrapper:first-child .card-tab-list .card-tab {
+    font-size: 1.3rem;
+  }
+  .track-status-container {
+    display: grid;
+    grid-template-columns: 50% 50%;
+    grid-template-rows: auto auto auto;
+  }
+  .track-status-container .track_order_card--wrapper {
+    grid-area: 1 / 1 / 2 / 3;
+  }
+  .track-status-container .link_img_card-2 {
+    grid-area: 3 / 1 / 4 / 2;
+  }
+  .track-status-container .link_img_card-3 {
+    grid-area: 3 / 2 / 4 / 3;
+  }
+  .track-status-query-result {
+    grid-area: 2 / 1 / 3 / 3;
+  }
+}
+@media screen and (max-width: 500px) {
+  .track-status-container {
+    display: flex;
+    flex-direction: column;
+  }
+  .card--wrapper:first-child {
+    grid-column: unset;
+  }
+  .card--wrapper:first-child .card-tab-list .card-tab {
+    font-size: 1rem;
+  }
+  .track-query-list .query-header {
+    display: block;
+  }
+}
+@media screen and (max-width: 350px) {
+  .card--wrapper:first-child .card-tab-list .card-tab, .query-header, .expect-arrive-time {
+    font-size: 0.8rem;
+  }
+  .timeline {
+    padding: 2em 0 1em 0;
+  }
+}
+@media screen and (max-width: 300px) {
+  .card--wrapper:first-child .card-tab-list .card-tab, .query-header, .expect-arrive-time {
+    font-size: 0.7rem;
+  }
+  .card--wrapper .card-title {
+    font-size: 1.3rem;
+  }
+  .timeline {
+    padding: 2em 0 1em 0;
+  }
+  .track-status-query-result {
+    padding: 0.5rem;
+  }
+}
+</style>
+{% endif %}
+{% schema %}
+  {
+    "name": "t:sections.track-status.name",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "divider",
+        "label": "t:sections.track-status.settings.divider",
+        "default": true
+      }, {
+        "type": "text",
+        "id": "title",
+        "label": "t:sections.track-status.settings.title"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "track_order_card",
+        "name": "track_order_card",
+        "settings": [{
+            "type": "text",
+            "id": "orderCardTitle",
+            "label": "t:sections.track-status.blocks.column.settings.orderCardTitle",
+            "default": "Track Order Status"
+          }, {
+            "type": "text",
+            "id": "trackCardTitle",
+            "label": "t:sections.track-status.blocks.column.settings.trackCardTitle",
+            "default": "Track Order Status"
+          }, {
+            "type": "text",
+            "id": "orderTabTitle",
+            "label": "t:sections.track-status.blocks.column.settings.orderTabTitle",
+            "default": "Order Number"
+          }, {
+            "type": "text",
+            "id": "trackTabTitle",
+            "label": "t:sections.track-status.blocks.column.settings.trackTabTitle",
+            "default": "Tracking Number"
+          }, {
+            "type": "text",
+            "id": "orderButtonLabel",
+            "label": "t:sections.track-status.blocks.column.settings.orderButtonLabel",
+            "default": "Track"
+          }, {
+            "type": "text",
+            "id": "trackButtonLabel",
+            "label": "t:sections.track-status.blocks.column.settings.trackButtonLabel",
+            "default": "Track"
+          }, {
+            "type": "text",
+            "id": "orderNumLabel",
+            "label": "t:sections.track-status.blocks.column.settings.orderNumLabel",
+            "default": "Order Number"
+          }, {
+            "type": "text",
+            "id": "orderEmailLabel",
+            "label": "t:sections.track-status.blocks.column.settings.orderEmailLabel",
+            "default": "Email"
+          }, {
+            "type": "text",
+            "id": "trackNumLabel",
+            "label": "t:sections.track-status.blocks.column.settings.trackNumLabel",
+            "default": "Tracking Number"
+          }, {
+            "type": "text",
+            "id": "trackEmailLabel",
+            "label": "t:sections.track-status.blocks.column.settings.trackEmailLabel",
+            "default": "Email"
+          }
+        ]
+      }, {
+        "type": "link_img_card",
+        "name": "t:sections.track-status.blocks.column.name",
+        "settings": [{
+            "type": "image_picker",
+            "id": "img",
+            "label": "t:sections.track-status.blocks.column.settings.img"
+          },{
+            "type": "image_picker",
+            "id": "mobile_img",
+            "label": "Mobile Image"
+          }, {
+            "type": "color",
+            "id": "color",
+            "label": "Text Color",
+            "default": "#000"
+          }, {
+            "type": "range",
+            "id": "title_offset_top",
+            "label": "Title Offset Top",
+            "default": 0,
+            "min": 0,
+            "max": 100,
+            "step": 10
+          }, {
+            "type": "text",
+            "id": "title",
+            "label": "t:sections.track-status.blocks.column.settings.title"
+          }, {
+            "type": "richtext",
+            "id": "describe",
+            "label": "t:sections.track-status.blocks.column.settings.describe"
+          }, {
+            "type": "text",
+            "id": "buttonLabel",
+            "label": "t:sections.track-status.blocks.column.settings.buttonLabel",
+            "default": "Learn More"
+          },{
+            "type": "range",
+            "id": "btn_offset_top",
+            "label": "Button Offset Top",
+            "default": 0,
+            "min": 0,
+            "max": 100,
+            "step": 10
+          }, {
+            "type": "url",
+            "id": "link",
+            "label": "t:sections.track-status.blocks.column.settings.link"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Tracking Status",
+        "blocks": [
+          {
+            "type": "track_order_card"
+          },
+          {
+            "type": "link_img_card"
+          },
+          {
+            "type": "link_img_card"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

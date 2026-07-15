@@ -1,0 +1,33 @@
+<div
+  data-section-id="{{ section.id }}">
+ {%- if section.settings.pcimage != blank -%}
+<img class="banner__image hbanner__image--{{ block.id }} lazyload" src="{{section.settings.pcimage | img_url: '1920x' }}"/>
+ {%- endif -%}
+ {%- if section.settings.mobileimage != blank -%}
+<img class="banner__image hbanner__image--{{ block.id }} lazyload" src="{{section.settings.mobileimage | img_url: '1000x' }}"/>
+ {%- endif -%}
+</div>
+
+{% schema %}
+{
+  "name": "banner-one",
+  "class": "index-section--banner",
+  "settings": [
+    {
+      "type": "image_picker",
+          "id": "pcimage",
+     "label": "PC image"
+    },
+    {
+      "type": "image_picker",
+          "id": "mobileimage",
+     "label": "MOBILE image"
+    }
+  ],
+  "presets": [
+    {
+      "name": "banner-one"
+    }
+  ]
+}
+{% endschema %}

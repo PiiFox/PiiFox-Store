@@ -1,0 +1,143 @@
+{%- if section.settings.divider -%}<div class="section--divider">{%- endif -%}
+<div class="page-width wow bounceInUp">
+  <div class="max_scrills">
+  <div class="p-top">
+    <div></div>
+     {% for block in section.blocks %}
+    <div>
+           <span class="protitle">{{ block.settings.title }}</span>
+           <img src="{{ block.settings.image | img_url: '100x' }}" />
+         </div>
+      {% endfor %}
+  </div>
+  <div class="p-list">
+    <div class="p-label">
+      <span>Power</span>
+      <span>Max. AC Input</span>
+      <span>Max. Solar Input</span>
+      <span>Battery Capacity</span>
+      <span>Battery Cell Type</span>
+      <span>Fast Charging</span>
+      <span>Battery Life Cycle (To 80% Health)</span>
+      <span>Warranty</span>
+      <span class="p-s-btn">Price
+      <a href="3epowers-p15-1500w-portable-power-station" class="p-btn">BUY NOW</a>
+      </span>
+      
+    </div>
+      {% for block in section.blocks %}
+       <div class="p-item">
+         
+         
+         <div>{{ block.settings.Power }}</div>
+         <div>{{ block.settings.Max_ACInput }}</div>
+         <div>{{ block.settings.Max_SolarInput }}</div>
+         <div>{{ block.settings.Battery_Capacity }}</div>
+         <div>{{ block.settings.Battery_Cell_Type }}</div>
+         <div>{{ block.settings.Fast_Charging }}</div>
+         <div>{{ block.settings.Battery_Life_Cycle }}</div>
+         <div>{{ block.settings.Warranty }}</div>
+         <div>{{ block.settings.Price }}
+          <a href="{{ block.settings.href }}" class="p-btn">BUY NOW</a>
+         </div>
+       </div>
+      {% endfor %}
+  </div> 
+</div>
+  </div> 
+  {%- if section.settings.divider -%}</div>{%- endif -%}
+
+{% schema %}
+{
+  "name": "table products",
+  "class": "index-section",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "divider",
+      "label": "t:sections.featured-video.settings.divider.label",
+      "default": false
+    }
+  ],
+  "blocks": [
+    {
+      "type": "product_item",
+      "name": "product item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "product title"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "product image"
+        },
+        {
+          "type": "text",
+          "id": "Power",
+          "label": "Power"
+        },
+        {
+          "type": "text",
+          "id": "Max_ACInput",
+          "label": "Max.AC Input"
+        },
+        {
+          "type": "text",
+          "id": "Max_SolarInput",
+          "label": "Max.Solar Input"
+        },
+        {
+          "type": "text",
+          "id": "Battery_Capacity",
+          "label": "Battery Capacity"
+        },
+        {
+          "type": "text",
+          "id": "Battery_Cell_Type",
+          "label": "Battery Cell Type"
+        },
+        {
+          "type": "text",
+          "id": "Fast_Charging",
+          "label": "Fast Charging"
+        },
+        {
+          "type": "text",
+          "id": "Battery_Life_Cycle",
+          "label": "Battery Life Cycle"
+        },
+        {
+          "type": "text",
+          "id": "Warranty",
+          "label": "Warranty"
+        },
+        {
+          "type": "text",
+          "id": "Price",
+          "label": "Price"
+        },
+        {
+          "type": "url",
+          "id": "href",
+          "label": "product link"
+        }
+        
+        
+      ]}
+  ],
+  "presets": [
+    {
+      "name": "table products",
+      "blocks": [
+        {
+          "type": "product_item"
+        }
+        
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,112 @@
+{%- if section.settings.divider -%}
+  <div class="section--divider">
+{%- endif -%}
+  <div class="image-textlist-{{ section.id }}-container page-width">
+    <div class="section-header text-center">
+      <h2>{{ section.settings.title }}</h2>
+    </div>
+    
+    <div class="top-img--wrapper">
+      <img src="{{ section.settings.topimg | img_url: '2560x' }}"/>
+    </div>
+    <div class="text-list--wrapper">
+      {% for col in section.blocks %}
+        <div class="text-item--wrapper">
+          {{ col.settings.text }}
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+{%- if section.settings.divider -%}
+  </div>
+{%- endif -%}
+{% style %}
+  .image-textlist-{{ section.id }}-container .top-img--wrapper, .image-textlist-{{ section.id }}-container .text-list--wrapper {
+    position: relative;
+    width: 100%;
+  }
+  .image-textlist-{{ section.id }}-container .top-img--wrapper, .image-textlist-{{ section.id }}-container .text-list--wrapper .text-item--wrapper {
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    background: #fafafa;
+    margin: 1rem 0;
+  }
+  .image-textlist-{{ section.id }}-container .text-list--wrapper .text-item--wrapper {
+    font-size: 1.8rem;
+    padding: 0.6rem 0;
+    font-weight: 400;
+    letter-spacing: 0.1rem;
+    text-align: center;
+  }
+  @media screen and (max-width: 768px) {
+    .image-textlist-{{ section.id }}-container .text-list--wrapper .text-item--wrapper {
+      font-size: 1rem;
+      padding: 0.4rem 0;
+    }
+  }
+{% endstyle %}
+{% schema %}
+  {
+    "name": "t:sections.image_textlist.name",
+    "class": "index-section-image-textlist",
+    "max_blocks": 6,
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "divider",
+        "label": "t:sections.image_textlist.settings.divider.label",
+        "default": true
+      }, {
+        "type": "text",
+        "id": "title",
+        "label": "t:sections.image_textlist.settings.title.label"
+      }, {
+        "type": "image_picker",
+        "id": "topimg",
+        "label": "t:sections.image_textlist.settings.topimg.label"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "text",
+        "name": "t:sections.image_textlist.blocks.column.name",
+        "settings": [
+          {
+            "type": "text",
+            "id": "text",
+            "label": "t:sections.image_textlist.blocks.column.settings.text.label"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "t:sections.image_textlist.presets.image_textlist.name",
+        "settings": {
+          "divider": true,
+          "title": "title"
+        },
+        "blocks": [
+          {
+            "type": "text",
+            "settings": {
+              "text": "Enter Text Item"
+            }
+          },
+          {
+            "type": "text",
+            "settings": {
+              "text": "Enter Text Item"
+            }
+          },
+          {
+            "type": "text",
+            "settings": {
+              "text": "Enter Text Item"
+            }
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

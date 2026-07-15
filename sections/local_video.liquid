@@ -1,0 +1,41 @@
+{%- if section.settings.divider -%}<div class="section--divider">{%- endif -%}
+
+<div class="page-width-fill">
+  
+  <div class="video_wrapper">
+  {%- if section.settings.video_url != blank -%}
+ <video autoplay="autoplay" playsinline="" loop="loop" controls="controls" 
+   src="{{ section.settings.video_url }}" muted  preload="metadata" style="width:100%">
+  </video>
+  {%- endif -%}
+  </div>
+</div>
+
+{%- if section.settings.divider -%}</div>{%- endif -%}
+
+{% schema %}
+{
+  "name": "local video",
+  "class": "indexs-section",
+  "settings": [
+   
+    {
+      "type": "text",
+      "id": "video_url",
+      "label": "t:sections.featured-video.settings.video_url.label"
+      
+    },
+    {
+      "type": "checkbox",
+      "id": "divider",
+      "label": "t:sections.featured-video.settings.divider.label",
+      "default": false
+    }
+  ],
+  "presets": [
+    {
+      "name": "local video"
+    }
+  ]
+}
+{% endschema %}

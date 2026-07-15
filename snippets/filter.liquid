@@ -1,0 +1,118 @@
+{%- style -%}
+  .testimonials-{{ section.id }}{
+    background-color: {{ section.settings.color_background }};
+    color: {{ section.settings.color_text }};
+  }
+{%- endstyle -%}
+
+{%- assign current_variant = product.selected_or_first_available_variant -%}
+{%- capture form_id -%}AddToCartForm-{{ section_id }}-{{ product.id }}{%- endcapture -%}
+
+<div class="filter-sec filter-sec-{{ section.id }}" data-section-id="{{ section.id }}">
+  <div class="page-width">
+    <div class="filter-sec-list">
+      <div class="filter-sec-item">
+        <a href="#descs" class="filter active" tabindex="0" data-tab="Features">Features</a>
+      </div>
+      <div class="filter-sec-item">
+        <a href="#product-space" class="filter" tabindex="1" data-tab="Specs">Specs</a>
+      </div>
+      <div class="filter-sec-item">
+        <a href="#product-faq" class="filter" tabindex="2" data-tab="FAQ">FAQ</a>
+      </div>
+      <div class="filter-sec-item">
+        <a href="#product-download" class="filter" tabindex="3" data-tab="Downloads">Downloads</a>
+      </div>
+      <div class="filter-sec-item">
+        <a href="#product-review" class="filter" tabindex="4" data-tab="Reviews">Reviews</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% style %}
+  .filter-sec .filter-sec-list {
+    width: 100%;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+  }
+  .filter-sec .filter-sec-list .filter-sec-item {
+    flex: 0 0 20%;
+  }
+  .filter-sec .filter-sec-list .filter-sec-item a {
+    width: 100%;
+    line-height: 3em;
+    height: 3em;
+    padding: 0;
+  }
+  @media screen and (max-width: 550px) {
+    .filter-sec .filter-sec-list {
+      overflow-x: auto;
+    }
+  }
+{% endstyle %}
+<script>
+  window.addEventListener('load', function () {
+    const returntopBtn = document.querySelector('.returntop-2-addcart-btn');
+    if (returntopBtn) {
+      returntopBtn.addEventListener('click', function () {
+        const target = document.querySelector('.grid--product-images--partial');
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth' });
+        }
+      });
+    }
+
+    const filterBtns = document.querySelectorAll('.filter-sec .filter');
+    filterBtns.forEach((btn) => {
+      btn.addEventListener('click', function () {
+        const currentFilter = this.closest('.filter');
+        if (!currentFilter) return;
+
+        $('.filter-sec .filter-sec-item .filter').removeClass('active');
+        $(currentFilter).addClass('active');
+
+        const filterValue = currentFilter.dataset.tab;
+        const targetItem = document.querySelector(`div.filter-item[data-snippet="${filterValue}"]`);
+
+        const headerHeight =
+          document.querySelector('#SiteHeader').offsetHeight + document.querySelector('.filter-sec').offsetHeight;
+
+        if (targetItem) {
+          const rect = targetItem.getBoundingClientRect();
+          window.scrollTo({
+            behavior: 'smooth',
+            top: rect.top + window.pageYOffset - headerHeight,
+          });
+        }
+      });
+    });
+
+    function handleHashChange() {
+      let hash = window.location.hash;
+      if (!hash) return;
+
+      let hashEl = document.querySelector(`.filter-sec .filter-sec-item a[href="${hash}"]`);
+
+      const currentFilter = $(hashEl).closest('.filter');
+      if (!currentFilter) return;
+
+      $('.filter-sec .filter-sec-item .filter').removeClass('active');
+      $(currentFilter).addClass('active');
+
+      const targetItem = document.querySelector(`div.filter-item[data-snippet="${hash}"]`);
+      if (targetItem) {
+        const rect = targetItem.getBoundingClientRect();
+        window.scrollTo({
+          behavior: 'smooth',
+          top: rect.top + window.pageYOffset - headerHeight,
+        });
+      }
+    }
+
+    handleHashChange();
+  });
+</script>

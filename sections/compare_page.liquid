@@ -1,0 +1,372 @@
+{%- if section.settings.divider -%}<div class="section--divider">{%- endif -%}
+<div
+  class="compare-page-section-{{ section.id }}"
+  data-section-id="{{ section.id }}"
+  data-section-type="compare-page"
+>
+  <div class="page-width">
+    {%- if section.settings.title != blank -%}
+      <div class="compare-page__title section-header" >
+        <h2 class="text-center">{{ section.settings.title }}</h2>
+      </div>
+    {%- endif -%}
+    {% assign target_collection = section.blocks | map: 'settings' | map: 'collection' | first %}
+    
+    {% style %}
+      .compare-page-section-{{ section.id }} .switch-collection-tab-list {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 1rem;
+      }
+      .compare-page-section-{{ section.id }} .switch-collection-tab-list .collection-tab-item {
+        border: 1px solid #ccc;
+        padding: 0.5rem 2rem;
+        cursor: pointer;
+      }
+      .compare-page-section-{{ section.id }} .switch-collection-tab-list .collection-tab-item.active {
+        color: var(--colorBtnPrimaryText);
+        background: var(--colorBtnPrimary);
+      }
+    {% endstyle %}
+    <div class="switch-collection-tab-list">
+      {% for block in section.blocks %}
+        <div class="collection-tab-item{% if target_collection.title == block.settings.collection.title %} active{% endif %}" data-collection="{{ block.settings.collection }}">
+          {{ block.settings.collection.title }}
+        </div>
+      {% endfor %}
+    </div>
+    {% style %}
+      
+      .compare-page-section-{{ section.id }} .compare-products-container {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(35%, 1fr));
+      }
+      .compare-page-section-{{ section.id }} .compare-products-container .compare-product--wrapper {
+        padding: 20%;
+        display: flex;
+        flex-direction: column;
+      }
+      .compare-page-section-{{ section.id }} .compare-products-container .compare-product--wrapper .compare-product-select--wrapper {}
+      .compare-page-section-{{ section.id }} .compare-products-container .compare-product--wrapper .compare-product-meta--wrapper {
+        display: flex;
+        flex-direction: column;
+      }
+      .compare-page-section-{{ section.id }} .compare-product-meta--wrapper .compare-product-image {}
+      .compare-page-section-{{ section.id }} .compare-product-meta--wrapper .compare-product-title {
+        text-align: center;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .compare-page-section-{{ section.id }} .compare-product-meta--wrapper .compare-product-price {
+        color: var(--colorBtnPrimary);
+        padding: 0.5rem 0;
+      }
+      .compare-page-section-{{ section.id }} .compare-product-meta--wrapper .compare-product-btn-list {
+        margin:1rem 0;
+      }
+      .compare-page-section-{{ section.id }} .compare-product-meta--wrapper .compare-product-btn-list .sn_btn {
+        color: var(--colorBtnPrimary);
+      }
+      .compare-page-section-{{ section.id }} .compare-product-meta--wrapper .compare-product-btn-list .sn_btn:hover {
+        color: var(--colorBtnPrimaryText);
+        background: var(--colorBtnPrimary);
+      }
+      .compare-page-section-{{ section.id }} .compare-product-meta--wrapper .compare-product-btn-list .lm_btn {
+        color: var(--colorBtnPrimaryText);
+        background: var(--colorBtnPrimary);
+      }
+      .compare-page-section-{{ section.id }} .compare-product-meta--wrapper .compare-product-btn-list .lm_btn:hover {
+        background: var(--colorBtnPrimaryText);
+        color: var(--colorBtnPrimary);
+      }
+      .compare-page-section-{{ section.id }} .compare-product-meta--wrapper .compare-product-btn-list a {
+        border-color: var(--colorBtnPrimary);
+      }
+      .compare-page-section-{{ section.id }} .compare-products-container .compare-product--wrapper .compare-product-spec--wrapper {}
+      .compare-page-section-{{ section.id }} .compare-product-spec--wrapper .spec-group--wrapper {
+        margin: 3rem 0;
+        position: relative;
+      }
+      .compare-page-section-{{ section.id }} .compare-product-spec--wrapper .spec-group--wrapper .group-title {
+        font-size: 2em;
+        font-weight: bold;
+        width: 260%;
+        text-wrap: nowrap;
+        padding: 1rem 0;
+        border-bottom: 1px solid #ccc;
+      }
+      .compare-page-section-{{ section.id }} .compare-product--wrapper:nth-child(2n) .compare-product-spec--wrapper .spec-group--wrapper .group-title {
+        max-width: 100%;
+        overflow-x: hidden;
+      }
+      .compare-page-section-{{ section.id }} .compare-product-spec--wrapper .spec-group--wrapper .group-item {
+        margin: 2rem 0;
+        line-height: 1.5rem;
+        height: 3rem;
+        display: flex;
+        flex-direction: column;
+      }
+      .compare-page-section-{{ section.id }} .compare-product-spec--wrapper .spec-group--wrapper .group-item.column-reverse {
+        flex-direction: column-reverse;
+      }
+      .compare-page-section-{{ section.id }} .compare-product-spec--wrapper .spec-group--wrapper .group-item big {
+        font-size: 2em;
+        font-weight: bold;
+        padding: 0.5rem 0;
+      }
+      .compare-page-section-{{ section.id }} .text-left {text-align: left;}
+      .compare-page-section-{{ section.id }} .text-center {text-align: center;}
+      .compare-page-section-{{ section.id }} .text-right {text-align: right;}
+      .compare-page-section-{{ section.id }} .compare-products-container .compare-product--wrapper .compare-product-meta--wrapper.display-none {display: none ;}
+      .compare-page-section-{{ section.id }} .compare-products-container .compare-product--wrapper .compare-product-spec--wrapper.display-none {display: none ;}
+      .compare-page-section-{{ section.id }} .compare-products-container .compare-product--wrapper .compare-product-select--wrapper.display-none {display: none ;}
+      .compare-page-section-{{ section.id }} .display-hidden {visibility: hidden;}
+      @media screen and (max-width: 768px) {
+        .compare-page-section-{{ section.id }} .compare-products-container .compare-product--wrapper {
+          padding: 1rem ;
+        }
+        .compare-page-section-{{ section.id }} .compare-product-spec--wrapper .spec-group--wrapper .group-title {
+          font-size: 1.2rem;
+          width: calc(200% + 2rem);
+        }
+        .compare-page-section-{{ section.id }} .compare-product-spec--wrapper .spec-group--wrapper .group-item big {
+          font-size: 1.3rem;
+        }
+        .compare-page-section-{{ section.id }} .compare-product-meta--wrapper .compare-product-btn-list a {
+          font-size: 8px;
+        }
+      }
+    {% endstyle %}
+    <div class="compare-products-container">
+      {% assign list = '0,1' | split: ',' %}
+      {% for block in section.blocks %}
+        {% assign row_collection = block.settings.collection %}
+        {% for col in list %}
+        {% assign target_product = row_collection.products[forloop.index0] %}
+        <div class="compare-product--wrapper" 
+          data-collection="{{ row_collection }}" 
+          data-index="{{ forloop.index0 }}">
+          {% assign collection_list = section.blocks | map: 'settings' | map: 'collection' %}
+          {% for collection in collection_list %}
+            <div class="compare-product-select--wrapper text-center{% if collection.title != target_collection.title %} display-none{% endif %}"
+              data-collection="{{ collection }}">
+              <select data-index="{{ col }}" data-collection="{{ collection.title }}">
+                {% for product in collection.products %}
+                  <option label="{{ product.title }}" value="{{  product.title }}" {% if target_product.title == product.title %}selected{% endif %}></option>
+                {% endfor %}
+              </select>
+            </div>
+          {% endfor %}
+          {% for product in row_collection.products %}
+            
+            <div class="compare-product-meta--wrapper{% if product.title != target_product.title %} display-none{% endif %}" 
+              data-product="{{ product.title }}"
+              data-collection="{{ row_collection.title }}">
+              <div class="compare-product-img">
+                <img src="{{ product.images | first | img_url: '800x' }}" alt="{{ product.title }}"/>
+              </div>
+              <div class="compare-product-title">
+                {{ product.title }}
+              </div>
+              <div class="compare-product-price text-right">
+                {{ product.price | money }}
+              </div>
+              <div class="compare-product-btn-list bottom_btn">
+                <a href="{{ product.url }}?#descs" class="sn_btn text-center">{{ 'general.custom.button_label'| t }}</a>
+                <a href="{{ product.url }}" class="lm_btn text-center">{{ 'general.custom.shop_now'| t }}</a>
+              </div>
+            </div>
+            <div class="compare-product-spec--wrapper{% if product.title != target_product.title %} display-none{% endif %}" 
+            data-collection="{{ row_collection.title }}"
+            data-product="{{ product.title }}"
+            data-collection-spec-name="{{ row_collection.metafields.custom.spec_name }}"
+            data-product-spec-name="{{ product.metafields.custom.spec_name }}"
+            data-spac-label="{{ row_collection.metafields.custom.spac_list | metafield_text }}"
+            data-spac-value="{{ product.metafields.custom.spec_list | metafield_text }}"
+            data-col="{{ col }}">
+              {% comment %}can't ergodic the json data{% endcomment %}
+              {% for spac in row_collection.metafields.custom.spac_list  %}
+              <div class="spec-group--wrapper {{ spac.label }}-group">
+                <div class="group-title {{ spac.label }}-group-title text-left{% if col != '0' %} display-hidden{% endif %}">{{ spac.label }}</div>
+                {% assign reverse = 'CPU_reference_frequency,CPU_max_frequency' | split: ',' %}
+                {% for spac_item in spac.children %}
+                <div class="group-item {{ spac.label }}-group-item {{ spac_item.label }} text-center{% if reverse contains spac_item.label %} column-reverse{% endif %}">
+                  {{ product.metafields.custom.spec_list  }}.{{ spac.label }}.{{ spac_item.label }}
+                </div>
+                {% endfor %}
+              </div>
+              {% endfor %}
+            </div>
+            <div class="compare-product-meta--wrapper{% if product.title != target_product.title %} display-none{% endif %}" 
+              data-product="{{ product.title }}" 
+              data-collection="{{ row_collection.title }}">
+              <div class="compare-product-img">
+                <img src="{{ product.images | first | img_url: '800x' }}" alt="{{ product.title }}"/>
+              </div>
+              <div class="compare-product-title">
+                {{ product.title }}
+              </div>
+              <div class="compare-product-btn-list bottom_btn">
+                <a href="{{ product.url }}?#descs" class="sn_btn text-center">{{ 'general.custom.button_label'| t }}</a>
+                <a href="{{ product.url }}" class="lm_btn text-center">{{ 'general.custom.shop_now'| t }}</a>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+        {% endfor %}
+      {% endfor %}
+    </div>
+  </div>
+</div>
+{%- if section.settings.divider -%}</div>{%- endif -%}
+<script>
+  let collection_specName_list = {}
+  function renderProductSpac(el) {
+    let spacLabelList = el.data('spac-label')
+    let spacValue = el.data('spac-value')
+    let collection_specName = el.data('collection-spec-name')
+    let product_specName = el.data('product-spec-name')
+    let col = el.data('col'), reverse = ['CPU_reference_frequency', 'CPU_max_frequency']
+    
+    !collection_specName_list[collection_specName] && getSpecLabels((res) => {
+      let collection_specLabel = res.data
+      collection_specName_list[collection_specName] = collection_specLabel
+      console.log(collection_specName, collection_specLabel )
+      getSpecValues((res) => {
+        let product_specValue = res.data
+        console.log(product_specName, product_specValue )
+        for(let spacLabel of collection_specLabel) {
+          let children = ''
+          for(let spac_item of spacLabel.children) {
+            let child_node = `<div class="group-item ${ spacLabel.prop }-group-item ${ spac_item } text-center ${ reverse.includes(spac_item) ? 'column-reverse' : '' }">
+                ${ (product_specValue && product_specValue[spacLabel.prop] && product_specValue[spacLabel.prop][spac_item]) ? product_specValue[spacLabel.prop][spac_item] : '--' }
+              </div>`
+            children += child_node
+          }
+          let node = `<div class="spec-group--wrapper ${ spacLabel.prop }-group">
+              <div class="group-title ${ spacLabel.prop }-group-title ${ col == '0' ? 'text-left' : 'text-right' } ${ spacLabel.label } ${ col == '0' ? '' : 'display-hidden' }">${ spacLabel.label }</div>
+              ${children}
+            </div>`
+          el.append(node)
+        }
+      }, collection_specName, product_specName)
+    }, collection_specName)
+    
+    
+    /* for(let spacLabel of spacLabelList) {
+      let children = ''
+      for(let spac_item of spacLabel.children) {
+        let child_node = `<div class="group-item ${ spacLabel.prop }-group-item ${ spac_item.label } text-center ${ reverse.includes(spac_item.label) ? 'column-reverse' : '' }">
+                ${ (spacValue && spacValue[spacLabel.prop] && spacValue[spacLabel.prop][spac_item.label]) ? spacValue[spacLabel.prop][spac_item.label] : '--' }
+              </div>`
+        children += child_node
+      }
+      let node = `<div class="spec-group--wrapper ${ spacLabel.prop }-group">
+              <div class="group-title ${ spacLabel.prop }-group-title ${ col == '0' ? 'text-left' : 'text-right' } ${ spacLabel.label } ${ col == '0' ? '' : 'display-hidden' }">${ spacLabel.label }</div>
+              ${children}
+            </div>`
+      el.append(node)
+    } */
+  }
+  function renderSelectProduct(index, collection, product) {
+    $(`.compare-page-section-{{ section.id }} .compare-product--wrapper[data-index="${index}"] .compare-product-meta--wrapper[data-collection="${collection}"]`).hide()
+    $(`.compare-page-section-{{ section.id }} .compare-product--wrapper[data-index="${index}"] .compare-product-meta--wrapper[data-collection="${collection}"][data-product="${product}"]`).show()
+    $(`.compare-page-section-{{ section.id }} .compare-product--wrapper[data-index="${index}"] .compare-product-spec--wrapper[data-collection="${collection}"]`).hide()
+    $(`.compare-page-section-{{ section.id }} .compare-product--wrapper[data-index="${index}"] .compare-product-spec--wrapper[data-collection="${collection}"][data-product="${product}"]`).show()
+  }
+  $(function() {
+    $('.compare-page-section-{{ section.id }} .compare-product--wrapper').hide() 
+    $('.compare-page-section-{{ section.id }} .compare-product--wrapper[data-collection="laptop"]').show() 
+    for(let i = 0; i < $('.compare-page-section-{{ section.id }} .compare-product-spec--wrapper').length; i++){
+      renderProductSpac($('.compare-page-section-{{ section.id }} .compare-product-spec--wrapper').eq(i))
+    }
+    
+    $('.compare-page-section-{{ section.id }} .collection-tab-item').click(event => {
+      $('.compare-page-section-{{ section.id }} .collection-tab-item').removeClass('active')
+      let el = event.target;
+      $(el).addClass('active')
+      let collection = $(el).data('collection');
+      $('.compare-page-section-{{ section.id }} .compare-product--wrapper').hide()
+      $(`.compare-page-section-{{ section.id }} .compare-product--wrapper[data-collection="${collection}"]`).show()
+      $('.compare-page-section-{{ section.id }} .compare-product-select--wrapper').hide()
+      $(`.compare-page-section-{{ section.id }} .compare-product-select--wrapper[data-collection="${collection}"]`).show()
+    }) 
+    $('.compare-page-section-{{ section.id }} .compare-product-select--wrapper select').change(event => {
+      let el = event.target;
+      let index = $(el).data('index')
+      let current_collection = $(el).data('collection')
+      let current_product = $(el).val();
+      console.log(current_collection, current_product)
+      renderSelectProduct(index, current_collection, current_product )
+    })
+
+    let select_collection = window.location.search.split('=')[1].toLowerCase() || 'laptop';
+    if(select_collection == 'laptop') $('.compare-page-section-{{ section.id }} .collection-tab-item').eq(0).click();
+    else if(select_collection == 'tablet') $('.compare-page-section-{{ section.id }} .collection-tab-item').eq(1).click()
+    else $('.compare-page-section-{{ section.id }} .collection-tab-item').eq(2).click()
+
+  })
+  function getSpecLabels(callback, collection = "Laptop") {
+    $.ajax({
+      url: 'https://shopifyv1.piifox.com/api/product/propList',
+      method: "POST",
+      data: JSON.stringify({
+        "category": collection,
+        "lang": "en"
+      }),
+      success: (res) => { callback(res) },
+      error: (err) => { console.log(err) }
+    })
+  }
+  function getSpecValues(callback, collection = "Laptop", product_name="") {
+    $.ajax({
+      url: 'https://shopifyv1.piifox.com/api/product/detail',
+      method: "POST",
+      data: JSON.stringify({
+        "category": collection,
+        "lang": "en",
+        "productName": product_name
+      }),
+      success: (res) => { callback(res) },
+      error: (err) => { console.log(err) }
+    })
+  }
+</script>
+{% schema %}
+  {
+    "name": "Compare Page",
+    "settings": [{
+        "type": "checkbox",
+        "id": "divider",
+        "label": "t:sections.compare-page.settings.divider.label",
+        "default": true
+      }, {
+        "type": "text",
+        "id": "title",
+        "label": "t:sections.compare-page.settings.title.label"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "text",
+        "name": "t:sections.compare-page.blocks.column.name",
+        "settings": [
+          {
+            "type": "collection",
+            "id": "collection",
+            "label": "t:sections.compare-page.blocks.column.settings.collection.label"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

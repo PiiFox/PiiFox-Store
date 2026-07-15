@@ -1,0 +1,160 @@
+<div class="newsletter_subscription-section">
+  <div class="page-width">
+    <h1 class="newsletter_subscription-title">{{ section.settings.title }}</h1>
+    <div class="newsletter_subscription-context">{{ section.settings.context }}</div>
+    <div class="newsletter_subscription-form">
+      {%- render 'newsletter-form', section_id: 'newsletter-popup' -%}
+    </div>
+    
+  </div>
+  <div class="marquee-container">
+    <div class="text-list marquee--wrapper">
+      {% for block in section.blocks %}
+        <div class="text-item marquee-item">{{ block.settings.marqueeText }}</div>
+      {% endfor %}
+      {% for block in section.blocks %}
+        <div class="text-item marquee-item">{{ block.settings.marqueeText }}</div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+{% style %}
+  @keyframes horizontal_move {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+  .newsletter_subscription-section {}
+  .newsletter_subscription-section .newsletter_subscription-form {
+    margin: 2em 0;
+  }
+  .newsletter_subscription-section .marquee-container {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+    background: #222222;
+    color: #fff;
+  }
+  .newsletter_subscription-section .marquee-container .marquee--wrapper {
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
+    animation: horizontal_move 20s linear 1s infinite;
+  }
+  .newsletter_subscription-section .marquee-container .marquee-item {
+    display: inline-block;
+    padding: 0.5em 1em;
+    white-space: nowrap;
+  }
+
+  @media screen and (max-width: 768px) {
+    .template-page .main-content { margin-bottom: 2em; }
+    .newsletter_subscription-section h1 { font-size: 2em; }
+  }
+{% endstyle %}
+
+{% schema %}
+  {
+    "name": "Newsletter Subscription",
+    "settings": [
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Title"
+      },
+      {
+        "type": "html",
+        "id": "context",
+        "label": "Context"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "marquee-item",
+        "name": "Marquee Item",
+        "settings": [
+          {
+            "type": "text",
+            "id": "marqueeText",
+            "label": "Marquee Text"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Newsletter Subscription Section",
+        "blocks": [
+          {
+            "type": "marquee-item",
+            "settings": {
+              "marqueeText": "Get 10% off"
+            }
+          },
+          {
+            "type": "marquee-item",
+            "settings": {
+              "marqueeText": "Offers and Discounts"
+            }
+          },
+          {
+            "type": "marquee-item",
+            "settings": {
+              "marqueeText": "Extra % off Sale"
+            }
+          },
+          {
+            "type": "marquee-item",
+            "settings": {
+              "marqueeText": "Exciting Contests"
+            }
+          },
+          {
+            "type": "marquee-item",
+            "settings": {
+              "marqueeText": "Surprise Plus offers"
+            }
+          },
+          {
+            "type": "marquee-item",
+            "settings": {
+              "marqueeText": "Birthaday Treat"
+            }
+          },
+          {
+            "type": "marquee-item",
+            "settings": {
+              "marqueeText": "Unique Access to Special Collections"
+            }
+          },
+          {
+            "type": "marquee-item",
+            "settings": {
+              "marqueeText": "Invitations to Events"
+            }
+          },
+          {
+            "type": "marquee-item",
+            "settings": {
+              "marqueeText": "Early Access to Upcomming  VIP Membership"
+            }
+          },
+          {
+            "type": "marquee-item",
+            "settings": {
+              "marqueeText": "Early Access to Upcomming  Membership Benefits"
+            }
+          }
+        ],
+        "settings": {
+          "title": "Get 10% off —SUBSCRIBE PIIFOX — become a member today",
+          "context": "<p>PIIFOX is a technology company that <b>Creates Your Smart Life</b></p><ul><li>Receive a 10% off  Welcome Coupon for first time subscription!</li><li>You can receive the latest news of PIIFOX including new arrivals, limited offers and event details by our E-newsletter.</li><li>Please make sure the email address you provided is correct. Otherwise, you may fail to subscribe our E-newsletter.</li><li>E-newsletter is currently available Traditional ENGLISH/JAPANESE only.</li></ul>"
+        }
+      }
+    ]
+  }
+{% endschema %}
+

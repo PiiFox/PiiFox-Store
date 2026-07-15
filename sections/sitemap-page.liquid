@@ -1,0 +1,494 @@
+{%- if section.settings.divider -%}
+  <div class="section--divider">
+{%- endif -%}
+<div class="sitemap-page-container">
+  <div class="page-width">
+    <div class="sitemap-page--header">
+      <h2 class="sitemap-page-title custom-txt-bold">{{ section.settings.title }}</h2>
+      <p class="sitemap-page-description">{{ section.settings.description }}</p>
+    </div>
+    <div class="sitemap-page--wrapper">
+      <section class="sitemap-section" data-level="1">
+        <div class="section-title custom-txt-semibold">HOME</div>
+        <div class="section-list">
+          <ul>
+            <li>
+              <a href="{{  shop.url }}" target="_blank">HOME</a>
+            </li>
+          </ul>
+        </div>
+      </section>
+      <section class="sitemap-section" data-level="1">
+        <div class="section-title custom-txt-semibold">SHOP BY CATEGORY</div>
+        {% liquid
+          assign collections_str = 'keyboards, keycaps, switches, mice, accessories'
+          assign collection_handles = collections_str | split: ', '
+        %}
+        <div class="section-list">
+          <ul>
+            {% for collection_handle in collection_handles %}
+              {% assign collection = collections[collection_handle] %}
+              <li>
+                <a href="{{ collection.url }}" target="_blank">{{ collection.title }}</a>
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
+      </section>
+      <section class="sitemap-section" data-level="1">
+        <div class="section-title custom-txt-semibold">KEYBOARDS</div>
+        <div class="section-list">
+          <ul>
+            <li>
+              <a href="{{ collections['keyboards'].url }}/New-Arrival" target="_blank">New Arrival</a>
+            </li>
+            <li>
+              <a href="{{ collections['keyboards'].url }}" target="_blank">Shop All Keyboards</a>
+            </li>
+          </ul>
+        </div>
+      </section>
+      <section class="sitemap-section" data-level="2" data-parent="Keyboards" data-param="Layout Size">
+        <div class="section-title custom-txt-semibold">By Size</div>
+        <div class="section-list">
+          <ul>
+            {% comment %}固定目标集合：keyboards{% endcomment %}
+            {% assign target_col = collections.keyboards %}
+            {% assign filter_key = 'Layout Size' %}
+            {% assign target_filter = target_col.filters | where: 'label', filter_key | first %}
+
+            {% comment %}循环Layout Size所有可选值{% endcomment %}
+            {% if target_filter and target_filter.values.size > 0 %}
+              {% for val in target_filter.values %}
+                <li>
+                  {% comment %}拼接标准筛选参数：filter.p.m.custom.字段名=值（Shopify原生筛选URL格式）{% endcomment %}
+                  {% assign filter_url = target_col.url
+                    | append: '?filter.p.m.custom.'
+                    | append: target_filter.param
+                    | append: '='
+                    | append: val
+                    | url_escape
+                  %}
+                  <a href="{{ filter_url }}" target="_blank">{{ val }}</a>
+                </li>
+              {% endfor %}
+            {% endif %}
+          </ul>
+        </div>
+      </section>
+      <section class="sitemap-section" data-level="2" data-parent="Keyboards" data-param="Layout Standard">
+        <div class="section-title custom-txt-semibold">By Layout</div>
+        <div class="section-list">
+          <ul>
+            {% comment %}固定目标集合：keyboards{% endcomment %}
+            {% assign target_col = collections.keyboards %}
+            {% assign filter_key = 'Layout Standard' %}
+            {% assign target_filter = target_col.filters | where: 'label', filter_key | first %}
+
+            {% comment %}循环Keycap Profile所有可选值{% endcomment %}
+            {% if target_filter and target_filter.values.size > 0 %}
+              {% for val in target_filter.values %}
+                <li>
+                  {% comment %}拼接标准筛选参数：filter.v.字段名=值（Shopify原生筛选URL格式）{% endcomment %}
+                  {% assign filter_url = target_col.url
+                    | append: '?filter.p.m.custom.'
+                    | append: target_filter.param
+                    | append: '='
+                    | append: val
+                    | url_escape
+                  %}
+                  <a href="{{ filter_url }}" target="_blank">{{ val }}</a>
+                </li>
+              {% endfor %}
+            {% endif %}
+          </ul>
+        </div>
+      </section>
+      <section class="sitemap-section" data-level="2" data-parent="Keyboards" data-param="Series">
+        <div class="section-title custom-txt-semibold">By Series</div>
+        <div class="section-list">
+          <ul>
+            {% comment %}固定目标集合：keyboards{% endcomment %}
+            {% assign target_col = collections.keyboards %}
+            {% assign filter_key = 'Series' %}
+            {% assign target_filter = target_col.filters | where: 'label', filter_key | first %}
+
+            {% comment %}循环Keycap Profile所有可选值{% endcomment %}
+            {% if target_filter and target_filter.values.size > 0 %}
+              {% for val in target_filter.values %}
+                <li>
+                  {% comment %}拼接标准筛选参数：filter.v.字段名=值（Shopify原生筛选URL格式）{% endcomment %}
+                  {% assign filter_url = target_col.url
+                    | append: '?filter.p.m.custom.'
+                    | append: target_filter.param
+                    | append: '='
+                    | append: val
+                    | url_escape
+                  %}
+                  <a href="{{ filter_url }}" target="_blank">{{ val }}</a>
+                </li>
+              {% endfor %}
+            {% endif %}
+          </ul>
+        </div>
+      </section>
+      <section class="sitemap-section" data-level="1">
+        <div class="section-title custom-txt-semibold">KEYCAPS</div>
+        <div class="section-list">
+          <ul>
+            <li>
+              <a href="{{ collections['keycaps'].url }}/New-Arrival" target="_blank">New Arrival</a>
+            </li>
+            <li>
+              <a href="{{ collections['keycaps'].url }}" target="_blank">Shop All Keycaps</a>
+            </li>
+          </ul>
+        </div>
+      </section>
+      <section class="sitemap-section" data-level="2" data-parent="keycaps" data-param="Keycap Material">
+        <div class="section-title custom-txt-semibold">By Material & Legend</div>
+        <div class="section-list">
+          <ul>
+            {% comment %}固定目标集合：keycaps{% endcomment %}
+            {% assign target_col = collections.keycaps %}
+            {% assign filter_key = 'Keycap Material' %}
+            {% assign target_filter = target_col.filters | where: 'label', filter_key | first %}
+
+            {% comment %}循环Keycap Material所有可选值{% endcomment %}
+            {% if target_filter and target_filter.values.size > 0 %}
+              {% for val in target_filter.values %}
+                <li>
+                  {% comment %}拼接标准筛选参数：filter.v.字段名=值（Shopify原生筛选URL格式）{% endcomment %}
+                  {% assign filter_url = target_col.url
+                    | append: '?filter.p.m.custom.'
+                    | append: target_filter.param
+                    | append: '='
+                    | append: val
+                    | url_escape
+                  %}
+                  <a href="{{ filter_url }}" target="_blank">{{ val }}</a>
+                </li>
+              {% endfor %}
+            {% endif %}
+          </ul>
+        </div>
+      </section>
+      <section class="sitemap-section" data-level="2" data-parent="keycaps" data-param="Keycap Profile">
+        <div class="section-title custom-txt-semibold">By Profile</div>
+        <div class="section-list">
+          <ul>
+            {% comment %}固定目标集合：keycaps{% endcomment %}
+            {% assign target_col = collections.keycaps %}
+            {% assign filter_key = 'Keycap Profile' %}
+            {% assign target_filter = target_col.filters | where: 'label', filter_key | first %}
+
+            {% comment %}循环Keycap Profile所有可选值{% endcomment %}
+            {% if target_filter and target_filter.values.size > 0 %}
+              {% for val in target_filter.values %}
+                <li>
+                  {% comment %}拼接标准筛选参数：filter.v.字段名=值（Shopify原生筛选URL格式）{% endcomment %}
+                  {% assign filter_url = target_col.url
+                    | append: '?filter.p.m.custom.'
+                    | append: target_filter.param
+                    | append: '='
+                    | append: val
+                    | url_escape
+                  %}
+                  <a href="{{ filter_url }}" target="_blank">{{ val }}</a>
+                </li>
+              {% endfor %}
+            {% endif %}
+          </ul>
+        </div>
+      </section>
+      <section class="sitemap-section" data-level="2" data-parent="keycaps" data-param="Theme">
+        <div class="section-title custom-txt-semibold">By Theme</div>
+        <div class="section-list">
+          <ul>
+            {% comment %}固定目标集合：keycaps{% endcomment %}
+            {% assign target_col = collections.keycaps %}
+            {% assign filter_key = 'Theme' %}
+            {% assign target_filter = target_col.filters | where: 'label', filter_key | first %}
+
+            {% comment %}循环Theme所有可选值{% endcomment %}
+            {% if target_filter and target_filter.values.size > 0 %}
+              {% for val in target_filter.values %}
+                <li>
+                  {% comment %}拼接标准筛选参数：filter.v.字段名=值（Shopify原生筛选URL格式）{% endcomment %}
+                  {% assign filter_url = target_col.url
+                    | append: '?filter.p.m.custom.'
+                    | append: target_filter.param
+                    | append: '='
+                    | append: val
+                    | url_escape
+                  %}
+                  <a href="{{ filter_url }}" target="_blank">{{ val }}</a>
+                </li>
+              {% endfor %}
+            {% endif %}
+          </ul>
+        </div>
+      </section>
+      <section class="sitemap-section" data-level="1">
+        <div class="section-title custom-txt-semibold">SWITCHES</div>
+        <div class="section-list">
+          <ul>
+            <li>
+              <a href="{{ collections['switches'].url }}/New-Arrival" target="_blank">New Arrival</a>
+            </li>
+            <li>
+              <a href="{{ collections['switches'].url }}" target="_blank">Shop All Switches</a>
+            </li>
+          </ul>
+        </div>
+      </section>
+      <section class="sitemap-section" data-level="2" data-parent="switches" data-param="Switch Feel">
+        <div class="section-title custom-txt-semibold">By Type</div>
+        <div class="section-list">
+          <ul>
+            {% comment %}固定目标集合：switches{% endcomment %}
+            {% assign target_col = collections.switches %}
+            {% assign filter_key = 'Switch Feel' %}
+            {% assign target_filter = target_col.filters | where: 'label', filter_key | first %}
+
+            {% comment %}循环Switch Feel所有可选值{% endcomment %}
+            {% if target_filter and target_filter.values.size > 0 %}
+              {% for val in target_filter.values %}
+                <li>
+                  {% comment %}拼接标准筛选参数：filter.v.字段名=值（Shopify原生筛选URL格式）{% endcomment %}
+                  {% assign filter_url = target_col.url
+                    | append: '?filter.p.m.custom.'
+                    | append: target_filter.param
+                    | append: '='
+                    | append: val
+                    | url_escape
+                  %}
+                  <a href="{{ filter_url }}" target="_blank">{{ val }}</a>
+                </li>
+              {% endfor %}
+            {% endif %}
+          </ul>
+        </div>
+      </section>
+      <section class="sitemap-section" data-level="2" data-parent="switches" data-param="Brand">
+        <div class="section-title custom-txt-semibold">By Brand</div>
+        <div class="section-list">
+          <ul>
+            {% comment %}固定目标集合：switches{% endcomment %}
+            {% assign target_col = collections.switches %}
+            {% assign filter_key = 'Brand' %}
+            {% assign target_filter = target_col.filters | where: 'label', filter_key | first %}
+
+            {% comment %}循环Brand所有可选值{% endcomment %}
+            {% if target_filter and target_filter.values.size > 0 %}
+              {% for val in target_filter.values %}
+                <li>
+                  {% comment %}拼接标准筛选参数：filter.v.字段名=值（Shopify原生筛选URL格式）{% endcomment %}
+                  {% assign filter_url = target_col.url
+                    | append: '?filter.p.m.custom.'
+                    | append: target_filter.param
+                    | append: '='
+                    | append: val
+                    | url_escape
+                  %}
+                  <a href="{{ filter_url }}" target="_blank">{{ val }}</a>
+                </li>
+              {% endfor %}
+            {% endif %}
+          </ul>
+        </div>
+      </section>
+      <section class="sitemap-section" data-level="1">
+        <div class="section-title custom-txt-semibold">MICE</div>
+        <div class="section-list">
+          <ul>
+            <li>
+              <a href="{{ collections['mice'].url }}/New-Arrival" target="_blank">New Arrival</a>
+            </li>
+            <li>
+              <a href="{{ collections['mice'].url }}" target="_blank">Shop All Mice</a>
+            </li>
+          </ul>
+        </div>
+      </section>
+      <section class="sitemap-section" data-level="1">
+        <div class="section-title custom-txt-semibold">ACCESSORIES</div>
+        <div class="section-list">
+          <ul>
+            <li>
+              <a href="{{ collections['accessories'].url }}/New-Arrival" target="_blank">New Arrival</a>
+            </li>
+            <li>
+              <a href="{{ collections['accessories'].url }}" target="_blank">Shop All Accessories</a>
+            </li>
+          </ul>
+        </div>
+      </section>
+      <section class="sitemap-section" data-level="1">
+        <div class="section-title custom-txt-semibold">SUPPORT</div>
+        {% assign pages_str = 'faq-center, download-center, track-status' %}
+        {% assign main_pages = pages_str | split: ', ' %}
+
+        <div class="section-list">
+          <ul>
+            {% for handle in main_pages %}
+              {% assign current_page = pages[handle] %}
+              <li>
+                <a href="{{ current_page.url }}" target="_blank">{{ current_page.title }}</a>
+              </li>
+            {% endfor %}
+            <li>
+              <a href="{{ pages['download-center'].url }}" target="_blank">User Manuals</a>
+            </li>
+          </ul>
+        </div>
+      </section>
+      <section class="sitemap-section" data-level="1">
+        <div class="section-title custom-txt-semibold">PIIFOX</div>
+        {% assign pages_str = 'about-us, contact-us' %}
+        {% assign main_pages = pages_str | split: ', ' %}
+
+        <div class="section-list">
+          <ul>
+            {% for handle in main_pages %}
+              {% assign current_page = pages[handle] %}
+              <li>
+                <a href="{{ current_page.url }}" target="_blank">{{ current_page.title }}</a>
+              </li>
+            {% endfor %}
+            <li>
+              <a href="{{ blogs['news'].url }}" target="_blank">Blogs</a>
+            </li>
+          </ul>
+        </div>
+      </section>
+      <section class="sitemap-section" data-level="1">
+        <div class="section-title custom-txt-semibold">POLICIES</div>
+        {% assign pages_str = 'warranty-return-policy, shipping-policy, privacy-policy, terms-of-service' %}
+        {% assign main_pages = pages_str | split: ', ' %}
+
+        <div class="section-list">
+          <ul>
+            {% for handle in main_pages %}
+              {% assign current_page = pages[handle] %}
+              <li>
+                <a href="{{ current_page.url }}" target="_blank">{{ current_page.title }}</a>
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
+      </section>
+      <section class="sitemap-section" data-level="1">
+        <div class="section-title custom-txt-semibold">SOCIAL MEDIA</div>
+        <div class="section-list">
+          <ul>
+            {% if settings.social_facebook_link %}
+              <li>
+                <a href="{{ settings.social_facebook_link }}" target="_blank">Facebook</a>
+              </li>
+            {% endif %}
+            {% if settings.social_twitter_link %}
+              <li>
+                <a href="{{ settings.social_twitter_link }}" target="_blank">Twitter</a>
+              </li>
+            {% endif %}
+            {% if settings.social_instagram_link %}
+              <li>
+                <a href="{{ settings.social_instagram_link }}" target="_blank">Instagram</a>
+              </li>
+            {% endif %}
+            {% if settings.social_linkedin_link %}
+              <li>
+                <a href="{{ settings.social_linkedin_link }}" target="_blank">LinkedIn</a>
+              </li>
+            {% endif %}
+            {% if settings.social_youtube_link %}
+              <li>
+                <a href="{{ settings.social_youtube_link }}" target="_blank">YouTube</a>
+              </li>
+            {% endif %}
+            {% if settings.social_tiktok_link %}
+              <li>
+                <a href="{{ settings.social_tiktok_link }}" target="_blank">TikTok</a>
+              </li>
+            {% endif %}
+          </ul>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
+{%- if section.settings.divider -%}
+  </div>
+{%- endif -%}
+
+{% style %}
+  .sitemap-page-container {
+  }
+  .sitemap-page-container .sitemap-page--header {
+    padding-bottom: 2em;
+  }
+  .sitemap-page-container .sitemap-page--header h2.sitemap-page-title {
+    font-size: 2.5em;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+  .sitemap-page-container .sitemap-page--header p.sitemap-page-description {
+  }
+  .sitemap-page-container .sitemap-page--wrapper {
+  }
+  .sitemap-page-container .sitemap-page--wrapper .sitemap-section {
+    padding: 2em 0;
+  }
+  .sitemap-page-container .sitemap-page--wrapper .sitemap-section[data-level='1'] {
+    padding-left: 1em;
+  }
+  .sitemap-page-container .sitemap-page--wrapper .sitemap-section[data-level='2'] {
+    padding-left: 4em;
+  }
+  .sitemap-page-container .sitemap-page--wrapper .sitemap-section .section-title {
+    font-size: 1.5em;
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+  .sitemap-page-container .sitemap-page--wrapper .sitemap-section .section-list {
+  }
+  .sitemap-page-container .sitemap-page--wrapper .sitemap-section .section-list ul {
+  }
+  .sitemap-page-container .sitemap-page--wrapper .sitemap-section .section-list ul li {
+  }
+  .sitemap-page-container .sitemap-page--wrapper .sitemap-section .section-list ul li a {
+  }
+{% endstyle %}
+{% schema %}
+{
+  "name": "Site Map",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "divider",
+      "label": "t:sections.site-map.settings.divider.label",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "页面标题",
+      "default": "Site Map"
+    },
+    {
+      "type": "text",
+      "id": "description",
+      "label": "页面描述",
+      "default": "Find all PIIFOX pages, product categories, support resources, policies, and brand information in one place."
+    }
+  ],
+  "blocks": []
+}
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

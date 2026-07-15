@@ -1,0 +1,82 @@
+<div class="support-banner">
+  <div class="support-icon">
+    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#427347" stroke-width="2">
+      <path d="M3 18V10a9 9 0 0 1 18 0v8" />
+      <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v1a2 2 0 0 1-2 2z" />
+      <path d="M3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3a2 2 0 0 0-2 2v1a2 2 0 0 0 2 2z" />
+    </svg>
+  </div>
+  <div class="support-text">
+    <h3>{{ section.settings.support_title }}</h3>
+    <p>{{ section.settings.support_desc }}</p>
+  </div>
+  <a href="mailto:{{ section.settings.support_btn_email }}" class="support-btn">
+    {{ section.settings.support_btn_text }}
+    <span>&rsaquo;</span>
+  </a>
+</div>
+
+<style>
+  .support-banner {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 24px;
+    border: 1px solid #eee;
+    border-radius: 10px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .support-icon {
+    background: #edf9f5;
+    padding: 12px;
+    border-radius: 10px;
+    flex-shrink: 0;
+  }
+
+  .support-text {
+    flex: 1;
+  }
+
+  .support-text h3 {
+    margin: 0 0 8px;
+    font-size: 24px;
+    font-weight: 600;
+  }
+
+  .support-text p {
+    margin: 0;
+    font-size: 16px;
+    color: #666;
+  }
+
+  .support-btn {
+    background: var(--colorThemePrimary);
+    color: #fff;
+    padding: 12px 24px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+  }
+
+  .support-btn:hover {
+    opacity: 0.9;
+  }
+
+  @media (max-width: 768px) {
+    .support-banner {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 16px;
+    }
+    .support-btn {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+</style>

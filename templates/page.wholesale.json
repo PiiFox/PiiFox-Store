@@ -1,0 +1,370 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {}
+    },
+    "166098642059749204": {
+      "type": "head-bg",
+      "settings": {
+        "title": "<p>Global investment, welcome</p><p>all dealers to grow together</p><p>with us in the new energy industry</p>",
+        "title_size": 40,
+        "src": "shopify://shop_images/P15_2f2805a8-ec40-463c-895b-a1056a4ab627.jpg"
+      }
+    },
+    "1660997893cf53559c": {
+      "type": "icon-text-colmns",
+      "blocks": {
+        "166099789321c54fbc-0": {
+          "type": "text_block",
+          "settings": {
+            "enable_image": true,
+            "image": "shopify://shop_images/62e66b7fba26af64b62d33d1a541a695_80x_056e1d58-59f4-409f-98fe-a80ab16a9f29.webp",
+            "image_width": 80,
+            "title": "Global Inventory",
+            "text": "<p>We keep stock in an overseas warehouse for<br/>you. Drop shopping or Wholesale at your choice.</p>"
+          }
+        },
+        "166099789321c54fbc-1": {
+          "type": "text_block",
+          "settings": {
+            "enable_image": true,
+            "image": "shopify://shop_images/882d328a08fb065a3ce891b74ee5fad4_80x_6f05cb4b-22c6-474b-82d1-2f6e55c31697.webp",
+            "image_width": 80,
+            "title": "Shipping",
+            "text": "<p>We pay the last mile shipping cost to you<br/>or your customer in drop shipping mode.</p>"
+          }
+        },
+        "166099789321c54fbc-2": {
+          "type": "text_block",
+          "settings": {
+            "enable_image": true,
+            "image": "shopify://shop_images/0e9fadd8053d28fc6fd9fb396ce76af3_80x_bbdd1f47-b180-47bd-a6bf-95d92d22e00d.webp",
+            "image_width": 80,
+            "title": "After Sales",
+            "text": "<p>We do all after-sales services.</p>"
+          }
+        },
+        "dc8cf980-ad65-42f9-b4fd-b242a9484000": {
+          "type": "text_block",
+          "settings": {
+            "enable_image": true,
+            "image": "shopify://shop_images/ca7b6dd66f965e49f5efab86b845c69f_80x_b7ee9330-1630-4c76-beb4-4fd96692e409.webp",
+            "image_width": 80,
+            "title": "Marketing",
+            "text": "<p>We promote 3EPOWERS online. We pay for<br/>marketing campaigns and you get customers.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "166099789321c54fbc-0",
+        "166099789321c54fbc-1",
+        "166099789321c54fbc-2",
+        "dc8cf980-ad65-42f9-b4fd-b242a9484000"
+      ],
+      "settings": {
+        "title": "Why You Choose Us.",
+        "align_text": "center",
+        "divider": false
+      }
+    },
+    "16607470327a35634c": {
+      "type": "advanced-content",
+      "blocks": {
+        "1660747032e1b64e1e-1": {
+          "type": "liquid",
+          "settings": {
+            "code": "<h2>Cannot Wait to Enroll?\n</h2>",
+            "width": "75%",
+            "alignment": "center"
+          }
+        },
+        "56569345-3277-4970-9b5d-3bc29c1f1b43": {
+          "type": "liquid",
+          "settings": {
+            "code": "<a class=\"enm\">Enroll Now</a>",
+            "width": "25%",
+            "alignment": "center"
+          }
+        }
+      },
+      "block_order": [
+        "1660747032e1b64e1e-1",
+        "56569345-3277-4970-9b5d-3bc29c1f1b43"
+      ],
+      "settings": {
+        "full_width": false,
+        "space_around": true
+      }
+    },
+    "1661006142819bd24e": {
+      "type": "banner-title",
+      "settings": {
+        "title": "Global Network",
+        "align_text": "center",
+        "pcimage": "shopify://shop_images/358e52262bd3ba44e1cab2c8ad1ef999.jpg",
+        "color_background": "#000000",
+        "color_text": "#ffffff"
+      }
+    },
+    "16610074920d5d9e37": {
+      "type": "icon-colums-bg",
+      "blocks": {
+        "166100749268ee11ea-0": {
+          "type": "text_block",
+          "settings": {
+            "enable_image": true,
+            "image": "shopify://shop_images/Home-Back-Up_1.webp",
+            "image_width": 80,
+            "title": "Power Entire Home",
+            "text": "<p>Keep your home ON like a UPS when your neigh boris blackout</p>",
+            "button_label": "",
+            "button_link": ""
+          }
+        },
+        "166100749268ee11ea-1": {
+          "type": "text_block",
+          "settings": {
+            "enable_image": true,
+            "image": "shopify://shop_images/Outdoor-Power_1.webp",
+            "image_width": 80,
+            "title": "Outdoor Power",
+            "text": "<p>Camping, Outdoor Party,RV, Photographing, Drone,Boating, Tailgating</p>",
+            "button_label": "",
+            "button_link": ""
+          }
+        },
+        "166100749268ee11ea-2": {
+          "type": "text_block",
+          "settings": {
+            "enable_image": true,
+            "image": "shopify://shop_images/Professional_1.webp",
+            "image_width": 80,
+            "title": "Professional",
+            "text": "<p>Floor Machine, Electric drill, Medical ventilator</p>",
+            "button_label": "",
+            "button_link": ""
+          }
+        }
+      },
+      "block_order": [
+        "166100749268ee11ea-0",
+        "166100749268ee11ea-1",
+        "166100749268ee11ea-2"
+      ],
+      "settings": {
+        "background": "shopify://shop_images/f0d9a836ea12cdbe0012db062c9ca061.jpg",
+        "title": "Product Application",
+        "color_text": "#ffffff",
+        "align_text": "center",
+        "divider": false
+      }
+    },
+    "16610099337302b164": {
+      "type": "richtext-and-image",
+      "settings": {
+        "image": "shopify://shop_images/P15_0455853e-1376-4eaf-a61e-264e4c93ed0a.png",
+        "image_width": 490,
+        "subtitle": "Power without hassles from camper to your off-grid hut",
+        "title": "3EPOWERS P15 1500W",
+        "text": "<p>Fast charging from 0-80% in 1 hour.</p><p>Super efficient 1500W unrivaled solar input.</p><p>Continuous stable pure sine wave output<br/>with inbuilt, E-UPS, inbuilt automatic AC charger and AC mains</p><p>Top-grade max power E-VSZ 2500W Constant Power MAX.</p><p>Intelligent E-speed technology.</p><p><br/>24/7 UPS HomeBackup</p>",
+        "button_label": "Check It Now",
+        "button_link": "shopify://products/3epowers-p15-1500w-portable-power-station",
+        "button_style": "secondary",
+        "align_text": "left",
+        "layout": "left",
+        "color_background2": "#000000",
+        "color_text": "#ffffff",
+        "divider": false
+      }
+    },
+    "1661012182f6e458e3": {
+      "type": "richtext-and-image",
+      "settings": {
+        "image": "shopify://shop_images/wholesale2.png",
+        "image_width": 450,
+        "subtitle": "Best choice for entire home; Firm backup in an outage.",
+        "title": "3EPOWERS P25+EP160",
+        "text": "<p>Capacity: 1573Wh 50.4V AC 110V 2000W MAX(×4).</p><p>Easily expandable with the EP160 at strong sun day.</p><p>Continuous stable pure sine wave output with inbuilt, <br/>E-UPS, inbuilt automatic AC charger and AC mains.</p><p>Fast AC charging, intelligent E-speed technology 0-80% in 1hours, <br/>E-VSZ 3000W Constant Power MAX.</p><p>Both are easy to carry. <br/>Making a total of 1400W.</p><p>Supports a reliable smart<br/>App control & monitor.</p>",
+        "button_label": "Check It Now",
+        "button_link": "",
+        "button_style": "secondary",
+        "align_text": "left",
+        "layout": "right",
+        "color_background2": "#000000",
+        "color_text": "#ffffff",
+        "divider": false
+      }
+    },
+    "16610121870b88525a": {
+      "type": "richtext-and-image",
+      "disabled": true,
+      "settings": {
+        "image": "shopify://shop_images/P25_f95d8d04-746e-428f-9e20-61d95dd2d446.jpg",
+        "image_width": 440,
+        "subtitle": "An ideal choice to power a mini-fridge, air pump, laptop, and more.",
+        "title": "BLUETTI EB70",
+        "text": "<p>Massive 716Wh capacity and<br/>700W rated wattage</p><p>4*Pure sine wave AC outlets will<br/>protect sensitive devices by<br/>producing 110V US standard<br/>electricity</p><p>2*PD 100W PORTS，your<br/>phone/pad/laptop will reach 80%<br/>power within half an hour</p><p>3 Charge methods<br/>(Solar panel, AC wall outlet, Car charge)</p><p>Ultra-stable LiFePO4 battery,<br/>2500+ life cycles before reaching its<br/>80% capacity</p><p>Built-in BMS, with short circuit/<br/>overcurrent/ overvoltage/ overload<br/>/ overheating protection</p>",
+        "button_label": "Check It Now",
+        "button_link": "",
+        "button_style": "secondary",
+        "align_text": "left",
+        "layout": "left",
+        "color_background2": "#000000",
+        "color_text": "#ffffff",
+        "divider": false
+      }
+    },
+    "16612450833292fe66": {
+      "type": "richtext-and-image",
+      "disabled": true,
+      "settings": {
+        "image": "shopify://shop_images/P15_0455853e-1376-4eaf-a61e-264e4c93ed0a.png",
+        "image_width": 700,
+        "subtitle": "",
+        "title": "Image with text",
+        "text": "<p>Pair large text with an image to tell a story, explain a detail about your product, or describe a new promotion.</p>",
+        "button_label": "",
+        "button_link": "",
+        "button_style": "primary",
+        "align_text": "left",
+        "layout": "right",
+        "color_background2": "#000000",
+        "color_text": "#ffffff",
+        "divider": false
+      }
+    },
+    "1661245089f8872f9b": {
+      "type": "richtext-and-image",
+      "disabled": true,
+      "settings": {
+        "image": "shopify://shop_images/faa8f7fd5fb3e0218d4f3348d374cf8a.jpg",
+        "image_width": 700,
+        "subtitle": "",
+        "title": "Image with text",
+        "text": "<p>Pair large text with an image to tell a story, explain a detail about your product, or describe a new promotion.</p>",
+        "button_label": "",
+        "button_link": "",
+        "button_style": "primary",
+        "align_text": "left",
+        "layout": "right",
+        "color_background2": "#000000",
+        "color_text": "#ffffff",
+        "divider": false
+      }
+    },
+    "16610146963fa14849": {
+      "type": "media-reviews",
+      "disabled": true,
+      "blocks": {
+        "1661014696b4e49d1d-0": {
+          "type": "text_block",
+          "settings": {
+            "title": "If You're Thinking About Going Off-Grid",
+            "text": "<p>If the prospect of losing power for hours or days at a time concerns you, the Bluetti AC200MAX portable power station offers a very compelling solution. It has the ability to run even large appliances like a refrigerator, high-demand devices like a space heater, and it can charge all your portable electronics.</p>",
+            "button_label": "LEARN MORE",
+            "button_link": ""
+          }
+        },
+        "796865cb-302d-4b66-8768-cae8604f0ff7": {
+          "type": "text_block",
+          "settings": {
+            "title": "With Bluetti’s Fusion Box Pro",
+            "text": "<p>If you're thinking about going off-grid, you're probably already thinking about a backup power source. Top of your list of considerations should be the Bluetti AC300 power station and the AC200 MAX, a heavy-duty yet flexible alternative that supports expandable battery modules.</p>",
+            "button_label": "LEARN MORE",
+            "button_link": "",
+            "image": "shopify://shop_images/20220821005937.jpg"
+          }
+        }
+      },
+      "block_order": [
+        "1661014696b4e49d1d-0",
+        "796865cb-302d-4b66-8768-cae8604f0ff7"
+      ],
+      "settings": {
+        "title": "Media Reviews",
+        "background": "#f5f5f8",
+        "align_text": "center",
+        "divider": false
+      }
+    },
+    "16610156998389f56b": {
+      "type": "icon-colums-bg",
+      "blocks": {
+        "1661015699923ed7a0-0": {
+          "type": "text_block",
+          "settings": {
+            "enable_image": true,
+            "image": "shopify://shop_images/Download_30774782-8636-4149-b8f8-d7662e9a5d1d.webp",
+            "image_width": 80,
+            "title": "",
+            "text": "<p>Product list & Introduction</p>",
+            "button_label": "DOWNLOAD",
+            "button_link": "https://cdn.shopifycdn.net/s/files/1/0619/4325/1152/files/3EPOWERS_Power_Station_List.pdf?v=1661122044"
+          }
+        },
+        "1661015699923ed7a0-1": {
+          "type": "text_block",
+          "settings": {
+            "enable_image": true,
+            "image": "shopify://shop_images/User_Manuals.webp",
+            "image_width": 80,
+            "title": "",
+            "text": "<p>Wholesale & Partnership Inquiry</p>",
+            "button_label": "CHECK NOW",
+            "button_link": "shopify://pages/user-guide"
+          }
+        },
+        "1661015699923ed7a0-2": {
+          "type": "text_block",
+          "settings": {
+            "enable_image": true,
+            "image": "shopify://shop_images/Join_US.webp",
+            "image_width": 80,
+            "title": "",
+            "text": "<p>Wherever you from</p>",
+            "button_label": "CONTACT US",
+            "button_link": "shopify://pages/contact-us"
+          }
+        }
+      },
+      "block_order": [
+        "1661015699923ed7a0-0",
+        "1661015699923ed7a0-1",
+        "1661015699923ed7a0-2"
+      ],
+      "settings": {
+        "background": "shopify://shop_images/d715e427d1344f0e27350c7316bcd7ff.jpg",
+        "title": "Get More info and Support",
+        "color_text": "#ffffff",
+        "align_text": "center",
+        "divider": false
+      }
+    }
+  },
+  "order": [
+    "main",
+    "166098642059749204",
+    "1660997893cf53559c",
+    "16607470327a35634c",
+    "1661006142819bd24e",
+    "16610074920d5d9e37",
+    "16610099337302b164",
+    "1661012182f6e458e3",
+    "16610121870b88525a",
+    "16612450833292fe66",
+    "1661245089f8872f9b",
+    "16610146963fa14849",
+    "16610156998389f56b"
+  ]
+}

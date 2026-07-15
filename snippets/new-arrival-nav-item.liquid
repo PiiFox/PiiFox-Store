@@ -1,0 +1,52 @@
+{% comment %} 
+ childlink
+ mega_tag
+ add_class
+{% endcomment %}
+
+{% assign childlink_handle = childlink.url
+  | remove: '/collections/'
+  | remove: '/new-arrival'
+  | remove: '/New-Arrival'
+  | strip
+%}
+
+{% assign current_collection = collections[childlink_handle] %}
+
+{% for product in current_collection.products %}
+  {% if product.tags contains 'New Arrival' %}
+    <div class="mega__item">
+      <a
+        href="{{ product.url }}"
+        class="site-nav__dropdown-link site-nav__dropdown-link--second-level site-nav__dropdown-link-{{ product.title }} {% if add_class %} {{ add_class }} {% endif %}"
+        data-tag="{{ mega_tag }}"
+      >
+        {% if product.featured_image %}
+          <img
+            src="{{ product.featured_image | image_url }}"
+            width="{{ product.featured_image.width }}"
+            height="{{ product.featured_image.height }}"
+            alt="{{ product.title | escape }}, a new arrival from the {{ current_collection.title | escape }} series"
+          />
+        {% else %}
+          {% assign product_featured_image = 'placeholder-img.svg' | asset_url %}
+          <img
+            src="{{ product_featured_image }}"
+            width="{{ product_featured_image.width }}"
+            height="{{ product_featured_image.height }}"
+            alt="{{ product.title | escape }}, a new arrival from the {{ current_collection.title | escape }} series"
+          />
+        {% endif %}
+        <div class="sub-link-content">
+          <div class="sub-link-title custom-text-semibold notranslate">
+            {{ product.title | escape }}
+            <sup> {{ 'products.product.new' | t }} </sup>
+          </div>
+          <div class="sub-link-desc">
+            {{ product.metafields.custom.short_introduction | escape }}
+          </div>
+        </div>
+      </a>
+    </div>
+  {% endif %}
+{% endfor %}

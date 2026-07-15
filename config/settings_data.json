@@ -1,0 +1,1227 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "current": {
+    "color_body_bg": "#ffffff",
+    "color_body_text": "#000000",
+    "color_price": "#0A6830",
+    "color_savings_text": "#C20000",
+    "color_borders": "#e6e6e6",
+    "color_button": "#000000",
+    "color_button_text": "#ffffff",
+    "color_sale_tag": "#eb1f2e",
+    "color_cart_dot": "#0A6830",
+    "color_small_image_bg": "#ffffff",
+    "color_large_image_bg": "#0f0f0f",
+    "color_header": "#ffffff",
+    "color_header_text": "#000000",
+    "color_announcement": "#0f0f0f",
+    "color_announcement_text": "#ffffff",
+    "color_footer": "#000",
+    "color_footer_text": "#ffffff",
+    "color_drawer_background": "#ffffff",
+    "color_drawer_text": "#000000",
+    "color_drawer_border": "#e8e8e1",
+    "color_drawer_button": "#0A6830",
+    "color_drawer_button_text": "#ffffff",
+    "color_modal_overlays": "#e6e6e6",
+    "color_image_overlay": "#000000",
+    "color_image_overlay_text_shadow": 20,
+    "type_header_font_family": "montserrat_n8",
+    "type_header_spacing": "0",
+    "type_header_base_size": 36,
+    "type_header_line_height": 1.5,
+    "type_header_capitalize": false,
+    "type_headers_align_text": true,
+    "type_base_font_family": "montserrat_n5",
+    "type_base_spacing": "0",
+    "type_base_size": 16,
+    "type_base_line_height": 1.5,
+    "type_body_align_text": true,
+    "type_navigation_style": "body",
+    "type_navigation_size": 14,
+    "type_navigation_capitalize": false,
+    "type_product_style": "body",
+    "type_collection_font": "body",
+    "type_collection_size": 20,
+    "button_style": "square",
+    "icon_weight": "7px",
+    "icon_linecaps": "miter",
+    "product_save_amount": false,
+    "vendor_enable": false,
+    "quick_shop_enable": false,
+    "quick_shop_text": "Quick look",
+    "product_grid_image_size": "natural",
+    "product_grid_image_fill": false,
+    "product_hover_image": false,
+    "enable_swatches": true,
+    "collection_grid_style": "overlaid-box",
+    "collection_grid_shape": "landscape",
+    "collection_grid_image": "collection",
+    "collection_grid_text_align": "center",
+    "collection_grid_tint": "#000000",
+    "collection_grid_opacity": 10,
+    "collection_grid_gutter": false,
+    "cart_type": "drawer",
+    "cart_icon": "cart",
+    "cart_notes_enable": false,
+    "cart_terms_conditions_enable": false,
+    "social_facebook_link": "https://www.facebook.com/piifoxglobal",
+    "social_twitter_link": "https://x.com/PIIFOXkeyboard",
+    "social_pinterest_link": "https://www.pinterest.com/piifoxkeyboard/",
+    "social_instagram_link": "https://www.instagram.com/piifox_global",
+    "social_tiktok_link": "",
+    "social_linkedin_link": "",
+    "social_youtube_link": "https://www.youtube.com/@PIIFOX-KEYBOARD",
+    "favicon": "shopify://shop_images/logo-3_webp.png",
+    "show_breadcrumbs": true,
+    "social_reddit_link": "",
+    "color_original_price": "#918f8f",
+    "store_email": "store@piifox.com",
+    "support_email": "service@piifox.com",
+    "market_email": "marketing@piifox.com",
+    "color_theme_primary": "#0A6830",
+    "color_theme_secondary": "#006934",
+    "color_second_text": "#777777",
+    "color_blog_link": "#154379",
+    "checkout_logo_position": "left",
+    "checkout_logo_size": "small",
+    "checkout_body_background_color": "#ffffff",
+    "checkout_input_background_color_mode": "white",
+    "checkout_sidebar_background_color": "#fafafa",
+    "checkout_accent_color": "#111111",
+    "checkout_button_color": "#111111",
+    "checkout_error_color": "#ff6d6d",
+    "color_light_link": "#0A6830",
+    "color_footer_text_hover": "#999999",
+    "breadcrumb": false,
+    "sections": {
+      "header": {
+        "type": "header",
+        "blocks": {
+          "nav_item_img_wimxxV": {
+            "type": "nav_item_img",
+            "settings": {
+              "level_1_title": "Keycaps",
+              "level_2_title": "By Material & Legend",
+              "level_3_title": "POM",
+              "image": "shopify://shop_images/p_2_012110c7-212a-4f70-86ec-9f85edecb00a.png",
+              "description": ""
+            }
+          },
+          "nav_item_img_XiwWwY": {
+            "type": "nav_item_img",
+            "settings": {
+              "level_1_title": "Keycaps",
+              "level_2_title": "By Theme",
+              "level_3_title": "Test Theme",
+              "image": "shopify://shop_images/c9503ff884f03ee934848cde77b39936.jpg",
+              "description": ""
+            }
+          },
+          "nav_item_img_xkXN33": {
+            "type": "nav_item_img",
+            "settings": {
+              "level_1_title": "Switches",
+              "level_2_title": "By Brand",
+              "level_3_title": "PiiFox",
+              "image": "shopify://shop_images/333.png",
+              "description": ""
+            }
+          },
+          "nav_item_img_hq9ViQ": {
+            "type": "nav_item_img",
+            "settings": {
+              "level_1_title": "Switches",
+              "level_2_title": "By Brand",
+              "level_3_title": "Gateron",
+              "image": "shopify://shop_images/222.jpg",
+              "description": "Test"
+            }
+          },
+          "service_item_8bmpEE": {
+            "type": "service_item",
+            "disabled": true,
+            "settings": {
+              "icon": "shopify://shop_images/icon1_73345dbc-b937-4bb5-8c2e-615ddf533fb6.png",
+              "service_title": "2-Year Warranty",
+              "service_desc": "Quality you can trust."
+            }
+          },
+          "service_item_y6iPNy": {
+            "type": "service_item",
+            "disabled": true,
+            "settings": {
+              "icon": "shopify://shop_images/icon2_2132c0c9-e027-4815-a9a5-7a584b8315db.png",
+              "service_title": "Fast Delivery",
+              "service_desc": "Quick delivery across Europe."
+            }
+          },
+          "service_item_RUjCJa": {
+            "type": "service_item",
+            "disabled": true,
+            "settings": {
+              "icon": "shopify://shop_images/icon3_0a1ccaff-6871-43f5-80dc-179ef5a82016.png",
+              "service_title": "30-Day Returns",
+              "service_desc": "Hassle-free returns."
+            }
+          },
+          "service_item_My66HU": {
+            "type": "service_item",
+            "disabled": true,
+            "settings": {
+              "icon": "shopify://shop_images/icon4_dffd6126-bfc1-43bc-b25a-7fed4b1f9c69.png",
+              "service_title": "Expert Support",
+              "service_desc": "We're here to help."
+            }
+          },
+          "1524770014057": {
+            "type": "logo",
+            "settings": {
+              "logo": "shopify://shop_images/logo.avif",
+              "desktop_logo_width": 130,
+              "mobile_logo_width": 100
+            }
+          },
+          "26cbc770-e3e6-4ee6-bf0b-1f3882cf931e": {
+            "type": "toolbar_ad",
+            "disabled": true,
+            "settings": {
+              "text": "",
+              "link": ""
+            }
+          },
+          "0c6a6ec2-e537-46e1-a21f-f31f761988d1": {
+            "type": "country_select",
+            "settings": {
+              "icon": "<svg t=\"1685676805160\" class=\"earth-icon\" viewbox=\"0 0 1024 1024\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" p-id=\"3331\" width=\"32\" height=\"32\" xmlns:xlink=\"http://www.w3.org/1999/xlink\"><path d=\"M968.021333 319.351467a493.226667 493.226667 0 0 0-106.069333-157.294934A493.226667 493.226667 0 0 0 511.940267 17.066667 493.226667 493.226667 0 0 0 161.962667 162.048 493.226667 493.226667 0 0 0 17.066667 512a493.226667 493.226667 0 0 0 144.981333 349.994667A493.226667 493.226667 0 0 0 512 1006.933333a493.226667 493.226667 0 0 0 349.994667-144.981333A493.226667 493.226667 0 0 0 1006.933333 512c0-66.816-13.098667-131.643733-38.912-192.648533z m-419.413333 37.495466a2280.746667 2280.746667 0 0 0 164.590933-8.064c11.733333 39.3984 19.114667 81.681067 22.237867 126.549334H548.7104V356.855467h-0.093867z m0-73.3696V113.271467c20.241067 13.9264 45.175467 34.218667 70.007467 62.08a432.4096 432.4096 0 0 1 67.3536 102.016c-45.713067 3.413333-91.52 5.4528-137.352534 6.109866z m-73.3184-165.8624v165.76a2335.5392 2335.5392 0 0 1-131.242667-5.8624 433.152 433.152 0 0 1 64.913067-99.234133 397.994667 397.994667 0 0 1 66.3808-60.612267l-0.0512-0.0512z m-124.893867 233.898667c41.6 2.8416 83.293867 4.548267 124.987734 5.290667v118.528H294.673067c3.1232-44.765867 10.555733-87.005867 22.144-126.353067 10.8032 0.878933 21.9904 1.757867 33.536 2.542933h0.042666z m-129.194666 123.818667H91.9552a418.133333 418.133333 0 0 1 41.403733-149.230934 1904.64 1904.64 0 0 0 109.346134 15.6416c-11.383467 42.0352-18.568533 86.664533-21.504 133.597867z m-0.981334 73.326933a480.9984 480.9984 0 0 0 26.496 133.794133c-37.828267 4.181333-75.52 9.531733-113.015466 16.034134a418.133333 418.133333 0 0 1-41.693867-149.828267h128.213333z m73.472 0H475.392v119.227733a2435.072 2435.072 0 0 0-153.1904 7.338667 414.276267 414.276267 0 0 1-28.501333-126.5664z m181.691734 192.597333v150.903467a711.825067 711.825067 0 0 1-64.2304-68.437333 611.1744 611.1744 0 0 1-54.254934-77.525334c39.4496-2.645333 78.958933-4.3008 118.485334-4.9408z m73.326933 156.5696v-156.672c41.540267 0.622933 83.054933 2.363733 124.501333 5.239467a611.328 611.328 0 0 1-54.161066 77.329067 713.6768 713.6768 0 0 1-70.391467 74.103466h0.0512z m60.177067-228.471466a2465.28 2465.28 0 0 0-60.177067-1.621334V548.667733h187.8528a414.327467 414.327467 0 0 1-28.586667 126.754134c-32.989867-2.730667-66.0224-4.7616-99.089066-6.058667zM809.984 548.6592h122.0608a418.184533 418.184533 0 0 1-41.6 149.674667 2088.3968 2088.3968 0 0 0-107.050667-15.394134 481.1008 481.1008 0 0 0 26.589867-134.280533z m-0.9728-73.3184c-2.986667-47.121067-10.2656-91.904-21.6576-134.135467a2086.826667 2086.826667 0 0 0 103.389867-14.958933 417.604267 417.604267 0 0 1 41.301333 149.0944H809.0112z m1.169067-261.469867a431.223467 431.223467 0 0 1 39.005866 44.868267c-28.637867 4.4032-57.335467 8.2176-86.075733 11.434667a510.1824 510.1824 0 0 0-95.863467-150.408534 420.6336 420.6336 0 0 1 142.933334 94.1056zM366.378667 116.104533c-3.2256 3.473067-6.4512 6.9376-9.582934 10.461867a510.327467 510.327467 0 0 0-89.838933 144.008533c-30.72-3.2768-61.3632-7.2704-91.904-11.9808a422.545067 422.545067 0 0 1 38.8608-44.7232 420.241067 420.241067 0 0 1 152.465067-97.7664zM213.870933 810.180267a427.861333 427.861333 0 0 1-38.4768-44.1856c33.732267-5.188267 67.584-9.506133 101.5296-12.9536 20.872533 40.712533 47.317333 80.605867 78.8992 118.929066a773.504 773.504 0 0 0 40.96 45.7984 419.259733 419.259733 0 0 1-182.912-107.639466v0.0512z m421.853867 105.096533a772.5312 772.5312 0 0 0 38.613333-43.306667 665.6256 665.6256 0 0 0 78.651734-118.545066c31.965867 3.421867 63.889067 7.534933 95.709866 12.4672a427.716267 427.716267 0 0 1-38.613333 44.288 419.456 419.456 0 0 1-174.318933 105.096533H635.733333z\" fill=\"currentColor\" p-id=\"3332\"></path></svg>",
+              "label": "Global",
+              "s_label": "GLB",
+              "desc": "* Other countries or region",
+              "link": "https://store.piifox.com"
+            }
+          },
+          "4c6e47d1-e48e-4c17-a6ba-4c3dc5cc06ee": {
+            "type": "country_select",
+            "settings": {
+              "icon": "<svg viewbox=\"0 0 1024 1024\" xmlns=\"http://www.w3.org/2000/svg\" width=\"26\" height=\"26\"><path d=\"M533.504 2.56h29.696c-16.896-1.536-34.304-2.56-51.2-2.56s-34.304 1.024-51.2 2.56h72.704z\" fill=\"#FFFFFF\" p-id=\"5869\"></path><path d=\"M446.976 1019.904c21.504 2.56 43.008 4.096 65.024 4.096s43.52-1.536 65.024-4.096H446.976z\" fill=\"#C22045\" p-id=\"5870\"></path><path d=\"M78.848 784.896h866.304c15.36-24.576 29.184-50.688 40.448-77.824H38.4c11.264 27.136 24.576 53.248 40.448 77.824z\" fill=\"#FFFFFF\" p-id=\"5871\"></path><path d=\"M38.4 707.072h947.2c10.24-25.088 18.944-51.2 25.088-77.824H13.312c6.656 26.624 14.848 52.736 25.088 77.824z\" fill=\"#C22045\" p-id=\"5872\"></path><path d=\"M233.984 942.08h555.52c34.304-22.016 65.536-48.128 93.696-77.824H140.288c28.16 29.696 59.392 55.808 93.696 77.824z\" fill=\"#FFFFFF\" p-id=\"5873\"></path><path d=\"M233.984 942.08c58.88 38.4 125.952 64.512 198.656 75.776h158.72c72.192-11.264 139.264-37.376 198.656-75.776H233.984zM140.288 864.256h742.912c22.528-24.064 43.008-50.176 60.928-77.824H79.872c17.408 27.648 37.888 53.76 60.416 77.824zM432.64 1017.856c4.608 0.512 9.728 1.536 14.336 2.048h130.048c4.608-0.512 9.728-1.536 14.336-2.048h-158.72z\" fill=\"#C22045\" p-id=\"5874\"></path><path d=\"M1.536 550.912c2.048 26.624 6.144 52.736 11.776 77.824h997.376c6.144-25.088 9.728-51.2 11.776-77.824H1.536z\" fill=\"#FFFFFF\" p-id=\"5875\"></path><path d=\"M533.504 393.728h476.672c-6.144-26.624-14.848-52.736-25.088-77.824h-451.584v77.824z\" fill=\"#C22045\" p-id=\"5876\"></path><path d=\"M787.456 80.384h-253.952V158.72h349.184c-28.672-29.696-60.416-56.32-95.232-78.336z\" fill=\"#FFFFFF\" p-id=\"5877\"></path><path d=\"M533.504 236.544h410.112c-17.92-27.648-38.4-53.76-60.928-77.824h-349.184v77.824zM533.504 549.376h488.96c1.024-12.288 1.536-24.576 1.536-37.376 0-13.824-0.512-27.136-1.536-40.448h-488.96v77.824zM787.456 80.384c-58.368-37.376-124.928-62.976-196.096-74.24h-57.856v74.24h253.952z\" fill=\"#C22045\" p-id=\"5878\"></path><path d=\"M533.504 6.144h57.856c-9.216-1.536-18.432-2.56-28.16-3.584h-29.696v3.584z\" fill=\"#C22045\" p-id=\"5879\"></path><path d=\"M533.504 471.552h488.96c-2.048-26.624-6.144-52.736-12.288-77.824h-476.672v77.824zM533.504 315.392h451.584c-11.264-27.136-25.088-53.248-40.448-77.824h-410.624v77.824z\" fill=\"#FFFFFF\"></path><path d=\"M423.424 237.568v-1.024H340.992v1.024zM428.544 236.544l-1.536 1.024h12.8l-1.536-1.024zM442.88 237.568h90.624v-1.024H442.88zM321.024 236.544H240.64v0.512l-0.512-0.512h-20.992l-0.512 0.512v-0.512h-138.24c0 0.512-0.512 0.512-0.512 1.024h241.152v-1.024zM38.912 315.904h494.592v-0.512H38.912v0.512zM325.632 236.544l-1.536 1.024h13.312l-1.536-1.024zM533.504 549.376H1.536v1.536h531.968v-1.536zM30.208 337.92c0.512-1.024 1.024-2.56 1.536-3.584l-2.048 1.536 0.512 2.048z\" fill=\"#004981\"></path><path d=\"M34.304 327.168H40.96l-9.216 7.168c-0.512 1.024-1.024 2.56-1.536 3.584l3.072 10.752-5.12-4.096c-5.632 15.872-10.24 32.256-14.336 49.152h48.128l-5.632-3.584h13.824c0.512 0 4.096-13.824 4.608-13.824l5.12 13.824h12.8l-4.608 3.584H163.84l-5.12-3.584h13.824l5.632-13.824 3.584 13.824h13.824l-5.12 3.584h77.312l-4.608-3.584h12.8l4.608-13.824 3.584 13.824h14.336l-5.12 3.584h76.8l-5.12-3.584H378.88l3.584-13.824 3.584 13.824h13.824l-5.12 3.584h77.312l-5.12-3.584h13.824l4.096-13.824 5.12 13.824H501.76l-5.12 3.584h36.864V315.904H38.912c-1.536 3.584-3.072 7.68-4.608 11.264z m393.728 7.68l5.12-12.8 3.584 12.8H450.56l-11.264 8.704 5.12 12.8-11.264-7.68-11.264 7.68 3.584-12.8-11.264-8.704h13.824z m-102.912 0c0.512 0 4.608-12.8 4.096-12.8l5.12 12.8H348.16l-11.264 8.704 3.584 12.8-11.264-7.68-10.24 7.68 3.584-12.8-11.264-8.704h13.824z m-101.376-4.096l3.584-12.288 5.12 12.8h12.8l-10.24 7.68 3.584 13.824-11.264-8.704-11.264 8.704 5.12-13.824-11.264-8.192h13.824z m-97.792-13.824l3.584 12.8h14.336l-11.264 7.68 5.12 13.824-11.264-8.704-11.264 8.704 3.584-13.824-10.24-7.68h13.824c-0.512 0 3.072-12.8 3.584-12.8zM232.96 98.304h13.824L235.52 105.984l5.12 12.8-11.264-7.68-11.264 7.68 5.12-12.8-11.264-7.68h13.824s2.56-10.24 3.584-13.312c-31.744 20.992-61.44 46.08-87.552 73.728h30.72l5.12-12.8 3.584 12.8h93.696l4.608-12.8 3.584 12.8h94.208c0.512 0 3.584-11.264 3.584-12.8l3.584 12.8h94.208l4.096-12.8 5.12 12.8h45.568V80.384h-296.96c-2.56 1.536-4.608 3.072-7.168 4.608l3.584 13.312z m195.584 3.584l5.632-12.8 3.584 12.8h13.824L440.32 109.568l3.584 13.824-10.24-8.704-11.264 8.704 3.584-13.824-11.264-7.68h13.824z m-101.376 0l4.096-12.8 5.12 12.8h12.288l-10.24 7.68 3.584 13.824-11.264-8.704-11.264 8.704 5.12-13.824-11.264-7.68h13.824zM218.624 236.544h21.504l-10.752-7.168zM330.752 232.96l-5.12 3.584h10.24z\" fill=\"#004981\" p-id=\"5882\"></path><path d=\"M288.256 51.2l-2.048 1.536 5.12 12.8-11.264-7.68-11.264 7.68 1.536-5.12c-11.264 6.144-22.528 12.8-33.792 19.968h296.96V6.144H432.64C381.44 14.336 332.8 29.696 288.256 51.2z m103.936 14.336l-11.264-7.68-11.264 7.68 5.12-12.8L363.52 45.056h13.824c0.512 0 3.584-12.288 3.584-13.824l3.584 13.824h13.824l-11.264 7.68 5.12 12.8z m90.624-34.304l5.12 13.824H501.76l-11.264 7.68 3.584 12.8-11.264-7.68-10.24 7.68 3.584-12.8-11.264-7.68h13.824l4.096-13.824zM433.664 232.96l-5.12 3.584h9.728zM0 512c0 12.8 0.512 25.088 1.536 37.376h531.968V471.552H1.536C0.512 484.864 0 498.176 0 512z m478.72-11.264l4.096-12.8 5.12 12.8H501.76l-11.264 8.704 3.584 12.8-11.264-7.68-10.24 7.68 3.584-12.8-11.264-8.704h13.824z m-101.376 0l3.584-12.8 3.584 12.8h13.824l-11.264 8.704 5.12 12.8-11.264-7.68-11.264 7.68 5.12-12.8-11.264-8.704h13.824z m-102.4 0l4.608-12.8 3.584 12.8h14.336l-11.264 8.704 5.12 12.8-11.264-7.68-11.264 7.68 3.584-12.8-10.24-8.704h12.8z m-102.912 0l5.632-12.8 3.584 12.8h13.824l-11.264 8.704 3.584 12.8-10.24-7.68-11.264 7.68 3.584-12.8-11.264-8.704h13.824z m-97.28-12.8l5.12 12.8h12.8l-10.24 8.704 3.584 12.8-11.264-7.68-11.264 7.68 5.12-12.8-12.288-8.704h13.824c0.512 0 4.096-12.8 4.608-12.8z\" fill=\"#004981\" p-id=\"5883\"></path><path d=\"M490.496 167.424l3.584 12.8-11.264-7.68-10.24 7.68 3.584-12.8-11.264-8.704h-66.56l-11.264 8.704 5.12 12.8-11.264-7.68-11.264 7.68 5.12-12.8L363.52 158.72H297.472l-11.264 8.704 5.12 12.8-11.264-7.68-11.264 7.68 3.584-12.8-10.24-8.704H195.072l-11.264 8.704 3.584 12.8-10.24-7.68-11.264 7.68 3.584-12.8L158.72 158.72h-17.408c-22.528 24.064-43.008 50.176-60.928 77.824h137.728l5.12-12.288-11.776-9.216h14.336l3.584-12.288 3.584 12.8h13.824L235.52 224.256l5.12 12.288h80.896l3.584-8.704-11.776-7.68h13.824l4.096-13.824 5.12 13.824h12.288l-10.24 7.68 2.56 8.704h82.432l2.56-8.704-10.24-7.68h13.824l4.608-13.824 3.584 13.824h13.824L440.32 227.84l2.56 8.704h90.624V158.72H501.76l-11.264 8.704zM136.704 235.52l-10.24-7.68-10.752 7.68 3.584-12.8-11.264-8.704h13.824s5.632-12.8 5.12-12.8l3.584 12.8h13.824L133.12 222.72l3.584 12.8zM533.504 6.144V2.56H460.8c-9.216 1.024-18.944 2.048-28.16 3.584h100.864zM490.496 397.824l3.584 12.8-11.264-7.68-10.24 7.68 3.584-12.8-6.144-4.096h-76.8l-6.144 4.096 5.12 12.8-11.264-7.68-11.264 7.68 5.12-12.8-6.144-4.096H291.84l-6.144 4.096 5.12 12.8-11.264-7.68-11.264 7.68 3.584-12.8-5.632-4.096H189.952l-6.144 4.096 3.584 12.8-10.24-7.68-11.264 7.68 3.584-12.8-6.144-4.096H88.064l-5.632 4.096 3.584 12.8-11.264-7.68-11.264 7.68 5.12-12.8-6.656-4.096H13.824c-6.144 25.088-10.24 51.2-12.288 77.824h531.968V393.728H496.64l-6.144 4.096zM34.304 463.36l-11.264-8.704-11.264 8.704 3.584-13.824-10.24-7.68h12.8l5.12-12.8 3.584 12.8h13.824l-11.264 7.68 5.12 13.824z m100.864 1.024l-11.264-7.68-11.264 7.68 5.12-12.8-11.264-7.68h13.824l4.096-13.824 3.584 13.824h13.824l-10.24 7.68 3.584 12.8z m102.912 1.536l-11.264-7.68-10.24 7.68 3.584-12.8-10.752-7.68h13.824l3.584-13.824 5.12 13.824H245.76l-11.264 7.68 3.584 12.8z m100.864 5.12l-10.24-8.704L317.44 471.04l3.584-13.824-11.264-7.68h13.824l5.632-12.8 3.584 12.8h13.824l-11.264 7.68 3.584 13.824z m103.936 0l-11.264-8.704-11.264 8.192 3.584-13.824-10.24-7.68h13.824c-0.512 0 4.096-12.288 4.096-12.288l3.584 12.8h13.824l-11.264 7.68 5.12 13.824zM443.904 240.64l-4.096-3.072h-12.8l-4.608 3.072 1.024-3.072h-81.92l1.024 3.072-4.608-3.072h-13.312l-5.12 3.072 1.024-3.072h-240.64c-7.168 11.264-14.336 23.04-20.48 35.328h10.752c0.512 0 4.096-12.288 4.608-12.288l5.12 12.8h12.8l-10.24 7.68 3.584 13.824-11.264-8.704-11.264 8.704 5.12-13.824-10.24-6.656c-7.168 13.312-13.312 27.136-19.456 40.96h494.592V237.568H442.88l1.024 3.072zM187.392 294.912l-10.24-8.704-11.264 8.704 3.584-13.824-11.264-7.68h13.824l5.632-12.8 3.584 12.8h13.824l-11.264 7.68 3.584 13.824z m103.936 0l-11.264-8.704-11.264 8.704 3.584-13.824-10.24-7.68h12.8l4.608-12.8 3.584 12.8h14.336l-11.264 7.68 5.12 13.824z m100.864 0l-11.264-8.704-11.264 8.704 5.12-13.824-11.264-8.192h13.824l3.584-12.288 3.584 12.8h13.824l-11.264 7.68 5.12 13.824z m86.528-21.504l4.096-12.8 5.12 12.8H501.76l-11.264 7.68 3.584 13.824-11.264-8.704-10.24 8.704 3.584-13.824-11.264-7.68h13.824z\" fill=\"#004981\" p-id=\"5884\"></path><path d=\"M324.096 237.568l1.536-1.024h-4.608l-0.512 1.024zM439.808 237.568h3.072v-1.024h-4.608zM218.624 236.544h-0.512v0.512zM427.008 237.568l1.536-1.024h-5.12v1.024zM240.64 237.056v-0.512h-0.512zM337.408 237.568h3.584v-1.024h-5.12zM421.888 356.352l11.264-7.68 11.264 7.68-5.12-12.8 11.264-8.704h-13.824l-3.584-12.8-5.12 12.8h-13.824l11.264 8.704zM118.784 337.408l-3.584 13.824 11.264-8.704 11.264 8.704-5.12-13.824 11.264-7.68h-14.336l-3.584-12.8c-0.512 0-4.096 12.8-3.584 12.8h-13.824l10.24 7.68zM30.208 337.92c-1.024 2.048-1.536 4.608-2.56 6.656l5.12 4.096-2.56-10.752zM216.064 352.768l11.264-8.704 11.264 8.704-3.584-13.824 10.24-7.68h-12.8l-5.12-12.8-3.584 12.288H209.92l11.264 8.192zM318.976 356.352l10.24-7.68 11.264 7.68-3.584-12.8 11.264-8.704h-13.824l-5.12-12.8c0.512 0-3.584 12.8-4.096 12.8h-13.824l11.264 8.704-3.584 12.8zM297.472 390.144h-14.336l-3.584-13.824-4.608 13.824h-12.8l4.608 3.584h25.6zM92.672 390.144h-12.8l-5.12-13.824c-0.512 0-4.096 13.824-4.608 13.824H56.32l5.632 3.584h25.6l5.12-3.584zM40.96 327.168H34.304c-1.024 2.56-2.048 4.608-2.56 7.168L40.96 327.168zM398.336 390.144h-13.824l-3.584-13.824-3.584 13.824H363.52l5.12 3.584h24.576zM501.76 390.144h-13.824l-5.12-13.824-4.096 13.824h-13.824l5.12 3.584H496.64zM195.072 390.144h-13.824l-3.584-13.824-5.632 13.824h-13.824l5.12 3.584h26.624zM229.376 84.48v0zM380.928 145.92c0 1.536-3.072 12.8-3.584 12.8h7.168l-3.584-12.8zM319.488 123.392l11.264-8.704 11.264 8.704-3.584-13.824 10.24-7.68h-12.288l-5.12-12.8-4.096 12.8h-13.824l11.264 7.68zM482.816 145.92l-4.096 12.8h9.216zM422.4 123.392l11.264-8.704 10.24 8.704-3.584-13.824 11.264-7.68h-13.824l-3.584-12.8-5.632 12.8H414.72l11.264 7.68zM380.928 145.92zM177.664 145.92l-5.12 12.8h8.704zM279.552 145.92l-4.608 12.8h8.192zM211.968 98.304l11.264 7.68-5.12 12.8 11.264-7.68 11.264 7.68-5.12-12.8 11.264-7.68h-13.824l-3.584-13.312h-0.512c-0.512 2.56-3.584 13.312-3.584 13.312h-13.312zM283.136 45.056l-3.584-13.824-4.608 13.824h-12.8l10.24 7.68-2.048 7.68c6.144-3.072 11.776-6.144 17.92-9.216l9.216-6.144h-14.336z\" fill=\"#FFFFFF\" p-id=\"5885\"></path><path d=\"M268.8 65.536l11.264-7.68 11.264 7.68-5.12-12.8 2.048-1.536c-6.144 3.072-11.776 6.144-17.92 9.216l-1.536 5.12zM68.608 509.44l-5.12 12.8 11.264-7.68 11.264 7.68-3.584-12.8 10.24-8.704h-12.8l-5.12-12.8c-0.512 0-4.096 12.8-4.608 12.8H56.32l12.288 8.704zM369.664 522.24l11.264-7.68 11.264 7.68-5.12-12.8 11.264-8.704h-13.824l-3.584-12.8-3.584 12.8H363.52l11.264 8.704zM165.888 522.24l11.264-7.68 10.24 7.68-3.584-12.8 11.264-8.704h-13.824l-3.584-12.8-5.632 12.8h-13.824l11.264 8.704zM472.576 522.24l10.24-7.68 11.264 7.68-3.584-12.8 11.264-8.704h-13.824l-5.12-12.8-4.096 12.8h-13.824l11.264 8.704zM268.8 522.24l11.264-7.68 11.264 7.68-5.12-12.8 11.264-8.704h-14.336l-3.584-12.8-4.608 12.8h-12.8l10.24 8.704zM369.664 180.224l11.264-7.68 11.264 7.68-5.12-12.8 11.264-8.704H363.52l11.264 8.704zM229.376 229.376l10.752 7.168h0.512l-5.12-12.288 11.264-8.704h-13.824l-3.584-12.8-3.584 12.288h-14.336l11.776 9.216-5.12 12.288h0.512zM433.664 232.96l4.608 3.584h4.608l-2.56-8.704 11.264-7.68h-13.824l-3.584-13.824-4.608 13.824h-13.824l10.24 7.68-2.56 8.704h5.12zM330.752 232.96l5.12 3.584h5.12l-2.56-8.704 10.24-7.68h-12.288l-5.12-13.824-4.096 13.824h-13.824l11.264 7.68-3.584 8.704h4.608zM268.8 180.224l11.264-7.68 11.264 7.68-5.12-12.8 11.264-8.704h-35.328l10.24 8.704zM472.576 180.224l10.24-7.68 11.264 7.68-3.584-12.8L501.76 158.72h-36.864l11.264 8.704zM130.56 214.016l-3.584-12.8c0.512 0-5.12 12.8-5.12 12.8h-13.824l11.264 8.704-3.584 12.8 10.752-7.68 10.24 7.68-3.584-12.8 11.264-8.704h-13.824zM384.512 45.056l-3.584-13.824c0 1.536-3.072 13.824-3.584 13.824H363.52l11.264 7.68-5.12 12.8 11.264-7.68 11.264 7.68-5.12-12.8 11.264-7.68h-13.824zM165.888 180.224l11.264-7.68 10.24 7.68-3.584-12.8 11.264-8.704H158.72l10.752 8.704zM380.928 31.232zM476.16 52.736l-3.584 12.8 10.24-7.68 11.264 7.68-3.584-12.8L501.76 45.056h-13.824l-5.12-13.824-4.096 13.824h-13.824zM56.32 272.896l2.048 1.536c0-0.512 0.512-1.024 0.512-1.536H56.32zM63.488 294.912l11.264-8.704 11.264 8.704-3.584-13.824 10.24-7.68h-12.8l-5.12-12.8c-0.512 0-4.096 12.288-4.608 12.288h-10.752c0 0.512-0.512 1.024-0.512 1.536l10.24 6.656-5.632 13.824zM319.488 240.64l4.608-3.072h-3.584zM384.512 273.408l-3.584-12.8-3.584 12.288H363.52l11.264 8.192-5.12 13.824 11.264-8.704 11.264 8.704-5.12-13.824 11.264-7.68zM472.576 294.912l10.24-8.704 11.264 8.704-3.584-13.824 11.264-7.68h-13.824l-5.12-12.8-4.096 12.8h-13.824l11.264 7.68zM181.248 273.408l-3.584-12.8-5.632 12.8h-13.824l11.264 7.68-3.584 13.824 11.264-8.704 10.24 8.704-3.584-13.824 11.264-7.68zM283.136 273.408l-3.584-12.8-4.608 12.8h-12.8l10.24 7.68-3.584 13.824 11.264-8.704 11.264 8.704-5.12-13.824 11.264-7.68zM422.4 240.64l4.608-3.072h-3.584zM165.888 410.624l11.264-7.68 10.24 7.68-3.584-12.8 6.144-4.096h-26.624l6.144 4.096zM63.488 410.624l11.264-7.68 11.264 7.68-3.584-12.8 5.632-4.096h-26.112l6.656 4.096zM128 443.904l-3.584-13.824-4.096 13.824h-13.824l11.264 7.68-5.12 12.8 11.264-7.68 11.264 7.68-3.584-12.8 10.24-7.68zM26.624 441.856l-3.584-12.8-5.12 12.8H5.12l10.24 7.68-3.584 13.824 11.264-8.704 11.264 8.704-5.12-13.824 11.264-7.68zM342.016 240.64l-1.024-3.072h-3.584zM369.664 410.624l11.264-7.68 11.264 7.68-5.12-12.8 6.144-4.096H368.64l6.144 4.096zM268.8 410.624l11.264-7.68 11.264 7.68-5.12-12.8 6.144-4.096h-25.6l5.632 4.096zM231.936 445.44l-5.12-13.824-3.584 13.824h-13.824l10.752 7.68-3.584 12.8 10.24-7.68 11.264 7.68-3.584-12.8L245.76 445.44zM443.904 240.64l-1.024-3.072h-3.072zM472.576 410.624l10.24-7.68 11.264 7.68-3.584-12.8 6.144-4.096h-26.624l6.144 4.096zM435.2 449.536l-3.584-12.8s-4.608 12.288-4.096 12.288h-13.824l10.24 7.68-3.584 13.824 11.264-8.192 11.264 8.704-5.12-13.824 11.264-7.68H435.2zM332.8 449.536l-3.584-12.8-5.632 12.8h-13.824l11.264 7.68L317.44 471.04l11.264-8.704 10.24 8.704-3.584-13.824 11.264-7.68z\" fill=\"#FFFFFF\" p-id=\"5886\"></path></svg>",
+              "label": "United States",
+              "s_label": "US",
+              "desc": "",
+              "link": "https://us.piifox.com"
+            }
+          },
+          "3fe181b8-0e7f-467d-a463-c5f490400e1c": {
+            "type": "country_select",
+            "settings": {
+              "icon": "<svg viewbox=\"0 0 1070 1024\" xmlns=\"http://www.w3.org/2000/svg\" width=\"26\" height=\"26\"><path d=\"M514.094545 0c282.810182 0 512 229.236364 512 512s-229.189818 512-512 512c-282.763636 0-512-229.236364-512-512s229.236364-512 512-512z\" fill=\"#F0F0F0\" p-id=\"13476\"></path><path d=\"M514.094545 289.419636a222.626909 222.626909 0 1 1 0 445.253819 222.626909 222.626909 0 0 1 0-445.253819\" fill=\"#D80027\" p-id=\"13477\"></path></svg>",
+              "label": "Japan",
+              "s_label": "JP",
+              "desc": "",
+              "link": "https://jp.piifox.com"
+            }
+          }
+        },
+        "block_order": [
+          "nav_item_img_wimxxV",
+          "nav_item_img_XiwWwY",
+          "nav_item_img_xkXN33",
+          "nav_item_img_hq9ViQ",
+          "service_item_8bmpEE",
+          "service_item_y6iPNy",
+          "service_item_RUjCJa",
+          "service_item_My66HU",
+          "1524770014057",
+          "26cbc770-e3e6-4ee6-bf0b-1f3882cf931e",
+          "0c6a6ec2-e537-46e1-a21f-f31f761988d1",
+          "4c6e47d1-e48e-4c17-a6ba-4c3dc5cc06ee",
+          "3fe181b8-0e7f-467d-a463-c5f490400e1c"
+        ],
+        "custom_css": [
+          "div.custom-country-select-item {padding-bottom: 7.5px;}",
+          ".custom-current-country-currency-item > svg {width: 22px; height: 22px; top: 4px; position: relative; cursor: pointer;}",
+          "@media screen and (max-width: 768px) {.custom-current-country-select-item.site-nav__link {color: #000; }}"
+        ],
+        "settings": {
+          "main_menu_link_list": "main-menu",
+          "mega_menu_images": true,
+          "timezone_area_limit": true,
+          "main_menu1": "Keyboards",
+          "main_menu1_tag": "New",
+          "main_menu2": "Keycaps",
+          "main_menu2_tag": "New",
+          "main_menu3": "Switches",
+          "main_menu3_tag": "",
+          "main_menu4": "Mice",
+          "main_menu4_tag": "",
+          "main_menu5": "Accessories",
+          "main_menu5_tag": "",
+          "main_menu_alignment": "left",
+          "header_style": "sticky",
+          "sticky_index": true,
+          "sticky_collection": false,
+          "announcement_compact": true,
+          "announcement_above_header": false,
+          "toolbar_header": "",
+          "toolbar_menu": "",
+          "toolbar_social": false,
+          "show_locale_selector": true,
+          "show_currency_selector": false,
+          "show_currency_flags": false,
+          "show_country_selector": false,
+          "show_language_currency_selector": true,
+          "show_activity_bar": false,
+          "background_color": "rgba(0,0,0,0)",
+          "activity_page": "shopify://products/aubox-x",
+          "activity_text": "Be the First to Experience the Whisper-Quiet AuBox X AI PC.",
+          "activity_text_color": "#ebe4d3",
+          "activity_btn": "Preorder Now",
+          "activity_btn_bgcolor": "rgba(0,0,0,0)",
+          "activity_btn_textcolor": "#2d200d",
+          "is_activity_downcount": false,
+          "activity_downcount_bgcolor": "#000000",
+          "activity_downcount_text_color": "#ffffff",
+          "activity_timezone": -8,
+          "activity_end_time": "2026-05-15 23:59:59"
+        }
+      },
+      "footer": {
+        "type": "footer",
+        "blocks": {
+          "1494292487693": {
+            "type": "newsletter",
+            "settings": {
+              "show_footer_newsletter_subscribe": false,
+              "footer_newsletter_subscribe_title": "Not Subsribe yet?",
+              "footer_newsletter_subscribe_text": "Get 7% off — Subscribe Piifox today",
+              "footer_newsletter_subscribe_btn": "Read More >",
+              "footer_newsletter_subscribe_url": "shopify://pages/newsletter-subscription",
+              "show_footer_title": true,
+              "show_newsletter": false,
+              "foot_logo": "shopify://shop_images/logo-1.webp",
+              "title": "Where Performance Meets Personality.",
+              "text": "<p>Built for the way you work, play, and make your setup yours.</p>",
+              "container_width": 25
+            }
+          },
+          "5531d6fa-5b78-4208-8f5a-902bb645a83b": {
+            "type": "muti_menu",
+            "settings": {
+              "show_footer_title": true,
+              "menu": "footer",
+              "container_width": 75
+            }
+          },
+          "66c67605-371e-4209-aa9e-ef68c22dcfcc": {
+            "type": "menu",
+            "disabled": true,
+            "settings": {
+              "show_footer_title": true,
+              "menu": "",
+              "container_width": 25
+            }
+          },
+          "5b7e9514-c75b-487d-a372-7d16db6ba645": {
+            "type": "menu",
+            "disabled": true,
+            "settings": {
+              "show_footer_title": true,
+              "menu": "",
+              "container_width": 25
+            }
+          },
+          "1494301487049": {
+            "type": "menu",
+            "disabled": true,
+            "settings": {
+              "show_footer_title": true,
+              "menu": "",
+              "container_width": 25
+            }
+          }
+        },
+        "block_order": [
+          "1494292487693",
+          "5531d6fa-5b78-4208-8f5a-902bb645a83b",
+          "66c67605-371e-4209-aa9e-ef68c22dcfcc",
+          "5b7e9514-c75b-487d-a372-7d16db6ba645",
+          "1494301487049"
+        ],
+        "custom_css": [
+          ".footer__collapsible p {color: #b8b8b8;}"
+        ],
+        "settings": {
+          "payments": "visa,master,american_express,discover,jcb,diners_club,maestro,klarna",
+          "show_locale_selector": false,
+          "show_currency_selector": false,
+          "show_currency_flags": true,
+          "show_payment_icons": true,
+          "show_copyright": true,
+          "copyright_text": "",
+          "policy_list": "<a href=\"/pages/privacy-policy\" style=\"padding: 0 0.5rem;border-right: 1px solid #fff;\">Privacy Policy</a>      <a href=\"/pages/terms-of-service\" style=\"padding-left: 0.5rem\">Terms Of Service</a> \n | <a href=\"#\" style=\"padding: 0 0.5rem;\" onclick=\"__ucCmp.showSecondLayer(); return false;\">Cookie Preferences</a>"
+        }
+      },
+      "newsletter-popup": {
+        "type": "newsletter-popup",
+        "blocks": {
+          "reminder-block": {
+            "type": "header",
+            "disabled": true,
+            "settings": {
+              "reminder_label": "Get 10% off"
+            }
+          }
+        },
+        "block_order": [
+          "reminder-block"
+        ],
+        "settings": {
+          "mode": false,
+          "disable_for_account_holders": true,
+          "popup_seconds": 5,
+          "popup_days": 30,
+          "popup_title": "SIGN UP FOR NEWSLETTER",
+          "popup_text": "<p>Be the first to receive PIIFOX STORE's the latest news, knowledge boom and exclusive deals!</p>",
+          "image_position": "left",
+          "show_social_icons": false,
+          "enable_newsletter": true,
+          "button_label": "Continue Visiting Store",
+          "button_link": "https://store.piifox.com/"
+        }
+      },
+      "collection-header": {
+        "type": "collection-header",
+        "settings": {
+          "enable": true,
+          "collection_image_enable": true,
+          "parallax": true
+        }
+      },
+      "footer-promotions": {
+        "type": "footer-promotions",
+        "blocks": {
+          "footer-promotions-0": {
+            "type": "promotion",
+            "disabled": true,
+            "settings": {
+              "enable_image": true,
+              "title": "Site-wide promotion",
+              "text": "<p>Use this section to promote content throughout every page of your site. Add images for further impact.</p>",
+              "button_label": "Optional button",
+              "button_link": ""
+            }
+          },
+          "footer-promotions-1": {
+            "type": "promotion",
+            "disabled": true,
+            "settings": {
+              "enable_image": true,
+              "title": "Site-wide promotion",
+              "text": "<p>Use this section to promote content throughout every page of your site. Add images for further impact.</p>",
+              "button_label": "Optional button",
+              "button_link": ""
+            }
+          },
+          "footer-promotions-2": {
+            "type": "promotion",
+            "disabled": true,
+            "settings": {
+              "enable_image": true,
+              "title": "Site-wide promotion",
+              "text": "<p>Use this section to promote content throughout every page of your site. Add images for further impact.</p>",
+              "button_label": "Optional button",
+              "button_link": ""
+            }
+          }
+        },
+        "block_order": [
+          "footer-promotions-0",
+          "footer-promotions-1",
+          "footer-promotions-2"
+        ],
+        "custom_css": [],
+        "settings": {
+          "hide_homepage": false,
+          "image_size": "wide"
+        }
+      },
+      "foot-newsletter": {
+        "type": "foot-newsletter",
+        "blocks": {
+          "583a47fe-10ab-4fc2-afa4-846334d6cf64": {
+            "type": "title",
+            "settings": {
+              "title": "Subscribe to the PIIFOX newsletter"
+            }
+          },
+          "c1dffe11-3921-4ca4-86db-dda5a639d34a": {
+            "type": "text",
+            "settings": {
+              "text": "<p>Get the latest keyboard drops, deals, and stories.</p>"
+            }
+          },
+          "2827512a-04e2-4c3a-8308-06bc55bd00cc": {
+            "type": "form",
+            "settings": {
+              "checkbox_text": "<p>I agree to the <a href=\"/pages/terms-of-service\">Terms of Use</a> and <a href=\"/pages/privacy-policy\">Privacy Policy</a>.</p>"
+            }
+          }
+        },
+        "block_order": [
+          "583a47fe-10ab-4fc2-afa4-846334d6cf64",
+          "c1dffe11-3921-4ca4-86db-dda5a639d34a",
+          "2827512a-04e2-4c3a-8308-06bc55bd00cc"
+        ],
+        "settings": {
+          "color_background": "#000000",
+          "color_text": "#ffffff"
+        }
+      },
+      "switch-site-warntip": {
+        "type": "switch-site-warntip",
+        "blocks": {
+          "switch-site-warntip-0": {
+            "type": "header",
+            "settings": {
+              "tip_text": "It seems you're in % country %.Redirect to % storename % to see the content specific to your location and shop online.",
+              "country_code": "",
+              "confirm_label": "Yes,Please",
+              "cancel_label": "No,Thanks"
+            }
+          },
+          "header_BiVKtc": {
+            "type": "header",
+            "settings": {
+              "tip_text": "It seems you're in % country %.Redirect to % storename % to see the content specific to your location and shop online.",
+              "country_code": "US",
+              "confirm_label": "Yes,Please",
+              "cancel_label": "No,Thanks"
+            }
+          },
+          "header_giPJfG": {
+            "type": "header",
+            "settings": {
+              "tip_text": "It seems you're in % country %.Redirect to % storename % to see the content specific to your location and shop online.",
+              "country_code": "",
+              "confirm_label": "Yes,Please",
+              "cancel_label": "No,Thanks"
+            }
+          },
+          "ff27b541-f072-41a0-a248-dfc4c3682b01": {
+            "type": "header",
+            "settings": {
+              "tip_text": "現在、 % country %.にお住まいでしょうか？% storename % にリダイレクトすると、日本向けのスペシャルコンテンツが見られます。PIIFOX JP Storeで楽しみショッピングしてください。",
+              "country_code": "JP",
+              "confirm_label": "はい、入ります",
+              "cancel_label": "いいえ、結構です"
+            }
+          },
+          "40a3e0e7-27be-46be-8a3e-48979655d0b3": {
+            "type": "header",
+            "settings": {
+              "tip_text": "Parece que estás en % country %. Redirigir a % storename % para ver el contenido específico de tu ubicación.",
+              "country_code": "ES",
+              "confirm_label": "sí,por favor",
+              "cancel_label": "No,gracias"
+            }
+          },
+          "5fe5ae73-3724-4774-907e-e372e35b1caf": {
+            "type": "header",
+            "settings": {
+              "tip_text": "Es scheint, dass sich Ihr Standort in % country % befindet.  Leiten Sie zu % storename % weiter, um die Inhalte zu kaufen, die für Ihre Region spezifisch sind.",
+              "country_code": "DE",
+              "confirm_label": "Ja, bitte.",
+              "cancel_label": "Nein, danke."
+            }
+          },
+          "b31cad95-f8f9-4591-b8d8-ced34a9b2586": {
+            "type": "header",
+            "settings": {
+              "tip_text": "Parece que você está atualmente localizado em % country %. Por favor, seja redirecionado para % storename % para acessar o conteúdo específico da sua região.",
+              "country_code": "PT",
+              "confirm_label": "Sim, por favor.",
+              "cancel_label": "Não, obrigado."
+            }
+          },
+          "99ad4844-f098-434e-a6dd-fe96a060f59d": {
+            "type": "header",
+            "settings": {
+              "tip_text": "Похоже, что ваше текущее местоположение - % country %. Пожалуйста, перейдите на % storename %, чтобы получить доступ к контенту, специфическому для вашего региона.",
+              "country_code": "RU",
+              "confirm_label": "Да, пожалуйста.",
+              "cancel_label": "Нет, спасибо."
+            }
+          },
+          "90651f97-1f2d-471d-a871-83d746f7eea4": {
+            "type": "header",
+            "settings": {
+              "tip_text": "Sembra che tu sia attualmente situato in % country %. Sii gentile e fai il redirezionamento a % storename % per accedere ai contenuti specifici per la tua regione.",
+              "country_code": "IT",
+              "confirm_label": "Sì, per favore.",
+              "cancel_label": "No, grazie."
+            }
+          }
+        },
+        "block_order": [
+          "switch-site-warntip-0",
+          "header_BiVKtc",
+          "header_giPJfG",
+          "ff27b541-f072-41a0-a248-dfc4c3682b01",
+          "40a3e0e7-27be-46be-8a3e-48979655d0b3",
+          "5fe5ae73-3724-4774-907e-e372e35b1caf",
+          "b31cad95-f8f9-4591-b8d8-ced34a9b2586",
+          "99ad4844-f098-434e-a6dd-fe96a060f59d",
+          "90651f97-1f2d-471d-a871-83d746f7eea4"
+        ],
+        "settings": {}
+      },
+      "activity-bar": {
+        "type": "activity-bar",
+        "settings": {
+          "show_activity_bar": false,
+          "background_color": "rgba(0,0,0,0)",
+          "activity_page": "#",
+          "activity_text": "",
+          "activity_text_color": "#ebe4d3",
+          "activity_btn": "Preorder Now",
+          "activity_btn_bgcolor": "rgba(0,0,0,0)",
+          "activity_btn_textcolor": "#2d200d",
+          "is_activity_downcount": false,
+          "activity_downcount_bgcolor": "#000000",
+          "activity_downcount_text_color": "#ffffff",
+          "activity_timezone": -8,
+          "activity_end_time": "2026-05-15 23:59:59"
+        }
+      }
+    },
+    "content_for_index": [],
+    "blocks": {
+      "14060646107696862457": {
+        "type": "shopify://apps/judge-me-reviews/blocks/judgeme_core/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+        "disabled": false,
+        "settings": {}
+      },
+      "10008203421340698720": {
+        "type": "shopify://apps/g-translate-shop-translator/blocks/dropdown/408a74ac-f92d-43cf-a1b1-a044341e66bd",
+        "disabled": true,
+        "settings": {
+          "horizontal_position": "left",
+          "vertical_position": "bottom",
+          "select_language_label": "Select Language",
+          "native_language_names": true,
+          "wrapper_selector": "",
+          "custom_css": ""
+        }
+      },
+      "11354984448963461329": {
+        "type": "shopify://apps/g-translate-shop-translator/blocks/dropdown_with_flags/408a74ac-f92d-43cf-a1b1-a044341e66bd",
+        "disabled": false,
+        "settings": {
+          "horizontal_position": "left",
+          "vertical_position": "bottom",
+          "open_direction": "bottom",
+          "native_language_names": true,
+          "flag_size": "32",
+          "flag_style": "2d",
+          "switcher_text_color": "#666666",
+          "switcher_arrow_color": "#666666",
+          "switcher_border_color": "#cccccc",
+          "switcher_background_color": "#ffffff",
+          "switcher_background_shadow_color": "#efefef",
+          "switcher_background_hover_color": "#ffffff",
+          "dropdown_text_color": "#000000",
+          "dropdown_hover_color": "#ffffff",
+          "dropdown_background_color": "#eeeeee",
+          "wrapper_selector": ".custom-language-select--wrapper",
+          "custom_css": ""
+        }
+      },
+      "776302416715791028": {
+        "type": "shopify://apps/bucks/blocks/app-embed/4f0a9b06-9da4-4a49-b378-2de9d23a3af3",
+        "disabled": false,
+        "settings": {}
+      },
+      "2647664283302970701": {
+        "type": "shopify://apps/cookiebot-cmp/blocks/uc-banner/42d95aba-03be-478d-adf0-7bb4f5efae78",
+        "disabled": false,
+        "settings": {}
+      },
+      "855628211100114053": {
+        "type": "shopify://apps/klaviyo-email-marketing-sms/blocks/klaviyo-onsite-embed/2632fe16-c075-4321-a88b-50b567f42507",
+        "disabled": false,
+        "settings": {}
+      },
+      "16936614187718193802": {
+        "type": "shopify://apps/multifeeds/blocks/app_embed/f3e7ca1d-2d5a-45a7-97dd-2fd45843acef",
+        "disabled": false,
+        "settings": {}
+      }
+    }
+  },
+  "presets": {
+    "Modern": {
+      "breadcrumb": false,
+      "button_style": "square",
+      "cart_notes_enable": false,
+      "cart_terms_conditions_enable": false,
+      "cart_type": "drawer",
+      "checkout_accent_color": "#111111",
+      "checkout_body_background_color": "#ffffff",
+      "checkout_button_color": "#111111",
+      "checkout_error_color": "#ff6d6d",
+      "checkout_input_background_color_mode": "white",
+      "checkout_logo_position": "left",
+      "checkout_logo_size": "small",
+      "checkout_sidebar_background_color": "#fafafa",
+      "collection_grid_gutter": true,
+      "collection_grid_image": "product",
+      "collection_grid_opacity": 10,
+      "collection_grid_shape": "square",
+      "collection_grid_style": "overlaid-box",
+      "collection_grid_text_align": "center",
+      "collection_grid_tint": "#000000",
+      "color_announcement": "#0f0f0f",
+      "color_announcement_text": "#ffffff",
+      "color_body_bg": "#ffffff",
+      "color_body_text": "#000000",
+      "color_borders": "#e8e8e1",
+      "color_button": "#111111",
+      "color_button_text": "#ffffff",
+      "color_button_disable": "#cccccc",
+      "color_button_disable_text": "#ffffff",
+      "color_cart_dot": "#ff4f33",
+      "color_drawer_background": "#ffffff",
+      "color_drawer_border": "#e8e8e1",
+      "color_drawer_button": "#111111",
+      "color_drawer_button_text": "#ffffff",
+      "color_drawer_text": "#000000",
+      "color_footer": "#ffffff",
+      "color_footer_text": "#000000",
+      "color_header": "#ffffff",
+      "color_header_text": "#000000",
+      "color_image_overlay": "#000000",
+      "color_image_overlay_text_shadow": 20,
+      "color_large_image_bg": "#0f0f0f",
+      "color_modal_overlays": "#e6e6e6",
+      "color_price": "#1c1d1d",
+      "color_savings_text": "#C20000",
+      "color_small_image_bg": "#ffffff",
+      "icon_linecaps": "miter",
+      "icon_weight": "2px",
+      "product_grid_image_size": "natural",
+      "product_hover_image": false,
+      "quick_shop_text": "Quick view",
+      "type_base_font_family": "twentieth_century_n4",
+      "type_base_line_height": 1.4,
+      "type_base_size": 18,
+      "type_base_spacing": "25",
+      "type_body_align_text": true,
+      "type_collection_font": "body",
+      "type_collection_size": 20,
+      "type_header_base_size": 36,
+      "type_header_capitalize": true,
+      "type_header_font_family": "tenor_sans_n4",
+      "type_header_line_height": 1,
+      "type_header_spacing": "0",
+      "type_headers_align_text": true,
+      "type_navigation_capitalize": true,
+      "type_navigation_size": 16,
+      "type_navigation_style": "body",
+      "type_product_style": "body",
+      "sections": {
+        "header": {
+          "type": "header",
+          "blocks": {
+            "1524770014057": {
+              "type": "logo",
+              "settings": {
+                "desktop_logo_width": 140,
+                "mobile_logo_width": 110
+              }
+            },
+            "1524770292306": {
+              "type": "announcement",
+              "settings": {
+                "text": "Free shipping",
+                "link_text": "On all orders over $100"
+              }
+            },
+            "1524770296206": {
+              "type": "announcement",
+              "settings": {
+                "text": "Hassle-free returns",
+                "link_text": "30-day postage paid returns"
+              }
+            }
+          },
+          "block_order": [
+            "1524770014057",
+            "1524770292306",
+            "1524770296206"
+          ],
+          "settings": {
+            "main_menu_link_list": "main-menu",
+            "main_menu_alignment": "center-split",
+            "header_style": "sticky",
+            "sticky_index": false,
+            "sticky_collection": false,
+            "announcement_compact": true,
+            "toolbar_menu": "top",
+            "toolbar_social": true
+          }
+        },
+        "footer": {
+          "type": "footer",
+          "blocks": {
+            "1494301487048": {
+              "type": "logo_social",
+              "settings": {
+                "container_width": 95
+              }
+            },
+            "1494301487049": {
+              "type": "menu",
+              "settings": {
+                "menu": "footer",
+                "container_width": 25
+              }
+            },
+            "1494292487693": {
+              "type": "newsletter",
+              "settings": {
+                "container_width": 33
+              }
+            }
+          },
+          "block_order": [
+            "1494301487049",
+            "1494292487693",
+            "1494301487048"
+          ],
+          "settings": {
+            "show_payment_icons": false
+          }
+        },
+        "newsletter-popup": {
+          "type": "newsletter-popup",
+          "blocks": {
+            "reminder-block": {
+              "type": "header",
+              "disabled": true,
+              "settings": {}
+            }
+          },
+          "block_order": [
+            "reminder-block"
+          ],
+          "settings": {}
+        },
+        "collection-header": {
+          "type": "collection-header",
+          "settings": {
+            "enable": true,
+            "collection_image_enable": true,
+            "parallax": true
+          }
+        }
+      }
+    },
+    "Clean": {
+      "show_breadcrumbs": true,
+      "color_body_bg": "#ffffff",
+      "color_body_text": "#000000",
+      "color_price": "#1c1d1d",
+      "color_savings_text": "#ff4e4e",
+      "color_borders": "#e8e8e1",
+      "color_button": "#111111",
+      "color_button_text": "#ffffff",
+      "color_cart_dot": "#ff4f33",
+      "color_small_image_bg": "#e5e5e5",
+      "color_large_image_bg": "#0f0f0f",
+      "color_header": "#ffffff",
+      "color_header_text": "#000000",
+      "color_announcement": "#0f0f0f",
+      "color_announcement_text": "#ffffff",
+      "color_footer": "#ffffff",
+      "color_footer_text": "#000000",
+      "color_drawer_background": "#ffffff",
+      "color_drawer_text": "#000000",
+      "color_drawer_border": "#e8e8e1",
+      "color_drawer_button": "#111111",
+      "color_drawer_button_text": "#ffffff",
+      "color_modal_overlays": "#e6e6e6",
+      "color_image_overlay_opacity": 0,
+      "color_image_overlay_text_shadow": 24,
+      "type_header_font_family": "basic_commercial_n7",
+      "type_header_spacing": "25",
+      "type_header_base_size": 38,
+      "type_header_line_height": 1,
+      "type_header_capitalize": false,
+      "type_headers_align_text": false,
+      "type_base_font_family": "basic_commercial_n4",
+      "type_base_spacing": "25",
+      "type_base_size": 16,
+      "type_base_line_height": 1.6,
+      "type_body_align_text": false,
+      "type_navigation_style": "body",
+      "type_navigation_size": 18,
+      "type_navigation_capitalize": false,
+      "type_product_style": "heading",
+      "type_product_capitalize": false,
+      "type_collection_font": "body",
+      "type_collection_size": 24,
+      "button_style": "square",
+      "icon_weight": "4px",
+      "icon_linecaps": "miter",
+      "quick_shop_text": "Quick view",
+      "product_grid_image_size": "square",
+      "product_hover_image": true,
+      "collection_grid_style": "overlaid",
+      "collection_grid_shape": "square",
+      "collection_grid_image": "collection",
+      "collection_grid_text_align": "center",
+      "collection_grid_tint": "#000000",
+      "collection_grid_opacity": 20,
+      "collection_grid_gutter": true,
+      "cart_type": "drawer",
+      "cart_notes_enable": false,
+      "cart_terms_conditions_enable": false,
+      "checkout_logo_position": "left",
+      "checkout_logo_size": "medium",
+      "checkout_body_background_color": "#ffffff",
+      "checkout_input_background_color_mode": "white",
+      "checkout_sidebar_background_color": "#f5f5f5",
+      "checkout_accent_color": "#682d2d",
+      "checkout_button_color": "#682d2d",
+      "checkout_error_color": "#ff6d6d",
+      "product_fixed_image_height": false,
+      "sections": {
+        "header": {
+          "type": "header",
+          "blocks": {
+            "1520882467782": {
+              "type": "logo",
+              "settings": {
+                "logo": "",
+                "logo-inverted": "",
+                "desktop_logo_width": 200,
+                "mobile_logo_width": 140
+              }
+            },
+            "1521051841065": {
+              "type": "announcement",
+              "settings": {
+                "text": "Free shipping",
+                "link_text": "On all orders over $100",
+                "link": "shopify://collections/all"
+              }
+            },
+            "1520888647304": {
+              "type": "announcement",
+              "settings": {
+                "text": "Hassle-free returns",
+                "link_text": "30-day postage paid returns",
+                "link": "shopify://collections/all"
+              }
+            }
+          },
+          "block_order": [
+            "1520882467782",
+            "1521051841065",
+            "1520888647304"
+          ],
+          "settings": {
+            "main_menu_link_list": "main-menu",
+            "mega_menu_images": true,
+            "main_menu_alignment": "left-center",
+            "header_style": "sticky",
+            "sticky_index": true,
+            "sticky_collection": true,
+            "announcement_compact": true,
+            "announcement_above_header": true,
+            "toolbar_menu": "",
+            "toolbar_social": true,
+            "show_locale_selector": true,
+            "show_currency_selector": true,
+            "show_currency_flags": true
+          }
+        },
+        "footer": {
+          "type": "footer",
+          "blocks": {
+            "1494301487049": {
+              "type": "menu",
+              "settings": {
+                "show_footer_title": false,
+                "menu": "footer",
+                "container_width": 25
+              }
+            },
+            "1494292487693": {
+              "type": "newsletter",
+              "settings": {
+                "show_footer_title": true,
+                "title": "Sign up and save",
+                "text": "<p>Subscribe to get special offers, free giveaways, and once-in-a-lifetime deals.</p>",
+                "container_width": 30
+              }
+            },
+            "1494301487048": {
+              "type": "logo_social",
+              "settings": {
+                "logo": "",
+                "desktop_logo_height": 50,
+                "container_width": 95
+              }
+            }
+          },
+          "block_order": [
+            "1494301487049",
+            "1494292487693",
+            "1494301487048"
+          ],
+          "settings": {
+            "show_locale_selector": true,
+            "show_currency_selector": true,
+            "show_currency_flags": true,
+            "show_payment_icons": false,
+            "show_copyright": false,
+            "copyright_text": ""
+          }
+        },
+        "newsletter-popup": {
+          "type": "newsletter-popup",
+          "settings": {
+            "mode": false,
+            "popup_seconds": 5,
+            "popup_days": 30,
+            "popup_title": "Sign up and save",
+            "popup_text": "<p>Entice customers to sign up for your mailing list with discounts or exclusive offers. Include an image for extra impact.</p>",
+            "popup_image": "",
+            "enable_newsletter": true,
+            "button_label": "Optional button",
+            "button_link": ""
+          }
+        },
+        "collection-header": {
+          "type": "collection-header",
+          "settings": {
+            "enable": true,
+            "collection_image_enable": true,
+            "parallax": true
+          }
+        },
+        "footer-promotions": {
+          "type": "footer-promotions",
+          "blocks": {
+            "footer-promotions-0": {
+              "type": "promotion",
+              "settings": {
+                "enable_image": true,
+                "image": "",
+                "title": "Site-wide promotion",
+                "text": "<p>Use this section to promote content throughout every page of your site. Add images for further impact.</p>",
+                "button_label": "Optional button",
+                "button_link": ""
+              }
+            },
+            "footer-promotions-1": {
+              "type": "promotion",
+              "settings": {
+                "enable_image": true,
+                "image": "",
+                "title": "Site-wide promotion",
+                "text": "<p>Use this section to promote content throughout every page of your site. Add images for further impact.</p>",
+                "button_label": "Optional button",
+                "button_link": ""
+              }
+            },
+            "footer-promotions-2": {
+              "type": "promotion",
+              "settings": {
+                "enable_image": true,
+                "image": "",
+                "title": "Site-wide promotion",
+                "text": "<p>Use this section to promote content throughout every page of your site. Add images for further impact.</p>",
+                "button_label": "Optional button",
+                "button_link": ""
+              }
+            }
+          },
+          "block_order": [
+            "footer-promotions-0",
+            "footer-promotions-1",
+            "footer-promotions-2"
+          ],
+          "settings": {
+            "hide_homepage": false,
+            "image_size": "wide"
+          }
+        }
+      }
+    },
+    "Bold": {
+      "color_body_bg": "#000000",
+      "color_body_text": "#ffffff",
+      "color_price": "#d1ba98",
+      "color_savings_text": "#b30000",
+      "color_borders": "#2b2a27",
+      "color_button": "#9f8561",
+      "color_button_text": "#ffffff",
+      "color_cart_dot": "#b30000",
+      "color_small_image_bg": "#000000",
+      "color_large_image_bg": "#111111",
+      "color_header": "#000000",
+      "color_header_text": "#ffffff",
+      "color_announcement": "#cf2424",
+      "color_announcement_text": "#ffffff",
+      "color_footer": "#000000",
+      "color_footer_text": "#ffffff",
+      "color_drawer_background": "#000000",
+      "color_drawer_text": "#ffffff",
+      "color_drawer_border": "#2b2a27",
+      "color_drawer_button": "#9f8561",
+      "color_drawer_button_text": "#ffffff",
+      "color_modal_overlays": "#67635d",
+      "color_image_overlay": "#000000",
+      "color_image_overlay_opacity": 15,
+      "color_image_overlay_text_shadow": 30,
+      "type_header_font_family": "fjalla_one_n4",
+      "type_header_spacing": "150",
+      "type_header_base_size": 45,
+      "type_header_line_height": 1.2,
+      "type_header_capitalize": true,
+      "type_headers_align_text": true,
+      "type_base_font_family": "itc_conduit_n4",
+      "type_base_spacing": "50",
+      "type_base_size": 18,
+      "type_base_line_height": 1.4,
+      "type_body_align_text": true,
+      "type_navigation_style": "heading",
+      "type_navigation_size": 18,
+      "type_product_style": "heading",
+      "type_collection_font": "heading",
+      "type_collection_size": 23,
+      "button_style": "angled",
+      "icon_weight": "5px",
+      "icon_linecaps": "miter",
+      "search_enable": false,
+      "product_save_amount": true,
+      "quick_shop_enable": true,
+      "quick_shop_text": "Quick view",
+      "product_grid_image_size": "square",
+      "product_hover_image": false,
+      "product_content_collapse_1": false,
+      "product_content_collapse_2": true,
+      "product_content_collapse_3": true,
+      "collection_grid_style": "overlaid-box",
+      "collection_grid_shape": "landscape",
+      "collection_grid_image": "collection",
+      "collection_grid_text_align": "bottom-center",
+      "collection_grid_tint": "#000000",
+      "collection_grid_opacity": 10,
+      "collection_grid_gutter": true,
+      "cart_type": "drawer",
+      "checkout_logo_position": "left",
+      "checkout_logo_size": "small",
+      "checkout_body_background_color": "#000000",
+      "checkout_input_background_color_mode": "transparent",
+      "checkout_sidebar_background_color": "#000000",
+      "checkout_heading_font": "Helvetica Neue",
+      "checkout_body_font": "Helvetica Neue",
+      "checkout_accent_color": "#ae9878",
+      "checkout_button_color": "#ae9878",
+      "checkout_error_color": "#ff6d6d",
+      "color_image_2": "#cf2424",
+      "color_image_2_opacity": 0,
+      "color_image_1": "#6d1414",
+      "color_image_1_opacity": 0,
+      "type_accent_style": "body",
+      "type_accent_bold": true,
+      "type_accent_capitalize": true,
+      "type_button_font": "heading",
+      "type_button_capitalize": false,
+      "type_header_accent_transform": true,
+      "type_base_accent_transform": true,
+      "collection_grid_font": "heading",
+      "color_image_bg": "#000000",
+      "breadcrumb": true,
+      "color_sale_tag": "#990000",
+      "color_input": "#ffffff",
+      "checkout_banner_background_color": "#ffffff",
+      "checkout_call_to_action_color": "#a26b25",
+      "sections": {
+        "header": {
+          "type": "header",
+          "blocks": {
+            "1524768779513": {
+              "type": "logo",
+              "settings": {}
+            }
+          },
+          "block_order": [
+            "1524768779513"
+          ],
+          "settings": {
+            "main_menu_link_list": "main-menu",
+            "main_menu_alignment": "left-center",
+            "header_style": "normal",
+            "sticky_index": true,
+            "sticky_collection": false,
+            "announcement_compact": false,
+            "toolbar_social": false
+          }
+        },
+        "footer": {
+          "type": "footer",
+          "blocks": {
+            "1494292487693": {
+              "type": "newsletter",
+              "settings": {}
+            },
+            "1526406521795": {
+              "type": "menu",
+              "settings": {
+                "menu": "footer",
+                "container_width": 25
+              }
+            },
+            "1525444454442": {
+              "type": "logo_social",
+              "settings": {
+                "container_width": 95
+              }
+            }
+          },
+          "block_order": [
+            "1494292487693",
+            "1526406521795",
+            "1525444454442"
+          ],
+          "settings": {
+            "show_payment_icons": true
+          }
+        },
+        "newsletter-popup": {
+          "type": "newsletter-popup",
+          "settings": {}
+        },
+        "collection-header": {
+          "type": "collection-header",
+          "settings": {
+            "enable": true,
+            "collection_image_enable": false,
+            "parallax": false
+          }
+        }
+      }
+    }
+  }
+}

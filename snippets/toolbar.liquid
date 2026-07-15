@@ -1,0 +1,181 @@
+{% comment %}
+  Params :
+  section: Header Section (ad_list)
+  toolbar_menu: navigation
+  sticky_header: boolean,
+  overlay_header: boolean
+{% endcomment %}
+{%- liquid
+  assign show_selectors = false
+  assign currency_selector = false
+  assign locale_selector = false
+
+  if section.settings.show_currency_selector and shop.enabled_currencies.size > 1
+    assign currency_selector = true
+  endif
+
+  if section.settings.show_locale_selector and shop.enabled_locales.size > 1
+    assign locale_selector = true
+  endif
+
+  if currency_selector or locale_selector
+    assign show_selectors = true
+  endif
+
+  assign toolbar_title = section.settings.toolbar_header
+  assign toolbar_ad_list = section.blocks | where: 'type', 'toolbar_ad'
+-%}
+{% style %}
+  @property --scroll-length {
+    syntax: '<length>';
+    inherits: false;
+    initial-value: -70px;
+  }
+  @keyframes ad-scroll-4 {
+    0% {
+      transform: translate3d(0, 0px, 0);
+    }
+    25% {
+      transform: translate3d(0, -35px, 0);
+    }
+    50% {
+      transform: translate3d(0, -70px, 0);
+    }
+    75% {
+      transform: translate3d(0, -105px, 0);
+    }
+    100% {
+      transform: translate3d(0, -140px, 0);
+    }
+  }
+  @keyframes ad-scroll-3 {
+    0% {
+      transform: translate3d(0, 0px, 0);
+    }
+    33% {
+      transform: translate3d(0, -35px, 0);
+    }
+    66% {
+      transform: translate3d(0, -70px, 0);
+    }
+    100% {
+      transform: translate3d(0, -105px, 0);
+    }
+  }
+  @keyframes ad-scroll-2 {
+    0% {
+      transform: translate3d(0, 0px, 0);
+    }
+    50% {
+      transform: translate3d(0, -35px, 0);
+    }
+    100% {
+      transform: translate3d(0, -70px, 0);
+    }
+  }
+  .content-space-between {
+    justify-content: center;
+  }
+  .toolbar__item.toolbar__title a {
+    color: #434547;
+    font-weight: 600;
+    text-decoration: none;
+    text-underline-offset: 0px;
+  }
+  .toolbar__item.toolbar__title a:hover {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    transition: text-decoration 0.1s ease, text-underline-offset 0.3s linear;
+  }
+  .toolbar__item.toolbar__ad-list {
+    max-height: 35px;
+    line-height: 35px;
+    overflow: hidden;
+    text-align:center;
+  }
+  ul.block-list.toolbar__ad-list {
+    {% if toolbar_ad_list.size > 1 %}transform: translate3d(0, var(--scroll-length), 0);{% endif %}
+    margin: 0;
+    {% if toolbar_ad_list.size == 4 %}animation: ad-scroll-4 6s ease 0s infinite ;{% endif %}
+    {% if toolbar_ad_list.size == 3 %}animation: ad-scroll-3 4.5s ease 0s infinite ;{% endif %}
+    {% if toolbar_ad_list.size == 2 %}animation: ad-scroll-2 3s ease 0s infinite ;{% endif %}
+  }
+  ul.block-list.toolbar__ad-list li {
+    margin: 0;
+  }
+  ul.block-list.toolbar__ad-list li a .ad-item--hignlight-text {
+    color: #ec6521;
+    font-weight: 600;
+    width: unset;
+  }
+{% endstyle %}
+
+<div
+  class="toolbar"
+  data-sticky="{{ sticky_header }}"
+  data-overlay="{{ overlay_header }}"
+>
+  <div class="page-width">
+    <div class="toolbar__content {% if toolbar_title != blank %}content-space-between{% endif %}">
+      {% if toolbar_title != blank %}
+        <div class="toolbar__item toolbar__title small--hide">
+          <a href="/">{{ toolbar_title }}</a>
+        </div>
+      {% endif %}
+
+      {% if toolbar_ad_list.size > 0 %}
+        {% style %}
+          @media screen and (max-width: 768px) {
+            .template-index .main-content {top: 80px !important;}
+          }
+        {% endstyle %}
+        <div class="toolbar__item toolbar__ad-list">
+          <ul class="block-list toolbar__ad-list">
+            {%- for ad in toolbar_ad_list -%}
+              <li class="ad-list-{{ forloop.index0 }}">
+                <a href="{% if ad.settings.link != blank %}{{ ad.settings.link }}{% else %}#{% endif %}">
+                  {{ ad.settings.text }}
+                </a>
+              </li>
+            {%- endfor -%}
+            {% assign last_ad = toolbar_ad_list | first %}
+            <li class="ad-list-{{ toolbar_ad_list.size }}">
+              <a href="{{ last_ad.settings.link }}">
+                {{ last_ad.settings.text }}
+              </a>
+            </li>
+          </ul>
+        </div>
+      {% endif %}
+
+      {%- if section.settings.toolbar_menu != blank -%}
+        <div class="toolbar__item toolbar__item--menu">
+          <ul class="inline-list toolbar__menu">
+            {%- for link in toolbar_menu.links -%}
+              <li>
+                <a href="{{ link.url }}">{{ link.title }}</a>
+              </li>
+            {%- endfor -%}
+          </ul>
+        </div>
+      {%- endif -%}
+
+      {%- if section.settings.toolbar_social -%}
+        <div class="toolbar__item">
+          {% render 'social-icons', additional_classes: 'inline-list toolbar__social' %}
+        </div>
+      {%- endif -%}
+
+      {%- if show_selectors -%}
+        <div class="toolbar__item small--hide">
+          {%- render 'multi-selectors',
+            locale_selector: locale_selector,
+            currency_selector: currency_selector,
+            show_currency_flags: section.settings.show_currency_flags,
+            location: 'toolbar'
+          -%}
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</div>

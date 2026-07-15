@@ -1,0 +1,125 @@
+{%- assign swatch_file_extension = 'png' -%}
+
+{%- capture size_chart_title -%}
+  Delivery & Return{%- endcapture -%}
+
+{%- liquid
+  assign is_size = false
+  assign size_trigger = 'products.general.size_trigger' | t | downcase
+  assign downcased_option = option.name | downcase
+
+  if downcased_option contains size_trigger
+    assign is_size = true
+  endif
+-%}
+
+<div class="variant-wrapper js" data-type="button">
+  <label
+    class="variant__label{% if option.name == 'Default' or option.name == 'Title' %} hidden-label{% endif %}{% unless variant_labels %} hidden-label{% endunless %}"
+    for="ProductSelect-{{ section_id }}-{{ product.id }}-option-{{ forloop.index0 }}"
+  >
+    {{ option.name }}
+    {%- if connect_to_sizechart and is_size -%}
+      <span class="variant__label-info">
+        &mdash;
+        {%- render 'tool-tip-trigger',
+          title: size_chart_title,
+          content: section.blocks[sizechart_index].settings.size_chart.content,
+          context: 'size-chart'
+        -%}
+      </span>
+    {%- endif -%}
+    {%- if is_color -%}
+      <span class="variant__label-info">
+        &mdash;
+        <span
+          data-variant-color-label
+          data-index="{{ forloop.index0 }}"
+          data-option-index="{{ color_option_index }}"
+        >
+          {{ option.selected_value }}
+        </span>
+      </span>
+    {%- endif -%}
+  </label>
+  {%- assign option_index = forloop.index -%}
+  <fieldset
+    class="variant-input-wrap"
+    name="{{ option.name }}"
+    data-index="option{{ option_index }}"
+    data-handle="{{ option.name | handleize }}"
+    id="ProductSelect-{{ section_id }}-{{ product.id }}-option-{{ forloop.index0 }}"
+  >
+    <legend class="hide">{{ option.name }}</legend>
+    {%- for value in option.values -%}
+      {%- liquid
+        assign product_available = true
+        if product.options.size == 1
+          assign product_available = product.variants[forloop.index0].available
+        endif
+      -%}
+      <div
+        class="variant-input"
+        data-index="option{{ option_index }}"
+        data-value="{{ value | escape }}"
+      >
+        <input
+          type="radio"
+          form="{{ form_id }}"
+          {% if option.selected_value == value %}
+            checked="checked"
+          {% endif %}
+          value="{{ value | escape }}"
+          data-index="option{{ option_index }}"
+          name="{{ option.name }}"
+          data-variant-input
+          class="{% unless product_available %} disabled{% endunless %}"
+          id="ProductSelect-{{ section_id }}-{{ product.id }}-option-{{ option.name | handleize }}-{{ value | url_encode }}"
+        >
+
+        <label
+          for="ProductSelect-{{ section_id }}-{{ product.id }}-option-{{ option.name | handleize }}-{{ value | url_encode }}"
+          class="variant__button-label{% unless product_available %} disabled{% endunless %}"
+        >
+          {{- value | escape -}}
+        </label>
+
+        
+        <div for="ProductSelect-{{ section_id }}-{{ product.id }}-option-{{ option.name | handleize }}-{{ value | url_encode }}"
+          class="variant__button-label{% unless product_available %} disabled{% endunless %}" class="product-label--wrapper" style="display: none" >
+          {% for varient in product.variants %}
+            {% assign current_option = varient.options | has: option.name %}
+            {% if current_option %}
+              {% capture current_variant %}
+                {{ variant }}
+              {% endcapture %}
+            {% endif %}
+          {% endfor %}
+            <div class="product-variant-image">
+            <img
+              src="{{ current_variant.image | img_url: '80x80' }}"
+              alt="{{ current_variant.title }}"
+              title="{{ current_variant.title }}"
+            >
+            </div>
+            <div class="product-variant-title">
+            {{ current_variant.title }}
+            </div>
+            <div class="product-variant-price">
+            <span data-product-price-wrap class="{% if hide_sale_price %} hide{% endif %}">
+              <span data-compare-price class="product__price product__price--compare">
+                {%- if current_variant.compare_at_price > current_variant.price -%}
+                  {{ current_variant.compare_at_price | money }}
+                {%- endif -%}
+              </span>
+            </span>
+            <span data-compare-price-a11y class="visually-hidden">
+              {{ current_variant.price | money }}
+            </span>
+            </div>
+          
+        </div>
+      </div>
+    {%- endfor -%}
+  </fieldset>
+</div>

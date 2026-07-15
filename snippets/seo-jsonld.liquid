@@ -1,0 +1,165 @@
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": {{ shop.name | json }},
+    "url": "{{ routes.root_url }}",
+    "logo": "{{ shop.image | img_url: 'master' }}"
+  }
+</script>
+
+{% if request.page_type == 'collection' and collection != blank %}
+  {% liquid
+    assign collection_schema_url = collection.url | prepend: request.origin
+    assign collection_schema_image = collection.image | default: collection.featured_image
+
+    if collection_schema_image
+      assign collection_schema_image_url = collection_schema_image | image_url: width: 1200
+
+      unless collection_schema_image_url contains 'http'
+        assign collection_schema_image_url = collection_schema_image_url | prepend: 'https:'
+      endunless
+    endif
+  %}
+
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "CollectionPage",
+      "@id": {{ collection_schema_url | append: "#collection-page" | json }},
+      "url": {{ collection_schema_url | json }},
+      "name": {{ collection.title | json }}
+      {% if collection.description != blank %},
+        "description": {{ collection.description | strip_html | strip_newlines | json }}
+      {% endif %}
+      {% if collection_schema_image %},
+        "image": {
+          "@type": "ImageObject",
+          "url": {{ collection_schema_image_url | json }},
+          "width": {{ collection_schema_image.width | json }},
+          "height": {{ collection_schema_image.height | json }}
+        }
+      {% endif %}
+    }
+  </script>
+{% endif %}
+
+{% if request.page_type == 'product' %}
+  {% assign current_variant = product.selected_or_first_available_variant %}
+  {%- render 'product-json-id', product: product, current_variant: current_variant -%}
+{% endif %}
+
+{% if request.page_type == 'article' %}
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "articleBody": {{ article.content | strip_html | json }},
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": {{ canonical_url | json }}
+      },
+      "headline": {{ article.title | json }},
+      {% if article.excerpt != blank %}
+        "description": {{ article.excerpt | strip_html | json }},
+      {% endif %}
+      {% if article.image %}
+        {% assign image_size = article.image.width | append: 'x' %}
+        "image": [
+          {{ article | img_url: image_size | prepend: "https:" | json }}
+        ],
+      {% endif %}
+      "datePublished": {{ article.published_at | date: '%Y-%m-%dT%H:%M:%SZ' | json }},
+      "dateModified": {{ article.updated_at | date: '%Y-%m-%dT%H:%M:%SZ' | json }},
+      "dateCreated": {{ article.created_at | date: '%Y-%m-%dT%H:%M:%SZ' | json }},
+      "author": {
+        "@type": "Person",
+        "name": {{ article.author | json }}
+      },
+      "publisher": {
+        "@type": "Organization",
+        {% if page_image %}
+          {% assign image_size = page_image.width | append: 'x' %}
+          "logo": {
+            "@type": "ImageObject",
+            "height": {{ page_image.height | json }},
+            "url": {{ page_image | img_url: image_size | prepend: "https:" | json }},
+            "width": {{ page_image.width | json }}
+          },
+        {% endif %}
+        "name": {{ shop.name | json }}
+      }
+    }
+  </script>
+{% endif %}
+
+{% if request.page_type != 'index' %}
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": {
+            "@type": "Thing",
+            "@id": "{{ shop.url }}"
+          }
+        }
+        {% if request.page_type == 'product' %}
+        ,{
+          "@type": "ListItem",
+          "position": 2,
+          "name": {{ product.title | json }},
+          "item": {
+            "@type": "Thing",
+            "@id": "{{ shop.url }}{{ product.url }}"
+          }
+        }
+        {% elsif request.page_type == 'article' %}
+        ,{
+          "@type": "ListItem",
+          "position": 2,
+          "name": {{ blog.title | json }},
+          "item": {
+            "@type": "Thing",
+            "@id": "{{ shop.url }}/blogs/{{ blog.handle }}"
+          }
+        }
+        ,{
+          "@type": "ListItem",
+          "position": 3,
+          "name": {{ article.title | json }},
+          "item": {
+            "@type": "Thing",
+            "@id": "{{ shop.url }}{{ article.url }}"
+          }
+        }
+        {% elsif request.page_type == 'collection' %}
+        ,{
+          "@type": "ListItem",
+          "position": 2,
+          "name": {{ collection.title | json }},
+          "item": {
+            "@type": "Thing",
+            "@id": "{{ shop.url }}{{ collection.url }}"
+          }
+        }
+        {% elsif request.page_type == 'page' %}
+        ,{
+          "@type": "ListItem",
+          "position": 2,
+          "name": {{ page.title | json }},
+          "item": {
+            "@type": "Thing",
+            "@id": "{{ shop.url }}{{ page.url }}"
+          }
+        }
+        {% endif %}
+      ]
+    }
+  </script>
+{% endif %}

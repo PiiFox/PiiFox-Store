@@ -1,0 +1,107 @@
+{%- if section.settings.divider -%}
+
+<div class="page-width">
+  <div class="support-officialnews-box container">
+    {% for block in section.blocks  %}
+      {% if block.type == 'image' %}
+        <div class="row  {{ block.settings.supalign }}">
+          <div class="col-12 col-sm-6">
+            <img src="{{ block.settings.image | img_url: 'master' }}" alt="{{ block.settings.image.alt }}">
+          </div>
+          <div class="col-12 col-sm-6">
+            <div class="text-box">
+              <h2>{{ block.settings.texth2 }}</h2>
+              <p>{{ block.settings.textp }}</p>
+              <a href="{{ block.settings.link }}" class="btn-link">
+                {{ block.settings.learn_more }}
+              </a>
+            </div>
+          </div>
+        </div>
+      {% endif %}
+    {% endfor %}  
+  </div>
+</div>
+
+<style>
+.support-officialnews-box{margin-top:10rem;}
+.support-officialnews-box .row{display:flex;width:100%;margin:0 0 2rem;flex-wrap: wrap;}
+.support-officialnews-box .col-sm-6{display:flex;align-items: center;justify-content:center;flex-direction:column;max-width:50%;text-align:center;-ms-flex:0 0 50%;flex:0 0 50%;}
+.support-officialnews-box .text-box{text-align:left;}
+.support-officialnews-box .btn-link{border:1px solid var(--colorBtnPrimary);color: var(--colorBtnPrimary);border-radius:5px;padding:.5rem 2rem;transition:all .2s linear;-webkit-transition:all .2s linear;display: inline-block;margin-top: 2rem;}
+.support-officialnews-box .btn-link:hover{transition:all .2s linear;-webkit-transition:all .2s linear;background-color:{{ settings.color_button }};color:{{ settings.color_button_text }};border-color:{{ settings.color_button }};}
+.support-officialnews-box .col-sm-6 img{width:100%;}
+.support-officialnews-box .supright{flex-direction:row-reverse;}
+
+@media screen and (max-width: 750px) {
+  .support-officialnews-box{margin-top:5rem}
+  .support-officialnews-box .col-12{max-width:100%;text-align:center;-ms-flex:0 0 100%;flex:0 0 100%;}
+  .support-officialnews-box h2{font-size:1.4rem;margin-top:1rem;}
+  .support-officialnews-box .text-box{text-align:center;}
+  .support-officialnews-box .btn-link{margin-top:0;}
+}
+</style>
+{%- endif -%}
+{% schema %}
+{
+  "name": "t:sections.support-officialnews.name",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "divider",
+      "label": "t:sections.support-officialnews.settings.divider",
+      "default": true
+    }
+  ],
+  "blocks": [
+    {
+      "type": "image",
+      "name": "t:sections.support-officialnews.blocks.column.name",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "t:sections.support-officialnews.blocks.column.settings.image.label"
+        },
+        {
+          "type": "text",
+          "id": "texth2",
+          "label": "t:sections.support-officialnews.blocks.column.settings.texth2.label"
+        },
+        {
+          "type": "text",
+          "id": "textp",
+          "label": "t:sections.support-officialnews.blocks.column.settings.textp.label"
+        },
+        {
+          "type": "text",
+          "id": "learn_more",
+          "label": "t:sections.support-officialnews.blocks.column.settings.learn_more.label",
+          "default": "Learn More"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "t:sections.support-officialnews.blocks.column.settings.link.label"
+        },
+        {
+          "type": "select",
+          "id": "supalign",
+          "label": "t:sections.support-officialnews.blocks.column.settings.box_align.label",
+          "default": "supleft",
+          "options": [
+            {
+              "value": "supleft",
+              "label": "t:sections.support-officialnews.blocks.column.settings.box_align.options.left.label"
+            },
+            {
+              "value": "supright",
+              "label": "t:sections.support-officialnews.blocks.column.settings.box_align.options.right.label"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

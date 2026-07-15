@@ -1,0 +1,146 @@
+{% comment %} 
+  article: article,
+  grid_item_width: 'medium-up--one-half',
+  grid_item_width_1: 'medium-up--one-whole',
+  per_row: '2',
+  image_size: section.settings.blog_image_size
+  index0: forloop.index0
+{% endcomment %}
+{%- assign fixed_aspect_ratio = false -%}
+{% unless image_size == 'natural' %}
+  {%- assign fixed_aspect_ratio = true -%}
+{% endunless %}
+{%- assign mod3 = index0 | modulo: 3 -%}
+<div class="grid__item {% if grid_item_width_1 %}{% if mod3 == 0 %} {{ grid_item_width_1 }} {% else %} {{ grid_item_width }} {% endif %}{% else %} {{ grid_item_width }} {% endif %}" 
+  data-aos="row-of-{{ per_row }}"
+  data-index0="{{ index0 }}"
+>
+  <div class="grid-item">
+    <div class="grid__items small--one-third">
+      {%- if article.image -%}
+        <a href="{{ article.url }}" class="article__grid-image" aria-label="{{ article.title | escape }}">
+          <div class="article__grid-image--wrapper">
+            {%- if fixed_aspect_ratio -%}
+              <div class="image-wrap">
+                <div
+                  class="grid__image-ratio grid__image-ratio--{{ image_size }}"
+                >
+                  {% assign img_url = article.image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' %}
+                  <img
+                    class="lazyload"
+                    data-src="{{ img_url }}"
+                    data-widths="[360, 540, 720, 900, 1080]"
+                    data-aspectratio="{{ article.image.aspect_ratio }}"
+                    data-sizes="auto"
+                    alt="{{ article.image.alt | escape }}"
+                    width="{{ article.image.width }}"
+                    height="{{ article.image.height }}"
+                  >
+                </div>
+                <noscript>
+                  <img
+                    class="lazyloaded"
+                    src="{{ article.image | img_url: '400x' }}"
+                    alt="{{ article.title | escape }}"
+                  >
+                </noscript>
+              </div>
+            {%- else -%}
+              <div
+                class="image-wrap"
+                style="height: 0; padding-bottom: {{ 100 | divided_by: article.image.aspect_ratio }}%;"
+              >
+                {%- assign img_url = article.image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+                <img
+                  class="lazyload"
+                  data-src="{{ img_url }}"
+                  data-widths="[180, 360, 540, 720, 900, 1080]"
+                  data-aspectratio="{{ article.image.aspect_ratio }}"
+                  data-sizes="auto"
+                  alt="{{ article.image.alt | escape }}"
+                  width="{{ article.image.width }}"
+                  height="{{ article.image.height }}"
+                >
+                <noscript>
+                  <img
+                    class="lazyloaded"
+                    src="{{ article.image | img_url: '400x' }}"
+                    alt="{{ article.title | escape }}"
+                    width="{{ article.image.width }}"
+                    height="{{ article.image.height }}"
+                    loading="lazy"
+                  >
+                </noscript>
+              </div>
+            {%- endif -%}
+            {%- if section.settings.blog_show_tags and article.tags.size > 0 -%}
+              <div class="article-tag-list">
+                {%- for tag in article.tags -%}
+                  {% if tag contains '_' %}
+                    {%- assign tag_starts_with = tag | slice: 0 -%}
+                    {% if tag_starts_with == '_' -%}
+                      {%- if tag_count %}{%- assign tag_count = tag_count | minus: 1 | at_least: 0 -%}{% endif -%}
+                      {%- continue -%}
+                    {%- endif -%}
+                  {%- endif %}
+                  <a href="{{ blog.url }}/tagged/{{ tag | handle }}" class="article-tag-item">{{ tag }}</a>
+                {%- endfor -%}
+              </div>
+            {%- endif -%}
+          </div>
+        </a>
+      {%- else -%}
+        <div class="article__grid-image">
+          {%- if fixed_aspect_ratio -%}
+            <div class="image-wrap">
+              <div
+                class="grid__image-ratio grid__image-ratio--{{ image_size }} lazyload"
+              ></div>
+            </div>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+    </div>
+    <div class="grid__items small--two-thirds">
+      <div class="article__grid-meta">
+        {%- if section.settings.blog_show_date or article.tags.size > 0 or articles.comments_count > 0 -%}
+          <div class="article__date">
+            {%- if section.settings.blog_show_comments and article.comments_count > 0 -%}
+              <a href="{{ article.url }}#comments">
+                {{ 'blogs.comments.with_count' | t: count: article.comments_count }}
+              </a>
+              &middot;
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+
+        <a href="{{ article.url }}" class="article__title">{{ article.title }}</a>
+        <div>
+          {%- if section.settings.blog_show_date -%}
+            {{ article.published_at | time_tag: format: 'month_day_year' }}
+          {%- endif -%}
+          {%- if section.settings.blog_show_author -%}
+            <span class="article__author">by {{ article.author }}</span>
+          {%- endif -%}
+        </div>
+        {%- if section.settings.blog_show_excerpt -%}
+          <div class="rte article__excerpt">
+            {%- if article.excerpt.size > 0 -%}
+              {{ article.excerpt }}
+            {%- else -%}
+              {{ article.content | strip_html | truncatewords: 40 }}
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+        <div class="article__amore">
+          <a class="ee-link-reset uk-text-500 uk-text-small" href="{{ article.url }}">
+            Read more
+            <svg width="16" height="16" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+              <polyline fill="none" stroke="{{ settings.color_blog_link }}" stroke-width="1.03" points="7 4 13 10 7 16"></polyline>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

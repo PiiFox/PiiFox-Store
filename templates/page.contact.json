@@ -1,0 +1,52 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {}
+    },
+    "165994781230f27e9f": {
+      "type": "advanced-content",
+      "blocks": {
+        "1659947812dbc40969-1": {
+          "type": "liquid",
+          "settings": {
+            "code": "<div style=\"max-width: 750px;margin:auto;padding: 0 40px;\">\n    <h2 style=\"text-align:center\">Contact us</h2>\n    <p>Whenever you have any questions, suggestions, or cooperate with us, you are welcome to reach out.</p>\n<H3>Any Questions </H3>\n<p><strong>Email:</strong>3epowers@gamil.com</p>\n<p><strong>Address:</strong> 5186 Cliffwood Dr. Montclair CA 91763</p>\n<p><strong>Social Media</strong></p>\n<div class=\"Social_a\">\n    <a href=\"https://www.facebook.com/3E-Powers-104543388853847\"><img src=\"https://cdn.shopify.com/s/files/1/0536/3390/8911/files/F.png?v=1627545989\"></a>\n    <a href=\"https://twitter.com/3epower1\"><img src=\"https://cdn.shopify.com/s/files/1/0536/3390/8911/files/T.png?v=1627546219\"></a>\n<a href=\"https://www.instagram.com/3epowers2022/\"><img src=\"https://cdn.shopify.com/s/files/1/0536/3390/8911/files/I.png?v=1627546061\"></a>\n<a href=\"https://www.youtube.com/channel/UCQFl0_-3HkxIYNovOiaDFsQ\"><img src=\"https://cdn.shopify.com/s/files/1/0536/3390/8911/files/YOUTUBE.png?v=1627550397\"></a>\n</div>\n<p><strong>Facebook Group</strong></p>\n<p>New release/ promotion/ technic discussion:https://www.facebook.com/groups/224073499859060</p>\n</div>\n<style>\n    .Social_a{\n    display:flex;\n        margin-bottom: 40px;\n    }\n    .Social_a a{\n    margin-right:50px\n    }\n</style>",
+            "width": "100%",
+            "alignment": "center"
+          }
+        }
+      },
+      "block_order": [
+        "1659947812dbc40969-1"
+      ],
+      "settings": {
+        "full_width": false,
+        "space_around": true
+      }
+    },
+    "form": {
+      "type": "contact-form",
+      "settings": {
+        "title": "",
+        "text": "",
+        "show_phone": false,
+        "narrow_column": true
+      }
+    }
+  },
+  "order": [
+    "main",
+    "165994781230f27e9f",
+    "form"
+  ]
+}

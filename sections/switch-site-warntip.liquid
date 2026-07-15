@@ -1,0 +1,151 @@
+
+<div
+  id="SwitchSitePopup-{{ section.id }}"
+  class="custom-modal modal--square modal--mobile-friendly notranslate"
+  data-section-id="{{ section.id }}"
+  data-section-type="switchsite-popup"
+  >
+   <div class="custom-modal__inner">
+    <div class="modal__centered medium-up--text-center">
+      <button type="button" class="modal__close js-modal-close text-link" style="display: none">
+        <svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-close" viewBox="0 0 64 64"><path d="M19 17.61l27.12 27.13m0-27.12L19 44.74"/></svg>
+        <span class="icon__fallback-text">{{ 'general.accessibility.close_modal' | t | json }}</span>
+      </button>
+      {% for block in section.blocks %}
+      <div class="modal__centered-content data-site-{{ block.settings.country_code }}" data-site="{{ block.settings.country_code }}">
+        <div class="position-tip">
+          {{ block.settings.tip_text }}
+        </div>
+        <button class="btn confirm-btn">{{ block.settings.confirm_label }}</button>
+        <button class="btn cancel-btn">{{ block.settings.cancel_label }}</button>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+<script src="{{ 'country_site.js' | asset_url }}" defer="defer"></script>
+<script>
+  $(function() {
+    $('div#shopify-section-switch-site-warntip').css('display', 'none')
+    $(`#SwitchSitePopup-{{ section.id }} .modal__close`).click(()=>closePopup())
+    function closePopup() {
+      console.log('close')
+      $('div#shopify-section-switch-site-warntip').css('display', 'none')
+    }
+    getIpByIpify((country, country_code, country_img, redirectAddress, storeName) => {
+      $('#SwitchSitePopup-{{ section.id }} .modal__centered-content').hide();
+      let el = $(`#SwitchSitePopup-{{ section.id }} .modal__centered-content[data-site='${country_code}']`), elSelector = `#SwitchSitePopup-{{ section.id }} .modal__centered-content[data-site='${country_code}']`;
+      if (el.length) {
+        el.eq(0).show();
+      } else {
+        elSelector = `#SwitchSitePopup-{{ section.id }} .modal__centered-content.data-site-`
+        $(`#SwitchSitePopup-{{ section.id }} .modal__centered-content.data-site-`).eq(0).show()
+      }
+      let tip_text = $(elSelector + ' .position-tip').html();
+      $(elSelector + ' .position-tip').html(tip_text.replace('% country %', `<img class="country-img" src='${country_img}' /><b class="country-name">`+country+'</b>').replace('% storename %', '<b class="store-name">'+storeName+'</b>'))
+      
+      $(elSelector + ' .confirm-btn').click(()=>{
+        window.location = redirectAddress
+      })
+      $(elSelector + ' .cancel-btn').click(()=>closePopup())
+      
+      $('div#shopify-section-switch-site-warntip').css('display', 'inline-block')
+    });
+  })
+</script>
+{% style %}
+  div#shopify-section-switch-site-warntip {
+    display: none;
+    position: fixed;
+    bottom: 0.5em;
+    right: 0.5em;
+    z-index: 9999;
+    background: #fff;
+    border-radius: 6px;
+    box-shadow: 0 0 8px #d7d5d5;
+  }
+  @media screen and (max-width: 450px) {
+    div#shopify-section-switch-site-warntip {width: calc(100% - 1em);}
+  }
+  div#SwitchSitePopup-{{ section.id }} .modal__inner {border-radius: 6px;}
+  div#SwitchSitePopup-{{ section.id }}.modal--square .modal__centered-content {
+    max-width: 500px;
+  }
+  div#SwitchSitePopup-{{ section.id }} .position-tip,div#SwitchSitePopup-{{ section.id }} .redirect-tip {
+    margin: 0.5rem 0;
+    font-size: 1.2em;
+    font-weight: 200;
+  }
+  div#SwitchSitePopup-{{ section.id }} .current-country,div#SwitchSitePopup-{{ section.id }} .device-site {
+    font-weight: bold;
+    margin: 0 0.5rem;
+  }
+  div#SwitchSitePopup-{{ section.id }} .modal__centered-content .country-img {
+    height: 1em;
+    display: inline-block;
+  }
+  div#SwitchSitePopup-{{ section.id }} .modal__centered-content .country-name {}
+  div#SwitchSitePopup-{{ section.id }} .modal__centered-content .store-name {
+    text-decoration: underline;
+  }
+  
+  div#SwitchSitePopup-{{ section.id }} .modal__centered-content .btn {
+    width: 100%;
+    margin: 0.3rem 0;
+    border-radius: 6px;
+  }
+  div#SwitchSitePopup-{{ section.id }} .modal__centered-content .cancel-btn {
+    background: #a5a5a5;
+    color: #fff;
+  }
+{% endstyle %}
+
+
+{% schema %}
+  {
+    "name": "Switch Site",
+    "class": "index-section--hidden",
+    "settings": [],
+    "blocks": [
+      {
+        "type": "header",
+        "name": "Site",
+        "settings": [
+          {
+            "type": "text",
+            "id": "tip_text",
+            "label": "Tip Text",
+            "default": "It seems you're in % country %.Redirect to % storename % to see the content specific to your location and shop online."
+            
+          },
+          {
+            "type": "text",
+            "id": "country_code",
+            "label": "Country Code"
+          },
+          {
+            "type": "text",
+            "id": "confirm_label",
+            "label": "Confirm Label",
+            "default": "Yes,Please"
+          },
+          {
+            "type": "text",
+            "id": "cancel_label",
+            "label": "Cancel Label",
+            "default": "No,Thanks"
+          }
+        ]
+      }
+    ],
+    "default": {
+      "settings": {},
+      "blocks": [
+        {
+          "type": "header",
+          "settings": {}
+        }
+      ]
+    }
+  }
+{% endschema %}

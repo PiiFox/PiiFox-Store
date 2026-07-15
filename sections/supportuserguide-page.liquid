@@ -1,0 +1,394 @@
+
+{% if section.settings.divider %}
+  <div class="support-breadcrumb-box">
+    <div class="support-breadcrumb">
+      <div class="support-crumb"><a href="/">Home</a></div>
+      <div class="support-crumb"><a href="/pages/support-center">Support</a></div>
+      <div class="support-crumb"><a href="#">{{ section.settings.title }}</a></div>
+    </div>
+  </div>
+  <div class="page-width">
+    <div class="support-userguidepage-box">
+      <h2>
+        <svg width="19" height="23" viewBox="0 0 19 23" xmlns="http://www.w3.org/2000/svg" >
+          <g stroke="#03060B" stroke-width="2" fill="none" fill-rule="evenodd">
+            <path d="M17.737 11.275a5 5 0 0 1-1.962 4.736l-6.79 5.054a4.984 4.984 0 0 1-3.71.936A5 5 0 0 1 1 17.054V6.946c0-1.38.56-2.63 1.464-3.536a5 5 0 0 1 6.521-.475l6.79 5.054a4.984 4.984 0 0 1 1.962 3.286z"></path>
+            <path d="M7.134 16.134l3.71-3.839-3.71-3.839"></path>
+          </g>
+        </svg>
+        {{ section.settings.title }}
+      </h2>
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-3 col-12">
+            {% style %}
+              .user-guide-search-container {display: flex;}
+              .user-guide-search-input {flex: 1;}
+              .user-guide-search-btn {border: 1px solid #ccc;padding: 8px 1rem;background: var(--colorBtnPrimary);color: #fff;}
+            {% endstyle %}
+            <div class="user-guide-search-container" style="display: none;">
+              <input class="user-guide-search-input" type="text"/>
+              <button class="user-guide-search-btn">
+                <svg t="1683793838638" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2563" xmlns:xlink="http://www.w3.org/1999/xlink" width="32" height="32">
+                  <path d="M967.9234 816.206954l-147.416093-192.48379c52.29229-49.884092 85.146985-119.721821 85.146985-197.472199 0-150.684361-122.990089-273.330422-274.018478-273.330422-151.200403 0-274.018478 122.646061-274.018478 273.330422s122.990089 273.330422 274.018478 273.330422c48.679993 0 94.263733-12.901058 133.998992-35.090879l147.932135 193.171846c6.70855 8.77272 16.857383 13.417101 27.350244 13.417101 7.224593 0 14.621199-2.236183 20.641693-7.052579C976.524105 852.501932 979.448345 831.172182 967.9234 816.206954L967.9234 816.206954zM421.090543 426.250966c0-115.765496 94.435747-209.857215 210.545271-209.857215s210.545271 94.091718 210.545271 209.857215-94.435747 209.857215-210.545271 209.857215S421.090543 542.016462 421.090543 426.250966L421.090543 426.250966zM288.467663 288.811692 83.254829 288.811692c-18.921552 0-34.230808-15.309256-34.230808-34.058794s15.309256-34.058794 34.230808-34.058794l205.212834 0c18.921552 0 34.230808 15.309256 34.230808 34.058794C322.698471 273.502436 307.389216 288.811692 288.467663 288.811692L288.467663 288.811692zM280.210986 626.131362 83.254829 626.131362c-18.921552 0-34.230808-15.309256-34.230808-34.058794s15.309256-34.058794 34.230808-34.058794l196.956157 0c18.921552 0 34.230808 15.309256 34.230808 34.058794C314.441794 610.822107 299.132538 626.131362 280.210986 626.131362L280.210986 626.131362zM239.78767 457.041492l-156.532841 0c-18.921552 0-34.230808-15.309256-34.230808-34.230808 0-18.921552 15.309256-34.230808 34.230808-34.230808l156.532841 0c18.921552 0 34.230808 15.309256 34.230808 34.230808C273.846464 441.732236 258.537208 457.041492 239.78767 457.041492L239.78767 457.041492zM460.137746 801.241727 83.254829 801.241727c-18.921552 0-34.230808-15.309256-34.230808-34.230808s15.309256-34.230808 34.230808-34.230808l376.882916 0c18.921552 0 34.230808 15.309256 34.230808 34.230808C494.368554 785.932471 479.059298 801.241727 460.137746 801.241727L460.137746 801.241727z" fill="currentcolor" p-id="2564"></path>
+                </svg>
+              </button>
+            </div>
+            {% assign list = section.blocks | map: 'settings' %}
+            {% assign cateList = list | map: "collection" | uniq %}
+            {% assign current_tab = cateList | first %}
+            {% for cate in cateList %}
+                <div
+                  data-key="p-{{ cate }}"
+                  data-index="{{ cate }}"
+                  class="collection-tab-item {% if cate == current_tab %}on{% endif %}"
+                >
+                  {{ cate.title }}
+                </div>
+            {% endfor %}
+            <div class="tabs-ink-bar"></div>
+          </div>
+          <div class="col-sm-9 col-12">
+            {% for item in list %}
+                <div id="p-{{ item.collection }}"
+                  class="block-key {% if item.collection == current_tab %}on{% endif %}"
+                  data-title="{{ item.title }}{%if item.version != '' %}-{% endif %}{{ item.version }}">
+                  <div class="file--wrapper">
+                    <div class="file-img">
+                      <img src="{{ item.img | img_url }}" alt="{{ item.title }}" title="{{ item.title }}">
+                    </div>
+                    <div class="file-info">
+                      <div class="file-title">{{ item.title }}{%if item.version != '' %}-{% endif %}{{ item.version }}</div>
+                      <div class="file-upload-time">{{ item.uploadTime }}</div>
+                    </div>
+                    <div class="file-opera">
+                      <a href="{{ item.url }}" class="file-brower-btn">
+                        <div class="icon">
+                          <svg width="30" height="20">
+                            <g>
+                              <title>download</title>
+                              <polygon points="13 2 16 2 16 13 20 13 15 18 10 13 14 13" fill="currentColor" />
+                            </g>
+                          </svg>
+                        </div>
+                        PDF
+                      </a>
+                    </div>
+                  </div>
+                </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <script>
+  var p1top = $('.support-userguidepage-box .col-sm-3 .on').offset().top,
+  p1height = $('.support-userguidepage-box .col-sm-3 .on').outerHeight(),
+  tabbar = $('.support-userguidepage-box .tabs-ink-bar');
+  // console.log(p1top);
+  var tab_top = $('.tabs-ink-bar').offset().top;
+  $('.support-userguidepage-box .col-sm-3 div.collection-tab-item').on('click',function(event){
+    var _this = $(this),
+    data_key = _this.attr('data-key'),
+    nowheight = _this.outerHeight(),
+    nowtop = event.target.offsetTop;
+    tabbar.height(nowheight);
+    tabbar.css('transform','translateY('+( nowtop )+'px)');
+    $('.support-userguidepage-box .col-sm-3 div.collection-tab-item').removeClass('on');
+    _this.addClass('on');
+    $('.support-userguidepage-box .block-key').removeClass('on');
+    $('.support-userguidepage-box .col-sm-9 #'+data_key).addClass('on');
+  })
+  $('button.user-guide-search-btn').click((e) => {
+    let search_word = $('input.user-guide-search-input').val().trim().toLowerCase();
+    let active_tab = $('.support-userguidepage-box .col-sm-3 .collection-tab-item.on').data('key')
+    $('.support-userguidepage-box .col-sm-9 #'+active_tab).addClass('on');
+    if(!search_word) return;
+    let list = $('.support-userguidepage-box .col-sm-9 .block-key.on')
+    for(let i = 0; i < list.length; i++) {
+      let temp = list.eq(i).data('title').toLowerCase();
+      if(!temp.includes(search_word))list.eq(i).removeClass('on')
+    }
+  })
+  </script>
+  
+  <style>
+    .support-breadcrumb-box {
+      background: #ededed;
+    }
+    .support-breadcrumb-box .support-breadcrumb {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: flex;
+      padding: 0 3rem;
+    }
+    .support-breadcrumb-box .support-crumb a {
+      line-height: 2.8rem;
+    }
+    .support-breadcrumb-box .support-crumb a:hover {
+      color: #2673ff;
+    }
+    .support-breadcrumb-box .support-crumb:after {
+      content: ">";
+      padding: 0 0.5rem;
+    }
+    .support-breadcrumb-box .support-crumb:last-child:after {
+      content: "";
+    }
+    .support-userguidepage-box {
+      margin-top: 5rem;
+    }
+    .support-userguidepage-box h2 {
+      font-weight: 400;
+      font-size: 1.4rem;
+      padding: 0 3rem;
+      display: flex;
+      align-items: center;
+    }
+    .support-userguidepage-box h2 svg {
+      margin-right: 1rem;
+    }
+    .support-userguidepage-box .container {
+      border-top: 1px solid #e9e9e9;
+    }
+    .support-userguidepage-box a {
+      padding: 0 2rem;
+    }
+    .container .row {
+      display: flex;
+    }
+    .container .row .col-sm-3 {
+      max-width: 25%;
+      -ms-flex: 0 0 25%;
+      flex: 0 0 25%;
+      border-right: 1px solid #e9e9e9;
+      position: relative;
+    }
+    .container .row .col-sm-3 > div {
+      font-size: 1rem;
+      font-weight: 500;
+      cursor: pointer;
+      line-height: 1.5;
+      outline: none;
+      transition: all 0.3s;
+      padding: 23px 22px 22px;
+      white-space: normal;
+      text-align: left;
+    }
+    .container .row .col-sm-3 > div.on {
+      color: {{ settings.color_button }};
+      background-color: hsla(0, 0%, 93%, 0.3);
+    }
+    .support-userguidepage-box .container .col-sm-3 .tabs-ink-bar {
+      left: 0;
+      width: 4px;
+      position: absolute;
+      background: {{ settings.color_button }};
+      pointer-events: none;
+      padding: 0;
+      height: 69px;
+      top: 0
+    }
+    .container .row .col-sm-9 {
+      max-width: 75%;
+      -ms-flex: 0 0 75%;
+      flex: 0 0 75%;
+      padding: 1rem;
+    }
+    .support-userguidepage-box .block-key {
+      display: none;
+    }
+    .support-userguidepage-box .block-key.on {
+      display: block;
+    }
+    .block-page-box h3 {
+      font-weight: 400;
+      font-size: 1.2rem;
+      margin-bottom: 0.2rem;
+    }
+    .block-page-box p {
+      color: #666;
+      font-size: 1rem;
+      margin-bottom: 2rem;
+      font-weight: 200;
+    }
+  </style>
+  <style>
+  .file--wrapper {
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    border-bottom: 1px solid #ddd;
+    width: 100%;
+    position: relative;
+  }
+  .file--wrapper .file-img {
+    margin: 1rem;
+  }
+  .file-img img {
+    width: 2rem;
+    height: 2rem;
+  }
+  .file--wrapper .file-info {
+    flex: 1;
+    width: calc(100% - 4rem - 2rem - 3rem - 4rem);
+  }
+  .file-info .file-title {
+    font-weight: 400;
+    letter-space: 1px;
+    line-height: 2.5rem;
+    font-size: 1.1em;
+  }
+  .file-info .file-title, .file-info .file-upload-time {
+    white-space: nowrap;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .file-info .file-upload-time {
+    font-size: 0.9em;
+    color: #757575;
+  }
+  .file--wrapper .file-opera {
+    padding: 1rem;
+  }
+  .file-opera .file-brower-btn {
+    display: flex;
+    align-items: center;
+    line-height: 1.8rem;
+    text-decoration: none;
+    border: 1px solid #2673ff;
+    color:#2673ff;
+    padding: 0.3rem 2rem 0.3rem 1rem;
+    border-radius: 2rem;
+  }
+  .file-opera .file-brower-btn:hover {
+    background: #2673ff;
+    color: #fff;
+  }
+  </style>
+  <style>
+    .container .row .col-sm-9 {display: flex;flex-wrap: wrap;}
+    .support-userguidepage-box .block-key {width: 20%;}
+    .file-img img {width: 5rem;height: 5rem;}
+    .file--wrapper {flex-direction: column;}
+    .file--wrapper .file-info {width: 100%;text-align: center;}
+    .file-brower-btn .icon {margin-right: 0.4rem;}
+  </style>                             
+  <style>
+    @media screen and (max-width: 900px) {
+      .support-userguidepage-box .block-key {width: 25%;}
+    }
+    @media screen and (max-width: 768px) {
+      .support-userguidepage-box h2 {font-size: 1.4rem;margin-bottom: 2rem;}
+      .support-userguidepage-box .block-key {width: 33.3%;}
+    }
+    @media screen and (max-width: 500px) {
+      .support-userguidepage-box h2 {
+        padding: 0;
+      }
+      .container .row {
+        display: block;
+      }
+      .container .row .col-sm-3 {
+        display: flex;
+        border-right: 0px;
+        border-bottom: 1px solid #e9e9e9;
+        max-width: 100%;
+        overflow-x: auto;
+        overflow-y: hidden;
+      }
+      .container .row .col-sm-3 > div {
+        padding: 1rem;
+        white-space: nowrap;
+        border-bottom: 3px solid transparent;
+      }
+      .container .row .col-sm-9 {padding: 0;}
+      .file--wrapper {padding: 0;}
+      .container .row .col-sm-9, .container .row .col-sm-3 {max-width: 100%;}
+      .file-opera .file-brower-btn {padding: 0.2rem 2rem 0.2rem 1rem;}
+      .support-userguidepage-box .container .col-sm-3 .tabs-ink-bar {background: transparent;}
+      .container .row .col-sm-3 > div.on {border-bottom: 3px solid #ec6521;}
+      .container .row .col-sm-3::-webkit-scrollbar {height: 0px;width: 0px;}
+      .support-userguidepage-box {margin-top: 2rem;}
+      .support-breadcrumb-box .support-breadcrumb {padding: 0 1rem;}
+    }
+    @media screen and (max-width: 350px) {
+      .container .row .col-sm-3 > div {
+        font-size: 0.8rem;
+        padding: 0.5rem 1rem;
+      }
+      .file--wrapper .file-img, .file--wrapper .file-opera {
+        padding: 0.5rem;
+        margin: 0;
+      }
+      .file-opera .file-brower-btn {
+        padding: 0rem 1.2rem 0rem 0.2rem;
+      }
+      .support-userguidepage-box h2 {
+        margin-bottom: 1rem;
+      }
+    }
+  </style>
+{% endif %}
+{% schema %}
+  {
+    "name": "t:sections.support-userguide.name",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "divider",
+        "label": "t:sections.support-userguide.settings.divider",
+        "default": true
+      }, {
+        "type": "text",
+        "id": "title",
+        "label": "t:sections.support-userguide.settings.title"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "text",
+        "name": "t:sections.support-userguide.blocks.column.name",
+        "settings": [{
+            "type": "text",
+            "id": "title",
+            "label": "t:sections.support-userguide.blocks.column.settings.title"
+          }, {
+            "type": "text",
+            "id": "url",
+            "label": "t:sections.support-userguide.blocks.column.settings.url"
+          }, {
+            "type": "image_picker",
+            "id": "img",
+            "label": "t:sections.support-userguide.blocks.column.settings.img"
+          }, {
+            "type": "text",
+            "id": "version",
+            "label": "t:sections.support-userguide.blocks.column.settings.version"
+          }, {
+            "type": "text",
+            "id": "uploadTime",
+            "label": "t:sections.support-userguide.blocks.column.settings.uploadTime"
+          }, {
+            "type": "collection",
+            "id": "collection",
+            "label": "t:sections.support-userguide.blocks.column.settings.collection"
+          }, {
+            "type": "product",
+            "id": "product",
+            "label": "t:sections.support-userguide.blocks.column.settings.product"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

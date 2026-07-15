@@ -1,0 +1,324 @@
+<div class="shop-confidence-section-{{ section.id }}">
+  <div class="shop-confidence-section--wrapper page-width wow bounceInUp">
+    <div class="shop-confidence-section-header">
+        <h2 class="shop-confidence-section-title custom-txt-bold appear-delay{% cycle '','-1','-2','-3','-4' %}">
+          {{ section.settings.shop_confidence_title }}
+        </h2>
+        <div class="shop-confidence-section-description appear-delay{% cycle '','-1','-2','-3','-4' %}">
+          {{ section.settings.shop_confidence_description }}
+        </div>
+    </div>
+    
+    <div class="shop-confidence-section-content swiper-container">
+      <div class="swiper-wrapper">
+        {% for block in section.blocks %}
+          <div class="swiper-slide swiper-slide-{{ block.id }}">
+            <div class="service-item {% if forloop.last %}last-item{% endif %}">
+              {% if block.settings.service_img %}
+                <img
+                  src="{{ block.settings.service_img | image_url }}"
+                  alt="{{ block.settings.service_title }}"
+                  width="200"
+                  height="200"
+                >
+              {% else %}
+                {%- capture current -%}{% cycle 1, 2, 3, 4, 5, 6 %}{%- endcapture -%}
+                {{ 'product-' | append: current | placeholder_svg_tag: 'placeholder-svg' }}
+              {% endif %}
+              <h3 class="service-item-title custom-txt-semibold appear-delay{% cycle '','-1','-2','-3','-4' %}">
+                {{ block.settings.service_title }}
+              </h3>
+              <div class="service-item-description custom-txt-light appear-delay{% cycle '','-1','-2','-3','-4' %}">
+                {{ block.settings.service_description }}
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const isScroll = window.innerWidth < 1600;
+
+    const serviceListSwiper = new Swiper('.shop-confidence-section-{{ section.id }} .swiper-container', {
+        loop: isScroll ? true : false,
+        autoplay: isScroll ? true : false,
+        allowTouchMove: isScroll ? true : false,
+        centeredSlides: isScroll ? true : false,  
+        spaceBetween: isScroll ? 40 : 0,
+        breakpoints: {
+            0: {
+              slidesPerView: 1.2,
+            },
+            768: {
+              slidesPerView: 2,
+            },
+            1200: {
+              slidesPerView: 3,
+            },
+            1600: {
+              slidesPerView: 4,
+            }
+        }
+    });
+    let resizeTimer;
+    window.addEventListener('resize', () => {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(() => {
+            serviceListSwiper.update();
+        }, 500);
+    });
+});
+</script>
+{% style %}
+  .shop-confidence-section-{{ section.id }} {
+      background-color: #fff;
+      padding: 4em 0;
+  }
+  .shop-confidence-section-{{ section.id }} .shop-confidence-section--wrapper {
+      padding: 2em;
+      display: grid;
+      grid-template-columns: 1fr 4fr;
+      grid-gap: 2em;
+      border-radius: 1em;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  .shop-confidence-section-{{ section.id }} .shop-confidence-section--wrapper .shop-confidence-section-header {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      text-align: left;
+  }
+  .shop-confidence-section-{{ section.id }} .shop-confidence-section--wrapper .shop-confidence-section-title {
+      font-size: 2em;
+      font-weight: bold;
+      padding-bottom: 0.5em;
+      position: relative;
+  }
+  .shop-confidence-section-{{ section.id }} .shop-confidence-section--wrapper .shop-confidence-section-title::before {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 2em;
+      height: 0.2em;
+      background: var(--colorThemePrimary);
+      border-radius: 1em;
+  }
+  .shop-confidence-section-{{ section.id }} .shop-confidence-section--wrapper .shop-confidence-section-title::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 2.5em;
+      width: 0.2em;
+      height: 0.2em;
+      background: var(--colorThemePrimary);
+      border-radius: 1em;
+  }
+  .shop-confidence-section-{{ section.id }} .shop-confidence-section--wrapper .shop-confidence-section-description {
+      font-size: 1.2em;
+      margin-bottom: 2em;
+      color: #95979b;
+  }
+  .shop-confidence-section-{{ section.id }} .shop-confidence-section--wrapper .shop-confidence-section-content {
+      width: 100%;
+      margin: 0 auto;
+      overflow: hidden;
+      position: relative;
+  }
+  .shop-confidence-section-{{ section.id }} .swiper-container {
+      height: 100%;
+      position: relative;
+  }
+  .shop-confidence-section-{{ section.id }} .swiper-wrapper{
+      height: 100%;
+      position: relative;
+      align-items: stretch;
+  }
+  .shop-confidence-section-{{ section.id }} .shop-confidence-section--wrapper .swiper-slide {
+      height: 100%;
+      display: flex;
+      padding: 1em 0;
+  }
+  .shop-confidence-section-{{ section.id }} .swiper-slide .service-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 0 1em;
+      border-right: 1px solid #f5f5f5;
+  }
+  .shop-confidence-section-{{ section.id }} .swiper-slide .service-item.last-item {
+      border-right: 0;
+  }
+  .shop-confidence-section-{{ section.id }} .swiper-slide .service-item img,
+  .shop-confidence-section-{{ section.id }} .swiper-slide .service-item svg {
+      width: unset;
+      height: 5em;
+      /* aspect-ratio: 1/1; */
+      object-fit: contain;
+      margin-bottom: 1em;
+  }
+  .shop-confidence-section-{{ section.id }} .swiper-slide .service-item .service-title {
+      font-size: 1.6em;
+      font-weight: 500;
+      margin-bottom: 1em;
+  }
+  .shop-confidence-section-{{ section.id }} .swiper-slide .service-item .service-description {
+      font-size: 1em;
+      color: #95979b;
+  }
+
+  /* 初始状态：所有 Swiper 容器隐藏，避免出现未格式化布局 */
+  .shop-confidence-section-{{ section.id }} .swiper-container {
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  /* Swiper 初始化完成后显示 */
+  .shop-confidence-section-{{ section.id }} .swiper-container.swiper-initialized {
+    visibility: visible;
+    opacity: 1;
+  }
+
+  @media screen and (max-width: 1700px) {
+    .shop-confidence-section-{{ section.id }} .shop-confidence-section--wrapper {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        border-radius: 0;
+        box-shadow: none;
+    }
+    .shop-confidence-section-{{ section.id }} .shop-confidence-section--wrapper .shop-confidence-section-header  {
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .shop-confidence-section-{{ section.id }} .shop-confidence-section--wrapper .shop-confidence-section-title {
+        width: max-content;
+    }
+    .shop-confidence-section-{{ section.id }} .shop-confidence-section--wrapper .shop-confidence-section-title::before {
+        left: calc(50% - 0.8em);
+        transform: translateX(-50%);
+    }
+    .shop-confidence-section-{{ section.id }} .shop-confidence-section--wrapper .shop-confidence-section-title::after {
+        left: calc(50% + 0.8em);
+        transform: translateX(-50%);
+    }
+    .shop-confidence-section-{{ section.id }} .shop-confidence-section--wrapper .shop-confidence-section-content {}
+    .shop-confidence-section-{{ section.id }} .shop-confidence-section--wrapper .swiper-slide {
+        position: relative;
+        width: 100%;
+        height: 20em;
+    }
+    .shop-confidence-section-{{ section.id }} .swiper-slide .service-item {
+        width: 100%;
+        height: 100%;
+        padding: 4em 2em ;
+        border-radius: 1em;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    .shop-confidence-section-{{ section.id }} .swiper-slide-active .service-item {
+        transform: scale(1.08);
+    }
+    
+  }
+
+  @media screen and (max-width: 768px) {
+      .shop-confidence-section-{{ section.id }} {
+          font-size: 0.9em;
+      }
+  }
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "Shop With Confidence",
+  "class": "shop-confidence-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "shop_confidence_title",
+      "label": "Title"
+    },
+    {
+      "type": "text",
+      "id": "shop_confidence_description",
+      "label": "Description"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "service_item",
+      "name": "Service Item",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "service_img",
+          "label": "Service Image"
+        },
+        {
+          "type": "text",
+          "id": "service_title",
+          "label": "Service Title"
+        },
+        {
+          "type": "text",
+          "id": "service_description",
+          "label": "Service Description"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Shop With Confidence Section",
+      "settings": {
+        "shop_confidence_title": "Shop With Confidence",
+        "shop_confidence_description": "Premium quality. Reliable service. Every step of the way."
+      },
+      "blocks": [
+        {
+          "type": "service_item",
+          "settings": {
+            "service_img": "",
+            "service_title": "Fast & Free Shipping",
+            "service_description": "Free shipping on all orders$99+(US). Global shipping available."
+          }
+        },
+        {
+          "type": "service_item",
+          "settings": {
+            "service_img": "",
+            "service_title": "2-Year Warranty",
+            "service_description": "All PlIFOX keyboards comewith a 2-year limited warranty."
+          }
+        },
+        {
+          "type": "service_item",
+          "settings": {
+            "service_img": "",
+            "service_title": "30-Day Returns",
+            "service_description": "Not the right fit? Returnany item within 30 days of delivery."
+          }
+        },
+        {
+          "type": "service_item",
+          "settings": {
+            "service_img": "",
+            "service_title": "Expert Support",
+            "service_description": "Our mechanical keyboard experts are here to help,7 days a week."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

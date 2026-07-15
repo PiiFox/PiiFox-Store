@@ -1,0 +1,64 @@
+{% liquid
+  assign is_noindex = false
+  assign canonical_href = canonical_url
+
+  assign noindex_page_handles = 'privacy-policy,terms-of-service,refund-policy,warranty-return-policy,shipping-policy,access-denied' | split: ','
+  assign noindex_policy_urls = '/policies/privacy-policy,/policies/terms-of-service,/policies/refund-policy,/policies/shipping-policy' | split: ','
+
+  if request.page_type == 'page' and noindex_page_handles contains page.handle
+    assign is_noindex = true
+  endif
+
+  if request.page_type == 'policy' and noindex_policy_urls contains policy.url
+    assign is_noindex = true
+  endif
+
+  if request.page_type == 'cart' or request.page_type == 'search' or request.page_type == '404' or request.page_type == 'password'
+    assign is_noindex = true
+  endif
+
+  if request.page_type contains 'customers/'
+    assign is_noindex = true
+  endif
+
+  if request.page_type == 'collection'
+    assign canonical_href = collection.url | prepend: request.origin
+
+    assign has_active_filter = false
+
+    for filter in collection.filters
+      if filter.active_values.size > 0
+        assign has_active_filter = true
+      endif
+
+      if filter.type == 'price_range'
+        if filter.min_value.value != blank or filter.max_value.value != blank
+          assign has_active_filter = true
+        endif
+      endif
+    endfor
+
+    if collection.sort_by != blank
+      assign is_noindex = true
+    endif
+
+    if current_page > 1
+      assign is_noindex = true
+    endif
+
+    if collection.current_type != blank or collection.current_vendor != blank
+      assign is_noindex = true
+    endif
+
+    if has_active_filter
+      assign is_noindex = true
+    endif
+  endif
+%}
+
+{% if is_noindex %}
+  <meta name="robots" content="noindex,follow,noarchive">
+  <meta name="googlebot" content="noindex,follow,noarchive">
+{% endif %}
+
+<link rel="canonical" href="{{ canonical_href }}">

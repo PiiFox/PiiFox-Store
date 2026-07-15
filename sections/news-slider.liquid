@@ -1,0 +1,89 @@
+{%- if section.settings.divider -%}<div class="section--divider">{%- endif -%}
+<div
+<div class="template__banner__carousel">
+
+  <div class="swiper newsSwiper">
+      <div class="swiper-wrapper">
+        {% for block in section.blocks%}
+        <div class="swiper-slide">
+          <div class="banner__block">
+            <img class="banner__img" src="{{ block.settings.banner | img_url:"master" }}" alt="">
+            <div class="banner__card">
+              <div class="card__type">{{ block.settings.type}}</div>
+              <div class="card__title" href="{{ block.settings.article.url }}">{{ block.settings.article.title }}</div>
+              <div class="card__text">{{ block.settings.article.excerpt }}</div>
+              <div class="card__date">{{ block.settings.article.created_at | time_tag: format: 'month_day_year' }}</div>
+              <div class="card__tag">
+                <span class="icon-msi-tag"></span>
+                <div class="card__tag-li">{{ block.settings.article.tags }}</div>
+              </div>
+              <div class="card__link">Learn more <span class="icon-msi-next"></p>
+              </div>
+            </div>
+          </div>
+        </div>
+          {% endfor %}
+      </div>
+      <div class="swiper-pagination"></div>
+  </div>
+
+
+  
+  
+</div>
+
+{%- if section.settings.divider -%}</div>{%- endif -%}
+
+{% schema %}
+  {
+    "name": "news banner",
+    "settings": [
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Heading",
+        "default": "Video"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "article",
+        "name": "article",
+        "settings": [
+          {
+            "type": "text",
+            "id": "type",
+            "label": "type",
+            "default":"Product News"
+          },
+          {
+            "type": "article",
+            "id": "article",
+            "label": "article"
+          },
+        {
+          "type": "image_picker",
+          "id": "banner",
+          "label": "banner"
+        }
+         
+        ]
+      }
+      
+    ],
+     "presets": [
+    {
+      "name": "news banner"
+    }
+  ]
+  }
+{% endschema %}
+ <script>
+      var swiper = new Swiper(".newsSwiper", {
+        pagination: {
+          el: ".swiper-pagination",
+          clickable: true
+         
+        },
+      });
+    </script>

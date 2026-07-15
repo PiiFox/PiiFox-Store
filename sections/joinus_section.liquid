@@ -1,0 +1,165 @@
+<div class="join-us-section-{{ section.id }} wow bounceInLeft">
+  <div class="join-us-section--wrapper page-width">
+    <h2 class="join-us-section-title custom-txt-bold appear-delay{% cycle '','-1','-2','-3','-4' %}"></h2>
+    <div class="join-us-section--content">
+      <div class="join-us-section--content--left">
+        <img
+          src="{{ section.settings.joinus_image | image_url }}"
+          width="{{ section.settings.joinus_image.width }}"
+          height="{{ section.settings.joinus_image.height }}"
+          alt="{{ section.settings.joinus_image.alt | escape }}"
+          loading="lazy"
+        >
+      </div>
+      <div class="join-us-section--content--right">
+        <p class="join-us-section--content--right-subtitle custom-txt-Oxanium appear-delay{% cycle '','-1','-2','-3','-4' %}">
+          {{ section.settings.sub_title }}
+        </p>
+        <h3 class="join-us-section--content--right-title custom-txt-Oxanium appear-delay{% cycle '','-1','-2','-3','-4' %}">
+          {{ section.settings.banner_title }}
+        </h3>
+        <p class="join-us-section--content--right-context custom-txt-normal appear-delay{% cycle '','-1','-2','-3','-4' %}">
+          {{ section.settings.context }}
+        </p>
+        {% if section.settings.btn_label != blank %}
+          <a
+            href="{{ section.settings.btn_link }}"
+            class="join-us-section--content--right-btn custom-txt-Oxanium appear-delay{% cycle '','-1','-2','-3','-4' %}"
+            style="background-image: url({{ section.settings.btn_bg | image_url: width: 500 }});"
+          >
+            {{ section.settings.btn_label }}
+          </a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+{% style %}
+    .join-us-section-{{ section.id }} {
+        background-color: #fff;
+        padding: 0 0 4em 0;
+    }
+    .join-us-section-{{ section.id }} .join-us-section--content {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        align-items: center;
+        border-radius: 1em;
+    }
+    .join-us-section-{{ section.id }} .join-us-section--content--left {
+        padding-right: 1em;
+        border-right: 1px solid #eee;
+    }
+    .join-us-section-{{ section.id }} .join-us-section--content--left img {
+        width: 100%;
+        height: auto;
+        border-radius: 1em 0 0 1em;
+    }
+    .join-us-section-{{ section.id }} .join-us-section--content--right {
+        padding-left: 1em;
+    }
+    .join-us-section-{{ section.id }} .join-us-section--content--right-title {
+        font-size: 3.5em;
+        font-weight: 900;
+        margin-bottom: 0em;
+    }
+    .join-us-section-{{ section.id }} .join-us-section--content--right-subtitle {
+        font-size: 2em;
+        color: #888;
+        margin-bottom: 0.5em;
+    }
+    .join-us-section-{{ section.id }} .join-us-section--content--right-context {
+        font-size: 1.2em;
+        color: #555;
+        margin-bottom: 2em;
+    }
+    .join-us-section-{{ section.id }} .join-us-section--content--right-btn {
+        display: inline-block;
+        font-size: 1.4em;
+        padding: 0.7em 4em 0.7em 1.5em;
+        color: #fff ;
+        background-size: cover ;
+        background-position: center ;
+        border-radius: 2em;
+        transition: all 0.3s ease-in-out;
+    }
+    .join-us-section-{{ section.id }} .join-us-section--content--right-btn:hover {
+        transform: translateY(-5px);
+        box-shadow: 0px 10px 20px rgba(0,0,0,0.2);
+    }
+    @media screen and (max-width: 768px) {
+        .join-us-section-{{ section.id }} .join-us-section--content {
+            display: block;
+        }
+        .join-us-section-{{ section.id }} .join-us-section--content--left,
+        .join-us-section-{{ section.id }} .join-us-section--content--right {
+            width: 100%;
+            padding: 0;
+        }
+        .join-us-section-{{ section.id }} .join-us-section--content--left {
+            border-right: none;
+        }
+        .join-us-section-{{ section.id }} .join-us-section--content--left img {
+            border-radius: 1em;
+            margin-bottom: 2em;
+        }
+        .join-us-section-{{ section.id }} .join-us-section--content--right-title {
+            font-size: 2.5em;
+        }   
+        .join-us-section-{{ section.id }} .join-us-section--content--right-subtitle {
+            font-size: 1.2em;
+        }
+        .join-us-section-{{ section.id }} .join-us-section--content--right-context {
+            font-size: 1em;
+        }
+    }
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "Join Us Section",
+  "class": "join-us-section",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "joinus_image",
+      "label": "Join Us Image"
+    },
+    {
+      "type": "text",
+      "id": "banner_title",
+      "label": "Banner Title"
+    },
+    {
+      "type": "text",
+      "id": "sub_title",
+      "label": "Sub Title"
+    },
+    {
+      "type": "text",
+      "id": "context",
+      "label": "Context"
+    },
+    {
+      "type": "url",
+      "id": "btn_link",
+      "label": "Button Link"
+    },
+    {
+      "type": "image_picker",
+      "id": "btn_bg",
+      "label": "Button Background"
+    },
+    {
+      "type": "text",
+      "id": "btn_label",
+      "label": "Button Label"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Join Us Section",
+      "settings": {}
+    }
+  ]
+}
+{% endschema %}

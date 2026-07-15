@@ -1,0 +1,182 @@
+{%- style -%}
+    .testimonials-{{ section.id }} {
+      background-color: {{ section.settings.color_background }};
+      color: {{ section.settings.color_text }};
+    }
+  }
+{%- endstyle -%}
+
+<div
+  class="articles-section api-blog-slider-section testimonials-{{ section.id }}{% if section.settings.color_background == settings.color_body_bg %} testimonials-section--with-divider{% endif %} text-{{ section.settings.align_text }}"
+  data-section-id="{{ section.id }}"
+  data-section-type="testimonials"
+  data-aos
+>
+  {%- unless section.settings.full_width -%}
+    <div class="page-width">
+  {%- endunless -%}
+  {%- if section.settings.title != blank -%}
+    <div class="page-width">
+      <div class="section-header">
+        <h2>{{ section.settings.title | escape }}</h2>
+        <a href="https://blog.piifox.com/" class="btn">{{ 'general.custom.button_label' | t }}</a>
+      </div>
+    </div>
+  {%- endif -%}
+
+  <div class="slideshow-wrapper">
+    <div
+      class="testimonials-slider api-blog-slider--wrapper"
+      id="Testimonials-{{ section.id }}"
+      data-dots="true"
+      data-count="0"
+    ></div>
+  </div>
+  {%- unless section.settings.full_width -%}
+    </div>
+  {%- endunless -%}
+</div>
+{% style %}
+  .api-blog-slider-section.testimonials-{{ section.id }} {
+    display: none;
+  }
+  .testimonials-{{ section.id }} .section-header .btn {
+    text-transform: capitalize;
+  }
+  .testimonials-{{ section.id }} .flickity-viewport {
+    height: 30em!important;
+  }
+  .testimonials-{{ section.id }} .flickity-slider {}
+  .testimonials-{{ section.id }} .flickity-slider .testimonials-slide {}
+  .testimonials-{{ section.id }} .testimonials-slide .testimonials-slider__text {
+    width: 90%;
+    margin: 0 auto;
+  }
+  .testimonials-{{ section.id }} .testimonials-slider__text .testimonail-image.testimonail-image--round {
+    width: 100%;
+    height: 20em;
+    border-radius: 20px;
+  }
+  .testimonials-{{ section.id }} .testimonials-slider__text .testimonail-image .image-wrap {
+    height: 100%;
+  }
+  .testimonials-{{ section.id }} .testimonials-slider__text .features_blog {}
+{% endstyle %}
+<script>
+  function createNode(blog, length) {
+    let node = `
+      <div
+        class="testimonials-slide testimonials-slide--${blog.ID}"
+        data-index="${blog.ID}"
+        data-aos="row-of-${length}"
+        >
+        <a href="${blog.guid}" class="testimonials-slider__text" style="display:block">
+          <div class="testimonail-image{% if section.settings.round_images %} testimonail-image--round{% endif %}">
+            <div class="image-wrap" style="background: url('${blog.images}') center/auto 100% no-repeat;">
+            </div>
+          </div>
+
+          <div class="rte-setting text-spacing features_blog">
+            <div class="f_arti_tags"><span>{{ block.settings.article.tags }}</span></div>
+            <div class="f_arti_title">${blog.post_title}</div>
+            <div class="f_arti_link">Read More</div>
+            <div class="f_arti_date"> ${blog.post_date}</div>
+          </div>
+        </a>
+    </div>`
+    return node
+  }
+  function getBlogData() {
+    $.ajax({
+      url: 'http://api.piifox.com/api/public/index.php/wpblog/getBlog?page=1&limit=9',
+      method: "GET",
+      success: (res) => {
+        console.log(res)
+        let len = res.data.length;
+       
+        res.data.forEach(item => {
+          // console.log(item)
+          let node = createNode(item, len)
+          // console.log(node)
+          $('.api-blog-slider--wrapper').html(($('.api-blog-slider--wrapper').html() || '') + node);
+        })
+        $( '.api-blog-slider--wrapper').attr('data-count', len);
+        // console.log(theme)
+        $('.api-blog-slider-section.testimonials-{{ section.id }}').css('display','block')
+      },
+      error: (err) => {
+        console.log(err)
+      }
+    })
+  }
+  $(function() {
+    getBlogData();
+  })
+</script>
+{% schema %}
+{
+  "name": "api-blog-slider",
+  "class": "index-section api-blogs-section",
+  "max_blocks": 9,
+  "settings": [
+   {
+      "type": "checkbox",
+      "id": "full_width",
+      "label": "t:sections.promo-grid.settings.full_width.label",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "t:sections.testimonials.settings.title.label",
+      "default": "Testimonials"
+    },
+    {
+      "type": "select",
+      "id": "align_text",
+      "label": "t:sections.testimonials.settings.align_text.label",
+      "default": "center",
+      "options": [
+        {
+          "value": "left",
+          "label": "t:sections.testimonials.settings.align_text.options.left.label"
+        },
+        {
+          "value": "center",
+          "label": "t:sections.testimonials.settings.align_text.options.center.label"
+        },
+        {
+          "value": "right",
+          "label": "t:sections.testimonials.settings.align_text.options.right.label"
+        }
+      ]
+    },
+    {
+      "type": "checkbox",
+      "id": "round_images",
+      "label": "t:sections.testimonials.settings.round_images.label",
+      "info": "t:sections.testimonials.settings.round_images.info",
+      "default": true
+    },
+    {
+      "type": "color",
+      "id": "color_background",
+      "label": "t:sections.testimonials.settings.color_background.label",
+      "default": "#f9f9f9"
+    },
+    {
+      "type": "color",
+      "id": "color_text",
+      "label": "t:sections.testimonials.settings.color_text.label",
+      "default": "#1c1d1d"
+    }
+  ],
+  "blocks": [],
+  "presets": [
+    {
+      "name": "api-blog-slider",
+      "blocks": []
+    }
+  ]
+}
+{% endschema %}

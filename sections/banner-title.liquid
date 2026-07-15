@@ -1,0 +1,85 @@
+{%- style -%}
+  .section--with-color{
+    background-color: {{ section.settings.color_background }};
+    color: {{ section.settings.color_text }};
+  }
+}
+{%- endstyle -%}
+<div
+  data-section-id="{{ section.id }}" class="{% if section.settings.color_background %}section--with-color{% endif %}">
+
+
+    {%- if section.settings.title != blank -%}
+    <div class="section-header text-{{ section.settings.align_text }}">
+      <h2>{{ section.settings.title }}</h2>
+    </div>
+  {%- endif -%}
+  
+ {%- if section.settings.pcimage != blank -%}
+<img class="banner__image hbanner__image--{{ block.id }} lazyload" src="{{section.settings.pcimage | img_url: '1920x' }}"/>
+ {%- endif -%}
+ {%- if section.settings.mobileimage != blank -%}
+<img class="banner__image hbanner__image--{{ block.id }} lazyload" src="{{section.settings.mobileimage | img_url: '1000x' }}"/>
+ {%- endif -%}
+</div>
+
+{% schema %}
+{
+  "name": "banner with title",
+  "class": "index-section--banner section section-3",
+  "settings": [
+     {
+      "type": "text",
+      "id": "title",
+      "label": "t:sections.text-columns.settings.title.label"
+    },
+    {
+      "type": "select",
+      "id": "align_text",
+      "label": "t:sections.text-columns.settings.align_text.label",
+      "default": "center",
+      "options": [
+        {
+          "value": "left",
+          "label": "t:sections.text-columns.settings.align_text.options.left.label"
+        },
+        {
+          "value": "center",
+          "label": "t:sections.text-columns.settings.align_text.options.center.label"
+        },
+        {
+          "value": "right",
+          "label": "t:sections.text-columns.settings.align_text.options.right.label"
+        }
+      ]
+    },
+    {
+      "type": "image_picker",
+          "id": "pcimage",
+     "label": "PC image"
+    },
+    {
+      "type": "image_picker",
+          "id": "mobileimage",
+     "label": "MOBILE image"
+    },
+     {
+      "type": "color",
+      "id": "color_background",
+      "label": "t:sections.testimonials.settings.color_background.label",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "color_text",
+      "label": "t:sections.testimonials.settings.color_background.label",
+      "default": "#ffffff"
+    }
+  ],
+  "presets": [
+    {
+      "name": "banner with title"
+    }
+  ]
+}
+{% endschema %}
