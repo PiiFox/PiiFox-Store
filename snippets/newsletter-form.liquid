@@ -1,4 +1,4 @@
-
+{% comment %}
 {%- assign newsletter_form_id = 'newsletter-' | append: section_id -%}
 {% form 'customer', id: newsletter_form_id %}
   {%- if form.posted_successfully? -%}
@@ -45,10 +45,29 @@
     {%- endif -%}
   {%- endunless -%}
 {% endform %}
-{% comment %}
-<div class="klaviyo-form-TUSnz7"></div>
 {% endcomment %}
+<div class="klaviyo-form-container">
+  <div class="klaviyo-form-TUSnz7"></div>
+</div>
+
+
 {% style %}
+.klaviyo-form-container {
+  max-width: 600px;
+  margin: 0 auto;
+}
+.klaviyo-form.go1015280969.kl-private-reset-css-Xuajs1 > .needsclick.kl-private-reset-css-Xuajs1>.needsclick[data-testid="form-row"]:nth-child(2) {
+  justify-content: center;
+}
+.go3524743143.go3524743143.go3524743143 {
+  flex: unset;
+}
+.go4114739661.go4114739661.go4114739661 {
+  border-radius: 25px 0 0 25px;
+}
+.go2878369631.go2878369631.go2878369631 {
+  border-radius: 0 25px 25px 0;
+}
 .foot-news .newsletter__input-group {
     background: rgba(0, 0, 0, 0.5);
 }
