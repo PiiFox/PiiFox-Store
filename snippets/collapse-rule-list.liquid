@@ -431,8 +431,12 @@
         const allRules = document.querySelectorAll(`.product-block-collapse-rule-list .product-rule-item`);
 
         if(window.innerWidth <= 768) {
-          allRules.forEach((rule) => rule.classList.remove('active'));
-          targetItem.classList.add('active');
+          if(targetItem.classList.contains('active')) {
+            targetItem.classList.remove('active');
+          } else {
+            allRules.forEach((rule) => rule.classList.remove('active'));
+            targetItem.classList.add('active');
+          }
           return;
         }
 
