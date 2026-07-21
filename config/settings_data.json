@@ -593,7 +593,7 @@
           "activity_btn": "Preorder Now",
           "activity_btn_bgcolor": "#eacf05",
           "activity_btn_textcolor": "#2d200d",
-          "is_activity_downcount": true,
+          "is_activity_downcount": false,
           "activity_downcount_bgcolor": "#000000",
           "activity_downcount_text_color": "#ffffff",
           "activity_timezone": -8,
