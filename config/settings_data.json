@@ -278,18 +278,18 @@
           "show_country_selector": false,
           "show_language_currency_selector": true,
           "show_activity_bar": false,
-          "background_color": "rgba(0,0,0,0)",
-          "activity_page": "shopify://products/aubox-x",
+          "background_color": "#C73A3A",
+          "activity_page": "",
           "activity_text": "Be the First to Experience the Whisper-Quiet AuBox X AI PC.",
           "activity_text_color": "#ebe4d3",
           "activity_btn": "Preorder Now",
-          "activity_btn_bgcolor": "rgba(0,0,0,0)",
+          "activity_btn_bgcolor": "#EACF05",
           "activity_btn_textcolor": "#2d200d",
           "is_activity_downcount": false,
           "activity_downcount_bgcolor": "#000000",
           "activity_downcount_text_color": "#ffffff",
           "activity_timezone": -8,
-          "activity_end_time": "2026-05-15 23:59:59"
+          "activity_end_time": "2026-08-15 23:59:59"
         }
       },
       "footer": {
@@ -588,7 +588,7 @@
           "show_activity_bar": false,
           "background_color": "#C73A3A",
           "activity_page": "#",
-          "activity_text": "Test Test Test",
+          "activity_text": "Be the First to Experience the Whisper-Quiet AuBox X AI PC.",
           "activity_text_color": "#ebe4d3",
           "activity_btn": "Preorder Now",
           "activity_btn_bgcolor": "#EACF05",
