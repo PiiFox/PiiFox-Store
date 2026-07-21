@@ -21,18 +21,18 @@
         "collection": "clean-minimal-theme-keycaps"
       }
     },
-    "style_keycap_section_pYqC74": {
-      "type": "style-keycap-section",
-      "name": "Style Keycap Section",
-      "settings": {
-        "collection": "cute-colorful-theme-keycaps"
-      }
-    },
     "style_keycap_section_iyQNEn": {
       "type": "style-keycap-section",
       "name": "Style Keycap Section",
       "settings": {
         "collection": "game-playful-theme-keycaps"
+      }
+    },
+    "style_keycap_section_pYqC74": {
+      "type": "style-keycap-section",
+      "name": "Style Keycap Section",
+      "settings": {
+        "collection": "cute-colorful-theme-keycaps"
       }
     },
     "style_keycap_section_nxTJ3X": {
@@ -60,8 +60,8 @@
   "order": [
     "main",
     "style_keycap_section_QJwzgn",
-    "style_keycap_section_pYqC74",
     "style_keycap_section_iyQNEn",
+    "style_keycap_section_pYqC74",
     "style_keycap_section_nxTJ3X",
     "style_keycap_section_D6QLrq",
     "style_keycap_section_Lea9Qa"
