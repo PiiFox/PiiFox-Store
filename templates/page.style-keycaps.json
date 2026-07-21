@@ -12,9 +12,25 @@
     "main": {
       "type": "main-page",
       "settings": {}
+    },
+    "style_keycap_section_QJwzgn": {
+      "type": "style-keycap-section",
+      "name": "Style Keycap Section",
+      "settings": {
+        "collection": "clean-minimal-theme-keycaps"
+      }
+    },
+    "style_keycap_section_pYqC74": {
+      "type": "style-keycap-section",
+      "name": "Style Keycap Section",
+      "settings": {
+        "collection": "cute-colorful-theme-keycaps"
+      }
     }
   },
   "order": [
-    "main"
+    "main",
+    "style_keycap_section_QJwzgn",
+    "style_keycap_section_pYqC74"
   ]
 }
