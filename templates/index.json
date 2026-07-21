@@ -365,7 +365,7 @@
             "banner_title": "Smart Keys.Nice Life.",
             "sub_title": "Keycaps Made for Your Daily Setup.",
             "context": "Premium PBT keycaps designed to bring personality, comfort, and style to every keystroke.",
-            "btn_link": "shopify://collections",
+            "btn_link": "shopify://pages/keycap-style",
             "btn_bg": "shopify://shop_images/about_us_btn.png",
             "btn_label": "Explore Keycaps"
           }
@@ -374,7 +374,6 @@
       "block_order": [
         "single_page_width_banner_btfwM4"
       ],
-      "disabled": true,
       "name": "Single Page Width Banner",
       "settings": {}
     },
