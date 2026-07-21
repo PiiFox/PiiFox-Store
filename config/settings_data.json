@@ -585,7 +585,7 @@
       "activity-bar": {
         "type": "activity-bar",
         "settings": {
-          "show_activity_bar": true,
+          "show_activity_bar": false,
           "background_color": "#C73A3A",
           "activity_page": "#",
           "activity_text": "Test Test Test",
