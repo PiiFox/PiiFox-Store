@@ -1,170 +1,176 @@
-
 {% assign section_collection = section.settings.collection %}
 {% assign product_count = section_collection.products | size %}
 
 {% style %}
-.keycap-section-wrapper {
-  width: 100%;
-  padding: 40px 20px;
-  box-sizing: border-box;
-}
-.keycap-section-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 28px;
-}
-.keycap-section-title {
-  font-size: 42px;
-  font-weight: 600;
-  margin: 0;
-}
-.keycap-view-all-btn {
-  padding: 10px 24px;
-  border: 1px solid #000;
-  border-radius: 999px;
-  text-decoration: none;
-  color: #000;
-  font-size: 15px;
-  transition: all 0.2s ease;
-}
-.keycap-view-all-btn:hover {
-  background: #000;
-  color: #fff;
-}
-.keycap-carousel {
-  display: flex;
-  gap: 20px;
-  overflow-x: auto;
-  scroll-behavior: smooth;
-  padding-bottom: 16px;
-  scrollbar-width: thin;
-}
-.keycap-carousel::-webkit-scrollbar {
-  height: 4px;
-}
-.keycap-carousel::-webkit-scrollbar-thumb {
-  background: #ccc;
-  border-radius: 2px;
-}
-.keycap-product-card {
-  min-width: 340px;
-  max-width: 340px;
-  border-radius: 16px;
-  overflow: hidden;
-  background: #fff;
-  flex-shrink: 0;
-}
-.keycap-card-img-wrap {
-  width: 100%;
-  aspect-ratio: 16 / 9;
-  overflow: hidden;
-}
-.keycap-card-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-.keycap-card-info {
-  padding: 16px;
-}
-.keycap-product-name {
-  font-size: 22px;
-  font-weight: 500;
-  margin: 0 0 12px 0;
-}
-.keycap-shopnow-btn {
-  display: inline-block;
-  padding: 8px 20px;
-  border: 1px solid #000;
-  border-radius: 999px;
-  text-decoration: none;
-  color: #000;
-  font-size: 14px;
-}
-.carousel-arrow-wrap {
-  display: flex;
-  gap: 10px;
-  position: relative;
-  top: -60px;
-  justify-content: flex-end;
-  margin-right: 10px;
-}
-.carousel-arrow {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  border: none;
-  background: #f0f0f0;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 18px;
-}
-.carousel-arrow:disabled {
-  opacity: 0.3;
-  cursor: not-allowed;
-}
+  .keycap-section-wrapper {
+    width: 100%;
+    padding: 40px 20px;
+    box-sizing: border-box;
+  }
+  .keycap-section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 28px;
+  }
+  .keycap-section-title {
+    font-size: 42px;
+    font-weight: 600;
+    margin: 0;
+  }
+  .keycap-view-all-btn {
+    padding: 10px 24px;
+    border: 1px solid #000;
+    border-radius: 999px;
+    text-decoration: none;
+    color: #000;
+    font-size: 15px;
+    transition: all 0.2s ease;
+  }
+  .keycap-view-all-btn:hover {
+    background: #000;
+    color: #fff;
+  }
+  .keycap-carousel {
+    display: flex;
+    gap: 20px;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    padding-bottom: 16px;
+    scrollbar-width: thin;
+  }
+  .keycap-carousel::-webkit-scrollbar {
+    height: 4px;
+  }
+  .keycap-carousel::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 2px;
+  }
+  .keycap-product-card {
+    min-width: 340px;
+    max-width: 340px;
+    border-radius: 16px;
+    overflow: hidden;
+    background: #fff;
+    flex-shrink: 0;
+  }
+  .keycap-card-img-wrap {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+  }
+  .keycap-card-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .keycap-card-info {
+    padding: 16px;
+  }
+  .keycap-product-name {
+    font-size: 22px;
+    font-weight: 500;
+    margin: 0 0 12px 0;
+  }
+  .keycap-shopnow-btn {
+    display: inline-block;
+    padding: 8px 20px;
+    border: 1px solid #000;
+    border-radius: 999px;
+    text-decoration: none;
+    color: #000;
+    font-size: 14px;
+  }
+  .carousel-arrow-wrap {
+    display: flex;
+    gap: 10px;
+    position: relative;
+    top: -60px;
+    justify-content: flex-end;
+    margin-right: 10px;
+  }
+  .carousel-arrow {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: none;
+    background: #f0f0f0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+  }
+  .carousel-arrow:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+  }
 {% endstyle %}
 
 <div class="keycap-section-wrapper">
-  <div class="keycap-section-header">
-    <h2 class="keycap-section-title">
-      {{ section_collection.title }} <span>({{ product_count }})</span>
-    </h2>
-    <a href="{{ section_collection.url }}" class="keycap-view-all-btn">{{ 'collections.general.all_of_collection' | t }}</a>
-  </div>
+  <div class="page-width">
+    <div class="keycap-section-header">
+      <h2 class="keycap-section-title">
+        {{ section_collection.title }}
+        <span>({{ product_count }})</span>
+      </h2>
+      <a href="{{ section_collection.url }}" class="keycap-view-all-btn">
+        {{- 'collections.general.all_of_collection' | t -}}
+      </a>
+    </div>
 
-  <div class="keycap-carousel" id="keycapCarousel-{{ section.id }}">
-    {% for product in section_collection.products %}
-      <div class="keycap-product-card">
-        <div class="keycap-card-img-wrap">
-          {% if product.featured_image %}
-            <img 
-              src="{{ product.featured_image | image_url: width: 680 }}" 
-              alt="{{ product.title | escape }}" 
-              class="keycap-card-img"
-              loading="lazy"
-              width="680"
-              height="auto"
-            >
-          {% else %}
-            <div style="width:100%;height:100%;background:#f7f7f7;display:flex;align-items:center;justify-content:center;">No Image</div>
-          {% endif %}
+    <div class="keycap-carousel" id="keycapCarousel-{{ section.id }}">
+      {% for product in section_collection.products %}
+        <div class="keycap-product-card">
+          <div class="keycap-card-img-wrap">
+            {% if product.featured_image %}
+              <img
+                src="{{ product.featured_image | image_url: width: 680 }}"
+                alt="{{ product.title | escape }}"
+                class="keycap-card-img"
+                loading="lazy"
+                width="680"
+                height="auto"
+              >
+            {% else %}
+              <div style="width:100%;height:100%;background:#f7f7f7;display:flex;align-items:center;justify-content:center;">
+                No Image
+              </div>
+            {% endif %}
+          </div>
+          <div class="keycap-card-info">
+            <h3 class="keycap-product-name">{{ product.title }}</h3>
+            <a href="{{ product.url }}" class="keycap-shopnow-btn">Shop Now</a>
+          </div>
         </div>
-        <div class="keycap-card-info">
-          <h3 class="keycap-product-name">{{ product.title }}</h3>
-          <a href="{{ product.url }}" class="keycap-shopnow-btn">Shop Now</a>
-        </div>
-      </div>
-    {% endfor %}
-  </div>
+      {% endfor %}
+    </div>
 
-  <div class="carousel-arrow-wrap">
-    <button class="carousel-arrow prev-arrow" data-target="keycapCarousel-{{ section.id }}">←</button>
-    <button class="carousel-arrow next-arrow" data-target="keycapCarousel-{{ section.id }}">→</button>
+    <div class="carousel-arrow-wrap">
+      <button class="carousel-arrow prev-arrow" data-target="keycapCarousel-{{ section.id }}">←</button>
+      <button class="carousel-arrow next-arrow" data-target="keycapCarousel-{{ section.id }}">→</button>
+    </div>
   </div>
 </div>
 
 <script>
-document.addEventListener('DOMContentLoaded', () => {
-  const arrows = document.querySelectorAll('.carousel-arrow');
-  arrows.forEach(btn => {
-    btn.addEventListener('click', () => {
-      const carouselId = btn.dataset.target;
-      const carouselEl = document.getElementById(carouselId);
-      const scrollStep = 360; 
-      
-      if(btn.classList.contains('prev-arrow')) {
-        carouselEl.scrollBy({ left: -scrollStep, behavior: 'smooth' });
-      } else {
-        carouselEl.scrollBy({ left: scrollStep, behavior: 'smooth' });
-      }
-    })
-  })
-})
+  document.addEventListener('DOMContentLoaded', () => {
+    const arrows = document.querySelectorAll('.carousel-arrow');
+    arrows.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const carouselId = btn.dataset.target;
+        const carouselEl = document.getElementById(carouselId);
+        const scrollStep = 360;
+
+        if (btn.classList.contains('prev-arrow')) {
+          carouselEl.scrollBy({ left: -scrollStep, behavior: 'smooth' });
+        } else {
+          carouselEl.scrollBy({ left: scrollStep, behavior: 'smooth' });
+        }
+      });
+    });
+  });
 </script>
 
 {% schema %}
