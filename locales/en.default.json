@@ -175,7 +175,7 @@
   "collections": {
     "general": {
       "catalog_title": "Catalog",
-      "all_of_collection": "View all",
+      "all_of_collection": "View All",
       "view_all_products_html": "View all<br>{{ count }} products",
       "see_more": "Show more",
       "see_less": "Show less",
