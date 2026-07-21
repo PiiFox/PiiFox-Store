@@ -27,11 +27,43 @@
       "settings": {
         "collection": "cute-colorful-theme-keycaps"
       }
+    },
+    "style_keycap_section_iyQNEn": {
+      "type": "style-keycap-section",
+      "name": "Style Keycap Section",
+      "settings": {
+        "collection": "game-playful-theme-keycaps"
+      }
+    },
+    "style_keycap_section_nxTJ3X": {
+      "type": "style-keycap-section",
+      "name": "Style Keycap Section",
+      "settings": {
+        "collection": "nature-soft-theme-keycaps"
+      }
+    },
+    "style_keycap_section_D6QLrq": {
+      "type": "style-keycap-section",
+      "name": "Style Keycap Section",
+      "settings": {
+        "collection": "retro-daily-theme-keycaps"
+      }
+    },
+    "style_keycap_section_Lea9Qa": {
+      "type": "style-keycap-section",
+      "name": "Style Keycap Section",
+      "settings": {
+        "collection": "art-culture-theme-keycaps"
+      }
     }
   },
   "order": [
     "main",
     "style_keycap_section_QJwzgn",
-    "style_keycap_section_pYqC74"
+    "style_keycap_section_pYqC74",
+    "style_keycap_section_iyQNEn",
+    "style_keycap_section_nxTJ3X",
+    "style_keycap_section_D6QLrq",
+    "style_keycap_section_Lea9Qa"
   ]
 }
