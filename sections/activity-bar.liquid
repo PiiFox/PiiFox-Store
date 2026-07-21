@@ -2,7 +2,7 @@
 <div id="ActivityBar-{{ section.id }}" class="activity-bar-section" data-section-id="{{ section.id }}" data-section-type="activity-bar">
   <a class="activity-bar-section-container" href="{{ section.settings.activity_page }}" >
     <div class="page-width" style="overflow-x: hidden;">
-    <div class="activity-bar--wrapper">
+    <div class="activity-bar--wrapper {% if section.settings.is_activity_downcount == false %}js-center{% endif %}">
       <div class="activity-bar-text">
         {% if section.settings.activity_text != blank %}
         <span>{{ section.settings.activity_text }}</span>
@@ -33,13 +33,6 @@
             <div class="activity-bar-minute-one-value activity-bar-value-box">0</div>
           </div>
           <div class="activity-bar-minute-label activity-bar-item-label">MINUTES</div>
-        </div>
-        <div class="activity-bar-second-downcount activity-bar-item-downcount">
-          <div class="activity-bar-second-value activity-bar-item-value">
-            <div class="activity-bar-second-ten-value activity-bar-value-box">0</div>
-            <div class="activity-bar-second-one-value activity-bar-value-box">0</div>
-          </div>
-          <div class="activity-bar-second-label activity-bar-item-label">SECONDS</div>
         </div>
       </div>
       {% endif %}
@@ -111,10 +104,6 @@ $(function() {
 				m = m > 9 ? '' + m : '0' + m;
 				$('#ActivityBar-{{ section.id }} .activity-bar-minute-downcount .activity-bar-minute-ten-value').text(m.slice(0, 1));
                 $('#ActivityBar-{{ section.id }} .activity-bar-minute-downcount .activity-bar-minute-one-value').text(m.slice(1));
-				var s = Math.floor(time / 1000 % 60);
-				s = s > 9 ? '' + s : '0' + s;
-				$('#ActivityBar-{{ section.id }} .activity-bar-second-downcount .activity-bar-second-ten-value').text(s.slice(0, 1));
-                $('#ActivityBar-{{ section.id }} .activity-bar-second-downcount .activity-bar-second-one-value').text(s.slice(1));
 			} else {
 				clearInterval(timer);
 			}
@@ -144,6 +133,9 @@ $(function() {
     display: flex;
     align-items: center;
     justify-content: space-between;
+  }
+  .activity-bar-section-container .activity-bar--wrapper.js-center {
+    justify-content: center;
   }
   .activity-bar--wrapper .activity-bar-text {min-height: 47px;min-width: 1px;color: {{ section.settings.activity_text_color }};}
   .activity-bar--wrapper .activity-bar-button {
