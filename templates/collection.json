@@ -201,7 +201,7 @@
           "type": "product_item",
           "disabled": true,
           "settings": {
-            "product": "piifox-luna-grid98-mechanical-keyboard",
+            "product": "luna-grid98-mechanical-keyboard",
             "card_bg": "shopify://shop_images/card4.png",
             "card_img": "shopify://shop_images/LUNAGrid980.png",
             "card_tag": "",
