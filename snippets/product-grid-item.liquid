@@ -87,15 +87,8 @@
     -%}
 
     <a href="{{ product.url }}" class="grid-product__link">
+      {%- assign keycap_themes = product.metafields.custom.theme.value | map: 'label' | join: ', ' -%}
       <div class="top-right-wrapper">
-        {%- assign keycap_themes = product.metafields.custom.theme.value | map: 'label' | join: ', ' -%}
-
-        {%- if keycap_themes != blank -%}
-          <div class="custom-top-right-text">
-            {{ keycap_themes }}
-          </div>
-        {%- endif -%}
-
         {% if short_point_desc_enable and product.metafields.custom.short_point_desc != blank %}
           <div class="content-toggle-btn">
             <img class="open-content-icon" src="{{ 'eye.png' | asset_url }}" alt="open content" width="24" height="24">
@@ -119,6 +112,11 @@
       {% endif %}
 
       <div class="grid-product__image-mask">
+        {%- if keycap_themes != blank -%}
+          <div class="custom-top-right-text keycap-style-label">
+            {{ keycap_themes }}
+          </div>
+        {%- endif -%}
         {%- if quick_shop_enable -%}
           <div class="quick-product__btn quick-product__btn--not-ready js-modal-open-quick-modal-{{ product.id }} small--hide">
             <span class="quick-product__label">{{ settings.quick_shop_text }}</span>
@@ -526,7 +524,15 @@
     gap: 8px;
   }
 
-  .top-right-wrapper .custom-top-right-text {
+  .grid__item.grid-product .grid-product__image-mask {
+    position: relative;
+  }
+
+  .keycap-style-label {
+    position: absolute;
+    right: 4%;
+    bottom: 5%;
+    z-index: 4;
     border: 1.5px solid #107a44;
     color: #107a44;
     background-color: #ffffff;
@@ -537,7 +543,6 @@
     pointer-events: none;
     line-height: 1;
     display: inline-block;
-    margin-rifgt: 2em;
   }
 
   @media screen and (max-width: 768px) {
