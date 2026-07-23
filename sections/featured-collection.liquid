@@ -69,14 +69,22 @@
           </div>
 
         {%- else -%}
-
           {%- for product in collections[section.settings.home_featured_products].products limit: product_limit -%}
-            {%- render 'product-grid-item',
-              product: product,
-              collection: collection,
-              per_row: per_row,
-              quick_shop_enable: settings.quick_shop_enable
-            -%}
+            {%- if product.type == 'Keycaps' -%}
+              {%- render 'product-grid-item-keycap',
+                product: product,
+                collection: collection,
+                per_row: per_row,
+                quick_shop_enable: settings.quick_shop_enable
+              -%}
+            {%- else -%}
+              {%- render 'product-grid-item',
+                product: product,
+                collection: collection,
+                per_row: per_row,
+                quick_shop_enable: settings.quick_shop_enable
+              -%}
+            {%- endif -%}
           {%- endfor -%}
 
           {%- if section.settings.view_all -%}

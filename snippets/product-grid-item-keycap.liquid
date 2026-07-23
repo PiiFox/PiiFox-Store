@@ -87,30 +87,17 @@
     -%}
 
     <a href="{{ product.url }}" class="grid-product__link">
-      <div class="top-right-wrapper">
-        {%- assign keycap_themes = product.metafields.custom.theme.value | map: 'label' | join: ', ' -%}
-
-        {%- if keycap_themes != blank -%}
-          <div class="custom-top-right-text">
-            {{ keycap_themes }}
-          </div>
-        {%- endif -%}
-
-        {% if short_point_desc_enable and product.metafields.custom.short_point_desc != blank %}
-          <div class="content-toggle-btn">
-            <img class="open-content-icon" src="{{ 'eye.png' | asset_url }}" alt="open content" width="24" height="24">
-            <img
-              class="close-content-icon"
-              src="{{ 'close.svg' | asset_url }}"
-              alt="close content"
-              width="24"
-              height="24"
-            >
-          </div>
-        {% endif %}
-      </div>
-
       {% if short_point_desc_enable and product.metafields.custom.short_point_desc != blank %}
+        <div class="content-toggle-btn">
+          <img class="open-content-icon" src="{{ 'eye.png' | asset_url }}" alt="open content" width="24" height="24">
+          <img
+            class="close-content-icon"
+            src="{{ 'close.svg' | asset_url }}"
+            alt="close content"
+            width="24"
+            height="24"
+          >
+        </div>
         <div class="grid-product-item-content">
             <div class="custom-short_point_desc">
               {% render 'product-short-point-desc', product: product %}
@@ -352,7 +339,7 @@
       e.stopPropagation();
       e.preventDefault();
       $(this).toggleClass('active');
-      $(this).closest('.grid-product__link').find('.grid-product-item-content').toggleClass('active');
+      $(this).siblings('.grid-product-item-content').toggleClass('active');
     });
   });
 </script>
@@ -395,13 +382,13 @@
   .grid__item.grid-product .grid-product__link {
     position: relative;
   }
-  /* .grid__item.grid-product .content-toggle-btn {
+  .grid__item.grid-product .content-toggle-btn {
     position: absolute;
     top: 5%;
     right: 5%;
     z-index: 4;
     color: #000;
-  } */
+  }
   .grid__item.grid-product .content-toggle-btn img {
     width: 1.5em;
     height: 1.5em;
@@ -514,32 +501,7 @@
     aspect-ratio: 1 / 1;
     object-fit: contain;
   }
-
-  .top-right-wrapper {
-    position: absolute;
-    top: 5%;
-    right: 5%;
-    z-index: 4;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 8px;
-  }
-
-  .top-right-wrapper .custom-top-right-text {
-    border: 1.5px solid #107a44;
-    color: #107a44;
-    background-color: #ffffff;
-    font-size: 0.7em;
-    font-weight: 600;
-    padding: 3px 10px;
-    border-radius: 12px;
-    pointer-events: none;
-    line-height: 1;
-    display: inline-block;
-    margin-rifgt: 2em;
-  }
-
+  
   @media screen and (max-width: 768px) {
     .grid__item.grid__item--content {
       padding-left: 0;
