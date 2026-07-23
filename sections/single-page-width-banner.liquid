@@ -4,18 +4,20 @@
     {% assign block = section.blocks[0] %}
     {%  style %}
       .single-page-width-banner-section-{{ section.id }} .single-page-width-banner-section--content {
-          background-image: url({{ block.settings.banner | image_url: width: 1920, format: 'webp', crop: 'center' }});
+          background-image: url('https://cdn.shopify.com/s/files/1/1001/2383/6697/files/p-1-no-text.jpg?v=1784789888');
           background-size: cover;
           background-position: center;
-          padding: 5em 4em;
+          padding: 3.5em 4em;
           border-radius: 1em;
+          display: flex;
+          align-items: center;
       }
       .single-page-width-banner-section-{{ section.id }} .single-page-width-banner-section--content--left-btn {
           background-image: url({{ block.settings.btn_bg | image_url: width: 300, format: 'webp' }});
       }
       @media screen and (max-width: 768px) {
           .single-page-width-banner-section-{{ section.id }} .single-page-width-banner-section--content {
-              background-image: url({{ block.settings.m_banner | image_url: width: 768, format: 'webp', crop: 'center' }});
+              background-image: url('https://cdn.shopify.com/s/files/1/1001/2383/6697/files/m-1-no-text.jpg?v=1784789888');
           }
       }
     {% endstyle %}
@@ -24,15 +26,13 @@
           <h3 class="single-page-width-banner-section--content--left-title custom-txt-oxanium appear-delay{% cycle '','-1','-2','-3','-4' %}">
             {{ block.settings.banner_title }}
           </h3>
-          <p class="single-page-width-banner-section--content--left-subtitle custom-txt-oxanium appear-delay{% cycle '','-1','-2','-3','-4' %}">
+          <p class="single-page-width-banner-section--content--left-subtitle appear-delay{% cycle '','-1','-2','-3','-4' %}">
             {{ block.settings.sub_title }}
           </p>
-          <p class="single-page-width-banner-section--content--left-context custom-txt-normal appear-delay{% cycle '','-1','-2','-3','-4' %}">
-            {{ block.settings.context }}
-          </p>
           {% if block.settings.btn_label != blank %}
-            <a href="{{ block.settings.btn_link }}" class="single-page-width-banner-section--content--left-btn custom-txt-oxanium appear-delay{% cycle '','-1','-2','-3','-4' %}" style="background-image: url({{ block.settings.btn_bg | img_url: 'original' }});">
+            <a href="{{ block.settings.btn_link }}" class="single-page-width-banner-section--content--left-btn appear-delay{% cycle '','-1','-2','-3','-4' %}">
               {{ block.settings.btn_label }}
+              <span>→</span>
             </a>
           {% endif %}
         </div>
@@ -45,53 +45,155 @@
       background-color: #fff;
   }
   .single-page-width-banner-section-{{ section.id }} .single-page-width-banner-section--content {
-      height: 500px;
+      width: 100%;
+      height: auto;
+      aspect-ratio: 2047 / 639;
+      box-sizing: border-box;
   }
   .single-page-width-banner-section-{{ section.id }} .single-page-width-banner-section--content--left {
-      width: 50%;
-      padding-right: 5em;
+      width: 55%;
+      padding-right: 2em;
   }
   .single-page-width-banner-section-{{ section.id }} .single-page-width-banner-section--content--left-title {
-      font-size: 4em;
+      font-size: 4.5em;
       font-weight: 900;
-      margin-bottom: 0em;
+      font-stretch: condensed;
+      line-height: 0.9;
+      letter-spacing: 0.01em;
+      text-transform: uppercase;
+      white-space: nowrap;
+      transform: scaleX(0.8);
+      transform-origin: left top;
+      margin-bottom: 0.25em;
   }
   .single-page-width-banner-section-{{ section.id }} .single-page-width-banner-section--content--left-subtitle {
-      font-size: 2em;
-      font-weight: 700;
-      margin-bottom: 0.6em;
-  }
-  .single-page-width-banner-section-{{ section.id }} .single-page-width-banner-section--content--left-context {
+      max-width: 20em;
       font-size: 1em;
-      margin-bottom: 2em;
+      font-weight: 400;
+      line-height: 1.35;
+      margin-bottom: 1.7em;
+      margin-left: 0.2em;
   }
   .single-page-width-banner-section-{{ section.id }} .single-page-width-banner-section--content--left-btn {
-      display: inline-block;
-      padding: 0.8em 3em 0.8em 1.5em;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75em;
+      min-width: 14em;
+      padding: 0.9em 1.2em;
       letter-spacing: 0.05em;
       color: #fff;
-      font-size: 1.3em;
-      font-weight: 500;
+      font-size: 1em;
       text-decoration: none;
-      background-size: 100% 100%;
-      background-position: center;
+      background: #1f1f1f;
+      border-radius: 0.25em;
   }
-  @media screen and (max-width: 768px) {
+  .single-page-width-banner-section-{{ section.id }} .single-page-width-banner-section--content--left-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+  }
+  .single-page-width-banner-section-{{ section.id }} .single-page-width-banner-section--content--left-btn span {
+      height: 1.1em;
+      line-height: 100%;
+  }
+    @media screen and (max-width: 768px) {
       .single-page-width-banner-section-{{ section.id }} {
-          padding: 2em 0;
-          font-size: 0.7em;
+        padding: 2em 0;
+        font-size: 1em;
       }
       .single-page-width-banner-section-{{ section.id }} .single-page-width-banner-section--content {
-          height: unset;
-          aspect-ratio: 768 / 1000;
-          padding: 3em;
+        height: auto;
+        aspect-ratio: 1131 / 1391;
+        padding: 3.5em 3.5em;
+        align-items: flex-start;
       }
       .single-page-width-banner-section-{{ section.id }} .single-page-width-banner-section--content--left {
-          width: 100%;
-          padding-right: 0;
+        width: 100%;
+        padding-right: 0;
+      }
+      .single-page-width-banner-section-{{ section.id }} .single-page-width-banner-section--content--left-title {
+        font-size: 3.8em;
+        line-height: 0.9;
+        margin-bottom: 0.35em;
+      }
+      .single-page-width-banner-section-{{ section.id }} .single-page-width-banner-section--content--left-subtitle {
+        font-size: 0.8em;
+        line-height: 1.35;
+        margin-bottom: 2.5em;
+        margin-left: 0.2em;
+        max-width: 20em;
+        white-space: nowrap;
+      }
+      .single-page-width-banner-section-{{ section.id }} .single-page-width-banner-section--content--left-btn {
+        gap: 0.75em;
+        min-width: 12em;
+        padding: 0.8em 1em;
+        font-size: 0.7em;
       }
   }
-
+  
+  @media screen and (max-width: 580px) {
+      .single-page-width-banner-section-{{ section.id }} {
+        padding: 2em 0;
+        font-size: 1em;
+      }
+      .single-page-width-banner-section-{{ section.id }} .single-page-width-banner-section--content {
+        height: auto;
+        aspect-ratio: 1131 / 1391;
+        padding: 3em 2.5em;
+        align-items: flex-start;
+      }
+      .single-page-width-banner-section-{{ section.id }} .single-page-width-banner-section--content--left {
+        width: 100%;
+        padding-right: 0;
+      }
+      .single-page-width-banner-section-{{ section.id }} .single-page-width-banner-section--content--left-title {
+        font-size: 3em;
+        line-height: 0.9;
+        margin-bottom: 0.25em;
+      }
+      .single-page-width-banner-section-{{ section.id }} .single-page-width-banner-section--content--left-subtitle {
+        font-size: 0.6em;
+        line-height: 1.35;
+        margin-bottom: 1.4em;
+        margin-left: 0.2em;
+        max-width: 20em;
+        white-space: nowrap;
+      }
+      .single-page-width-banner-section-{{ section.id }} .single-page-width-banner-section--content--left-btn {
+        gap: 0.75em;
+        min-width: 12em;
+        padding: 0.8em 1em;
+        font-size: 0.5em;
+      }
+  }
+  @media screen and (max-width: 430px) {
+      .single-page-width-banner-section-{{ section.id }} .single-page-width-banner-section--content {
+        padding: 2em 2em;
+      }
+      .single-page-width-banner-section-{{ section.id }} .single-page-width-banner-section--content--left-title {
+        font-size: 2.2em;
+        line-height: 0.9;
+        margin-bottom: 0.25em;
+      }
+      .single-page-width-banner-section-{{ section.id }} .single-page-width-banner-section--content--left-subtitle {
+        font-size: 0.5em;
+        max-width: 18em;
+        white-space: nowrap;
+      }
+      .single-page-width-banner-section-{{ section.id }} .single-page-width-banner-section--content--left-btn {
+        gap: 0.75em;
+        min-width: 5em;
+        padding: 0.8em 1em;
+        font-size: 0.45em;
+      }
+      .single-page-width-banner-section-{{ section.id }} .single-page-width-banner-section--content--left-btn span {
+        height: 1.37em;
+        line-height: 100%;
+      }
+  }
 {% endstyle %}
 
 {% schema %}
@@ -123,11 +225,6 @@
           "type": "text",
           "id": "sub_title",
           "label": "Sub Title"
-        },
-        {
-          "type": "text",
-          "id": "context",
-          "label": "Context"
         },
         {
           "type": "url",

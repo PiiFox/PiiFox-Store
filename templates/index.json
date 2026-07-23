@@ -362,12 +362,10 @@
           "settings": {
             "banner": "shopify://shop_images/20260626-163954.jpg",
             "m_banner": "shopify://shop_images/20260626-164003.jpg",
-            "banner_title": "Smart Keys.Nice Life.",
-            "sub_title": "Keycaps Made for Your Daily Setup.",
-            "context": "Premium PBT keycaps designed to bring personality, comfort, and style to every keystroke.",
+            "banner_title": "STATE YOUR<br>BOARDS",
+            "sub_title": "Browse curated PIIFOX keycap themes <br> and build a setup with more personality.",
             "btn_link": "shopify://pages/keycaps-themes-lab",
-            "btn_bg": "shopify://shop_images/about_us_btn.png",
-            "btn_label": "Explore Keycaps"
+            "btn_label": "SHOP KEYCAP THEMES"
           }
         }
       },
