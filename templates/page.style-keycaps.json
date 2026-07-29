@@ -60,7 +60,7 @@
           "settings": {
             "is_current_themes": true,
             "is_coming_soon": false,
-            "is_current_popular_themes": true,
+            "is_current_popular_themes": false,
             "collection": "retro-daily-theme-keycaps"
           }
         },
@@ -69,7 +69,7 @@
           "settings": {
             "is_current_themes": true,
             "is_coming_soon": false,
-            "is_current_popular_themes": true,
+            "is_current_popular_themes": false,
             "collection": "art-culture-theme-keycaps"
           }
         },

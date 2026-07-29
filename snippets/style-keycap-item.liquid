@@ -7,7 +7,6 @@
 {% assign product_count = section_collection.products | size %}
 
 <div class="keycap-section-item-wrapper">
-  <div class="page-width">
     <div class="keycap-section-header">
       <h2 class="keycap-section-title">
         {{ section_collection.title }}
@@ -49,7 +48,6 @@
       <button class="carousel-arrow prev-arrow" data-target="keycap-{{ current_tab }}-{{ section_collection.handle }}">←</button>
       <button class="carousel-arrow next-arrow" data-target="keycap-{{ current_tab }}-{{ section_collection.handle }}">→</button>
     </div>
-  </div>
 </div>
 
 <script>

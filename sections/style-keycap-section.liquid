@@ -1,9 +1,12 @@
 {% style %}
+  .keycap-section-title {
+    padding: 4em 0 1em 0;
+  }
   /* Tab 容器 */
   .keycap-section-tab {
     border-bottom: 2px solid #e5e5e53d;
     margin-bottom: 2em;
-    padding: 4em 0 0.2em 0;
+    padding: 2em 0 1em 0;
   }
 
   .keycap-section-tab > .page-width {
@@ -114,6 +117,7 @@
     overflow: hidden;
     background: #fff;
     flex-shrink: 0;
+    cursor: pointer;
   }
   .keycap-card-img-wrap {
     width: 100%;
@@ -142,6 +146,7 @@
     text-decoration: none;
     color: #000;
     font-size: 0.9em;
+    cursor: pointer;
   }
   .carousel-arrow-wrap {
     display: flex;
@@ -188,16 +193,22 @@
   {% endif %}
 {% endfor %}
 
+<div class="keycap-section-title">
+  <div class="page-width">
+    <h1>{{ section.settings.title }}</h1>
+  </div>
+</div>
+
 <div class="keycap-section-tab">
   <div class="page-width">
     {% if has_current %}
-      <button class="keycap-section-tab-item active" data-tab="current_themes">Current Themes</button>
+      <button class="keycap-section-tab-item active" data-tab="current_themes">{{ section.settings.tab1_title }}</button>
     {% endif %}
     {% if has_coming %}
-      <button class="keycap-section-tab-item" data-tab="coming_soon">Coming Soon</button>
+      <button class="keycap-section-tab-item" data-tab="coming_soon">{{ section.settings.tab2_title }}</button>
     {% endif %}
     {% if has_popular %}
-      <button class="keycap-section-tab-item" data-tab="current_popular_themes">Current Popular Themes</button>
+      <button class="keycap-section-tab-item" data-tab="current_popular_themes">{{ section.settings.tab3_title }}</button>
     {% endif %}
   </div>
 </div>
@@ -282,9 +293,28 @@
   "class": "keycap-style-section",
   "settings": [
     {
-      "type": "collection",
-      "id": "collection",
-      "label": "collection"
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Explore PIIFOX Keycaps Themes"
+    },
+    {
+      "type": "text",
+      "id": "tab1_title",
+      "label": "Tab 1 Title",
+      "default": "Current Themes"
+    },
+    {
+      "type": "text",
+      "id": "tab2_title",
+      "label": "Tab 2 Title",
+      "default": "Coming Soon"
+    },
+    {
+      "type": "text",
+      "id": "tab3_title",
+      "label": "Tab 3 Title",
+      "default": "Current Popular Themes"
     }
   ],
   "blocks": [
