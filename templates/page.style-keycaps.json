@@ -14,56 +14,78 @@
       "disabled": true,
       "settings": {}
     },
-    "style_keycap_section_QJwzgn": {
+    "style_keycap_section_QJwzgn": { 
       "type": "style-keycap-section",
       "name": "Style Keycap Section",
-      "settings": {
-        "collection": "clean-minimal-theme-keycaps"
-      }
-    },
-    "style_keycap_section_iyQNEn": {
-      "type": "style-keycap-section",
-      "name": "Style Keycap Section",
-      "settings": {
-        "collection": "game-playful-theme-keycaps"
-      }
-    },
-    "style_keycap_section_pYqC74": {
-      "type": "style-keycap-section",
-      "name": "Style Keycap Section",
-      "settings": {
-        "collection": "cute-colorful-theme-keycaps"
-      }
-    },
-    "style_keycap_section_nxTJ3X": {
-      "type": "style-keycap-section",
-      "name": "Style Keycap Section",
-      "settings": {
-        "collection": "nature-soft-theme-keycaps"
-      }
-    },
-    "style_keycap_section_D6QLrq": {
-      "type": "style-keycap-section",
-      "name": "Style Keycap Section",
-      "settings": {
-        "collection": "retro-daily-theme-keycaps"
-      }
-    },
-    "style_keycap_section_Lea9Qa": {
-      "type": "style-keycap-section",
-      "name": "Style Keycap Section",
-      "settings": {
-        "collection": "art-culture-theme-keycaps"
-      }
+      "settings": {},
+      "blocks": {
+        "78c1667e-d1d9-46f6-94db-235ebc5db859": {
+          "type": "style_item",
+          "settings": {
+            "is_current_themes": true,
+            "is_coming_soon": false,
+            "is_current_popular_themes": false,
+            "collection": "clean-minimal-theme-keycaps"
+          }
+        },
+        "78c1667e-d1d9-46f6-94db-235ebc5db849": {
+          "type": "style_item",
+          "settings": {
+            "is_current_themes": true,
+            "is_coming_soon": false,
+            "is_current_popular_themes": false,
+            "collection": "game-playful-theme-keycaps"
+          }
+        },
+        "78c1667e-d1d9-46f6-94db-235ebc5db839": {
+          "type": "style_item",
+          "settings": {
+            "is_current_themes": true,
+            "is_coming_soon": false,
+            "is_current_popular_themes": false,
+            "collection": "cute-colorful-theme-keycaps"
+          }
+        },
+        "78c1667e-d1d9-46f6-94db-235ebc5db829": {
+          "type": "style_item",
+          "settings": {
+            "is_current_themes": true,
+            "is_coming_soon": false,
+            "is_current_popular_themes": false,
+            "collection": "nature-soft-theme-keycaps"
+          }
+        },
+        "78c1667e-d1d9-46f6-94db-235ebc5db819": {
+          "type": "style_item",
+          "settings": {
+            "is_current_themes": true,
+            "is_coming_soon": false,
+            "is_current_popular_themes": true,
+            "collection": "retro-daily-theme-keycaps"
+          }
+        },
+        "78c1667e-d1d9-46f6-94db-235ebc5db809": {
+          "type": "style_item",
+          "settings": {
+            "is_current_themes": true,
+            "is_coming_soon": false,
+            "is_current_popular_themes": true,
+            "collection": "art-culture-theme-keycaps"
+          }
+        },
+      },
+      "block_order": [
+        "78c1667e-d1d9-46f6-94db-235ebc5db859",
+        "78c1667e-d1d9-46f6-94db-235ebc5db849",
+        "78c1667e-d1d9-46f6-94db-235ebc5db839",
+        "78c1667e-d1d9-46f6-94db-235ebc5db829",
+        "78c1667e-d1d9-46f6-94db-235ebc5db819",
+        "78c1667e-d1d9-46f6-94db-235ebc5db809"
+      ]
     }
   },
   "order": [
     "main",
-    "style_keycap_section_QJwzgn",
-    "style_keycap_section_iyQNEn",
-    "style_keycap_section_pYqC74",
-    "style_keycap_section_nxTJ3X",
-    "style_keycap_section_D6QLrq",
-    "style_keycap_section_Lea9Qa"
+    "style_keycap_section_QJwzgn"
   ]
 }

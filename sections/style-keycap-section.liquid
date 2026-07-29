@@ -1,8 +1,70 @@
-{% assign section_collection = section.settings.collection %}
-{% assign product_count = section_collection.products | size %}
+{% style %}
+  /* Tab 容器 */
+  .keycap-section-tab {
+    border-bottom: 2px solid #e5e5e53d;
+    margin-bottom: 2em;
+    padding: 4em 0 0.2em 0;
+  }
+
+  .keycap-section-tab > .page-width {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 1em;
+  }
+
+  .keycap-section-tab-item {
+    font-size: 1.2rem;
+    font-weight: 400;
+    color: #000;
+    border-radius: 25em;
+    border: 2px solid #000;
+    cursor: pointer;
+    padding: 0.6em 1em;
+    background: none;
+    position: relative;
+    transition: color 0.25s ease;
+    letter-spacing: 0.8px;
+    text-decoration: none;
+    outline: none;
+  }
+
+  .keycap-section-tab-item:hover {
+    background: #000;
+    color: #fff;
+    font-weight: 700;
+  }
+
+  .keycap-section-tab-item.active {
+    background: #000;
+    color: #fff;
+    font-weight: 700;
+  }
+
+  @media screen and (max-width: 768px) {
+    .keycap-section-tab {
+      gap: 1.5em;
+      overflow-x: auto;
+      white-space: nowrap;
+      -webkit-overflow-scrolling: touch;
+    }
+    .keycap-section-tab-item {
+      font-size: 1em;
+      padding: 0.4em 0.2em;
+    }
+  }
+
+  .keycap-section-wrapper {
+    display: none; /* 默认隐藏 */
+  }
+
+  .keycap-section-wrapper.active {
+    display: block;
+  }
+{% endstyle %}
 
 {% style %}
-  .keycap-section-wrapper {
+  .keycap-section-item-wrapper {
     width: 100%;
     padding: 2em 1em;
     box-sizing: border-box;
@@ -38,7 +100,12 @@
     overflow-x: auto;
     scroll-behavior: smooth;
     padding-bottom: 1em;
-    scrollbar-width: thin;
+    /* scrollbar-width: thin; */
+  }
+  .keycap-carousel::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+    visibility: hidden;
   }
   .keycap-product-card {
     min-width: 340px;
@@ -102,65 +169,106 @@
   }
 {% endstyle %}
 
-<div class="keycap-section-wrapper">
+{% comment %} 收集有效的 Tab 标签 {% endcomment %}
+{% assign has_current = false %}
+{% assign has_coming = false %}
+{% assign has_popular = false %}
+
+{% for block in section.blocks %}
+  {% if block.type == 'style_item' %}
+    {% if block.settings.is_current_themes and block.settings.collection.products.size > 0 %}
+      {% assign has_current = true %}
+    {% endif %}
+    {% if block.settings.is_coming_soon and block.settings.collection.products.size > 0 %}
+      {% assign has_coming = true %}
+    {% endif %}
+    {% if block.settings.is_current_popular_themes and block.settings.collection.products.size > 0 %}
+      {% assign has_popular = true %}
+    {% endif %}
+  {% endif %}
+{% endfor %}
+
+<div class="keycap-section-tab">
   <div class="page-width">
-    <div class="keycap-section-header">
-      <h2 class="keycap-section-title">
-        {{ section_collection.title }}
-        <span>({{ product_count }})</span>
-      </h2>
-      <a href="{{ section_collection.url }}" class="keycap-view-all-btn">
-        {{- 'collections.general.all_of_collection' | t -}}
-      </a>
-    </div>
-
-    <div class="keycap-carousel" id="keycapCarousel-{{ section.id }}">
-      {% for product in section_collection.products %}
-        <div class="keycap-product-card">
-          <div class="keycap-card-img-wrap">
-            {% if product.featured_image %}
-              <img
-                src="{{ product.featured_image | image_url: width: 680 }}"
-                alt="{{ product.title | escape }}"
-                class="keycap-card-img"
-                loading="lazy"
-                width="680"
-                height="auto"
-              >
-            {% else %}
-              <div style="width:100%;height:100%;background:#f7f7f7;display:flex;align-items:center;justify-content:center;">
-                No Image
-              </div>
-            {% endif %}
-          </div>
-          <div class="keycap-card-info">
-            <h3 class="keycap-product-name">{{ product.title }}</h3>
-            <a href="{{ product.url }}" class="keycap-shopnow-btn">Shop Now</a>
-          </div>
-        </div>
-      {% endfor %}
-    </div>
-
-    <div class="carousel-arrow-wrap">
-      <button class="carousel-arrow prev-arrow" data-target="keycapCarousel-{{ section.id }}">←</button>
-      <button class="carousel-arrow next-arrow" data-target="keycapCarousel-{{ section.id }}">→</button>
-    </div>
+    {% if has_current %}
+      <button class="keycap-section-tab-item active" data-tab="current_themes">Current Themes</button>
+    {% endif %}
+    {% if has_coming %}
+      <button class="keycap-section-tab-item" data-tab="coming_soon">Coming Soon</button>
+    {% endif %}
+    {% if has_popular %}
+      <button class="keycap-section-tab-item" data-tab="current_popular_themes">Current Popular Themes</button>
+    {% endif %}
   </div>
 </div>
 
-<script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const arrows = document.querySelectorAll('.carousel-arrow');
-    arrows.forEach((btn) => {
-      btn.addEventListener('click', () => {
-        const carouselId = btn.dataset.target;
-        const carouselEl = document.getElementById(carouselId);
-        const scrollStep = 360;
+{% comment %} 面板内容 {% endcomment %}
+{% if has_current %}
+  <div class="keycap-section-wrapper keycap-section-wrapper-current_themes active">
+    <div class="page-width">
+      {% for block in section.blocks %}
+        {% if block.type == 'style_item' and block.settings.is_current_themes %}
+          {% render 'style-keycap-item', collection: block.settings.collection, current_tab: 'current_themes' %}
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+{% endif %}
 
-        if (btn.classList.contains('prev-arrow')) {
-          carouselEl.scrollBy({ left: -scrollStep, behavior: 'smooth' });
-        } else {
-          carouselEl.scrollBy({ left: scrollStep, behavior: 'smooth' });
+{% if has_coming %}
+  <div class="keycap-section-wrapper keycap-section-wrapper-coming_soon">
+    <div class="page-width">
+      {% for block in section.blocks %}
+        {% if block.type == 'style_item' and block.settings.is_coming_soon %}
+          {% render 'style-keycap-item', collection: block.settings.collection, current_tab: 'coming_soon' %}
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+{% endif %}
+
+{% if has_popular %}
+  <div class="keycap-section-wrapper keycap-section-wrapper-current_popular_themes">
+    <div class="page-width">
+      {% for block in section.blocks %}
+        {% if block.type == 'style_item' and block.settings.is_current_popular_themes %}
+          {% render 'style-keycap-item', collection: block.settings.collection, current_tab: 'current_popular_themes' %}
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+{% endif %}
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const tabs = document.querySelectorAll('.keycap-section-tab-item');
+    const panels = document.querySelectorAll('.keycap-section-wrapper');
+
+    if (!tabs.length) return;
+
+    const activeTab = document.querySelector('.keycap-section-tab-item.active');
+    if (!activeTab) {
+      tabs[0].classList.add('active');
+      const firstPanel = document.querySelector('.keycap-section-wrapper.' + tabs[0].dataset.tab);
+      if (firstPanel) firstPanel.classList.add('active');
+    } else {
+      const firstPanel = document.querySelector('.keycap-section-wrapper.' + activeTab.dataset.tab);
+      if (firstPanel) firstPanel.classList.add('active');
+    }
+
+    // 点击切换
+    tabs.forEach((tab) => {
+      tab.addEventListener('click', function (e) {
+        // 移除所有激活状态
+        tabs.forEach((t) => t.classList.remove('active'));
+        panels.forEach((p) => p.classList.remove('active'));
+
+        // 激活当前 Tab
+        this.classList.add('active');
+        const target = this.dataset.tab;
+        const targetPanel = document.querySelector('.keycap-section-wrapper-' + target);
+        if (targetPanel) {
+          targetPanel.classList.add('active');
         }
       });
     });
@@ -179,12 +287,40 @@
       "label": "collection"
     }
   ],
+  "blocks": [
+    {
+      "type": "style_item",
+      "name": "Style Item",
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "is_current_themes",
+          "label": "Is Current Themes",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "is_coming_soon",
+          "label": "Is Coming Soon",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "is_current_popular_themes",
+          "label": "Is Current Popular Themes",
+          "default": false
+        },
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Collection"
+        }
+      ]
+    }
+  ],
   "presets": [
     {
-      "name": "Style Keycap Section",
-      "settings": {
-        "collection": ""
-      }
+      "name": "Style Keycap Section"
     }
   ]
 }
