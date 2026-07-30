@@ -1,12 +1,11 @@
 {% style %}
-  .keycap-section-title {
-    padding: 4em 0 1em 0;
+  .keycap-style-section-title {
+    padding: 4em 0 0em 0;
   }
   /* Tab 容器 */
   .keycap-section-tab {
-    border-bottom: 2px solid #e5e5e53d;
     margin-bottom: 2em;
-    padding: 2em 0 1em 0;
+    padding: 0.5em 0 1em 0;
   }
 
   .keycap-section-tab > .page-width {
@@ -23,7 +22,7 @@
     border-radius: 25em;
     border: 2px solid #000;
     cursor: pointer;
-    padding: 0.6em 1em;
+    padding: 0.5em 2em;
     background: none;
     position: relative;
     transition: color 0.25s ease;
@@ -45,6 +44,9 @@
   }
 
   @media screen and (max-width: 768px) {
+    .keycap-style-section-title h1 {
+      font-size: 2em;
+    }
     .keycap-section-tab {
       gap: 1.5em;
       overflow-x: auto;
@@ -53,7 +55,7 @@
     }
     .keycap-section-tab-item {
       font-size: 1em;
-      padding: 0.4em 0.2em;
+      padding: 0.5em 1em;
     }
   }
 
@@ -193,9 +195,9 @@
   {% endif %}
 {% endfor %}
 
-<div class="keycap-section-title">
+<div class="keycap-style-section-title">
   <div class="page-width">
-    <h1>{{ section.settings.title }}</h1>
+    <h1 class="custom-txt-extrabold">{{ section.settings.title }}</h1>
   </div>
 </div>
 
