@@ -73,6 +73,7 @@
     width: 100%;
     padding: 2em 1em;
     box-sizing: border-box;
+    position: relative;
   }
   .keycap-section-header {
     display: flex;
@@ -174,6 +175,21 @@
     opacity: 0.3;
     cursor: not-allowed;
   }
+  @media screen and (max-width: 768px) {
+    .carousel-arrow-wrap {
+      position: absolute;
+      width: 100%;
+      top: 50%;
+      left: 0;
+      justify-content: space-between;
+    }
+    .carousel-arrow {
+      width: 2em;
+      height: 2em;
+      line-height: 2em;
+    }
+  }
+
 {% endstyle %}
 
 {% comment %} 收集有效的 Tab 标签 {% endcomment %}
