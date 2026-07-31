@@ -1,0 +1,463 @@
+{%- assign community_fallback_image = 'style-studio-theme-placeholder.png' | asset_url -%}
+
+<section
+  class="style-studio-community style-studio-community-{{ section.id }}"
+  data-style-studio-community="{{ section.id }}"
+>
+  <div class="style-studio-community__inner">
+    {%- if section.settings.title_before != blank or section.settings.title_after != blank -%}
+      <h2 class="style-studio-community__title">
+        {%- if section.settings.title_before != blank -%}
+          <span style="color: {{ section.settings.title_before_color | default: '#111111' | escape }};">{{ section.settings.title_before | escape }}</span>
+        {%- endif -%}
+        {%- if section.settings.title_before != blank and section.settings.title_after != blank -%}&nbsp;{%- endif -%}
+        {%- if section.settings.title_after != blank -%}
+          <span style="color: {{ section.settings.title_after_color | default: '#244f1d' | escape }};">{{ section.settings.title_after | escape }}</span>
+        {%- endif -%}
+      </h2>
+    {%- endif -%}
+
+    {%- if section.settings.subtitle != blank -%}
+      <p class="style-studio-community__subtitle">
+        {{ section.settings.subtitle | escape | newline_to_br }}
+      </p>
+    {%- endif -%}
+
+    <div class="style-studio-community__viewport" data-community-viewport>
+      <div class="style-studio-community__track" data-community-track>
+        {%- if section.blocks.size > 0 -%}
+          {%- for block in section.blocks -%}
+            {%- assign community_image = community_fallback_image -%}
+            {%- if block.settings.image != blank -%}
+              {%- assign community_image = block.settings.image | image_url: width: 1200 -%}
+            {%- endif -%}
+
+            {%- assign community_alt = block.settings.alt | default: 'Community setup' -%}
+
+            {%- if block.settings.link != blank -%}
+              <a
+                class="style-studio-community__item"
+                href="{{ block.settings.link | escape }}"
+                {{ block.shopify_attributes }}
+              >
+                <img
+                  class="style-studio-community__image"
+                  src="{{ community_image }}"
+                  alt="{{ community_alt | escape }}"
+                  loading="lazy"
+                  width="1200"
+                  height="1500"
+                >
+              </a>
+            {%- else -%}
+              <div class="style-studio-community__item" {{ block.shopify_attributes }}>
+                <img
+                  class="style-studio-community__image"
+                  src="{{ community_image }}"
+                  alt="{{ community_alt | escape }}"
+                  loading="lazy"
+                  width="1200"
+                  height="1500"
+                >
+              </div>
+            {%- endif -%}
+          {%- endfor -%}
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% style %}
+  .style-studio-community-{{ section.id }} {
+    width: 100%;
+    overflow: hidden;
+    background: #ffffff;
+    color: #111111;
+  }
+
+  .style-studio-community-{{ section.id }} .style-studio-community__inner {
+    width: 95%;
+    margin: 0 auto;
+    padding: 2em 0 3em;
+    box-sizing: border-box;
+  }
+
+  .style-studio-community-{{ section.id }} .style-studio-community__title {
+    margin: 0;
+    color: #111111;
+    font-size: 2em;
+    font-weight: 700;
+    line-height: 1.1;
+    text-align: center;
+  }
+
+  .style-studio-community-{{ section.id }} .style-studio-community__subtitle {
+    max-width: 42em;
+    margin: 0.75em auto 0;
+    color: #555555;
+    font-size: 0.9em;
+    line-height: 1.4;
+    text-align: center;
+  }
+
+  .style-studio-community-{{ section.id }} .style-studio-community__viewport {
+    width: 100%;
+    margin-top: 2em;
+    overflow: hidden;
+  }
+
+  .style-studio-community-{{ section.id }} .style-studio-community__track {
+    display: flex;
+    align-items: stretch;
+    gap: 1em;
+    width: max-content;
+    margin: 0 auto;
+  }
+
+  .style-studio-community-{{ section.id }} .style-studio-community__track.flickity-enabled {
+    display: block;
+    width: 100%;
+    margin: 0;
+    overflow: visible;
+  }
+
+  .style-studio-community-{{ section.id }} .style-studio-community__track.flickity-enabled .flickity-viewport {
+    width: 100%;
+    overflow: hidden;
+  }
+
+  .style-studio-community-{{ section.id }} .style-studio-community__track .flickity-button,
+  .style-studio-community-{{ section.id }} .style-studio-community__track .flickity-page-dots {
+    display: none !important;
+  }
+
+  .style-studio-community-{{ section.id }} .style-studio-community__item {
+    display: block;
+    flex: 0 0 16em;
+    width: 16em;
+    height: 20em;
+    overflow: hidden;
+    border-radius: 1em;
+    background: #eeeeee;
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .style-studio-community-{{ section.id }} .style-studio-community__track.flickity-enabled .flickity-slider .style-studio-community__item {
+    margin-right: 1em;
+  }
+
+  .style-studio-community-{{ section.id }} .style-studio-community__image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: inherit;
+  }
+
+  .style-studio-community-{{ section.id }} .style-studio-community__item:focus-visible {
+    outline: 2px solid #111111;
+    outline-offset: 3px;
+  }
+
+  @media screen and (max-width: 48.0625em) {
+    .style-studio-community-{{ section.id }} .style-studio-community__inner {
+      width: 95%;
+      padding: 2em 0;
+    }
+
+    .style-studio-community-{{ section.id }} .style-studio-community__title {
+      font-size: 1.7em;
+    }
+
+    .style-studio-community-{{ section.id }} .style-studio-community__subtitle {
+      font-size: 0.85em;
+    }
+
+    .style-studio-community-{{ section.id }} .style-studio-community__viewport {
+      margin-top: 1.5em;
+    }
+
+    .style-studio-community-{{ section.id }} .style-studio-community__track {
+      gap: 0.75em;
+    }
+
+    .style-studio-community-{{ section.id }} .style-studio-community__item {
+      flex-basis: 14em;
+      width: 14em;
+      height: 17.5em;
+      border-radius: 0.75em;
+    }
+
+    .style-studio-community-{{ section.id }} .style-studio-community__track.flickity-enabled .flickity-slider .style-studio-community__item {
+      margin-right: 0.75em;
+    }
+  }
+{% endstyle %}
+
+<script>
+  (() => {
+    const pixelsPerSecond = 18;
+
+    const initCommunity = (section, attempt = 0) => {
+      if (
+        !section ||
+        section.dataset.styleStudioCommunityInitialized === 'true'
+      ) {
+        return;
+      }
+
+      const track = section.querySelector('[data-community-track]');
+      const viewport = section.querySelector('[data-community-viewport]');
+
+      if (!track || !viewport) {
+        return;
+      }
+
+      if (typeof window.Flickity !== 'function') {
+        if (attempt < 30) {
+          window.setTimeout(() => initCommunity(section, attempt + 1), 150);
+        }
+        return;
+      }
+
+      const items = Array.from(
+        track.querySelectorAll('.style-studio-community__item')
+      );
+
+      if (!items.length) {
+        section.dataset.styleStudioCommunityInitialized = 'true';
+        return;
+      }
+
+      let flkty = null;
+      let animationFrame = null;
+      let lastTimestamp = 0;
+      let resizeFrame = null;
+      let isCleanedUp = false;
+
+      const getContentWidth = () => {
+        const trackStyles = window.getComputedStyle(track);
+        const gap = parseFloat(trackStyles.columnGap || trackStyles.gap) || 0;
+        const isFlickityEnabled = track.classList.contains('flickity-enabled');
+
+        return items.reduce((totalWidth, item, index) => {
+          const itemStyles = window.getComputedStyle(item);
+          const itemWidth = item.getBoundingClientRect().width;
+          const itemSpacing = isFlickityEnabled
+            ? parseFloat(itemStyles.marginRight) || 0
+            : index < items.length - 1
+              ? gap
+              : 0;
+
+          return totalWidth + itemWidth + itemSpacing;
+        }, 0);
+      };
+
+      const animate = (timestamp) => {
+        if (isCleanedUp || !flkty) {
+          return;
+        }
+
+        if (lastTimestamp) {
+          const elapsed = Math.min(timestamp - lastTimestamp, 100);
+          flkty.x -= (elapsed / 1000) * pixelsPerSecond;
+          flkty.positionSlider();
+        }
+
+        lastTimestamp = timestamp;
+        animationFrame = window.requestAnimationFrame(animate);
+      };
+
+      const stopAnimation = () => {
+        if (animationFrame !== null) {
+          window.cancelAnimationFrame(animationFrame);
+          animationFrame = null;
+        }
+        lastTimestamp = 0;
+      };
+
+      const startCarousel = () => {
+        if (flkty || getContentWidth() <= viewport.clientWidth + 1) {
+          return;
+        }
+
+        flkty = new window.Flickity(track, {
+          cellSelector: '.style-studio-community__item',
+          cellAlign: 'left',
+          wrapAround: true,
+          autoPlay: false,
+          draggable: false,
+          prevNextButtons: false,
+          pageDots: false,
+          freeScroll: false,
+          contain: false
+        });
+
+        animationFrame = window.requestAnimationFrame(animate);
+      };
+
+      const stopCarousel = () => {
+        if (!flkty) {
+          return;
+        }
+
+        stopAnimation();
+        flkty.destroy();
+        flkty = null;
+      };
+
+      const syncCarousel = () => {
+        if (isCleanedUp) {
+          return;
+        }
+
+        const shouldAnimate = getContentWidth() > viewport.clientWidth + 1;
+
+        if (shouldAnimate) {
+          startCarousel();
+          if (flkty) {
+            flkty.resize();
+          }
+        } else {
+          stopCarousel();
+        }
+      };
+
+      const handleResize = () => {
+        if (resizeFrame !== null) {
+          window.cancelAnimationFrame(resizeFrame);
+        }
+
+        resizeFrame = window.requestAnimationFrame(() => {
+          resizeFrame = null;
+          syncCarousel();
+        });
+      };
+
+      section.dataset.styleStudioCommunityInitialized = 'true';
+      window.addEventListener('resize', handleResize);
+      syncCarousel();
+
+      section.__styleStudioCommunityCleanup = () => {
+        if (isCleanedUp) {
+          return;
+        }
+
+        isCleanedUp = true;
+        window.removeEventListener('resize', handleResize);
+        if (resizeFrame !== null) {
+          window.cancelAnimationFrame(resizeFrame);
+          resizeFrame = null;
+        }
+        stopCarousel();
+      };
+    };
+
+    const initAllCommunitySections = () => {
+      document
+        .querySelectorAll('[data-style-studio-community]')
+        .forEach(initCommunity);
+    };
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initAllCommunitySections);
+    } else {
+      initAllCommunitySections();
+    }
+
+    document.addEventListener('shopify:section:load', (event) => {
+      const section = event.target.querySelector
+        ? event.target.querySelector('[data-style-studio-community]')
+        : null;
+
+      initCommunity(section || event.target);
+    });
+
+    document.addEventListener('shopify:section:unload', (event) => {
+      const section = event.target.matches && event.target.matches('[data-style-studio-community]')
+        ? event.target
+        : event.target.querySelector
+          ? event.target.querySelector('[data-style-studio-community]')
+          : null;
+
+      if (section && section.__styleStudioCommunityCleanup) {
+        section.__styleStudioCommunityCleanup();
+      }
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Style Studio Community",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title_before",
+      "label": "Title before",
+      "default": "Real Desks."
+    },
+    {
+      "type": "color",
+      "id": "title_before_color",
+      "label": "Title before color",
+      "default": "#111111"
+    },
+    {
+      "type": "text",
+      "id": "title_after",
+      "label": "Title after",
+      "default": "Real Styles."
+    },
+    {
+      "type": "color",
+      "id": "title_after_color",
+      "label": "Title after color",
+      "default": "#244f1d"
+    },
+    {
+      "type": "textarea",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "See how different setups come together with PiiFOX keycaps."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "image",
+      "name": "Community image",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "alt",
+          "label": "Image alt text",
+          "default": "Community setup"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Image link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Style Studio Community",
+      "blocks": [
+        { "type": "image" },
+        { "type": "image" },
+        { "type": "image" },
+        { "type": "image" }
+      ]
+    }
+  ]
+}
+{% endschema %}

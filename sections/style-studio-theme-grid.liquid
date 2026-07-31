@@ -1,0 +1,1103 @@
+<div id="StyleStudio-{{ section.id }}" class="style-studio-section style-studio-section-{{ section.id }}" data-section-id="{{ section.id }}">
+  <div class="style-studio-inner">
+    {%- if section.settings.title_before != blank or section.settings.title_after != blank -%}
+      <div class="section-header text-center">
+        <h2 class="section-header__title notranslate">
+          {%- if section.settings.title_before != blank -%}
+            <span style="color: {{ section.settings.title_before_color | default: '#121212' | escape }};">{{ section.settings.title_before | escape }}</span>
+          {%- endif -%}
+          {%- if section.settings.title_before != blank and section.settings.title_after != blank -%}&nbsp;{%- endif -%}
+          {%- if section.settings.title_after != blank -%}
+            <span style="color: {{ section.settings.title_after_color | default: '#244f1d' | escape }};">{{ section.settings.title_after | escape }}</span>
+          {%- endif -%}
+        </h2>
+        {%- if section.settings.subtitle != blank -%}
+          <p class="section-header__subtitle">{{ section.settings.subtitle }}</p>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    {%- assign theme_blocks = section.blocks | where: 'type', 'theme_card' -%}
+    {%- assign style_blocks = section.blocks | where: 'type', 'style_card' -%}
+    {%- assign initial_theme_index = 0 -%}
+    {%- if theme_blocks.size > 2 -%}
+      {%- assign initial_theme_index = 2 -%}
+    {%- endif -%}
+
+    <div class="top-theme-carousel-wrap">
+      <div class="top-theme-carousel{% if theme_blocks.size == 5 or theme_blocks.size == 6 %} top-theme-carousel--five-six{% endif %}">
+        {%- assign theme_index = 0 -%}
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'theme_card' -%}
+            {%- assign theme_image = block.settings.product_image -%}
+            {%- assign theme_collection_handle = block.settings.collection.handle | default: '' -%}
+            <div class="theme-cell{% if theme_index == initial_theme_index %} is-selected{% endif %}"
+                 data-index="{{ theme_index }}"
+                 data-collection-handle="{{ theme_collection_handle | escape }}"
+                 style="--theme-highlight-color: {{ block.settings.highlight_color | default: '#f4efe6' }};"
+                 {{ block.shopify_attributes }}>
+            <div class="theme-card-inner">
+              <div class="theme-card-info">
+                <h3 class="theme-title notranslate" style="color: {{ block.settings.title_color | default: '#107a44' }};">{{ block.settings.title }}</h3>
+                <p class="theme-short-desc" style="color: {{ block.settings.subtitle_color | default: '#121212' }};">{{ block.settings.subtitle }}</p>
+                <p class="theme-desc" style="color: {{ block.settings.description_color | default: '#666666' }};">{{ block.settings.description }}</p>
+              </div>
+
+              <div class="theme-card-media">
+                {%- if theme_image != blank -%}
+                  <img class="theme-card-img lazyload"
+                       src="{{ theme_image | image_url: width: 1000 }}"
+                       data-src="{{ theme_image | image_url: width: 1000 }}"
+                       alt="{{ block.settings.title | escape }}" />
+                {%- else -%}
+                  <img class="theme-card-img lazyload"
+                       src="{{ 'keyboard.png' | asset_url }}"
+                       data-src="{{ 'keyboard.png' | asset_url }}"
+                       alt="{{ block.settings.title | escape }}" />
+                {%- endif -%}
+              </div>
+
+              <div class="theme-card-action">
+                <a href="{{ block.settings.button_link | default: '#' | escape }}" class="explore-btn" style="border-color: {{ block.settings.button_text_color | default: '#107a44' }}; color: {{ block.settings.button_text_color | default: '#107a44' }};">
+                  {{ block.settings.button_label }}
+                </a>
+              </div>
+            </div>
+            </div>
+            {%- assign theme_index = theme_index | plus: 1 -%}
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    </div>
+
+    <div class="bottom-style-carousel-wrap">
+      <div class="bottom-style-carousel">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'style_card' -%}
+            {%- assign style_image = block.settings.product_image -%}
+            {%- assign style_collection_handle = block.settings.collection.handle | default: '' -%}
+            <div
+              class="style-cell"
+              data-collection-handle="{{ style_collection_handle | escape }}"
+              {{ block.shopify_attributes }}
+            >
+            <div class="style-card-inner">
+              <div class="style-card-media">
+                {%- if style_image != blank -%}
+                  <img class="style-card-img lazyload"
+                       src="{{ style_image | image_url: width: 800 }}"
+                       data-src="{{ style_image | image_url: width: 800 }}"
+                       alt="{{ block.settings.title | escape }}" />
+                {%- else -%}
+                  <img class="style-card-img lazyload"
+                       src="{{ 'keyboard.png' | asset_url }}"
+                       data-src="{{ 'keyboard.png' | asset_url }}"
+                       alt="{{ block.settings.title | escape }}" />
+                {%- endif -%}
+              </div>
+              <div class="style-card-info">
+                <h4 class="style-title notranslate">
+                  {{ block.settings.title }}
+                </h4>
+                <a href="{{ block.settings.button_link | default: '#' | escape }}" class="view-style-btn">
+                  {{ block.settings.button_label }}
+                </a>
+              </div>
+            </div>
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+
+      <div class="carousel-controls-container page-width">
+        <div class="custom-dots">
+        </div>
+        <div class="custom-arrows">
+          <button class="custom-arrow btn-prev" aria-label="Previous slide">
+            <svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-chevron-left" viewBox="0 0 284.49 497.14">
+              <path fill="currentColor" d="M229.88 497.14a15 15 0 0 1-11.23-5.11L14.65 260.88a15 15 0 0 1 0-21.22L218.65 8.11a15 15 0 1 1 22.46 19.94L50.41 249.27l190.7 218.65a15 15 0 0 1-11.23 29.22z"/>
+            </svg>
+          </button>
+          <button class="custom-arrow btn-next" aria-label="Next slide">
+            <svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-chevron-right" viewBox="0 0 284.49 497.14">
+              <path fill="currentColor" d="M54.61 497.14a15 15 0 0 1-11.23-29.22l190.7-218.65L43.38 30.62a15 15 0 1 1 22.46-19.94l204 231.55a15 15 0 0 1 0 21.22L65.84 492a15 15 0 0 1-11.23 5.11z"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% style %}
+  .style-studio-section-{{ section.id }} {
+    font-size: 1em;
+    width: 100%;
+    min-height: 100vh;
+    padding: 0;
+    overflow: hidden;
+    background-color: #ffffff;
+    display: flex;
+    align-items: center;
+  }
+  .style-studio-section-{{ section.id }} .style-studio-inner {
+    width: 100%;
+    margin: 0 auto;
+    padding: 1em 2.5em 1.5em;
+    box-sizing: border-box;
+  }
+  .style-studio-section-{{ section.id }} .section-header {
+    margin-bottom: 1.25em;
+  }
+  .style-studio-section-{{ section.id }} .section-header h2 {
+    font-size: 2.75em;
+    font-weight: 800;
+    letter-spacing: 0;
+    color: #121212;
+    margin-bottom: 0.4em;
+    line-height: 1;
+  }
+  .style-studio-section-{{ section.id }} .section-header p {
+    font-size: 1.2em;
+    color: #777;
+    margin: 0;
+  }
+  .style-studio-section-{{ section.id }} .top-theme-carousel-wrap {
+    width: 100%;
+    max-width: 1600px;
+    margin-right: auto;
+    margin-left: auto;
+    margin-bottom: 1.5em;
+    overflow: visible;
+  }
+  .style-studio-section-{{ section.id }} .top-theme-carousel {
+    --top-theme-card-side-shift: clamp(3.9em, 7.28vw, 5.72em);
+    --top-theme-card-gap: 1em;
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: stretch;
+    gap: var(--top-theme-card-gap);
+    overflow: visible;
+    overflow-x: auto;
+    overflow-y: visible;
+    padding: 2em 0 3em;
+    scroll-snap-type: x proximity;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+  .style-studio-section-{{ section.id }} .top-theme-carousel::-webkit-scrollbar {
+    display: none;
+  }
+  .style-studio-section-{{ section.id }} .top-theme-carousel .theme-cell {
+    width: clamp(15em, 28vw, 26em);
+    flex: 0 0 clamp(15em, 28vw, 26em);
+    min-width: 0;
+    margin-right: 0;
+    background-color: transparent;
+    border-radius: 1.2em;
+    padding: 1.8em 1.7em 1.55em;
+    box-sizing: border-box;
+    text-align: left;
+    position: relative;
+    overflow: visible;
+    opacity: 1;
+    scroll-snap-align: center;
+    transition: background-color 0.45s ease, box-shadow 0.45s ease, opacity 0.45s ease;
+  }
+  .style-studio-section-{{ section.id }} .top-theme-carousel .theme-cell.is-selected {
+    background-color: transparent;
+    opacity: 1;
+    z-index: 2;
+  }
+  .style-studio-section-{{ section.id }} .top-theme-carousel .theme-cell::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    border-radius: 1.2em;
+    background-color: var(--theme-highlight-color, #f4efe6);
+    transform-origin: center center;
+    transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.45s ease;
+    pointer-events: none;
+  }
+  .style-studio-section-{{ section.id }} .top-theme-carousel .theme-cell.is-selected::before {
+    transform: scale(1.4, 1.1);
+  }
+  .style-studio-section-{{ section.id }} .top-theme-carousel .theme-cell:not(.is-selected)::before,
+  .style-studio-section-{{ section.id }} .top-theme-carousel .theme-cell.is-before-selected::before,
+  .style-studio-section-{{ section.id }} .top-theme-carousel .theme-cell.is-after-selected::before {
+    transform: scaleX(0.88);
+  }
+  .style-studio-section-{{ section.id }} .top-theme-carousel .theme-cell.is-before-selected::before {
+    transform: translateX(calc(var(--top-theme-card-side-shift) * -1)) scaleX(0.88);
+  }
+  .style-studio-section-{{ section.id }} .top-theme-carousel .theme-cell.is-after-selected::before {
+    transform: translateX(var(--top-theme-card-side-shift)) scaleX(0.88);
+  }
+  .style-studio-section-{{ section.id }} .top-theme-carousel.flickity-enabled {
+    display: block;
+    overflow: visible;
+  }
+  .style-studio-section-{{ section.id }} .top-theme-carousel--five-six .theme-cell {
+    width: calc(20% + 3.5em);
+    flex-basis: calc(20% + 3.5em);
+    margin-right: 0;
+  }
+  .style-studio-section-{{ section.id }} .top-theme-carousel .flickity-viewport {
+    overflow: visible;
+  }
+  .style-studio-section-{{ section.id }} .top-theme-carousel .flickity-button,
+  .style-studio-section-{{ section.id }} .top-theme-carousel .flickity-page-dots {
+    display: none;
+  }
+  .style-studio-section-{{ section.id }} .theme-card-inner {
+    height: clamp(20em, 32vw, 28em);
+    min-height: 0;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    z-index: 1;
+    transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .style-studio-section-{{ section.id }} .top-theme-carousel .theme-cell.is-before-selected .theme-card-inner {
+    transform: translateX(calc(var(--top-theme-card-side-shift) * -1));
+  }
+  .style-studio-section-{{ section.id }} .top-theme-carousel .theme-cell.is-after-selected .theme-card-inner {
+    transform: translateX(var(--top-theme-card-side-shift));
+  }
+
+  .style-studio-section-{{ section.id }} .theme-card-media {
+    width: 100%;
+    flex: 1;
+    min-height: 0;
+    margin: 0.8em 0 1.1em;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+  .style-studio-section-{{ section.id }} .top-theme-carousel .theme-cell:not(.is-selected) .theme-card-media {
+    width: calc(100% + 15em);
+    margin-left: -0.3em;
+    justify-content: flex-start;
+  }
+  .style-studio-section-{{ section.id }} .theme-card-img {
+    width: 210%;
+    height: auto;
+    object-fit: contain;
+    transform: translateX(-50%);
+    transform-origin: left center;
+    filter: drop-shadow(0.4em 0.4em 0.8em rgba(0, 0, 0, 0.2));
+    transition: width 0.75s cubic-bezier(0.22, 1, 0.36, 1), transform 0.75s cubic-bezier(0.22, 1, 0.36, 1), filter 0.75s ease;
+    will-change: transform;
+  }
+  .style-studio-section-{{ section.id }} .top-theme-carousel .theme-cell.is-selected .theme-card-media {
+    overflow: visible;
+  }
+  .style-studio-section-{{ section.id }} .top-theme-carousel .theme-cell.is-selected .theme-card-img {
+    width: 100%;
+    transform: rotateY(-9deg) skewY(-5deg) scale(1.8) translate(-22%, 5%);
+    filter: drop-shadow(0.4em 0.4em 0.8em rgba(0, 0, 0, 0.2));
+  }
+  .style-studio-section-{{ section.id }} .theme-card-info {
+    position: relative;
+    z-index: 2;
+  }
+  .style-studio-section-{{ section.id }} .top-theme-carousel .theme-cell:not(.is-selected) .theme-card-info {
+    transform: translateX(1.5em);
+  }
+  .style-studio-section-{{ section.id }} .theme-card-info .theme-title {
+    font-size: 1.15em;
+    font-weight: 700;
+    margin: 0 0 0.2em 0;
+    line-height: 1.2;
+    transition: font-size 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .style-studio-section-{{ section.id }} .theme-cell.is-selected .theme-card-info {
+    transform: translate(-2.35em, -1em);
+  }
+  .style-studio-section-{{ section.id }} .theme-cell.is-selected .theme-card-info .theme-title {
+    font-size: 2em;
+  }
+  .style-studio-section-{{ section.id }} .theme-card-info .theme-short-desc {
+    opacity: 0;
+    max-height: 0;
+    overflow: hidden;
+    font-size: 0.9em;
+    color: #121212;
+    font-weight: 700;
+    margin: 0;
+    line-height: 1.25;
+    transition: opacity 0.45s ease, max-height 0.45s ease, margin 0.45s ease;
+  }
+  .style-studio-section-{{ section.id }} .theme-cell.is-selected .theme-card-info .theme-short-desc {
+    opacity: 1;
+    max-height: 3em;
+    margin: 0.2em 0 0;
+  }
+  .style-studio-section-{{ section.id }} .theme-card-info .theme-desc {
+    width: 80%;
+    opacity: 1;
+    overflow: hidden;
+    font-size: 0.85em;
+    color: #666;
+    line-height: 1.35;
+    margin: 0.85em 0 0;
+    transition: opacity 0.45s ease, max-height 0.45s ease, margin 0.45s ease;
+  }
+  .style-studio-section-{{ section.id }} .theme-card-action {
+    display: flex;
+    justify-content: center;
+    min-height: 2.5em;
+  }
+  .style-studio-section-{{ section.id }} .theme-card-action .explore-btn {
+    display: inline-block;
+    border: 0.08em solid currentColor;
+    padding: 0.75em 1.8em;
+    border-radius: 999em;
+    font-size: 0.9em;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background 0.3s, color 0.3s, opacity 0.45s ease;
+  }
+  .style-studio-section-{{ section.id }} .theme-cell:not(.is-selected) .theme-card-action .explore-btn {
+    opacity: 0;
+    pointer-events: none;
+  }
+  .style-studio-section-{{ section.id }} .theme-card-action .explore-btn:hover {
+    background-color: #121212;
+    color: #ffffff;
+    border-color: #121212;
+  }
+  .style-studio-section-{{ section.id }} .bottom-style-carousel-wrap {
+    position: relative;
+  }
+  .style-studio-section-{{ section.id }} .bottom-style-carousel {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: stretch;
+    gap: 1.05em;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x proximity;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+  .style-studio-section-{{ section.id }} .bottom-style-carousel::-webkit-scrollbar {
+    display: none;
+  }
+  .style-studio-section-{{ section.id }} .bottom-style-carousel .style-cell[hidden] {
+    display: none;
+  }
+  .style-studio-section-{{ section.id }} .bottom-style-carousel .style-cell {
+    flex: 0 0 clamp(8em, calc((100% - 6.3em) / 7), 16em);
+    min-width: 0;
+    margin-right: 0;
+    box-sizing: border-box;
+    scroll-snap-align: start;
+  }
+  .style-studio-section-{{ section.id }} .style-card-inner {
+    background-color: #f9f7f5;
+    border-radius: 1em;
+    padding: 0.85em 0.9em 1em;
+    margin-left: 0;
+    text-align: left;
+    transition: transform 0.3s ease;
+  }
+  .style-studio-section-{{ section.id }} .style-card-inner:hover {
+    transform: translateY(-0.3em);
+  }
+  .style-studio-section-{{ section.id }} .style-card-media {
+    width: calc(100% + 0.1em);
+    margin-left: -0.9em;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    overflow: hidden;
+  }
+  .style-studio-section-{{ section.id }} .style-card-img {
+    width: 210%;
+    max-width: none;
+    height: auto;
+    margin-left: 0;
+    object-fit: contain;
+    transform: translateX(-50%);
+    transform-origin: left center;
+    filter: drop-shadow(0.2em 0.4em 0.2em rgba(0, 0, 0, 0.15));
+  }
+  .style-studio-section-{{ section.id }} .style-card-info {
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+  }
+  .style-studio-section-{{ section.id }} .style-card-info .style-title {
+    font-size: 0.95em;
+    font-weight: 700;
+    color: #121212;
+    margin: 0.5em 0 0.6em 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .style-studio-section-{{ section.id }} .style-card-info .view-style-btn {
+    display: inline-block;
+    border: 0.08em solid #c8c8c8;
+    color: #121212;
+    padding: 0.55em 1.35em;
+    border-radius: 999em;
+    font-size: 0.75em;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s ease;
+  }
+  .style-studio-section-{{ section.id }} .style-card-info .view-style-btn:hover {
+    border-color: #121212;
+    background-color: #121212;
+    color: #ffffff;
+  }
+  .style-studio-section-{{ section.id }} .carousel-controls-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 1.3em;
+    padding: 0;
+  }
+  .style-studio-section-{{ section.id }} .custom-dots {
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    gap: 0.65em;
+  }
+  .style-studio-section-{{ section.id }} .custom-dots > .dot {
+    display: block;
+    width: 1.7em;
+    height: 0.35em;
+    padding: 0;
+    border: 0;
+    border-radius: 999em;
+    background-color: #ead7c9;
+    cursor: pointer;
+  }
+  .style-studio-section-{{ section.id }} .custom-dots > .dot.is-selected {
+    background-color: #121212;
+  }
+  .style-studio-section-{{ section.id }} .custom-arrows {
+    display: flex;
+    gap: 0.75em;
+    flex: 0 0 auto;
+  }
+  .style-studio-section-{{ section.id }} .custom-arrow {
+    width: 2.5em;
+    height: 2.5em;
+    border-radius: 50%;
+    background-color: #000000;
+    color: #ffffff;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+  }
+  .style-studio-section-{{ section.id }} .custom-arrow:hover {
+    background-color: #222222;
+    transform: scale(1.05);
+  }
+  .style-studio-section-{{ section.id }} .custom-arrow svg {
+    width: 0.9em;
+    height: 0.9em;
+  }
+
+  @media screen and (max-width: 768px) {
+    .style-studio-section-{{ section.id }} {
+      min-height: 0;
+      display: block;
+    }
+
+    .style-studio-section-{{ section.id }} .style-studio-inner {
+      padding: 1.25em 0.75em 1.75em;
+    }
+
+    .style-studio-section-{{ section.id }} .section-header {
+      margin-bottom: 0.85em;
+    }
+
+    .style-studio-section-{{ section.id }} .section-header h2 {
+      font-size: 1.65em;
+      line-height: 1.1;
+    }
+
+    .style-studio-section-{{ section.id }} .section-header p {
+      padding: 0 0.5em;
+      font-size: 0.85em;
+      line-height: 1.35;
+    }
+
+    .style-studio-section-{{ section.id }} .theme-card-info .theme-title {
+      font-size: 1em;
+    }
+
+    .style-studio-section-{{ section.id }} .top-theme-carousel .theme-cell {
+      width: clamp(15em, 28vw, 22em);
+      flex-basis: clamp(15em, 28vw, 22em);
+    }
+
+    .style-studio-section-{{ section.id }} .top-theme-carousel {
+      --top-theme-card-gap: 0.75em;
+    }
+
+    .style-studio-section-{{ section.id }} .top-theme-carousel--five-six .theme-cell {
+      width: clamp(15em, 28vw, 22em);
+      flex-basis: clamp(15em, 28vw, 22em);
+    }
+
+    .style-studio-section-{{ section.id }} .theme-cell.is-selected .theme-card-info .theme-title {
+      font-size: 1.4em;
+    }
+
+    .style-studio-section-{{ section.id }} .theme-card-info .theme-short-desc {
+      font-size: 0.78em;
+    }
+
+    .style-studio-section-{{ section.id }} .theme-card-info .theme-desc {
+      width: 90%;
+      font-size: 0.75em;
+    }
+
+    .style-studio-section-{{ section.id }} .bottom-style-carousel {
+      gap: 0.65em;
+    }
+
+    .style-studio-section-{{ section.id }} .bottom-style-carousel .style-cell {
+      flex-basis: clamp(7.5em, 31vw, 10em);
+    }
+
+    .style-studio-section-{{ section.id }} .style-card-inner {
+      padding: 0.65em 0.65em 0.8em;
+      border-radius: 0.7em;
+    }
+
+    .style-studio-section-{{ section.id }} .style-card-media {
+      width: calc(100% + 1.3em);
+      margin-left: -0.65em;
+      margin-bottom: 0.55em;
+    }
+
+    .style-studio-section-{{ section.id }} .style-card-info .style-title {
+      margin: 0.35em 0 0.45em;
+      font-size: 0.78em;
+    }
+
+    .style-studio-section-{{ section.id }} .style-card-info .view-style-btn {
+      padding: 0.5em 1.1em;
+      font-size: 0.65em;
+    }
+
+    .style-studio-section-{{ section.id }} .carousel-controls-container {
+      margin-top: 1em;
+    }
+
+    .style-studio-section-{{ section.id }} .custom-arrows {
+      gap: 0.45em;
+    }
+
+    .style-studio-section-{{ section.id }} .custom-arrow {
+      width: 2.1em;
+      height: 2.1em;
+    }
+  }
+{% endstyle %}
+
+<script>
+  (function() {
+    const rootSelector = '#StyleStudio-{{ section.id }}';
+
+    const initStyleStudio = function(attempt) {
+      const root = document.querySelector(rootSelector);
+      if (!root) return;
+      if (root.dataset.initialized === 'true') return;
+
+      const topCarouselEl = root.querySelector('.top-theme-carousel');
+      const themeCells = root.querySelectorAll('.theme-cell');
+      const hasFlickity = typeof window.Flickity === 'function';
+      const updateTopCardOffsets = function(selectedIndex) {
+        const totalCells = themeCells.length;
+        if (!totalCells || typeof selectedIndex !== 'number') return;
+
+        themeCells.forEach(function(cell, index) {
+          let relativeIndex = index - selectedIndex;
+          if (relativeIndex > totalCells / 2) relativeIndex -= totalCells;
+          if (relativeIndex < -totalCells / 2) relativeIndex += totalCells;
+
+          cell.classList.toggle('is-before-selected', relativeIndex < 0);
+          cell.classList.toggle('is-after-selected', relativeIndex > 0);
+        });
+      };
+
+      const announceTopSelection = function(selectedIndex) {
+        root.dispatchEvent(
+          new CustomEvent('style-studio:theme-selected', {
+            detail: { index: selectedIndex }
+          })
+        );
+      };
+
+      const getTopContentWidth = function() {
+        if (!topCarouselEl || !themeCells.length) return 0;
+
+        return Array.prototype.reduce.call(themeCells, function(total, cell) {
+          const cellStyles = window.getComputedStyle(cell);
+          const marginRight = parseFloat(cellStyles.marginRight) || 0;
+
+          return total + cell.getBoundingClientRect().width + marginRight;
+        }, 0);
+      };
+
+      const hasTopOverflow = function() {
+        return Boolean(
+          topCarouselEl &&
+          getTopContentWidth() > topCarouselEl.clientWidth + 1
+        );
+      };
+
+      if (topCarouselEl && !hasFlickity && hasTopOverflow() && attempt < 20) {
+        window.setTimeout(function() {
+          initStyleStudio(attempt + 1);
+        }, 150);
+        return;
+      }
+
+      root.dataset.initialized = 'true';
+
+      let flktyTop = null;
+      let topResizeFrame = null;
+
+      const stopTopCarousel = function() {
+        if (!flktyTop) return;
+
+        const selectedIndex = flktyTop.selectedIndex;
+        flktyTop.destroy();
+        flktyTop = null;
+
+        themeCells.forEach(function(cell) {
+          cell.classList.toggle(
+            'is-selected',
+            Number(cell.dataset.index) === selectedIndex
+          );
+        });
+        updateTopCardOffsets(selectedIndex);
+        announceTopSelection(selectedIndex);
+      };
+
+      const startTopCarousel = function() {
+        if (
+          !topCarouselEl ||
+          !hasFlickity ||
+          flktyTop ||
+          themeCells.length < 2 ||
+          !hasTopOverflow()
+        ) {
+          return;
+        }
+
+        flktyTop = new window.Flickity(topCarouselEl, {
+          cellAlign: 'center',
+          wrapAround: true,
+          autoPlay: 5000,
+          pauseAutoPlayOnHover: false,
+          draggable: true,
+          dragThreshold: 8,
+          prevNextButtons: false,
+          pageDots: false,
+          initialIndex: {{ initial_theme_index }},
+          selectedAttraction: 0.018,
+          friction: 0.24
+        });
+
+        const restartTopAutoplay = function() {
+          if (flktyTop && typeof flktyTop.playPlayer === 'function') {
+            flktyTop.playPlayer();
+          }
+        };
+
+        flktyTop.on('dragEnd', restartTopAutoplay);
+        flktyTop.on('select', function(selectedIndex) {
+          updateTopCardOffsets(selectedIndex);
+          announceTopSelection(selectedIndex);
+        });
+        flktyTop.on('staticClick', function(event, pointer, cellElement, cellIndex) {
+          if (typeof cellIndex === 'number') {
+            flktyTop.select(cellIndex);
+            restartTopAutoplay();
+          }
+        });
+
+        updateTopCardOffsets(flktyTop.selectedIndex);
+
+        window.setTimeout(function() {
+          if (flktyTop) {
+            flktyTop.resize();
+            flktyTop.reposition();
+          }
+        }, 150);
+      };
+
+      const syncTopCarousel = function() {
+        if (!topCarouselEl) return;
+
+        if (hasTopOverflow() && themeCells.length > 1) {
+          startTopCarousel();
+          if (flktyTop) {
+            flktyTop.resize();
+            flktyTop.reposition();
+          }
+        } else {
+          stopTopCarousel();
+        }
+      };
+
+      const handleTopResize = function() {
+        if (topResizeFrame !== null) {
+          window.cancelAnimationFrame(topResizeFrame);
+        }
+
+        topResizeFrame = window.requestAnimationFrame(function() {
+          topResizeFrame = null;
+          syncTopCarousel();
+        });
+      };
+
+      if (topCarouselEl) {
+        window.addEventListener('resize', handleTopResize);
+        syncTopCarousel();
+      }
+
+      const bottomCarouselEl = root.querySelector('.bottom-style-carousel');
+      const prevBtn = root.querySelector('.btn-prev');
+      const nextBtn = root.querySelector('.btn-next');
+      const dotsContainer = root.querySelector('.custom-dots');
+      const styleCells = Array.from(root.querySelectorAll('.style-cell'));
+
+      if (!bottomCarouselEl || !prevBtn || !nextBtn || !dotsContainer) return;
+
+      let dots = [];
+
+      const getPageCount = function() {
+        const pageWidth = bottomCarouselEl.clientWidth;
+        const maxScroll = Math.max(0, bottomCarouselEl.scrollWidth - pageWidth);
+
+        if (!pageWidth) return 1;
+        return Math.max(1, Math.ceil(maxScroll / pageWidth) + 1);
+      };
+
+      const getPagePositions = function(pageCount) {
+        const pageWidth = bottomCarouselEl.clientWidth;
+        const maxScroll = Math.max(0, bottomCarouselEl.scrollWidth - pageWidth);
+
+        return Array.from({ length: pageCount }, function(_, index) {
+          return Math.min(index * pageWidth, maxScroll);
+        });
+      };
+
+      const getActivePageIndex = function(pagePositions) {
+        let activeIndex = 0;
+        let nearestDistance = Infinity;
+
+        pagePositions.forEach(function(pagePosition, index) {
+          const distance = Math.abs(bottomCarouselEl.scrollLeft - pagePosition);
+
+          if (distance < nearestDistance) {
+            nearestDistance = distance;
+            activeIndex = index;
+          }
+        });
+
+        return activeIndex;
+      };
+
+      const scrollToPage = function(pageIndex) {
+        const pagePositions = getPagePositions(getPageCount());
+        const targetIndex = Math.max(0, Math.min(pageIndex, pagePositions.length - 1));
+
+        bottomCarouselEl.scrollTo({
+          left: pagePositions[targetIndex],
+          behavior: 'smooth'
+        });
+      };
+
+      const renderDots = function() {
+        const pageCount = getPageCount();
+
+        if (dots.length !== pageCount) {
+          dotsContainer.innerHTML = '';
+
+          for (let index = 0; index < pageCount; index += 1) {
+            const dot = document.createElement('button');
+            dot.type = 'button';
+            dot.className = 'dot';
+            dot.setAttribute('aria-label', 'Go to page ' + (index + 1));
+            dot.addEventListener('click', function() {
+              scrollToPage(index);
+            });
+            dotsContainer.appendChild(dot);
+          }
+
+          dots = Array.prototype.slice.call(dotsContainer.querySelectorAll('.dot'));
+        }
+
+        return pageCount;
+      };
+
+      const updateDots = function() {
+        const pageCount = renderDots();
+        const pagePositions = getPagePositions(pageCount);
+        const activeIndex = getActivePageIndex(pagePositions);
+
+        dots.forEach(function(dot, index) {
+          dot.classList.toggle('is-selected', index === activeIndex);
+          dot.setAttribute('aria-current', index === activeIndex ? 'page' : 'false');
+        });
+      };
+
+      const syncBottomCards = function(selectedIndex) {
+        const selectedThemeCell = themeCells[selectedIndex] || themeCells[0];
+        const collectionHandle = selectedThemeCell
+          ? selectedThemeCell.getAttribute('data-collection-handle')
+          : '';
+        const shouldFilter = Boolean(collectionHandle);
+
+        styleCells.forEach(function(styleCell) {
+          const styleCollectionHandle = styleCell.getAttribute(
+            'data-collection-handle'
+          );
+          const shouldShow =
+            !shouldFilter || styleCollectionHandle === collectionHandle;
+
+          styleCell.hidden = !shouldShow;
+        });
+
+        bottomCarouselEl.scrollLeft = 0;
+        updateDots();
+      };
+
+      root.addEventListener('style-studio:theme-selected', function(event) {
+        const selectedIndex = event.detail && Number(event.detail.index);
+        if (Number.isFinite(selectedIndex)) {
+          syncBottomCards(selectedIndex);
+        }
+      });
+
+      syncBottomCards({{ initial_theme_index }});
+
+      prevBtn.addEventListener('click', function() {
+        const pagePositions = getPagePositions(getPageCount());
+        scrollToPage(getActivePageIndex(pagePositions) - 1);
+      });
+
+      nextBtn.addEventListener('click', function() {
+        const pagePositions = getPagePositions(getPageCount());
+        scrollToPage(getActivePageIndex(pagePositions) + 1);
+      });
+
+      bottomCarouselEl.addEventListener('scroll', updateDots, { passive: true });
+      window.addEventListener('resize', updateDots);
+      updateDots();
+    };
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', function() {
+        initStyleStudio(0);
+      });
+    } else {
+      initStyleStudio(0);
+    }
+
+    document.addEventListener('shopify:section:load', function(e) {
+      if (e.detail.sectionId === '{{ section.id }}') {
+        initStyleStudio(0);
+      }
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Style Studio Theme Grid",
+  "class": "index-section",
+  "max_blocks": 40,
+  "settings": [
+    {
+      "type": "text",
+      "id": "title_before",
+      "label": "Title before",
+      "default": "One Board."
+    },
+    {
+      "type": "color",
+      "id": "title_before_color",
+      "label": "Title before color",
+      "default": "#121212"
+    },
+    {
+      "type": "text",
+      "id": "title_after",
+      "label": "Title after",
+      "default": "Many Styles."
+    },
+    {
+      "type": "color",
+      "id": "title_after_color",
+      "label": "Title after color",
+      "default": "#244f1d"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Section subtitle",
+      "default": "Preview how different keycap themes transform the same keyboard."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "theme_card",
+      "name": "Theme card",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Nature & Soft"
+        },
+        {
+          "type": "color",
+          "id": "title_color",
+          "label": "Title color",
+          "default": "#107a44"
+        },
+        {
+          "type": "text",
+          "id": "subtitle",
+          "label": "Subtitle",
+          "default": "Calm tones inspired by nature."
+        },
+        {
+          "type": "color",
+          "id": "subtitle_color",
+          "label": "Subtitle color",
+          "default": "#121212"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Description",
+          "default": "Soft greens, warm neutrals, and gentle contrast for a relaxed desk setup."
+        },
+        {
+          "type": "color",
+          "id": "description_color",
+          "label": "Description color",
+          "default": "#666666"
+        },
+        {
+          "type": "image_picker",
+          "id": "product_image",
+          "label": "Product image"
+        },
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Parent collection",
+          "info": "Choose the collection that links this theme card to its style cards."
+        },
+        {
+          "type": "text",
+          "id": "button_label",
+          "label": "Button label",
+          "default": "Explore Theme"
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "Button link"
+        },
+        {
+          "type": "color",
+          "id": "button_text_color",
+          "label": "Button text color",
+          "default": "#107a44"
+        },
+        {
+          "type": "color",
+          "id": "highlight_color",
+          "label": "Highlight background color",
+          "default": "#f4efe6"
+        }
+      ]
+    },
+    {
+      "type": "style_card",
+      "name": "Style card",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "product_image",
+          "label": "Product image"
+        },
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Parent collection",
+          "info": "Choose the same collection as the parent theme card."
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Cassette"
+        },
+        {
+          "type": "text",
+          "id": "button_label",
+          "label": "Button label",
+          "default": "View Style"
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "Button link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Style Studio Theme Grid",
+      "blocks": [
+        {
+          "type": "theme_card"
+        },
+        {
+          "type": "theme_card"
+        },
+        {
+          "type": "theme_card"
+        },
+        {
+          "type": "theme_card"
+        },
+        {
+          "type": "theme_card"
+        },
+        {
+          "type": "style_card"
+        },
+        {
+          "type": "style_card"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

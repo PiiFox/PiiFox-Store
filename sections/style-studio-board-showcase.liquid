@@ -1,0 +1,738 @@
+<section
+  class="style-studio-board-showcase style-studio-board-showcase-{{ section.id }}"
+  data-style-studio-board-showcase
+>
+  <div class="style-studio-board-showcase__slider">
+    <div class="style-studio-board-showcase__backgrounds">
+      {% for block in section.blocks %}
+        {% assign board_product_image_url = 'keyboard.png' | asset_url %}
+        {% assign board_background_image_url = block.settings.background_image | image_url: width: 2400 %}
+        {% if block.settings.product_image != blank %}
+          {% assign board_product_image_url = block.settings.product_image | image_url: width: 1800 %}
+        {% endif %}
+        {% if block.settings.background_image == blank %}
+          {% assign board_background_image_url = 'style-studio-board-background.png' | asset_url %}
+        {% endif %}
+
+        <div
+          class="style-studio-board-showcase__background-slide{% if forloop.first %} is-active{% endif %}"
+          style="background-image: url('{{ board_background_image_url }}');"
+        >
+          <div class="style-studio-board-showcase__product">
+            <img
+              class="style-studio-board-showcase__product-image"
+              src="{{ board_product_image_url }}"
+              loading="lazy"
+              alt="{{ block.settings.product_image_alt | default: block.settings.content_title | escape }}"
+            >
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+
+    <div class="style-studio-board-showcase__inner">
+      <div class="style-studio-board-showcase__card">
+        <div class="style-studio-board-showcase__card-header">
+          <div class="style-studio-board-showcase__topline">
+            {% if section.settings.card_eyebrow != blank %}
+              <span class="style-studio-board-showcase__eyebrow">
+                {{ section.settings.card_eyebrow | escape }}
+              </span>
+            {% endif %}
+          </div>
+
+          <div class="style-studio-board-showcase__title-row">
+            {% if section.settings.card_title != blank %}
+              <h2 class="style-studio-board-showcase__title">
+                {{ section.settings.card_title | escape }}
+              </h2>
+            {% endif %}
+
+            {% if section.settings.view_all_themes_label != blank %}
+              <a
+                class="style-studio-board-showcase__button{% if section.settings.view_all_themes_link == blank %} style-studio-board-showcase__button--placeholder{% endif %}"
+                href="{{ section.settings.view_all_themes_link | default: '#' }}"
+                {% if section.settings.view_all_themes_link == blank %}aria-label="{{ section.settings.view_all_themes_label | escape }} (link not set)"{% endif %}
+              >
+                {{ section.settings.view_all_themes_label | escape }}
+              </a>
+            {% endif %}
+          </div>
+        </div>
+
+        <div class="style-studio-board-showcase__content-slider">
+          {% for block in section.blocks %}
+            <div
+              class="style-studio-board-showcase__content-slide{% if forloop.first %} is-active{% endif %}"
+              {{ block.shopify_attributes }}
+            >
+              <div class="style-studio-board-showcase__content">
+                {% if block.settings.content_title != blank %}
+                  <h3 class="style-studio-board-showcase__content-title">
+                    {{ block.settings.content_title | escape }}
+                  </h3>
+                {% endif %}
+
+                {% if block.settings.content_subtitle != blank %}
+                  <p class="style-studio-board-showcase__content-subtitle">
+                    {{ block.settings.content_subtitle | escape | newline_to_br }}
+                  </p>
+                {% endif %}
+
+                {% if block.settings.content_body != blank %}
+                  <p class="style-studio-board-showcase__content-text">
+                    {{ block.settings.content_body | escape | newline_to_br }}
+                  </p>
+                {% endif %}
+
+                <div class="style-studio-board-showcase__details">
+                  {% for detail_index in (1..3) %}
+                    {% case detail_index %}
+                      {% when 1 %}
+                        {% assign detail_image = block.settings.detail_1_image %}
+                        {% assign detail_title = block.settings.detail_1_title | default: 'Minimal Play' %}
+                        {% assign detail_image_url = 'style-studio-board-detail-1.png' | asset_url %}
+                      {% when 2 %}
+                        {% assign detail_image = block.settings.detail_2_image %}
+                        {% assign detail_title = block.settings.detail_2_title | default: 'Silence' %}
+                        {% assign detail_image_url = 'style-studio-board-detail-2.png' | asset_url %}
+                      {% when 3 %}
+                        {% assign detail_image = block.settings.detail_3_image %}
+                        {% assign detail_title = block.settings.detail_3_title | default: 'Dashboard White' %}
+                        {% assign detail_image_url = 'style-studio-board-detail-3.png' | asset_url %}
+                    {% endcase %}
+
+                    {% if detail_image != blank %}
+                      {% assign detail_image_url = detail_image | image_url: width: 400 %}
+                    {% endif %}
+
+                    <div class="style-studio-board-showcase__detail">
+                      <div class="style-studio-board-showcase__detail-image-wrap">
+                        <img
+                          class="style-studio-board-showcase__detail-image"
+                          src="{{ detail_image_url }}"
+                          loading="lazy"
+                          alt="{{ detail_title | escape }}"
+                        >
+                      </div>
+
+                      {% if detail_title != blank %}
+                        <strong class="style-studio-board-showcase__detail-title">
+                          {{ detail_title | escape }}
+                        </strong>
+                      {% endif %}
+                    </div>
+                  {% endfor %}
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+
+        <div class="style-studio-board-showcase__pagination" aria-label="Choose theme">
+          {% for pagination_block in section.blocks %}
+            <button
+              type="button"
+              data-slide-index="{{ forloop.index0 }}"
+              aria-label="Go to theme {{ forloop.index }}"
+              aria-current="{% if forloop.first %}true{% else %}false{% endif %}"
+            >
+              <span></span>
+            </button>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% style %}
+  .style-studio-board-showcase-{{ section.id }} {
+    --style-studio-board-ink: #111;
+    position: relative;
+    width: min(calc(100% - 32px), 1560px);
+    margin: 16px auto;
+    overflow: hidden;
+    border-radius: 1.4vw;
+    background-color: #d8d8d6;
+    background-image: none;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    color: var(--style-studio-board-ink);
+    isolation: isolate;
+  }
+
+  .style-studio-board-showcase-{{ section.id }} .style-studio-board-showcase__inner {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    min-height: min(43vw, 680px);
+    margin: 0 auto;
+    padding: 3.5vw 2.8vw;
+    box-sizing: border-box;
+  }
+
+  .style-studio-board-showcase-{{ section.id }} .style-studio-board-showcase__slider {
+    position: relative;
+    width: 100%;
+    min-height: min(43vw, 680px);
+  }
+
+  .style-studio-board-showcase-{{ section.id }} .style-studio-board-showcase__backgrounds {
+    position: absolute;
+    z-index: 0;
+    inset: 0;
+    overflow: hidden;
+  }
+
+  .style-studio-board-showcase-{{ section.id }} .style-studio-board-showcase__background-slide {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    visibility: hidden;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    transform: translate3d(24px, 0, 0);
+    transition:
+      opacity 1000ms ease,
+      transform 1000ms ease,
+      visibility 0s linear 1000ms;
+  }
+
+  .style-studio-board-showcase-{{ section.id }} .style-studio-board-showcase__background-slide.is-active {
+    opacity: 1;
+    visibility: visible;
+    transform: translate3d(0, 0, 0);
+    transition-delay: 0s;
+  }
+
+  .style-studio-board-showcase-{{ section.id }} .style-studio-board-showcase__content-slider {
+    position: relative;
+  }
+
+  .style-studio-board-showcase-{{ section.id }} .style-studio-board-showcase__content-slide {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    visibility: hidden;
+    transform: translate3d(20px, 0, 0);
+    transition:
+      opacity 1000ms ease,
+      transform 1000ms ease,
+      visibility 0s linear 1000ms;
+  }
+
+  .style-studio-board-showcase-{{ section.id }} .style-studio-board-showcase__content-slide.is-active {
+    position: relative;
+    opacity: 1;
+    visibility: visible;
+    transform: translate3d(0, 0, 0);
+    transition-delay: 0s;
+  }
+  .style-studio-board-showcase-{{ section.id }} .style-studio-board-showcase__card {
+    position: relative;
+    z-index: 2;
+    width: min(42%, 580px);
+    padding: 2.25vw;
+    border-radius: 1.1vw;
+    background: rgba(255, 255, 255, 0.97);
+    box-sizing: border-box;
+    box-shadow: 0 0.5vw 1.5vw rgba(0, 0, 0, 0.05);
+  }
+
+  .style-studio-board-showcase-{{ section.id }} .style-studio-board-showcase__card-header {
+    padding-bottom: 1.3vw;
+  }
+
+  .style-studio-board-showcase-{{ section.id }} .style-studio-board-showcase__topline {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.8vw;
+  }
+
+  .style-studio-board-showcase-{{ section.id }} .style-studio-board-showcase__title-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .style-studio-board-showcase-{{ section.id }} .style-studio-board-showcase__eyebrow {
+    display: inline-flex;
+    align-items: center;
+    min-height: 1.7em;
+    padding: 0.5em 1.1em;
+    border-radius: 999px;
+    background: var(--style-studio-board-ink);
+    color: #fff;
+    font-size: 0.9vw;
+    line-height: 1.1;
+    white-space: nowrap;
+  }
+
+  .style-studio-board-showcase-{{ section.id }} .style-studio-board-showcase__button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 2.3em;
+    padding: 0.8em 1.05em;
+    border: 1px solid #555;
+    border-radius: 12px;
+    background: transparent;
+    color: var(--style-studio-board-ink);
+    font-size: 0.7vw;
+    line-height: 1;
+    text-align: center;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: background-color 180ms ease, color 180ms ease;
+  }
+
+  .style-studio-board-showcase-{{ section.id }} .style-studio-board-showcase__button:hover,
+  .style-studio-board-showcase-{{ section.id }} .style-studio-board-showcase__button:focus-visible {
+    background: var(--style-studio-board-ink);
+    color: #fff;
+  }
+
+  .style-studio-board-showcase-{{ section.id }} .style-studio-board-showcase__button--placeholder {
+    cursor: default;
+  }
+
+  .style-studio-board-showcase-{{ section.id }} .style-studio-board-showcase__title {
+    display: flex;
+    align-items: center;
+    flex: 1 1 auto;
+    margin: 0;
+    color: var(--style-studio-board-ink);
+    font-size: 2vw;
+    font-weight: 700;
+    line-height: 1.05;
+  }
+
+  .style-studio-board-showcase-{{ section.id }} .style-studio-board-showcase__content {
+    padding: 2vw;
+    border-radius: 0.8vw;
+    background: #f1f1f0;
+  }
+
+  .style-studio-board-showcase-{{ section.id }} .style-studio-board-showcase__content-title {
+    margin: 0;
+    color: var(--style-studio-board-ink);
+    font-size: 2.3vw;
+    font-weight: 700;
+    line-height: 1;
+    text-transform: uppercase;
+  }
+
+  .style-studio-board-showcase-{{ section.id }} .style-studio-board-showcase__content-subtitle {
+    margin: 0.55em 0 0;
+    color: #919292;
+    font-size: 0.95vw;
+    font-weight: 600;
+    line-height: 1.2;
+  }
+
+  .style-studio-board-showcase-{{ section.id }} .style-studio-board-showcase__content-text {
+    margin: 1.15em 0 0;
+    color: #333;
+    font-size: 0.72vw;
+    line-height: 1.4;
+  }
+
+  .style-studio-board-showcase-{{ section.id }} .style-studio-board-showcase__details {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1vw;
+    margin-top: 1.45vw;
+  }
+
+  .style-studio-board-showcase-{{ section.id }} .style-studio-board-showcase__detail {
+    min-width: 0;
+    text-align: center;
+  }
+
+  .style-studio-board-showcase-{{ section.id }} .style-studio-board-showcase__detail-image-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: min(100%, 108px);
+    aspect-ratio: 1;
+    margin: 0 auto 0.55vw;
+    overflow: hidden;
+    border-radius: 50%;
+    border: 4px solid #fff;
+    background: #e2e2df;
+    box-shadow: 0 0 0 2px transparent;
+    box-sizing: border-box;
+    transition: box-shadow 180ms ease;
+  }
+
+  .style-studio-board-showcase-{{ section.id }} .style-studio-board-showcase__detail-image-wrap:hover {
+    box-shadow: 0 0 0 2px #919193;
+  }
+
+  .style-studio-board-showcase-{{ section.id }} .style-studio-board-showcase__detail-image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .style-studio-board-showcase-{{ section.id }} .style-studio-board-showcase__detail-title {
+    display: block;
+    color: var(--style-studio-board-ink);
+    font-size: 0.75vw;
+    line-height: 1.2;
+  }
+
+  .style-studio-board-showcase-{{ section.id }} .style-studio-board-showcase__detail-title {
+    font-weight: 700;
+  }
+
+  .style-studio-board-showcase-{{ section.id }} .style-studio-board-showcase__pagination {
+    display: flex;
+    justify-content: center;
+    gap: 7px; 
+    margin-top: 1.4vw;
+  }
+
+  .style-studio-board-showcase-{{ section.id }} .style-studio-board-showcase__pagination button {
+    width: 12px;
+    height: 12px;
+    padding: 3px;
+    border: 0;
+    border-radius: 50%;
+    background: transparent;
+    cursor: pointer;
+  }
+
+  .style-studio-board-showcase-{{ section.id }} .style-studio-board-showcase__pagination span {
+    display: block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #c2c2be;
+  }
+
+  .style-studio-board-showcase-{{ section.id }} .style-studio-board-showcase__pagination .is-selected span {
+    background: var(--style-studio-board-ink);
+  }
+
+  .style-studio-board-showcase-{{ section.id }} .style-studio-board-showcase__product {
+    position: absolute;
+    z-index: 1;
+    top: 7%;
+    right: 0;
+    left: 42%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 86%;
+  }
+
+  .style-studio-board-showcase-{{ section.id }} .style-studio-board-showcase__product-image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
+    transform: perspective(2000px) rotateX(15deg) scale(0.9);
+    transform-origin: center center;
+    filter: drop-shadow(0.7vw 1.2vw 0.8vw rgba(0, 0, 0, 0.28));
+  }
+
+  @media (max-width: 1100px) {
+    .style-studio-board-showcase-{{ section.id }} {
+      border-radius: 12px;
+    }
+
+    .style-studio-board-showcase-{{ section.id }} .style-studio-board-showcase__card {
+      padding: 18px;
+      border-radius: 10px;
+    }
+
+    .style-studio-board-showcase-{{ section.id }} .style-studio-board-showcase__card-header {
+      padding-bottom: 13px;
+    }
+
+    .style-studio-board-showcase-{{ section.id }} .style-studio-board-showcase__topline {
+      margin-bottom: 12px;
+    }
+
+    .style-studio-board-showcase-{{ section.id }} .style-studio-board-showcase__eyebrow,
+    .style-studio-board-showcase-{{ section.id }} .style-studio-board-showcase__button {
+      font-size: 9px;
+    }
+
+    .style-studio-board-showcase-{{ section.id }} .style-studio-board-showcase__title {
+      font-size: 20px;
+    }
+
+    .style-studio-board-showcase-{{ section.id }} .style-studio-board-showcase__content {
+      padding: 18px;
+      border-radius: 7px;
+    }
+
+    .style-studio-board-showcase-{{ section.id }} .style-studio-board-showcase__content-title {
+      font-size: 20px;
+    }
+
+    .style-studio-board-showcase-{{ section.id }} .style-studio-board-showcase__content-subtitle {
+      font-size: 10px;
+    }
+
+    .style-studio-board-showcase-{{ section.id }} .style-studio-board-showcase__content-text {
+      font-size: 10px;
+    }
+
+    .style-studio-board-showcase-{{ section.id }} .style-studio-board-showcase__details {
+      gap: 7px;
+      margin-top: 14px;
+    }
+
+    .style-studio-board-showcase-{{ section.id }} .style-studio-board-showcase__detail-image-wrap {
+      width: min(100%, 96px);
+      margin-bottom: 6px;
+    }
+
+    .style-studio-board-showcase-{{ section.id }} .style-studio-board-showcase__detail-title {
+      font-size: 10px;
+    }
+
+    .style-studio-board-showcase-{{ section.id }} .style-studio-board-showcase__pagination {
+      margin-top: 13px;
+    }
+  }
+
+  @media (max-width: 749px) {
+    .style-studio-board-showcase-{{ section.id }} .style-studio-board-showcase__slider {
+      min-height: 0;
+    }
+
+    .style-studio-board-showcase-{{ section.id }} .style-studio-board-showcase__backgrounds {
+      z-index: 1;
+    }
+
+    .style-studio-board-showcase-{{ section.id }} .style-studio-board-showcase__background-slide.is-active {
+      z-index: 1;
+    }
+
+    .style-studio-board-showcase-{{ section.id }} .style-studio-board-showcase__inner {
+      position: relative;
+      z-index: 2;
+      display: block;
+      min-height: 0;
+      padding: 300px 18px 45px;
+    }
+
+    .style-studio-board-showcase-{{ section.id }} .style-studio-board-showcase__card {
+      width: min(100%, 480px);
+      margin: 0 auto;
+    }
+
+    .style-studio-board-showcase-{{ section.id }} .style-studio-board-showcase__product {
+      position: absolute;
+      z-index: 1;
+      top: 0;
+      right: 0;
+      left: 0;
+      width: 100%;
+      height: 285px;
+      min-height: 0;
+      margin: 0;
+    }
+
+    .style-studio-board-showcase-{{ section.id }} .style-studio-board-showcase__product-image {
+      max-height: 280px;
+      transform: perspective(1000px) scale(0.9);
+    }
+  }
+{% endstyle %}
+
+<script>
+  (() => {
+    const initBoardShowcase = (section) => {
+      if (
+        !section ||
+        section.dataset.boardShowcaseInitialized === 'true'
+      ) {
+        return;
+      }
+
+      const backgrounds = section.querySelectorAll(
+        '.style-studio-board-showcase__background-slide'
+      );
+      const contentSlides = section.querySelectorAll(
+        '.style-studio-board-showcase__content-slide'
+      );
+      const dots = section.querySelectorAll(
+        '.style-studio-board-showcase__pagination button'
+      );
+
+      if (!contentSlides.length) {
+        return;
+      }
+
+      section.dataset.boardShowcaseInitialized = 'true';
+
+      const activeSlide = section.querySelector(
+        '.style-studio-board-showcase__content-slide.is-active'
+      );
+      let activeIndex = activeSlide
+        ? Array.from(contentSlides).indexOf(activeSlide)
+        : 0;
+      let autoPlayTimer;
+
+      const updateDots = (index) => {
+        dots.forEach((dot) => {
+          const dotIndex = Number(dot.getAttribute('data-slide-index'));
+          dot.classList.toggle('is-selected', dotIndex === index);
+          dot.setAttribute(
+            'aria-current',
+            dotIndex === index ? 'true' : 'false'
+          );
+        });
+      };
+
+      const showSlide = (index) => {
+        if (contentSlides.length < 2) {
+          return;
+        }
+
+        const nextIndex = (index + contentSlides.length) % contentSlides.length;
+
+        if (nextIndex === activeIndex) {
+          return;
+        }
+
+        contentSlides[activeIndex].classList.remove('is-active');
+        contentSlides[nextIndex].classList.add('is-active');
+
+        if (backgrounds[activeIndex]) {
+          backgrounds[activeIndex].classList.remove('is-active');
+        }
+        if (backgrounds[nextIndex]) {
+          backgrounds[nextIndex].classList.add('is-active');
+        }
+
+        activeIndex = nextIndex;
+        updateDots(activeIndex);
+      };
+
+      const restartAutoPlay = () => {
+        clearInterval(autoPlayTimer);
+
+        if (contentSlides.length > 1) {
+          autoPlayTimer = setInterval(
+            () => showSlide(activeIndex + 1),
+            5000
+          );
+        }
+      };
+
+      dots.forEach((dot) => {
+        dot.addEventListener('click', (event) => {
+          event.preventDefault();
+          event.stopPropagation();
+          showSlide(Number(dot.getAttribute('data-slide-index')));
+          restartAutoPlay();
+        });
+      });
+
+      updateDots(activeIndex);
+      restartAutoPlay();
+    };
+
+    const initAllBoardShowcases = () => {
+      document
+        .querySelectorAll('[data-style-studio-board-showcase]')
+        .forEach(initBoardShowcase);
+    };
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initAllBoardShowcases);
+    } else {
+      initAllBoardShowcases();
+    }
+
+    document.addEventListener('shopify:section:load', (event) => {
+      const section = event.target.querySelector
+        ? event.target.querySelector('[data-style-studio-board-showcase]')
+        : null;
+
+      initBoardShowcase(section || event.target);
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Board Showcase",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Board image"
+    },
+    {
+      "type": "header",
+      "content": "Story card"
+    },
+    {
+      "type": "text",
+      "id": "card_eyebrow",
+      "label": "Eyebrow label",
+      "default": "Theme Stories"
+    },
+    {
+      "type": "text",
+      "id": "view_all_themes_label",
+      "label": "Theme link label",
+      "default": "View All Themes"
+    },
+    {
+      "type": "url",
+      "id": "view_all_themes_link",
+      "label": "Theme link"
+    },
+    {
+      "type": "text",
+      "id": "card_title",
+      "label": "Card title",
+      "default": "Styles With Stories"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "theme",
+      "name": "Product Item",
+      "settings": [
+        { "type": "image_picker", "id": "background_image", "label": "Background image" },
+        { "type": "image_picker", "id": "product_image", "label": "Product image", "info": "If empty, keyboard.png will be used." },
+        { "type": "text", "id": "product_image_alt", "label": "Product image alt text" },
+        { "type": "text", "id": "content_title", "label": "Content title", "default": "Clean & Minimal" },
+        { "type": "text", "id": "content_subtitle", "label": "Content subtitle", "default": "Simple. Calm. Focused." },
+        { "type": "textarea", "id": "content_body", "label": "Content text" },
+        { "type": "image_picker", "id": "detail_1_image", "label": "Detail 1 image" },
+        { "type": "text", "id": "detail_1_title", "label": "Detail 1 title", "default": "Minimal Play" },
+        { "type": "image_picker", "id": "detail_2_image", "label": "Detail 2 image" },
+        { "type": "text", "id": "detail_2_title", "label": "Detail 2 title", "default": "Silence" },
+        { "type": "image_picker", "id": "detail_3_image", "label": "Detail 3 image" },
+        { "type": "text", "id": "detail_3_title", "label": "Detail 3 title", "default": "Dashboard White" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Board Showcase",
+      "blocks": [
+        {
+          "type": "theme"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

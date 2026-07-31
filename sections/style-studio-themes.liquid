@@ -1,0 +1,475 @@
+{% assign style_studio_placeholder_image = 'style-studio-theme-placeholder.png' | asset_url %}
+
+<section class="style-studio-themes style-studio-themes-{{ section.id }}">
+  <div class="style-studio-themes__inner">
+    {% if section.settings.title_before != blank or section.settings.title_after != blank %}
+      <h2 class="style-studio-themes__title">
+        {% if section.settings.title_before != blank %}
+          <span
+            class="style-studio-themes__title-before"
+            style="color: {{ section.settings.title_before_color | escape }};"
+          >{{ section.settings.title_before | escape }}</span>
+        {% endif %}
+        {% if section.settings.title_before != blank and section.settings.title_after != blank %} {% endif %}
+        {% if section.settings.title_after != blank %}
+          <span
+            class="style-studio-themes__title-after"
+            style="color: {{ section.settings.title_after_color | escape }};"
+          >{{ section.settings.title_after | escape }}</span>
+        {% endif %}
+      </h2>
+    {% endif %}
+
+    {% if section.settings.subtitle != blank %}
+      <p class="style-studio-themes__subtitle">
+        {{ section.settings.subtitle | escape | newline_to_br }}
+      </p>
+    {% endif %}
+
+    <div class="style-studio-themes__cards">
+      {% for block in section.blocks %}
+        {% assign card_image_url = style_studio_placeholder_image %}
+        {% assign card_icon_url = 'style-studio-pen.svg' | asset_url %}
+        {% assign card_icon_color = '#042106' %}
+
+        {% if forloop.index == 2 %}
+          {% assign card_icon_color = '#762e02' %}
+        {% elsif forloop.index == 3 %}
+          {% assign card_icon_color = '#4e1573' %}
+        {% endif %}
+
+        {% if block.settings.image != blank %}
+          {% assign card_image_url = block.settings.image | image_url: width: 1200 %}
+        {% endif %}
+
+        {% if block.settings.icon != blank %}
+          {% assign card_icon_url = block.settings.icon | image_url: width: 300 %}
+        {% elsif forloop.index == 2 %}
+          {% assign card_icon_url = 'style-studio-book.svg' | asset_url %}
+        {% elsif forloop.index == 3 %}
+          {% assign card_icon_url = 'style-studio-love.svg' | asset_url %}
+        {% endif %}
+
+        {% if block.settings.icon_color != blank %}
+          {% assign card_icon_color = block.settings.icon_color %}
+        {% endif %}
+
+        {% assign card_number = block.settings.number %}
+        {% if card_number == blank %}
+          {% assign card_number = forloop.index %}
+        {% endif %}
+
+        <article
+          class="style-studio-themes__card{% if forloop.first %} is-mobile-active{% endif %}"
+          style="background-color: {{ block.settings.background_color | default: '#eff9d6' }};"
+          {{ block.shopify_attributes }}
+        >
+          <div class="style-studio-themes__media">
+            <img
+              class="style-studio-themes__card-image"
+              src="{{ card_image_url }}"
+              loading="lazy"
+              alt="{{ block.settings.title | escape }}"
+            >
+          </div>
+
+          <div class="style-studio-themes__card-content">
+            <div
+              class="style-studio-themes__icon"
+              style="border-color: {{ card_icon_color | escape }};"
+              aria-hidden="true"
+            >
+              <img src="{{ card_icon_url }}" alt="">
+            </div>
+            <div class="style-studio-themes__card-copy">
+              <span class="style-studio-themes__number">
+                {{ card_number | escape }}
+              </span>
+              <h3>{{ block.settings.title | escape }}</h3>
+              <p>{{ block.settings.subtitle | escape | newline_to_br }}</p>
+            </div>
+          </div>
+        </article>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% style %}
+  .style-studio-themes-{{ section.id }} {
+    width: 100%;
+    overflow: hidden;
+    background: #fff;
+    color: #111;
+  }
+
+  .style-studio-themes-{{ section.id }} .style-studio-themes__inner {
+    width: min(100% - 30px, 1503px);
+    margin: 0 auto;
+    padding: 3vw 0 3vw;
+    box-sizing: border-box;
+  }
+
+  .style-studio-themes-{{ section.id }} .style-studio-themes__title {
+    margin: 0;
+    color: #111;
+    font-size: 3.8vw;
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: 0.016em;
+    text-align: center;
+  }
+
+  .style-studio-themes-{{ section.id }} .style-studio-themes__subtitle {
+    margin: 1.2vw 0 0;
+    color: #111;
+    font-size: 1.25vw;
+    line-height: 1.3;
+    text-align: center;
+  }
+
+  .style-studio-themes-{{ section.id }} .style-studio-themes__cards {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+    justify-content: center;
+    gap: 1vw;
+    margin-top: 3.3vw;
+  }
+
+  .style-studio-themes-{{ section.id }} .style-studio-themes__card {
+    flex: 0 1 calc((100% - 2vw) / 3);
+    min-width: 0;
+    overflow: hidden;
+    border-radius: 1.4vw;
+  }
+
+  .style-studio-themes-{{ section.id }} .style-studio-themes__media {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .style-studio-themes-{{ section.id }} .style-studio-themes__card-image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .style-studio-themes-{{ section.id }} .style-studio-themes__card-content {
+    display: grid;
+    grid-template-columns: 5vw minmax(0, 1fr);
+    gap: 1.5vw;
+    align-items: start;
+    min-height: 14vw;
+    padding: 2.6vw 1.5vw 0;
+    box-sizing: border-box;
+  }
+
+  .style-studio-themes-{{ section.id }} .style-studio-themes__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 4.4vw;
+    height: 4.4vw;
+    box-sizing: border-box;
+    border: 3px solid currentColor;
+    border-radius: 50%;
+  }
+
+  .style-studio-themes-{{ section.id }} .style-studio-themes__icon img {
+    display: block;
+    width: 68%;
+    height: 68%;
+    object-fit: contain;
+  }
+
+  .style-studio-themes-{{ section.id }} .style-studio-themes__icon--smile {
+    border: 0;
+  }
+
+  .style-studio-themes-{{ section.id }} .style-studio-themes__icon--smile img {
+    width: 108%;
+    height: 108%;
+    max-width: none;
+    max-height: none;
+  }
+
+  .style-studio-themes-{{ section.id }} .style-studio-themes__card-copy {
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+    justify-content: start;
+  }
+
+  .style-studio-themes-{{ section.id }} .style-studio-themes__number {
+    display: block;
+    margin-bottom: 0.5vw;
+    padding: 0.2em 0.9em 0.2em;
+    border-radius: 999px;
+    background: #000;
+    color: #fff;
+    font-size: 0.9vw;
+    font-weight: 700;
+    line-height: 1;
+    align-self: flex-start;
+  }
+
+  .style-studio-themes-{{ section.id }} .style-studio-themes__card-copy h3 {
+    margin: 0;
+    color: #111;
+    font-size: 1.8vw;
+    font-weight: 700;
+    line-height: 1;
+  }
+
+  .style-studio-themes-{{ section.id }} .style-studio-themes__card-copy p {
+    max-width: 18em;
+    margin: 0.8vw 0 0;
+    color: #111;
+    font-size: 1vw;
+    line-height: 1.4;
+  }
+
+  @media (max-width: 1200px) {
+    .style-studio-themes-{{ section.id }} .style-studio-themes__icon {
+      border: 2px solid currentColor;
+    }
+
+    .style-studio-themes-{{ section.id }} .style-studio-themes__icon--smile {
+      border: 0;
+    }
+  }
+
+  @media (max-width: 700px) {
+    .style-studio-themes-{{ section.id }} .style-studio-themes__inner {
+      width: min(100% - 24px, 520px);
+      padding: 2em 0 2.5em;
+    }
+
+    .style-studio-themes-{{ section.id }} .style-studio-themes__title {
+      font-size: clamp(2em, 8vw, 2.6em);
+      line-height: 1.1;
+    }
+
+    .style-studio-themes-{{ section.id }} .style-studio-themes__subtitle {
+      margin-top: 0.75em;
+      font-size: 0.95em;
+    }
+
+    .style-studio-themes-{{ section.id }} .style-studio-themes__cards {
+      display: block;
+      margin-top: 2em;
+    }
+
+    .style-studio-themes-{{ section.id }} .style-studio-themes__card {
+      display: none;
+      border-radius: 1em;
+    }
+
+    .style-studio-themes-{{ section.id }} .style-studio-themes__card.is-mobile-active {
+      display: block;
+    }
+
+    .style-studio-themes-{{ section.id }} .style-studio-themes__card-content {
+      grid-template-columns: 3.25em minmax(0, 1fr);
+      gap: 1em;
+      min-height: 10em;
+      padding: 1.5em 1.25em 1.25em;
+    }
+
+      .style-studio-themes-{{ section.id }} .style-studio-themes__icon {
+      width: 3.25em;
+      height: 3.25em;
+      border-width: 2px;
+      }
+
+    .style-studio-themes-{{ section.id }} .style-studio-themes__number {
+      margin-bottom: 0.45em;
+      font-size: 0.75em;
+    }
+
+    .style-studio-themes-{{ section.id }} .style-studio-themes__card-copy h3 {
+      font-size: 1.45em;
+    }
+
+    .style-studio-themes-{{ section.id }} .style-studio-themes__card-copy p {
+      margin-top: 0.6em;
+      font-size: 0.9em;
+    }
+
+    .style-studio-themes-{{ section.id }} .style-studio-themes__icon img {
+      width: 70%;
+      height: 70%;
+      }
+  }
+{% endstyle %}
+
+<script>
+  (() => {
+    const section = document.querySelector('.style-studio-themes-{{ section.id }}');
+    if (!section || section.dataset.mobileCarouselInitialized === 'true') return;
+
+    const cards = Array.from(section.querySelectorAll('.style-studio-themes__card'));
+    if (cards.length < 2) return;
+
+    section.dataset.mobileCarouselInitialized = 'true';
+    const mobileQuery = window.matchMedia('(max-width: 700px)');
+    let activeIndex = 0;
+    let timer;
+
+    const showCard = (index) => {
+      activeIndex = (index + cards.length) % cards.length;
+      cards.forEach((card, cardIndex) => {
+        card.classList.toggle('is-mobile-active', cardIndex === activeIndex);
+      });
+    };
+
+    const stop = () => {
+      window.clearInterval(timer);
+      timer = undefined;
+    };
+
+    const sync = () => {
+      stop();
+      if (mobileQuery.matches) {
+        showCard(activeIndex);
+        timer = window.setInterval(() => showCard(activeIndex + 1), 3000);
+      } else {
+        cards.forEach((card) => card.classList.remove('is-mobile-active'));
+      }
+    };
+
+    if (typeof mobileQuery.addEventListener === 'function') {
+      mobileQuery.addEventListener('change', sync);
+    } else {
+      mobileQuery.addListener(sync);
+    }
+
+    sync();
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Themes",
+  "max_blocks": 20,
+  "settings": [
+    {
+      "type": "text",
+      "id": "title_before",
+      "label": "Title before",
+      "default": "Switch the Look."
+    },
+    {
+      "type": "color",
+      "id": "title_before_color",
+      "label": "Title before color",
+      "default": "#111111"
+    },
+    {
+      "type": "text",
+      "id": "title_after",
+      "label": "Title after",
+      "default": "Keep the Feel."
+    },
+    {
+      "type": "color",
+      "id": "title_after_color",
+      "label": "Title after color",
+      "default": "#244f1d"
+    },
+    {
+      "type": "textarea",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Refresh your keyboard anytime with keycaps that match your setup, style, and mood."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "theme_card",
+      "name": "Theme card",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Card image"
+        },
+        {
+          "type": "color",
+          "id": "background_color",
+          "label": "Background color",
+          "default": "#eff9d6"
+        },
+        {
+          "type": "image_picker",
+          "id": "icon",
+          "label": "Icon"
+        },
+        {
+          "type": "color",
+          "id": "icon_color",
+          "label": "Icon circle color",
+          "default": "#042106"
+        },
+        {
+          "type": "text",
+          "id": "number",
+          "label": "Number",
+          "default": "01"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Card title",
+          "default": "Match Your Setup"
+        },
+        {
+          "type": "textarea",
+          "id": "subtitle",
+          "label": "Card subtitle",
+          "default": "Refresh your desk with colors that fit your space."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Themes",
+      "blocks": [
+        {
+          "type": "theme_card",
+          "settings": {
+            "number": "01",
+            "title": "Match Your Setup",
+            "subtitle": "Refresh your desk with colors that fit your space.",
+            "background_color": "#eff9d6",
+            "icon_color": "#042106"
+          }
+        },
+        {
+          "type": "theme_card",
+          "settings": {
+            "number": "02",
+            "title": "Tell Your Story",
+            "subtitle": "Choose a themed keycap set that shows your personality.",
+            "background_color": "#ffe8c2",
+            "icon_color": "#762e02"
+          }
+        },
+        {
+          "type": "theme_card",
+          "settings": {
+            "number": "03",
+            "title": "Change the Vibe",
+            "subtitle": "Switch keycaps when your workspace needs a new feeling.",
+            "background_color": "#f4ddff",
+            "icon_color": "#4e1573"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,187 @@
+{%- assign service_image_url = 'service-img.png' | asset_url -%}
+{%- assign service_mobile_image_url = service_image_url -%}
+
+{%- if section.settings.image != blank -%}
+  {%- assign service_image_url = section.settings.image | image_url: width: 2400 -%}
+{%- endif -%}
+
+{%- if section.settings.mobile_image != blank -%}
+  {%- assign service_mobile_image_url = section.settings.mobile_image | image_url: width: 1600 -%}
+{%- endif -%}
+
+<section class="style-studio-service style-studio-service-{{ section.id }}">
+  <div class="style-studio-service__inner">
+    {%- if section.settings.title_before != blank or section.settings.title_after != blank -%}
+      <h2 class="style-studio-service__title">
+        {%- if section.settings.title_before != blank -%}
+          <span
+            class="style-studio-service__title-before"
+            style="color: {{ section.settings.title_before_color | escape }};"
+          >{{ section.settings.title_before | escape }}</span>
+        {%- endif -%}
+        {%- if section.settings.title_before != blank and section.settings.title_after != blank %}&nbsp;{% endif -%}
+        {%- if section.settings.title_after != blank -%}
+          <span
+            class="style-studio-service__title-after"
+            style="color: {{ section.settings.title_after_color | escape }};"
+          >{{ section.settings.title_after | escape }}</span>
+        {%- endif -%}
+      </h2>
+    {%- endif -%}
+
+    {%- if section.settings.subtitle != blank -%}
+      <p class="style-studio-service__subtitle">
+        {{ section.settings.subtitle | escape | newline_to_br }}
+      </p>
+    {%- endif -%}
+
+    <div class="style-studio-service__media">
+      <picture>
+        <source media="(max-width: 769px)" srcset="{{ service_mobile_image_url }}">
+        <img
+          class="style-studio-service__image"
+          src="{{ service_image_url }}"
+          alt="{{ section.settings.image_alt | default: section.settings.title_before | escape }}"
+          loading="lazy"
+          width="2400"
+          height="1400"
+        >
+      </picture>
+    </div>
+  </div>
+</section>
+
+{% style %}
+  .style-studio-service-{{ section.id }} {
+    width: 100%;
+    overflow: hidden;
+    background: #ffffff;
+    color: #111111;
+  }
+
+  .style-studio-service-{{ section.id }} .style-studio-service__inner {
+    width: 95%;
+    margin: 0 auto;
+    padding: 3em 0 4em;
+    box-sizing: border-box;
+    text-align: center;
+  }
+
+  .style-studio-service-{{ section.id }} .style-studio-service__title {
+    margin: 0;
+    color: #111111;
+    font-size: 2.5em;
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: 0.01em;
+  }
+
+  .style-studio-service-{{ section.id }} .style-studio-service__subtitle {
+    max-width: 48em;
+    margin: 0.75em auto 0;
+    color: #333333;
+    font-size: 1em;
+    line-height: 1.45;
+  }
+
+  .style-studio-service-{{ section.id }} .style-studio-service__media {
+    width: 100%;
+    margin-top: 2.5em;
+    overflow: hidden;
+    border-radius: 1em;
+  }
+
+  .style-studio-service-{{ section.id }} .style-studio-service__image {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: inherit;
+  }
+
+  .style-studio-service-{{ section.id }} .style-studio-service__media picture {
+    display: block;
+  }
+
+  @media screen and (max-width: 769px) {
+    .style-studio-service-{{ section.id }} .style-studio-service__inner {
+      width: 95%;
+      padding: 2em 0 3em;
+    }
+
+    .style-studio-service-{{ section.id }} .style-studio-service__title {
+      font-size: 1.8em;
+    }
+
+    .style-studio-service-{{ section.id }} .style-studio-service__subtitle {
+      margin-top: 0.8em;
+      font-size: 0.9em;
+    }
+
+    .style-studio-service-{{ section.id }} .style-studio-service__media {
+      margin-top: 1.75em;
+      border-radius: 0.75em;
+    }
+
+  }
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "Style Studio Service",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title_before",
+      "label": "Title before",
+      "default": "PIIFOX"
+    },
+    {
+      "type": "color",
+      "id": "title_before_color",
+      "label": "Title before color",
+      "default": "#111111"
+    },
+    {
+      "type": "text",
+      "id": "title_after",
+      "label": "Title after",
+      "default": "Style Service"
+    },
+    {
+      "type": "color",
+      "id": "title_after_color",
+      "label": "Title after color",
+      "default": "#244f1d"
+    },
+    {
+      "type": "textarea",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Want us to install your keycaps for you? We can do it before shipping —\nor you can swap them yourself anytime."
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Service illustration",
+      "info": "Upload the service instruction image shown below the title."
+    },
+    {
+      "type": "image_picker",
+      "id": "mobile_image",
+      "label": "Mobile service illustration",
+      "info": "Optional image used on screens up to 769px wide."
+    },
+    {
+      "type": "text",
+      "id": "image_alt",
+      "label": "Image alt text",
+      "default": "PiiFOX Style Service steps"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Style Studio Service"
+    }
+  ]
+}
+{% endschema %}
