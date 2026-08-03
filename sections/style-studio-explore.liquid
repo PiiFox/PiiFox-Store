@@ -123,10 +123,12 @@
 
   .style-studio-explore-{{ section.id }} .style-studio-explore__button {
     display: inline-flex;
+    flex: 0 0 clamp(230px, 18vw, 300px);
     align-items: center;
     justify-content: space-between;
     gap: 22px;
-    min-width: 210px;
+    width: clamp(230px, 18vw, 300px);
+    min-width: 0;
     padding: 0.9em 1.35em;
     border: 1px solid var(--style-studio-explore-border);
     border-radius: 12px;
@@ -138,6 +140,7 @@
     line-height: 1.2;
     text-decoration: none;
     cursor: pointer;
+    white-space: nowrap;
     transition: filter 160ms ease, transform 160ms ease;
   }
 
@@ -200,9 +203,10 @@
     }
 
     .style-studio-explore-{{ section.id }} .style-studio-explore__button {
-      width: auto;
+      flex: 0 0 auto;
+      width: 16em;
       min-width: 0;
-      max-width: 14em;
+      max-width: 100%;
       align-self: flex-start;
       padding: 0.8em 1.1em;
       border-radius: 10px;

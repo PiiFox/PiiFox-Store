@@ -50,6 +50,13 @@
                        data-src="{{ theme_image | image_url: width: 1000 }}"
                        alt="{{ block.settings.title | escape }}" />
                 </div>
+              {%- else -%}
+                <div class="theme-card-media">
+                  <img class="theme-card-img lazyload"
+                       src="{{ 'keyboard.png' | asset_url }}"
+                       data-src="{{ 'keyboard.png' | asset_url }}"
+                       alt="{{ block.settings.title | escape }}" />
+                </div>
               {%- endif -%}
 
               <div class="theme-card-action">
@@ -82,6 +89,13 @@
                   <img class="style-card-img lazyload"
                        src="{{ style_image | image_url: width: 800 }}"
                        data-src="{{ style_image | image_url: width: 800 }}"
+                       alt="{{ block.settings.title | escape }}" />
+                </div>
+              {%- else -%}
+                <div class="style-card-media">
+                  <img class="style-card-img lazyload"
+                       src="{{ 'keyboard.png' | asset_url }}"
+                       data-src="{{ 'keyboard.png' | asset_url }}"
                        alt="{{ block.settings.title | escape }}" />
                 </div>
               {%- endif -%}
@@ -500,7 +514,7 @@
     height: 0.9em;
   }
 
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 769px) {
     .style-studio-section-{{ section.id }} {
       min-height: 0;
       display: block;
@@ -596,6 +610,116 @@
     .style-studio-section-{{ section.id }} .custom-arrow {
       width: 2.1em;
       height: 2.1em;
+    }
+  }
+
+  @media screen and (min-width: 769px) and (max-width: 1200px) {
+    .style-studio-section-{{ section.id }} {
+      min-height: 0;
+      align-items: flex-start;
+    }
+
+    .style-studio-section-{{ section.id }} .style-studio-inner {
+      padding: 1.5em 1.25em 2em;
+    }
+
+    .style-studio-section-{{ section.id }} .section-header {
+      margin-bottom: 1em;
+    }
+
+    .style-studio-section-{{ section.id }} .section-header h2 {
+      font-size: clamp(2em, 3.4vw, 2.6em);
+    }
+
+    .style-studio-section-{{ section.id }} .section-header p {
+      font-size: clamp(0.95em, 1.5vw, 1.15em);
+    }
+
+    .style-studio-section-{{ section.id }} .top-theme-carousel {
+      --top-theme-card-side-shift: clamp(4.2em, 6vw, 5.8em);
+      --top-theme-card-gap: 0.8em;
+      padding: 1.4em 0 2.3em;
+    }
+
+    .style-studio-section-{{ section.id }} .top-theme-carousel .theme-cell,
+    .style-studio-section-{{ section.id }} .top-theme-carousel--five-six .theme-cell {
+      width: clamp(14.5em, 27vw, 20em);
+      flex-basis: clamp(14.5em, 27vw, 20em);
+      padding: 1.35em 1.25em 1.2em;
+    }
+
+    .style-studio-section-{{ section.id }} .theme-card-inner {
+      height: clamp(18em, 31vw, 23em);
+    }
+
+    .style-studio-section-{{ section.id }} .top-theme-carousel .theme-cell:not(.is-selected) .theme-card-media {
+      width: calc(100% + 8em);
+      margin-left: -0.2em;
+    }
+
+    .style-studio-section-{{ section.id }} .top-theme-carousel .theme-cell.is-selected .theme-card-img {
+      transform: rotateY(-9deg) skewY(-5deg) scale(1.45) translate(-18%, 4%);
+    }
+
+    .style-studio-section-{{ section.id }} .top-theme-carousel .theme-cell:not(.is-selected) .theme-card-info {
+      transform: translateX(0.7em);
+    }
+
+    .style-studio-section-{{ section.id }} .theme-cell.is-selected .theme-card-info {
+      transform: translate(-1.6em, -0.7em);
+    }
+
+    .style-studio-section-{{ section.id }} .theme-cell.is-selected .theme-card-info .theme-title {
+      font-size: 1.6em;
+    }
+
+    .style-studio-section-{{ section.id }} .theme-card-info .theme-short-desc {
+      font-size: 0.82em;
+    }
+
+    .style-studio-section-{{ section.id }} .theme-card-info .theme-desc {
+      width: 88%;
+      font-size: 0.78em;
+    }
+
+    .style-studio-section-{{ section.id }} .bottom-style-carousel {
+      gap: 0.8em;
+    }
+
+    .style-studio-section-{{ section.id }} .bottom-style-carousel .style-cell {
+      flex-basis: clamp(9em, calc((100% - 4.8em) / 6), 13em);
+    }
+
+    .style-studio-section-{{ section.id }} .style-card-inner {
+      padding: 0.75em 0.75em 0.9em;
+    }
+
+    .style-studio-section-{{ section.id }} .style-card-media {
+      width: calc(100% + 0.1em);
+      margin-left: -0.75em;
+    }
+
+    .style-studio-section-{{ section.id }} .style-card-img {
+      width: 180%;
+    }
+
+    .style-studio-section-{{ section.id }} .style-card-info .style-title {
+      margin: 0.45em 0 0.55em;
+      font-size: 0.85em;
+    }
+
+    .style-studio-section-{{ section.id }} .style-card-info .view-style-btn {
+      padding: 0.52em 1.2em;
+      font-size: 0.7em;
+    }
+
+    .style-studio-section-{{ section.id }} .carousel-controls-container {
+      margin-top: 1.1em;
+    }
+
+    .style-studio-section-{{ section.id }} .custom-arrow {
+      width: 2.25em;
+      height: 2.25em;
     }
   }
 {% endstyle %}
