@@ -1,5 +1,5 @@
-{%- assign service_image_url = 'service-img.png' | asset_url -%}
-{%- assign service_mobile_image_url = service_image_url -%}
+{%- assign service_image_url = blank -%}
+{%- assign service_mobile_image_url = blank -%}
 
 {%- if section.settings.image != blank -%}
   {%- assign service_image_url = section.settings.image | image_url: width: 2400 -%}
@@ -7,6 +7,8 @@
 
 {%- if section.settings.mobile_image != blank -%}
   {%- assign service_mobile_image_url = section.settings.mobile_image | image_url: width: 1600 -%}
+{%- elsif service_image_url != blank -%}
+  {%- assign service_mobile_image_url = service_image_url -%}
 {%- endif -%}
 
 <section class="style-studio-service style-studio-service-{{ section.id }}">
@@ -35,19 +37,21 @@
       </p>
     {%- endif -%}
 
-    <div class="style-studio-service__media">
-      <picture>
-        <source media="(max-width: 769px)" srcset="{{ service_mobile_image_url }}">
-        <img
-          class="style-studio-service__image"
-          src="{{ service_image_url }}"
-          alt="{{ section.settings.image_alt | default: section.settings.title_before | escape }}"
-          loading="lazy"
-          width="2400"
-          height="1400"
-        >
-      </picture>
-    </div>
+    {%- if service_image_url != blank -%}
+      <div class="style-studio-service__media">
+        <picture>
+          <source media="(max-width: 769px)" srcset="{{ service_mobile_image_url }}">
+          <img
+            class="style-studio-service__image"
+            src="{{ service_image_url }}"
+            alt="{{ section.settings.image_alt | default: section.settings.title_before | escape }}"
+            loading="lazy"
+            width="2400"
+            height="1400"
+          >
+        </picture>
+      </div>
+    {%- endif -%}
   </div>
 </section>
 

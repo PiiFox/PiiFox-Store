@@ -1,5 +1,5 @@
-{%- assign explore_background_image = 'style-studio-explore-bg.png' | asset_url -%}
-{%- assign explore_mobile_background_image = explore_background_image -%}
+{%- assign explore_background_image = blank -%}
+{%- assign explore_mobile_background_image = blank -%}
 
 {%- if section.settings.background_image != blank -%}
   {%- assign explore_background_image = section.settings.background_image | image_url: width: 2400 -%}
@@ -7,12 +7,14 @@
 
 {%- if section.settings.mobile_background_image != blank -%}
   {%- assign explore_mobile_background_image = section.settings.mobile_background_image | image_url: width: 1600 -%}
+{%- elsif explore_background_image != blank -%}
+  {%- assign explore_mobile_background_image = explore_background_image -%}
 {%- endif -%}
 
 <div class="style-studio-explore-frame style-studio-explore-frame-{{ section.id }}">
   <section
     class="style-studio-explore style-studio-explore-{{ section.id }}"
-    style="--style-studio-explore-background-image: url('{{ explore_background_image }}'); --style-studio-explore-mobile-background-image: url('{{ explore_mobile_background_image }}');"
+    {% if explore_background_image != blank or explore_mobile_background_image != blank %}style="--style-studio-explore-background-image: url('{{ explore_background_image }}'); --style-studio-explore-mobile-background-image: url('{{ explore_mobile_background_image }}');"{% endif %}
   >
   <div class="style-studio-explore__content">
     {%- if section.settings.title != blank -%}
@@ -218,7 +220,7 @@
       "type": "image_picker",
       "id": "background_image",
       "label": "Background image",
-      "info": "Defaults to the local Style Studio Explore background image."
+      "info": "Optional background image."
     },
     {
       "type": "image_picker",

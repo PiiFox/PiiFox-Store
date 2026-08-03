@@ -43,19 +43,14 @@
                 <p class="theme-desc" style="color: {{ block.settings.description_color | default: '#666666' }};">{{ block.settings.description }}</p>
               </div>
 
-              <div class="theme-card-media">
-                {%- if theme_image != blank -%}
+              {%- if theme_image != blank -%}
+                <div class="theme-card-media">
                   <img class="theme-card-img lazyload"
                        src="{{ theme_image | image_url: width: 1000 }}"
                        data-src="{{ theme_image | image_url: width: 1000 }}"
                        alt="{{ block.settings.title | escape }}" />
-                {%- else -%}
-                  <img class="theme-card-img lazyload"
-                       src="{{ 'keyboard.png' | asset_url }}"
-                       data-src="{{ 'keyboard.png' | asset_url }}"
-                       alt="{{ block.settings.title | escape }}" />
-                {%- endif -%}
-              </div>
+                </div>
+              {%- endif -%}
 
               <div class="theme-card-action">
                 <a href="{{ block.settings.button_link | default: '#' | escape }}" class="explore-btn" style="border-color: {{ block.settings.button_text_color | default: '#107a44' }}; color: {{ block.settings.button_text_color | default: '#107a44' }};">
@@ -82,19 +77,14 @@
               {{ block.shopify_attributes }}
             >
             <div class="style-card-inner">
-              <div class="style-card-media">
-                {%- if style_image != blank -%}
+              {%- if style_image != blank -%}
+                <div class="style-card-media">
                   <img class="style-card-img lazyload"
                        src="{{ style_image | image_url: width: 800 }}"
                        data-src="{{ style_image | image_url: width: 800 }}"
                        alt="{{ block.settings.title | escape }}" />
-                {%- else -%}
-                  <img class="style-card-img lazyload"
-                       src="{{ 'keyboard.png' | asset_url }}"
-                       data-src="{{ 'keyboard.png' | asset_url }}"
-                       alt="{{ block.settings.title | escape }}" />
-                {%- endif -%}
-              </div>
+                </div>
+              {%- endif -%}
               <div class="style-card-info">
                 <h4 class="style-title notranslate">
                   {{ block.settings.title }}

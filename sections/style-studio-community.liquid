@@ -1,5 +1,3 @@
-{%- assign community_fallback_image = 'style-studio-theme-placeholder.png' | asset_url -%}
-
 <section
   class="style-studio-community style-studio-community-{{ section.id }}"
   data-style-studio-community="{{ section.id }}"
@@ -27,14 +25,9 @@
       <div class="style-studio-community__track" data-community-track>
         {%- if section.blocks.size > 0 -%}
           {%- for block in section.blocks -%}
-            {%- assign community_image = community_fallback_image -%}
-            {%- if block.settings.image != blank -%}
-              {%- assign community_image = block.settings.image | image_url: width: 1200 -%}
-            {%- endif -%}
-
             {%- assign community_alt = block.settings.alt | default: 'Community setup' -%}
 
-            {%- if block.settings.link != blank -%}
+            {%- if block.settings.image != blank and block.settings.link != blank -%}
               <a
                 class="style-studio-community__item"
                 href="{{ block.settings.link | escape }}"
@@ -42,18 +35,18 @@
               >
                 <img
                   class="style-studio-community__image"
-                  src="{{ community_image }}"
+                  src="{{ block.settings.image | image_url: width: 1200 }}"
                   alt="{{ community_alt | escape }}"
                   loading="lazy"
                   width="1200"
                   height="1500"
                 >
               </a>
-            {%- else -%}
+            {%- elsif block.settings.image != blank -%}
               <div class="style-studio-community__item" {{ block.shopify_attributes }}>
                 <img
                   class="style-studio-community__image"
-                  src="{{ community_image }}"
+                  src="{{ block.settings.image | image_url: width: 1200 }}"
                   alt="{{ community_alt | escape }}"
                   loading="lazy"
                   width="1200"

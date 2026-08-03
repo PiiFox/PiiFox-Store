@@ -5,27 +5,29 @@
   <div class="style-studio-board-showcase__slider">
     <div class="style-studio-board-showcase__backgrounds">
       {% for block in section.blocks %}
-        {% assign board_product_image_url = 'keyboard.png' | asset_url %}
-        {% assign board_background_image_url = block.settings.background_image | image_url: width: 2400 %}
+        {% assign board_product_image_url = blank %}
+        {% assign board_background_image_url = blank %}
         {% if block.settings.product_image != blank %}
           {% assign board_product_image_url = block.settings.product_image | image_url: width: 1800 %}
         {% endif %}
-        {% if block.settings.background_image == blank %}
-          {% assign board_background_image_url = 'style-studio-board-background.png' | asset_url %}
+        {% if block.settings.background_image != blank %}
+          {% assign board_background_image_url = block.settings.background_image | image_url: width: 2400 %}
         {% endif %}
 
         <div
           class="style-studio-board-showcase__background-slide{% if forloop.first %} is-active{% endif %}"
-          style="background-image: url('{{ board_background_image_url }}');"
+          {% if board_background_image_url != blank %}style="background-image: url('{{ board_background_image_url }}');"{% endif %}
         >
-          <div class="style-studio-board-showcase__product">
-            <img
-              class="style-studio-board-showcase__product-image"
-              src="{{ board_product_image_url }}"
-              loading="lazy"
-              alt="{{ block.settings.product_image_alt | default: block.settings.content_title | escape }}"
-            >
-          </div>
+          {% if board_product_image_url != blank %}
+            <div class="style-studio-board-showcase__product">
+              <img
+                class="style-studio-board-showcase__product-image"
+                src="{{ board_product_image_url }}"
+                loading="lazy"
+                alt="{{ block.settings.product_image_alt | default: block.settings.content_title | escape }}"
+              >
+            </div>
+          {% endif %}
         </div>
       {% endfor %}
     </div>
@@ -91,15 +93,15 @@
                       {% when 1 %}
                         {% assign detail_image = block.settings.detail_1_image %}
                         {% assign detail_title = block.settings.detail_1_title | default: 'Minimal Play' %}
-                        {% assign detail_image_url = 'style-studio-board-detail-1.png' | asset_url %}
+                        {% assign detail_image_url = blank %}
                       {% when 2 %}
                         {% assign detail_image = block.settings.detail_2_image %}
                         {% assign detail_title = block.settings.detail_2_title | default: 'Silence' %}
-                        {% assign detail_image_url = 'style-studio-board-detail-2.png' | asset_url %}
+                        {% assign detail_image_url = blank %}
                       {% when 3 %}
                         {% assign detail_image = block.settings.detail_3_image %}
                         {% assign detail_title = block.settings.detail_3_title | default: 'Dashboard White' %}
-                        {% assign detail_image_url = 'style-studio-board-detail-3.png' | asset_url %}
+                        {% assign detail_image_url = blank %}
                     {% endcase %}
 
                     {% if detail_image != blank %}
@@ -107,14 +109,16 @@
                     {% endif %}
 
                     <div class="style-studio-board-showcase__detail">
-                      <div class="style-studio-board-showcase__detail-image-wrap">
-                        <img
-                          class="style-studio-board-showcase__detail-image"
-                          src="{{ detail_image_url }}"
-                          loading="lazy"
-                          alt="{{ detail_title | escape }}"
-                        >
-                      </div>
+                      {% if detail_image_url != blank %}
+                        <div class="style-studio-board-showcase__detail-image-wrap">
+                          <img
+                            class="style-studio-board-showcase__detail-image"
+                            src="{{ detail_image_url }}"
+                            loading="lazy"
+                            alt="{{ detail_title | escape }}"
+                          >
+                        </div>
+                      {% endif %}
 
                       {% if detail_title != blank %}
                         <strong class="style-studio-board-showcase__detail-title">
@@ -710,7 +714,7 @@
       "name": "Product Item",
       "settings": [
         { "type": "image_picker", "id": "background_image", "label": "Background image" },
-        { "type": "image_picker", "id": "product_image", "label": "Product image", "info": "If empty, keyboard.png will be used." },
+        { "type": "image_picker", "id": "product_image", "label": "Product image" },
         { "type": "text", "id": "product_image_alt", "label": "Product image alt text" },
         { "type": "text", "id": "content_title", "label": "Content title", "default": "Clean & Minimal" },
         { "type": "text", "id": "content_subtitle", "label": "Content subtitle", "default": "Simple. Calm. Focused." },
