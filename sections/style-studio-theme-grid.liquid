@@ -50,13 +50,6 @@
                        data-src="{{ theme_image | image_url: width: 1000 }}"
                        alt="{{ block.settings.title | escape }}" />
                 </div>
-              {%- else -%}
-                <div class="theme-card-media">
-                  <img class="theme-card-img lazyload"
-                       src="{{ 'keyboard.png' | asset_url }}"
-                       data-src="{{ 'keyboard.png' | asset_url }}"
-                       alt="{{ block.settings.title | escape }}" />
-                </div>
               {%- endif -%}
 
               <div class="theme-card-action">
@@ -89,13 +82,6 @@
                   <img class="style-card-img lazyload"
                        src="{{ style_image | image_url: width: 800 }}"
                        data-src="{{ style_image | image_url: width: 800 }}"
-                       alt="{{ block.settings.title | escape }}" />
-                </div>
-              {%- else -%}
-                <div class="style-card-media">
-                  <img class="style-card-img lazyload"
-                       src="{{ 'keyboard.png' | asset_url }}"
-                       data-src="{{ 'keyboard.png' | asset_url }}"
                        alt="{{ block.settings.title | escape }}" />
                 </div>
               {%- endif -%}
