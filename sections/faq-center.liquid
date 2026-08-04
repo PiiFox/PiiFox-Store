@@ -31,24 +31,6 @@
       "label": "客服邮箱"
     }
   ],
-  "blocks": [
-    {
-      "type": "collection",
-      "name": "Collection Faq",
-      "settings": [
-        {
-          "type": "collection",
-          "id": "collection",
-          "label": "Collection"
-        },
-        {
-          "type": "html",
-          "id": "icon",
-          "label": "Icon"
-        }
-      ]
-    }
-  ],
   "presets": [
     {
       "name": "FAQ Center"
@@ -57,350 +39,445 @@
 }
 {% endschema %}
 
-<style>
-  .faq-container {
-    max-width: 800px;
-    margin: 40px auto;
-    padding: 0 20px;
-  }
-  .faq-item {
-    border-bottom: 1px solid #eee;
-    padding: 16px 0;
-    cursor: pointer;
-  }
-  .faq-question {
-    font-size: 18px;
-    font-weight: 600;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  .faq-answer {
-    margin-top: 12px;
-    font-size: 16px;
-    color: #555;
-    display: none;
-  }
-  .faq-answer.active {
-    display: block;
-  }
-</style>
+{% assign faq_entries = shop.metaobjects.product_faq.values %}
+{% assign faq_groups = 'policy-faq,keyboards,keycaps,switches,mice,accessories' | split: ',' %}
 
 <div class="faq-list-{{ section.id }}">
-  <button class="mobile-filter-toggle">
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+  <button type="button" class="mobile-filter-toggle" aria-controls="FAQCategories-{{ section.id }}">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
       <path d="M4 6h16M4 12h16M4 18h16"></path>
     </svg>
-    Product List
+    FAQ Categories
   </button>
 
-  {% assign faq_types = '' %}
-  {% assign faq_entries = shop.metaobjects.product_faq.values %}
+  <div id="FAQCategories-{{ section.id }}" class="collection-list-block">
+    <div class="filter-close" role="button" tabindex="0" aria-label="Close FAQ categories">&times;</div>
 
-  {% if faq_entries.size > 0 %}
-    {% for item in faq_entries %}
-      {% assign type = item.faq_type | strip %}
-      {% unless faq_types contains type %}
-        {% assign faq_types = faq_types | append: type | append: ',' %}
-      {% endunless %}
-    {% endfor %}
-  {% else %}
-    未读到任何数据
-  {% endif %}
-  {% assign faq_types = faq_types %}
-  {% assign faq_types = faq_types | split: ',' %}
+    <nav class="faq-category-navigation" aria-label="FAQ categories">
+      {% for group_key in faq_groups %}
+        {% assign group_title = group_key | capitalize %}
+        {% if group_key == 'policy-faq' %}
+          {% assign group_title = 'Policy FAQ' %}
+        {% endif %}
 
-  <div class="collection-list-block">
-    <div class="filter-close">&times;</div>
+        {% capture group_icon %}
+          {% case group_key %}
+            {% when 'policy-faq' %}
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#427347" stroke-width="2" aria-hidden="true">
+                <rect x="5" y="3" width="14" height="18" rx="2"></rect>
+                <path d="M9 8h6M9 12h6M9 16h4"></path>
+              </svg>
+            {% when 'keyboards' %}
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#427347" stroke-width="2" aria-hidden="true">
+                <rect x="2" y="4" width="20" height="16" rx="2"></rect>
+                <path d="M6 8h.01M10 8h.01M14 8h.01M18 8h.01M6 12h.01M10 12h.01M14 12h.01M18 12h.01M8 16h8"></path>
+              </svg>
+            {% when 'keycaps' %}
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#427347" stroke-width="2" aria-hidden="true">
+                <rect x="4" y="4" width="16" height="16" rx="2"></rect>
+                <rect x="9" y="9" width="6" height="6" rx="1"></rect>
+              </svg>
+            {% when 'switches' %}
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#427347" stroke-width="2" aria-hidden="true">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="12" y1="8" x2="12" y2="16"></line>
+                <line x1="8" y1="12" x2="16" y2="12"></line>
+              </svg>
+            {% when 'mice' %}
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#427347" stroke-width="2" aria-hidden="true">
+                <rect x="5" y="3" width="14" height="18" rx="7"></rect>
+                <line x1="12" y1="7" x2="12" y2="11"></line>
+              </svg>
+            {% when 'accessories' %}
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#427347" stroke-width="2" aria-hidden="true">
+                <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                <path d="M7.5 4.21v15.58M16.5 4.21v15.58"></path>
+              </svg>
+          {% endcase %}
+        {% endcapture %}
 
-    <div class="collection-group">
-      <div class="collection-group-title">Policy FAQ</div>
-      <div class="collection-product-list">
-        {% for type in faq_types %}
-          <div class="collection-product-item" data-product-id="{{ type }}">
-            <span>{{ type }}</span>
-          </div>
-        {% endfor %}
-      </div>
-    </div>
+        {% assign category_keys_string = '' %}
+        {% assign seen_category_tokens = '|' %}
 
-    {% for block in section.blocks %}
-      {% assign collection = block.settings.collection %}
-      <div class="collection-group">
-        <div class="collection-group-title">
-          {% if block.settings.icon %}
-            {{ block.settings.icon }}
-          {% else %}
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#427347" stroke-width="2">
-              <rect x="2" y="4" width="20" height="16" rx="2" />
-              <path d="M6 8h.01M10 8h.01M14 8h.01M18 8h.01M6 12h.01M10 12h.01M14 12h.01M18 12h.01M8 16h8" />
-            </svg>
+        {% for item in faq_entries %}
+          {% assign item_group_value = item['faq-group'] %}
+          {% if item_group_value == blank %}
+            {% assign item_group_value = item.faq_group %}
           {% endif %}
-          {{ collection.title }}
-        </div>
-        <div class="collection-product-list">
-          {% for product in collection.products %}
-            <div class="collection-product-item" data-product-id="{{ product.id }}">
-              {% if product.featured_image %}
-                <img src="{{ product.featured_image | image_url }}" width="80" height="80" alt="{{ product.title }}">
+
+          {% assign item_type_value = item['faq-type'] %}
+          {% if item_type_value == blank %}
+            {% assign item_type_value = item.faq_type %}
+          {% endif %}
+
+          {% assign item_group = item_group_value | strip | downcase | handleize %}
+          {% assign item_type = item_type_value | strip | downcase | handleize %}
+
+          {% if item_group == group_key and item_type != blank %}
+            {% assign category_token = '|' | append: item_type | append: '|' %}
+            {% unless seen_category_tokens contains category_token %}
+              {% assign seen_category_tokens = seen_category_tokens | append: item_type | append: '|' %}
+              {% assign category_keys_string = category_keys_string | append: item_type | append: '||' %}
+            {% endunless %}
+          {% endif %}
+        {% endfor %}
+
+        {% assign category_keys = category_keys_string | split: '||' %}
+        {% assign has_same_category = false %}
+
+        {% for category_key in category_keys %}
+          {% if category_key != blank and category_key == group_key %}
+            {% assign has_same_category = true %}
+          {% endif %}
+        {% endfor %}
+
+        {% if has_same_category %}
+          <button
+            type="button"
+            class="collection-group-title faq-category-item faq-category-item--parent"
+            data-faq-category="{{ group_key }}-{{ group_key }}"
+          >
+            {{ group_icon }}
+            <span>{{ group_title }}</span>
+          </button>
+        {% else %}
+          <div class="collection-group-title">
+            {{ group_icon }}
+            <span>{{ group_title }}</span>
+          </div>
+
+          <div class="faq-category-list">
+            {% for category_key in category_keys %}
+              {% if category_key != blank and category_key != group_key %}
+                {% assign category_title = category_key | replace: '-', ' ' | capitalize %}
+
+                {% for item in faq_entries %}
+                  {% assign item_group_value = item['faq-group'] %}
+                  {% if item_group_value == blank %}
+                    {% assign item_group_value = item.faq_group %}
+                  {% endif %}
+
+                  {% assign item_type_value = item['faq-type'] %}
+                  {% if item_type_value == blank %}
+                    {% assign item_type_value = item.faq_type %}
+                  {% endif %}
+
+                  {% assign item_group = item_group_value | strip | downcase | handleize %}
+                  {% assign item_type = item_type_value | strip | downcase | handleize %}
+
+                  {% if item_group == group_key and item_type == category_key %}
+                    {% assign category_title = item_type_value | strip %}
+                    {% break %}
+                  {% endif %}
+                {% endfor %}
+
+                <button
+                  type="button"
+                  class="faq-category-item faq-category-item--child"
+                  data-faq-category="{{ group_key }}-{{ category_key }}"
+                >
+                  {{ category_title }}
+                </button>
               {% endif %}
-              <span>{{ product.title }}</span>
-            </div>
-          {% endfor %}
-        </div>
-      </div>
-    {% endfor %}
+            {% endfor %}
+          </div>
+        {% endif %}
+      {% endfor %}
+    </nav>
   </div>
 
   <div class="product-faq-list-block">
-    {% for type in faq_types %}
-      {% assign type_faq_entries = faq_entries | where: 'faq_type', type %}
-      <div class="product-faq-list--wrapper">
-        {% for item in type_faq_entries %}
-          {% assign custom_index = type | strip | append: '-type-' | append: forloop.index0 %}
-          <div class="product-faq-list" data-collection="{{ type }}" data-product-id="{{ type }}">
-            {% render 'faq-item', item: item, index: custom_index %}
+    {% for group_key in faq_groups %}
+      {% assign category_keys_string = '' %}
+      {% assign seen_category_tokens = '|' %}
+
+      {% for item in faq_entries %}
+        {% assign item_group_value = item['faq-group'] %}
+        {% if item_group_value == blank %}
+          {% assign item_group_value = item.faq_group %}
+        {% endif %}
+
+        {% assign item_type_value = item['faq-type'] %}
+        {% if item_type_value == blank %}
+          {% assign item_type_value = item.faq_type %}
+        {% endif %}
+
+        {% assign item_group = item_group_value | strip | downcase | handleize %}
+        {% assign item_type = item_type_value | strip | downcase | handleize %}
+
+        {% if item_group == group_key and item_type != blank %}
+          {% assign category_token = '|' | append: item_type | append: '|' %}
+          {% unless seen_category_tokens contains category_token %}
+            {% assign seen_category_tokens = seen_category_tokens | append: item_type | append: '|' %}
+            {% assign category_keys_string = category_keys_string | append: item_type | append: '||' %}
+          {% endunless %}
+        {% endif %}
+      {% endfor %}
+
+      {% assign category_keys = category_keys_string | split: '||' %}
+
+      {% for category_key in category_keys %}
+        {% if category_key != blank %}
+          {% assign full_category_key = group_key | append: '-' | append: category_key %}
+          {% assign has_faqs = false %}
+
+          <div
+            class="product-faq-list--wrapper faq-category-panel"
+            data-faq-category="{{ full_category_key }}"
+          >
+            {% for item in faq_entries %}
+              {% assign item_group_value = item['faq-group'] %}
+              {% if item_group_value == blank %}
+                {% assign item_group_value = item.faq_group %}
+              {% endif %}
+
+              {% assign item_type_value = item['faq-type'] %}
+              {% if item_type_value == blank %}
+                {% assign item_type_value = item.faq_type %}
+              {% endif %}
+
+              {% assign item_group = item_group_value | strip | downcase | handleize %}
+              {% assign item_type = item_type_value | strip | downcase | handleize %}
+
+              {% assign item_key = item_group | append: '-' | append: item_type %}
+
+              {% if item_key == full_category_key %}
+                {% assign has_faqs = true %}
+                {% assign faq_index = full_category_key | append: '-' | append: forloop.index0 %}
+                {% render 'faq-item', item: item, index: faq_index %}
+              {% endif %}
+            {% endfor %}
+
+            {% unless has_faqs %}
+              <p class="faq-empty-message">No FAQs available in this category.</p>
+            {% endunless %}
           </div>
-        {% endfor %}
-      </div>
-    {% endfor %}
-    {% for block in section.blocks %}
-      {% assign collection = block.settings.collection %}
-      {% for product in collection.products %}
-        <div class="product-faq-list" data-collection="{{ collection.title }}" data-product-id="{{ product.id }}">
-          <div class="product-info-card">
-            {% if product.featured_image %}
-              <img src="{{ product.featured_image | image_url }}" width="100" height="100" alt="{{ product.title }}">
-            {% endif %}
-            <div class="product-info-card-text">
-              <h3>{{ product.title }}</h3>
-              <a href="{{ product.url }}" class="learn-more-btn">Learn More</a>
-            </div>
-          </div>
-          {% render 'product-faq-list', product: product %}
-        </div>
+        {% endif %}
       {% endfor %}
     {% endfor %}
+
     {% render 'support-contact-section', section: section %}
   </div>
 </div>
 
 {% style %}
-    .product-faq-list--wrapper {
-        padding-bottom: 0;
-    }
+  .faq-list-{{ section.id }} {
+    max-width: 1100px;
+    margin: 40px auto;
+    padding: 0 20px;
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 40px;
+    position: relative;
+  }
+
+  .mobile-filter-toggle {
+    display: none;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 16px;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    margin-bottom: 20px;
+  }
+
+  .collection-list-block {
+    border-right: 1px solid #eee;
+    padding-right: 20px;
+    position: relative;
+  }
+
+  .filter-close {
+    display: none;
+  }
+
+  .faq-category-navigation {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .collection-group-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 18px;
+    padding: 8px 14px;
+    font-size: 20px;
+    font-weight: 600;
+    color: #111;
+  }
+
+  .collection-group-title:first-child {
+    margin-top: 0;
+  }
+
+  .collection-group-title svg,
+  .faq-category-item--parent svg {
+    flex-shrink: 0;
+  }
+
+  .faq-category-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .faq-category-item {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 14px;
+    border: 2px solid transparent;
+    border-radius: 8px;
+    background: transparent;
+    color: #111;
+    text-align: left;
+    font: inherit;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .faq-category-item--child {
+    padding-left: 34px;
+    font-size: 16px;
+  }
+
+  .faq-category-item--parent {
+    width: 100%;
+    margin-top: 18px;
+    padding: 8px 14px;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    color: #111;
+    font-size: 20px;
+    font-weight: 600;
+    text-align: left;
+  }
+
+  .faq-category-item.faq-category-item--parent:hover,
+  .faq-category-item--parent.active {
+    background: transparent;
+    border-color: transparent;
+  }
+
+  .faq-category-item:hover {
+    background: #f5f5f5;
+  }
+
+  .faq-category-item.active:not(.faq-category-item--parent) {
+    background: #edf9f5;
+    border-color: var(--colorThemePrimary);
+  }
+
+  .faq-category-panel {
+    display: none;
+  }
+
+  .faq-category-panel.active {
+    display: block;
+  }
+
+  .faq-empty-message {
+    padding: 16px 20px;
+    color: #666;
+  }
+
+  @media (max-width: 768px) {
     .faq-list-{{ section.id }} {
-      max-width: 1100px;
-      margin: 40px auto;
-      padding: 0 20px;
-      display: grid;
-      grid-template-columns: 280px 1fr;
-      gap: 40px;
-      position: relative;
+      display: block;
     }
 
-    /* 移动端开关 */
     .mobile-filter-toggle {
-      display: none;
-      align-items: center;
-      gap: 8px;
-      padding: 12px 16px;
-      background: #fff;
-      border: 1px solid #ddd;
-      border-radius: 8px;
-      font-size: 16px;
-      font-weight: 500;
-      cursor: pointer;
-      margin-bottom: 20px;
+      display: flex;
     }
 
-    /* 左侧列表 - 电脑端正常 */
     .collection-list-block {
-      border-right: 1px solid #eee;
-      padding-right: 20px;
-      position: relative;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 280px;
+      height: 100vh;
+      background: #fff;
+      z-index: 9999;
+      padding: 20px;
+      box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+      transform: translateX(-100%);
+      transition: transform 0.3s ease;
+      overflow-y: auto;
+      border-right: none;
+    }
+
+    .collection-list-block.open {
+      transform: translateX(0);
     }
 
     .filter-close {
-      display: none;
-    }
-
-    .collection-group {
-      margin-bottom: 24px;
-    }
-
-    .collection-group-title {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 20px;
-      font-weight: 600;
-      padding-bottom: 0.8em;
-      color: #111;
-    }
-
-    .collection-product-list {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      max-height: calc(2 * 72px);
-      overflow-y: auto;
-      padding-right: 4px;
-    }
-
-    .collection-product-item {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 12px 14px;
+      display: block;
+      font-size: 28px;
+      line-height: 1;
+      text-align: right;
       cursor: pointer;
-      border-radius: 8px;
-      border: 2px solid transparent;
-      transition: all 0.2s;
-      min-height: 60px;
+      margin-bottom: 16px;
     }
-
-    .collection-product-item img {
-      width: 48px;
-      height: 48px;
-      object-fit: contain;
-      border-radius: 4px;
-      flex-shrink: 0;
-    }
-
-    .collection-product-item span {
-      font-size: 15px;
-      font-weight: 500;
-      line-height: 1.3;
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .collection-product-item:hover {
-      background: #f5f5f5;
-    }
-
-    .collection-product-item.active {
-      background: #edf9f5;
-      border-color: var(--colorThemePrimary);
-    }
-
-    /* 右侧内容 */
-    .product-faq-list { display: none; }
-    .product-faq-list.active { display: block; }
-
-    .product-info-card {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      background: #edf9f5;
-      padding: 16px;
-      border-radius: 8px;
-      margin-bottom: 20px;
-      border: 2px solid var(--colorThemePrimary);
-    }
-    .product-info-card img {
-      width: 80px;
-      height: 80px;
-      object-fit: contain;
-    }
-    .product-info-card-text {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex: 1;
-    }
-    .product-info-card-text h3 { margin: 0; font-size: 18px; font-weight: 600; }
-    .learn-more-btn { color: #009688; text-decoration: none; font-size: 14px; font-weight: 500; }
-    .learn-more-btn:hover { text-decoration: underline; }
-
-    .faq-list-{{ section.id }} .faq-item {
-      padding: 16px 20px;
-      border: 1px solid #eee;
-      border-radius: 10px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .faq-list-{{ section.id }} .faq-title { font-size: 16px; font-weight: 500; }
-    .faq-list-{{ section.id }} .faq-desc { font-size: 14px; color: #666; margin-top: 4px; }
-    .faq-list-{{ section.id }} .faq-btn { padding: 8px 16px; background: #000; color: #fff; border-radius: 6px; text-decoration: none; font-size: 14px; white-space: nowrap; }
-    .faq-list-{{ section.id }} .faq-btn:hover { opacity: 0.8; }
-
-    /* ====================== 手机端弹窗模式 ====================== */
-    @media (max-width: 768px) {
-      .faq-list-{{ section.id }} {
-        display: block;
-      }
-      .mobile-filter-toggle {
-        display: flex;
-      }
-      .collection-list-block {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 280px;
-        height: 100vh;
-        background: #fff;
-        z-index: 9999;
-        padding: 20px;
-        box-shadow: 2px 0 10px rgba(0,0,0,0.1);
-        transform: translateX(-100%);
-        transition: transform 0.3s ease;
-        overflow-y: auto;
-        border-right: none;
-      }
-      .collection-list-block.open {
-        transform: translateX(0);
-      }
-      .filter-close {
-        display: block;
-        font-size: 28px;
-        text-align: right;
-        cursor: pointer;
-        margin-bottom: 16px;
-      }
-      .collection-product-list {
-        max-height: none;
-      }
-      .learn-more-btn {
-          display: none;
-      }
-    }
+  }
 {% endstyle %}
 
 <script>
   document.addEventListener('DOMContentLoaded', function () {
-    const productItems = document.querySelectorAll('.collection-product-item');
-    const faqLists = document.querySelectorAll('.product-faq-list');
-    const filter = document.querySelector('.collection-list-block');
-    const toggle = document.querySelector('.mobile-filter-toggle');
-    const close = document.querySelector('.filter-close');
+    const root = document.querySelector('.faq-list-{{ section.id }}');
 
-    productItems.forEach((item) => {
-      item.onclick = function () {
-        const pid = this.dataset.productId;
-        productItems.forEach((i) => i.classList.remove('active'));
-        this.classList.add('active');
-        faqLists.forEach((list) => {
-          list.classList.toggle('active', list.dataset.productId === pid);
+    if (!root) return;
+
+    const categoryItems = root.querySelectorAll('.faq-category-item');
+    const faqPanels = root.querySelectorAll('.faq-category-panel');
+    const filter = root.querySelector('.collection-list-block');
+    const toggle = root.querySelector('.mobile-filter-toggle');
+    const close = root.querySelector('.filter-close');
+
+    categoryItems.forEach((item) => {
+      item.addEventListener('click', function () {
+        const category = this.dataset.faqCategory;
+
+        categoryItems.forEach((categoryItem) => {
+          categoryItem.classList.remove('active');
         });
-        if (window.innerWidth <= 768) {
+
+        faqPanels.forEach((panel) => {
+          panel.classList.toggle(
+            'active',
+            panel.dataset.faqCategory === category
+          );
+        });
+
+        this.classList.add('active');
+
+        if (window.innerWidth <= 768 && filter) {
           filter.classList.remove('open');
         }
-      };
+      });
     });
 
-    if (toggle) {
-      toggle.onclick = () => filter.classList.add('open');
-      close.onclick = () => filter.classList.remove('open');
+    if (toggle && filter) {
+      toggle.addEventListener('click', function () {
+        filter.classList.add('open');
+      });
     }
 
-    if (productItems.length > 0) {
-      productItems[0].onclick();
+    if (close && filter) {
+      close.addEventListener('click', function () {
+        filter.classList.remove('open');
+      });
+    }
+
+    if (categoryItems.length > 0) {
+      categoryItems[0].click();
     }
   });
 </script>
