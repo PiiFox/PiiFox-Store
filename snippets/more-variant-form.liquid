@@ -7,11 +7,12 @@
   });
 </script>
 <div class="bundle-list">
+  <label class="bundle-list-title">Complete Your Setup</label>
   <div class="bundle-tab-list">
     {% assign bundle_list_labels = product.metafields.custom.bundle_list_labels.value %}
     {% for label in bundle_list_labels %}
       <div class="bundle-tab-item" data-bundle-product-list="{{ label }}">
-        {{ label }}
+        Setup {{ forloop.index }}
       </div>
     {% endfor %}
   </div>

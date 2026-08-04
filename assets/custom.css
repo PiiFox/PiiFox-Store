@@ -1907,6 +1907,15 @@ input.js-qty__num:focus {
   margin: 2rem 0;
 }
 
+.bundle-list .bundle-list-title {
+  display: block;
+  margin: 0 0 10px;
+  font-size: 14px;
+  color: #000;
+  font-weight: 600;
+  line-height: var(--typeBaseLineHeight);
+}
+
 /* 顶部标签栏 */
 .bundle-tab-list {
   display: flex;
