@@ -354,6 +354,153 @@
         "title": "SHOP BY CATEGORY"
       }
     },
+    "style_studio_theme_grid_home": {
+      "type": "style-studio-theme-grid",
+      "blocks": {
+        "theme-nature-home": {
+          "type": "theme_card",
+          "settings": {
+            "title": "Nature & Soft",
+            "title_color": "#107a44",
+            "subtitle": "Calm tones inspired by nature.",
+            "subtitle_color": "#121212",
+            "description": "Soft greens, warm neutrals, and gentle contrast for a relaxed desk setup.",
+            "description_color": "#666666",
+            "button_label": "Explore Theme",
+            "button_text_color": "#107a44",
+            "highlight_color": "#f4efe6"
+          }
+        },
+        "theme-cute-home": {
+          "type": "theme_card",
+          "settings": {
+            "title": "Cute & Colorful",
+            "title_color": "#ef5da8",
+            "subtitle": "Bright, cheerful colors that spark joy.",
+            "subtitle_color": "#121212",
+            "description": "Candy colors and lively legends made for cheerful desk builds.",
+            "description_color": "#666666",
+            "button_label": "Explore Theme",
+            "button_text_color": "#ef5da8",
+            "highlight_color": "#f4efe6"
+          }
+        },
+        "theme-retro-home": {
+          "type": "theme_card",
+          "settings": {
+            "title": "Retro & Playful",
+            "title_color": "#b45309",
+            "subtitle": "Nostalgia with Character",
+            "subtitle_color": "#121212",
+            "description": "Classic vibes, pixel art, and timeless colors that bring back the good old days.",
+            "description_color": "#666666",
+            "button_label": "Explore Theme",
+            "button_text_color": "#b45309",
+            "highlight_color": "#f4efe6"
+          }
+        },
+        "theme-art-home": {
+          "type": "theme_card",
+          "settings": {
+            "title": "Art & Culture",
+            "title_color": "#7c3aed",
+            "subtitle": "Inspired by art, history and expression.",
+            "subtitle_color": "#121212",
+            "description": "Graphic palettes and expressive details for a board with personality.",
+            "description_color": "#666666",
+            "button_label": "Explore Theme",
+            "button_text_color": "#7c3aed",
+            "highlight_color": "#f4efe6"
+          }
+        },
+        "theme-fun-home": {
+          "type": "theme_card",
+          "settings": {
+            "title": "Fun & Unique",
+            "title_color": "#0f766e",
+            "subtitle": "Quirky, bold, and made to stand out.",
+            "subtitle_color": "#121212",
+            "description": "Unexpected colors and playful compositions for a memorable setup.",
+            "description_color": "#666666",
+            "button_label": "Explore Theme",
+            "button_text_color": "#0f766e",
+            "highlight_color": "#f4efe6"
+          }
+        },
+        "style-cassette-home": {
+          "type": "style_card",
+          "settings": {
+            "title": "Cassette",
+            "button_label": "View Style"
+          }
+        },
+        "style-gameboy-home": {
+          "type": "style_card",
+          "settings": {
+            "title": "Gameboy89",
+            "button_label": "View Style"
+          }
+        },
+        "style-pokejo-home": {
+          "type": "style_card",
+          "settings": {
+            "title": "Pokejo",
+            "button_label": "View Style"
+          }
+        },
+        "style-time-home": {
+          "type": "style_card",
+          "settings": {
+            "title": "Time",
+            "button_label": "View Style"
+          }
+        },
+        "style-arcade-home": {
+          "type": "style_card",
+          "settings": {
+            "title": "Arcade Night",
+            "button_label": "View Style"
+          }
+        },
+        "style-dashboard-home": {
+          "type": "style_card",
+          "settings": {
+            "title": "Dashboard Blue",
+            "button_label": "View Style"
+          }
+        },
+        "style-retro-home": {
+          "type": "style_card",
+          "settings": {
+            "title": "Retro Type",
+            "button_label": "View Style"
+          }
+        },
+        "style-neon-home": {
+          "type": "style_card",
+          "settings": {
+            "title": "Neon",
+            "button_label": "View Style"
+          }
+        },
+      },
+      "block_order": [
+        "theme-nature-home",
+        "theme-cute-home",
+        "theme-retro-home",
+        "theme-art-home",
+        "theme-fun-home",
+        "style-cassette-home",
+        "style-gameboy-home",
+        "style-pokejo-home",
+        "style-time-home",
+        "style-arcade-home",
+        "style-dashboard-home",
+        "style-retro-home",
+        "style-neon-home",
+      ],
+      "settings": {}
+    },
     "single_page_width_banner_ihTf8b": {
       "type": "single-page-width-banner",
       "blocks": {
@@ -750,6 +897,7 @@
     "col2_txt_section_RFrVGf",
     "collection_list_LPzqx3",
     "main_collection_list_tAJGQJ",
+    "style_studio_theme_grid_home",
     "single_page_width_banner_ihTf8b",
     "about_us_section_nGTcfQ",
     "joinus_section_YB8Mm3",
