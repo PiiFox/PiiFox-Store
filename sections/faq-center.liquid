@@ -40,7 +40,38 @@
 {% endschema %}
 
 {% assign faq_entries = shop.metaobjects.product_faq.values %}
-{% assign faq_groups = 'policy-faq,keyboards,keycaps,switches,mice,accessories' | split: ',' %}
+
+{% assign faq_group_keys_string = '' %}
+{% assign seen_faq_group_tokens = '|' %}
+{% assign faq_group_order = 'policy-faq,keyboards,keycaps,switches,mice,accessories' | split: ',' %}
+
+{% for item in faq_entries %}
+  {% assign category_tags = item['categories'].value %}
+  {% for category_tag_value in category_tags %}
+    {% assign category_tag = category_tag_value %}
+    {% if category_tag != blank %}
+      {% assign category_tag_parts = category_tag | split: ':' %}
+      {% assign category_group_title = category_tag_parts[0] | strip %}
+      {% assign category_group_key = category_group_title | downcase | handleize %}
+
+      {% if category_group_key != blank %}
+        {% assign group_token = '|' | append: category_group_key | append: '|' %}
+        {% unless seen_faq_group_tokens contains group_token %}
+          {% assign seen_faq_group_tokens = seen_faq_group_tokens | append: category_group_key | append: '|' %}
+          {% assign faq_group_keys_string = faq_group_keys_string | append: category_group_key | append: '||' %}
+        {% endunless %}
+      {% endif %}
+    {% endif %}
+  {% endfor %}
+{% endfor %}
+{% assign faq_group_keys_string = '' %}
+{% for group_key in faq_group_order %}
+  {% assign group_token = '|' | append: group_key | append: '|' %}
+  {% if seen_faq_group_tokens contains group_token %}
+    {% assign faq_group_keys_string = faq_group_keys_string | append: group_key | append: '||' %}
+  {% endif %}
+{% endfor %}
+{% assign faq_group_keys = faq_group_keys_string | split: '||' %}
 
 <div class="faq-list-{{ section.id }}">
   <button type="button" class="mobile-filter-toggle" aria-controls="FAQCategories-{{ section.id }}">
@@ -54,206 +85,203 @@
     <div class="filter-close" role="button" tabindex="0" aria-label="Close FAQ categories">&times;</div>
 
     <nav class="faq-category-navigation" aria-label="FAQ categories">
-      {% for group_key in faq_groups %}
-        {% assign group_title = group_key | capitalize %}
-        {% if group_key == 'policy-faq' %}
-          {% assign group_title = 'Policy FAQ' %}
-        {% endif %}
+      {% for group_key in faq_group_keys %}
+        {% if group_key != blank %}
+          {% assign group_title = '' %}
+          {% assign group_has_direct_category = false %}
+          {% assign child_keys_string = '' %}
+          {% assign child_titles_string = '' %}
+          {% assign seen_child_tokens = '|' %}
 
-        {% capture group_icon %}
-          {% case group_key %}
-            {% when 'policy-faq' %}
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#427347" stroke-width="2" aria-hidden="true">
-                <rect x="5" y="3" width="14" height="18" rx="2"></rect>
-                <path d="M9 8h6M9 12h6M9 16h4"></path>
-              </svg>
-            {% when 'keyboards' %}
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#427347" stroke-width="2" aria-hidden="true">
-                <rect x="2" y="4" width="20" height="16" rx="2"></rect>
-                <path d="M6 8h.01M10 8h.01M14 8h.01M18 8h.01M6 12h.01M10 12h.01M14 12h.01M18 12h.01M8 16h8"></path>
-              </svg>
-            {% when 'keycaps' %}
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#427347" stroke-width="2" aria-hidden="true">
-                <rect x="4" y="4" width="16" height="16" rx="2"></rect>
-                <rect x="9" y="9" width="6" height="6" rx="1"></rect>
-              </svg>
-            {% when 'switches' %}
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#427347" stroke-width="2" aria-hidden="true">
-                <circle cx="12" cy="12" r="10"></circle>
-                <line x1="12" y1="8" x2="12" y2="16"></line>
-                <line x1="8" y1="12" x2="16" y2="12"></line>
-              </svg>
-            {% when 'mice' %}
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#427347" stroke-width="2" aria-hidden="true">
-                <rect x="5" y="3" width="14" height="18" rx="7"></rect>
-                <line x1="12" y1="7" x2="12" y2="11"></line>
-              </svg>
-            {% when 'accessories' %}
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#427347" stroke-width="2" aria-hidden="true">
-                <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
-                <path d="M7.5 4.21v15.58M16.5 4.21v15.58"></path>
-              </svg>
-          {% endcase %}
-        {% endcapture %}
+          {% for item in faq_entries %}
+            {% assign category_tags = item['categories'].value %}
 
-        {% assign category_keys_string = '' %}
-        {% assign seen_category_tokens = '|' %}
+            {% for category_tag_value in category_tags %}
+              {% assign category_tag = category_tag_value %}
+              {% if category_tag != blank %}
+                {% assign category_tag_parts = category_tag | split: ':' %}
+                {% assign category_group_title = category_tag_parts[0] | strip %}
+                {% assign category_group_key = category_group_title | downcase | handleize %}
 
-        {% for item in faq_entries %}
-          {% assign item_group_value = item['faq-group'] %}
-          {% if item_group_value == blank %}
-            {% assign item_group_value = item.faq_group %}
-          {% endif %}
+                {% if category_group_key == group_key %}
+                  {% assign group_title = category_group_title %}
+                  {% assign category_child_title = category_tag_parts[1] | strip %}
 
-          {% assign item_type_value = item['faq-type'] %}
-          {% if item_type_value == blank %}
-            {% assign item_type_value = item.faq_type %}
-          {% endif %}
-
-          {% assign item_group = item_group_value | strip | downcase | handleize %}
-          {% assign item_type = item_type_value | strip | downcase | handleize %}
-
-          {% if item_group == group_key and item_type != blank %}
-            {% assign category_token = '|' | append: item_type | append: '|' %}
-            {% unless seen_category_tokens contains category_token %}
-              {% assign seen_category_tokens = seen_category_tokens | append: item_type | append: '|' %}
-              {% assign category_keys_string = category_keys_string | append: item_type | append: '||' %}
-            {% endunless %}
-          {% endif %}
-        {% endfor %}
-
-        {% assign category_keys = category_keys_string | split: '||' %}
-        {% assign has_same_category = false %}
-
-        {% for category_key in category_keys %}
-          {% if category_key != blank and category_key == group_key %}
-            {% assign has_same_category = true %}
-          {% endif %}
-        {% endfor %}
-
-        {% if has_same_category %}
-          <button
-            type="button"
-            class="collection-group-title faq-category-item faq-category-item--parent"
-            data-faq-category="{{ group_key }}-{{ group_key }}"
-          >
-            {{ group_icon }}
-            <span>{{ group_title }}</span>
-          </button>
-        {% else %}
-          <div class="collection-group-title">
-            {{ group_icon }}
-            <span>{{ group_title }}</span>
-          </div>
-
-          <div class="faq-category-list">
-            {% for category_key in category_keys %}
-              {% if category_key != blank and category_key != group_key %}
-                {% assign category_title = category_key | replace: '-', ' ' | capitalize %}
-
-                {% for item in faq_entries %}
-                  {% assign item_group_value = item['faq-group'] %}
-                  {% if item_group_value == blank %}
-                    {% assign item_group_value = item.faq_group %}
+                  {% if category_child_title == blank %}
+                    {% assign group_has_direct_category = true %}
+                  {% else %}
+                    {% assign category_child_key = category_child_title | downcase | handleize %}
+                    {% assign child_token = '|' | append: category_child_key | append: '|' %}
+                    {% unless seen_child_tokens contains child_token %}
+                      {% assign seen_child_tokens = seen_child_tokens | append: category_child_key | append: '|' %}
+                      {% assign child_keys_string = child_keys_string | append: category_child_key | append: '||' %}
+                      {% assign child_titles_string = child_titles_string | append: category_child_title | append: '||' %}
+                    {% endunless %}
                   {% endif %}
-
-                  {% assign item_type_value = item['faq-type'] %}
-                  {% if item_type_value == blank %}
-                    {% assign item_type_value = item.faq_type %}
-                  {% endif %}
-
-                  {% assign item_group = item_group_value | strip | downcase | handleize %}
-                  {% assign item_type = item_type_value | strip | downcase | handleize %}
-
-                  {% if item_group == group_key and item_type == category_key %}
-                    {% assign category_title = item_type_value | strip %}
-                    {% break %}
-                  {% endif %}
-                {% endfor %}
-
-                <button
-                  type="button"
-                  class="faq-category-item faq-category-item--child"
-                  data-faq-category="{{ group_key }}-{{ category_key }}"
-                >
-                  {{ category_title }}
-                </button>
+                {% endif %}
               {% endif %}
             {% endfor %}
-          </div>
+          {% endfor %}
+
+          {% capture group_icon %}
+            {% case group_key %}
+              {% when 'policy-faq' %}
+                <svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="#427347" stroke-width="2" aria-hidden="true">
+                  <rect x="5" y="3" width="14" height="18" rx="2"></rect>
+                  <path d="M9 8h6M9 12h6M9 16h4"></path>
+                </svg>
+              {% when 'keyboards' %}
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#427347" stroke-width="2" aria-hidden="true">
+                  <rect x="2" y="4" width="20" height="16" rx="2"></rect>
+                  <path d="M6 8h.01M10 8h.01M14 8h.01M18 8h.01M6 12h.01M10 12h.01M14 12h.01M18 12h.01M8 16h8"></path>
+                </svg>
+              {% when 'keycaps' %}
+                <svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="#427347" stroke-width="2" aria-hidden="true">
+                  <rect x="4" y="4" width="16" height="16" rx="2"></rect>
+                  <rect x="9" y="9" width="6" height="6" rx="1"></rect>
+                </svg>
+              {% when 'switches' %}
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#427347" stroke-width="2" aria-hidden="true">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <line x1="12" y1="8" x2="12" y2="16"></line>
+                  <line x1="8" y1="12" x2="16" y2="12"></line>
+                </svg>
+              {% when 'mice' %}
+                <svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="#427347" stroke-width="2" aria-hidden="true">
+                  <rect x="5" y="3" width="14" height="18" rx="7"></rect>
+                  <line x1="12" y1="7" x2="12" y2="11"></line>
+                </svg>
+              {% when 'accessories' %}
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#427347" stroke-width="2" aria-hidden="true">
+                  <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                  <path d="M7.5 4.21v15.58M16.5 4.21v15.58"></path>
+                </svg>
+            {% endcase %}
+          {% endcapture %}
+
+          {% if group_has_direct_category %}
+            <button
+              type="button"
+              class="collection-group-title faq-category-item faq-category-item--parent"
+              data-faq-category="{{ group_key }}"
+            >
+              {{ group_icon }}
+              <span>{{ group_title | escape }}</span>
+            </button>
+          {% else %}
+            <div class="collection-group-title">
+              {{ group_icon }}
+              <span>{{ group_title | escape }}</span>
+            </div>
+          {% endif %}
+
+          {% assign child_keys = child_keys_string | split: '||' %}
+          {% assign child_titles = child_titles_string | split: '||' %}
+          {% if child_keys_string != blank %}
+            <div class="faq-category-list">
+              {% for child_key in child_keys %}
+                {% if child_key != blank %}
+                  <button
+                    type="button"
+                    class="faq-category-item faq-category-item--child"
+                    data-faq-category="{{ group_key }}--{{ child_key }}"
+                  >
+                    {{ child_titles[forloop.index0] | escape }}
+                  </button>
+                {% endif %}
+              {% endfor %}
+            </div>
+          {% endif %}
         {% endif %}
       {% endfor %}
     </nav>
   </div>
 
   <div class="product-faq-list-block">
-    {% for group_key in faq_groups %}
-      {% assign category_keys_string = '' %}
-      {% assign seen_category_tokens = '|' %}
+    {% for group_key in faq_group_keys %}
+      {% if group_key != blank %}
+        {% assign category_keys_string = '' %}
+        {% assign seen_category_tokens = '|' %}
 
-      {% for item in faq_entries %}
-        {% assign item_group_value = item['faq-group'] %}
-        {% if item_group_value == blank %}
-          {% assign item_group_value = item.faq_group %}
-        {% endif %}
+        {% for item in faq_entries %}
+          {% assign category_tags = item['categories'].value %}
 
-        {% assign item_type_value = item['faq-type'] %}
-        {% if item_type_value == blank %}
-          {% assign item_type_value = item.faq_type %}
-        {% endif %}
+          {% for category_tag_value in category_tags %}
+            {% assign category_tag = category_tag_value %}
+            {% if category_tag != blank %}
+              {% assign category_tag_parts = category_tag | split: ':' %}
+              {% assign category_group_title = category_tag_parts[0] | strip %}
+              {% assign category_group_key = category_group_title | downcase | handleize %}
 
-        {% assign item_group = item_group_value | strip | downcase | handleize %}
-        {% assign item_type = item_type_value | strip | downcase | handleize %}
+              {% if category_group_key == group_key %}
+                {% assign category_child_title = category_tag_parts[1] | strip %}
+                {% if category_child_title == blank %}
+                  {% assign category_key = group_key %}
+                {% else %}
+                  {% assign category_child_key = category_child_title | downcase | handleize %}
+                  {% assign category_key = group_key | append: '--' | append: category_child_key %}
+                {% endif %}
 
-        {% if item_group == group_key and item_type != blank %}
-          {% assign category_token = '|' | append: item_type | append: '|' %}
-          {% unless seen_category_tokens contains category_token %}
-            {% assign seen_category_tokens = seen_category_tokens | append: item_type | append: '|' %}
-            {% assign category_keys_string = category_keys_string | append: item_type | append: '||' %}
-          {% endunless %}
-        {% endif %}
-      {% endfor %}
-
-      {% assign category_keys = category_keys_string | split: '||' %}
-
-      {% for category_key in category_keys %}
-        {% if category_key != blank %}
-          {% assign full_category_key = group_key | append: '-' | append: category_key %}
-          {% assign has_faqs = false %}
-
-          <div
-            class="product-faq-list--wrapper faq-category-panel"
-            data-faq-category="{{ full_category_key }}"
-          >
-            {% for item in faq_entries %}
-              {% assign item_group_value = item['faq-group'] %}
-              {% if item_group_value == blank %}
-                {% assign item_group_value = item.faq_group %}
+                {% assign category_token = '|' | append: category_key | append: '|' %}
+                {% unless seen_category_tokens contains category_token %}
+                  {% assign seen_category_tokens = seen_category_tokens | append: category_key | append: '|' %}
+                  {% assign category_keys_string = category_keys_string | append: category_key | append: '||' %}
+                {% endunless %}
               {% endif %}
+            {% endif %}
+          {% endfor %}
+        {% endfor %}
 
-              {% assign item_type_value = item['faq-type'] %}
-              {% if item_type_value == blank %}
-                {% assign item_type_value = item.faq_type %}
-              {% endif %}
+        {% assign category_keys = category_keys_string | split: '||' %}
+        {% for category_key in category_keys %}
+          {% if category_key != blank %}
+            {% assign has_faqs = false %}
 
-              {% assign item_group = item_group_value | strip | downcase | handleize %}
-              {% assign item_type = item_type_value | strip | downcase | handleize %}
+            <div
+              class="product-faq-list--wrapper faq-category-panel"
+              data-faq-category="{{ category_key }}"
+            >
+              {% for item in faq_entries %}
+                {% assign item_matches_category = false %}
+                {% assign faq_index = category_key | append: '-' | append: forloop.index0 %}
+                {% assign category_tags = item['categories'].value %}
 
-              {% assign item_key = item_group | append: '-' | append: item_type %}
+                {% for category_tag_value in category_tags %}
+                  {% assign category_tag = category_tag_value %}
+                  {% if category_tag != blank %}
+                    {% assign category_tag_parts = category_tag | split: ':' %}
+                    {% assign category_group_title = category_tag_parts[0] | strip %}
+                    {% assign category_group_key = category_group_title | downcase | handleize %}
 
-              {% if item_key == full_category_key %}
-                {% assign has_faqs = true %}
-                {% assign faq_index = full_category_key | append: '-' | append: forloop.index0 %}
-                {% render 'faq-item', item: item, index: faq_index %}
-              {% endif %}
-            {% endfor %}
+                    {% if category_group_key == group_key %}
+                      {% assign category_child_title = category_tag_parts[1] | strip %}
+                      {% if category_child_title == blank %}
+                        {% assign item_category_key = group_key %}
+                      {% else %}
+                        {% assign category_child_key = category_child_title | downcase | handleize %}
+                        {% assign item_category_key = group_key | append: '--' | append: category_child_key %}
+                      {% endif %}
 
-            {% unless has_faqs %}
-              <p class="faq-empty-message">No FAQs available in this category.</p>
-            {% endunless %}
-          </div>
-        {% endif %}
-      {% endfor %}
+                      {% if item_category_key == category_key %}
+                        {% assign item_matches_category = true %}
+                      {% endif %}
+                    {% endif %}
+                  {% endif %}
+                {% endfor %}
+
+                {% if item_matches_category %}
+                  {% assign has_faqs = true %}
+                  {% render 'faq-item', item: item, index: faq_index %}
+                {% endif %}
+              {% endfor %}
+
+              {% unless has_faqs %}
+                <p class="faq-empty-message">No FAQs available in this category.</p>
+              {% endunless %}
+            </div>
+          {% endif %}
+        {% endfor %}
+      {% endif %}
     {% endfor %}
 
     {% render 'support-contact-section', section: section %}
