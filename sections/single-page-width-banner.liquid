@@ -4,7 +4,11 @@
     {% assign block = section.blocks[0] %}
     {%  style %}
       .single-page-width-banner-section-{{ section.id }} .single-page-width-banner-section--content {
-          background-image: url('https://cdn.shopify.com/s/files/1/1001/2383/6697/files/p-1-no-text.jpg?v=1784789888');
+          {% if block.settings.banner != blank %}
+            background-image: url('{{ block.settings.banner | image_url: width: 2400 }}');
+          {% else %}
+            background-image: none;
+          {% endif %}
           background-size: cover;
           background-position: center;
           padding: 3.5em 4em;
@@ -17,7 +21,11 @@
       }
       @media screen and (max-width: 768px) {
           .single-page-width-banner-section-{{ section.id }} .single-page-width-banner-section--content {
-              background-image: url('https://cdn.shopify.com/s/files/1/1001/2383/6697/files/m-1-no-text.jpg?v=1784789888');
+            {% if block.settings.m_banner != blank %}
+              background-image: url('{{ block.settings.m_banner | image_url: width: 1600 }}');
+            {% else %}
+              background-image: none;
+            {% endif %}
           }
       }
     {% endstyle %}
@@ -61,7 +69,7 @@
       line-height: 0.9;
       letter-spacing: 0.01em;
       text-transform: uppercase;
-      white-space: nowrap;
+      white-space: pre-line;
       transform: scaleX(0.8);
       transform-origin: left top;
       margin-bottom: 0.25em;
@@ -73,6 +81,7 @@
       line-height: 1.35;
       margin-bottom: 1.7em;
       margin-left: 0.2em;
+      white-space: pre-line;
   }
   .single-page-width-banner-section-{{ section.id }} .single-page-width-banner-section--content--left-btn {
       display: inline-flex;
@@ -98,40 +107,40 @@
       height: 1.1em;
       line-height: 100%;
   }
-    @media screen and (max-width: 768px) {
-      .single-page-width-banner-section-{{ section.id }} {
-        padding: 2em 0;
-        font-size: 1em;
-      }
-      .single-page-width-banner-section-{{ section.id }} .single-page-width-banner-section--content {
-        height: auto;
-        aspect-ratio: 1131 / 1391;
-        padding: 3.5em 3.5em;
-        align-items: flex-start;
-      }
-      .single-page-width-banner-section-{{ section.id }} .single-page-width-banner-section--content--left {
-        width: 100%;
-        padding-right: 0;
-      }
-      .single-page-width-banner-section-{{ section.id }} .single-page-width-banner-section--content--left-title {
-        font-size: 3.8em;
-        line-height: 0.9;
-        margin-bottom: 0.35em;
-      }
-      .single-page-width-banner-section-{{ section.id }} .single-page-width-banner-section--content--left-subtitle {
-        font-size: 0.8em;
-        line-height: 1.35;
-        margin-bottom: 2.5em;
-        margin-left: 0.2em;
-        max-width: 20em;
-        white-space: nowrap;
-      }
-      .single-page-width-banner-section-{{ section.id }} .single-page-width-banner-section--content--left-btn {
-        gap: 0.75em;
-        min-width: 12em;
-        padding: 0.8em 1em;
-        font-size: 0.7em;
-      }
+  @media screen and (max-width: 768px) {
+    .single-page-width-banner-section-{{ section.id }} {
+      padding: 2em 0;
+      font-size: 1em;
+    }
+    .single-page-width-banner-section-{{ section.id }} .single-page-width-banner-section--content {
+      height: auto;
+      aspect-ratio: 1490 / 1055;
+      padding: 0em 3.5em;
+      align-items: flex-start;
+    }
+    .single-page-width-banner-section-{{ section.id }} .single-page-width-banner-section--content--left {
+      width: 100%;
+      padding-right: 0;
+    }
+    .single-page-width-banner-section-{{ section.id }} .single-page-width-banner-section--content--left-title {
+      font-size: 2.9em;
+      line-height: 0.9;
+      margin-bottom: -0.2em;
+    }
+    .single-page-width-banner-section-{{ section.id }} .single-page-width-banner-section--content--left-subtitle {
+      font-size: 0.7em;
+      line-height: 1.35;
+      margin-bottom: 1.2em;
+      margin-left: 0.2em;
+      max-width: 20em;
+      white-space: pre-line;
+    }
+    .single-page-width-banner-section-{{ section.id }} .single-page-width-banner-section--content--left-btn {
+      gap: 0.75em;
+      min-width: 12em;
+      padding: 0.7em 0.9em;
+      font-size: 0.6em;
+    }
   }
   
   @media screen and (max-width: 580px) {
@@ -141,8 +150,8 @@
       }
       .single-page-width-banner-section-{{ section.id }} .single-page-width-banner-section--content {
         height: auto;
-        aspect-ratio: 1131 / 1391;
-        padding: 3em 2.5em;
+        aspect-ratio: 1490 / 1055;
+        padding: 0em 2.5em;
         align-items: flex-start;
       }
       .single-page-width-banner-section-{{ section.id }} .single-page-width-banner-section--content--left {
@@ -150,47 +159,53 @@
         padding-right: 0;
       }
       .single-page-width-banner-section-{{ section.id }} .single-page-width-banner-section--content--left-title {
-        font-size: 3em;
+        font-size: 2.2em;
         line-height: 0.9;
-        margin-bottom: 0.25em;
+        margin-bottom: -0.2em;
       }
       .single-page-width-banner-section-{{ section.id }} .single-page-width-banner-section--content--left-subtitle {
-        font-size: 0.6em;
+        font-size: 0.5em;
         line-height: 1.35;
-        margin-bottom: 1.4em;
+        margin-bottom: 0.5em;
         margin-left: 0.2em;
         max-width: 20em;
-        white-space: nowrap;
+        white-space: pre-line;
       }
       .single-page-width-banner-section-{{ section.id }} .single-page-width-banner-section--content--left-btn {
         gap: 0.75em;
         min-width: 12em;
-        padding: 0.8em 1em;
+        padding: 0.6em 0.8em;
         font-size: 0.5em;
+      }
+      .single-page-width-banner-section-{{ section.id }} .single-page-width-banner-section--content--left-btn span {
+        height: 1.32em;
+        line-height: 100%;
       }
   }
   @media screen and (max-width: 430px) {
       .single-page-width-banner-section-{{ section.id }} .single-page-width-banner-section--content {
-        padding: 2em 2em;
+        padding: 0em 2em;
+        aspect-ratio: 1490 / 1055;
       }
       .single-page-width-banner-section-{{ section.id }} .single-page-width-banner-section--content--left-title {
-        font-size: 2.2em;
+        font-size: 1.8em;
         line-height: 0.9;
-        margin-bottom: 0.25em;
+        margin-bottom: -0.2em;
       }
       .single-page-width-banner-section-{{ section.id }} .single-page-width-banner-section--content--left-subtitle {
-        font-size: 0.5em;
-        max-width: 18em;
-        white-space: nowrap;
+        font-size: 0.4em;
+        max-width: 19em;
+        white-space: pre-line;
+        margin-bottom: 0;
       }
       .single-page-width-banner-section-{{ section.id }} .single-page-width-banner-section--content--left-btn {
         gap: 0.75em;
         min-width: 5em;
-        padding: 0.8em 1em;
-        font-size: 0.45em;
+        padding: 0.5em 0.7em;
+        font-size: 0.4em;
       }
       .single-page-width-banner-section-{{ section.id }} .single-page-width-banner-section--content--left-btn span {
-        height: 1.37em;
+        height: 1.48em;
         line-height: 100%;
       }
   }
@@ -209,7 +224,7 @@
         {
           "type": "image_picker",
           "id": "banner",
-          "label": "Banner Image"
+          "label": "Desktop Banner Image"
         },
         {
           "type": "image_picker",
@@ -217,12 +232,12 @@
           "label": "Mobile Banner Image"
         },
         {
-          "type": "text",
+          "type": "textarea",
           "id": "banner_title",
           "label": "Banner Title"
         },
         {
-          "type": "text",
+          "type": "textarea",
           "id": "sub_title",
           "label": "Sub Title"
         },
