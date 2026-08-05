@@ -540,10 +540,10 @@
         "single_page_width_banner_btfwM4": {
           "type": "single_page_width_banner",
           "settings": {
-            "banner": "shopify://shop_images/20260626-163954.jpg",
-            "m_banner": "shopify://shop_images/20260626-164003.jpg",
-            "banner_title": "STATE YOUR<br>BOARDS",
-            "sub_title": "Browse curated PIIFOX keycap themes <br> and build a setup with more personality.",
+            "banner": "shopify://shop_images/p-1-no-text.jpg",
+            "m_banner": "shopify://shop_images/m-half-bg.png",
+            "banner_title": "STATE YOUR\nBOARDS",
+            "sub_title": "Browse curated PIIFOX keycap themes \nand build a setup with more personality.",
             "btn_link": "shopify://pages/keycaps-themes-lab",
             "btn_label": "SHOP KEYCAP THEMES"
           }
