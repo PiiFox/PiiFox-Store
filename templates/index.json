@@ -366,7 +366,9 @@
             "subtitle_color": "#121212",
             "description": "Soft greens, warm neutrals, and gentle contrast for a relaxed desk setup.",
             "description_color": "#666666",
+            "collection": "",
             "button_label": "Explore Theme",
+            "button_link": "",
             "button_text_color": "#107a44",
             "highlight_color": "#f4efe6"
           }
@@ -380,7 +382,9 @@
             "subtitle_color": "#121212",
             "description": "Candy colors and lively legends made for cheerful desk builds.",
             "description_color": "#666666",
+            "collection": "",
             "button_label": "Explore Theme",
+            "button_link": "",
             "button_text_color": "#ef5da8",
             "highlight_color": "#f4efe6"
           }
@@ -394,7 +398,9 @@
             "subtitle_color": "#121212",
             "description": "Classic vibes, pixel art, and timeless colors that bring back the good old days.",
             "description_color": "#666666",
+            "collection": "",
             "button_label": "Explore Theme",
+            "button_link": "",
             "button_text_color": "#b45309",
             "highlight_color": "#f4efe6"
           }
@@ -408,7 +414,9 @@
             "subtitle_color": "#121212",
             "description": "Graphic palettes and expressive details for a board with personality.",
             "description_color": "#666666",
+            "collection": "",
             "button_label": "Explore Theme",
+            "button_link": "",
             "button_text_color": "#7c3aed",
             "highlight_color": "#f4efe6"
           }
@@ -422,7 +430,9 @@
             "subtitle_color": "#121212",
             "description": "Unexpected colors and playful compositions for a memorable setup.",
             "description_color": "#666666",
+            "collection": "",
             "button_label": "Explore Theme",
+            "button_link": "",
             "button_text_color": "#0f766e",
             "highlight_color": "#f4efe6"
           }
@@ -430,59 +440,75 @@
         "style-cassette-home": {
           "type": "style_card",
           "settings": {
+            "collection": "",
             "title": "Cassette",
-            "button_label": "View Style"
+            "button_label": "View Style",
+            "button_link": ""
           }
         },
         "style-gameboy-home": {
           "type": "style_card",
           "settings": {
+            "collection": "",
             "title": "Gameboy89",
-            "button_label": "View Style"
+            "button_label": "View Style",
+            "button_link": ""
           }
         },
         "style-pokejo-home": {
           "type": "style_card",
           "settings": {
+            "collection": "",
             "title": "Pokejo",
-            "button_label": "View Style"
+            "button_label": "View Style",
+            "button_link": ""
           }
         },
         "style-time-home": {
           "type": "style_card",
           "settings": {
+            "collection": "",
             "title": "Time",
-            "button_label": "View Style"
+            "button_label": "View Style",
+            "button_link": ""
           }
         },
         "style-arcade-home": {
           "type": "style_card",
           "settings": {
+            "collection": "",
             "title": "Arcade Night",
-            "button_label": "View Style"
+            "button_label": "View Style",
+            "button_link": ""
           }
         },
         "style-dashboard-home": {
           "type": "style_card",
           "settings": {
+            "collection": "",
             "title": "Dashboard Blue",
-            "button_label": "View Style"
+            "button_label": "View Style",
+            "button_link": ""
           }
         },
         "style-retro-home": {
           "type": "style_card",
           "settings": {
+            "collection": "",
             "title": "Retro Type",
-            "button_label": "View Style"
+            "button_label": "View Style",
+            "button_link": ""
           }
         },
         "style-neon-home": {
           "type": "style_card",
           "settings": {
+            "collection": "",
             "title": "Neon",
-            "button_label": "View Style"
+            "button_label": "View Style",
+            "button_link": ""
           }
-        },
+        }
       },
       "block_order": [
         "theme-nature-home",
@@ -497,9 +523,16 @@
         "style-arcade-home",
         "style-dashboard-home",
         "style-retro-home",
-        "style-neon-home",
+        "style-neon-home"
       ],
-      "settings": {}
+      "disabled": true,
+      "settings": {
+        "title_before": "One Board.",
+        "title_before_color": "#121212",
+        "title_after": "Many Styles.",
+        "title_after_color": "#244f1d",
+        "subtitle": "Preview how different keycap themes transform the same keyboard."
+      }
     },
     "single_page_width_banner_ihTf8b": {
       "type": "single-page-width-banner",
