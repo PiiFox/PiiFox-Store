@@ -817,13 +817,24 @@
 >
   {% render 'product-description', product: product %}
 </div>
-<div
-  id="product-space"
-  class="page-width page-width--narrow Specs filter-item"
-  data-snippet="Specs"
->
-  {% render 'product-specs', product: product %}
-</div>
+{%- assign show_product_specs = false -%}
+{%- if product.category == 'Keyboards' -%}
+  {%- assign show_product_specs = true -%}
+{%- elsif product.category == 'Keyboard Keycaps' or product.category == 'Keyboard Switches' -%}
+  {%- assign product_spec_data = product.metafields.custom.product_spec.value -%}
+  {%- if product_spec_data.system.type != blank -%}
+    {%- assign show_product_specs = true -%}
+  {%- endif -%}
+{%- endif -%}
+{%- if show_product_specs -%}
+  <div
+    id="product-space"
+    class="page-width page-width--narrow Specs filter-item"
+    data-snippet="Specs"
+  >
+    {% render 'product-specs', product: product %}
+  </div>
+{%- endif -%}
 {% if product.category == 'Keyboards' %}
   <div
     id="product-switches"

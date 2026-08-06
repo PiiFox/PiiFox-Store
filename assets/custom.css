@@ -874,6 +874,43 @@ p.link__title {
   z-index: 1;
   background: linear-gradient(180deg, transparent, #ffffff);
 }
+
+/* Simple text-only copy in the Features section */
+.page-width.Features .product-description--simple {
+  width: 80%;
+  max-width: none;
+  margin: clamp(1.5rem, 4vw, 3.5rem) auto clamp(3rem, 7vw, 6rem);
+  padding: clamp(1.35rem, 3vw, 2.2rem) clamp(1.25rem, 4vw, 3rem);
+  border: 1px solid rgba(10, 31, 24, 0.1);
+  border-left: 4px solid var(--colorLightLink, #087a3f);
+  border-radius: 0 14px 14px 0;
+  background: linear-gradient(135deg, #f7faf8 0%, #f1f6f3 100%);
+  box-shadow: 0 12px 30px rgba(10, 31, 24, 0.07);
+  color: #24312b;
+  font-size: clamp(1.05rem, 0.45vw + 0.95rem, 1.3rem);
+  line-height: 1.75;
+  letter-spacing: 0.005em;
+}
+
+.page-width.Features .product-description--simple > :first-child {
+  margin-top: 0;
+}
+
+.page-width.Features .product-description--simple > :last-child {
+  margin-bottom: 0;
+}
+
+@media screen and (max-width: 768px) {
+  .page-width.Features .product-description--simple {
+    width: calc(100% - 2rem);
+    margin-top: 1.35rem;
+    margin-bottom: 3rem;
+    padding: 1.15rem 1rem 1.2rem 1.15rem;
+    border-radius: 0 10px 10px 0;
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+}
 .bottom_btn a {
   display: inline-block;
   font-size: 1em;

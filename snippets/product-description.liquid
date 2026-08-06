@@ -6,6 +6,14 @@
   {%- endif -%}
 {% endcapture %}
 
+{% assign description_content = description | strip_html | strip %}
+{% if description_content != blank %}
+
+{% assign is_simple_product_description = true %}
+{% if description contains '<img' or description contains '<table' or description contains '<iframe' or description contains '<div' or description contains '<section' or description contains '<ul' %}
+  {% assign is_simple_product_description = false %}
+{% endif %}
+
 {% if product.category == 'Keyboard Keycaps' %}
   {{ 'keycap-detail-basecss.css' | asset_url | stylesheet_tag: preload: true }}
 {% elsif product.category == 'Keyboard Switches' %}
@@ -16,7 +24,7 @@
   {% assign title = 'products.product.description' | t %}
   {%- render 'tab', id: id, title: title, content: description -%}
 {%- else -%}
-  <div class="rte">
+  <div class="rte{% if is_simple_product_description %} product-description--simple{% endif %}">
     {% if product.category == 'Keyboard Switches' %}
       <div class="page-width">
     {% endif %}
@@ -62,3 +70,4 @@
     {% endif %}
   </div>
 {%- endif -%}
+{% endif %}
