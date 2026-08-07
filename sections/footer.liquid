@@ -93,24 +93,7 @@
     <div class="page-width">
     
     {%- if section.settings.show_payment_icons -%}
-      {%- unless shop.enabled_payment_types == empty -%}
-        <ul class="inline-list payment-icons footer__section">
-          {%- for type in shop.enabled_payment_types -%}
-            <li class="icon--payment">
-              {{ type | payment_type_svg_tag }}
-            </li>
-          {%- endfor -%}
-          {%- assign payment_icons_available = 'amazon_payments,american_express,apple_pay,bitcoin,cirrus,dankort,diners_club,discover,dogecoin,dwolla,forbrugsforeningen,interac,jcb,klarna,litecoin,maestro,master,paypal,stripe,shopify_pay,visa,visa_electron' | split: ',' -%}
-          {%- assign payments = section.settings.payments | remove: ' ' | split: ',' -%}
-          {%- for payment in payments -%}
-            {% if payment_icons_available contains payment %}
-              <li class="icon--payment">
-                <img width="32" height="24" src="{{ 'close.svg' | asset_url }}" data-src="{{ payment | payment_type_img_url }}"  class="footer-payment-logo lazyload" alt="{{ payment }}" />
-              </li>
-            {%- endif -%}
-          {%- endfor -%}
-        </ul>
-      {%- endunless -%}
+      {%- render 'payment-icons' -%}
     {%- endif -%}
     
     {%- if section.settings.show_copyright -%}
@@ -143,13 +126,6 @@
       "type": "header",
       "content": "t:sections.footer.settings.header_language_selector",
       "info": "t:sections.footer.settings.header_language_selector"
-    },
-    {
-      "type": "textarea",
-      "id": "payments",
-      "label": "Payment to show",
-      "info": "amazon_payments,american_express,apple_pay,bitcoin,cirrus,dankort,diners_club,discover,dogecoin,dwolla,forbrugsforeningen,interac,jcb,klarna,litecoin,maestro,master,paypal,stripe,shopify_pay,visa,visa_electron",
-      "default": "visa,master,american_express,discover,jcb,diners_club,maestro,klarna"
     },
     {
       "type": "checkbox",
@@ -407,18 +383,21 @@
       ]
     }
   ],
-  "default": {
-    "settings": {},
-    "blocks": [
-      {
-        "type": "menu",
-        "settings": {}
-      },
-      {
-        "type": "logo_social",
-        "settings": {}
-      }
-    ]
-  }
+  "presets": [
+    {
+      "name": "Default",
+      "settings": {},
+      "blocks": [
+        {
+          "type": "menu",
+          "settings": {}
+        },
+        {
+          "type": "logo_social",
+          "settings": {}
+        }
+      ]
+    }
+  ]
 }
 {% endschema %}

@@ -156,7 +156,7 @@
               {%- assign payment_icon_block = blocks | where: 'type', 'payment_icon' | first -%}
               {% if payment_icon_block %}
                 <div class="product-block" {{ payment_icon_block.shopify_attributes }}>
-                  {{ payment_icon_block.settings.code }}
+                  {%- render 'payment-icons' -%}
                 </div>
               {% endif %}
             </div>
@@ -629,7 +629,7 @@
                     </div>
                   {%- when 'payment_icon' -%}
                     <div class="product-block pc--hide" {{ block.shopify_attributes }}>
-                      {{ payment_icon_block.settings.code }}
+                      {%- render 'payment-icons' -%}
                     </div>
                   {%- when 'custom' -%}
                     <div class="product-block" {{ block.shopify_attributes }}>

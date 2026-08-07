@@ -318,7 +318,6 @@
           ".footer__collapsible p {color: #b8b8b8;}"
         ],
         "settings": {
-          "payments": "visa,master,american_express,discover,jcb,diners_club,maestro,klarna",
           "show_locale_selector": false,
           "show_currency_selector": false,
           "show_currency_flags": true,
