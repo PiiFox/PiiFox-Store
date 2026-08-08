@@ -19,6 +19,12 @@
     font-size: 1.2em;
     margin-bottom: 0.8em;
   }
+  {% if page.handle == 'shipping-policy' %}
+    .newsletter-{{ section.id }} .footer-context,
+    .newsletter-{{ section.id }} .footer-context p {
+      text-align: center;
+    }
+  {% endif %}
   @media screen and (max-width: 768px) {
     .newsletter-{{ section.id }} .footer-title {
       font-size: 1.6em;

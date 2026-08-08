@@ -12,3 +12,15 @@
         {% endcase %}   
     </div>
 </div>
+
+{% if page.handle == 'shipping-policy' %}
+    <style>
+        body.template-page {
+            padding: 0;
+        }
+
+        .policy-page-{{ section.id }} .policy-page-content {
+            padding: 37px;
+        }
+    </style>
+{% endif %}
