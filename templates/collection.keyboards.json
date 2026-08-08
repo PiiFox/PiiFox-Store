@@ -599,7 +599,7 @@
           "type": "service_item",
           "settings": {
             "service_img": "shopify://shop_images/footer-icon1_1c7e0e71-312c-45ba-841d-143686c63e07.png",
-            "service_title": "Secure & Fast Delivery",
+            "service_title": "Secure & Fast\nDelivery",
             "service_description": "Fast, secure shipping you can count on."
           }
         },
@@ -607,7 +607,7 @@
           "type": "service_item",
           "settings": {
             "service_img": "shopify://shop_images/footer-icon2_ae165278-8567-4f3a-ad49-e2c526c8498b.png",
-            "service_title": "1-Year Free Warranty",
+            "service_title": "1-Year Free\nWarranty",
             "service_description": "All PIIFOX keyboards come with a 1-year limited warranty."
           }
         },
@@ -615,7 +615,7 @@
           "type": "service_item",
           "settings": {
             "service_img": "shopify://shop_images/footer-icon3_8076622e-27c0-49a3-aa04-a93ddb8e6477.png",
-            "service_title": "Hassle-Free Returns",
+            "service_title": "Hassle-Free\nReturns",
             "service_description": "7-Day No-Reason Return,30-Day Quality Issue Return."
           }
         },
@@ -623,7 +623,7 @@
           "type": "service_item",
           "settings": {
             "service_img": "shopify://shop_images/footer-icon4_ec25736e-ddc5-4aee-9832-defeb336309e.png",
-            "service_title": "Expert Support",
+            "service_title": "Expert\nSupport",
             "service_description": "Our keyboard experts are here to help 7 days a week."
           }
         }
