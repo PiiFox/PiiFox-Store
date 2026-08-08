@@ -166,21 +166,30 @@
 
     const maskArea = document.querySelector(`.ProductRuleList-popup-mask`);
     if (maskArea) {
-      maskArea.addEventListener('click', function () {
-        document.querySelector(`.${popupId}`).style.display = 'none';
+      maskArea.addEventListener('click', function (e) {
+        // 修改为只有点击弹窗外部的遮罩空白区域时才关闭弹窗
+        if (e.target === maskArea) {
+          document.querySelector(`.${popupId}`).style.display = 'none';
+        }
       });
     }
 
-    const items = document.querySelectorAll(`#${popupId} .product-rule-item .product-rule-item-header`);
+    const items = document.querySelectorAll(`#${popupId} .product-rule-item`);
     items.forEach((item) => {
       item.addEventListener('click', function (e) {
         e.stopPropagation();
-        const activeBody = e.target.closest('.product-rule-item');
+
+        if (e.target.closest('.product-rule-item-body')) {
+          return;
+        }
+
+        const activeBody = this;
 
         const allBodies = document.querySelectorAll(`#${popupId} .product-rule-item`);
+        const wasActive = activeBody.classList.contains('active');
         allBodies.forEach((body) => body.classList.remove('active'));
 
-        if (activeBody) {
+        if (!wasActive) {
           activeBody.classList.add('active');
         }
       });
@@ -233,7 +242,14 @@
     display: flex;
     align-items: center;
   }
+  .product-rule-list--wrapper .product-rule-item .collapse-rule-item-icon {
+    display: flex;
+    align-items: center;
+    flex: 0 0 auto;
+    line-height: 0;
+  }
   .product-rule-list--wrapper .product-rule-item .collapse-rule-item-icon img {
+    display: block;
     width: 1.3em;
     margin-right: 1em;
   }
@@ -249,6 +265,15 @@
     font-size: 1.3em;
     color: #bfbfc3;
     margin-left: 1em;
+  }
+  .product-rule-list--wrapper .product-rule-item .collapse-rule-item-detail svg,
+  .product-rule-list--wrapper .product-rule-item .collapse-rule-item-collapse svg {
+    transform-origin: center;
+    transition: transform 0.3s ease;
+  }
+  .product-rule-list--wrapper .product-rule-item.active .collapse-rule-item-detail svg,
+  .product-rule-list--wrapper .product-rule-item.active .collapse-rule-item-collapse svg {
+    transform: rotate(90deg);
   }
   .product-rule-list--wrapper .product-rule-item .product-rule-item-body {
     height: 0;
