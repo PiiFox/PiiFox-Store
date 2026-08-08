@@ -237,10 +237,51 @@
           {% if category_key != blank %}
             {% assign has_faqs = false %}
 
+            {% assign faq_category_parent_title = '' %}
+            {% assign faq_category_child_title = '' %}
+            {% for category_item in faq_entries %}
+              {% assign category_tags = category_item['categories'].value %}
+
+              {% for category_tag_value in category_tags %}
+                {% assign category_tag = category_tag_value %}
+                {% if category_tag != blank %}
+                  {% assign category_tag_parts = category_tag | split: ':' %}
+                  {% assign category_group_title = category_tag_parts[0] | strip %}
+                  {% assign category_group_key = category_group_title | downcase | handleize %}
+
+                  {% if category_group_key == group_key %}
+                    {% assign category_child_title = category_tag_parts[1] | strip %}
+                    {% if category_child_title == blank %}
+                      {% assign item_category_key = group_key %}
+                    {% else %}
+                      {% assign category_child_key = category_child_title | downcase | handleize %}
+                      {% assign item_category_key = group_key | append: '--' | append: category_child_key %}
+                    {% endif %}
+
+                    {% if item_category_key == category_key %}
+                      {% assign faq_category_parent_title = category_group_title %}
+                      {% assign faq_category_child_title = category_child_title %}
+                    {% endif %}
+                  {% endif %}
+                {% endif %}
+              {% endfor %}
+            {% endfor %}
+
             <div
               class="product-faq-list--wrapper faq-category-panel"
               data-faq-category="{{ category_key }}"
             >
+              {% if faq_category_parent_title != blank %}
+                <div class="faq-category-context" aria-label="FAQ category">
+                  <span class="faq-category-context__label">Category</span>
+                  <span class="faq-category-context__name">{{ faq_category_parent_title | escape }}</span>
+                  {% if faq_category_child_title != blank %}
+                    <span class="faq-category-context__separator" aria-hidden="true">/</span>
+                    <span class="faq-category-context__name">{{ faq_category_child_title | escape }}</span>
+                  {% endif %}
+                </div>
+              {% endif %}
+
               {% for item in faq_entries %}
                 {% assign item_matches_category = false %}
                 {% assign faq_index = category_key | append: '-' | append: forloop.index0 %}
@@ -412,6 +453,18 @@
     display: block;
   }
 
+  .faq-category-context {
+    display: none;
+  }
+
+  .product-faq-list--wrapper.faq-category-panel button.collapsible-trigger-btn {
+    padding-right: 2.75rem;
+  }
+
+  .product-faq-list--wrapper.faq-category-panel .collapsible-trigger__icon {
+    right: 0.75rem;
+  }
+
   .faq-empty-message {
     padding: 16px 20px;
     color: #666;
@@ -453,6 +506,44 @@
       text-align: right;
       cursor: pointer;
       margin-bottom: 16px;
+    }
+
+    .faq-category-context {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin: 0 0 14px;
+      padding: 10px 12px;
+      border: 1px solid #e2efe8;
+      border-radius: 8px;
+      background: #f7fbf8;
+      color: #1b3323;
+      font-size: 13px;
+      line-height: 1.35;
+    }
+
+    .faq-category-context__label {
+      margin-right: 2px;
+      color: #6b7b71;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .faq-category-context__name {
+      font-weight: 600;
+    }
+
+    .faq-category-context__separator {
+      color: #9aada0;
+    }
+
+    .product-faq-list--wrapper.faq-category-panel button.collapsible-trigger-btn {
+      padding: 0.75rem 2.75rem 0.75rem 0.6rem;
+      line-height: 1.35;
+      overflow-wrap: anywhere;
     }
   }
 {% endstyle %}
