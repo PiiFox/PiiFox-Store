@@ -17,7 +17,7 @@
             </div>
           {% endif %}
           <div class="policy-item-info">
-            <h3 class="policy-item-title custom-txt-bold">{{ block.settings.title | escape }}</h3>
+            <h3 class="policy-item-title custom-txt-bold">{{ block.settings.title | escape | newline_to_br }}</h3>
             <p class="policy-item-description">{{ block.settings.description }}</p>
           </div>
         </div>
