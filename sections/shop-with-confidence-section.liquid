@@ -26,7 +26,7 @@
                 {{ 'product-' | append: current | placeholder_svg_tag: 'placeholder-svg' }}
               {% endif %}
               <h3 class="service-item-title custom-txt-semibold appear-delay{% cycle '','-1','-2','-3','-4' %}">
-                {{ block.settings.service_title }}
+                {{ block.settings.service_title | escape | newline_to_br }}
               </h3>
               <div class="service-item-description custom-txt-light appear-delay{% cycle '','-1','-2','-3','-4' %}">
                 {{ block.settings.service_description }}
@@ -40,36 +40,55 @@
 </div>
 <script>
 document.addEventListener('DOMContentLoaded', function () {
-    const isScroll = window.innerWidth < 1600;
+    const swiperSelector = '.shop-confidence-section-{{ section.id }} .swiper-container';
+    let serviceListSwiper;
+    let isScroll = window.innerWidth < 1600;
 
-    const serviceListSwiper = new Swiper('.shop-confidence-section-{{ section.id }} .swiper-container', {
-        loop: isScroll ? true : false,
-        autoplay: isScroll ? true : false,
-        allowTouchMove: isScroll ? true : false,
-        centeredSlides: isScroll ? true : false,  
-        spaceBetween: isScroll ? 40 : 0,
-        breakpoints: {
-            0: {
-              slidesPerView: 1.2,
-            },
-            768: {
-              slidesPerView: 2,
-            },
-            1200: {
-              slidesPerView: 3,
-            },
-            1600: {
-              slidesPerView: 4,
+    function initServiceListSwiper() {
+        isScroll = window.innerWidth < 1600;
+
+        serviceListSwiper = new Swiper(swiperSelector, {
+            loop: isScroll,
+            autoplay: isScroll,
+            allowTouchMove: isScroll,
+            centeredSlides: isScroll,
+            spaceBetween: isScroll ? 40 : 0,
+            breakpoints: {
+                0: {
+                  slidesPerView: 1.2,
+                },
+                768: {
+                  slidesPerView: 2,
+                },
+                1200: {
+                  slidesPerView: 3,
+                },
+                1600: {
+                  slidesPerView: 4,
+                }
             }
-        }
-    });
+        });
+    }
+
+    initServiceListSwiper();
+
     let resizeTimer;
-    window.addEventListener('resize', () => {
+    function updateServiceListSwiper() {
         clearTimeout(resizeTimer);
         resizeTimer = setTimeout(() => {
-            serviceListSwiper.update();
+            const shouldScroll = window.innerWidth < 1600;
+
+            if (shouldScroll !== isScroll) {
+                serviceListSwiper.destroy(true, true);
+                initServiceListSwiper();
+            } else if (serviceListSwiper && !serviceListSwiper.destroyed) {
+                serviceListSwiper.update();
+            }
         }, 500);
-    });
+    }
+
+    window.addEventListener('resize', updateServiceListSwiper);
+    document.addEventListener('fullscreenchange', updateServiceListSwiper);
 });
 </script>
 {% style %}
@@ -265,7 +284,7 @@ document.addEventListener('DOMContentLoaded', function () {
           "label": "Service Image"
         },
         {
-          "type": "text",
+          "type": "textarea",
           "id": "service_title",
           "label": "Service Title"
         },
