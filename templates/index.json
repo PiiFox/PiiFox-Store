@@ -633,7 +633,7 @@
           "type": "policy_item",
           "settings": {
             "icon": "shopify://shop_images/policy-icon1-b.png",
-            "title": "SECURE & FAST DELIVERY",
+            "title": "SECURE & FAST\nDELIVERY",
             "description": ""
           }
         },
@@ -641,7 +641,7 @@
           "type": "policy_item",
           "settings": {
             "icon": "shopify://shop_images/policy-icon2-b.png",
-            "title": "1-YEAR FREE WARRANTY",
+            "title": "1-YEAR FREE\nWARRANTY",
             "description": ""
           }
         },
@@ -649,7 +649,7 @@
           "type": "policy_item",
           "settings": {
             "icon": "shopify://shop_images/policy-icon3-b.png",
-            "title": "HASSLE-FREE RETURNS",
+            "title": "HASSLE-FREE\nRETURNS",
             "description": ""
           }
         },
@@ -657,7 +657,7 @@
           "type": "policy_item",
           "settings": {
             "icon": "shopify://shop_images/policy-icon4-b.png",
-            "title": "MEMBERSHIP BENEFITS",
+            "title": "MEMBERSHIP\nBENEFITS",
             "description": ""
           }
         },
