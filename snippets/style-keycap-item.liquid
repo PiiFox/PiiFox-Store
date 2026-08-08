@@ -20,25 +20,35 @@
     <div class="keycap-carousel" id="keycap-{{ current_tab }}-{{ section_collection.handle }}">
       {% for product in section_collection.products %}
         <div class="keycap-product-card">
-          <div class="keycap-card-img-wrap">
-            {% if product.featured_image %}
-              <img
-                src="{{ product.featured_image | image_url: width: 680 }}"
-                alt="{{ product.title | escape }}"
-                class="keycap-card-img"
-                loading="lazy"
-                width="680"
-                height="auto"
-              >
-            {% else %}
-              <div style="width:100%;height:100%;background:#f7f7f7;display:flex;align-items:center;justify-content:center;">
-                No Image
-              </div>
-            {% endif %}
-          </div>
+          <a
+            href="{{ product.url }}"
+            class="keycap-card-image-link"
+            aria-label="View {{ product.title | escape }}"
+          >
+            <div class="keycap-card-img-wrap">
+              {% if product.featured_image %}
+                <img
+                  src="{{ product.featured_image | image_url: width: 680 }}"
+                  alt="{{ product.title | escape }}"
+                  class="keycap-card-img"
+                  loading="lazy"
+                  width="680"
+                  height="auto"
+                >
+              {% else %}
+                <div style="width:100%;height:100%;background:#f7f7f7;display:flex;align-items:center;justify-content:center;">
+                  No Image
+                </div>
+              {% endif %}
+            </div>
+          </a>
           <div class="keycap-card-info">
             <h3 class="keycap-product-name">{{ product.title }}</h3>
-            <a href="{{ product.url }}" class="keycap-shopnow-btn">Shop Now</a>
+            <a
+              href="{{ product.url }}"
+              class="keycap-shopnow-btn"
+              aria-label="Shop {{ product.title | escape }}"
+            >Shop Now</a>
           </div>
         </div>
       {% endfor %}

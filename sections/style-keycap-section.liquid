@@ -122,16 +122,35 @@
     flex-shrink: 0;
     cursor: pointer;
   }
+  .keycap-card-image-link {
+    display: block;
+    color: inherit;
+    text-decoration: none;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+  }
   .keycap-card-img-wrap {
     width: 100%;
     aspect-ratio: 16 / 9;
     overflow: hidden;
+    background: #f7f7f7;
   }
   .keycap-card-img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     display: block;
+    transition: transform 0.25s ease, filter 0.25s ease;
+  }
+  .keycap-card-image-link:hover .keycap-card-img,
+  .keycap-card-image-link:focus-visible .keycap-card-img,
+  .keycap-card-image-link:active .keycap-card-img {
+    transform: scale(1.04);
+    filter: brightness(0.94);
+  }
+  .keycap-card-image-link:focus-visible {
+    outline: 2px solid #000;
+    outline-offset: 3px;
   }
   .keycap-card-info {
     padding: 1em;
@@ -150,6 +169,41 @@
     color: #000;
     font-size: 0.9em;
     cursor: pointer;
+    transition: all 0.2s ease;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+    position: relative;
+    z-index: 1;
+  }
+  .keycap-shopnow-btn:hover,
+  .keycap-shopnow-btn:focus-visible,
+  .keycap-shopnow-btn:active {
+    background: #000;
+    color: #fff;
+    transform: translateY(-1px);
+  }
+  .keycap-shopnow-btn:focus-visible {
+    outline: 2px solid #000;
+    outline-offset: 3px;
+  }
+  @media screen and (max-width: 768px) {
+    .keycap-section-title {
+      font-size: 1.35em;
+      line-height: 1.2;
+    }
+    .keycap-view-all-btn {
+      padding: 0.45em 1em;
+      font-size: 0.8em;
+    }
+    .keycap-product-name {
+      font-size: 1.05em;
+      line-height: 1.3;
+      margin-bottom: 8px;
+    }
+    .keycap-shopnow-btn {
+      padding: 0.4em 1em;
+      font-size: 0.8em;
+    }
   }
   .carousel-arrow-wrap {
     display: flex;
