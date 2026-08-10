@@ -61,21 +61,27 @@
 </div>
 
 <script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const arrows = document.querySelectorAll('.carousel-arrow');
-    arrows.forEach((btn) => {
-      btn.addEventListener('click', () => {
-        const carouselId = btn.dataset.target;
-        const carouselEl = document.getElementById(carouselId);
-        const scrollStep = 360;
+  (() => {
+    const initKeycapCarousels = () => {
+      document.querySelectorAll('.carousel-arrow').forEach((button) => {
+        if (button.dataset.keycapArrowReady === 'true') return;
+        button.dataset.keycapArrowReady = 'true';
 
-        if (btn.classList.contains('prev-arrow')) {
-          carouselEl.scrollBy({ left: -scrollStep, behavior: 'smooth' });
-        } else {
-          carouselEl.scrollBy({ left: scrollStep, behavior: 'smooth' });
-        }
+        button.addEventListener('click', () => {
+          const carousel = document.getElementById(button.dataset.target);
+          if (!carousel) return;
+
+          const direction = button.classList.contains('prev-arrow') ? -1 : 1;
+          const scrollStep = Math.max(carousel.clientWidth * 0.85, 280);
+          carousel.scrollBy({ left: direction * scrollStep, behavior: 'smooth' });
+        });
       });
-    });
-  });
-</script>
+    };
 
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initKeycapCarousels, { once: true });
+    } else {
+      initKeycapCarousels();
+    }
+  })();
+</script>
