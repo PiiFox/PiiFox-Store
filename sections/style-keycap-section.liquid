@@ -114,6 +114,9 @@
     height: 0;
     visibility: hidden;
   }
+  .keycap-carousel-scrollbar {
+    display: none;
+  }
   .keycap-product-card {
     min-width: 340px;
     max-width: 340px;
@@ -127,6 +130,7 @@
     display: block;
     color: inherit;
     text-decoration: none;
+    -webkit-user-drag: none;
     -webkit-tap-highlight-color: transparent;
     touch-action: manipulation;
   }
@@ -141,6 +145,8 @@
     height: 100%;
     object-fit: cover;
     display: block;
+    -webkit-user-drag: none;
+    user-select: none;
     transition: transform 0.25s ease, filter 0.25s ease;
   }
   .keycap-card-image-link:hover .keycap-card-img,
@@ -188,6 +194,25 @@
     outline-offset: 3px;
   }
   @media screen and (max-width: 768px) {
+    .keycap-carousel {
+      gap: 12px;
+      padding-bottom: 0.75em;
+      scroll-snap-type: x mandatory;
+      scroll-padding-inline: 0;
+      scrollbar-width: none;
+      overscroll-behavior-inline: contain;
+    }
+    .keycap-carousel::after {
+      content: '';
+      flex: 0 0 calc(33.3333% - 4px);
+    }
+    .keycap-product-card {
+      flex-basis: calc(66.6667% - 8px);
+      min-width: calc(66.6667% - 8px);
+      max-width: calc(66.6667% - 8px);
+      scroll-snap-align: start;
+      scroll-snap-stop: always;
+    }
     .keycap-section-title {
       font-size: 1.35em;
       line-height: 1.2;
@@ -197,13 +222,51 @@
       font-size: 0.8em;
     }
     .keycap-product-name {
-      font-size: 1.05em;
+      font-size: 0.9em;
       line-height: 1.3;
       margin-bottom: 8px;
     }
     .keycap-shopnow-btn {
       padding: 0.4em 1em;
       font-size: 0.8em;
+    }
+    .keycap-carousel-scrollbar {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin: 8px auto 0;
+    }
+    .keycap-carousel-scrollbar.is-disabled {
+      display: none;
+    }
+    .keycap-carousel-scrollbar__page {
+      display: block;
+      flex: 0 0 22px;
+      width: 22px;
+      height: 5px;
+      min-width: 0;
+      margin: 0;
+      padding: 0;
+      border: 0;
+      border-radius: 999px;
+      background: #e7ddd5;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+    }
+    .keycap-carousel-scrollbar__page.is-active {
+      background: #171717;
+    }
+    .keycap-carousel-scrollbar__page:focus-visible {
+      outline: 2px solid #171717;
+      outline-offset: 3px;
+    }
+    .keycap-carousel-scrollbar.is-compact {
+      gap: 5px;
+    }
+    .keycap-carousel-scrollbar.is-compact .keycap-carousel-scrollbar__page {
+      flex-basis: 15px;
+      width: 15px;
     }
   }
   .carousel-arrow-wrap {
@@ -247,16 +310,7 @@
   }
   @media screen and (max-width: 768px) {
     .carousel-arrow-wrap {
-      position: absolute;
-      width: 100%;
-      top: 50%;
-      left: 0;
-      justify-content: space-between;
-    }
-    .carousel-arrow {
-      width: 2em;
-      height: 2em;
-      line-height: 2em;
+      display: none;
     }
   }
 

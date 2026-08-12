@@ -24,6 +24,7 @@
             href="{{ product.url }}"
             class="keycap-card-image-link"
             aria-label="View {{ product.title | escape }}"
+            draggable="false"
           >
             <div class="keycap-card-img-wrap">
               {% if product.featured_image %}
@@ -34,6 +35,7 @@
                   loading="lazy"
                   width="680"
                   height="auto"
+                  draggable="false"
                 >
               {% else %}
                 <div style="width:100%;height:100%;background:#f7f7f7;display:flex;align-items:center;justify-content:center;">
@@ -53,6 +55,16 @@
         </div>
       {% endfor %}
     </div>
+
+    {% if product_count > 1 %}
+      <div
+        class="keycap-carousel-scrollbar"
+        data-carousel-scrollbar="keycap-{{ current_tab }}-{{ section_collection.handle }}"
+        role="navigation"
+        aria-label="{{ section_collection.title | escape }} carousel pages"
+      >
+      </div>
+    {% endif %}
 
     <div class="carousel-arrow-wrap">
       <button class="carousel-arrow prev-arrow" data-target="keycap-{{ current_tab }}-{{ section_collection.handle }}">←</button>
@@ -75,6 +87,98 @@
           const scrollStep = Math.max(carousel.clientWidth * 0.85, 280);
           carousel.scrollBy({ left: direction * scrollStep, behavior: 'smooth' });
         });
+      });
+
+      document.querySelectorAll('.keycap-carousel').forEach((carousel) => {
+        if (carousel.dataset.keycapScrollbarReady === 'true') return;
+
+        const scrollbar = document.querySelector(
+          '[data-carousel-scrollbar="' + carousel.id + '"]'
+        );
+        if (!scrollbar) return;
+
+        carousel.dataset.keycapScrollbarReady = 'true';
+        let updateFrame;
+
+        carousel.addEventListener('dragstart', (event) => {
+          if (event.target.closest('.keycap-card-image-link')) {
+            event.preventDefault();
+          }
+        });
+
+        const getPageMetrics = () => {
+          const products = Array.from(carousel.querySelectorAll('.keycap-product-card'));
+          const pageStep = products.length > 1
+            ? Math.abs(products[1].offsetLeft - products[0].offsetLeft)
+            : 0;
+
+          return { products, pageStep };
+        };
+
+        const updatePagination = () => {
+          updateFrame = undefined;
+          const maxScroll = Math.max(carousel.scrollWidth - carousel.clientWidth, 0);
+          const pageCount = Number(scrollbar.dataset.pageCount || 1);
+          const scrollPosition = Math.min(Math.abs(carousel.scrollLeft), maxScroll);
+          const { pageStep } = getPageMetrics();
+          const activePage = pageStep > 0 && pageCount > 1
+            ? Math.min(Math.round(scrollPosition / pageStep), pageCount - 1)
+            : 0;
+
+          scrollbar.querySelectorAll('.keycap-carousel-scrollbar__page').forEach((page, index) => {
+            const isActive = index === activePage;
+            page.classList.toggle('is-active', isActive);
+            page.setAttribute('aria-current', isActive ? 'true' : 'false');
+          });
+        };
+
+        const renderPagination = () => {
+          const { products } = getPageMetrics();
+          const pageCount = Math.max(products.length, 1);
+          const previousPageCount = Number(scrollbar.dataset.pageCount || 0);
+
+          scrollbar.classList.toggle('is-disabled', pageCount <= 1);
+          scrollbar.classList.toggle('is-compact', pageCount > 6);
+          if (pageCount === previousPageCount) {
+            updatePagination();
+            return;
+          }
+
+          scrollbar.dataset.pageCount = pageCount;
+          scrollbar.replaceChildren();
+
+          for (let index = 0; index < pageCount; index += 1) {
+            const page = document.createElement('button');
+            page.type = 'button';
+            page.className = 'keycap-carousel-scrollbar__page';
+            page.setAttribute('aria-label', 'Go to page ' + (index + 1) + ' of ' + pageCount);
+
+            page.addEventListener('click', () => {
+              const maxScroll = Math.max(carousel.scrollWidth - carousel.clientWidth, 0);
+              const { pageStep } = getPageMetrics();
+              const targetScroll = Math.min(index * pageStep, maxScroll);
+              const isRtl = getComputedStyle(carousel).direction === 'rtl';
+
+              carousel.scrollTo({
+                left: isRtl ? -targetScroll : targetScroll,
+                behavior: 'smooth'
+              });
+            });
+
+            scrollbar.appendChild(page);
+          }
+
+          updatePagination();
+        };
+
+        const requestPaginationUpdate = () => {
+          if (updateFrame) cancelAnimationFrame(updateFrame);
+          updateFrame = requestAnimationFrame(updatePagination);
+        };
+
+        carousel.addEventListener('scroll', requestPaginationUpdate, { passive: true });
+        window.addEventListener('resize', renderPagination, { passive: true });
+        renderPagination();
       });
     };
 
