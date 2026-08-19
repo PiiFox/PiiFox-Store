@@ -37,6 +37,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     {{ 'fonts-style.css' | asset_url | stylesheet_tag: preload: true }}
     {{ 'theme.css' | asset_url | stylesheet_tag: preload: true }}
     {{ 'custom.css' | asset_url | stylesheet_tag: preload: true }}
+    {{ 'klaviyo-teaser-custom.css' | asset_url | stylesheet_tag }}
     {{ 'css_tool.css' | asset_url | stylesheet_tag: preload: true }}
     {%- render 'css-variables' -%}
     <script>
