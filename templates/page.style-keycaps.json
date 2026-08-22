@@ -14,10 +14,8 @@
       "disabled": true,
       "settings": {}
     },
-    "style_keycap_section_QJwzgn": { 
+    "style_keycap_section_QJwzgn": {
       "type": "style-keycap-section",
-      "name": "Style Keycap Section",
-      "settings": {},
       "blocks": {
         "78c1667e-d1d9-46f6-94db-235ebc5db859": {
           "type": "style_item",
@@ -73,6 +71,15 @@
             "collection": "art-culture-theme-keycaps"
           }
         },
+        "style_item_xgMQNk": {
+          "type": "style_item",
+          "settings": {
+            "is_current_themes": true,
+            "is_coming_soon": false,
+            "is_current_popular_themes": false,
+            "collection": "future-fantasy-theme-keycaps"
+          }
+        }
       },
       "block_order": [
         "78c1667e-d1d9-46f6-94db-235ebc5db859",
@@ -80,8 +87,16 @@
         "78c1667e-d1d9-46f6-94db-235ebc5db839",
         "78c1667e-d1d9-46f6-94db-235ebc5db829",
         "78c1667e-d1d9-46f6-94db-235ebc5db819",
-        "78c1667e-d1d9-46f6-94db-235ebc5db809"
-      ]
+        "78c1667e-d1d9-46f6-94db-235ebc5db809",
+        "style_item_xgMQNk"
+      ],
+      "name": "Style Keycap Section",
+      "settings": {
+        "title": "Explore PIIFOX Keycaps Themes",
+        "tab1_title": "Current Themes",
+        "tab2_title": "Coming Soon",
+        "tab3_title": "Current Popular Themes"
+      }
     }
   },
   "order": [
