@@ -183,6 +183,18 @@
             "card_description": "Calm palettes inspired by nature and soft living."
           }
         },
+        "collection_item_EiFHUx": {
+          "type": "collection_item",
+          "settings": {
+            "collection": "future-fantasy-theme-keycaps",
+            "card_bg": "shopify://shop_images/card2.png",
+            "card_img": "shopify://shop_images/detail_1.png",
+            "card_tag": "",
+            "card_text_color": "#1b2e1b",
+            "card_title": "Nature & Soft",
+            "card_description": "Calm palettes inspired by nature and soft living."
+          }
+        },
         "product_item_ikp7LL": {
           "type": "product_item",
           "disabled": true,
@@ -243,6 +255,7 @@
         "collection_item_gBJwrD",
         "collection_item_Lz6afi",
         "collection_item_bKpVjw",
+        "collection_item_EiFHUx",
         "product_item_ikp7LL",
         "product_item_7GknNP",
         "product_item_UV7dCW",
