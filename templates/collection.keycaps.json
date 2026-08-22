@@ -144,7 +144,7 @@
             "card_tag": "",
             "card_text_color": "#1b2e1b",
             "card_title": "Future & Fantasy",
-            "card_description": "inspired details and imaginative designs"
+            "card_description": "Luminous keycaps inspired by crystal, light, and imagined worlds."
           }
         },
         "collection_item_n986Yw": {
@@ -175,7 +175,7 @@
           "type": "collection_item",
           "settings": {
             "collection": "retro-daily-theme-keycaps",
-            "card_bg": "shopify://shop_images/card1.png",
+            "card_bg": "shopify://shop_images/card3.png",
             "card_img": "shopify://shop_images/time.png",
             "card_tag": "",
             "card_text_color": "#1b2e1b",
