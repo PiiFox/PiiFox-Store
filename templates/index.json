@@ -357,6 +357,23 @@
     "style_studio_theme_grid_home": {
       "type": "style-studio-theme-grid",
       "blocks": {
+        "theme-retro-home": {
+          "type": "theme_card",
+          "settings": {
+            "title": "Retro & Daily",
+            "title_color": "#6F3B13",
+            "subtitle": "Nostalgia with Character",
+            "subtitle_color": "#121212",
+            "description": "Classic vibes, pixel art, and timeless colors that bring back the good old days.",
+            "description_color": "#666666",
+            "product_image": "shopify://shop_images/time_1cb99280-b860-4fd3-b818-82033cf1685b.png",
+            "collection": "retro-daily-theme-keycaps",
+            "button_label": "Explore Theme",
+            "button_link": "",
+            "button_text_color": "#6F3B13",
+            "highlight_color": "#f4efe6"
+          }
+        },
         "theme-nature-home": {
           "type": "theme_card",
           "settings": {
@@ -366,10 +383,28 @@
             "subtitle_color": "#121212",
             "description": "Soft greens, warm neutrals, and gentle contrast for a relaxed desk setup.",
             "description_color": "#666666",
+            "product_image": "shopify://shop_images/Herbary_dd09c53b-9219-4056-b731-fc1596051933.png",
             "collection": "nature-soft-theme-keycaps",
             "button_label": "Explore Theme",
             "button_link": "",
             "button_text_color": "#107a44",
+            "highlight_color": "#f4efe6"
+          }
+        },
+        "theme_card_ycaA7P": {
+          "type": "theme_card",
+          "settings": {
+            "title": "Clean & Minimal",
+            "title_color": "#BC896F",
+            "subtitle": "xxxxx",
+            "subtitle_color": "#121212",
+            "description": "Soft greens, warm neutrals, and gentle contrast for a relaxed desk setup.",
+            "description_color": "#666666",
+            "product_image": "shopify://shop_images/Silence.png",
+            "collection": "clean-minimal-theme-keycaps",
+            "button_label": "Explore Theme",
+            "button_link": "",
+            "button_text_color": "#BC896F",
             "highlight_color": "#f4efe6"
           }
         },
@@ -382,6 +417,7 @@
             "subtitle_color": "#121212",
             "description": "Candy colors and lively legends made for cheerful desk builds.",
             "description_color": "#666666",
+            "product_image": "shopify://shop_images/Chocolate.png",
             "collection": "cute-colorful-theme-keycaps",
             "button_label": "Explore Theme",
             "button_link": "",
@@ -389,19 +425,20 @@
             "highlight_color": "#f4efe6"
           }
         },
-        "theme-retro-home": {
+        "theme_card_nUMQFG": {
           "type": "theme_card",
           "settings": {
-            "title": "Retro & Playful",
-            "title_color": "#b45309",
-            "subtitle": "Nostalgia with Character",
+            "title": "Game & Playful",
+            "title_color": "#E14F56",
+            "subtitle": "Calm tones inspired by nature.",
             "subtitle_color": "#121212",
-            "description": "Classic vibes, pixel art, and timeless colors that bring back the good old days.",
+            "description": "Soft greens, warm neutrals, and gentle contrast for a relaxed desk setup.",
             "description_color": "#666666",
-            "collection": "retro-daily-theme-keycaps",
+            "product_image": "shopify://shop_images/Pixelgo.png",
+            "collection": "",
             "button_label": "Explore Theme",
             "button_link": "",
-            "button_text_color": "#b45309",
+            "button_text_color": "#E14F56",
             "highlight_color": "#f4efe6"
           }
         },
@@ -414,6 +451,7 @@
             "subtitle_color": "#121212",
             "description": "Graphic palettes and expressive details for a board with personality.",
             "description_color": "#666666",
+            "product_image": "shopify://shop_images/DUNHUANG.png",
             "collection": "art-culture-theme-keycaps",
             "button_label": "Explore Theme",
             "button_link": "",
@@ -424,12 +462,13 @@
         "theme-fun-home": {
           "type": "theme_card",
           "settings": {
-            "title": "Fun & Unique",
+            "title": "Future & Fantasy",
             "title_color": "#0f766e",
             "subtitle": "Quirky, bold, and made to stand out.",
             "subtitle_color": "#121212",
             "description": "Unexpected colors and playful compositions for a memorable setup.",
             "description_color": "#666666",
+            "product_image": "shopify://shop_images/PRISMS.png",
             "collection": "game-playful-theme-keycaps",
             "button_label": "Explore Theme",
             "button_link": "",
@@ -439,9 +478,11 @@
         }
       },
       "block_order": [
-        "theme-nature-home",
-        "theme-cute-home",
         "theme-retro-home",
+        "theme-nature-home",
+        "theme_card_ycaA7P",
+        "theme-cute-home",
+        "theme_card_nUMQFG",
         "theme-art-home",
         "theme-fun-home"
       ],
