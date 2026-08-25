@@ -70,6 +70,7 @@
             "subtitle_color": "#121212",
             "description": "Soft greens, warm neutrals, and gentle contrast for a relaxed desk setup.",
             "description_color": "#666666",
+            "collection": "nature-soft-theme-keycaps",
             "button_label": "Explore Theme",
             "button_text_color": "#107a44",
             "highlight_color": "#f4efe6"
@@ -84,6 +85,7 @@
             "subtitle_color": "#121212",
             "description": "Candy colors and lively legends made for cheerful desk builds.",
             "description_color": "#666666",
+            "collection": "cute-colorful-theme-keycaps",
             "button_label": "Explore Theme",
             "button_text_color": "#ef5da8",
             "highlight_color": "#f4efe6"
@@ -98,6 +100,7 @@
             "subtitle_color": "#121212",
             "description": "Classic vibes, pixel art, and timeless colors that bring back the good old days.",
             "description_color": "#666666",
+            "collection": "retro-daily-theme-keycaps",
             "button_label": "Explore Theme",
             "button_text_color": "#b45309",
             "highlight_color": "#f4efe6"
@@ -112,6 +115,7 @@
             "subtitle_color": "#121212",
             "description": "Graphic palettes and expressive details for a board with personality.",
             "description_color": "#666666",
+            "collection": "art-culture-theme-keycaps",
             "button_label": "Explore Theme",
             "button_text_color": "#7c3aed",
             "highlight_color": "#f4efe6"
@@ -126,79 +130,10 @@
             "subtitle_color": "#121212",
             "description": "Unexpected colors and playful compositions for a memorable setup.",
             "description_color": "#666666",
+            "collection": "game-playful-theme-keycaps",
             "button_label": "Explore Theme",
             "button_text_color": "#0f766e",
             "highlight_color": "#f4efe6"
-          }
-        },
-        "style-cassette": {
-          "type": "style_card",
-          "settings": {
-            "title": "Cassette",
-            "button_label": "View Style"
-          }
-        },
-        "style-gameboy": {
-          "type": "style_card",
-          "settings": {
-            "title": "Gameboy89",
-            "button_label": "View Style"
-          }
-        },
-        "style-pokejo": {
-          "type": "style_card",
-          "settings": {
-            "title": "Pokejo",
-            "button_label": "View Style"
-          }
-        },
-        "style-time": {
-          "type": "style_card",
-          "settings": {
-            "title": "Time",
-            "button_label": "View Style"
-          }
-        },
-        "style-arcade": {
-          "type": "style_card",
-          "settings": {
-            "title": "Arcade Night",
-            "button_label": "View Style"
-          }
-        },
-        "style-dashboard": {
-          "type": "style_card",
-          "settings": {
-            "title": "Dashboard Blue",
-            "button_label": "View Style"
-          }
-        },
-        "style-retro": {
-          "type": "style_card",
-          "settings": {
-            "title": "Retro Type",
-            "button_label": "View Style"
-          }
-        },
-        "style-neon": {
-          "type": "style_card",
-          "settings": {
-            "title": "Neon",
-            "button_label": "View Style"
-          }
-        },
-        "style-minimal": {
-          "type": "style_card",
-          "settings": {
-            "title": "Minimal",
-            "button_label": "View Style"
-          }
-        },
-        "style-vintage": {
-          "type": "style_card",
-          "settings": {
-            "title": "Vintage",
-            "button_label": "View Style"
           }
         }
       },
@@ -207,22 +142,7 @@
         "theme-cute-1",
         "theme-retro-1",
         "theme-art-1",
-        "theme-fun-1",
-        "theme-nature-2",
-        "theme-cute-2",
-        "theme-retro-2",
-        "theme-art-2",
-        "theme-fun-2",
-        "style-cassette",
-        "style-gameboy",
-        "style-pokejo",
-        "style-time",
-        "style-arcade",
-        "style-dashboard",
-        "style-retro",
-        "style-neon",
-        "style-minimal",
-        "style-vintage"
+        "theme-fun-1"
       ]
     },
     "service": {

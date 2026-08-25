@@ -18,7 +18,6 @@
     {%- endif -%}
 
     {%- assign theme_blocks = section.blocks | where: 'type', 'theme_card' -%}
-    {%- assign style_blocks = section.blocks | where: 'type', 'style_card' -%}
     {%- assign initial_theme_index = 0 -%}
     {%- if theme_blocks.size > 2 -%}
       {%- assign initial_theme_index = 2 -%}
@@ -31,6 +30,7 @@
           {%- if block.type == 'theme_card' -%}
             {%- assign theme_image = block.settings.product_image -%}
             {%- assign theme_collection_handle = block.settings.collection.handle | default: '' -%}
+            {%- assign theme_button_link = block.settings.button_link | default: block.settings.collection.url | default: '#' -%}
             <div class="theme-cell{% if theme_index == initial_theme_index %} is-selected{% endif %}"
                  data-index="{{ theme_index }}"
                  data-collection-handle="{{ theme_collection_handle | escape }}"
@@ -53,7 +53,7 @@
               {%- endif -%}
 
               <div class="theme-card-action">
-                <a href="{{ block.settings.button_link | default: '#' | escape }}" class="explore-btn" style="border-color: {{ block.settings.button_text_color | default: '#107a44' }}; color: {{ block.settings.button_text_color | default: '#107a44' }};">
+                <a href="{{ theme_button_link | escape }}" class="explore-btn" style="border-color: {{ block.settings.button_text_color | default: '#107a44' }}; color: {{ block.settings.button_text_color | default: '#107a44' }};">
                   {{ block.settings.button_label }}
                 </a>
               </div>
@@ -67,34 +67,44 @@
 
     <div class="bottom-style-carousel-wrap">
       <div class="bottom-style-carousel">
-        {%- for block in section.blocks -%}
-          {%- if block.type == 'style_card' -%}
-            {%- assign style_image = block.settings.product_image -%}
-            {%- assign style_collection_handle = block.settings.collection.handle | default: '' -%}
-            <div
-              class="style-cell"
-              data-collection-handle="{{ style_collection_handle | escape }}"
-              {{ block.shopify_attributes }}
-            >
-            <div class="style-card-inner">
-              {%- if style_image != blank -%}
-                <div class="style-card-media">
-                  <img class="style-card-img lazyload"
-                       src="{{ style_image | image_url: width: 800 }}"
-                       data-src="{{ style_image | image_url: width: 800 }}"
-                       alt="{{ block.settings.title | escape }}" />
+        {%- for block in theme_blocks -%}
+          {%- assign style_collection = block.settings.collection -%}
+          {%- if style_collection != blank -%}
+            {%- for style_product in style_collection.products -%}
+              {%- assign style_image = style_product.metafields.custom.style_card_img.value -%}
+              {%- assign style_name = style_product.metafields.custom.style_card_name.value -%}
+              {%- if style_image != blank and style_name != blank -%}
+                <div
+                  class="style-cell"
+                  data-collection-handle="{{ style_collection.handle | escape }}"
+                  data-product-handle="{{ style_product.handle | escape }}"
+                >
+                  <div class="style-card-inner">
+                    <a
+                      href="{{ style_product.url }}"
+                      class="style-card-media"
+                      aria-label="{{ style_name | escape }}"
+                    >
+                      {{ style_image
+                        | image_url: width: 1200
+                        | image_tag:
+                          class: 'style-card-img',
+                          loading: 'lazy',
+                          alt: style_name
+                      }}
+                    </a>
+                    <div class="style-card-info">
+                      <h4 class="style-title notranslate">
+                        {{ style_name | escape }}
+                      </h4>
+                      <a href="{{ style_product.url }}" class="view-style-btn">
+                        {{ section.settings.style_card_button_label | escape }}
+                      </a>
+                    </div>
+                  </div>
                 </div>
               {%- endif -%}
-              <div class="style-card-info">
-                <h4 class="style-title notranslate">
-                  {{ block.settings.title }}
-                </h4>
-                <a href="{{ block.settings.button_link | default: '#' | escape }}" class="view-style-btn">
-                  {{ block.settings.button_label }}
-                </a>
-              </div>
-            </div>
-            </div>
+            {%- endfor -%}
           {%- endif -%}
         {%- endfor -%}
       </div>
@@ -406,7 +416,7 @@
     transform: translateY(-0.3em);
   }
   .style-studio-section-{{ section.id }} .style-card-media {
-    width: calc(100% + 0.1em);
+    width: calc(100% + 1em);
     margin-left: -0.9em;
     display: flex;
     align-items: center;
@@ -414,7 +424,7 @@
     overflow: hidden;
   }
   .style-studio-section-{{ section.id }} .style-card-img {
-    width: 180%;
+    width: 190%;
     max-width: none;
     height: auto;
     margin-left: 0;
@@ -428,8 +438,13 @@
     display: flex;
     align-items: flex-start;
     flex-direction: column;
+    width: 100%;
+    min-width: 0;
   }
   .style-studio-section-{{ section.id }} .style-card-info .style-title {
+    display: block;
+    width: 100%;
+    max-width: 100%;
     font-size: 0.95em;
     font-weight: 700;
     color: #121212;
@@ -572,7 +587,7 @@
     }
 
     .style-studio-section-{{ section.id }} .style-card-media {
-      width: 100%;
+      width: 112%;
       margin-left: -0.65em;
       margin-bottom: 0.55em;
     }
@@ -710,12 +725,8 @@
     }
 
     .style-studio-section-{{ section.id }} .style-card-media {
-      width: calc(100% + 0.1em);
+      width: calc(100% + 1em);
       margin-left: -0.75em;
-    }
-
-    .style-studio-section-{{ section.id }} .style-card-img {
-      width: 150%;
     }
 
     .style-studio-section-{{ section.id }} .style-card-info .style-title {
@@ -1022,14 +1033,12 @@
         const collectionHandle = selectedThemeCell
           ? selectedThemeCell.getAttribute('data-collection-handle')
           : '';
-        const shouldFilter = Boolean(collectionHandle);
-
         styleCells.forEach(function(styleCell) {
           const styleCollectionHandle = styleCell.getAttribute(
             'data-collection-handle'
           );
           const shouldShow =
-            !shouldFilter || styleCollectionHandle === collectionHandle;
+            Boolean(collectionHandle) && styleCollectionHandle === collectionHandle;
 
           styleCell.hidden = !shouldShow;
         });
@@ -1112,6 +1121,12 @@
       "id": "subtitle",
       "label": "Section subtitle",
       "default": "Preview how different keycap themes transform the same keyboard."
+    },
+    {
+      "type": "text",
+      "id": "style_card_button_label",
+      "label": "Product card button label",
+      "default": "View Style"
     }
   ],
   "blocks": [
@@ -1164,7 +1179,7 @@
           "type": "collection",
           "id": "collection",
           "label": "Parent collection",
-          "info": "Choose the collection that links this theme card to its style cards."
+          "info": "Products from this collection are shown automatically below."
         },
         {
           "type": "text",
@@ -1190,40 +1205,6 @@
           "default": "#f4efe6"
         }
       ]
-    },
-    {
-      "type": "style_card",
-      "name": "Style card",
-      "settings": [
-        {
-          "type": "image_picker",
-          "id": "product_image",
-          "label": "Product image"
-        },
-        {
-          "type": "collection",
-          "id": "collection",
-          "label": "Parent collection",
-          "info": "Choose the same collection as the parent theme card."
-        },
-        {
-          "type": "text",
-          "id": "title",
-          "label": "Title",
-          "default": "Cassette"
-        },
-        {
-          "type": "text",
-          "id": "button_label",
-          "label": "Button label",
-          "default": "View Style"
-        },
-        {
-          "type": "url",
-          "id": "button_link",
-          "label": "Button link"
-        }
-      ]
     }
   ],
   "presets": [
@@ -1244,12 +1225,6 @@
         },
         {
           "type": "theme_card"
-        },
-        {
-          "type": "style_card"
-        },
-        {
-          "type": "style_card"
         }
       ]
     }
