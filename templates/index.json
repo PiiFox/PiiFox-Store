@@ -445,12 +445,14 @@
         "theme-art-home",
         "theme-fun-home"
       ],
+      "disabled": true,
       "settings": {
         "title_before": "One Board.",
         "title_before_color": "#121212",
         "title_after": "Many Styles.",
         "title_after_color": "#244f1d",
-        "subtitle": "Preview how different keycap themes transform the same keyboard."
+        "subtitle": "Preview how different keycap themes transform the same keyboard.",
+        "style_card_button_label": "View Style"
       }
     },
     "single_page_width_banner_ihTf8b": {

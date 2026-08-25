@@ -1,7 +1,17 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "hero": {
-      "type": "style-studio-hero"
+      "type": "style-studio-hero",
+      "settings": {}
     },
     "themes": {
       "type": "style-studio-themes",
@@ -9,31 +19,31 @@
         "theme-card-1": {
           "type": "theme_card",
           "settings": {
+            "background_color": "#eff9d6",
+            "icon_color": "#042106",
             "number": "01",
             "title": "Match Your Setup",
-            "subtitle": "Refresh your desk with colors that fit your space.",
-            "background_color": "#eff9d6",
-            "icon_color": "#042106"
+            "subtitle": "Refresh your desk with colors that fit your space."
           }
         },
         "theme-card-2": {
           "type": "theme_card",
           "settings": {
+            "background_color": "#ffe8c2",
+            "icon_color": "#762e02",
             "number": "02",
             "title": "Tell Your Story",
-            "subtitle": "Choose a themed keycap set that shows your personality.",
-            "background_color": "#ffe8c2",
-            "icon_color": "#762e02"
+            "subtitle": "Choose a themed keycap set that shows your personality."
           }
         },
         "theme-card-3": {
           "type": "theme_card",
           "settings": {
+            "background_color": "#f4ddff",
+            "icon_color": "#4e1573",
             "number": "03",
             "title": "Change the Vibe",
-            "subtitle": "Switch keycaps when your workspace needs a new feeling.",
-            "background_color": "#f4ddff",
-            "icon_color": "#4e1573"
+            "subtitle": "Switch keycaps when your workspace needs a new feeling."
           }
         }
       },
@@ -41,7 +51,8 @@
         "theme-card-1",
         "theme-card-2",
         "theme-card-3"
-      ]
+      ],
+      "settings": {}
     },
     "board_showcase": {
       "type": "style-studio-board-showcase",
@@ -56,7 +67,8 @@
       },
       "block_order": [
         "board-default"
-      ]
+      ],
+      "settings": {}
     },
     "theme_grid": {
       "type": "style-studio-theme-grid",
@@ -143,10 +155,12 @@
         "theme-retro-1",
         "theme-art-1",
         "theme-fun-1"
-      ]
+      ],
+      "settings": {}
     },
     "service": {
-      "type": "style-studio-service"
+      "type": "style-studio-service",
+      "settings": {}
     },
     "community": {
       "type": "style-studio-community",
@@ -209,7 +223,8 @@
         "community-default-6",
         "community-default-7",
         "community-default-8"
-      ]
+      ],
+      "settings": {}
     },
     "explore": {
       "type": "style-studio-explore",
@@ -234,7 +249,8 @@
       "block_order": [
         "shop-keycaps",
         "explore-keyboards"
-      ]
+      ],
+      "settings": {}
     }
   },
   "order": [
