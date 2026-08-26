@@ -342,9 +342,9 @@
     max-width: none;
     position: relative;
     z-index: 1;
-    transform: rotateY(-7deg) skewY(-3deg) scale(1.23) translate(0, 5%);
+    transform: rotateY(-14deg) skewY(-3deg) scale(1.23) translate(0, 5%);
     transform-origin: center bottom;
-    filter: saturate(1.1) contrast(1.06) brightness(1.03);
+    filter: saturate(1.1) contrast(1.06) brightness(1.03) drop-shadow(0.45em 0.55em 0.65em rgba(0, 0, 0, 0.28));
     backface-visibility: hidden;
   }
   .style-studio-section-{{ section.id }} .theme-card-info {
@@ -598,6 +598,20 @@
       font-size: 0.85em;
       line-height: 1.35;
     }
+
+    .style-studio-section-{{ section.id }} .top-theme-carousel {
+      padding: 2em 0;
+    }
+
+    .style-studio-section-{{ section.id }} .top-theme-carousel .theme-cell.is-selected .theme-card-media {
+      margin: -1em 0 -0.7em -1.2em;
+    }
+
+    .style-studio-section-{{ section.id }} .top-theme-carousel .theme-cell.is-selected {
+      margin-top: 1em;
+      padding: 0.8em 1.7em 0.8em;
+    }
+
     .style-studio-section-{{ section.id }} .theme-card-inner {
       height: 22em;
     }
@@ -633,7 +647,7 @@
     }
 
     .style-studio-section-{{ section.id }} .top-theme-carousel .theme-cell.is-selected .theme-card-img {
-      transform: rotateY(-5deg) skewY(-2deg) scale(1.2) translate(0, 4%);
+      transform: rotateY(-13deg) skewY(-2deg) scale(1.2) translate(0, 4%);
     }
 
     .style-studio-section-{{ section.id }} .bottom-style-carousel {
@@ -738,7 +752,7 @@
 
     .style-studio-section-{{ section.id }} .top-theme-carousel .theme-cell.is-selected .theme-card-img {
       transform-origin: center bottom;
-      transform: rotateY(-5deg) skewY(-2deg) scale(1.17) translate(0, 1%);
+      transform: rotateY(-13deg) skewY(-2deg) scale(1.17) translate(0, 1%);
     }
 
     .style-studio-section-{{ section.id }} .top-theme-carousel .theme-cell.is-selected .theme-card-media {
@@ -808,6 +822,18 @@
     .style-studio-section-{{ section.id }} .custom-arrow {
       width: 2.25em;
       height: 2.25em;
+    }
+  }
+  
+  @media screen and (min-width: 770px) and (max-width: 1017px) {
+    .style-studio-section-{{ section.id }} .top-theme-carousel .theme-cell:not(.is-selected) .theme-card-media {
+      margin-left: -0.4em;
+    }
+  }
+
+  @media screen and (min-width: 1018px) and (max-width: 1449px) {
+    .style-studio-section-{{ section.id }} .top-theme-carousel .theme-cell:not(.is-selected) .theme-card-media {
+      margin-left: 0.1em;
     }
   }
 
