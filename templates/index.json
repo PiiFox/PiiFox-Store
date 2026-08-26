@@ -486,7 +486,6 @@
         "theme-art-home",
         "theme-fun-home"
       ],
-      "disabled": true,
       "settings": {
         "title_before": "One Board.",
         "title_before_color": "#121212",
