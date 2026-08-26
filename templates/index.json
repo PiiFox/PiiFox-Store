@@ -361,7 +361,7 @@
           "type": "theme_card",
           "settings": {
             "title": "Retro & Daily",
-            "title_color": "#6F3B13",
+            "title_color": "#6f3b13",
             "subtitle": "Nostalgia with Character",
             "subtitle_color": "#121212",
             "description": "Classic vibes, pixel art, and timeless colors that bring back the good old days.",
@@ -370,7 +370,7 @@
             "collection": "retro-daily-theme-keycaps",
             "button_label": "Explore Theme",
             "button_link": "",
-            "button_text_color": "#6F3B13",
+            "button_text_color": "#6f3b13",
             "highlight_color": "#f4efe6"
           }
         },
@@ -395,7 +395,7 @@
           "type": "theme_card",
           "settings": {
             "title": "Clean & Minimal",
-            "title_color": "#BC896F",
+            "title_color": "#bc896f",
             "subtitle": "xxxxx",
             "subtitle_color": "#121212",
             "description": "Soft greens, warm neutrals, and gentle contrast for a relaxed desk setup.",
@@ -404,7 +404,7 @@
             "collection": "clean-minimal-theme-keycaps",
             "button_label": "Explore Theme",
             "button_link": "",
-            "button_text_color": "#BC896F",
+            "button_text_color": "#bc896f",
             "highlight_color": "#f4efe6"
           }
         },
@@ -429,16 +429,16 @@
           "type": "theme_card",
           "settings": {
             "title": "Game & Playful",
-            "title_color": "#E14F56",
+            "title_color": "#e14f56",
             "subtitle": "Calm tones inspired by nature.",
             "subtitle_color": "#121212",
             "description": "Soft greens, warm neutrals, and gentle contrast for a relaxed desk setup.",
             "description_color": "#666666",
             "product_image": "shopify://shop_images/Pixelgo.png",
-            "collection": "",
+            "collection": "game-playful-theme-keycaps",
             "button_label": "Explore Theme",
             "button_link": "",
-            "button_text_color": "#E14F56",
+            "button_text_color": "#e14f56",
             "highlight_color": "#f4efe6"
           }
         },
@@ -469,7 +469,7 @@
             "description": "Unexpected colors and playful compositions for a memorable setup.",
             "description_color": "#666666",
             "product_image": "shopify://shop_images/PRISMS.png",
-            "collection": "game-playful-theme-keycaps",
+            "collection": "future-fantasy-theme-keycaps",
             "button_label": "Explore Theme",
             "button_link": "",
             "button_text_color": "#0f766e",
