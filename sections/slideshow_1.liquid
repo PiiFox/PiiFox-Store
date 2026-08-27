@@ -165,6 +165,31 @@
         line-height: 1rem;
       }
     }
+
+    {% if request.page_type == 'collection'
+      and collection.metafields.custom.banner == blank
+      and collection.metafields.custom.mobile_banner == blank
+    %}
+      @media screen and (max-width: 768px) {
+        .swiper-{{ section.id }} {
+          height: auto !important;
+          aspect-ratio: auto;
+        }
+        .swiper-{{ section.id }} .custom-swiper-list--wrapper {
+          height: auto !important;
+        }
+        .swiper-{{ section.id }} .custom-swiper-item {
+          height: auto !important;
+          min-height: 9em;
+          aspect-ratio: auto;
+          padding: 1.25em 0.75em;
+          place-items: center;
+        }
+        .swiper-{{ section.id }} .swiper-slide .slide-content {
+          padding: 0;
+        }
+      }
+    {% endif %}
 {% endstyle %}
 
 {%- if section.settings.divider -%}

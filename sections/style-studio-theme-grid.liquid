@@ -130,10 +130,14 @@
 </div>
 
 {% style %}
+  #shopify-section-{{ section.id }}.index-section {
+    margin: 2em 0 0 !important;
+  }
+
   .style-studio-section-{{ section.id }} {
     font-size: 1em;
     width: 100%;
-    min-height: 100vh;
+    min-height: 0;
     padding: 0;
     overflow: hidden;
     background-color: #ffffff;
@@ -143,7 +147,10 @@
   .style-studio-section-{{ section.id }} .style-studio-inner {
     width: 100%;
     margin: 0 auto;
-    padding: 1em 2.5em 1.5em;
+    padding-top: 0 !important;
+    padding-right: 2.5em;
+    padding-bottom: 0 !important;
+    padding-left: 2.5em;
     box-sizing: border-box;
   }
   .style-studio-section-{{ section.id }} .section-header {
@@ -573,6 +580,29 @@
     height: 0.9em;
   }
 
+  @media screen and (min-width: 770px) {
+    .style-studio-section-{{ section.id }} .custom-arrows {
+      display: none;
+      position: absolute;
+      top: calc(var(--bottom-style-carousel-height, 0px) / 2);
+      right: -1.25em;
+      left: -1.25em;
+      z-index: 5;
+      justify-content: space-between;
+      gap: 0;
+      transform: translateY(-50%);
+      pointer-events: none;
+    }
+
+    .style-studio-section-{{ section.id }} .bottom-style-carousel-wrap.has-multiple-pages .custom-arrows {
+      display: flex;
+    }
+
+    .style-studio-section-{{ section.id }} .custom-arrow {
+      pointer-events: auto;
+    }
+  }
+
   @media screen and (max-width: 769px) {
     .style-studio-section-{{ section.id }} {
       min-height: 0;
@@ -580,7 +610,8 @@
     }
 
     .style-studio-section-{{ section.id }} .style-studio-inner {
-      padding: 1.25em 0.75em 1.75em;
+      padding-right: 0.75em;
+      padding-left: 0.75em;
     }
 
     .style-studio-section-{{ section.id }} .section-header {
@@ -720,7 +751,8 @@
     }
 
     .style-studio-section-{{ section.id }} .style-studio-inner {
-      padding: 1.5em 1.25em 2em;
+      padding-right: 1.25em;
+      padding-left: 1.25em;
     }
 
     .style-studio-section-{{ section.id }} .section-header {
@@ -1042,6 +1074,7 @@
       }
 
       const bottomCarouselEl = root.querySelector('.bottom-style-carousel');
+      const bottomCarouselWrap = root.querySelector('.bottom-style-carousel-wrap');
       const prevBtn = root.querySelector('.btn-prev');
       const nextBtn = root.querySelector('.btn-next');
       const dotsContainer = root.querySelector('.custom-dots');
@@ -1121,6 +1154,14 @@
         const pageCount = renderDots();
         const pagePositions = getPagePositions(pageCount);
         const activeIndex = getActivePageIndex(pagePositions);
+
+        if (bottomCarouselWrap) {
+          bottomCarouselWrap.classList.toggle('has-multiple-pages', pageCount > 1);
+          bottomCarouselWrap.style.setProperty(
+            '--bottom-style-carousel-height',
+            bottomCarouselEl.offsetHeight + 'px'
+          );
+        }
 
         dots.forEach(function(dot, index) {
           dot.classList.toggle('is-selected', index === activeIndex);
