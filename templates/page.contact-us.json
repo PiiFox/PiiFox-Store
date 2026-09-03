@@ -62,11 +62,41 @@
       "settings": {
         "title": "Email Us"
       }
+    },
+    "rich_text_f9fLWg": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_X9MWXr": {
+          "type": "heading",
+          "disabled": true,
+          "settings": {
+            "title": "Rich text"
+          }
+        },
+        "text_ke9ByL": {
+          "type": "text",
+          "settings": {
+            "enlarge_text": true,
+            "text": "<p>Business Address: Workshop 60, 3/F, Block A,East Sun Industrial Centre,No. 16 Shing Yip Street,Kwun Tong, Hong Kong</p><p>Business Hours: Monday–Friday, 9:00 AM–6:00 PM HKT</p>"
+          }
+        }
+      },
+      "block_order": [
+        "heading_X9MWXr",
+        "text_ke9ByL"
+      ],
+      "name": "t:sections.rich-text.presets.rich_text.name",
+      "settings": {
+        "align_text": "center",
+        "narrow_column": true,
+        "divider": false
+      }
     }
   },
   "order": [
     "main",
     "Topimg",
-    "contact_us_Y9ATap"
+    "contact_us_Y9ATap",
+    "rich_text_f9fLWg"
   ]
 }
