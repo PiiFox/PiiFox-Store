@@ -68,9 +68,8 @@
       "blocks": {
         "heading_X9MWXr": {
           "type": "heading",
-          "disabled": true,
           "settings": {
-            "title": "Rich text"
+            "title": "Address"
           }
         },
         "text_ke9ByL": {
