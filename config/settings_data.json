@@ -721,7 +721,7 @@
               "type": "announcement",
               "settings": {
                 "text": "Hassle-free returns",
-                "link_text": "30-day postage paid returns"
+                "link_text": "Hassle-Free Returns"
               }
             }
           },
@@ -891,7 +891,7 @@
               "type": "announcement",
               "settings": {
                 "text": "Hassle-free returns",
-                "link_text": "30-day postage paid returns",
+                "link_text": "Hassle-Free Returns",
                 "link": "shopify://collections/all"
               }
             }
