@@ -69,14 +69,14 @@
         "heading_X9MWXr": {
           "type": "heading",
           "settings": {
-            "title": "Address"
+            "title": "Business Information"
           }
         },
         "text_ke9ByL": {
           "type": "text",
           "settings": {
             "enlarge_text": true,
-            "text": "<p>Business Address: Workshop 60, 3/F, Block A,East Sun Industrial Centre,No. 16 Shing Yip Street,Kwun Tong, Hong Kong</p><p>Business Hours: Monday–Friday, 9:00 AM–6:00 PM HKT</p>"
+            "text": "<p>PIIFOX is operated by APEXPIIFOX TECHNOLOGIES LIMITED.<br/>Business Address: Workshop 60, 3/F, Block A,East Sun Industrial Centre,No. 16 Shing Yip Street,Kwun Tong, Hong Kong</p><p>Business Hours: Monday–Friday, 9:00 AM–6:00 PM HKT</p>"
           }
         }
       },
