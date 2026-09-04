@@ -681,6 +681,7 @@
         "media_item_UEKyWJ",
         "media_item_czwErw"
       ],
+      "disabled": true,
       "name": "As Seen On Section",
       "settings": {
         "as_seen_on_title": "As Seen On"
@@ -752,6 +753,7 @@
         "feedback_item_JzdJQc",
         "feedback_item_gh4npG"
       ],
+      "disabled": true,
       "name": "Feedback List Section",
       "settings": {
         "enable_author": true,
