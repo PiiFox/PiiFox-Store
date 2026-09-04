@@ -84,7 +84,7 @@
           "type": "icon_item",
           "settings": {
             "icon": "shopify://shop_images/header-icon4.png",
-            "context": "30-Day Money-Back Guarantee"
+            "context": "Hassle-Free Returns"
           }
         },
         "icon_item_GWf6Qe": {
@@ -610,7 +610,7 @@
           "type": "service_item",
           "settings": {
             "service_img": "shopify://shop_images/footer-icon4_ec25736e-ddc5-4aee-9832-defeb336309e.png",
-            "service_title": "Expert Support",
+            "service_title": "Customer Support",
             "service_description": "Our mechanical keyboard experts are here to help 7 days a week."
           }
         }
