@@ -268,6 +268,13 @@
             "service_description": "All PiiFox keyboards come with a 1-year limited warranty."
           }
         },
+        "service_item_UVyAQj": {
+          "type": "service_item",
+          "settings": {
+            "service_title": "",
+            "service_description": ""
+          }
+        },
         "service_item_imMPWq": {
           "type": "service_item",
           "settings": {
@@ -288,6 +295,7 @@
       "block_order": [
         "service_item_b9PBKH",
         "service_item_yKYpbL",
+        "service_item_UVyAQj",
         "service_item_imMPWq",
         "service_item_gVnri8"
       ],
