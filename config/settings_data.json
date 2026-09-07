@@ -212,7 +212,7 @@
         "settings": {
           "main_menu_link_list": "main-menu",
           "mega_menu_images": true,
-          "timezone_area_limit": true,
+          "timezone_area_limit": false,
           "main_menu1": "Keyboards",
           "main_menu1_tag": "New",
           "main_menu2": "Keycaps",
