@@ -23,3 +23,15 @@ Disallow: /product/*?add-to-cart=
 {%- endif %}
 
 {% endfor %}
+
+User-agent: Googlebot
+Disallow: /admin/
+Allow: /
+
+User-agent: Googlebot-Image
+Disallow: /admin/
+Allow: /
+
+User-agent: Storebot-Google
+Disallow: /admin/
+Allow: /
