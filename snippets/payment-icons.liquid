@@ -1,4 +1,4 @@
-{%- assign payment_types = 'visa,master,maestro,american_express,jcb,discover,diners_club,unionpay,paypal,klarna,apple_pay,google_pay' | split: ',' -%}
+{%- assign payment_types = 'paypal,visa,master,maestro,american_express,jcb,discover,diners_club,unionpay,apple_pay,google_pay,klarna' | split: ',' -%}
 
 <ul class="inline-list payment-icons footer__section">
   {%- for type in payment_types -%}
