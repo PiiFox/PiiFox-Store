@@ -28,6 +28,12 @@
     height: 100%;
     z-index: 0;
   }
+  .custom-swiper-item .custom-swiper-slide-bg picture,
+  .custom-swiper-item .custom-swiper-slide-bg picture img {
+    display: block !important;
+    width: 100%;
+    height: 100%;
+  }
   .custom-swiper-item .custom-swiper-slide-bg img {
     object-fit: cover;
     object-position: center;
@@ -333,30 +339,24 @@
           endif
          %}
         <div class="custom-swiper-slide-bg">
-          <img 
-            alt="{{ image_alt }}" 
-            width="100%"
-            height="100%"
-            {% if forloop.first %}fetchpriority="high"{% endif %}
-            class="small--hide"
-            srcset=" 
-            {{ block.settings.image | image_url: width: 1024, format: 'webp' }} 1024w, 
-            {{ block.settings.image | image_url: width: 1920, format: 'webp' }} 1920w, 
-            {{ block.settings.image | image_url: width: 2560, format: 'webp' }} 2560w"
-            sizes="100vw"
-            loading="{% if forloop.first %}eager{% else %}lazy{% endif %}"
-          >
-          <img 
-            alt="{{ image_alt }}" 
-            width="100%"
-            height="100%"
-            {% if forloop.first %}fetchpriority="high"{% endif %}
-            class="pc--hide"
-            srcset="{{ block.settings.image_mobile | image_url: width: 370, format: 'webp' }} 370w, 
-            {{ block.settings.image_mobile | image_url: width: 768, format: 'webp' }} 768w"
-            sizes="100vw"
-            loading="{% if forloop.first %}eager{% else %}lazy{% endif %}"
-          >
+          <picture>
+            <source
+              media="(max-width: 768px)"
+              srcset="{{ block.settings.image_mobile | image_url: width: 370, format: 'webp' }} 370w, {{ block.settings.image_mobile | image_url: width: 768, format: 'webp' }} 768w"
+              sizes="100vw"
+            >
+            <img
+              alt="{{ image_alt }}"
+              width="1920"
+              height="800"
+              {% if forloop.first %}fetchpriority="high"{% endif %}
+              decoding="async"
+              src="{{ block.settings.image | image_url: width: 1920, format: 'webp' }}"
+              srcset="{{ block.settings.image | image_url: width: 1024, format: 'webp' }} 1024w, {{ block.settings.image | image_url: width: 1920, format: 'webp' }} 1920w, {{ block.settings.image | image_url: width: 2560, format: 'webp' }} 2560w"
+              sizes="100vw"
+              loading="{% if forloop.first %}eager{% else %}lazy{% endif %}"
+            >
+          </picture>
         </div>
         <div
           class="slide-content"
