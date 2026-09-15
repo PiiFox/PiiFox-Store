@@ -157,13 +157,28 @@
       if (variantId) {
         return variantId;
       }
-      const idInput = JSON.parse(document.querySelector('textarea[data-current-variant-json]').innerHTML);
-      if (idInput) {
-        return idInput.id;
-      }
       const select = document.querySelector('select.product-single__variants');
       if (select) {
-        return select.value;
+        if (select.value) return select.value;
+      }
+      const currentVariantJson = document.querySelector('textarea[data-current-variant-json]');
+      if (currentVariantJson) {
+        try {
+          const idInput = JSON.parse(currentVariantJson.value || currentVariantJson.textContent);
+          if (idInput && idInput.id) return idInput.id;
+        } catch (error) {
+          console.warn('Unable to parse current variant JSON', error);
+        }
+      }
+      const variantsJson = document.querySelector('textarea[data-variant-json]');
+      if (variantsJson) {
+        try {
+          const variants = JSON.parse(variantsJson.value || variantsJson.textContent);
+          const availableVariant = variants.find(variant => variant.available !== false);
+          if (availableVariant && availableVariant.id) return availableVariant.id;
+        } catch (error) {
+          console.warn('Unable to parse product variants JSON', error);
+        }
       }
       return null;
     }
@@ -189,6 +204,10 @@
         e.preventDefault();
         e.stopPropagation();
         const currentVariantId = getCurrentVariantId();
+        if (!currentVariantId) {
+          console.warn('Unable to determine the selected variant');
+          return;
+        }
         const items = [
           { id: currentVariantId, quantity: 1 }
         ];
