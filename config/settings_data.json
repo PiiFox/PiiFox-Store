@@ -267,7 +267,7 @@
               "show_newsletter": false,
               "foot_logo": "shopify://shop_images/logo-1.webp",
               "title": "Where Performance Meets Personality.",
-              "text": "<p>Email: service@piifox.com</p><p>Business Hours: Monday–Friday, 9:00 AM–6:00 PM HKT</p>",
+              "text": "<p>Built for the way you work, play, and make your setup yours.</p><p>Email: service@piifox.com</p><p>Business Hours: Monday–Friday, 9:00 AM–6:00 PM HKT</p>",
               "container_width": 25
             }
           },
@@ -323,7 +323,7 @@
           "show_currency_flags": true,
           "show_payment_icons": true,
           "show_copyright": true,
-          "copyright_text": ". Operated by Shenzhen Paishifu Technology Co, Ltd.",
+          "copyright_text": ". Operated by Shenzhen Paishifu Technology Co., Ltd.",
           "policy_list": "<a href=\"/pages/privacy-policy\" style=\"padding: 0 0.5rem;border-right: 1px solid #fff;\">Privacy Policy</a>      <a href=\"/pages/terms-of-service\" style=\"padding-left: 0.5rem\">Terms Of Service</a> \n | <a href=\"#\" style=\"padding: 0 0.5rem;\" onclick=\"__ucCmp.showSecondLayer(); return false;\">Cookie Preferences</a>"
         }
       },
