@@ -313,7 +313,7 @@
       <div
         data-link="{% if block.type == 'product' %}{{ block.settings.product.url }}{% else %}{{ block.settings.link }}{% endif %}"
         data-header-color="{{ block.settings.nav_text_color }}"
-        class="custom-swiper-item slide-{{ block.id }} swiper-slide place-items-middle"
+        class="custom-swiper-item slide-{{ block.id }} swiper-slide{% if forloop.first %} swiper-slide-active{% endif %} place-items-middle"
       >
         {% liquid
           assign image_alt = block.settings.alt 
@@ -335,27 +335,29 @@
         <div class="custom-swiper-slide-bg">
           <img 
             alt="{{ image_alt }}" 
-            width="100%" 
-            height="100%" 
-            fetchpriority="high"
+            width="1920"
+            height="800"
+            decoding="async"
+            {% if forloop.first %}fetchpriority="high"{% endif %}
             class="small--hide"
             srcset=" 
             {{ block.settings.image | image_url: width: 1024, format: 'webp' }} 1024w, 
             {{ block.settings.image | image_url: width: 1920, format: 'webp' }} 1920w, 
             {{ block.settings.image | image_url: width: 2560, format: 'webp' }} 2560w"
             sizes="100vw"
-            loading="eager"
+            loading="{% if forloop.first %}eager{% else %}lazy{% endif %}"
           >
           <img 
             alt="{{ image_alt }}" 
-            width="100%" 
-            height="100%" 
-            fetchpriority="high"
+            width="768"
+            height="500"
+            decoding="async"
+            {% if forloop.first %}fetchpriority="high"{% endif %}
             class="pc--hide"
             srcset="{{ block.settings.image_mobile | image_url: width: 370, format: 'webp' }} 370w, 
             {{ block.settings.image_mobile | image_url: width: 768, format: 'webp' }} 768w"
             sizes="100vw"
-            loading="eager"
+            loading="{% if forloop.first %}eager{% else %}lazy{% endif %}"
           >
         </div>
         <div

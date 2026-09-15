@@ -105,7 +105,9 @@
     {% endcapture %}
   {% endif %}
   {% assign toolbar_ad_list = section.blocks | where: 'type', 'toolbar_ad' %}
-<script src="{{ 'gsap.min.js' | asset_url }}"></script>
+{% if toolbar_ad_list.size > 0 %}
+  <script src="{{ 'gsap.min.js' | asset_url }}" defer="defer"></script>
+{% endif %}
 <script>
   {% if toolbar_ad_list.size > 0 %}
   $(function() {
