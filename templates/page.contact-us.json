@@ -30,72 +30,15 @@
     },
     "contact_us_Y9ATap": {
       "type": "contact-us",
-      "blocks": {
-        "email_item_WdGNWp": {
-          "type": "email_item",
-          "settings": {
-            "label": "Official Email",
-            "email": "store@piifox.com"
-          }
-        },
-        "email_item_tgMx4b": {
-          "type": "email_item",
-          "settings": {
-            "label": "Marketing Email",
-            "email": "marketing@piifox.com"
-          }
-        },
-        "email_item_7NbkLX": {
-          "type": "email_item",
-          "settings": {
-            "label": "Support Email",
-            "email": "service@piifox.com"
-          }
-        }
-      },
-      "block_order": [
-        "email_item_WdGNWp",
-        "email_item_tgMx4b",
-        "email_item_7NbkLX"
-      ],
       "name": "Email Us",
       "settings": {
         "title": "Email Us"
       }
     },
-    "rich_text_f9fLWg": {
-      "type": "rich-text",
-      "blocks": {
-        "heading_X9MWXr": {
-          "type": "heading",
-          "settings": {
-            "title": "Business Information"
-          }
-        },
-        "text_ke9ByL": {
-          "type": "text",
-          "settings": {
-            "enlarge_text": true,
-            "text": "<p>PIIFOX is operated by Shenzhen Paishifu Technology Co., Ltd.</p><p>Business Address: Room 1210, Gangxinda Henggang Building, No. 5008 Longgang Avenue (Henggang Section), Songbai Community, Henggang Subdistrict, Longgang District, Shenzhen, Guangdong 518115, China</p><p>Business Hours: Monday-Saturday: 6:00-17:00 (PDT)</p>"
-          }
-        }
-      },
-      "block_order": [
-        "heading_X9MWXr",
-        "text_ke9ByL"
-      ],
-      "name": "t:sections.rich-text.presets.rich_text.name",
-      "settings": {
-        "align_text": "center",
-        "narrow_column": true,
-        "divider": false
-      }
-    }
   },
   "order": [
     "main",
     "Topimg",
     "contact_us_Y9ATap",
-    "rich_text_f9fLWg"
   ]
 }
