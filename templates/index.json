@@ -12,50 +12,6 @@
     "23e7f471-8853-4933-b850-986da236297a": {
       "type": "homepage_banner",
       "blocks": {
-        "product_brxGaC": {
-          "type": "product",
-          "settings": {
-            "image": "shopify://shop_images/PIIFOX_LUNA_Grid98_Mechanical_Keyboard_banner.jpg",
-            "image_mobile": "shopify://shop_images/PIIFOX_LUNA_Grid98_Mechanical_Keyboard_M_banner.jpg",
-            "product": "luna-grid98-mechanical-keyboard",
-            "series_title": "LUNA",
-            "title": "<div style=\"color:#FFFFFF\">Grid98 <sup style=\"color:#FFFFFF\"></sup>\n</div>",
-            "subheading": "98-Key Tri-Mode Mechanical Keyboard",
-            "show_price": false,
-            "text_color": "#ffffff",
-            "nav_text_color": "#ffffff",
-            "h_align": "right",
-            "v_align": "center",
-            "txt_align": "right",
-            "mobile_v_align": "top",
-            "link_text": "Shop Now",
-            "btn_text_color": "#ffffff",
-            "btn_bg_color": "#105f3f",
-            "btn_padding": "0.6em 1em"
-          }
-        },
-        "product_fk7aYU": {
-          "type": "product",
-          "settings": {
-            "image": "shopify://shop_images/DEF68_HE_pro_banner.png",
-            "image_mobile": "shopify://shop_images/DEF68_HE_pro_banner_m.png",
-            "product": "forx-defender68-he-pro-magnetic-keyboard",
-            "series_title": "FORX",
-            "title": "<div style=\"color:#BF15FF\">DEFENDER 68 HE <sup style=\"color:#FFFE1C\">Pro</sup>\n</div>",
-            "subheading": "CNC Aluminum × Carbon Fiber. Flagship Control.",
-            "show_price": false,
-            "text_color": "#ffffff",
-            "nav_text_color": "#ffffff",
-            "h_align": "right",
-            "v_align": "center",
-            "txt_align": "right",
-            "mobile_v_align": "top",
-            "link_text": "Shop Now",
-            "btn_text_color": "#fffe1c",
-            "btn_bg_color": "#bf15ff",
-            "btn_padding": "0.6em 1em"
-          }
-        },
         "product_BjE6jA": {
           "type": "product",
           "settings": {
@@ -75,6 +31,28 @@
             "link_text": "Shop Now",
             "btn_text_color": "#ffffff",
             "btn_bg_color": "#2390ff",
+            "btn_padding": "0.6em 1em"
+          }
+        },
+        "product_brxGaC": {
+          "type": "product",
+          "settings": {
+            "image": "shopify://shop_images/PIIFOX_LUNA_Grid98_Mechanical_Keyboard_banner.jpg",
+            "image_mobile": "shopify://shop_images/PIIFOX_LUNA_Grid98_Mechanical_Keyboard_M_banner.jpg",
+            "product": "luna-grid98-mechanical-keyboard",
+            "series_title": "LUNA",
+            "title": "<div style=\"color:#FFFFFF\">Grid98 <sup style=\"color:#FFFFFF\"></sup>\n</div>",
+            "subheading": "98-Key Tri-Mode Mechanical Keyboard",
+            "show_price": false,
+            "text_color": "#ffffff",
+            "nav_text_color": "#ffffff",
+            "h_align": "right",
+            "v_align": "center",
+            "txt_align": "right",
+            "mobile_v_align": "top",
+            "link_text": "Shop Now",
+            "btn_text_color": "#ffffff",
+            "btn_bg_color": "#105f3f",
             "btn_padding": "0.6em 1em"
           }
         },
@@ -100,8 +78,32 @@
             "btn_padding": "0.6em 1em"
           }
         },
+        "product_fk7aYU": {
+          "type": "product",
+          "disabled": true,
+          "settings": {
+            "image": "shopify://shop_images/DEF68_HE_pro_banner.png",
+            "image_mobile": "shopify://shop_images/DEF68_HE_pro_banner_m.png",
+            "product": "forx-defender68-he-pro-magnetic-keyboard",
+            "series_title": "FORX",
+            "title": "<div style=\"color:#BF15FF\">DEFENDER 68 HE <sup style=\"color:#FFFE1C\">Pro</sup>\n</div>",
+            "subheading": "CNC Aluminum × Carbon Fiber. Flagship Control.",
+            "show_price": false,
+            "text_color": "#ffffff",
+            "nav_text_color": "#ffffff",
+            "h_align": "right",
+            "v_align": "center",
+            "txt_align": "right",
+            "mobile_v_align": "top",
+            "link_text": "Shop Now",
+            "btn_text_color": "#fffe1c",
+            "btn_bg_color": "#bf15ff",
+            "btn_padding": "0.6em 1em"
+          }
+        },
         "product_e8DMB9": {
           "type": "product",
+          "disabled": true,
           "settings": {
             "image": "shopify://shop_images/FORX_Final75_HE_banner.png",
             "image_mobile": "shopify://shop_images/FORX_Final75_HE_banner_m.png",
@@ -124,6 +126,7 @@
         },
         "product_WGtri6": {
           "type": "product",
+          "disabled": true,
           "settings": {
             "image": "shopify://shop_images/HERBARY.png",
             "image_mobile": "shopify://shop_images/HERBARY-m.png",
@@ -170,6 +173,7 @@
         },
         "normal_rbRVBb": {
           "type": "normal",
+          "disabled": true,
           "settings": {
             "little_title": "",
             "title": "",
@@ -193,10 +197,10 @@
         }
       },
       "block_order": [
-        "product_brxGaC",
-        "product_fk7aYU",
         "product_BjE6jA",
+        "product_brxGaC",
         "product_NMg6gA",
+        "product_fk7aYU",
         "product_e8DMB9",
         "product_WGtri6",
         "product_BeqKU3",
