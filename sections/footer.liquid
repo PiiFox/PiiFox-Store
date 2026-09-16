@@ -117,6 +117,19 @@
  
 </footer>
 
+{% style %}
+  @media only screen and (max-width: 768px) {
+    .footer_bottom .footer__small-text {
+      text-align: center;
+    }
+
+    .footer_bottom .copyright--wrapper,
+    .footer_bottom .footer__small-text > span:last-child {
+      display: block;
+    }
+  }
+{% endstyle %}
+
 {% schema %}
 {
   "name": "t:sections.footer.name",
