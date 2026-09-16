@@ -1,4 +1,11 @@
 
+{% assign first_banner = section.blocks.first %}
+{% if first_banner.settings.image != blank %}
+  {% assign first_mobile_banner = first_banner.settings.image_mobile | default: first_banner.settings.image %}
+  <link rel="preload" as="image" media="(min-width: 769px)" imagesrcset="{{ first_banner.settings.image | image_url: width: 1024, format: 'webp' }} 1024w, {{ first_banner.settings.image | image_url: width: 1920, format: 'webp' }} 1920w, {{ first_banner.settings.image | image_url: width: 2560, format: 'webp' }} 2560w" imagesizes="100vw" fetchpriority="high">
+  <link rel="preload" as="image" media="(max-width: 768px)" imagesrcset="{{ first_mobile_banner | image_url: width: 370, format: 'webp' }} 370w, {{ first_mobile_banner | image_url: width: 768, format: 'webp' }} 768w" imagesizes="100vw" fetchpriority="high">
+{% endif %}
+
 {% style %}
   .custom-swiper--title {
     margin-bottom: 0rem;
@@ -8,13 +15,14 @@
       /* aspect-ratio: {{ section.settings.aspect_ratio }}; */
       height: 800px;
       contain: layout paint size;
+      background-color: #111;
   }
   .homepage-swiper-{{ section.id }} .h1, .homepage-swiper-{{ section.id }} .h2, .homepage-swiper-{{ section.id }} .h3, .homepage-swiper-{{ section.id }} .h4, .homepage-swiper-{{ section.id }} .h5, .homepage-swiper-{{ section.id }} .h6,
   .homepage-swiper-{{ section.id }} h1, .homepage-swiper-{{ section.id }} h2, .homepage-swiper-{{ section.id }} h3, .homepage-swiper-{{ section.id }} h4, .homepage-swiper-{{ section.id }} h5, .homepage-swiper-{{ section.id }} h6 {
     margin: 0;
   }
   .custom-swiper-item {
-    background: url({{ 'placeholder.svg' | asset_url }}) center center / cover no-repeat #f5f5f5;
+    background-color: #111;
     position: relative;
     padding: 2em 8em;
     display: flex;
@@ -44,11 +52,11 @@
   .custom-swiper-item .custom-swiper-slide-bg img.small--hide {
     display: block;
   }
-  .swiper-slide {
+  .homepage-swiper-{{ section.id }} .swiper-slide {
     opacity: 0;
     transition: opacity 0.3s;
   }
-  .swiper-slide-active {
+  .homepage-swiper-{{ section.id }} .swiper-slide-active {
     opacity: 1;
   }
   .homepage-swiper-{{ section.id }} .swiper-slide .slide-content {
@@ -323,6 +331,7 @@
       >
         {% liquid
           assign image_alt = block.settings.alt 
+          assign mobile_banner = block.settings.image_mobile | default: block.settings.image
           if image_alt == blank
             if block.type == 'product' and block.settings.product != blank
               assign block_product = block.settings.product
@@ -342,7 +351,7 @@
           <picture>
             <source
               media="(max-width: 768px)"
-              srcset="{{ block.settings.image_mobile | image_url: width: 370, format: 'webp' }} 370w, {{ block.settings.image_mobile | image_url: width: 768, format: 'webp' }} 768w"
+              srcset="{{ mobile_banner | image_url: width: 370, format: 'webp' }} 370w, {{ mobile_banner | image_url: width: 768, format: 'webp' }} 768w"
               sizes="100vw"
             >
             <img
@@ -350,7 +359,7 @@
               width="1920"
               height="800"
               {% if forloop.first %}fetchpriority="high"{% endif %}
-              decoding="async"
+              decoding="{% if forloop.first %}auto{% else %}async{% endif %}"
               src="{{ block.settings.image | image_url: width: 1920, format: 'webp' }}"
               srcset="{{ block.settings.image | image_url: width: 1024, format: 'webp' }} 1024w, {{ block.settings.image | image_url: width: 1920, format: 'webp' }} 1920w, {{ block.settings.image | image_url: width: 2560, format: 'webp' }} 2560w"
               sizes="100vw"
@@ -503,7 +512,7 @@
 
 <script>
   document.addEventListener('DOMContentLoaded', function() {
-    requestIdleCallback(() => {
+    const initializeHomepageSwiper = () => {
       const homepage_swiper = new Swiper(`.homepage-swiper-{{ section.id }}`, {
         loop: true,
         slidesPerView: 1,
@@ -547,7 +556,12 @@
           }
         }, 400);
       });
-    });
+    };
+    if (window.requestIdleCallback) {
+      window.requestIdleCallback(initializeHomepageSwiper, { timeout: 1200 });
+    } else {
+      initializeHomepageSwiper();
+    }
 
     document.querySelectorAll('.custom-swiper-item').forEach(item => {
       item.addEventListener('click', event => {
