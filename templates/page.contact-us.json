@@ -31,14 +31,12 @@
     "contact_us_Y9ATap": {
       "type": "contact-us",
       "name": "Email Us",
-      "settings": {
-        "title": "Email Us"
-      }
-    },
+      "settings": {}
+    }
   },
   "order": [
     "main",
     "Topimg",
-    "contact_us_Y9ATap",
+    "contact_us_Y9ATap"
   ]
 }
