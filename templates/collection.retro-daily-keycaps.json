@@ -526,54 +526,6 @@
       "settings": {
         "title": "FAQ"
       }
-    },
-    "shop_with_confidence_section_PGLWzQ": {
-      "type": "shop-with-confidence-section",
-      "blocks": {
-        "service_item_b9PBKH": {
-          "type": "service_item",
-          "settings": {
-            "service_img": "shopify://shop_images/footer-icon1_1c7e0e71-312c-45ba-841d-143686c63e07.png",
-            "service_title": "Secure & Fast Delivery",
-            "service_description": "Fast, secure shipping you can count on."
-          }
-        },
-        "service_item_yKYpbL": {
-          "type": "service_item",
-          "settings": {
-            "service_img": "shopify://shop_images/footer-icon2_ae165278-8567-4f3a-ad49-e2c526c8498b.png",
-            "service_title": "1-Year Free Warranty",
-            "service_description": "All PIIFOX keyboards come with a 1-year limited warranty."
-          }
-        },
-        "service_item_imMPWq": {
-          "type": "service_item",
-          "settings": {
-            "service_img": "shopify://shop_images/footer-icon3_8076622e-27c0-49a3-aa04-a93ddb8e6477.png",
-            "service_title": "Hassle-Free Returns",
-            "service_description": "7-Day No-Reason Return,30-Day Quality Issue Return."
-          }
-        },
-        "service_item_gVnri8": {
-          "type": "service_item",
-          "settings": {
-            "service_img": "shopify://shop_images/footer-icon4_ec25736e-ddc5-4aee-9832-defeb336309e.png",
-            "service_title": "Customer Support",
-            "service_description": "Our support team is available Monday-Saturday: 6:00-17:00 (PDT)."
-          }
-        }
-      },
-      "block_order": [
-        "service_item_b9PBKH",
-        "service_item_yKYpbL",
-        "service_item_imMPWq",
-        "service_item_gVnri8"
-      ],
-      "name": "Shop With Confidence Section",
-      "settings": {
-        "shop_confidence_title": "Shop With Confidence",
-        "shop_confidence_description": "Premium quality. Reliable service. Every step of the way."
-      }
     }
   },
   "order": [
@@ -581,7 +533,6 @@
     "ab0ae01d-c453-46ff-afd0-91368d57f96b",
     "card_list_section_ebjLwc",
     "main-collection",
-    "faq_YaXkAC",
-    "shop_with_confidence_section_PGLWzQ"
+    "faq_YaXkAC"
   ]
 }

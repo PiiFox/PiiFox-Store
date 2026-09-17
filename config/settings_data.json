@@ -611,6 +611,58 @@
           "scroll_speed": 18,
           "bg_color": "#f5f5f7"
         }
+      },
+      "shop-with-confidence-section": {
+        "type": "shop-with-confidence-section",
+        "blocks": {
+          "service_item_b9PBKH": {
+            "type": "service_item",
+            "settings": {
+              "service_img": "shopify://shop_images/footer-icon1_1c7e0e71-312c-45ba-841d-143686c63e07.png",
+              "service_title": "Secure & Fast\nDelivery",
+              "service_description": "Fast, secure shipping you can count on."
+            }
+          },
+          "service_item_yKYpbL": {
+            "type": "service_item",
+            "settings": {
+              "service_img": "shopify://shop_images/footer-icon2_ae165278-8567-4f3a-ad49-e2c526c8498b.png",
+              "service_title": "1-Year Free\nWarranty",
+              "service_description": "All PIIFOX keyboards come with a 1-year limited warranty."
+            }
+          },
+          "service_item_imMPWq": {
+            "type": "service_item",
+            "settings": {
+              "service_img": "shopify://shop_images/footer-icon3_8076622e-27c0-49a3-aa04-a93ddb8e6477.png",
+              "service_title": "Hassle-Free\nReturns",
+              "service_description": "Simple & Transparent Return Process"
+            }
+          },
+          "service_item_gVnri8": {
+            "type": "service_item",
+            "settings": {
+              "service_img": "shopify://shop_images/footer-icon4_ec25736e-ddc5-4aee-9832-defeb336309e.png",
+              "service_title": "Customer\nSupport",
+              "service_description": "Multiple Support Options & Fast Response."
+            }
+          }
+        },
+        "block_order": [
+          "service_item_b9PBKH",
+          "service_item_yKYpbL",
+          "service_item_imMPWq",
+          "service_item_gVnri8"
+        ],
+        "settings": {
+          "shop_confidence_title": "Shop With Confidence",
+          "shop_confidence_description": "Premium quality. Reliable service. Every step of the way.",
+          "show_on_all": false,
+          "show_on_collection": true,
+          "show_on_product": true,
+          "show_on_home": false,
+          "show_on_other": false
+        }
       }
     },
     "content_for_index": [],

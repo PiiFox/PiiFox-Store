@@ -1,95 +1,145 @@
+{%- liquid
+  assign show_section = false
+  if section.settings.show_on_all
+    assign show_section = true
+  elsif template contains 'collection' or request.page_type == 'collection'
+    if section.settings.show_on_collection
+      assign show_section = true
+    endif
+  elsif template contains 'product' or request.page_type == 'product'
+    if section.settings.show_on_product
+      assign show_section = true
+    endif
+  elsif template == 'index' or request.page_type == 'index'
+    if section.settings.show_on_home
+      assign show_section = true
+    endif
+  else
+    if section.settings.show_on_other
+      assign show_section = true
+    endif
+  endif
+-%}
+
+{%- if show_section -%}
 <div class="shop-confidence-section-{{ section.id }}">
   <div class="shop-confidence-section--wrapper page-width wow bounceInUp">
     <div class="shop-confidence-section-header">
         <h2 class="shop-confidence-section-title custom-txt-bold appear-delay{% cycle '','-1','-2','-3','-4' %}">
-          {{ section.settings.shop_confidence_title }}
+          {{ section.settings.shop_confidence_title | default: 'Shop With Confidence' }}
         </h2>
         <div class="shop-confidence-section-description appear-delay{% cycle '','-1','-2','-3','-4' %}">
-          {{ section.settings.shop_confidence_description }}
+          {{ section.settings.shop_confidence_description | default: 'Premium quality. Reliable service. Every step of the way.' }}
         </div>
     </div>
     
     <div class="shop-confidence-section-content swiper-container">
       <div class="swiper-wrapper">
-        {% for block in section.blocks %}
-          <div class="swiper-slide swiper-slide-{{ block.id }}">
-            <div class="service-item {% if forloop.last %}last-item{% endif %}">
-              {% if block.settings.service_img %}
-                <img
-                  src="{{ block.settings.service_img | image_url }}"
-                  alt="{{ block.settings.service_title }}"
-                  width="200"
-                  height="200"
-                >
-              {% else %}
-                {%- capture current -%}{% cycle 1, 2, 3, 4, 5, 6 %}{%- endcapture -%}
-                {{ 'product-' | append: current | placeholder_svg_tag: 'placeholder-svg' }}
-              {% endif %}
-              <h3 class="service-item-title custom-txt-semibold appear-delay{% cycle '','-1','-2','-3','-4' %}">
-                {{ block.settings.service_title | escape | newline_to_br }}
-              </h3>
-              <div class="service-item-description custom-txt-light appear-delay{% cycle '','-1','-2','-3','-4' %}">
-                {{ block.settings.service_description }}
+        {% if section.blocks.size > 0 %}
+          {% for block in section.blocks %}
+            <div class="swiper-slide swiper-slide-{{ block.id }}" {{ block.shopify_attributes }}>
+              <div class="service-item {% if forloop.last %}last-item{% endif %}">
+                {% if block.settings.service_img %}
+                  <img
+                    src="{{ block.settings.service_img | image_url: width: 200 }}"
+                    alt="{{ block.settings.service_title | escape }}"
+                    width="200"
+                    height="200"
+                    loading="lazy"
+                  >
+                {% else %}
+                  {%- capture current -%}{% cycle 1, 2, 3, 4, 5, 6 %}{%- endcapture -%}
+                  {{ 'product-' | append: current | placeholder_svg_tag: 'placeholder-svg' }}
+                {% endif %}
+                <h3 class="service-item-title custom-txt-semibold appear-delay{% cycle '','-1','-2','-3','-4' %}">
+                  {{ block.settings.service_title | escape | newline_to_br }}
+                </h3>
+                <div class="service-item-description custom-txt-light appear-delay{% cycle '','-1','-2','-3','-4' %}">
+                  {{ block.settings.service_description }}
+                </div>
               </div>
             </div>
+          {% endfor %}
+        {% else %}
+          {%- comment -%} 兜底保障：当后台尚未添加 blocks 时默认渲染设计稿 4 大服务承诺 {%- endcomment -%}
+          <div class="swiper-slide swiper-slide-fallback-1">
+            <div class="service-item">
+              <img src="{{ 'footer-icon1_1c7e0e71-312c-45ba-841d-143686c63e07.png' | file_img_url: '200x' }}" alt="Secure & Fast Delivery" width="200" height="200" loading="lazy">
+              <h3 class="service-item-title custom-txt-semibold">Secure &amp; Fast<br>Delivery</h3>
+              <div class="service-item-description custom-txt-light">Fast, secure shipping you can count on.</div>
+            </div>
           </div>
-        {% endfor %}
+          <div class="swiper-slide swiper-slide-fallback-2">
+            <div class="service-item">
+              <img src="{{ 'footer-icon2_ae165278-8567-4f3a-ad49-e2c526c8498b.png' | file_img_url: '200x' }}" alt="1-Year Free Warranty" width="200" height="200" loading="lazy">
+              <h3 class="service-item-title custom-txt-semibold">1-Year Free<br>Warranty</h3>
+              <div class="service-item-description custom-txt-light">All PIIFOX keyboards come with a 1-year limited warranty.</div>
+            </div>
+          </div>
+          <div class="swiper-slide swiper-slide-fallback-3">
+            <div class="service-item">
+              <img src="{{ 'footer-icon3_8076622e-27c0-49a3-aa04-a93ddb8e6477.png' | file_img_url: '200x' }}" alt="Hassle-Free Returns" width="200" height="200" loading="lazy">
+              <h3 class="service-item-title custom-txt-semibold">Hassle-Free<br>Returns</h3>
+              <div class="service-item-description custom-txt-light">Simple &amp; Transparent Return Process</div>
+            </div>
+          </div>
+          <div class="swiper-slide swiper-slide-fallback-4">
+            <div class="service-item last-item">
+              <img src="{{ 'footer-icon4_ec25736e-ddc5-4aee-9832-defeb336309e.png' | file_img_url: '200x' }}" alt="Customer Support" width="200" height="200" loading="lazy">
+              <h3 class="service-item-title custom-txt-semibold">Customer<br>Support</h3>
+              <div class="service-item-description custom-txt-light">Multiple Support Options &amp; Fast Response.</div>
+            </div>
+          </div>
+        {% endif %}
       </div>
     </div>
   </div>
 </div>
 <script>
-document.addEventListener('DOMContentLoaded', function () {
+(function() {
+  function initServiceSwiper() {
     const swiperSelector = '.shop-confidence-section-{{ section.id }} .swiper-container';
-    let serviceListSwiper;
+    const container = document.querySelector(swiperSelector);
+    if (!container || typeof Swiper === 'undefined') return;
+
+    if (container.swiper) {
+      try { container.swiper.destroy(true, true); } catch(e) {}
+    }
+
     let isScroll = window.innerWidth < 1600;
+    new Swiper(swiperSelector, {
+      loop: isScroll,
+      autoplay: isScroll ? { delay: 3500, disableOnInteraction: false } : false,
+      allowTouchMove: isScroll,
+      centeredSlides: isScroll,
+      spaceBetween: isScroll ? 40 : 0,
+      breakpoints: {
+        0: { slidesPerView: 1.2 },
+        768: { slidesPerView: 2 },
+        1200: { slidesPerView: 3 },
+        1600: { slidesPerView: 4 }
+      }
+    });
+  }
 
-    function initServiceListSwiper() {
-        isScroll = window.innerWidth < 1600;
+  let resizeTimer;
+  window.addEventListener('resize', function() {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(initServiceSwiper, 400);
+  });
 
-        serviceListSwiper = new Swiper(swiperSelector, {
-            loop: isScroll,
-            autoplay: isScroll,
-            allowTouchMove: isScroll,
-            centeredSlides: isScroll,
-            spaceBetween: isScroll ? 40 : 0,
-            breakpoints: {
-                0: {
-                  slidesPerView: 1.2,
-                },
-                768: {
-                  slidesPerView: 2,
-                },
-                1200: {
-                  slidesPerView: 3,
-                },
-                1600: {
-                  slidesPerView: 4,
-                }
-            }
-        });
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initServiceSwiper);
+  } else {
+    initServiceSwiper();
+  }
+
+  document.addEventListener('shopify:section:load', function(e) {
+    if (e.target && e.target.querySelector && e.target.querySelector('.shop-confidence-section-{{ section.id }}')) {
+      initServiceSwiper();
     }
-
-    initServiceListSwiper();
-
-    let resizeTimer;
-    function updateServiceListSwiper() {
-        clearTimeout(resizeTimer);
-        resizeTimer = setTimeout(() => {
-            const shouldScroll = window.innerWidth < 1600;
-
-            if (shouldScroll !== isScroll) {
-                serviceListSwiper.destroy(true, true);
-                initServiceListSwiper();
-            } else if (serviceListSwiper && !serviceListSwiper.destroyed) {
-                serviceListSwiper.update();
-            }
-        }, 500);
-    }
-
-    window.addEventListener('resize', updateServiceListSwiper);
-    document.addEventListener('fullscreenchange', updateServiceListSwiper);
-});
+  });
+})();
 </script>
 {% style %}
   .shop-confidence-section-{{ section.id }} {
@@ -256,6 +306,7 @@ document.addEventListener('DOMContentLoaded', function () {
       }
   }
 {% endstyle %}
+{%- endif -%}
 
 {% schema %}
 {
@@ -265,12 +316,48 @@ document.addEventListener('DOMContentLoaded', function () {
     {
       "type": "text",
       "id": "shop_confidence_title",
-      "label": "Title"
+      "label": "Title",
+      "default": "Shop With Confidence"
     },
     {
       "type": "text",
       "id": "shop_confidence_description",
-      "label": "Description"
+      "label": "Description",
+      "default": "Premium quality. Reliable service. Every step of the way."
+    },
+    {
+      "type": "header",
+      "content": "Page Visibility"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_on_all",
+      "label": "Show on All Pages",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_on_collection",
+      "label": "Show on Collection Pages",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_on_product",
+      "label": "Show on Product Pages",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_on_home",
+      "label": "Show on Homepage",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_on_other",
+      "label": "Show on Other Pages",
+      "default": false
     }
   ],
   "blocks": [
@@ -292,49 +379,6 @@ document.addEventListener('DOMContentLoaded', function () {
           "type": "text",
           "id": "service_description",
           "label": "Service Description"
-        }
-      ]
-    }
-  ],
-  "presets": [
-    {
-      "name": "Shop With Confidence Section",
-      "settings": {
-        "shop_confidence_title": "Shop With Confidence",
-        "shop_confidence_description": "Premium quality. Reliable service. Every step of the way."
-      },
-      "blocks": [
-        {
-          "type": "service_item",
-          "settings": {
-            "service_img": "",
-            "service_title": "Fast & Free Shipping",
-            "service_description": "Free shipping on all orders$99+(US). Global shipping available."
-          }
-        },
-        {
-          "type": "service_item",
-          "settings": {
-            "service_img": "",
-            "service_title": "2-Year Warranty",
-            "service_description": "All PlIFOX keyboards comewith a 2-year limited warranty."
-          }
-        },
-        {
-          "type": "service_item",
-          "settings": {
-            "service_img": "",
-            "service_title": "Hassle-Free Returns",
-            "service_description": "7-Day No-Reason Return,30-Day Quality Issue Return."
-          }
-        },
-        {
-          "type": "service_item",
-          "settings": {
-            "service_img": "",
-            "service_title": "Customer Support",
-            "service_description": "Our support team is available Mon - Sat : 8 AM - 7 PM (PDT)."
-          }
         }
       ]
     }
