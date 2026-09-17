@@ -3,35 +3,47 @@
     <div class="icon-list-marquee-section-content">
       <div class="icon-list-marquee-container">
         <div class="icon-list-marquee">
-          {% for block in section.blocks %}
-            <div class="icon-item">
-              <img
-                class="icon-item-icon"
-                src="{{ block.settings.icon | image_url }}"
-                alt="{{ block.settings.context }}"
-                width="40"
-                height="40"
-                loading="lazy"
-              >
-              <div class="icon-item-context custom-txt-semibold">{{ block.settings.context }}</div>
-            </div>
+          {% assign service_icon_keys = 'top_service_icon_1,top_service_icon_2,top_service_icon_3,top_service_icon_4,top_service_icon_5' | split: ',' %}
+          {% assign service_title_keys = 'top_service_title_1,top_service_title_2,top_service_title_3,top_service_title_4,top_service_title_5' | split: ',' %}
+          {% for icon_key in service_icon_keys %}
+            {% assign title_key = service_title_keys[forloop.index0] %}
+            {% if settings[title_key] != blank %}
+              <div class="icon-item">
+                {% if settings[icon_key] != blank %}
+                  <img
+                    class="icon-item-icon"
+                    src="{{ settings[icon_key] | image_url }}"
+                    alt="{{ settings[title_key] }}"
+                    width="40"
+                    height="40"
+                    loading="lazy"
+                  >
+                {% endif %}
+                <div class="icon-item-context custom-txt-semibold">{{ settings[title_key] }}</div>
+              </div>
+            {% endif %}
           {% endfor %}
         </div>
 
         <!-- 关键：复制一份，实现无缝 -->
         <div class="icon-list-marquee overflow-hidden">
-          {% for block in section.blocks %}
-            <div class="icon-item">
-              <img
-                class="icon-item-icon"
-                src="{{ block.settings.icon | image_url }}"
-                alt="{{ block.settings.context }}"
-                width="40"
-                height="40"
-                loading="lazy"
-              >
-              <div class="icon-item-context custom-txt-semibold">{{ block.settings.context }}</div>
-            </div>
+          {% for icon_key in service_icon_keys %}
+            {% assign title_key = service_title_keys[forloop.index0] %}
+            {% if settings[title_key] != blank %}
+              <div class="icon-item">
+                {% if settings[icon_key] != blank %}
+                  <img
+                    class="icon-item-icon"
+                    src="{{ settings[icon_key] | image_url }}"
+                    alt="{{ settings[title_key] }}"
+                    width="40"
+                    height="40"
+                    loading="lazy"
+                  >
+                {% endif %}
+                <div class="icon-item-context custom-txt-semibold">{{ settings[title_key] }}</div>
+              </div>
+            {% endif %}
           {% endfor %}
         </div>
       </div>

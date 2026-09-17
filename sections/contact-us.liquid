@@ -4,7 +4,7 @@
     <!-- 左侧：表单区域 -->
     <div class="contact-form-column">
       <div class="form-header-line">
-        <h2 class="form-title">Contact PIIFOX:</h2>
+        <h2 class="form-title">Submit a Contact Form:</h2>
       </div>
 
       {% form 'contact' %}
@@ -20,23 +20,26 @@
         {%- endif -%}
 
         <div class="form-group">
-          <label for="ContactForm-name">NAME</label>
+          <label for="ContactForm-subject">SUBJECT</label>
           <input 
             type="text" 
-            id="ContactForm-name" 
-            name="contact[Name]" 
-            placeholder="Your name"
+            id="ContactForm-subject"
+            name="contact[subject]"
+            placeholder="Subject"
+            value="{% if form.subject %}{{ form.subject }}{% endif %}"
           >
         </div>
 
         <div class="form-group">
-          <label for="ContactForm-email">EMAIL</label>
+          <label for="ContactForm-email">EMAIL <span class="required-indicator" aria-hidden="true">*</span></label>
           <input 
             type="email" 
             id="ContactForm-email" 
             name="contact[email]" 
             placeholder="your@email.com" 
             value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}"
+            required
+            aria-required="true"
             spellcheck="false"
             autocomplete="email"
             autocapitalize="off"
@@ -55,19 +58,23 @@
         </div>
 
         <div class="form-group">
-          <label for="ContactForm-body">COMMENT</label>
+          <label for="ContactForm-body">DESCRIPTION <span class="required-indicator" aria-hidden="true">*</span></label>
           <textarea 
             rows="6" 
             id="ContactForm-body" 
             name="contact[body]" 
-            placeholder="Please write your comment or inquiry here"
+            placeholder="Please write your description or inquiry here"
+            required
+            aria-required="true"
           >{% if form.body %}{{ form.body }}{% endif %}</textarea>
         </div>
 
         <!-- 隐私政策提示 -->
         <div class="privacy-agreement-text">
-          By submitting this form, you agree to our 
-          <a href="/pages/privacy-policy" class="privacy-link" target="_blank">Privacy Policy</a>.
+          <label class="consent-checkbox-label" for="ContactForm-consent">
+            <input type="checkbox" id="ContactForm-consent" name="contact[consent]" value="true" required aria-required="true">
+            <span>By submitting this form I agree to the <a href="https://www.bluettipower.com/pages/terms-conditions" class="privacy-link" target="_blank" rel="noopener">terms</a> of <a href="https://www.bluettipower.com/pages/privacy-policy" class="privacy-link" target="_blank" rel="noopener">privacy policy</a>. I am giving express written consent to receive emails and/or telephone calls including mobile from or on behalf of <a href="http://piifox.com" class="privacy-link" target="_blank" rel="noopener">piifox.com</a>. <span class="required-indicator" aria-hidden="true">*</span></span>
+          </label>
         </div>
 
         <div class="form-action">
@@ -81,7 +88,7 @@
 
       <!-- 营业时间 -->
       <div class="info-block">
-        <h4 class="info-block-title">Customer Support Hours:</h4>
+        <h4 class="info-block-title">Business Hours:</h4>
         <p class="business-hours">Mon - Sat: <strong>8 AM - 7 PM (PDT)</strong></p>
       </div>
 
@@ -213,6 +220,25 @@
   color: #666;
   line-height: 1.5;
   margin-bottom: 20px;
+}
+.consent-checkbox-label {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  cursor: pointer;
+}
+.consent-checkbox-label input[type="checkbox"] {
+  flex: 0 0 auto;
+  width: 16px;
+  height: 16px;
+  margin: 2px 0 0;
+}
+.consent-checkbox-label span {
+  flex: 1;
+}
+.required-indicator {
+  color: #b42318;
+  font-weight: 700;
 }
 .privacy-link {
   color: #0b6623; /* 品牌绿或强调色 */
