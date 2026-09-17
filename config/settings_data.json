@@ -80,14 +80,7 @@
     "social_tiktok_link": "",
     "social_linkedin_link": "",
     "social_youtube_link": "https://www.youtube.com/@PIIFOX-KEYBOARD",
-    "social_discord_link": "https://discord.gg/xPd7mmjj6D", 
     "favicon": "shopify://shop_images/logo-3_webp.png",
-    "show_breadcrumbs": true,
-    "social_reddit_link": "",
-    "color_original_price": "#918f8f",
-    "store_email": "store@piifox.com",
-    "support_email": "service@piifox.com",
-    "market_email": "marketing@piifox.com",
     "top_service_icon_1": "shopify://shop_images/header-icon1.png",
     "top_service_title_1": "Hassle-Free Warranty",
     "top_service_icon_2": "shopify://shop_images/header-icon2.png",
@@ -96,6 +89,13 @@
     "top_service_title_3": "Secure-Fast Delivery",
     "top_service_icon_4": "shopify://shop_images/header-icon4.png",
     "top_service_title_4": "Hassle-Free Returns",
+    "show_breadcrumbs": true,
+    "social_discord_link": "https://discord.gg/xPd7mmjj6D",
+    "social_reddit_link": "",
+    "color_original_price": "#918f8f",
+    "store_email": "store@piifox.com",
+    "support_email": "service@piifox.com",
+    "market_email": "marketing@piifox.com",
     "color_theme_primary": "#0A6830",
     "color_theme_secondary": "#006934",
     "color_second_text": "#777777",
@@ -566,6 +566,50 @@
           "activity_downcount_text_color": "#ffffff",
           "activity_timezone": -8,
           "activity_end_time": "2026-08-15 23:59:59"
+        }
+      },
+      "icon-list-marquee-section": {
+        "type": "icon-list-marquee-section",
+        "blocks": {
+          "icon_item_Wf4V84": {
+            "type": "icon_item",
+            "settings": {
+              "icon": "shopify://shop_images/header-icon1.png",
+              "context": "Hassle-Free Warranty"
+            }
+          },
+          "icon_item_HMNEUA": {
+            "type": "icon_item",
+            "settings": {
+              "icon": "shopify://shop_images/header-icon2.png",
+              "context": "Pay With Ease"
+            }
+          },
+          "icon_item_cwCPQ4": {
+            "type": "icon_item",
+            "settings": {
+              "icon": "shopify://shop_images/header-icon3.png",
+              "context": "Secure-Fast Delivery"
+            }
+          },
+          "icon_item_njEzpg": {
+            "type": "icon_item",
+            "settings": {
+              "icon": "shopify://shop_images/header-icon4.png",
+              "context": "Hassle-Free Returns"
+            }
+          }
+        },
+        "block_order": [
+          "icon_item_Wf4V84",
+          "icon_item_HMNEUA",
+          "icon_item_cwCPQ4",
+          "icon_item_njEzpg"
+        ],
+        "settings": {
+          "enable_section": true,
+          "scroll_speed": 18,
+          "bg_color": "#f5f5f7"
         }
       }
     },
@@ -1252,11 +1296,6 @@
           ],
           "settings": {
             "enable_section": true,
-            "show_on_all": false,
-            "show_on_home": false,
-            "show_on_collections": true,
-            "show_on_products": false,
-            "show_on_pages": true,
             "scroll_speed": 18,
             "bg_color": "#f5f5f7"
           }
