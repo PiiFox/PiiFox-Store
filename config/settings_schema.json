@@ -1056,6 +1056,59 @@
     ]
   },
   {
+    "name": "Top Service Commitments",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Top Service Commitments"
+      },
+      {
+        "type": "image_picker",
+        "id": "top_service_icon_1",
+        "label": "Service 1 icon"
+      },
+      {
+        "type": "text",
+        "id": "top_service_title_1",
+        "label": "Service 1 title",
+        "default": "Hassle-Free Warranty"
+      },
+      {
+        "type": "image_picker",
+        "id": "top_service_icon_2",
+        "label": "Service 2 icon"
+      },
+      {
+        "type": "text",
+        "id": "top_service_title_2",
+        "label": "Service 2 title",
+        "default": "Pay with Ease"
+      },
+      {
+        "type": "image_picker",
+        "id": "top_service_icon_3",
+        "label": "Service 3 icon"
+      },
+      {
+        "type": "text",
+        "id": "top_service_title_3",
+        "label": "Service 3 title",
+        "default": "Secure-Fast Delivery"
+      },
+      {
+        "type": "image_picker",
+        "id": "top_service_icon_4",
+        "label": "Service 4 icon"
+      },
+      {
+        "type": "text",
+        "id": "top_service_title_4",
+        "label": "Service 4 title",
+        "default": "Hassle-Free Returns"
+      }
+    ]
+  },
+  {
     "name": "t:settings_schema.extras.name",
     "settings": [
       {
