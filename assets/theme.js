@@ -7355,8 +7355,9 @@ lazySizesConfig.expFactor = 4;
         unitPriceBaseUnit: "[data-unit-base]",
         sku: "[data-sku]",
         inventory: "[data-product-inventory]",
-        incomingInventory: "[data-incoming-inventory]",
-        colorLabel: "[data-variant-color-label]",
+         incomingInventory: "[data-incoming-inventory]",
+         quantityStatus: "[data-product-quantity-status]",
+         colorLabel: "[data-variant-color-label]",
 
         addToCart: "[data-add-to-cart]",
         addToCartText: "[data-add-to-cart-text]",
@@ -7559,10 +7560,16 @@ lazySizesConfig.expFactor = 4;
           );
         }
 
-        this.container.on(
-          "variantChange" + this.settings.namespace,
-          this.updateCartButton.bind(this),
-        );
+         this.container.on(
+           "variantChange" + this.settings.namespace,
+           this.updateCartButton.bind(this),
+         );
+         if (this.container.querySelector(this.selectors.quantityStatus)) {
+           this.container.on(
+             "variantChange" + this.settings.namespace,
+             this.updateQuantityStatus.bind(this),
+           );
+         }
         this.container.on(
           "variantImageChange" + this.settings.namespace,
           this.updateVariantImage.bind(this),
@@ -7661,7 +7668,7 @@ lazySizesConfig.expFactor = 4;
         ).textContent = color;
       },
 
-      updateCartButton: function (evt) {
+       updateCartButton: function (evt) {
         var variant = evt.detail.variant;
         var cartBtn = this.container.querySelector(this.selectors.addToCart);
         var cartBtnText = this.container.querySelector(
@@ -7687,7 +7694,21 @@ lazySizesConfig.expFactor = 4;
           cartBtn.disabled = true;
           cartBtnText.textContent = theme.strings.unavailable;
         }
-      },
+       },
+
+       updateQuantityStatus: function (evt) {
+         var status = this.container.querySelector(this.selectors.quantityStatus);
+         var variant = evt.detail.variant;
+
+         if (!status) {
+           return;
+         }
+
+         var inStock = variant && variant.available;
+         status.textContent = inStock ? "In Stock" : "Out of Stock";
+         status.classList.toggle("product-quantity-status--in-stock", inStock);
+         status.classList.toggle("product-quantity-status--out-of-stock", !inStock);
+       },
 
       updatePrice: function (evt) {
         var variant = evt.detail.variant;
