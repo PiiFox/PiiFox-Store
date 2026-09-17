@@ -619,7 +619,7 @@
             "type": "service_item",
             "settings": {
               "service_img": "shopify://shop_images/footer-icon1_1c7e0e71-312c-45ba-841d-143686c63e07.png",
-              "service_title": "Secure & Fast\nDelivery11",
+              "service_title": "Secure & Fast\nDelivery",
               "service_description": "Fast, secure shipping you can count on."
             }
           },
