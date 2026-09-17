@@ -30,8 +30,78 @@
     },
     "contact_us_Y9ATap": {
       "type": "contact-us",
-      "name": "Email Us",
-      "settings": {}
+      "blocks": {
+        "field_subject": {
+          "type": "field",
+          "settings": {
+            "label": "Subject",
+            "placeholder": "Subject",
+            "field_key": "subject",
+            "field_type": "text",
+            "required": true
+          }
+        },
+        "field_email": {
+          "type": "field",
+          "settings": {
+            "label": "Email",
+            "placeholder": "your@email.com",
+            "field_key": "email",
+            "field_type": "email",
+            "required": true
+          }
+        },
+        "field_phone": {
+          "type": "field",
+          "settings": {
+            "label": "Phone Number",
+            "placeholder": "Your phone number",
+            "field_key": "phone",
+            "field_type": "tel",
+            "required": false
+          }
+        },
+        "field_message": {
+          "type": "field",
+          "settings": {
+            "label": "Description",
+            "placeholder": "Please write your description or inquiry here",
+            "field_key": "body",
+            "field_type": "textarea",
+            "required": true
+          }
+        }
+      },
+      "block_order": [
+        "field_subject",
+        "field_email",
+        "field_phone",
+        "field_message"
+      ],
+      "settings": {
+        "form_title": "Submit a Contact Form:",
+        "submit_label": "Send",
+        "show_privacy": true,
+        "privacy_text": "<p>By submitting this form I agree to the <a href=\"https://www.piifox.com/pages/terms-of-service\">Terms & Conditions</a>. I am giving express written consent to receive emails and/or telephone calls including mobile from or on behalf of <a href=\"http://piifox.com\">piifox.com</a></p>",
+        "business_hours_title": "Business Hours:",
+        "business_hours": "Mon - Sat: 8 AM - 7 PM (PDT)",
+        "email_title": "Email Us:",
+        "official_email_label": "Official Email",
+        "official_email": "store@piifox.com",
+        "marketing_email_label": "Marketing Email",
+        "marketing_email": "marketing@piifox.com",
+        "support_email_label": "Support Email",
+        "support_email": "service@piifox.com",
+        "show_social": true,
+        "social_title": "Connect With Us on Social Media for Updates & Support:",
+        "show_discord": true,
+        "discord_title": "Join Our Community for Support & Discussions:",
+        "discord_label": "Join Discord",
+        "discord_url": "https://discord.gg/xPd7mmjj6D",
+        "company_title": "Our Address:",
+        "company_name": "PIIFOX is operated by Shenzhen Paishifu Technology Co, Ltd.",
+        "company_address": "Room 1210, Gangxinda Henggang Building, No. 5008 Longgang Avenue (Henggang Section), Songbai Community, Henggang Subdistrict, Longgang District, Shenzhen, Guangdong 518115, China"
+      }
     }
   },
   "order": [

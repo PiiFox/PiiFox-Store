@@ -56,58 +56,6 @@
         "autoplay_speed": 5
       }
     },
-    "icon_list_marquee_section_DJLTVc": {
-      "type": "icon-list-marquee-section",
-      "blocks": {
-        "icon_item_HCpajM": {
-          "type": "icon_item",
-          "settings": {
-            "icon": "shopify://shop_images/header-icon1.png",
-            "context": "Hassle-Free Warranty"
-          }
-        },
-        "icon_item_4J8Ey3": {
-          "type": "icon_item",
-          "settings": {
-            "icon": "shopify://shop_images/header-icon2.png",
-            "context": "Pay with Ease"
-          }
-        },
-        "icon_item_ARFQT9": {
-          "type": "icon_item",
-          "settings": {
-            "icon": "shopify://shop_images/header-icon3.png",
-            "context": "Secure-Fast Delivery"
-          }
-        },
-        "icon_item_gyQz4z": {
-          "type": "icon_item",
-          "settings": {
-            "icon": "shopify://shop_images/header-icon4.png",
-            "context": "30-Day Money-Back Guarantee"
-          }
-        },
-        "icon_item_GWf6Qe": {
-          "type": "icon_item",
-          "settings": {
-            "icon": "shopify://shop_images/header-icon4.png",
-            "context": "Certified Compatibility"
-          }
-        }
-      },
-      "block_order": [
-        "icon_item_HCpajM",
-        "icon_item_4J8Ey3",
-        "icon_item_ARFQT9",
-        "icon_item_gyQz4z",
-        "icon_item_GWf6Qe"
-      ],
-      "name": "Icon List Marquee Section",
-      "settings": {
-        "icon_list_title": "",
-        "scroll_speed": 18
-      }
-    },
     "card_list_section_ebjLwc": {
       "type": "card-list-section",
       "blocks": {
@@ -631,7 +579,6 @@
   "order": [
     "collection-header",
     "ab0ae01d-c453-46ff-afd0-91368d57f96b",
-    "icon_list_marquee_section_DJLTVc",
     "card_list_section_ebjLwc",
     "main-collection",
     "faq_YaXkAC",

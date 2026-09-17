@@ -167,6 +167,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <!-- LayoutHub-Workspace-Start -->
           {{ content_for_layout }}
           <!-- LayoutHub-Workspace-End -->
+          {%- if template contains 'collection' or request.page_type == 'collection' -%}
+            {%- section 'icon-list-marquee-section' -%}
+          {%- endif -%}
         </main>
         {%- section 'foot-newsletter' -%}
         {%- section 'footer-promotions' -%}

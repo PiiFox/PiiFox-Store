@@ -100,7 +100,7 @@
       </a>
     </li>
   {%- endif -%}
-  {%- if settings.social_discord_link != blank -%}
+  {%- if settings.social_discord_link != blank and hide_discord != true -%}
     <li class="item-discord">
       <a target="_blank" rel="noopener" href="{{ settings.social_discord_link }}" title="{{ 'layout.footer.social_platform' | t: name: shop.name, platform: 'Discord' }}" class="social-icon-discord">
         <svg class="icon icon-discord" width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" role="presentation">

@@ -19,22 +19,42 @@
           </div>
         {%- endif -%}
 
-        {%- for block in section.blocks -%}
-          {%- assign field_key = block.settings.field_key | default: block.id | handleize -%}
-          {%- if block.settings.field_type == 'email' -%}{%- assign field_key = 'email' -%}{%- endif -%}
-          {%- assign field_value = form[field_key] -%}
-          {%- if field_key == 'email' and field_value == blank and customer -%}{%- assign field_value = customer.email -%}{%- endif -%}
-          <div class="form-group" {{ block.shopify_attributes }}>
-            <label for="ContactForm-{{ section.id }}-{{ block.id }}">
-              {{ block.settings.label }}{%- if block.settings.required -%} <span class="required-indicator" aria-hidden="true">*</span>{%- endif -%}
-            </label>
-            {%- if block.settings.field_type == 'textarea' -%}
-              <textarea rows="6" id="ContactForm-{{ section.id }}-{{ block.id }}" name="contact[{{ field_key }}]" placeholder="{{ block.settings.placeholder | escape }}"{% if block.settings.required %} required aria-required="true"{% endif %}>{{ field_value }}</textarea>
-            {%- else -%}
-              <input type="{{ block.settings.field_type }}" id="ContactForm-{{ section.id }}-{{ block.id }}" name="contact[{{ field_key }}]" placeholder="{{ block.settings.placeholder | escape }}" value="{{ field_value | escape }}"{% if block.settings.required %} required aria-required="true"{% endif %}{% if block.settings.field_type == 'email' %} autocorrect="off" autocapitalize="off" spellcheck="false" autocomplete="email"{% endif %}>
-            {%- endif -%}
+        {%- if section.blocks.size > 0 -%}
+          {%- for block in section.blocks -%}
+            {%- assign field_key = block.settings.field_key | default: block.id | handleize -%}
+            {%- if block.settings.field_type == 'email' -%}{%- assign field_key = 'email' -%}{%- endif -%}
+            {%- assign field_value = form[field_key] -%}
+            {%- if field_key == 'email' and field_value == blank and customer -%}{%- assign field_value = customer.email -%}{%- endif -%}
+            <div class="form-group" {{ block.shopify_attributes }}>
+              <label for="ContactForm-{{ section.id }}-{{ block.id }}">
+                {{ block.settings.label }}{%- if block.settings.required -%} <span class="required-indicator" aria-hidden="true">*</span>{%- endif -%}
+              </label>
+              {%- if block.settings.field_type == 'textarea' -%}
+                <textarea rows="6" id="ContactForm-{{ section.id }}-{{ block.id }}" name="contact[{{ field_key }}]" placeholder="{{ block.settings.placeholder | escape }}"{% if block.settings.required %} required aria-required="true"{% endif %}>{{ field_value }}</textarea>
+              {%- else -%}
+                <input type="{{ block.settings.field_type }}" id="ContactForm-{{ section.id }}-{{ block.id }}" name="contact[{{ field_key }}]" placeholder="{{ block.settings.placeholder | escape }}" value="{{ field_value | escape }}"{% if block.settings.required %} required aria-required="true"{% endif %}{% if block.settings.field_type == 'email' %} autocorrect="off" autocapitalize="off" spellcheck="false" autocomplete="email"{% endif %}>
+              {%- endif -%}
+            </div>
+          {%- endfor -%}
+        {%- else -%}
+          {%- comment -%} 兜底默认字段：避免尚未配置 blocks 时表单呈现空白 {%- endcomment -%}
+          <div class="form-group">
+            <label for="ContactForm-{{ section.id }}-subject">Subject <span class="required-indicator" aria-hidden="true">*</span></label>
+            <input type="text" id="ContactForm-{{ section.id }}-subject" name="contact[subject]" placeholder="Subject" value="{{ form.subject }}" required aria-required="true">
           </div>
-        {%- endfor -%}
+          <div class="form-group">
+            <label for="ContactForm-{{ section.id }}-email">Email <span class="required-indicator" aria-hidden="true">*</span></label>
+            <input type="email" id="ContactForm-{{ section.id }}-email" name="contact[email]" placeholder="your@email.com" value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}" required aria-required="true" autocorrect="off" autocapitalize="off" spellcheck="false" autocomplete="email">
+          </div>
+          <div class="form-group">
+            <label for="ContactForm-{{ section.id }}-phone">Phone Number</label>
+            <input type="tel" id="ContactForm-{{ section.id }}-phone" name="contact[phone]" placeholder="Your phone number" value="{{ form.phone }}">
+          </div>
+          <div class="form-group">
+            <label for="ContactForm-{{ section.id }}-body">Description <span class="required-indicator" aria-hidden="true">*</span></label>
+            <textarea rows="6" id="ContactForm-{{ section.id }}-body" name="contact[body]" placeholder="Please write your description or inquiry here" required aria-required="true">{{ form.body }}</textarea>
+          </div>
+        {%- endif -%}
 
         {%- if section.settings.show_privacy -%}
           <div class="privacy-agreement-text">
@@ -44,7 +64,7 @@
             </label>
           </div>
         {%- endif -%}
-        <div class="form-action"><button type="submit" class="contact-submit-btn">{{ section.settings.submit_label }}</button></div>
+        <div class="form-action"><button type="submit" class="contact-submit-btn">{{ section.settings.submit_label | default: 'Send' }}</button></div>
       {%- endform -%}
     </div>
 
@@ -66,13 +86,13 @@
       {%- endif -%}
 
       {%- if section.settings.show_social -%}
-        <div class="info-divider"></div><div class="info-block"><h4 class="info-block-title">{{ section.settings.social_title }}</h4>{% render 'social-icons', additional_classes: 'footer__social' %}</div>
+        <div class="info-divider"></div><div class="info-block"><h4 class="info-block-title">{{ section.settings.social_title }}</h4>{% render 'social-icons', additional_classes: 'footer__social', hide_discord: true %}</div>
       {%- endif -%}
 
       {%- if section.settings.show_discord and section.settings.discord_url != blank -%}
         <div class="info-divider"></div><div class="info-block">
           <h4 class="info-block-title">{{ section.settings.discord_title }}</h4>
-          <a target="_blank" rel="noopener" href="{{ section.settings.discord_url }}" class="discord-badge-link"><span class="discord-circle-icon" aria-hidden="true">Discord</span><span class="discord-text">{{ section.settings.discord_label }}</span></a>
+          <a target="_blank" rel="noopener" href="{{ section.settings.discord_url }}" class="discord-badge-link"><span class="discord-circle-icon" aria-hidden="true"><svg class="icon icon-discord" width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" role="presentation"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994.021-.041.001-.09-.041-.106a13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.929 1.793 8.18 1.793 12.061 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.894.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.028zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z" fill="#ffffff"></path></svg></span><span class="discord-text">{{ section.settings.discord_label }}</span></a>
         </div>
       {%- endif -%}
 
@@ -88,51 +108,269 @@
 </div>
 
 <style>
-.piifox-contact-page-wrapper{max-width:1200px;margin:40px auto;padding:0 24px;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;color:#222}.piifox-contact-grid{display:grid;grid-template-columns:1.25fr .75fr;gap:60px;align-items:start}.form-header-line{display:flex;align-items:center;margin-bottom:24px}.form-title{font-size:32px;font-weight:800;margin:0;white-space:nowrap}.form-group{margin-bottom:20px}.form-group label{display:block;font-size:14px;font-weight:700;color:#444;margin-bottom:6px;letter-spacing:.8px}.form-group input,.form-group textarea{width:100%;padding:12px 14px;border:1px solid #e0e0e0;border-radius:4px;font-size:14px;color:#333;outline:none;box-sizing:border-box;background:#fff}.form-group input:focus,.form-group textarea:focus{border-color:#111;box-shadow:0 0 0 1px #111}.privacy-agreement-text{font-size:13px;color:#666;line-height:1.5;margin-bottom:20px}.consent-checkbox-label{display:flex;align-items:flex-start;gap:8px;cursor:pointer}.consent-checkbox-label input{flex:0 0 auto;width:16px;height:16px;margin:2px 0 0}.consent-checkbox-label span{flex:1}.privacy-agreement-text p{margin:0}.privacy-agreement-text a{color:#0b6623;text-decoration:underline}.required-indicator{color:#b42318;font-weight:700}.contact-submit-btn{background:#111;color:#fff;border:0;padding:10px 32px;font-size:14px;font-weight:700;border-radius:4px;cursor:pointer}.contact-submit-btn:hover{opacity:.85}.form-status{padding:12px 16px;border-radius:4px;margin-bottom:20px;font-size:14px}.form-status--success{background:#f0fdf4;color:#166534;border:1px solid #bbf7d0}.form-status--error{background:#fef2f2;color:#991b1b;border:1px solid #fecaca}.contact-info-column{padding-left:50px;border-left:1px solid #f0f0f0;display:flex;flex-direction:column;justify-content:center;height:100%}.info-block-title{font-size:20px;font-weight:700;margin:0 0 8px;color:#111}.company-intro,.address-detail,.business-hours{font-size:14px;line-height:1.6;color:#555;margin:0}.company-intro{margin-bottom:8px}.info-divider{height:1px;background:#f0f0f0;margin:20px 0}.email-list{list-style:none;padding:0;margin:0}.email-list li{font-size:14px;line-height:1.8;color:#444}.info-link{color:#0b6623;text-decoration:underline}.discord-badge-link{display:inline-flex;align-items:center;gap:10px;text-decoration:none;margin-top:4px}.discord-circle-icon{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;background:#5865F2;border-radius:50%;color:#fff;font-size:8px;font-weight:700}.discord-text{font-size:13px;color:#444;font-weight:500}@media(max-width:768px){.piifox-contact-grid{grid-template-columns:1fr;gap:40px}.contact-info-column{padding-left:0;border-left:0;border-top:1px solid #f0f0f0;padding-top:30px}}
+.piifox-contact-page-wrapper{max-width:1200px;margin:40px auto;padding:0 24px;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;color:#222}.piifox-contact-grid{display:grid;grid-template-columns:1.25fr .75fr;gap:60px;align-items:start}.form-header-line{display:flex;align-items:center;margin-bottom:24px}.form-title{font-size:32px;font-weight:800;margin:0;white-space:nowrap}.form-group{margin-bottom:20px}.form-group label{display:block;font-size:14px;font-weight:700;color:#444;margin-bottom:6px;letter-spacing:.8px}.form-group input,.form-group textarea{width:100%;padding:12px 14px;border:1px solid #e0e0e0;border-radius:4px;font-size:14px;color:#333;outline:none;box-sizing:border-box;background:#fff}.form-group input:focus,.form-group textarea:focus{border-color:#111;box-shadow:0 0 0 1px #111}.privacy-agreement-text{font-size:13px;color:#666;line-height:1.5;margin-bottom:20px}.consent-checkbox-label{display:flex;align-items:flex-start;gap:8px;cursor:pointer}.consent-checkbox-label input{flex:0 0 auto;width:16px;height:16px;margin:2px 0 0}.consent-checkbox-label span{flex:1}.privacy-agreement-text p{margin:0}.privacy-agreement-text a{color:#0b6623;text-decoration:underline}.required-indicator{color:#b42318;font-weight:700}.contact-submit-btn{background:#111;color:#fff;border:0;padding:10px 32px;font-size:14px;font-weight:700;border-radius:4px;cursor:pointer}.contact-submit-btn:hover{opacity:.85}.form-status{padding:12px 16px;border-radius:4px;margin-bottom:20px;font-size:14px}.form-status--success{background:#f0fdf4;color:#166534;border:1px solid #bbf7d0}.form-status--error{background:#fef2f2;color:#991b1b;border:1px solid #fecaca}.contact-info-column{padding-left:50px;border-left:1px solid #f0f0f0;display:flex;flex-direction:column;justify-content:center;height:100%}.info-block-title{font-size:20px;font-weight:700;margin:0 0 8px;color:#111}.company-intro,.address-detail,.business-hours{font-size:14px;line-height:1.6;color:#555;margin:0}.company-intro{margin-bottom:8px}.info-divider{height:1px;background:#f0f0f0;margin:20px 0}.email-list{list-style:none;padding:0;margin:0}.email-list li{font-size:14px;line-height:1.8;color:#444}.info-link{color:#0b6623;text-decoration:underline}.discord-badge-link{display:inline-flex;align-items:center;gap:10px;text-decoration:none;margin-top:4px}.discord-circle-icon{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;background:#5865F2;border-radius:50%;color:#fff;flex-shrink:0}.discord-circle-icon svg{width:16px;height:16px;display:block}.discord-text{font-size:13px;color:#444;font-weight:500}.contact-info-column .social-icons .item-discord{display:none!important;}@media(max-width:768px){.piifox-contact-grid{grid-template-columns:1fr;gap:40px}.contact-info-column{padding-left:0;border-left:0;border-top:1px solid #f0f0f0;padding-top:30px}}
 </style>
 
 {% schema %}
 {
-  "name":"Contact Us",
-  "settings":[
-    {"type":"text","id":"form_title","label":"Form title","default":"Submit a Contact Form:"},
-    {"type":"text","id":"submit_label","label":"Submit button label","default":"Send"},
-    {"type":"text","id":"success_message","label":"Success message","default":"Thanks for contacting us! We have received your message and will get back to you as soon as possible."},
-    {"type":"text","id":"error_message","label":"Error message","default":"Please check the following errors:"},
-    {"type":"checkbox","id":"show_privacy","label":"Show privacy consent","default":true},
-    {"type":"richtext","id":"privacy_text","label":"Privacy consent text","default":"<p>By submitting this form, I agree to the privacy policy.</p>"},
-    {"type":"header","content":"Contact information"},
-    {"type":"text","id":"business_hours_title","label":"Business hours title","default":"Business Hours:"},
-    {"type":"text","id":"business_hours","label":"Business hours","default":"Mon - Sat: 8 AM - 7 PM (PDT)"},
-    {"type":"text","id":"email_title","label":"Email section title","default":"Email Us:"},
-    {"type":"text","id":"official_email_label","label":"Official email label","default":"Official Email"},
-    {"type":"text","id":"official_email","label":"Official email","default":"store@piifox.com"},
-    {"type":"text","id":"marketing_email_label","label":"Marketing email label","default":"Marketing Email"},
-    {"type":"text","id":"marketing_email","label":"Marketing email","default":"marketing@piifox.com"},
-    {"type":"text","id":"support_email_label","label":"Support email label","default":"Support Email"},
-    {"type":"text","id":"support_email","label":"Support email","default":"service@piifox.com"},
-    {"type":"checkbox","id":"show_social","label":"Show social media","default":true},
-    {"type":"text","id":"social_title","label":"Social media title","default":"Social Media:"},
-    {"type":"checkbox","id":"show_discord","label":"Show Discord","default":true},
-    {"type":"text","id":"discord_title","label":"Discord title","default":"Discord Group:"},
-    {"type":"text","id":"discord_label","label":"Discord link label","default":"Join Discord"},
-    {"type":"text","id":"discord_url","label":"Discord link","default":"https://discord.gg/xPd7mmjj6D"},
-    {"type":"text","id":"company_title","label":"Company information title","default":"Our Address:"},
-    {"type":"textarea","id":"company_name","label":"Company legal name","default":"PIIFOX is operated by Shenzhen Paishifu Technology Co, Ltd."},
-    {"type":"textarea","id":"company_address","label":"Company detailed address","default":"Room 1210, Gangxinda Henggang Building, No. 5008 Longgang Avenue (Henggang Section), Songbai Community, Henggang Subdistrict, Longgang District, Shenzhen, Guangdong 518115, China"}
+  "name": "Contact Us",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Form Settings (Left Side)"
+    },
+    {
+      "type": "text",
+      "id": "form_title",
+      "label": "Form title",
+      "default": "Submit a Contact Form:"
+    },
+    {
+      "type": "text",
+      "id": "submit_label",
+      "label": "Submit button label",
+      "default": "Send"
+    },
+    {
+      "type": "text",
+      "id": "success_message",
+      "label": "Success message",
+      "default": "Thanks for contacting us! We have received your message and will get back to you as soon as possible."
+    },
+    {
+      "type": "text",
+      "id": "error_message",
+      "label": "Error message",
+      "default": "Please check the following errors:"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_privacy",
+      "label": "Show privacy consent",
+      "default": true
+    },
+    {
+      "type": "richtext",
+      "id": "privacy_text",
+      "label": "Privacy consent text",
+      "default": "<p>By submitting this form I agree to the <a href='https://www.piifox.com/pages/terms-of-service'>Terms & Conditions</a>. I am giving express written consent to receive emails and/or telephone calls including mobile from or on behalf of <a href='http://piifox.com'>piifox.com</a></p>"
+    },
+    {
+      "type": "header",
+      "content": "Contact Information (Right Side)"
+    },
+    {
+      "type": "text",
+      "id": "business_hours_title",
+      "label": "Business hours title",
+      "default": "Business Hours:"
+    },
+    {
+      "type": "text",
+      "id": "business_hours",
+      "label": "Business hours",
+      "default": "Mon - Sat: 8 AM - 7 PM (PDT)"
+    },
+    {
+      "type": "text",
+      "id": "email_title",
+      "label": "Email section title",
+      "default": "Email Us:"
+    },
+    {
+      "type": "text",
+      "id": "official_email_label",
+      "label": "Official email label",
+      "default": "Official Email"
+    },
+    {
+      "type": "text",
+      "id": "official_email",
+      "label": "Official email",
+      "default": "store@piifox.com"
+    },
+    {
+      "type": "text",
+      "id": "marketing_email_label",
+      "label": "Marketing email label",
+      "default": "Marketing Email"
+    },
+    {
+      "type": "text",
+      "id": "marketing_email",
+      "label": "Marketing email",
+      "default": "marketing@piifox.com"
+    },
+    {
+      "type": "text",
+      "id": "support_email_label",
+      "label": "Support email label",
+      "default": "Support Email"
+    },
+    {
+      "type": "text",
+      "id": "support_email",
+      "label": "Support email",
+      "default": "service@piifox.com"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_social",
+      "label": "Show social media",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "social_title",
+      "label": "Social media title",
+      "default": "Connect With Us on Social Media for Updates & Support:"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_discord",
+      "label": "Show Discord",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "discord_title",
+      "label": "Discord title",
+      "default": "Join Our Community for Support & Discussions："
+    },
+    {
+      "type": "text",
+      "id": "discord_label",
+      "label": "Discord link label",
+      "default": "Join Discord"
+    },
+    {
+      "type": "text",
+      "id": "discord_url",
+      "label": "Discord link",
+      "default": "https://discord.gg/xPd7mmjj6D"
+    },
+    {
+      "type": "text",
+      "id": "company_title",
+      "label": "Company information title",
+      "default": "Our Address:"
+    },
+    {
+      "type": "textarea",
+      "id": "company_name",
+      "label": "Company legal name",
+      "default": "PIIFOX is operated by Shenzhen Paishifu Technology Co, Ltd."
+    },
+    {
+      "type": "textarea",
+      "id": "company_address",
+      "label": "Company detailed address",
+      "default": "Room 1210, Gangxinda Henggang Building, No. 5008 Longgang Avenue (Henggang Section), Songbai Community, Henggang Subdistrict, Longgang District, Shenzhen, Guangdong 518115, China"
+    }
   ],
-  "blocks":[{"type":"field","name":"Form field","settings":[
-    {"type":"text","id":"label","label":"Field label","default":"Subject"},
-    {"type":"text","id":"placeholder","label":"Placeholder","default":"Subject"},
-    {"type":"text","id":"field_key","label":"Field name","default":"subject","info":"Use a unique name. The email field always uses contact[email]."},
-    {"type":"select","id":"field_type","label":"Field type","default":"text","options":[{"value":"text","label":"Text"},{"value":"email","label":"Email"},{"value":"tel","label":"Phone"},{"value":"textarea","label":"Multiline text"}]},
-    {"type":"checkbox","id":"required","label":"Required","default":false}
-  ]}],
-  "presets":[{"name":"Contact Us","blocks":[
-    {"type":"field","settings":{"label":"Subject","placeholder":"Subject","field_key":"subject","field_type":"text","required":false}},
-    {"type":"field","settings":{"label":"Email","placeholder":"your@email.com","field_key":"email","field_type":"email","required":true}},
-    {"type":"field","settings":{"label":"Phone Number","placeholder":"Your phone number","field_key":"phone","field_type":"tel","required":false}},
-    {"type":"field","settings":{"label":"Description","placeholder":"Please write your description or inquiry here","field_key":"body","field_type":"textarea","required":true}}
-  ]}]
+  "blocks": [
+    {
+      "type": "field",
+      "name": "Form Field",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Field label",
+          "default": "Subject"
+        },
+        {
+          "type": "text",
+          "id": "placeholder",
+          "label": "Placeholder",
+          "default": "Subject"
+        },
+        {
+          "type": "text",
+          "id": "field_key",
+          "label": "Field name / key",
+          "default": "subject",
+          "info": "Unique identifier for this field in email notification. For email field, contact[email] is automatically used."
+        },
+        {
+          "type": "select",
+          "id": "field_type",
+          "label": "Field type",
+          "default": "text",
+          "options": [
+            {
+              "value": "text",
+              "label": "Text"
+            },
+            {
+              "value": "email",
+              "label": "Email"
+            },
+            {
+              "value": "tel",
+              "label": "Phone"
+            },
+            {
+              "value": "textarea",
+              "label": "Multiline text"
+            }
+          ]
+        },
+        {
+          "type": "checkbox",
+          "id": "required",
+          "label": "Required",
+          "default": false
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Contact Us",
+      "blocks": [
+        {
+          "type": "field",
+          "settings": {
+            "label": "Subject",
+            "placeholder": "Subject",
+            "field_key": "subject",
+            "field_type": "text",
+            "required": true
+          }
+        },
+        {
+          "type": "field",
+          "settings": {
+            "label": "Email",
+            "placeholder": "your@email.com",
+            "field_key": "email",
+            "field_type": "email",
+            "required": true
+          }
+        },
+        {
+          "type": "field",
+          "settings": {
+            "label": "Phone Number",
+            "placeholder": "Your phone number",
+            "field_key": "phone",
+            "field_type": "tel",
+            "required": false
+          }
+        },
+        {
+          "type": "field",
+          "settings": {
+            "label": "Description",
+            "placeholder": "Please write your description or inquiry here",
+            "field_key": "body",
+            "field_type": "textarea",
+            "required": true
+          }
+        }
+      ]
+    }
+  ]
 }
 {% endschema %}
