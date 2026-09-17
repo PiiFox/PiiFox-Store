@@ -84,11 +84,12 @@
           "type": "icon_item",
           "settings": {
             "icon": "shopify://shop_images/header-icon4.png",
-            "context": "Hassle-Free Returns"
+            "context": "Easy Returns"
           }
         },
         "icon_item_GWf6Qe": {
           "type": "icon_item",
+          "disabled": true,
           "settings": {
             "icon": "shopify://shop_images/header-icon4.png",
             "context": "Wide Compatibility"
