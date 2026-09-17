@@ -1,0 +1,15 @@
+{% if block.settings.context != blank %}
+  <div class="icon-item" {{ block.shopify_attributes }}>
+    {% if block.settings.icon != blank %}
+      <img
+        class="icon-item-icon"
+        src="{{ block.settings.icon | image_url }}"
+        alt="{{ block.settings.context | escape }}"
+        width="40"
+        height="40"
+        loading="lazy"
+      >
+    {% endif %}
+    <div class="icon-item-context custom-txt-semibold">{{ block.settings.context }}</div>
+  </div>
+{% endif %}
