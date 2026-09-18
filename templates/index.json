@@ -80,7 +80,6 @@
         },
         "product_fk7aYU": {
           "type": "product",
-          "disabled": true,
           "settings": {
             "image": "shopify://shop_images/DEF68_HE_pro_banner.png",
             "image_mobile": "shopify://shop_images/DEF68_HE_pro_banner_m.png",
@@ -103,7 +102,6 @@
         },
         "product_e8DMB9": {
           "type": "product",
-          "disabled": true,
           "settings": {
             "image": "shopify://shop_images/FORX_Final75_HE_banner.png",
             "image_mobile": "shopify://shop_images/FORX_Final75_HE_banner_m.png",
