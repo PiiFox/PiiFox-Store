@@ -33,7 +33,7 @@
       "@type": "Brand",
       "name": {{ product.vendor | json }}
     },
-    "sku": {{ current_variant.sku | json }},
+    "sku": "shopify_US_{{ product.id }}_{{ current_variant.id }}",
     {% if product.category != blank %}
     "category": {{ product.category | json }},
     {% endif %}
@@ -57,9 +57,7 @@
       {%- for variant in product.variants -%}
         {
           "@type": "Offer",
-          {%- if variant.sku != blank -%}
-            "sku": {{ variant.sku | json }},
-          {%- endif -%}
+          "sku": "shopify_US_{{ product.id }}_{{ variant.id }}",
           {%- if variant.title != blank -%}
             "name": {{ variant.title | json }},
           {%- endif -%}
