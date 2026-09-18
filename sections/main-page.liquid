@@ -5,7 +5,37 @@
   </header>
 
   <div class="rte rte--nomargin">
-    {{ page.content }}
+    {% case page.handle %}
+      {% when 'warranty-return-policy', 'return-refund-policy', 'refund-policy', 'return-and-refund-policy', 'privacy-policy', 'shipping-policy', 'terms-of-service' %}
+        {%- unless template.suffix == 'policy' -%}
+          {%- capture policy_body -%}
+            {% case page.handle %}
+              {% when 'privacy-policy' %}
+                {{ shop.privacy_policy.body }}
+              {% when 'shipping-policy' %}
+                {{ shop.shipping_policy.body }}
+              {% when 'warranty-return-policy', 'return-refund-policy', 'refund-policy', 'return-and-refund-policy' %}
+                {{ shop.refund_policy.body }}
+              {% when 'terms-of-service' %}
+                {{ shop.terms_of_service.body }}
+            {% endcase %}   
+          {%- endcapture -%}
+
+          {%- if policy_body contains '.warranty-container {' and policy_body contains '<div class="warranty-container">' and policy_body contains '<style>' == false -%}
+            {%- assign parts = policy_body | split: '<div class="warranty-container">' -%}
+            <style>
+              {{ parts[0] }}
+            </style>
+            <div class="warranty-container">
+              {{ parts[1] }}
+            </div>
+          {%- else -%}
+            {{ policy_body }}
+          {%- endif -%}
+        {%- endunless -%}
+      {% else %}
+        {{ page.content }}
+    {% endcase %}
   </div>
 </div>
 
