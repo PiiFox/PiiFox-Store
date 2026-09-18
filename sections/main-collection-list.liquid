@@ -1,4 +1,4 @@
-<div class="main-collection-list-section-{{ section.id }} wow bounceInUp">
+<div class="main-collection-list-section-{{ section.id }} wow fadeIn">
   <div class="main-collection-list-section--wrapper page-width">
     <h2 class="main-collection-list-section-title custom-txt-bold appear-delay{% cycle '','-1','-2','-3','-4' %}">
       {{ section.settings.title }}
@@ -7,13 +7,13 @@
       {% for block in section.blocks %}
         {% style %}
           .main-collection-list-item-{{ block.id }} {
-              background-image: url({{ block.settings.cover_image | image_url: width: 1000, format: 'webp'  }});
+              background-image: url({{ block.settings.cover_image | image_url: width: 700, format: 'webp'  }});
               background-size: cover;
               background-position: center;
           }
           @media screen and (max-width: 768px) {
             .main-collection-list-item-{{ block.id }} {
-              background-image: url({{ block.settings.cover_image_m | image_url: width: 768, format: 'webp'  }});
+              background-image: url({{ block.settings.cover_image_m | image_url: width: 500, format: 'webp'  }});
             }
           }
         {% endstyle %}

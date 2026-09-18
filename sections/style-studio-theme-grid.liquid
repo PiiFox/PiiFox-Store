@@ -45,9 +45,14 @@
 
               {%- if theme_image != blank -%}
                 <div class="theme-card-media">
-                  <img class="theme-card-img lazyload"
-                       src="{{ theme_image | image_url: width: 2000 }}"
-                       data-src="{{ theme_image | image_url: width: 2000 }}"
+                  <img class="theme-card-img"
+                       src="{{ theme_image | image_url: width: 800, format: 'webp' }}"
+                       srcset="{{ theme_image | image_url: width: 450, format: 'webp' }} 450w, {{ theme_image | image_url: width: 800, format: 'webp' }} 800w"
+                       sizes="(max-width: 768px) 90vw, 420px"
+                       width="{{ theme_image.width | default: 800 }}"
+                       height="{{ theme_image.height | default: 600 }}"
+                       loading="lazy"
+                       decoding="async"
                        alt="{{ block.settings.title | escape }}" />
                 </div>
               {%- endif -%}

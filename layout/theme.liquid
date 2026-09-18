@@ -41,6 +41,28 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     {{ 'klaviyo-teaser-custom.css' | asset_url | stylesheet_tag }}
     {{ 'css_tool.css' | asset_url | stylesheet_tag: preload: true }}
     {%- render 'css-variables' -%}
+    <style>
+      .template-index #shopify-section-activity-bar { display: none !important; }
+      body:not(.template-index) #ActivityBar-header { display: none !important; }
+    </style>
+    <script>
+      window.__jqQueue = window.__jqQueue || [];
+      window.$ = window.jQuery = function(selector) {
+        if (typeof selector === 'function') {
+          window.__jqQueue.push(selector);
+        } else {
+          return {
+            ready: function(fn) { window.__jqQueue.push(fn); },
+            on: function() { return this; },
+            click: function() { return this; },
+            hide: function() { return this; },
+            show: function() { return this; },
+            css: function() { return this; },
+            attr: function() { return ''; }
+          };
+        }
+      };
+    </script>
     <script>
       document.documentElement.className = document.documentElement.className.replace('no-js', 'js');
 
@@ -86,8 +108,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
     {{ content_for_header }}
 
-    <script src="{{ 'jquery.js' | asset_url }}" ></script>
-    <script src="{{ 'swiper.js' | asset_url }}" ></script>
+    <script src="{{ 'jquery.js' | asset_url }}" defer="defer"></script>
+    <script src="{{ 'swiper.js' | asset_url }}" defer="defer"></script>
 
     <script src="{{ 'vendor-scripts-v11.js' | asset_url | split: '?' | first }}" defer="defer"></script>
 
@@ -124,32 +146,24 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
     <script>
       $(function () {
-        // 把逻辑封装成函数，方便多次调用
         function handleHeaderLayout() {
-          let bodyClass = $('body').attr('class');
-          if (bodyClass === 'template-index') {
-            $('#ActivityBar-header').show();
-            $('#shopify-section-activity-bar').hide();
-          } else {
-            $('#ActivityBar-header').hide();
-            $('#shopify-section-activity-bar').show();
+          let bodyClass = $('body').attr('class') || '';
+          if (bodyClass.indexOf('template-index') === -1) {
             $('#StickyHeaderWrap').css('height', '35px');
-
-            // 调用你的获取可见高度函数
-            $('.template-collection .collection-filter').css('top', getVisibleHeight($('#SiteHeader')) - 1 + 'px');
+            if ($('.template-collection .collection-filter').length && typeof getVisibleHeight === 'function') {
+              $('.template-collection .collection-filter').css('top', getVisibleHeight($('#SiteHeader')) - 1 + 'px');
+            }
           }
         }
 
-        // 1. 页面加载时执行一次
         handleHeaderLayout();
 
-        // 2. 窗口 resize 时执行（加防抖，不卡顿）
         $(window).on(
           'resize',
-          theme.utils.debounce(function () {
-            handleHeaderLayout();
-          }, 500)
-        ); // 500ms 防抖，非常顺滑
+          (window.theme && theme.utils && theme.utils.debounce)
+            ? theme.utils.debounce(handleHeaderLayout, 500)
+            : function() { handleHeaderLayout(); }
+        );
       });
     </script>
     <div id="PageContainer" class="page-container">
