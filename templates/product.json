@@ -144,6 +144,7 @@
         },
         "af0d8d68-399e-4e03-a410-f08becab3d8f": {
           "type": "share",
+          "disabled": true,
           "settings": {}
         }
       },
