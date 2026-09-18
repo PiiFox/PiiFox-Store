@@ -13,14 +13,18 @@
             {% endcase %}   
         {%- endcapture -%}
 
-        {%- if policy_body contains '.warranty-container {' and policy_body contains '<div class="warranty-container">' and policy_body contains '<style>' == false -%}
-            {%- assign parts = policy_body | split: '<div class="warranty-container">' -%}
-            <style>
-                {{ parts[0] }}
-            </style>
-            <div class="warranty-container">
-                {{ parts[1] }}
-            </div>
+        {%- if policy_body contains '.warranty-container {' and policy_body contains '<div class="warranty-container">' -%}
+            {%- unless policy_body contains '<style>' -%}
+                {%- assign parts = policy_body | split: '<div class="warranty-container">' -%}
+                <style>
+                    {{ parts[0] }}
+                </style>
+                <div class="warranty-container">
+                    {{ parts[1] }}
+                </div>
+            {%- else -%}
+                {{ policy_body }}
+            {%- endunless -%}
         {%- else -%}
             {{ policy_body }}
         {%- endif -%}
