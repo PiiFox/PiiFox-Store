@@ -35,7 +35,16 @@
       "settings": {
         "image": "shopify://shop_images/p_2-bg.png",
         "title": "Where <span class=\"green-text\">performance</span> meets <span class=\"green-text\">personality</span>, and everyday setups feel more complete.",
-        "description": "PIIFOX is built for people who want more than a keyboard. We bring together reliable performance, comfortable feel, and expressive styles — so every setup can feel more personal."
+        "description": "PIIFOX is a mechanical keyboard and desktop peripherals brand focused on combining performance, design, and everyday usability.We believe a keyboard should be more than a tool. It should feel responsive, reliable, and personal — whether it is used for gaming, work, creation, or simply completing a desktop setup.Our products are developed around the details that matter most to keyboard users."
+      }
+    },
+    "text_bg_section_czJ8pi": {
+      "type": "text-bg-section",
+      "name": "Text with Background",
+      "settings": {
+        "image": "shopify://shop_images/p_2-bg.png",
+        "title": "Designed to <span class=\"green-text\">Perform.</span> Made to <span class=\"green-text\">Stand Out.</span>",
+        "description": "PIIFOX creates products for users who care about both how their setup performs and how it looks.Our product development focuses on balancing competitive specifications with practical everyday use. From Hall Effect magnetic-switch keyboards and tri-mode wireless models to custom keycaps and accessories."
       }
     },
     "carousel_dual_section_eLqia3": {
@@ -266,6 +275,7 @@
     "main",
     "about_us_video_dD7JEt",
     "text_bg_section_7jntX4",
+    "text_bg_section_czJ8pi",
     "carousel_dual_section_eLqia3",
     "milestones_section_kEq9Ut",
     "foot_newsletter_k4tRUa",
