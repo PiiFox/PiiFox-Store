@@ -24,7 +24,9 @@
       <div class="page-width">
         <h2 class="about-us-video-title section-header__title">{{ section.settings.section_title }}</h2>
         <div class="about-us-video-context">{{ section.settings.section_context }}</div>
-        <a href="{{ section.settings.btn_link }}" class="about-us-video-button">{{ section.settings.btn_label }}</a>
+        {% if section.settings.btn_label != blank %}
+          <a href="{{ section.settings.btn_link }}" class="about-us-video-button">{{ section.settings.btn_label }}</a>
+        {% endif %}
       </div>
     </div>
   </div>
