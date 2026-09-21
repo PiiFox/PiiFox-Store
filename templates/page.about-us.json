@@ -198,6 +198,21 @@
         "btn_label": "Learn More"
       }
     },
+    "inquiries_section": {
+      "type": "inquiries-section",
+      "name": "Inquiries & Office",
+      "settings": {
+        "inquiries_title": "General Inquiries",
+        "inquiries_email": "service@piifox.com",
+        "social_title": "Find Us On",
+        "stores_title": "Our Stores",
+        "store_1_name": "Amazon US",
+        "store_1_url": "https://www.amazon.com/s?me=A3KQMW0WEU9K1&marketplaceID=ATVPDKIKX0DER",
+        "office_title": "Our Office",
+        "office_company": "PIIFOX is operated by Shenzhen Paishifu Technology Co, Ltd.",
+        "office_address": "Room 1210, Gangxinda Henggang Building, No. 5008 Longgang Avenue (Henggang Section), Songbai Community, Henggang Subdistrict, Longgang District, Shenzhen, Guangdong 518115, China"
+      }
+    },
     "foot_newsletter_k4tRUa": {
       "type": "foot-newsletter",
       "blocks": {
@@ -268,6 +283,7 @@
     "text_bg_section_7jntX4",
     "carousel_dual_section_eLqia3",
     "milestones_section_kEq9Ut",
+    "inquiries_section",
     "foot_newsletter_k4tRUa",
     "dual_cards_section_XYzgxM"
   ]

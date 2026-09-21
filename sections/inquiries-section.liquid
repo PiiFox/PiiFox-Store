@@ -1,0 +1,550 @@
+<style>
+  .inquiries-section {
+    padding: {{ section.settings.padding_top | default: 60 }}px 20px {{ section.settings.padding_bottom | default: 60 }}px;
+    background-color: {{ section.settings.background_color | default: 'transparent' }};
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  }
+
+  .inquiries-card {
+    background-color: {{ section.settings.card_background | default: '#ffffff' }};
+    border-radius: {{ section.settings.card_border_radius | default: 16 }}px;
+    padding: 48px 44px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    box-sizing: border-box;
+    overflow: hidden;
+    border: none;
+  }
+
+  .inquiries-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 36px;
+    align-items: flex-start;
+  }
+
+  .inquiry-col {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .inquiry-icon-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin-bottom: 20px;
+    height: 48px;
+  }
+
+  .inquiry-icon {
+    width: 44px;
+    height: 44px;
+    stroke: {{ section.settings.icon_color | default: 'var(--colorThemePrimary, #427347)' }};
+    color: {{ section.settings.icon_color | default: 'var(--colorThemePrimary, #427347)' }};
+    display: block;
+  }
+
+  .inquiry-col--social .inquiry-icon,
+  .inquiry-col--stores .inquiry-icon {
+    width: 41px;
+    height: 41px;
+  }
+
+  .inquiry-title {
+    font-size: 26px;
+    font-weight: 700;
+    line-height: 1.25;
+    color: {{ section.settings.title_color | default: '#111111' }};
+    margin: 0 0 20px 0;
+    letter-spacing: -0.02em;
+  }
+
+  .inquiry-email-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 1.25;
+    color: {{ section.settings.text_color | default: '#222222' }};
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  .inquiry-email-link:hover {
+    color: {{ section.settings.icon_color | default: 'var(--colorThemePrimary, #427347)' }};
+  }
+
+  .inquiry-arrow-icon {
+    width: 14px;
+    height: 14px;
+    stroke: currentColor;
+    stroke-width: 2.2;
+    fill: none;
+    flex-shrink: 0;
+  }
+
+  .inquiry-email-link .inquiry-arrow-icon {
+    position: relative;
+    top: 1.5px;
+  }
+
+  .inquiry-stores-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .inquiry-store-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 1.25;
+    color: {{ section.settings.text_color | default: '#222222' }};
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  .inquiry-store-link:hover {
+    color: {{ section.settings.icon_color | default: 'var(--colorThemePrimary, #427347)' }};
+  }
+
+  .inquiry-social-wrapper {
+    width: 100%;
+  }
+
+  .inquiry-social-wrapper .footer__social {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  .inquiry-social-wrapper .footer__social li {
+    display: inline-block;
+    margin: 0 15px 15px 0;
+  }
+
+  .inquiry-social-wrapper .footer__social a {
+    color: {{ section.settings.text_color | default: '#000000' }};
+    display: inline-block;
+    text-decoration: none;
+    line-height: 1;
+    transition: color 0.2s ease;
+  }
+
+  .inquiry-social-wrapper .footer__social a:hover {
+    color: {{ section.settings.icon_color | default: 'var(--colorThemePrimary, #427347)' }};
+  }
+
+  .inquiry-social-wrapper .footer__social .icon {
+    width: 2em;
+    height: 2em;
+    padding: 0.5em;
+    border-radius: 50%;
+  }
+
+  .inquiry-social-wrapper .footer__social .icon.icon--wide {
+    width: 40px;
+  }
+
+  .inquiry-social-wrapper .footer__social .social-icon-discord {
+    background-color: #5865F2 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    border-radius: 50% !important;
+    padding: 0 !important;
+    width: 2em !important;
+    height: 2em !important;
+    line-height: 1;
+    box-sizing: border-box !important;
+    vertical-align: middle !important;
+    text-decoration: none !important;
+  }
+
+  .inquiry-social-wrapper .footer__social .social-icon-discord .icon,
+  .inquiry-social-wrapper .footer__social .social-icon-discord svg {
+    width: 16px !important;
+    height: 16px !important;
+    padding: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    display: block !important;
+  }
+
+  .inquiry-social-wrapper .footer__social .social-icon-discord svg path {
+    fill: #ffffff !important;
+  }
+
+  .inquiry-social-wrapper .footer__social .icon__fallback-text {
+    display: none;
+  }
+
+  .inquiry-office-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .inquiry-address-subtitle {
+    font-size: 15px;
+    font-weight: 700;
+    color: #111111;
+    margin: 0 0 2px 0;
+  }
+
+  .inquiry-company-name {
+    font-size: 14px;
+    font-weight: 500;
+    color: #444444;
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  .inquiry-address-content {
+    font-size: 13.5px;
+    line-height: 1.6;
+    color: #666666;
+    margin: 0;
+  }
+
+  @media (max-width: 1024px) {
+    .inquiries-card {
+      padding: 36px 30px;
+    }
+    .inquiries-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 36px;
+    }
+    .inquiry-title {
+      font-size: 22px;
+      margin-bottom: 16px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .inquiries-section {
+      padding: {{ section.settings.padding_top_mobile | default: 0 }}px 0 {{ section.settings.padding_bottom_mobile | default: 40 }}px;
+    }
+    .inquiries-card {
+      padding: 2em 1.5em;
+      border-radius: {{ section.settings.card_border_radius | default: 16 }}px;
+    }
+    .inquiries-grid {
+      grid-template-columns: 1fr;
+      gap: 32px;
+    }
+    .inquiry-col {
+      padding-bottom: 24px;
+      border-bottom: 1px solid #f0f0f0;
+    }
+    .inquiry-col:last-child {
+      padding-bottom: 0;
+      border-bottom: none;
+    }
+    .inquiry-icon-wrapper {
+      margin-bottom: 12px;
+    }
+  }
+</style>
+
+<section class="inquiries-section inquiries-section--{{ section.id }} wow bounceInUp" data-section-id="{{ section.id }}">
+  <div class="page-width">
+    <div class="inquiries-card">
+      <div class="inquiries-grid">
+        
+        <!-- 第1列：General Inquiries -->
+        <div class="inquiry-col inquiry-col--inquiries">
+          <div class="inquiry-icon-wrapper" aria-hidden="true">
+            <!-- 绿色信封线性图标 -->
+            <svg class="inquiry-icon" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="5" y="11" width="38" height="26" rx="5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M7 14L22.2574 25.4431C23.2847 26.2135 24.7153 26.2135 25.7426 25.4431L41 14" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <h3 class="inquiry-title">{{ section.settings.inquiries_title | default: 'General Inquiries' }}</h3>
+          {% assign email_address = section.settings.inquiries_email | default: 'service@piifox.com' %}
+          <a href="mailto:{{ email_address }}" class="inquiry-email-link" title="{{ email_address }}">
+            <span>{{ email_address }}</span>
+            <svg class="inquiry-arrow-icon" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M9 18l6-6-6-6" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+        </div>
+
+        <!-- 第2列：Find Us On / Render 系统社媒组件 -->
+        <div class="inquiry-col inquiry-col--social">
+          <div class="inquiry-icon-wrapper" aria-hidden="true">
+            <!-- 绿色微笑气泡线性图标 -->
+            <svg class="inquiry-icon" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M10 38V33.6C6.31 30.13 4 25.33 4 20C4 10.06 12.95 2 24 2C35.05 2 44 10.06 44 20C44 29.94 35.05 38 24 38C21.75 38 19.59 37.66 17.58 37.03L10 38Z" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <circle cx="17.5" cy="18.5" r="2.2" fill="currentColor"/>
+              <circle cx="30.5" cy="18.5" r="2.2" fill="currentColor"/>
+              <path d="M18 24.5C19.5 27 21.5 28 24 28C26.5 28 28.5 27 30 24.5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <h3 class="inquiry-title">{{ section.settings.social_title | default: 'Find Us On' }}</h3>
+          <div class="inquiry-social-wrapper">
+            {% render 'social-icons', additional_classes: 'footer__social' %}
+          </div>
+        </div>
+
+        <!-- 第3列：Our Stores -->
+        <div class="inquiry-col inquiry-col--stores">
+          <div class="inquiry-icon-wrapper" aria-hidden="true">
+            <!-- 绿色店面/商店矢量图标 -->
+            <svg class="inquiry-icon" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M4 16L7.5 6H40.5L44 16" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M4 16C4 18.76 6.24 21 9 21C11.76 21 14 18.76 14 16C14 21 19 21 19 21C19 21 24 21 24 16C24 21 29 21 29 21C29 21 34 21 34 16C34 18.76 36.24 21 39 21C41.76 21 44 18.76 44 16" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M7 21V41C7 42.1 7.9 43 9 43H39C40.1 43 41 42.1 41 41V21" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M19 43V29H29V43" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <h3 class="inquiry-title">{{ section.settings.stores_title | default: 'Our Stores' }}</h3>
+          <div class="inquiry-stores-list">
+            {%- assign store1_name = section.settings.store_1_name | default: 'Amazon US' -%}
+            {%- assign store1_url = section.settings.store_1_url | default: 'https://www.amazon.com/s?me=A3KQMW0WEU9K1&marketplaceID=ATVPDKIKX0DER' -%}
+            {%- if store1_name != blank and store1_url != blank -%}
+              <a href="{{ store1_url }}" class="inquiry-store-link" target="_blank" rel="noopener noreferrer" title="{{ store1_name }}">
+                <span>{{ store1_name }}</span>
+                <svg class="inquiry-arrow-icon" viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M9 18l6-6-6-6" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </a>
+            {%- endif -%}
+            {%- if section.settings.store_2_name != blank and section.settings.store_2_url != blank -%}
+              <a href="{{ section.settings.store_2_url }}" class="inquiry-store-link" target="_blank" rel="noopener noreferrer" title="{{ section.settings.store_2_name }}">
+                <span>{{ section.settings.store_2_name }}</span>
+                <svg class="inquiry-arrow-icon" viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M9 18l6-6-6-6" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </a>
+            {%- endif -%}
+          </div>
+        </div>
+
+        <!-- 第4列：Our Office / Address -->
+        <div class="inquiry-col inquiry-col--office">
+          <div class="inquiry-icon-wrapper" aria-hidden="true">
+            <!-- 绿色办公室/定位地标线性图标 -->
+            <svg class="inquiry-icon" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M24 42C24 42 38 29.5 38 18C38 10.268 31.732 4 24 4C16.268 4 10 10.268 10 18C10 29.5 24 42 24 42Z" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <circle cx="24" cy="18" r="5" stroke="currentColor" stroke-width="2.5"/>
+            </svg>
+          </div>
+          <h3 class="inquiry-title">{{ section.settings.office_title | default: 'Our Office' }}</h3>
+          <div class="inquiry-office-wrapper">
+            {%- if section.settings.office_company != blank -%}
+              <div class="inquiry-company-name">{{ section.settings.office_company }}</div>
+            {%- endif -%}
+            {%- if section.settings.office_address != blank -%}
+              <div class="inquiry-address-content">{{ section.settings.office_address | newline_to_br }}</div>
+            {%- endif -%}
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Inquiries & Office",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Card Box & Layout"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Section Background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "card_background",
+      "label": "Card Box Background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "card_border_color",
+      "label": "Card Border Color",
+      "default": "#e8e8e8"
+    },
+    {
+      "type": "range",
+      "id": "card_border_radius",
+      "min": 0,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "label": "Card Border Radius",
+      "default": 16
+    },
+    {
+      "type": "color",
+      "id": "icon_color",
+      "label": "Theme Green / Icon Color",
+      "default": "#427347"
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Title Color",
+      "default": "#111111"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Link & Text Color",
+      "default": "#222222"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 120,
+      "step": 5,
+      "unit": "px",
+      "label": "Top Padding (Desktop)",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 120,
+      "step": 5,
+      "unit": "px",
+      "label": "Bottom Padding (Desktop)",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 80,
+      "step": 5,
+      "unit": "px",
+      "label": "Top Padding (Mobile)",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 80,
+      "step": 5,
+      "unit": "px",
+      "label": "Bottom Padding (Mobile)",
+      "default": 40
+    },
+    {
+      "type": "header",
+      "content": "Column 1: General Inquiries"
+    },
+    {
+      "type": "text",
+      "id": "inquiries_title",
+      "label": "Column 1 Title",
+      "default": "General Inquiries"
+    },
+    {
+      "type": "text",
+      "id": "inquiries_email",
+      "label": "Inquiries Email",
+      "default": "service@piifox.com"
+    },
+    {
+      "type": "header",
+      "content": "Column 2: Social Media"
+    },
+    {
+      "type": "text",
+      "id": "social_title",
+      "label": "Column 2 Title",
+      "default": "Find Us On"
+    },
+    {
+      "type": "paragraph",
+      "content": "This column renders the store's social media accounts configured in Theme Settings > Social Media."
+    },
+    {
+      "type": "header",
+      "content": "Column 3: Our Stores"
+    },
+    {
+      "type": "text",
+      "id": "stores_title",
+      "label": "Column 3 Title",
+      "default": "Our Stores"
+    },
+    {
+      "type": "text",
+      "id": "store_1_name",
+      "label": "Store 1 Name",
+      "default": "Amazon US"
+    },
+    {
+      "type": "url",
+      "id": "store_1_url",
+      "label": "Store 1 Link URL"
+    },
+    {
+      "type": "text",
+      "id": "store_2_name",
+      "label": "Store 2 Name (Optional)"
+    },
+    {
+      "type": "url",
+      "id": "store_2_url",
+      "label": "Store 2 Link URL (Optional)"
+    },
+    {
+      "type": "header",
+      "content": "Column 4: Office & Address"
+    },
+    {
+      "type": "text",
+      "id": "office_title",
+      "label": "Column 4 Title",
+      "default": "Our Office"
+    },
+    {
+      "type": "text",
+      "id": "office_company",
+      "label": "Company Operator Name",
+      "default": "PIIFOX is operated by Shenzhen Paishifu Technology Co, Ltd."
+    },
+    {
+      "type": "textarea",
+      "id": "office_address",
+      "label": "Detailed Address",
+      "default": "Room 1210, Gangxinda Henggang Building, No. 5008 Longgang Avenue (Henggang Section), Songbai Community, Henggang Subdistrict, Longgang District, Shenzhen, Guangdong 518115, China"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Inquiries & Office",
+      "settings": {
+        "inquiries_title": "General Inquiries",
+        "inquiries_email": "service@piifox.com",
+        "social_title": "Find Us On",
+        "stores_title": "Our Stores",
+        "store_1_name": "Amazon US",
+        "store_1_url": "https://www.amazon.com/s?me=A3KQMW0WEU9K1&marketplaceID=ATVPDKIKX0DER",
+        "office_title": "Our Office",
+        "office_company": "PIIFOX is operated by Shenzhen Paishifu Technology Co, Ltd.",
+        "office_address": "Room 1210, Gangxinda Henggang Building, No. 5008 Longgang Avenue (Henggang Section), Songbai Community, Henggang Subdistrict, Longgang District, Shenzhen, Guangdong 518115, China"
+      }
+    }
+  ]
+}
+{% endschema %}
