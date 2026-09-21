@@ -276,7 +276,7 @@
           "type": "card_item",
           "settings": {
             "image": "shopify://shop_images/Honey_DSC00266.jpg",
-            "title": "Contact Us",
+            "title": "Contact Support",
             "button_label": "Learn More",
             "link": "shopify://pages/contact-us"
           }
