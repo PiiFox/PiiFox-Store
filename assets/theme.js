@@ -23,9 +23,9 @@ theme.config = {
   vimeoLoading: false,
   isTouch:
     "ontouchstart" in window ||
-    (window.DocumentTouch && window.document instanceof DocumentTouch) ||
-    window.navigator.maxTouchPoints ||
-    window.navigator.msMaxTouchPoints
+      (window.DocumentTouch && window.document instanceof DocumentTouch) ||
+      window.navigator.maxTouchPoints ||
+      window.navigator.msMaxTouchPoints
       ? true
       : false,
   stickyHeader: false,
@@ -52,15 +52,15 @@ if (console && console.log) {
   console.log(`%c${asciiArt}`, 'color: #0A6830; font-size: 14px; font-weight: bold;');
   /* console.log("Dawn theme (" + theme.settings.themeVersion + ") by Shopify | Learn more at https://support.shopify.com"); */
   console.log("⚡️ %cPIIFOX: Mechanical Keyboards, Gaming Mice & PC Accessories. ", "background: #0A6830; color: #fff; font-size: 12px; padding: 5px 10px; border-radius: 3px");
-  console.log("⚡️ %cContact Us: "+ 'service@piifox.com', "background: #0A6830; color: #fff; font-size: 12px; padding: 5px 10px; border-radius: 3px");
-  console.log("⚡️ %cMarketing Inquiry: "+ 'market@piifox.com', "background: #0A6830; color: #fff; font-size: 12px; padding: 5px 10px; border-radius: 3px");
-  console.log("✨ %cFaceBook Page: "+ "https://www.facebook.com/piifoxglobal", "font-size: 12px; padding: 5px 10px; border-radius: 3px");
-  console.log("💥 %cTwitter Page: "+ "https://x.com/PIIFOXkeyboard" , "font-size: 12px; padding: 5px 10px; border-radius: 3px");
-  console.log("⭐ %cPinterest Page: "+ "https://www.pinterest.com/piifoxkeyboard", "font-size: 12px; padding: 5px 10px; border-radius: 3px");
-  console.log("🎨 %cInstagram Page: "+ "https://www.instagram.com/piifox_global", "font-size: 12px; padding: 5px 10px; border-radius: 3px");
+  console.log("⚡️ %cContact Us: " + 'service@piifox.com', "background: #0A6830; color: #fff; font-size: 12px; padding: 5px 10px; border-radius: 3px");
+  console.log("⚡️ %cMarketing Inquiry: " + 'market@piifox.com', "background: #0A6830; color: #fff; font-size: 12px; padding: 5px 10px; border-radius: 3px");
+  console.log("✨ %cFaceBook Page: " + "https://www.facebook.com/piifoxglobal", "font-size: 12px; padding: 5px 10px; border-radius: 3px");
+  console.log("💥 %cTwitter Page: " + "https://x.com/PIIFOXkeyboard", "font-size: 12px; padding: 5px 10px; border-radius: 3px");
+  console.log("⭐ %cPinterest Page: " + "https://www.pinterest.com/piifoxkeyboard", "font-size: 12px; padding: 5px 10px; border-radius: 3px");
+  console.log("🎨 %cInstagram Page: " + "https://www.instagram.com/piifox_global", "font-size: 12px; padding: 5px 10px; border-radius: 3px");
   // console.log("🎯 %cTiktok Page: "+ settings.social_tiktok_link, "font-size: 12px; padding: 5px 10px; border-radius: 3px");
   // console.log("🌊 %cLinkedIn Page: "+ settings.social_linkedin_link, "font-size: 12px; padding: 5px 10px; border-radius: 3px");
-  console.log("🌈 %cYouTube Page: "+ "https://www.youtube.com/@PIIFOX-KEYBOARD", "font-size: 12px; padding: 5px 10px; border-radius: 3px");
+  console.log("🌈 %cYouTube Page: " + "https://www.youtube.com/@PIIFOX-KEYBOARD", "font-size: 12px; padding: 5px 10px; border-radius: 3px");
 }
 
 theme.recentlyViewed = {
@@ -189,8 +189,8 @@ lazySizesConfig.expFactor = 4;
             if (!option.selected) return;
             arr.push(
               encodeURIComponent(field.name) +
-                "=" +
-                encodeURIComponent(option.value),
+              "=" +
+              encodeURIComponent(option.value),
             );
           });
           return;
@@ -199,8 +199,8 @@ lazySizesConfig.expFactor = 4;
           return;
         arr.push(
           encodeURIComponent(field.name) +
-            "=" +
-            encodeURIComponent(field.value),
+          "=" +
+          encodeURIComponent(field.value),
         );
       });
       return arr.join("&");
@@ -393,7 +393,7 @@ lazySizesConfig.expFactor = 4;
       return variant.unit_price_measurement.reference_value === 1
         ? variant.unit_price_measurement.reference_unit
         : variant.unit_price_measurement.reference_value +
-            variant.unit_price_measurement.reference_unit;
+        variant.unit_price_measurement.reference_unit;
     }
 
     return {
@@ -572,7 +572,7 @@ lazySizesConfig.expFactor = 4;
       if (!library) return;
       if (library.status === status.requested) return;
 
-      callback = callback || function () {};
+      callback = callback || function () { };
       if (library.status === status.loaded) {
         callback();
         return;
@@ -1682,8 +1682,7 @@ lazySizesConfig.expFactor = 4;
         history.pushState(
           {},
           "",
-          `${window.location.pathname}${
-            searchParams && "?".concat(searchParams)
+          `${window.location.pathname}${searchParams && "?".concat(searchParams)
           }`,
         );
       },
@@ -1997,7 +1996,7 @@ lazySizesConfig.expFactor = 4;
               );
             }.bind(this),
           )
-          .catch(function (XMLHttpRequest) {});
+          .catch(function (XMLHttpRequest) { });
       },
 
       /*============================================================================
@@ -3414,9 +3413,9 @@ lazySizesConfig.expFactor = 4;
       var maxAttr = this.input.getAttribute("max") || this.wrapper.dataset.max;
       this.maxValue =
         maxAttr !== null &&
-        maxAttr !== undefined &&
-        maxAttr !== "" &&
-        !isNaN(parseInt(maxAttr, 10))
+          maxAttr !== undefined &&
+          maxAttr !== "" &&
+          !isNaN(parseInt(maxAttr, 10))
           ? parseInt(maxAttr, 10)
           : null;
 
@@ -3453,6 +3452,9 @@ lazySizesConfig.expFactor = 4;
       },
 
       setMax: function (max) {
+        if (this._inputTimer) {
+          clearTimeout(this._inputTimer);
+        }
         if (
           max !== null &&
           max !== undefined &&
@@ -3474,6 +3476,9 @@ lazySizesConfig.expFactor = 4;
         this.plus.addEventListener(
           "click",
           function () {
+            if (this._inputTimer) {
+              clearTimeout(this._inputTimer);
+            }
             if (this.plus.disabled) return;
             var qty = this._getQty();
             this._change(qty + 1);
@@ -3483,6 +3488,9 @@ lazySizesConfig.expFactor = 4;
         this.minus.addEventListener(
           "click",
           function () {
+            if (this._inputTimer) {
+              clearTimeout(this._inputTimer);
+            }
             var qty = this._getQty();
             this._change(qty - 1);
           }.bind(this),
@@ -3498,6 +3506,19 @@ lazySizesConfig.expFactor = 4;
         this.input.addEventListener(
           "change",
           function (evt) {
+            if (this._inputTimer) {
+              clearTimeout(this._inputTimer);
+            }
+            this._change(this._getQty());
+          }.bind(this),
+        );
+
+        this.input.addEventListener(
+          "blur",
+          function () {
+            if (this._inputTimer) {
+              clearTimeout(this._inputTimer);
+            }
             this._change(this._getQty());
           }.bind(this),
         );
@@ -3522,11 +3543,25 @@ lazySizesConfig.expFactor = 4;
         var qty = parseInt(rawVal, 10);
         if (isNaN(qty)) return;
 
+        if (this._inputTimer) {
+          clearTimeout(this._inputTimer);
+        }
+
         if (this.maxValue !== null && qty >= this.maxValue) {
-          this.input.value = this.maxValue;
           this._showWarning(this.maxValue);
           this.plus.disabled = true;
           this.plus.classList.add("disabled");
+
+          // 延迟 1 秒后再将数字更正为最大库存，避免输入 1200 时瞬间被截断，让用户有时间看清输入内容与提示
+          this._inputTimer = setTimeout(
+            function () {
+              var currentQty = parseInt(this.input.value, 10);
+              if (!isNaN(currentQty) && currentQty > this.maxValue) {
+                this._change(this.maxValue);
+              }
+            }.bind(this),
+            300,
+          );
         } else {
           this._hideWarning();
           this.plus.disabled = false;
@@ -3554,6 +3589,10 @@ lazySizesConfig.expFactor = 4;
       },
 
       _change: function (qty) {
+        if (this._inputTimer) {
+          clearTimeout(this._inputTimer);
+        }
+
         if (this.maxValue !== null && qty >= this.maxValue) {
           qty = this.maxValue;
         }
@@ -6089,8 +6128,8 @@ lazySizesConfig.expFactor = 4;
       getImageData: function () {
         this.images = this.inSlideshow
           ? this.container.querySelectorAll(
-              selectors.slideshowTrack + selectors.images,
-            )
+            selectors.slideshowTrack + selectors.images,
+          )
           : this.container.querySelectorAll(selectors.images);
 
         var items = [];
@@ -7472,10 +7511,10 @@ lazySizesConfig.expFactor = 4;
         unitPriceBaseUnit: "[data-unit-base]",
         sku: "[data-sku]",
         inventory: "[data-product-inventory]",
-         incomingInventory: "[data-incoming-inventory]",
-         quantityStatus: "[data-product-quantity-status]",
-         colorLabel: "[data-variant-color-label]",
-         productInventories: "[data-product-inventories]",
+        incomingInventory: "[data-incoming-inventory]",
+        quantityStatus: "[data-product-quantity-status]",
+        colorLabel: "[data-variant-color-label]",
+        productInventories: "[data-product-inventories]",
 
         addToCart: "[data-add-to-cart]",
         addToCartText: "[data-add-to-cart-text]",
@@ -7646,7 +7685,7 @@ lazySizesConfig.expFactor = 4;
           try {
             this.inventories = JSON.parse(
               this.cache.productInventories.value ||
-                this.cache.productInventories.textContent,
+              this.cache.productInventories.textContent,
             );
           } catch (e) {
             this.inventories = {};
@@ -7692,16 +7731,16 @@ lazySizesConfig.expFactor = 4;
           );
         }
 
-         this.container.on(
-           "variantChange" + this.settings.namespace,
-           this.updateCartButton.bind(this),
-         );
-         if (this.container.querySelector(this.selectors.quantityStatus)) {
-           this.container.on(
-             "variantChange" + this.settings.namespace,
-             this.updateQuantityStatus.bind(this),
-           );
-         }
+        this.container.on(
+          "variantChange" + this.settings.namespace,
+          this.updateCartButton.bind(this),
+        );
+        if (this.container.querySelector(this.selectors.quantityStatus)) {
+          this.container.on(
+            "variantChange" + this.settings.namespace,
+            this.updateQuantityStatus.bind(this),
+          );
+        }
         this.container.on(
           "variantChange" + this.settings.namespace,
           this.updateQuantityMax.bind(this),
@@ -7765,8 +7804,8 @@ lazySizesConfig.expFactor = 4;
         if (this.settings.imageSetName) {
           var variantWrapper = this.container.querySelector(
             '.variant-input-wrap[data-handle="' +
-              this.settings.imageSetName +
-              '"]',
+            this.settings.imageSetName +
+            '"]',
           );
           if (variantWrapper) {
             this.settings.imageSetIndex = variantWrapper.dataset.index;
@@ -7804,7 +7843,7 @@ lazySizesConfig.expFactor = 4;
         ).textContent = color;
       },
 
-       updateCartButton: function (evt) {
+      updateCartButton: function (evt) {
         var variant = evt.detail.variant;
         var cartBtn = this.container.querySelector(this.selectors.addToCart);
         var cartBtnText = this.container.querySelector(
@@ -7830,49 +7869,49 @@ lazySizesConfig.expFactor = 4;
           cartBtn.disabled = true;
           cartBtnText.textContent = theme.strings.unavailable;
         }
-       },
+      },
 
-       updateQuantityStatus: function (evt) {
-         var status = this.container.querySelector(this.selectors.quantityStatus);
-         var variant = evt.detail.variant;
+      updateQuantityStatus: function (evt) {
+        var status = this.container.querySelector(this.selectors.quantityStatus);
+        var variant = evt.detail.variant;
 
-         if (!status) {
-           return;
-         }
+        if (!status) {
+          return;
+        }
 
-         var inStock = variant && variant.available;
-         status.textContent = inStock ? "In Stock" : "Out of Stock";
-         status.classList.toggle("product-quantity-status--in-stock", inStock);
-         status.classList.toggle("product-quantity-status--out-of-stock", !inStock);
-       },
+        var inStock = variant && variant.available;
+        status.textContent = inStock ? "In Stock" : "Out of Stock";
+        status.classList.toggle("product-quantity-status--in-stock", inStock);
+        status.classList.toggle("product-quantity-status--out-of-stock", !inStock);
+      },
 
-       updateQuantityMax: function (evt) {
-         var variant = evt.detail.variant;
-         var qtyWrapper = this.container.querySelector(
-           ".product__quantity .js-qty__wrapper",
-         );
-         if (!qtyWrapper) {
-           return;
-         }
-         var qtySelector = qtyWrapper._qtySelector;
-         if (!qtySelector) {
-           qtySelector = new theme.QtySelector(qtyWrapper, {
-             namespace: ".product",
-           });
-         }
+      updateQuantityMax: function (evt) {
+        var variant = evt.detail.variant;
+        var qtyWrapper = this.container.querySelector(
+          ".product__quantity .js-qty__wrapper",
+        );
+        if (!qtyWrapper) {
+          return;
+        }
+        var qtySelector = qtyWrapper._qtySelector;
+        if (!qtySelector) {
+          qtySelector = new theme.QtySelector(qtyWrapper, {
+            namespace: ".product",
+          });
+        }
 
-         if (variant && this.inventories && this.inventories[variant.id]) {
-           var inv = this.inventories[variant.id];
-           if (
-             inv.inventory_management === "shopify" &&
-             inv.inventory_policy === "deny"
-           ) {
-             qtySelector.setMax(Math.max(0, inv.inventory_quantity));
-             return;
-           }
-         }
-         qtySelector.setMax(null);
-       },
+        if (variant && this.inventories && this.inventories[variant.id]) {
+          var inv = this.inventories[variant.id];
+          if (
+            inv.inventory_management === "shopify" &&
+            inv.inventory_policy === "deny"
+          ) {
+            qtySelector.setMax(Math.max(0, inv.inventory_quantity));
+            return;
+          }
+        }
+        qtySelector.setMax(null);
+      },
 
       updatePrice: function (evt) {
         var variant = evt.detail.variant;
@@ -8417,18 +8456,18 @@ lazySizesConfig.expFactor = 4;
 
         var prevSlide = this.cache.mainSlider.querySelector(
           '.product-main-slide[data-index="' +
-            this.settings.currentSlideIndex +
-            '"]',
+          this.settings.currentSlideIndex +
+          '"]',
         );
 
         // If imageSetName exists, use a more specific selector
         var nextSlide = this.settings.imageSetName
           ? this.cache.mainSlider.querySelectorAll(
-              ".flickity-slider .product-main-slide",
-            )[index]
+            ".flickity-slider .product-main-slide",
+          )[index]
           : this.cache.mainSlider.querySelector(
-              '.product-main-slide[data-index="' + index + '"]',
-            );
+            '.product-main-slide[data-index="' + index + '"]',
+          );
 
         prevSlide.setAttribute("tabindex", "-1");
         nextSlide.setAttribute("tabindex", 0);
@@ -8679,9 +8718,9 @@ lazySizesConfig.expFactor = 4;
           function () {
             var currentMedia = this.container.querySelector(
               this.selectors.productMediaWrapper +
-                ":not(." +
-                self.classes.hidden +
-                ")",
+              ":not(." +
+              self.classes.hidden +
+              ")",
             );
             currentMedia.dispatchEvent(
               new CustomEvent("xrLaunch", {
