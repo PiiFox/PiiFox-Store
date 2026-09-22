@@ -53,14 +53,30 @@
     </div>
     <div class="cart__item-sub">
       <div>
-        <div class="js-qty__wrapper">
+        {%- assign item_has_inventory_limit = false -%}
+        {%- if product.variant.inventory_management == 'shopify' and product.variant.inventory_policy == 'deny' -%}
+          {%- assign item_has_inventory_limit = true -%}
+          {%- assign item_max_qty = product.variant.inventory_quantity | at_least: 0 -%}
+        {%- endif -%}
+        {%- assign item_is_maxed = false -%}
+        {%- if item_has_inventory_limit and product.quantity >= item_max_qty -%}
+          {%- assign item_is_maxed = true -%}
+        {%- endif -%}
+        <div class="js-qty__wrapper"
+          {% if item_has_inventory_limit %}
+            data-max="{{ item_max_qty }}"
+          {% endif %}
+        >
           <label for="cart_updates_{{ product.key }}" class="hidden-label">{{ 'cart.label.quantity' | t }}</label>
           <input type="text"
             id="cart_updates_{{ product.key }}"
             name="updates[]"
             class="js-qty__num"
-            value="{{ product.quantity }}"
+            value="{% if item_is_maxed %}{{ item_max_qty }}{% else %}{{ product.quantity }}{% endif %}"
             min="0"
+            {% if item_has_inventory_limit %}
+              max="{{ item_max_qty }}"
+            {% endif %}
             pattern="[0-9]*"
             data-id="{{ product.key }}">
           <button type="button"
@@ -70,11 +86,17 @@
               <span class="icon__fallback-text" aria-hidden="true">&minus;</span>
           </button>
           <button type="button"
-            class="js-qty__adjust js-qty__adjust--plus"
+            class="js-qty__adjust js-qty__adjust--plus{% if item_is_maxed %} disabled{% endif %}"
+            {% if item_is_maxed %}disabled="disabled"{% endif %}
             aria-label="{{ 'cart.general.increase_quantity' | t }}">
               <svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-plus" viewBox="0 0 20 20"><path fill="#444" d="M17.409 8.929h-6.695V2.258c0-.566-.506-1.029-1.071-1.029s-1.071.463-1.071 1.029v6.671H1.967C1.401 8.929.938 9.435.938 10s.463 1.071 1.029 1.071h6.605V17.7c0 .566.506 1.029 1.071 1.029s1.071-.463 1.071-1.029v-6.629h6.695c.566 0 1.029-.506 1.029-1.071s-.463-1.071-1.029-1.071z"/></svg>
               <span class="icon__fallback-text" aria-hidden="true">+</span>
           </button>
+        </div>
+        <div class="js-qty__stock-warning"{% unless item_is_maxed %} style="display: none;"{% endunless %}>
+          {%- if item_is_maxed -%}
+            Only {{ item_max_qty }} pcs available
+          {%- endif -%}
         </div>
 
         <div class="cart__remove">

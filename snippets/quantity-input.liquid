@@ -2,16 +2,30 @@
   form_id: form_id, 
   id: qty_id, 
   qty: 1, 
-  min: 1
+  min: 1,
+  max: max,
+  has_limit: has_limit
 {% endcomment %}
 
-<div class="js-qty__wrapper">
+{%- assign is_maxed = false -%}
+{%- if has_limit and max != blank and qty >= max -%}
+  {%- assign is_maxed = true -%}
+{%- endif -%}
+
+<div class="js-qty__wrapper"
+  {% if has_limit and max != blank %}
+    data-max="{{ max }}"
+  {% endif %}
+>
   <input
     type="text"
     id="Quantity-{{ id }}"
     class="js-qty__num"
-    value="{{ qty }}"
+    value="{% if is_maxed %}{{ max }}{% else %}{{ qty }}{% endif %}"
     min="{{ min }}"
+    {% if has_limit and max != blank %}
+      max="{{ max }}"
+    {% endif %}
     aria-label="quantity"
     pattern="[0-9]*"
     form="{{ form_id }}"
@@ -29,7 +43,8 @@
   </button>
   <button
     type="button"
-    class="js-qty__adjust js-qty__adjust--plus"
+    class="js-qty__adjust js-qty__adjust--plus{% if is_maxed %} disabled{% endif %}"
+    {% if is_maxed %}disabled="disabled"{% endif %}
     aria-label="{{ 'cart.general.increase_quantity' | t }}"
   >
     <svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-plus" viewBox="0 0 20 20">
@@ -37,4 +52,9 @@
     </svg>
     <span class="icon__fallback-text" aria-hidden="true">+</span>
   </button>
+</div>
+<div class="js-qty__stock-warning"{% unless is_maxed %} style="display: none;"{% endunless %}>
+  {%- if is_maxed -%}
+    Only {{ max }} pcs available
+  {%- endif -%}
 </div>

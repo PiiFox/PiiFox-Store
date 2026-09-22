@@ -210,6 +210,17 @@ $(function() {
   <textarea data-variant-json class="hide" aria-hidden="true" aria-label="Product JSON">
     {{ product.variants | json }}
   </textarea>
+  <textarea data-product-inventories class="hide" aria-hidden="true" aria-label="Product Inventories JSON">
+    {
+      {%- for variant in product.variants -%}
+        "{{ variant.id }}": {
+          "inventory_management": {{ variant.inventory_management | json }},
+          "inventory_policy": {{ variant.inventory_policy | json }},
+          "inventory_quantity": {{ variant.inventory_quantity | default: 0 }}
+        }{%- unless forloop.last -%},{%- endunless -%}
+      {%- endfor -%}
+    }
+  </textarea>
   {%- if product.options.size > 1 -%}
     <textarea data-current-variant-json class="hide" aria-hidden="true" aria-label="Variant JSON">
       {{ current_variant | json }}

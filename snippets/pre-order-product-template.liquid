@@ -310,7 +310,19 @@
                             {% if current_variant.available %}In Stock{% else %}Out of Stock{% endif %}
                           </span>
                         </label>
-                        {%- render 'quantity-input', form_id: form_id, id: qty_id, qty: 1, min: 1 -%}
+                        {%- assign current_variant_has_inventory_limit = false -%}
+                        {%- if current_variant.inventory_management == 'shopify' and current_variant.inventory_policy == 'deny' -%}
+                          {%- assign current_variant_has_inventory_limit = true -%}
+                          {%- assign current_variant_max_qty = current_variant.inventory_quantity | at_least: 0 -%}
+                        {%- endif -%}
+                        {%- render 'quantity-input',
+                          form_id: form_id,
+                          id: qty_id,
+                          qty: 1,
+                          min: 1,
+                          max: current_variant_max_qty,
+                          has_limit: current_variant_has_inventory_limit
+                        -%}
                       </div>
                     </div>
                   {%- when 'size_chart' -%}

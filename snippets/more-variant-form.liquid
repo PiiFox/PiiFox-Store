@@ -123,6 +123,17 @@
   <textarea id="product-json" data-variant-json class="hide" aria-hidden="true" aria-label="Product JSON">
     {{ product.variants | json }}
   </textarea>
+  <textarea data-product-inventories class="hide" aria-hidden="true" aria-label="Product Inventories JSON">
+    {
+      {%- for variant in product.variants -%}
+        "{{ variant.id }}": {
+          "inventory_management": {{ variant.inventory_management | json }},
+          "inventory_policy": {{ variant.inventory_policy | json }},
+          "inventory_quantity": {{ variant.inventory_quantity | default: 0 }}
+        }{%- unless forloop.last -%},{%- endunless -%}
+      {%- endfor -%}
+    }
+  </textarea>
   {%- if product.options.size > 1 -%}
     <textarea data-current-variant-json class="hide" aria-hidden="true" aria-label="Variant JSON">
       {{ current_variant | json }}
@@ -196,6 +207,13 @@
       console.log('appendVariantIds', appendVariantIds);
       return appendVariantIds;
     }
+    function initBundleQtySelectors() {
+      document.querySelectorAll('.bundle-product-list .js-qty__wrapper').forEach(el => {
+        if (!el._qtySelector && window.theme && window.theme.QtySelector) {
+          new theme.QtySelector(el, { namespace: '.product' });
+        }
+      });
+    }
     function initAddToCart() {
       const addBtn = document.querySelector('button.add-to-cart');
       const ajaxCart = new theme.AjaxProduct(addBtn);
@@ -208,8 +226,10 @@
           console.warn('Unable to determine the selected variant');
           return;
         }
+        const mainQtyInput = document.querySelector('.product__quantity input[name="quantity"]') || document.querySelector('input[name="quantity"]');
+        const mainQty = mainQtyInput ? Math.max(1, parseInt(mainQtyInput.value, 10) || 1) : 1;
         const items = [
-          { id: currentVariantId, quantity: 1 }
+          { id: currentVariantId, quantity: mainQty }
         ];
         const appendVariantIds = getAppendVariantIds();
         if(appendVariantIds) {
@@ -219,6 +239,7 @@
       });
     }
     initBundleTabs();
+    initBundleQtySelectors();
     initAddToCart();
   });
 </script>

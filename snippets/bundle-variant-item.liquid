@@ -48,8 +48,22 @@
     </div>
     <div class="bundle-product-options">
       <div class="bundle-product-price">{{ variant.price | money }}</div>
-      {% assign qty_id = 'bundle-variant-form-' | append: variant.id %}
-      {%- render 'quantity-input', form_id: qty_id, id: variant.id, qty: 1, min: 1 -%}
+      <div class="bundle-product-qty">
+        {%- assign bundle_variant_has_limit = false -%}
+        {%- if variant.inventory_management == 'shopify' and variant.inventory_policy == 'deny' -%}
+          {%- assign bundle_variant_has_limit = true -%}
+          {%- assign bundle_variant_max_qty = variant.inventory_quantity | at_least: 0 -%}
+        {%- endif -%}
+        {% assign qty_id = 'bundle-variant-form-' | append: variant.id %}
+        {%- render 'quantity-input',
+          form_id: qty_id,
+          id: variant.id,
+          qty: 1,
+          min: 1,
+          max: bundle_variant_max_qty,
+          has_limit: bundle_variant_has_limit
+        -%}
+      </div>
     </div>
     
   </div>

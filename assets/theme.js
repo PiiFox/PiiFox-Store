@@ -3398,6 +3398,7 @@ lazySizesConfig.expFactor = 4;
       input: ".js-qty__num",
       plus: ".js-qty__adjust--plus",
       minus: ".js-qty__adjust--minus",
+      warning: ".js-qty__stock-warning",
     };
 
     function QtySelector(el, options) {
@@ -3405,7 +3406,21 @@ lazySizesConfig.expFactor = 4;
       this.plus = el.querySelector(selectors.plus);
       this.minus = el.querySelector(selectors.minus);
       this.input = el.querySelector(selectors.input);
-      this.minValue = this.input.getAttribute("min") || 1;
+      this.minValue = parseInt(this.input.getAttribute("min"), 10);
+      if (isNaN(this.minValue)) {
+        this.minValue = 1;
+      }
+
+      var maxAttr = this.input.getAttribute("max") || this.wrapper.dataset.max;
+      this.maxValue =
+        maxAttr !== null &&
+        maxAttr !== undefined &&
+        maxAttr !== "" &&
+        !isNaN(parseInt(maxAttr, 10))
+          ? parseInt(maxAttr, 10)
+          : null;
+
+      this.warning = this._findWarningElement();
 
       var defaults = {
         namespace: null,
@@ -3415,14 +3430,51 @@ lazySizesConfig.expFactor = 4;
 
       this.options = Object.assign({}, defaults, options);
 
+      this.wrapper._qtySelector = this;
+
       this.init();
     }
 
     QtySelector.prototype = Object.assign({}, QtySelector.prototype, {
+      _findWarningElement: function () {
+        var next = this.wrapper.nextElementSibling;
+        if (next && next.classList.contains("js-qty__stock-warning")) {
+          return next;
+        }
+        if (this.wrapper.parentElement) {
+          var found = this.wrapper.parentElement.querySelector(".js-qty__stock-warning");
+          if (found) return found;
+        }
+        var warning = document.createElement("div");
+        warning.className = "js-qty__stock-warning";
+        warning.style.display = "none";
+        this.wrapper.parentNode.insertBefore(warning, this.wrapper.nextSibling);
+        return warning;
+      },
+
+      setMax: function (max) {
+        if (
+          max !== null &&
+          max !== undefined &&
+          max !== "" &&
+          !isNaN(parseInt(max, 10))
+        ) {
+          this.maxValue = parseInt(max, 10);
+          this.input.setAttribute("max", this.maxValue);
+          this.wrapper.setAttribute("data-max", this.maxValue);
+        } else {
+          this.maxValue = null;
+          this.input.removeAttribute("max");
+          this.wrapper.removeAttribute("data-max");
+        }
+        this._checkAndApply(this._getQty());
+      },
+
       init: function () {
         this.plus.addEventListener(
           "click",
           function () {
+            if (this.plus.disabled) return;
             var qty = this._getQty();
             this._change(qty + 1);
           }.bind(this),
@@ -3437,30 +3489,81 @@ lazySizesConfig.expFactor = 4;
         );
 
         this.input.addEventListener(
+          "input",
+          function () {
+            this._handleInput();
+          }.bind(this),
+        );
+
+        this.input.addEventListener(
           "change",
           function (evt) {
             this._change(this._getQty());
           }.bind(this),
         );
+
+        this._checkAndApply(this._getQty());
       },
 
       _getQty: function () {
         var qty = this.input.value;
-        if (parseFloat(qty) == parseInt(qty) && !isNaN(qty)) {
+        if (parseFloat(qty) == parseInt(qty, 10) && !isNaN(qty)) {
           // We have a valid number!
         } else {
-          // Not a number. Default to 1.
-          qty = 1;
+          // Not a number. Default to minValue.
+          qty = this.minValue;
         }
-        return parseInt(qty);
+        return parseInt(qty, 10);
+      },
+
+      _handleInput: function () {
+        var rawVal = this.input.value;
+        if (rawVal === "") return;
+        var qty = parseInt(rawVal, 10);
+        if (isNaN(qty)) return;
+
+        if (this.maxValue !== null && qty >= this.maxValue) {
+          this.input.value = this.maxValue;
+          this._showWarning(this.maxValue);
+          this.plus.disabled = true;
+          this.plus.classList.add("disabled");
+        } else {
+          this._hideWarning();
+          this.plus.disabled = false;
+          this.plus.classList.remove("disabled");
+        }
+      },
+
+      _checkAndApply: function (qty) {
+        if (this.maxValue !== null && qty >= this.maxValue) {
+          qty = this.maxValue;
+          this.input.value = qty;
+          this._showWarning(this.maxValue);
+          this.plus.disabled = true;
+          this.plus.classList.add("disabled");
+        } else {
+          if (qty < this.minValue) {
+            qty = this.minValue;
+            this.input.value = qty;
+          }
+          this._hideWarning();
+          this.plus.disabled = false;
+          this.plus.classList.remove("disabled");
+        }
+        return qty;
       },
 
       _change: function (qty) {
+        if (this.maxValue !== null && qty >= this.maxValue) {
+          qty = this.maxValue;
+        }
+
         if (qty <= this.minValue) {
           qty = this.minValue;
         }
 
         this.input.value = qty;
+        this._checkAndApply(qty);
 
         if (this.options.isCart) {
           document.dispatchEvent(
@@ -3468,6 +3571,20 @@ lazySizesConfig.expFactor = 4;
               detail: [this.options.key, qty, this.wrapper],
             }),
           );
+        }
+      },
+
+      _showWarning: function (max) {
+        if (this.warning) {
+          this.warning.textContent = "Only " + max + " pcs available";
+          this.warning.style.display = "block";
+        }
+      },
+
+      _hideWarning: function () {
+        if (this.warning) {
+          this.warning.textContent = "";
+          this.warning.style.display = "none";
         }
       },
     });
@@ -7358,6 +7475,7 @@ lazySizesConfig.expFactor = 4;
          incomingInventory: "[data-incoming-inventory]",
          quantityStatus: "[data-product-quantity-status]",
          colorLabel: "[data-variant-color-label]",
+         productInventories: "[data-product-inventories]",
 
         addToCart: "[data-add-to-cart]",
         addToCartText: "[data-add-to-cart-text]",
@@ -7434,6 +7552,9 @@ lazySizesConfig.expFactor = 4;
           price: this.container.querySelector(this.selectors.price),
           savePrice: this.container.querySelector(this.selectors.savePrice),
           priceA11y: this.container.querySelector(this.selectors.priceA11y),
+          productInventories: this.container.querySelector(
+            this.selectors.productInventories,
+          ),
         };
       },
 
@@ -7521,6 +7642,17 @@ lazySizesConfig.expFactor = 4;
 
         this.variantsObject = JSON.parse(variantJson.innerHTML);
 
+        if (this.cache.productInventories) {
+          try {
+            this.inventories = JSON.parse(
+              this.cache.productInventories.value ||
+                this.cache.productInventories.textContent,
+            );
+          } catch (e) {
+            this.inventories = {};
+          }
+        }
+
         var options = {
           container: this.container,
           enableHistoryState: this.settings.enableHistoryState,
@@ -7570,6 +7702,10 @@ lazySizesConfig.expFactor = 4;
              this.updateQuantityStatus.bind(this),
            );
          }
+        this.container.on(
+          "variantChange" + this.settings.namespace,
+          this.updateQuantityMax.bind(this),
+        );
         this.container.on(
           "variantImageChange" + this.settings.namespace,
           this.updateVariantImage.bind(this),
@@ -7708,6 +7844,34 @@ lazySizesConfig.expFactor = 4;
          status.textContent = inStock ? "In Stock" : "Out of Stock";
          status.classList.toggle("product-quantity-status--in-stock", inStock);
          status.classList.toggle("product-quantity-status--out-of-stock", !inStock);
+       },
+
+       updateQuantityMax: function (evt) {
+         var variant = evt.detail.variant;
+         var qtyWrapper = this.container.querySelector(
+           ".product__quantity .js-qty__wrapper",
+         );
+         if (!qtyWrapper) {
+           return;
+         }
+         var qtySelector = qtyWrapper._qtySelector;
+         if (!qtySelector) {
+           qtySelector = new theme.QtySelector(qtyWrapper, {
+             namespace: ".product",
+           });
+         }
+
+         if (variant && this.inventories && this.inventories[variant.id]) {
+           var inv = this.inventories[variant.id];
+           if (
+             inv.inventory_management === "shopify" &&
+             inv.inventory_policy === "deny"
+           ) {
+             qtySelector.setMax(Math.max(0, inv.inventory_quantity));
+             return;
+           }
+         }
+         qtySelector.setMax(null);
        },
 
       updatePrice: function (evt) {
