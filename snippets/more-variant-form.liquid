@@ -142,7 +142,7 @@
 {%- endform -%}
 
 <script>
-  document.addEventListener('DOMContentLoaded', function() {
+  function initMoreVariantForm() {
     function initBundleTabs() {
       const bundleTabs = document.querySelectorAll('.bundle-tab-item');
       const bundleLists = document.querySelectorAll('.bundle-product-list');
@@ -214,6 +214,38 @@
         }
       });
     }
+    function initBundleAutoCheck() {
+      function checkItemCheckbox(target) {
+        if (!target) return;
+        const item = target.closest('.bundle-product-item');
+        if (!item) return;
+        const checkbox = item.querySelector('.bundle-product-checkbox');
+        if (checkbox && !checkbox.disabled && !checkbox.checked) {
+          checkbox.checked = true;
+          checkbox.dispatchEvent(new Event('change', { bubbles: true }));
+        }
+      }
+
+      document.addEventListener('click', function (e) {
+        const btn = e.target.closest('.bundle-product-item .js-qty__adjust');
+        if (btn) {
+          checkItemCheckbox(btn);
+        }
+      });
+
+      document.addEventListener('input', function (e) {
+        if (e.target && e.target.matches && e.target.matches('.bundle-product-item .js-qty__num')) {
+          checkItemCheckbox(e.target);
+        }
+      });
+
+      document.addEventListener('change', function (e) {
+        if (e.target && e.target.matches && e.target.matches('.bundle-product-item .js-qty__num')) {
+          checkItemCheckbox(e.target);
+        }
+      });
+    }
+
     function initAddToCart() {
       const addBtn = document.querySelector('button.add-to-cart');
       const ajaxCart = new theme.AjaxProduct(addBtn);
@@ -240,6 +272,13 @@
     }
     initBundleTabs();
     initBundleQtySelectors();
+    initBundleAutoCheck();
     initAddToCart();
-  });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initMoreVariantForm);
+  } else {
+    initMoreVariantForm();
+  }
 </script>

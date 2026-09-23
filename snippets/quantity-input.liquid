@@ -12,6 +12,16 @@
   {%- assign is_maxed = true -%}
 {%- endif -%}
 
+{%- assign current_qty = qty | default: 1 -%}
+{%- if is_maxed -%}
+  {%- assign current_qty = max -%}
+{%- endif -%}
+{%- assign min_val = min | default: 1 -%}
+{%- assign is_mined = false -%}
+{%- if current_qty <= min_val -%}
+  {%- assign is_mined = true -%}
+{%- endif -%}
+
 <div class="js-qty__wrapper"
   {% if has_limit and max != blank %}
     data-max="{{ max }}"
@@ -21,8 +31,8 @@
     type="text"
     id="Quantity-{{ id }}"
     class="js-qty__num"
-    value="{% if is_maxed %}{{ max }}{% else %}{{ qty }}{% endif %}"
-    min="{{ min }}"
+    value="{% if is_maxed %}{{ max }}{% else %}{{ current_qty }}{% endif %}"
+    min="{{ min_val }}"
     {% if has_limit and max != blank %}
       max="{{ max }}"
     {% endif %}
@@ -33,7 +43,8 @@
   >
   <button
     type="button"
-    class="js-qty__adjust js-qty__adjust--minus"
+    class="js-qty__adjust js-qty__adjust--minus{% if is_mined %} disabled{% endif %}"
+    {% if is_mined %}disabled="disabled"{% endif %}
     aria-label="{{ 'cart.general.reduce_quantity' | t }}"
   >
     <svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-minus" viewBox="0 0 20 20">

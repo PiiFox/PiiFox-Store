@@ -2306,7 +2306,461 @@ ul.social-share-icons li {
 .js-qty__adjust:disabled,
 .js-qty__adjust.disabled {
   cursor: not-allowed !important;
-  opacity: 0.4 !important;
+  opacity: 0.35 !important;
   pointer-events: auto;
 }
+
+.js-qty__adjust:disabled:hover,
+.js-qty__adjust.disabled:hover {
+  background-color: #fff !important;
+}
+
+/* ==========================================================================
+   Cart Item Center Layout & Delete Icon Styling
+   ========================================================================== */
+.cart__item-details .cart__item-sub {
+  flex: 1 1 100%;
+  display: block !important;
+  width: 100% !important;
+  margin-top: 10px;
+}
+
+.cart__item-details .cart__item-sub > div:first-child {
+  margin-right: 0 !important;
+}
+
+
+.cart__item-controls {
+  display: block !important;
+  width: 100% !important;
+  position: relative;
+}
+
+.cart__item-qty-row {
+  display: flex !important;
+  align-items: flex-start !important;
+  justify-content: space-between !important;
+  width: 100% !important;
+  position: relative;
+}
+
+.cart__item-qty-col {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+  justify-content: flex-start !important;
+  width: auto !important;
+  min-width: 150px;
+  position: relative;
+}
+
+.cart__item-qty-col .js-qty__wrapper,
+#CartDrawerForm .cart__item-qty-col .js-qty__wrapper,
+.cart__item .js-qty__wrapper {
+  position: relative !important;
+  display: block !important;
+  width: 150px !important;
+  height: 38px !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  border-radius: 40px !important;
+  border: 1px solid #dcdcdc !important;
+  background-color: #fff !important;
+  box-sizing: border-box !important;
+  overflow: hidden !important;
+}
+
+.cart__item-qty-col .js-qty__num,
+#CartDrawerForm .cart__item-qty-col .js-qty__num,
+.drawer .cart__item-qty-col .js-qty__num,
+.cart__item .js-qty__num {
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  width: 100% !important;
+  height: 36px !important;
+  line-height: 36px !important;
+  margin: 0 !important;
+  padding: 0 34px !important;
+  text-align: center !important;
+  font-size: 15px !important;
+  font-weight: 600 !important;
+  color: #111111 !important;
+  border: none !important;
+  background: transparent !important;
+  outline: none !important;
+  box-sizing: border-box !important;
+  vertical-align: middle !important;
+  display: block !important;
+}
+
+.cart__item-qty-col .js-qty__adjust,
+#CartDrawerForm .cart__item-qty-col .js-qty__adjust,
+.cart__item .js-qty__adjust {
+  position: absolute !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  bottom: auto !important;
+  width: 28px !important;
+  height: 28px !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background: transparent !important;
+  border: none !important;
+  border-radius: 50% !important;
+  cursor: pointer !important;
+  z-index: 3 !important;
+  transition: all 0.15s ease !important;
+}
+
+.cart__item-qty-col .js-qty__adjust--minus,
+#CartDrawerForm .cart__item-qty-col .js-qty__adjust--minus,
+.cart__item .js-qty__adjust--minus {
+  left: 4px !important;
+  right: auto !important;
+}
+
+.cart__item-qty-col .js-qty__adjust--plus,
+#CartDrawerForm .cart__item-qty-col .js-qty__adjust--plus,
+.cart__item .js-qty__adjust--plus {
+  right: 4px !important;
+  left: auto !important;
+}
+
+.cart__item-qty-col .js-qty__adjust:hover:not(:disabled),
+.cart__item .js-qty__adjust:hover:not(:disabled) {
+  background-color: #f3f4f6 !important;
+}
+
+.cart__item-qty-col .js-qty__adjust svg,
+.cart__item-qty-col .js-qty__adjust .icon,
+.cart__item .js-qty__adjust svg,
+.cart__item .js-qty__adjust .icon {
+  display: block !important;
+  width: 14px !important;
+  height: 14px !important;
+  margin: 0 auto !important;
+  vertical-align: middle !important;
+  flex-shrink: 0 !important;
+  pointer-events: none !important;
+}
+
+.cart__item-qty-col .js-qty__adjust .icon__fallback-text,
+.cart__item .js-qty__adjust .icon__fallback-text {
+  display: none !important;
+}
+
+.drawer .cart__item-qty-col .js-qty__stock-warning,
+.cart__item-qty-col .js-qty__stock-warning {
+  position: static !important;
+  display: block !important;
+  width: 100% !important;
+  text-align: left !important;
+  font-size: 11px;
+  line-height: 1.3;
+  color: #ff6000;
+  margin-top: 4px;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.cart__item-delete-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  border-radius: 8px;
+  background: #f7f7f7;
+  border: 1px solid #e0e0e0;
+  color: #777;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  outline: none;
+  flex-shrink: 0;
+  align-self: flex-start;
+  margin-left: auto !important;
+}
+
+.cart__item-delete-btn:hover {
+  background: #fee2e2;
+  border-color: #fca5a5;
+  color: #ef4444;
+  transform: scale(1.06);
+}
+
+.cart__item-delete-btn:active {
+  transform: scale(0.96);
+}
+
+.cart__delete-icon {
+  display: block;
+  pointer-events: none;
+}
+
+.cart__item-price-col {
+  margin-top: 6px;
+  padding-left: 6px;
+  width: 100% !important;
+  text-align: left !important;
+  box-sizing: border-box !important;
+}
+
+.cart__item-price-col .cart__price {
+  font-size: 14px;
+  font-weight: 600;
+  color: #111;
+  text-align: left !important;
+  display: inline-block;
+}
+
+.cart__item-price-col .cart__price--strikethrough {
+  color: #999;
+  margin-right: 6px;
+  text-decoration: line-through;
+  text-align: left !important;
+  display: inline-block;
+}
+
+.cart__item-price-col .cart__discount {
+  color: #d9383a;
+  font-weight: 600;
+  text-align: left !important;
+  display: inline-block;
+}
+
+.cart__item-price-col .product__unit-price {
+  font-size: 11px;
+  color: #777;
+  text-align: left !important;
+}
+
+/* ==========================================================================
+   Cart Item Delete Confirmation Modal
+   ========================================================================== */
+.cart-delete-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 999999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.22s ease;
+}
+
+.cart-delete-modal.is-active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.cart-delete-modal__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.52);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+.cart-delete-modal__dialog {
+  position: relative;
+  z-index: 2;
+  width: 92%;
+  max-width: 380px;
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.22);
+  padding: 24px 20px;
+  transform: scale(0.92) translateY(10px);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.cart-delete-modal.is-active .cart-delete-modal__dialog {
+  transform: scale(1) translateY(0);
+}
+
+.cart-delete-modal__close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 28px;
+  height: 28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #f1f3f5;
+  border: none;
+  border-radius: 50%;
+  color: #666;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  padding: 0;
+}
+
+.cart-delete-modal__close:hover {
+  background: #e2e8f0;
+  color: #111;
+}
+
+.cart-delete-modal__header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+.cart-delete-modal__icon-wrap {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: #fee2e2;
+  color: #ef4444;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 12px;
+}
+
+.cart-delete-modal__title {
+  font-size: 16px;
+  font-weight: 700;
+  color: #111;
+  margin: 0;
+  line-height: 1.35;
+}
+
+.cart-delete-modal__product {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #f8f9fa;
+  border: 1px solid #eaedf0;
+  border-radius: 12px;
+  padding: 12px;
+  margin-bottom: 20px;
+}
+
+.cart-delete-modal__img-wrap {
+  width: 54px;
+  height: 54px;
+  flex-shrink: 0;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cart-delete-modal__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.cart-delete-modal__info {
+  flex: 1 1 auto;
+  min-width: 0;
+  text-align: left;
+}
+
+.cart-delete-modal__prod-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: #111;
+  line-height: 1.3;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.cart-delete-modal__variant {
+  font-size: 12px;
+  color: #666;
+  margin-top: 2px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.cart-delete-modal__meta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: #444;
+  margin-top: 4px;
+  font-weight: 500;
+}
+
+.cart-delete-modal__divider {
+  color: #aaa;
+}
+
+.cart-delete-modal__price {
+  font-weight: 600;
+  color: #111;
+}
+
+.cart-delete-modal__actions {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+}
+
+.cart-delete-modal__btn {
+  flex: 1;
+  height: 42px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  border: none;
+  padding: 0 16px;
+  text-transform: none;
+  letter-spacing: normal;
+}
+
+.cart-delete-modal__btn--cancel {
+  background: #f1f3f5;
+  color: #495057;
+  border: 1px solid #dee2e6;
+}
+
+.cart-delete-modal__btn--cancel:hover {
+  background: #e9ecef;
+  color: #212529;
+}
+
+.cart-delete-modal__btn--confirm {
+  background: #111111;
+  color: #ffffff;
+  border: 1px solid #111111;
+}
+
+.cart-delete-modal__btn--confirm:hover {
+  background: #ef4444;
+  border-color: #ef4444;
+  color: #ffffff;
+}
+
+.cart-delete-modal__btn--confirm.is-loading {
+  opacity: 0.65;
+  pointer-events: none;
+}
+
 

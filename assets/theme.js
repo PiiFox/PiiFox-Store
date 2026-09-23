@@ -1905,20 +1905,24 @@ lazySizesConfig.expFactor = 4;
       cartMarkup: function (html) {
         var markup = this._parseProductHTML(html);
         var items = markup.items;
-        var count = parseInt(items.dataset.count);
+        if (!items) {
+          return;
+        }
+        var count = parseInt(items.dataset.count, 10);
         var subtotal = items.dataset.cartSubtotal;
         var savings = items.dataset.cartSavings;
 
         this.updateCartDiscounts(markup.discounts);
         this.updateSavings(savings);
 
-        if (count > 0) {
-          this.wrapper.classList.remove("is-empty");
-        } else {
-          this.wrapper.classList.add("is-empty");
+        if (!isNaN(count)) {
+          if (count > 0) {
+            this.wrapper.classList.remove("is-empty");
+          } else {
+            this.wrapper.classList.add("is-empty");
+          }
+          this.updateCount(count);
         }
-
-        this.updateCount(count);
 
         // Append item markup
         this.products.innerHTML = "";
@@ -1966,23 +1970,28 @@ lazySizesConfig.expFactor = 4;
         var qty = evt.detail[1];
         var el = evt.detail[2];
 
-        if (!key || !qty) {
+        if (!key || qty === undefined || qty === null || isNaN(qty) || qty < 0) {
           return;
         }
 
         // Disable qty selector so multiple clicks can't happen while loading
         if (el) {
           el.classList.add("is-loading");
+          if (qty === 0) {
+            var cartItem = el.closest(".cart__item");
+            if (cartItem) {
+              cartItem.style.opacity = "0.3";
+              cartItem.style.pointerEvents = "none";
+            }
+          }
         }
 
         theme.cart
           .changeItem(key, qty)
           .then(
             function (cart) {
-              if (cart.item_count > 0) {
+              if (cart && typeof cart.item_count === "number" && cart.item_count > 0) {
                 this.wrapper.classList.remove("is-empty");
-              } else {
-                this.wrapper.classList.add("is-empty");
               }
 
               this.buildCart();
@@ -2515,11 +2524,11 @@ lazySizesConfig.expFactor = 4;
           return;
         }
 
-        // Do not close if click event came from inside drawer
+        // Do not close if click event came from inside drawer or cart delete modal
         if (evt) {
           if (evt.target.closest(".js-drawer-close")) {
             // Do not close if using the drawer close button
-          } else if (evt.target.closest(".drawer")) {
+          } else if (evt.target.closest(".drawer") || evt.target.closest(".cart-delete-modal")) {
             return;
           }
         }
@@ -2567,7 +2576,7 @@ lazySizesConfig.expFactor = 4;
         }
 
         if (evt) {
-          if (evt.target.closest(".drawer")) {
+          if (evt.target.closest(".drawer") || evt.target.closest(".cart-delete-modal")) {
             return;
           }
         }
@@ -2619,6 +2628,10 @@ lazySizesConfig.expFactor = 4;
           "keyup" + this.config.namespace,
           function (evt) {
             if (evt.keyCode === 27) {
+              var deleteModal = document.getElementById("CartDeleteModal");
+              if (deleteModal && deleteModal.classList.contains("is-active")) {
+                return;
+              }
               this.close();
             }
           }.bind(this),
@@ -3082,8 +3095,14 @@ lazySizesConfig.expFactor = 4;
       var submitSelector = submit ? submit : ".add-to-cart";
 
       if (this.form) {
-        this.addToCart = form.querySelector(submitSelector);
-        this.form.addEventListener("submit", this.addItemFromForm.bind(this));
+        if (this.form.matches && this.form.matches(submitSelector)) {
+          this.addToCart = this.form;
+        } else if (this.form.querySelector) {
+          this.addToCart = form.querySelector(submitSelector);
+        }
+        if (this.form.addEventListener) {
+          this.form.addEventListener("submit", this.addItemFromForm.bind(this));
+        }
       }
     }
 
@@ -3096,7 +3115,9 @@ lazySizesConfig.expFactor = 4;
         }
 
         // Loading indicator on add to cart button
-        this.addToCart.classList.add("btn--loading");
+        if (this.addToCart) {
+          this.addToCart.classList.add("btn--loading");
+        }
 
         status.loading = true;
 
@@ -3115,19 +3136,30 @@ lazySizesConfig.expFactor = 4;
           .then(
             function (data) {
               if (data.status === 422) {
-                this.error(data);
+                // 超出库存限制时不报错，直接按成功处理打开购物车并展示最大库存数
+                this.success(data);
               } else {
                 var product = data;
                 this.success(product);
               }
 
               status.loading = false;
-              this.addToCart.classList.remove("btn--loading");
+              if (this.addToCart) {
+                this.addToCart.classList.remove("btn--loading");
+              }
 
               // Reload page if adding product from a section on the cart page
               if (document.body.classList.contains("template-cart")) {
                 window.scrollTo(0, 0);
                 location.reload();
+              }
+            }.bind(this),
+          )
+          .catch(
+            function (err) {
+              status.loading = false;
+              if (this.addToCart) {
+                this.addToCart.classList.remove("btn--loading");
               }
             }.bind(this),
           );
@@ -3153,10 +3185,16 @@ lazySizesConfig.expFactor = 4;
             .then(
               function (data) {
                 if (data.status === 422) {
-                  this.error(data);
-                  reject(data);
+                  // 如果是多商品批量加购，Shopify 在某个商品超库存时会整批失败拒收
+                  // 此时抛出 reject，让外层捕获并降级为逐个单品提交，确保其他有库存的商品成功加购
+                  if (products.length > 1) {
+                    reject(data);
+                    return;
+                  }
+                  // 单品加购超出库存限制时不报错，直接按成功处理打开购物车并展示最大库存数
+                  this.success(data);
                 } else {
-                  const product_list = data.items;
+                  const product_list = data.items || [data];
                   for (const product of product_list) {
                     this.success(product);
                   }
@@ -3183,21 +3221,37 @@ lazySizesConfig.expFactor = 4;
         try {
           await this.productAddToCartRest(addToCartEl, products);
         } catch (err) {
-          console.warn("批量加购失败，降级为逐个提交", err);
-          const promiseList = [];
+          console.warn("批量加购遇库存上限，降级为逐个商品提交", err);
           for (const product of products) {
-            promiseList.push(self.productAddToCartRest(addToCartEl, [product]));
+            try {
+              await fetch(theme.routes.cartAdd, {
+                method: "POST",
+                body: JSON.stringify({ id: product.id, quantity: product.quantity }),
+                credentials: "same-origin",
+                headers: {
+                  "Content-Type": "application/json",
+                  Accept: "application/json",
+                },
+              }).then((response) => response.json());
+            } catch (e) {
+              console.warn("单品提交异常", e);
+            }
           }
-          await Promise.allSettled(promiseList);
+          // 逐个提交完成（有库存的已正常加购，满库存的已保持最大库存），统一触发一次加购成功
+          self.success({ items: products });
+          if (document.body.classList.contains("template-cart")) {
+            window.scrollTo(0, 0);
+            location.reload();
+          }
         }
 
         addToCartEl.classList.remove("btn--loading");
       },
 
       success: function (product) {
-        var errors = this.form.querySelector(".errors");
-        if (errors) {
-          errors.remove();
+        var errors = document.querySelectorAll(".errors");
+        if (errors.length) {
+          errors.forEach((el) => el.remove());
         }
 
         document.dispatchEvent(
@@ -3405,10 +3459,7 @@ lazySizesConfig.expFactor = 4;
       this.plus = el.querySelector(selectors.plus);
       this.minus = el.querySelector(selectors.minus);
       this.input = el.querySelector(selectors.input);
-      this.minValue = parseInt(this.input.getAttribute("min"), 10);
-      if (isNaN(this.minValue)) {
-        this.minValue = 1;
-      }
+      this.minValue = 1;
 
       var maxAttr = this.input.getAttribute("max") || this.wrapper.dataset.max;
       this.maxValue =
@@ -3430,6 +3481,8 @@ lazySizesConfig.expFactor = 4;
       this.options = Object.assign({}, defaults, options);
 
       this.wrapper._qtySelector = this;
+      this._isDeleting = false;
+      this._lastQty = this._getQty();
 
       this.init();
     }
@@ -3491,7 +3544,9 @@ lazySizesConfig.expFactor = 4;
             if (this._inputTimer) {
               clearTimeout(this._inputTimer);
             }
+            if (this.minus.disabled) return;
             var qty = this._getQty();
+            if (qty <= 1) return;
             this._change(qty - 1);
           }.bind(this),
         );
@@ -3519,7 +3574,34 @@ lazySizesConfig.expFactor = 4;
             if (this._inputTimer) {
               clearTimeout(this._inputTimer);
             }
-            this._change(this._getQty());
+            var rawVal = this.input.value.trim();
+            if (rawVal === "" || isNaN(parseInt(rawVal, 10))) {
+              this.input.value = 1;
+              this._lastQty = null;
+              this._change(1);
+            } else {
+              this._change(this._getQty());
+            }
+          }.bind(this),
+        );
+
+        this.input.addEventListener(
+          "keydown",
+          function (evt) {
+            if (evt.key === "Enter" || evt.keyCode === 13) {
+              evt.preventDefault();
+              if (this._inputTimer) {
+                clearTimeout(this._inputTimer);
+              }
+              var rawVal = this.input.value.trim();
+              if (rawVal === "" || isNaN(parseInt(rawVal, 10))) {
+                this.input.value = 1;
+                this._lastQty = null;
+                this._change(1);
+              } else {
+                this._change(this._getQty());
+              }
+            }
           }.bind(this),
         );
 
@@ -3527,18 +3609,30 @@ lazySizesConfig.expFactor = 4;
       },
 
       _getQty: function () {
-        var qty = this.input.value;
-        if (parseFloat(qty) == parseInt(qty, 10) && !isNaN(qty)) {
-          // We have a valid number!
-        } else {
-          // Not a number. Default to minValue.
-          qty = this.minValue;
+        var rawVal = this.input.value.trim();
+        var qty = parseInt(rawVal, 10);
+        if (!isNaN(qty)) {
+          if (this.options.isCart) {
+            if (qty <= 0) {
+              return 0;
+            }
+            return qty;
+          } else {
+            if (qty < 1) {
+              return 1;
+            }
+            return qty;
+          }
         }
-        return parseInt(qty, 10);
+        return 1;
       },
 
       _handleInput: function () {
-        var rawVal = this.input.value;
+        if (this._isDeleting) {
+          return;
+        }
+
+        var rawVal = this.input.value.trim();
         if (rawVal === "") return;
         var qty = parseInt(rawVal, 10);
         if (isNaN(qty)) return;
@@ -3552,7 +3646,7 @@ lazySizesConfig.expFactor = 4;
           this.plus.disabled = true;
           this.plus.classList.add("disabled");
 
-          // 延迟 1 秒后再将数字更正为最大库存，避免输入 1200 时瞬间被截断，让用户有时间看清输入内容与提示
+          // 延迟 300ms 后再将数字更正为最大库存，避免输入 1200 时瞬间被截断，让用户有时间看清输入内容与提示
           this._inputTimer = setTimeout(
             function () {
               var currentQty = parseInt(this.input.value, 10);
@@ -3567,6 +3661,38 @@ lazySizesConfig.expFactor = 4;
           this.plus.disabled = false;
           this.plus.classList.remove("disabled");
         }
+
+        // 数量 <= 1 时禁用减号按钮
+        if (qty <= 1) {
+          this.minus.disabled = true;
+          this.minus.classList.add("disabled");
+        } else {
+          this.minus.disabled = false;
+          this.minus.classList.remove("disabled");
+        }
+
+        // 购物车中若用户输入 0，延迟防抖后直接执行删除操作
+        if (this.options.isCart && qty === 0) {
+          this._inputTimer = setTimeout(
+            function () {
+              var currentQty = parseInt(this.input.value, 10);
+              if (currentQty === 0) {
+                this._change(0);
+              }
+            }.bind(this),
+            400,
+          );
+        } else if (!this.options.isCart && qty < 1) {
+          this._inputTimer = setTimeout(
+            function () {
+              var currentQty = parseInt(this.input.value, 10);
+              if (!isNaN(currentQty) && currentQty < 1) {
+                this._change(1);
+              }
+            }.bind(this),
+            400,
+          );
+        }
       },
 
       _checkAndApply: function (qty) {
@@ -3577,14 +3703,23 @@ lazySizesConfig.expFactor = 4;
           this.plus.disabled = true;
           this.plus.classList.add("disabled");
         } else {
-          if (qty < this.minValue) {
-            qty = this.minValue;
+          if (!this.options.isCart && qty < 1) {
+            qty = 1;
             this.input.value = qty;
           }
           this._hideWarning();
           this.plus.disabled = false;
           this.plus.classList.remove("disabled");
         }
+
+        if (qty <= 1) {
+          this.minus.disabled = true;
+          this.minus.classList.add("disabled");
+        } else {
+          this.minus.disabled = false;
+          this.minus.classList.remove("disabled");
+        }
+
         return qty;
       },
 
@@ -3593,12 +3728,40 @@ lazySizesConfig.expFactor = 4;
           clearTimeout(this._inputTimer);
         }
 
+        if (this._isDeleting) {
+          return;
+        }
+
         if (this.maxValue !== null && qty >= this.maxValue) {
           qty = this.maxValue;
         }
 
-        if (qty <= this.minValue) {
-          qty = this.minValue;
+        if (this.options.isCart) {
+          if (qty <= 0) {
+            qty = 0;
+          }
+        } else {
+          if (qty < 1) {
+            qty = 1;
+          }
+        }
+
+        if (this._lastQty === qty && this.input.value.trim() === String(qty)) {
+          return;
+        }
+        this._lastQty = qty;
+
+        if (this.options.isCart && qty === 0) {
+          this._isDeleting = true;
+          this.input.disabled = true;
+          if (this.minus) {
+            this.minus.disabled = true;
+            this.minus.classList.add("disabled");
+          }
+          if (this.plus) {
+            this.plus.disabled = true;
+            this.plus.classList.add("disabled");
+          }
         }
 
         this.input.value = qty;
@@ -3630,6 +3793,34 @@ lazySizesConfig.expFactor = 4;
 
     return QtySelector;
   })();
+
+  // 当用户在任何数量输入框中清空内容并未输入任何值时，失去焦点自动重置为数量 1
+  document.addEventListener(
+    "focusout",
+    function (evt) {
+      var target = evt.target;
+      if (
+        target &&
+        target.tagName === "INPUT" &&
+        (target.classList.contains("js-qty__num") ||
+          target.name === "quantity" ||
+          target.name === "updates[]")
+      ) {
+        var rawVal = target.value.trim();
+        if (rawVal === "" || isNaN(parseInt(rawVal, 10))) {
+          target.value = 1;
+          var wrapper = target.closest(".js-qty__wrapper");
+          if (wrapper && wrapper._qtySelector) {
+            wrapper._qtySelector._lastQty = null;
+            wrapper._qtySelector._change(1);
+          } else {
+            target.dispatchEvent(new Event("change", { bubbles: true }));
+          }
+        }
+      }
+    },
+    true,
+  );
 
   theme.initQuickShop = function () {
     var ids = [];
@@ -9457,3 +9648,207 @@ $(function () {
     document.documentElement.scrollTop = 0;
   });
 });
+
+/* ==========================================================================
+   Cart Item Delete Confirmation Modal Logic
+   ========================================================================== */
+(function initCartDeleteModal() {
+  function getModalElements() {
+    var modal = document.getElementById("CartDeleteModal");
+    if (!modal) return null;
+    return {
+      modal: modal,
+      imgEl: document.getElementById("CartDeleteModalImg"),
+      titleEl: document.getElementById("CartDeleteModalProdTitle"),
+      variantEl: document.getElementById("CartDeleteModalVariant"),
+      qtyEl: document.getElementById("CartDeleteModalQty"),
+      priceEl: document.getElementById("CartDeleteModalPrice"),
+      confirmBtn: document.getElementById("CartDeleteModalConfirmBtn"),
+    };
+  }
+
+  var currentKey = null;
+  var isDeleting = false;
+
+  function openModal(btn) {
+    if (!btn || isDeleting) return;
+
+    var els = getModalElements();
+    if (!els || !els.modal) return;
+
+    currentKey = btn.getAttribute("data-key");
+    var title = btn.getAttribute("data-title") || "";
+    var variant = btn.getAttribute("data-variant") || "";
+    var image = btn.getAttribute("data-image") || "";
+    var price = btn.getAttribute("data-price") || "";
+    var qty = btn.getAttribute("data-qty") || "1";
+
+    if (els.titleEl) els.titleEl.textContent = title;
+    if (els.variantEl) {
+      if (variant) {
+        els.variantEl.textContent = variant;
+        els.variantEl.style.display = "block";
+      } else {
+        els.variantEl.textContent = "";
+        els.variantEl.style.display = "none";
+      }
+    }
+    if (els.qtyEl) els.qtyEl.textContent = "Qty: " + qty;
+    if (els.priceEl) els.priceEl.innerHTML = price;
+
+    if (els.imgEl) {
+      if (image) {
+        els.imgEl.src = image;
+        els.imgEl.alt = title;
+        els.imgEl.style.display = "block";
+      } else {
+        els.imgEl.style.display = "none";
+      }
+    }
+
+    if (els.confirmBtn) {
+      els.confirmBtn.classList.remove("is-loading");
+      els.confirmBtn.removeAttribute("disabled");
+    }
+
+    els.modal.classList.add("is-active");
+    els.modal.setAttribute("aria-hidden", "false");
+    document.body.classList.add("cart-delete-modal-open");
+  }
+
+  function closeModal() {
+    if (isDeleting) return;
+    currentKey = null;
+    var els = getModalElements();
+    if (!els || !els.modal) return;
+    els.modal.classList.remove("is-active");
+    els.modal.setAttribute("aria-hidden", "true");
+    document.body.classList.remove("cart-delete-modal-open");
+
+    // Ensure CartDrawer remains open
+    var drawer = document.getElementById("CartDrawer");
+    if (drawer && (drawer.classList.contains("drawer--is-open") || document.documentElement.classList.contains("js-drawer-open"))) {
+      document.dispatchEvent(new CustomEvent("cart:open"));
+    }
+  }
+
+  function confirmDelete() {
+    if (!currentKey || isDeleting) return;
+
+    var els = getModalElements();
+    isDeleting = true;
+    if (els && els.confirmBtn) {
+      els.confirmBtn.classList.add("is-loading");
+      els.confirmBtn.setAttribute("disabled", "disabled");
+    }
+
+    var keyToDelete = currentKey;
+
+    // Visual dimming on cart item
+    var targetItem = document.querySelector('.cart__item[data-key="' + keyToDelete + '"]');
+    if (targetItem) {
+      targetItem.style.opacity = "0.3";
+      targetItem.style.pointerEvents = "none";
+    }
+
+    if (window.theme && window.theme.cart && typeof window.theme.cart.changeItem === "function") {
+      window.theme.cart
+        .changeItem(keyToDelete, 0)
+        .then(function (cart) {
+          isDeleting = false;
+          closeModal();
+
+          // Dispatch cart:updated so header counts / bubbles update
+          document.dispatchEvent(
+            new CustomEvent("cart:updated", {
+              detail: { cart: cart },
+            })
+          );
+
+          // Dispatch cart:build so CartDrawer refreshes its contents
+          document.dispatchEvent(new CustomEvent("cart:build"));
+
+          // Ensure CartDrawer remains open
+          document.dispatchEvent(new CustomEvent("cart:open"));
+
+          // If on main cart page, reload
+          if (document.body.classList.contains("template-cart")) {
+            location.reload();
+          }
+        })
+        .catch(function (err) {
+          console.error("Cart item delete error:", err);
+          isDeleting = false;
+          if (els && els.confirmBtn) {
+            els.confirmBtn.classList.remove("is-loading");
+            els.confirmBtn.removeAttribute("disabled");
+          }
+          if (targetItem) {
+            targetItem.style.opacity = "1";
+            targetItem.style.pointerEvents = "auto";
+          }
+          closeModal();
+        });
+    } else {
+      fetch("/cart/change.js", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({ id: keyToDelete, quantity: 0 }),
+      })
+        .then(function (res) { return res.json(); })
+        .then(function () {
+          isDeleting = false;
+          closeModal();
+          location.reload();
+        })
+        .catch(function () {
+          isDeleting = false;
+          closeModal();
+        });
+    }
+  }
+
+  // Event Delegation for trigger clicks
+  document.addEventListener("click", function (evt) {
+    var trigger = evt.target.closest(".js-cart-delete-trigger");
+    if (trigger) {
+      evt.preventDefault();
+      evt.stopPropagation();
+      evt.stopImmediatePropagation();
+      openModal(trigger);
+      return;
+    }
+
+    var cancelBtn = evt.target.closest(".js-cart-delete-cancel");
+    if (cancelBtn) {
+      evt.preventDefault();
+      evt.stopPropagation();
+      evt.stopImmediatePropagation();
+      closeModal();
+      return;
+    }
+
+    var confirmTrigger = evt.target.closest(".js-cart-delete-confirm");
+    if (confirmTrigger) {
+      evt.preventDefault();
+      evt.stopPropagation();
+      evt.stopImmediatePropagation();
+      confirmDelete();
+      return;
+    }
+  }, true);
+
+  // ESC key to close
+  document.addEventListener("keydown", function (evt) {
+    if (evt.key === "Escape" || evt.keyCode === 27) {
+      var els = getModalElements();
+      if (els && els.modal && els.modal.classList.contains("is-active")) {
+        evt.preventDefault();
+        evt.stopPropagation();
+        evt.stopImmediatePropagation();
+        closeModal();
+      }
+    }
+  }, true);
+})();
+
