@@ -2763,4 +2763,16 @@ ul.social-share-icons li {
   pointer-events: none;
 }
 
+/* Prevent duplicate clicks and interaction while adding to cart or loading */
+.btn--loading,
+button.btn--loading,
+.add-to-cart.btn--loading,
+[data-add-to-cart].btn--loading,
+button.add-to-cart:disabled,
+[data-add-to-cart]:disabled {
+  pointer-events: none !important;
+  cursor: not-allowed !important;
+  user-select: none !important;
+}
+
 

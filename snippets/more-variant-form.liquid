@@ -253,6 +253,9 @@
       addBtn.addEventListener('click', function (e) {
         e.preventDefault();
         e.stopPropagation();
+        if (addBtn.disabled || addBtn.classList.contains('btn--loading')) {
+          return;
+        }
         const currentVariantId = getCurrentVariantId();
         if (!currentVariantId) {
           console.warn('Unable to determine the selected variant');

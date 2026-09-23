@@ -3110,16 +3110,18 @@ lazySizesConfig.expFactor = 4;
       addItemFromForm: function (evt, callback) {
         evt.preventDefault();
 
-        if (status.loading) {
+        if (status.loading || (this.addToCart && (this.addToCart.disabled || this.addToCart.classList.contains("btn--loading")))) {
           return;
         }
 
-        // Loading indicator on add to cart button
+        status.loading = true;
+
+        // Loading indicator on add to cart button & disable button to prevent duplicate clicks
         if (this.addToCart) {
           this.addToCart.classList.add("btn--loading");
+          this.addToCart.disabled = true;
+          this.addToCart.setAttribute("disabled", "disabled");
         }
-
-        status.loading = true;
 
         var data = theme.utils.serialize(this.form);
 
@@ -3143,11 +3145,6 @@ lazySizesConfig.expFactor = 4;
                 this.success(product);
               }
 
-              status.loading = false;
-              if (this.addToCart) {
-                this.addToCart.classList.remove("btn--loading");
-              }
-
               // Reload page if adding product from a section on the cart page
               if (document.body.classList.contains("template-cart")) {
                 window.scrollTo(0, 0);
@@ -3157,9 +3154,16 @@ lazySizesConfig.expFactor = 4;
           )
           .catch(
             function (err) {
+              console.warn("加购请求异常", err);
+            }.bind(this),
+          )
+          .finally(
+            function () {
               status.loading = false;
               if (this.addToCart) {
                 this.addToCart.classList.remove("btn--loading");
+                this.addToCart.disabled = false;
+                this.addToCart.removeAttribute("disabled");
               }
             }.bind(this),
           );
@@ -3215,8 +3219,17 @@ lazySizesConfig.expFactor = 4;
       },
 
       MoreProductAddToCart: async function (addToCartEl, products) {
+        if (status.loading || (addToCartEl && (addToCartEl.disabled || addToCartEl.classList.contains("btn--loading")))) {
+          return;
+        }
+
+        status.loading = true;
         const self = this;
-        addToCartEl.classList.add("btn--loading");
+        if (addToCartEl) {
+          addToCartEl.classList.add("btn--loading");
+          addToCartEl.disabled = true;
+          addToCartEl.setAttribute("disabled", "disabled");
+        }
 
         try {
           await this.productAddToCartRest(addToCartEl, products);
@@ -3243,9 +3256,14 @@ lazySizesConfig.expFactor = 4;
             window.scrollTo(0, 0);
             location.reload();
           }
+        } finally {
+          status.loading = false;
+          if (addToCartEl) {
+            addToCartEl.classList.remove("btn--loading");
+            addToCartEl.disabled = false;
+            addToCartEl.removeAttribute("disabled");
+          }
         }
-
-        addToCartEl.classList.remove("btn--loading");
       },
 
       success: function (product) {
@@ -3817,6 +3835,21 @@ lazySizesConfig.expFactor = 4;
             target.dispatchEvent(new Event("change", { bubbles: true }));
           }
         }
+      }
+    },
+    true,
+  );
+
+  // 全局拦截加购按钮在加载中或禁用状态下的重复点击
+  document.addEventListener(
+    "click",
+    function (e) {
+      var btn = e.target.closest && e.target.closest("button.add-to-cart, [data-add-to-cart], .btn--loading");
+      if (btn && (btn.classList.contains("btn--loading") || btn.disabled || btn.getAttribute("disabled") !== null)) {
+        e.preventDefault();
+        e.stopPropagation();
+        e.stopImmediatePropagation();
+        return false;
       }
     },
     true,
