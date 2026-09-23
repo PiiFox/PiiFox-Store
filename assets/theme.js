@@ -2524,11 +2524,11 @@ lazySizesConfig.expFactor = 4;
           return;
         }
 
-        // Do not close if click event came from inside drawer or cart delete modal
+        // Do not close if click event came from inside drawer
         if (evt) {
           if (evt.target.closest(".js-drawer-close")) {
             // Do not close if using the drawer close button
-          } else if (evt.target.closest(".drawer") || evt.target.closest(".cart-delete-modal")) {
+          } else if (evt.target.closest(".drawer")) {
             return;
           }
         }
@@ -2576,7 +2576,7 @@ lazySizesConfig.expFactor = 4;
         }
 
         if (evt) {
-          if (evt.target.closest(".drawer") || evt.target.closest(".cart-delete-modal")) {
+          if (evt.target.closest(".drawer")) {
             return;
           }
         }
@@ -2628,10 +2628,6 @@ lazySizesConfig.expFactor = 4;
           "keyup" + this.config.namespace,
           function (evt) {
             if (evt.keyCode === 27) {
-              var deleteModal = document.getElementById("CartDeleteModal");
-              if (deleteModal && deleteModal.classList.contains("is-active")) {
-                return;
-              }
               this.close();
             }
           }.bind(this),
@@ -9683,205 +9679,96 @@ $(function () {
 });
 
 /* ==========================================================================
-   Cart Item Delete Confirmation Modal Logic
+   Cart Item Direct Delete Logic
    ========================================================================== */
-(function initCartDeleteModal() {
-  function getModalElements() {
-    var modal = document.getElementById("CartDeleteModal");
-    if (!modal) return null;
-    return {
-      modal: modal,
-      imgEl: document.getElementById("CartDeleteModalImg"),
-      titleEl: document.getElementById("CartDeleteModalProdTitle"),
-      variantEl: document.getElementById("CartDeleteModalVariant"),
-      qtyEl: document.getElementById("CartDeleteModalQty"),
-      priceEl: document.getElementById("CartDeleteModalPrice"),
-      confirmBtn: document.getElementById("CartDeleteModalConfirmBtn"),
-    };
-  }
-
-  var currentKey = null;
+(function initCartItemDelete() {
   var isDeleting = false;
 
-  function openModal(btn) {
-    if (!btn || isDeleting) return;
+  document.addEventListener(
+    "click",
+    function (evt) {
+      var trigger = evt.target.closest(".js-cart-delete-trigger");
+      if (!trigger) return;
 
-    var els = getModalElements();
-    if (!els || !els.modal) return;
+      evt.preventDefault();
+      evt.stopPropagation();
+      evt.stopImmediatePropagation();
 
-    currentKey = btn.getAttribute("data-key");
-    var title = btn.getAttribute("data-title") || "";
-    var variant = btn.getAttribute("data-variant") || "";
-    var image = btn.getAttribute("data-image") || "";
-    var price = btn.getAttribute("data-price") || "";
-    var qty = btn.getAttribute("data-qty") || "1";
+      if (isDeleting) return;
 
-    if (els.titleEl) els.titleEl.textContent = title;
-    if (els.variantEl) {
-      if (variant) {
-        els.variantEl.textContent = variant;
-        els.variantEl.style.display = "block";
+      var keyToDelete = trigger.getAttribute("data-key");
+      if (!keyToDelete) return;
+
+      isDeleting = true;
+      trigger.classList.add("is-loading");
+      trigger.setAttribute("disabled", "disabled");
+
+      var targetItem = trigger.closest(".cart__item") || document.querySelector('.cart__item[data-key="' + keyToDelete + '"]');
+      if (targetItem) {
+        targetItem.style.opacity = "0.3";
+        targetItem.style.pointerEvents = "none";
+      }
+
+      function resetItemState() {
+        isDeleting = false;
+        if (trigger) {
+          trigger.classList.remove("is-loading");
+          trigger.removeAttribute("disabled");
+        }
+        if (targetItem) {
+          targetItem.style.opacity = "1";
+          targetItem.style.pointerEvents = "auto";
+        }
+      }
+
+      if (window.theme && window.theme.cart && typeof window.theme.cart.changeItem === "function") {
+        window.theme.cart
+          .changeItem(keyToDelete, 0)
+          .then(function (cart) {
+            isDeleting = false;
+
+            // Dispatch cart:updated so header counts / bubbles update
+            document.dispatchEvent(
+              new CustomEvent("cart:updated", {
+                detail: { cart: cart },
+              })
+            );
+
+            // Dispatch cart:build so CartDrawer refreshes its contents
+            document.dispatchEvent(new CustomEvent("cart:build"));
+
+            // Ensure CartDrawer remains open
+            document.dispatchEvent(new CustomEvent("cart:open"));
+
+            // If on main cart page, reload
+            if (document.body.classList.contains("template-cart")) {
+              location.reload();
+            }
+          })
+          .catch(function (err) {
+            console.error("Cart item delete error:", err);
+            resetItemState();
+          });
       } else {
-        els.variantEl.textContent = "";
-        els.variantEl.style.display = "none";
-      }
-    }
-    if (els.qtyEl) els.qtyEl.textContent = "Qty: " + qty;
-    if (els.priceEl) els.priceEl.innerHTML = price;
-
-    if (els.imgEl) {
-      if (image) {
-        els.imgEl.src = image;
-        els.imgEl.alt = title;
-        els.imgEl.style.display = "block";
-      } else {
-        els.imgEl.style.display = "none";
-      }
-    }
-
-    if (els.confirmBtn) {
-      els.confirmBtn.classList.remove("is-loading");
-      els.confirmBtn.removeAttribute("disabled");
-    }
-
-    els.modal.classList.add("is-active");
-    els.modal.setAttribute("aria-hidden", "false");
-    document.body.classList.add("cart-delete-modal-open");
-  }
-
-  function closeModal() {
-    if (isDeleting) return;
-    currentKey = null;
-    var els = getModalElements();
-    if (!els || !els.modal) return;
-    els.modal.classList.remove("is-active");
-    els.modal.setAttribute("aria-hidden", "true");
-    document.body.classList.remove("cart-delete-modal-open");
-
-    // Ensure CartDrawer remains open
-    var drawer = document.getElementById("CartDrawer");
-    if (drawer && (drawer.classList.contains("drawer--is-open") || document.documentElement.classList.contains("js-drawer-open"))) {
-      document.dispatchEvent(new CustomEvent("cart:open"));
-    }
-  }
-
-  function confirmDelete() {
-    if (!currentKey || isDeleting) return;
-
-    var els = getModalElements();
-    isDeleting = true;
-    if (els && els.confirmBtn) {
-      els.confirmBtn.classList.add("is-loading");
-      els.confirmBtn.setAttribute("disabled", "disabled");
-    }
-
-    var keyToDelete = currentKey;
-
-    // Visual dimming on cart item
-    var targetItem = document.querySelector('.cart__item[data-key="' + keyToDelete + '"]');
-    if (targetItem) {
-      targetItem.style.opacity = "0.3";
-      targetItem.style.pointerEvents = "none";
-    }
-
-    if (window.theme && window.theme.cart && typeof window.theme.cart.changeItem === "function") {
-      window.theme.cart
-        .changeItem(keyToDelete, 0)
-        .then(function (cart) {
-          isDeleting = false;
-          closeModal();
-
-          // Dispatch cart:updated so header counts / bubbles update
-          document.dispatchEvent(
-            new CustomEvent("cart:updated", {
-              detail: { cart: cart },
-            })
-          );
-
-          // Dispatch cart:build so CartDrawer refreshes its contents
-          document.dispatchEvent(new CustomEvent("cart:build"));
-
-          // Ensure CartDrawer remains open
-          document.dispatchEvent(new CustomEvent("cart:open"));
-
-          // If on main cart page, reload
-          if (document.body.classList.contains("template-cart")) {
-            location.reload();
-          }
+        fetch("/cart/change.js", {
+          method: "POST",
+          headers: { "Content-Type": "application/json", Accept: "application/json" },
+          body: JSON.stringify({ id: keyToDelete, quantity: 0 }),
         })
-        .catch(function (err) {
-          console.error("Cart item delete error:", err);
-          isDeleting = false;
-          if (els && els.confirmBtn) {
-            els.confirmBtn.classList.remove("is-loading");
-            els.confirmBtn.removeAttribute("disabled");
-          }
-          if (targetItem) {
-            targetItem.style.opacity = "1";
-            targetItem.style.pointerEvents = "auto";
-          }
-          closeModal();
-        });
-    } else {
-      fetch("/cart/change.js", {
-        method: "POST",
-        headers: { "Content-Type": "application/json", Accept: "application/json" },
-        body: JSON.stringify({ id: keyToDelete, quantity: 0 }),
-      })
-        .then(function (res) { return res.json(); })
-        .then(function () {
-          isDeleting = false;
-          closeModal();
-          location.reload();
-        })
-        .catch(function () {
-          isDeleting = false;
-          closeModal();
-        });
-    }
-  }
-
-  // Event Delegation for trigger clicks
-  document.addEventListener("click", function (evt) {
-    var trigger = evt.target.closest(".js-cart-delete-trigger");
-    if (trigger) {
-      evt.preventDefault();
-      evt.stopPropagation();
-      evt.stopImmediatePropagation();
-      openModal(trigger);
-      return;
-    }
-
-    var cancelBtn = evt.target.closest(".js-cart-delete-cancel");
-    if (cancelBtn) {
-      evt.preventDefault();
-      evt.stopPropagation();
-      evt.stopImmediatePropagation();
-      closeModal();
-      return;
-    }
-
-    var confirmTrigger = evt.target.closest(".js-cart-delete-confirm");
-    if (confirmTrigger) {
-      evt.preventDefault();
-      evt.stopPropagation();
-      evt.stopImmediatePropagation();
-      confirmDelete();
-      return;
-    }
-  }, true);
-
-  // ESC key to close
-  document.addEventListener("keydown", function (evt) {
-    if (evt.key === "Escape" || evt.keyCode === 27) {
-      var els = getModalElements();
-      if (els && els.modal && els.modal.classList.contains("is-active")) {
-        evt.preventDefault();
-        evt.stopPropagation();
-        evt.stopImmediatePropagation();
-        closeModal();
+          .then(function (res) { return res.json(); })
+          .then(function (cart) {
+            isDeleting = false;
+            document.dispatchEvent(new CustomEvent("cart:build"));
+            if (document.body.classList.contains("template-cart")) {
+              location.reload();
+            }
+          })
+          .catch(function () {
+            resetItemState();
+          });
       }
-    }
-  }, true);
+    },
+    true
+  );
 })();
 

@@ -155,11 +155,6 @@
             type="button"
             class="cart__item-delete-btn js-cart-delete-trigger"
             data-key="{{ product.key }}"
-            data-title="{{ product.product.title | escape }}"
-            data-variant="{{ item_variant_display | escape }}"
-            data-image="{{ product | img_url: '200x200' }}"
-            data-price="{{ product.final_price | money }}"
-            data-qty="{{ product.quantity }}"
             aria-label="{{ 'cart.general.remove' | t }}"
             title="{{ 'cart.general.remove' | t }}"
           >
