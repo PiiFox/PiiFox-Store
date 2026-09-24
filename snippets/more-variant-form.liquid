@@ -198,9 +198,11 @@
       let allVariants = document.querySelectorAll('.bundle-product-checkbox');
       for(let i = 0; i < allVariants.length; i++) {
         if(allVariants[i].checked) {
-          const qtyInput = document.getElementById(`Quantity-${allVariants[i].id}`);
+          const item = allVariants[i].closest('.bundle-product-item');
+          const qtyInput = item ? item.querySelector('.js-qty__num') : document.getElementById(`Quantity-${allVariants[i].id}`);
           const quantity = qtyInput ? Math.max(1, Number(qtyInput.value)) : 1;  
-          let selectedVariant = {id: allVariants[i].id, quantity: quantity};
+          const variantId = allVariants[i].dataset.bundleProduct || allVariants[i].id;
+          let selectedVariant = {id: variantId, quantity: quantity};
           appendVariantIds.push(selectedVariant);
         }
       }
@@ -214,34 +216,118 @@
         }
       });
     }
-    function initBundleAutoCheck() {
-      function checkItemCheckbox(target) {
-        if (!target) return;
-        const item = target.closest('.bundle-product-item');
+    function initBundleSelection() {
+      function syncItemState(item, isChecked) {
         if (!item) return;
-        const checkbox = item.querySelector('.bundle-product-checkbox');
-        if (checkbox && !checkbox.disabled && !checkbox.checked) {
-          checkbox.checked = true;
-          checkbox.dispatchEvent(new Event('change', { bubbles: true }));
+        if (isChecked) {
+          item.classList.add('is-selected');
+        } else {
+          item.classList.remove('is-selected');
         }
       }
 
+      function autoCheckItem(target) {
+        if (!target) return;
+        const item = target.closest('.bundle-product-item');
+        if (!item || item.classList.contains('sold-out')) return;
+
+        const checkbox = item.querySelector('.bundle-product-checkbox');
+        if (!checkbox || checkbox.disabled || checkbox.checked) return;
+
+        checkbox.checked = true;
+        syncItemState(item, true);
+        item._clickCount = 0;
+        if (item._clickTimer) clearTimeout(item._clickTimer);
+        checkbox.dispatchEvent(new Event('change', { bubbles: true }));
+      }
+
+      // Initial state sync
+      document.querySelectorAll('.bundle-product-checkbox').forEach(cb => {
+        const item = cb.closest('.bundle-product-item');
+        if (item) {
+          syncItemState(item, cb.checked);
+        }
+      });
+
+      // Click handling on .bundle-product-item:
+      // - 未勾选时：需在卡片方块内（空白、图片、标题、价格）连续点击 3 次（每次间隔不超过 1.5 秒）才打勾
+      // - 已勾选时：只有刚好点击复选框小方块才可以取消打勾
+      // - 数量调节按钮（+ / -）：点击自动打勾
       document.addEventListener('click', function (e) {
-        const btn = e.target.closest('.bundle-product-item .js-qty__adjust');
-        if (btn) {
-          checkItemCheckbox(btn);
+        const item = e.target.closest('.bundle-product-item');
+        if (!item || item.classList.contains('sold-out')) return;
+
+        const checkbox = item.querySelector('.bundle-product-checkbox');
+        if (!checkbox || checkbox.disabled) return;
+
+        // 若点击的是数量调节按钮（+-号），自动打勾，不触发卡片3次点击逻辑
+        const qtyAdjustBtn = e.target.closest('.js-qty__adjust');
+        if (qtyAdjustBtn && item.contains(qtyAdjustBtn)) {
+          autoCheckItem(qtyAdjustBtn);
+          return;
+        }
+
+        // 若点击的是数量调节组件的其他区域（如输入框本身或库存提示），不改变勾选状态
+        if (e.target.closest('.bundle-product-qty') || e.target.closest('.js-qty__wrapper')) {
+          return;
+        }
+
+        const isCheckboxTarget = e.target === checkbox || !!e.target.closest('.bundle-product-checked') || !!e.target.closest('.bundle-product-checkbox');
+
+        // 1. 单击对准左侧复选框：直接打勾或取消打勾
+        if (isCheckboxTarget) {
+          const willBeChecked = !checkbox.checked;
+          checkbox.checked = willBeChecked;
+          syncItemState(item, willBeChecked);
+          item._clickCount = 0;
+          if (item._clickTimer) clearTimeout(item._clickTimer);
+          checkbox.dispatchEvent(new Event('change', { bubbles: true }));
+          return;
+        }
+
+        // 2. 点击卡片方块内其他区域（图片、标题、价格、空白处）
+        const isCurrentlySelected = item.classList.contains('is-selected') || checkbox.checked;
+
+        if (isCurrentlySelected) {
+          // 已勾选时，点击卡片其他区域保持勾选状态，不取消
+          e.preventDefault();
+        } else {
+          // 未勾选时，卡片其他区域需要连续点击 3 次才打勾（每次间隔不超过 1.5 秒）
+          e.preventDefault();
+
+          item._clickCount = (item._clickCount || 0) + 1;
+          if (item._clickTimer) clearTimeout(item._clickTimer);
+
+          if (item._clickCount >= 3) {
+            item._clickCount = 0;
+            checkbox.checked = true;
+            syncItemState(item, true);
+            checkbox.dispatchEvent(new Event('change', { bubbles: true }));
+          } else {
+            item._clickTimer = setTimeout(function () {
+              item._clickCount = 0;
+            }, 1500);
+          }
         }
       });
 
+      // 手动输入数量时（input 事件，如键盘输入 2）自动打勾
       document.addEventListener('input', function (e) {
-        if (e.target && e.target.matches && e.target.matches('.bundle-product-item .js-qty__num')) {
-          checkItemCheckbox(e.target);
+        if (e.target && e.target.closest && e.target.closest('.bundle-product-item .js-qty__num')) {
+          autoCheckItem(e.target);
         }
       });
 
+      // 监听复选框及数量框 change 事件以同步状态
       document.addEventListener('change', function (e) {
-        if (e.target && e.target.matches && e.target.matches('.bundle-product-item .js-qty__num')) {
-          checkItemCheckbox(e.target);
+        if (!e.target) return;
+        if (e.target.classList.contains('bundle-product-checkbox')) {
+          const item = e.target.closest('.bundle-product-item');
+          if (item) {
+            syncItemState(item, e.target.checked);
+          }
+        } else if (e.target.closest && e.target.closest('.bundle-product-item .js-qty__num')) {
+          autoCheckItem(e.target);
         }
       });
     }
@@ -275,7 +361,7 @@
     }
     initBundleTabs();
     initBundleQtySelectors();
-    initBundleAutoCheck();
+    initBundleSelection();
     initAddToCart();
   }
 
