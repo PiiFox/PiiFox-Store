@@ -2013,17 +2013,17 @@ input.js-qty__num:focus {
   display: flex;
 }
 
-/* 4个及以上产品时，展示滚动条并露出第四个 52% */
+/* 4个及以上产品时，展示滚动条并露出第四个 50%（露出三个半） */
 .bundle-product-list:has(.bundle-product-item:nth-child(4)),
 .bundle-product-list.has-scroll {
   overflow-y: auto;
-  max-height: 489px;
+  max-height: 485px;
 }
 
 @media screen and (max-width: 768px) {
   .bundle-product-list:has(.bundle-product-item:nth-child(4)),
   .bundle-product-list.has-scroll {
-    max-height: 413px;
+    max-height: 410px;
   }
 }
 

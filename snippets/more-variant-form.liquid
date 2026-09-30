@@ -164,8 +164,8 @@
             const h2 = item2.offsetHeight;
             const h3 = item3.offsetHeight;
 
-            // 完整露出前3个商品 + 第4个商品露出 52%
-            const maxHeight = paddingTop + h0 + gap + h1 + gap + h2 + gap + (h3 * 0.52);
+            // 完整露出前3个商品 + 第4个商品露出 50%（露出三个半）
+            const maxHeight = paddingTop + h0 + gap + h1 + gap + h2 + gap + (h3 * 0.5);
             list.style.maxHeight = `${Math.round(maxHeight)}px`;
             list.style.overflowY = 'auto';
             list.classList.add('has-scroll');
