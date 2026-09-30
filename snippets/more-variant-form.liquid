@@ -143,6 +143,41 @@
 
 <script>
   function initMoreVariantForm() {
+    function updateBundleListScroll(target) {
+      const lists = target ? [target] : document.querySelectorAll('.bundle-product-list.active');
+      lists.forEach(list => {
+        if (!list) return;
+        const items = list.querySelectorAll('.bundle-product-item');
+        if (items.length >= 4) {
+          const item0 = items[0];
+          const item1 = items[1];
+          const item2 = items[2];
+          const item3 = items[3];
+
+          if (item0 && item1 && item2 && item3) {
+            const style = window.getComputedStyle(list);
+            const gap = parseFloat(style.rowGap || style.gap) || 12;
+            const paddingTop = parseFloat(style.paddingTop) || 0;
+
+            const h0 = item0.offsetHeight;
+            const h1 = item1.offsetHeight;
+            const h2 = item2.offsetHeight;
+            const h3 = item3.offsetHeight;
+
+            // 完整露出前3个商品 + 第4个商品露出 52%
+            const maxHeight = paddingTop + h0 + gap + h1 + gap + h2 + gap + (h3 * 0.52);
+            list.style.maxHeight = `${Math.round(maxHeight)}px`;
+            list.style.overflowY = 'auto';
+            list.classList.add('has-scroll');
+          }
+        } else {
+          list.style.maxHeight = '';
+          list.style.overflowY = '';
+          list.classList.remove('has-scroll');
+        }
+      });
+    }
+
     function initBundleTabs() {
       const bundleTabs = document.querySelectorAll('.bundle-tab-item');
       const bundleLists = document.querySelectorAll('.bundle-product-list');
@@ -153,14 +188,20 @@
         const currentLabel = this.dataset['bundleProductList'];
         bundleLists.forEach(list => list.classList.remove('active'));
         const targetList = document.querySelector(`.bundle-product-list[data-bundle-product-list="${currentLabel}"]`);
-        if(targetList) targetList.classList.add('active');
+        if(targetList) {
+          targetList.classList.add('active');
+          requestAnimationFrame(() => updateBundleListScroll(targetList));
+        }
       }));
 
       const firstTab = document.querySelector('.bundle-tab-item');
       if(firstTab) firstTab.classList.add('active');
 
       const firstList = document.querySelector('.bundle-product-list--1');
-      if(firstList) firstList.classList.add('active');
+      if(firstList) {
+        firstList.classList.add('active');
+        requestAnimationFrame(() => updateBundleListScroll(firstList));
+      }
     }
     function getCurrentVariantId() {
       const urlParams = new URLSearchParams(window.location.search);
@@ -363,6 +404,18 @@
     initBundleQtySelectors();
     initBundleSelection();
     initAddToCart();
+
+    let resizeTimer;
+    window.addEventListener('resize', function () {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(() => {
+        updateBundleListScroll();
+      }, 150);
+    });
+
+    window.addEventListener('load', function () {
+      updateBundleListScroll();
+    });
   }
 
   if (document.readyState === 'loading') {

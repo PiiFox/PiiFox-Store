@@ -2001,11 +2001,49 @@ input.js-qty__num:focus {
   display: none;
   flex-direction: column;
   gap: 12px;
-  padding: 0.5em 0;
+  padding: 4px 6px 6px 2px;
+  box-sizing: border-box;
+  scrollbar-width: thin;
+  scrollbar-color: #c1c1c1 #f5f5f5;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-y: contain;
 }
 .bundle-product-list.active {
   display: flex;
 }
+
+/* 4个及以上产品时，展示滚动条并露出第四个 52% */
+.bundle-product-list:has(.bundle-product-item:nth-child(4)),
+.bundle-product-list.has-scroll {
+  overflow-y: auto;
+  max-height: 489px;
+}
+
+@media screen and (max-width: 768px) {
+  .bundle-product-list:has(.bundle-product-item:nth-child(4)),
+  .bundle-product-list.has-scroll {
+    max-height: 413px;
+  }
+}
+
+/* 滚动条样式美化 */
+.bundle-product-list::-webkit-scrollbar {
+  width: 5px;
+}
+.bundle-product-list::-webkit-scrollbar-track {
+  background: #f5f5f5;
+  border-radius: 4px;
+}
+.bundle-product-list::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
+}
+.bundle-product-list::-webkit-scrollbar-thumb:hover {
+  background: #999;
+}
+
 
 /* 套餐内单个商品项 */
 .bundle-product-item {
