@@ -875,13 +875,15 @@
 >
   {% render 'product-faq-list', product: product %}
 </div>
-<div
-  id="product-download"
-  class="page-width Downloads filter-item"
-  data-snippet="Downloads"
->
-  {% render 'product-downloads-list', product: product %}
-</div>
+{%- if product.metafields.custom.downloads_list != blank -%}
+  <div
+    id="product-download"
+    class="page-width Downloads filter-item"
+    data-snippet="Downloads"
+  >
+    {% render 'product-downloads-list', product: product %}
+  </div>
+{%- endif -%}
 
 {% style %}
   .product-faq-list--wrapper .collapsible-trigger-btn {
