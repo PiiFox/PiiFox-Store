@@ -203,24 +203,6 @@
         "space_around": true
       }
     },
-    "1778720958190e635c": {
-      "type": "apps",
-      "blocks": {
-        "yotpo_product_reviews_reviews_8RBrtE": {
-          "type": "shopify://apps/yotpo-product-reviews/blocks/reviews/eb7dfd7d-db44-4334-bc49-c893b51b36cf",
-          "settings": {
-            "product": "{{product}}"
-          }
-        }
-      },
-      "block_order": [
-        "yotpo_product_reviews_reviews_8RBrtE"
-      ],
-      "settings": {
-        "full_width": false,
-        "space_around": true
-      }
-    },
     "sub": {
       "type": "product-full-width",
       "blocks": {
@@ -265,34 +247,14 @@
         "product_recommendations_heading": "Other Top Rated Products",
         "related_count": 4
       }
-    },
-    "1791536926f8c28a8f": {
-      "type": "apps",
-      "blocks": {
-        "yotpo_product_reviews_reviews_CgrTyW": {
-          "type": "shopify://apps/yotpo-product-reviews/blocks/reviews/eb7dfd7d-db44-4334-bc49-c893b51b36cf",
-          "settings": {
-            "product": "{{product}}"
-          }
-        }
-      },
-      "block_order": [
-        "yotpo_product_reviews_reviews_CgrTyW"
-      ],
-      "settings": {
-        "full_width": false,
-        "space_around": true
-      }
     }
   },
   "order": [
     "main",
     "e070434669baa39d8b0e",
-    "1778720958190e635c",
     "sub",
     "recently-viewed",
     "collection-return",
-    "product-recommendations",
-    "1791536926f8c28a8f"
+    "product-recommendations"
   ]
 }
