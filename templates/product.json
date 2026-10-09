@@ -12,11 +12,6 @@
     "main": {
       "type": "main-product",
       "blocks": {
-        "judge_me_reviews_preview_badge_NCAxDg": {
-          "type": "shopify://apps/judge-me-reviews/blocks/preview_badge/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
-          "disabled": true,
-          "settings": {}
-        },
         "c3cef06d-c80e-4a3d-9711-c1c6298184d4": {
           "type": "text",
           "settings": {
@@ -26,6 +21,12 @@
         "price": {
           "type": "price",
           "settings": {}
+        },
+        "89e95235-70d0-4267-b49f-dd49763f2af7": {
+          "type": "shopify://apps/yotpo-product-reviews/blocks/star-rating/eb7dfd7d-db44-4334-bc49-c893b51b36cf",
+          "settings": {
+            "product": "{{product}}"
+          }
         },
         "separator": {
           "type": "separator",
@@ -146,16 +147,9 @@
           "type": "share",
           "disabled": true,
           "settings": {}
-        },
-        "89e95235-70d0-4267-b49f-dd49763f2af7": {
-          "type": "shopify://apps/yotpo-product-reviews/blocks/star-rating/eb7dfd7d-db44-4334-bc49-c893b51b36cf",
-          "settings": {
-            "product": "{{product}}"
-          }
         }
       },
       "block_order": [
-        "judge_me_reviews_preview_badge_NCAxDg",
         "c3cef06d-c80e-4a3d-9711-c1c6298184d4",
         "price",
         "89e95235-70d0-4267-b49f-dd49763f2af7",
@@ -191,21 +185,36 @@
         "product_video_style": "muted"
       }
     },
-    "1778720958190e635c": {
+    "e070434669baa39d8b0e": {
       "type": "apps",
       "blocks": {
-        "judge_me_reviews_review_widget_Czaxk3": {
-          "type": "shopify://apps/judge-me-reviews/blocks/review_widget/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+        "55b2d604-d4c2-4aaa-923e-5652a99334e7": {
+          "type": "shopify://apps/yotpo-product-reviews/blocks/reviews/eb7dfd7d-db44-4334-bc49-c893b51b36cf",
           "settings": {
-            "review_data": "sample_data",
-            "max_width": 1200,
-            "show_shop_reviews": false,
-            "empty_state": "empty_widget"
+            "product": "{{product}}"
           }
         }
       },
       "block_order": [
-        "judge_me_reviews_review_widget_Czaxk3"
+        "55b2d604-d4c2-4aaa-923e-5652a99334e7"
+      ],
+      "settings": {
+        "full_width": false,
+        "space_around": true
+      }
+    },
+    "1778720958190e635c": {
+      "type": "apps",
+      "blocks": {
+        "yotpo_product_reviews_reviews_8RBrtE": {
+          "type": "shopify://apps/yotpo-product-reviews/blocks/reviews/eb7dfd7d-db44-4334-bc49-c893b51b36cf",
+          "settings": {
+            "product": "{{product}}"
+          }
+        }
+      },
+      "block_order": [
+        "yotpo_product_reviews_reviews_8RBrtE"
       ],
       "settings": {
         "full_width": false,
@@ -260,28 +269,7 @@
     "1791536926f8c28a8f": {
       "type": "apps",
       "blocks": {
-        "judge_me_reviews_review_widget_ByTFPF": {
-          "type": "shopify://apps/judge-me-reviews/blocks/review_widget/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
-          "settings": {
-            "review_data": "sample_data",
-            "max_width": 1200,
-            "show_shop_reviews": false,
-            "empty_state": "empty_widget"
-          }
-        }
-      },
-      "block_order": [
-        "judge_me_reviews_review_widget_ByTFPF"
-      ],
-      "settings": {
-        "full_width": false,
-        "space_around": true
-      }
-    },
-    "e070434669baa39d8b0e": {
-      "type": "apps",
-      "blocks": {
-        "55b2d604-d4c2-4aaa-923e-5652a99334e7": {
+        "yotpo_product_reviews_reviews_CgrTyW": {
           "type": "shopify://apps/yotpo-product-reviews/blocks/reviews/eb7dfd7d-db44-4334-bc49-c893b51b36cf",
           "settings": {
             "product": "{{product}}"
@@ -289,9 +277,12 @@
         }
       },
       "block_order": [
-        "55b2d604-d4c2-4aaa-923e-5652a99334e7"
+        "yotpo_product_reviews_reviews_CgrTyW"
       ],
-      "settings": {}
+      "settings": {
+        "full_width": false,
+        "space_around": true
+      }
     }
   },
   "order": [
