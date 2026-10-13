@@ -24,6 +24,7 @@
         },
         "89e95235-70d0-4267-b49f-dd49763f2af7": {
           "type": "shopify://apps/yotpo-product-reviews/blocks/star-rating/eb7dfd7d-db44-4334-bc49-c893b51b36cf",
+          "disabled": true,
           "settings": {
             "product": "{{product}}"
           }
@@ -198,7 +199,10 @@
       "block_order": [
         "55b2d604-d4c2-4aaa-923e-5652a99334e7"
       ],
-      "settings": {}
+      "settings": {
+        "full_width": false,
+        "space_around": true
+      }
     },
     "sub": {
       "type": "product-full-width",
