@@ -1,0 +1,113 @@
+{% comment %}
+  Setup 1 Keycap Card Item
+  - variant: ProductVariant object (or product)
+  - forloop: Loop state
+  - product: Current main keyboard product
+  - combo_images: Optional array of combo images
+{% endcomment %}
+
+{%- assign item_variant = variant -%}
+{%- if variant.variants -%}
+  {%- assign item_variant = variant.selected_or_first_available_variant | default: variant.variants.first -%}
+{%- endif -%}
+
+{%- assign is_available = item_variant.available -%}
+{%- assign keycap_title = item_variant.product.title -%}
+{%- if item_variant.title != 'Default Title' and item_variant.title != blank -%}
+  {%- assign keycap_title = item_variant.title -%}
+{%- endif -%}
+
+{%- assign card_image = '' -%}
+{%- if item_variant.featured_image -%}
+  {%- assign card_image = item_variant.featured_image | image_url: width: 360 -%}
+{%- elsif item_variant.image -%}
+  {%- assign card_image = item_variant.image | image_url: width: 360 -%}
+{%- elsif item_variant.product.featured_image -%}
+  {%- assign card_image = item_variant.product.featured_image | image_url: width: 360 -%}
+{%- elsif item_variant.product.images.first -%}
+  {%- assign card_image = item_variant.product.images.first | image_url: width: 360 -%}
+{%- endif -%}
+
+{% comment %}
+  Find combo image (keyboard equipped with this keycap)
+  1. Product metafield list: bundle_1_combo_images or bundle_1_images
+  2. Variant or Product metafield: keyboard_combo_image / combo_image / style_card_img
+{% endcomment %}
+{%- assign combo_image_url = '' -%}
+{%- if combo_images and combo_images[forloop.index0] -%}
+  {%- assign combo_image_url = combo_images[forloop.index0] | image_url: width: 1600 -%}
+{%- endif -%}
+
+{%- if combo_image_url == blank -%}
+  {%- assign variant_combo = item_variant.metafields.custom.keyboard_combo_image.value
+    | default: item_variant.metafields.custom.combo_image.value
+    | default: item_variant.product.metafields.custom.keyboard_combo_image.value
+    | default: item_variant.product.metafields.custom.combo_image.value
+    | default: item_variant.product.metafields.custom.style_card_img.value
+  -%}
+  {%- if variant_combo != blank -%}
+    {%- assign combo_image_url = variant_combo | image_url: width: 1600 -%}
+  {%- endif -%}
+{%- endif -%}
+
+<div
+  class="bundle-keycap-card {% if is_available %}available{% else %}sold-out{% endif %}"
+  data-variant-id="{{ item_variant.id }}"
+  data-keycap-title="{{ keycap_title | escape }}"
+  data-product-title="{{ item_variant.product.title | escape }}"
+  data-variant-title="{{ item_variant.title | escape }}"
+  data-keycap-handle="{{ item_variant.product.handle | escape }}"
+  data-keycap-sku="{{ item_variant.sku | escape }}"
+  {% if combo_image_url != blank %}
+    data-combo-image="{{ combo_image_url }}"
+  {% endif %}
+  role="button"
+  tabindex="{% if is_available %}0{% else %}-1{% endif %}"
+  aria-pressed="false"
+  aria-label="{{ keycap_title | escape }} - {{ item_variant.price | money }}"
+>
+  <input
+    type="checkbox"
+    class="bundle-product-checkbox bundle-keycap-checkbox"
+    id="bundle-keycap-{{ item_variant.id }}"
+    data-bundle-product="{{ item_variant.id }}"
+    {% unless is_available %}disabled{% endunless %}
+    tabindex="-1"
+    aria-hidden="true"
+    style="display: none;"
+  >
+
+  <div class="bundle-keycap-card__media">
+    {% if card_image != blank %}
+      <img
+        src="{{ card_image }}"
+        alt="{{ item_variant.product.title | escape }} - {{ item_variant.title | escape }}"
+        loading="lazy"
+        width="200"
+        height="200"
+        draggable="false"
+      >
+    {% else %}
+      <div class="bundle-keycap-card__no-img">No Image</div>
+    {% endif %}
+
+    <div class="bundle-keycap-card__badge" aria-hidden="true">
+      <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M13.5 4.5L6.5 11.5L3 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+
+    {% unless is_available %}
+      <div class="bundle-keycap-card__soldout-tag">Sold Out</div>
+    {% endunless %}
+  </div>
+
+  <div class="bundle-keycap-card__info">
+    <div class="bundle-keycap-card__title" title="{{ keycap_title | escape }}">
+      {{ keycap_title }}
+    </div>
+    <div class="bundle-keycap-card__price">
+      {{ item_variant.price | money }}
+    </div>
+  </div>
+</div>

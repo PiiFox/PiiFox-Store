@@ -1,7 +1,32 @@
 <script>
   $(function () {
-    $('.custom-shopify-buy-btn').click(() => {
-      console.log('click');
+    $('.custom-shopify-buy-btn').click(async function (e) {
+      const appendVariants = typeof window.getBundleAppendVariants === 'function' ? window.getBundleAppendVariants() : [];
+      if (appendVariants && appendVariants.length > 0) {
+        e.preventDefault();
+        e.stopPropagation();
+        const currentVariantId = typeof window.getBundleCurrentVariantId === 'function' ? window.getBundleCurrentVariantId() : null;
+        if (!currentVariantId) return;
+        const mainQtyInput = document.querySelector('.product__quantity input[name="quantity"]') || document.querySelector('input[name="quantity"]');
+        const mainQty = mainQtyInput ? Math.max(1, parseInt(mainQtyInput.value, 10) || 1) : 1;
+        const items = [{ id: currentVariantId, quantity: mainQty }, ...appendVariants];
+
+        const buyBtn = e.currentTarget;
+        buyBtn.disabled = true;
+        buyBtn.classList.add('btn--loading');
+        try {
+          await fetch((window.theme && window.theme.routes && window.theme.routes.cartAdd) || '/cart/add.js', {
+            method: 'POST',
+            body: JSON.stringify({ items: items }),
+            headers: { 'Content-Type': 'application/json', Accept: 'application/json' }
+          });
+          window.location.href = '/checkout';
+        } catch (err) {
+          console.error('Buy Now bundle failed', err);
+          window.location.href = '/checkout';
+        }
+        return;
+      }
       $('.shopify-payment-button button.shopify-payment-button__more-options').click();
     });
   });
@@ -23,8 +48,14 @@
       {% assign bundle_3_variants = product.metafields.custom.bundle_3_variants.value %}
 
       <div class="bundle-product-list bundle-product-list--1" data-bundle-product-list="{{ bundle_list_labels[0] }}">
+        {% assign bundle_1_combo_images = product.metafields.custom.bundle_1_combo_images.value | default: product.metafields.custom.bundle_1_images.value %}
         {% for variant in bundle_1_variants %}
-          {% render 'bundle-variant-item' variant: variant %}
+          {% render 'bundle-keycap-item',
+            variant: variant,
+            forloop: forloop,
+            product: product,
+            combo_images: bundle_1_combo_images
+          %}
         {% endfor %}
       </div>
 
@@ -147,6 +178,7 @@
       const lists = target ? [target] : document.querySelectorAll('.bundle-product-list.active');
       lists.forEach(list => {
         if (!list) return;
+        if (list.classList.contains('bundle-product-list--1')) return;
         const items = list.querySelectorAll('.bundle-product-item');
         if (items.length >= 4) {
           const item0 = items[0];
@@ -239,9 +271,15 @@
       let allVariants = document.querySelectorAll('.bundle-product-checkbox');
       for(let i = 0; i < allVariants.length; i++) {
         if(allVariants[i].checked) {
-          const item = allVariants[i].closest('.bundle-product-item');
+          const item = allVariants[i].closest('.bundle-product-item, .bundle-keycap-card');
           const qtyInput = item ? item.querySelector('.js-qty__num') : document.getElementById(`Quantity-${allVariants[i].id}`);
-          const quantity = qtyInput ? Math.max(1, Number(qtyInput.value)) : 1;  
+          let quantity = 1;
+          if (qtyInput) {
+            quantity = Math.max(1, Number(qtyInput.value));
+          } else {
+            const mainQtyInput = document.querySelector('.product__quantity input[name="quantity"]') || document.querySelector('input[name="quantity"]');
+            quantity = mainQtyInput ? Math.max(1, parseInt(mainQtyInput.value, 10) || 1) : 1;
+          }
           const variantId = allVariants[i].dataset.bundleProduct || allVariants[i].id;
           let selectedVariant = {id: variantId, quantity: quantity};
           appendVariantIds.push(selectedVariant);
@@ -250,6 +288,8 @@
       console.log('appendVariantIds', appendVariantIds);
       return appendVariantIds;
     }
+    window.getBundleAppendVariants = getAppendVariantIds;
+    window.getBundleCurrentVariantId = getCurrentVariantId;
     function initBundleQtySelectors() {
       document.querySelectorAll('.bundle-product-list .js-qty__wrapper').forEach(el => {
         if (!el._qtySelector && window.theme && window.theme.QtySelector) {
@@ -400,9 +440,160 @@
         ajaxCart.MoreProductAddToCart(addBtn, items);
       });
     }
+    function initSetup1KeycapSelection() {
+      const setup1List = document.querySelector('.bundle-product-list--1');
+      if (!setup1List) return;
+
+      const cards = setup1List.querySelectorAll('.bundle-keycap-card');
+      if (!cards.length) return;
+
+      let defaultSlideIndex = 0;
+      const mainSlider = document.querySelector('[data-product-photos]');
+      if (mainSlider) {
+        const activeSlide = mainSlider.querySelector('.product-main-slide.is-selected');
+        if (activeSlide && activeSlide.dataset.index) {
+          defaultSlideIndex = parseInt(activeSlide.dataset.index, 10) || 0;
+        }
+      }
+
+      let previewOverlay = document.querySelector('.bundle-combo-preview');
+      if (!previewOverlay) {
+        const mainPhotos = document.querySelector('.product__main-photos');
+        if (mainPhotos) {
+          previewOverlay = document.createElement('div');
+          previewOverlay.className = 'bundle-combo-preview';
+          previewOverlay.innerHTML = '<div class="bundle-combo-preview-wrap"><img class="bundle-combo-preview-img" src="" alt="Keyboard + Keycap Combo"></div>';
+          mainPhotos.appendChild(previewOverlay);
+        }
+      }
+      const previewImg = previewOverlay ? previewOverlay.querySelector('.bundle-combo-preview-img') : null;
+
+      function findMatchingSlideIndex(card) {
+        const keycapTitle = (card.dataset.keycapTitle || '').toLowerCase().trim();
+        const productTitle = (card.dataset.productTitle || '').toLowerCase().trim();
+        const keycapHandle = (card.dataset.keycapHandle || '').toLowerCase().trim();
+        const keycapSku = (card.dataset.keycapSku || '').toLowerCase().trim();
+        const variantId = (card.dataset.variantId || '').trim();
+
+        const slides = document.querySelectorAll('[data-product-photos] .product-main-slide');
+        for (let i = 0; i < slides.length; i++) {
+          const slide = slides[i];
+          const rawAlt = (slide.dataset.rawAlt || slide.getAttribute('data-raw-alt') || '').toLowerCase();
+          const img = slide.querySelector('img');
+          const imgAlt = ((img && (img.alt || img.getAttribute('data-alt'))) || '').toLowerCase();
+          const altText = (rawAlt + ' ' + imgAlt).trim();
+          if (!altText) continue;
+
+          if (
+            (keycapTitle && altText.includes(keycapTitle)) ||
+            (productTitle && altText.includes(productTitle)) ||
+            (keycapHandle && altText.includes(keycapHandle)) ||
+            (keycapSku && altText.includes(keycapSku)) ||
+            (variantId && altText.includes(variantId)) ||
+            (keycapTitle && altText.includes('#keycap_' + keycapTitle.replace(/[^a-z0-9]+/g, '-'))) ||
+            (keycapTitle && altText.includes('#keycap:' + keycapTitle))
+          ) {
+            const idx = parseInt(slide.dataset.index, 10);
+            return isNaN(idx) ? i : idx;
+          }
+        }
+        return -1;
+      }
+
+      function showKeycapImage(card) {
+        const matchingIndex = findMatchingSlideIndex(card);
+        const comboImageUrl = card.dataset.comboImage;
+
+        if (matchingIndex >= 0) {
+          const thumbLink = document.querySelector(`.product__thumb[data-index="${matchingIndex}"]`);
+          if (thumbLink) {
+            thumbLink.click();
+          } else if (window.Flickity && mainSlider) {
+            const flkty = Flickity.data(mainSlider);
+            if (flkty) flkty.select(matchingIndex);
+          }
+          if (previewOverlay) {
+            previewOverlay.classList.remove('is-visible');
+          }
+          return;
+        }
+
+        if (comboImageUrl && previewOverlay && previewImg) {
+          previewImg.src = comboImageUrl;
+          previewOverlay.classList.add('is-visible');
+          return;
+        }
+
+        if (previewOverlay) {
+          previewOverlay.classList.remove('is-visible');
+        }
+      }
+
+      function restoreDefaultImage() {
+        if (previewOverlay) {
+          previewOverlay.classList.remove('is-visible');
+        }
+        const defaultThumb = document.querySelector(`.product__thumb[data-index="${defaultSlideIndex}"]`);
+        if (defaultThumb) {
+          defaultThumb.click();
+        } else if (window.Flickity && mainSlider) {
+          const flkty = Flickity.data(mainSlider);
+          if (flkty) flkty.select(defaultSlideIndex);
+        }
+      }
+
+      document.querySelectorAll('.product__thumb').forEach(thumb => {
+        thumb.addEventListener('click', () => {
+          if (previewOverlay) previewOverlay.classList.remove('is-visible');
+        });
+      });
+
+      cards.forEach(card => {
+        card.addEventListener('click', function() {
+          if (this.classList.contains('sold-out')) return;
+
+          const checkbox = this.querySelector('.bundle-product-checkbox');
+          const isSelected = this.classList.contains('is-selected');
+
+          if (isSelected) {
+            // 取消勾选当前卡片（支持多选）
+            this.classList.remove('is-selected');
+            this.setAttribute('aria-pressed', 'false');
+            if (checkbox) checkbox.checked = false;
+
+            // 检查是否还有其他选中的键帽
+            const remainingSelected = setup1List.querySelectorAll('.bundle-keycap-card.is-selected');
+            if (remainingSelected.length > 0) {
+              // 显示最新剩余选中键帽的搭配图
+              showKeycapImage(remainingSelected[remainingSelected.length - 1]);
+            } else {
+              // 没有选中的键帽，还原默认主图
+              restoreDefaultImage();
+            }
+          } else {
+            // 勾选当前卡片（不影响其他卡片的勾选，支持多选）
+            this.classList.add('is-selected');
+            this.setAttribute('aria-pressed', 'true');
+            if (checkbox) checkbox.checked = true;
+
+            // 左侧切换为当前点击键帽的搭配图
+            showKeycapImage(this);
+          }
+        });
+
+        card.addEventListener('keydown', function(e) {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            this.click();
+          }
+        });
+      });
+    }
+
     initBundleTabs();
     initBundleQtySelectors();
     initBundleSelection();
+    initSetup1KeycapSelection();
     initAddToCart();
 
     let resizeTimer;

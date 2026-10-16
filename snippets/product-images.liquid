@@ -43,6 +43,12 @@
           {%- endfor -%}
         </div>
 
+        <div class="bundle-combo-preview" id="BundleComboPreview-{{ section_id }}" style="display: none;" aria-hidden="true">
+          <div class="bundle-combo-preview-wrap">
+            <img class="bundle-combo-preview-img" src="" alt="Keyboard + Keycap Combo">
+          </div>
+        </div>
+
         {%- if first_3d_model -%}
           <button
             aria-label="{{ 'products.product.view_in_space_label' | t }}"
@@ -88,6 +94,7 @@
               -%}
               <div class="product__thumb-item"
                 data-index="{{ forloop.index0 }}"
+                data-alt="{{ media.alt | escape }}"
                 {% if image_set %}
                   data-set-name="{{image_set_group}}"
                   data-group="{{image_set_full}}"
