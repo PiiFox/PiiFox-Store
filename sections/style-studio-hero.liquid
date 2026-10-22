@@ -1,0 +1,186 @@
+{%- assign hero_background = section.settings.background_image -%}
+{%- assign hero_mobile_background = section.settings.mobile_background_image -%}
+
+<section
+  class="style-studio-hero style-studio-hero-{{ section.id }}"
+>
+  <div class="style-studio-hero__content">
+    <h1 id="style-studio-hero-title-{{ section.id }}" class="style-studio-hero__title">
+      {{ section.settings.title | default: 'STATE YOUR BOARDS' | escape }}
+    </h1>
+
+    <p class="style-studio-hero__subtitle">
+      {{ section.settings.subtitle | default: 'We keep a steady release schedule so you can always find new keycap styles to choose from.' | escape }}
+    </p>
+
+    <div class="style-studio-hero__callout">
+      <div class="style-studio-hero__callout-highlight">
+        <span
+          class="style-studio-hero__calendar"
+          aria-hidden="true"
+          style="--style-studio-calendar-icon: url('{{ 'style-studio-calendar.svg' | asset_url }}');"
+        ></span>
+        <strong>New styles<br>every month</strong>
+      </div>
+
+      <span class="style-studio-hero__divider" aria-hidden="true"></span>
+
+      <p class="style-studio-hero__callout-copy">
+        Fresh keycap collections and<br>the latest design themes to explore.
+      </p>
+    </div>
+  </div>
+</section>
+
+{% style %}
+  .style-studio-hero-{{ section.id }} {
+    --style-studio-green: #286633;
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1916 / 821;
+    overflow: hidden;
+    color: #111;
+    background-color: #fff;
+    background-image: url('https://cdn.shopify.com/s/files/1/1001/2383/6697/files/whiteboard_keycaps_only.png?v=1784860312');
+    background-position: center top;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+
+  {% if hero_background != blank %}
+    .style-studio-hero-{{ section.id }} {
+      background-image: url('{{ hero_background | image_url: width: 2400 }}');
+    }
+  {% endif %}
+
+  {% if hero_mobile_background != blank %}
+    @media screen and (max-width: 769px) {
+      .style-studio-hero-{{ section.id }} {
+        background-image: url('{{ hero_mobile_background | image_url: width: 1600 }}');
+      }
+    }
+  {% endif %}
+
+  .style-studio-hero-{{ section.id }} .style-studio-hero__content {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    pointer-events: none;
+  }
+
+  .style-studio-hero-{{ section.id }} .style-studio-hero__title {
+    margin: 4% 0 0;
+    color: #111;
+    font-size: 11vw;
+    font-weight: bold;
+    line-height: 0.92;
+    letter-spacing: 0.012em;
+    text-align: center;
+    text-transform: uppercase;
+    white-space: nowrap;
+    transform: scaleX(0.7);
+  }
+
+  .style-studio-hero-{{ section.id }} .style-studio-hero__subtitle {
+    margin: 2% 0 0;
+    color: #111;
+    font-size: 1.6vw;
+    line-height: 1.25;
+    text-align: center;
+    max-width: 80%;
+  }
+
+  .style-studio-hero-{{ section.id }} .style-studio-hero__callout {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 46%;
+    margin-top: 3%;
+    padding: 0.7% 2.6%;
+    box-sizing: border-box;
+    border: 1px solid var(--style-studio-green);
+    border-radius: 999px;
+    color: #111;
+    pointer-events: auto;
+  }
+
+  .style-studio-hero-{{ section.id }} .style-studio-hero__callout-highlight {
+    display: flex;
+    flex: 0 0 auto;
+    align-items: center;
+    gap: 1.1vw;
+    color: var(--style-studio-green);
+  }
+
+  .style-studio-hero-{{ section.id }} .style-studio-hero__calendar {
+    display: block;
+    width: 3.7vw;
+    height: 3.7vw;
+    max-width: 4.4em;
+    max-height: 4.4em;
+    background-color: currentColor;
+    -webkit-mask: var(--style-studio-calendar-icon) center / contain no-repeat;
+    mask: var(--style-studio-calendar-icon) center / contain no-repeat;
+  }
+
+  .style-studio-hero-{{ section.id }} .style-studio-hero__callout-highlight strong {
+    display: inline-block;
+    padding: 0.2em 0.5em;
+    border-radius: 0.25em;
+    background: var(--style-studio-green);
+    color: #fff;
+    font-size: 1.7vw;
+    line-height: 1.08;
+    white-space: nowrap;
+  }
+
+  .style-studio-hero-{{ section.id }} .style-studio-hero__divider {
+    align-self: stretch;
+    width: 3px;
+    margin: 0 2.1vw;
+    background: var(--style-studio-green);
+  }
+
+  .style-studio-hero-{{ section.id }} .style-studio-hero__callout-copy {
+    flex: 0 1 auto;
+    margin: 0;
+    font-size: 1.2vw;
+    line-height: 1.25;
+    white-space: nowrap;
+  }
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "Style Studio Hero",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "Background image",
+      "info": "Defaults to the keycap-only artwork used in the reference design."
+    },
+    {
+      "type": "image_picker",
+      "id": "mobile_background_image",
+      "label": "Mobile background image",
+      "info": "Optional image used on screens up to 769px wide."
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "STATE YOUR BOARDS"
+    },
+    {
+      "type": "textarea",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "We keep a steady release schedule so you can always find new keycap styles to choose from."
+    }
+  ]
+}
+{% endschema %}

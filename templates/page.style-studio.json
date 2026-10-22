@@ -1,0 +1,329 @@
+{
+  "sections": {
+    "hero": {
+      "type": "style-studio-hero"
+    },
+    "themes": {
+      "type": "style-studio-themes",
+      "blocks": {
+        "theme-card-1": {
+          "type": "theme_card",
+          "settings": {
+            "number": "01",
+            "title": "Match Your Setup",
+            "subtitle": "Refresh your desk with colors that fit your space.",
+            "background_color": "#eff9d6",
+            "icon_color": "#042106"
+          }
+        },
+        "theme-card-2": {
+          "type": "theme_card",
+          "settings": {
+            "number": "02",
+            "title": "Tell Your Story",
+            "subtitle": "Choose a themed keycap set that shows your personality.",
+            "background_color": "#ffe8c2",
+            "icon_color": "#762e02"
+          }
+        },
+        "theme-card-3": {
+          "type": "theme_card",
+          "settings": {
+            "number": "03",
+            "title": "Change the Vibe",
+            "subtitle": "Switch keycaps when your workspace needs a new feeling.",
+            "background_color": "#f4ddff",
+            "icon_color": "#4e1573"
+          }
+        }
+      },
+      "block_order": [
+        "theme-card-1",
+        "theme-card-2",
+        "theme-card-3"
+      ]
+    },
+    "board_showcase": {
+      "type": "style-studio-board-showcase",
+      "blocks": {
+        "board-default": {
+          "type": "theme",
+          "settings": {
+            "content_title": "Clean & Minimal",
+            "content_subtitle": "Simple. Calm. Focused."
+          }
+        }
+      },
+      "block_order": [
+        "board-default"
+      ]
+    },
+    "theme_grid": {
+      "type": "style-studio-theme-grid",
+      "blocks": {
+        "theme-nature-1": {
+          "type": "theme_card",
+          "settings": {
+            "title": "Nature & Soft",
+            "title_color": "#107a44",
+            "subtitle": "Calm tones inspired by nature.",
+            "subtitle_color": "#121212",
+            "description": "Soft greens, warm neutrals, and gentle contrast for a relaxed desk setup.",
+            "description_color": "#666666",
+            "button_label": "Explore Theme",
+            "button_text_color": "#107a44",
+            "highlight_color": "#f4efe6"
+          }
+        },
+        "theme-cute-1": {
+          "type": "theme_card",
+          "settings": {
+            "title": "Cute & Colorful",
+            "title_color": "#ef5da8",
+            "subtitle": "Bright, cheerful colors that spark joy.",
+            "subtitle_color": "#121212",
+            "description": "Candy colors and lively legends made for cheerful desk builds.",
+            "description_color": "#666666",
+            "button_label": "Explore Theme",
+            "button_text_color": "#ef5da8",
+            "highlight_color": "#f4efe6"
+          }
+        },
+        "theme-retro-1": {
+          "type": "theme_card",
+          "settings": {
+            "title": "Retro & Playful",
+            "title_color": "#b45309",
+            "subtitle": "Nostalgia with Character",
+            "subtitle_color": "#121212",
+            "description": "Classic vibes, pixel art, and timeless colors that bring back the good old days.",
+            "description_color": "#666666",
+            "button_label": "Explore Theme",
+            "button_text_color": "#b45309",
+            "highlight_color": "#f4efe6"
+          }
+        },
+        "theme-art-1": {
+          "type": "theme_card",
+          "settings": {
+            "title": "Art & Culture",
+            "title_color": "#7c3aed",
+            "subtitle": "Inspired by art, history and expression.",
+            "subtitle_color": "#121212",
+            "description": "Graphic palettes and expressive details for a board with personality.",
+            "description_color": "#666666",
+            "button_label": "Explore Theme",
+            "button_text_color": "#7c3aed",
+            "highlight_color": "#f4efe6"
+          }
+        },
+        "theme-fun-1": {
+          "type": "theme_card",
+          "settings": {
+            "title": "Fun & Unique",
+            "title_color": "#0f766e",
+            "subtitle": "Quirky, bold, and made to stand out.",
+            "subtitle_color": "#121212",
+            "description": "Unexpected colors and playful compositions for a memorable setup.",
+            "description_color": "#666666",
+            "button_label": "Explore Theme",
+            "button_text_color": "#0f766e",
+            "highlight_color": "#f4efe6"
+          }
+        },
+        "style-cassette": {
+          "type": "style_card",
+          "settings": {
+            "title": "Cassette",
+            "button_label": "View Style"
+          }
+        },
+        "style-gameboy": {
+          "type": "style_card",
+          "settings": {
+            "title": "Gameboy89",
+            "button_label": "View Style"
+          }
+        },
+        "style-pokejo": {
+          "type": "style_card",
+          "settings": {
+            "title": "Pokejo",
+            "button_label": "View Style"
+          }
+        },
+        "style-time": {
+          "type": "style_card",
+          "settings": {
+            "title": "Time",
+            "button_label": "View Style"
+          }
+        },
+        "style-arcade": {
+          "type": "style_card",
+          "settings": {
+            "title": "Arcade Night",
+            "button_label": "View Style"
+          }
+        },
+        "style-dashboard": {
+          "type": "style_card",
+          "settings": {
+            "title": "Dashboard Blue",
+            "button_label": "View Style"
+          }
+        },
+        "style-retro": {
+          "type": "style_card",
+          "settings": {
+            "title": "Retro Type",
+            "button_label": "View Style"
+          }
+        },
+        "style-neon": {
+          "type": "style_card",
+          "settings": {
+            "title": "Neon",
+            "button_label": "View Style"
+          }
+        },
+        "style-minimal": {
+          "type": "style_card",
+          "settings": {
+            "title": "Minimal",
+            "button_label": "View Style"
+          }
+        },
+        "style-vintage": {
+          "type": "style_card",
+          "settings": {
+            "title": "Vintage",
+            "button_label": "View Style"
+          }
+        }
+      },
+      "block_order": [
+        "theme-nature-1",
+        "theme-cute-1",
+        "theme-retro-1",
+        "theme-art-1",
+        "theme-fun-1",
+        "theme-nature-2",
+        "theme-cute-2",
+        "theme-retro-2",
+        "theme-art-2",
+        "theme-fun-2",
+        "style-cassette",
+        "style-gameboy",
+        "style-pokejo",
+        "style-time",
+        "style-arcade",
+        "style-dashboard",
+        "style-retro",
+        "style-neon",
+        "style-minimal",
+        "style-vintage"
+      ]
+    },
+    "service": {
+      "type": "style-studio-service"
+    },
+    "community": {
+      "type": "style-studio-community",
+      "blocks": {
+        "community-default-1": {
+          "type": "image",
+          "settings": {
+            "alt": "Community setup"
+          }
+        },
+        "community-default-2": {
+          "type": "image",
+          "settings": {
+            "alt": "Community setup"
+          }
+        },
+        "community-default-3": {
+          "type": "image",
+          "settings": {
+            "alt": "Community setup"
+          }
+        },
+        "community-default-4": {
+          "type": "image",
+          "settings": {
+            "alt": "Community setup"
+          }
+        },
+        "community-default-5": {
+          "type": "image",
+          "settings": {
+            "alt": "Community setup"
+          }
+        },
+        "community-default-6": {
+          "type": "image",
+          "settings": {
+            "alt": "Community setup"
+          }
+        },
+        "community-default-7": {
+          "type": "image",
+          "settings": {
+            "alt": "Community setup"
+          }
+        },
+        "community-default-8": {
+          "type": "image",
+          "settings": {
+            "alt": "Community setup"
+          }
+        }
+      },
+      "block_order": [
+        "community-default-1",
+        "community-default-2",
+        "community-default-3",
+        "community-default-4",
+        "community-default-5",
+        "community-default-6",
+        "community-default-7",
+        "community-default-8"
+      ]
+    },
+    "explore": {
+      "type": "style-studio-explore",
+      "blocks": {
+        "shop-keycaps": {
+          "type": "button",
+          "settings": {
+            "label": "Shop Keycaps",
+            "background_color": "#214d0d",
+            "text_color": "#ffffff"
+          }
+        },
+        "explore-keyboards": {
+          "type": "button",
+          "settings": {
+            "label": "Explore Keyboards",
+            "background_color": "#ffffff",
+            "text_color": "#111111"
+          }
+        }
+      },
+      "block_order": [
+        "shop-keycaps",
+        "explore-keyboards"
+      ]
+    }
+  },
+  "order": [
+    "hero",
+    "themes",
+    "board_showcase",
+    "theme_grid",
+    "service",
+    "community",
+    "explore"
+  ]
+}
