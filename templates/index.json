@@ -295,63 +295,6 @@
         "title": "Discover What's Popular on PIIFOX"
       }
     },
-    "video_carousel_home": {
-      "type": "video-carousel",
-      "blocks": {
-        "video_1": {
-          "type": "video_card",
-          "settings": {
-            "title": "PIIFOX VEXRO Haze68",
-            "video_url": "https://www.youtube.com/shorts/YmPvzQK0_ek"
-          }
-        },
-        "video_2": {
-          "type": "video_card",
-          "settings": {
-            "title": "PIIFOX LUNA Grid98 Keyboard Review",
-            "video_url": "https://www.youtube.com/watch?v=vd3a0RwUWOY"
-          }
-        },
-        "video_3": {
-          "type": "video_card",
-          "settings": {
-            "title": "Unboxing the PiiFox Defender 68",
-            "video_url": "https://www.youtube.com/shorts/VrpkHxgZ3aM"
-          }
-        },
-        "video_4": {
-          "type": "video_card",
-          "settings": {
-            "title": "PIIFOX LUNA Grid98 (Screen Edition)",
-            "video_url": "https://www.youtube.com/shorts/aOyGh92vOcI"
-          }
-        },
-        "video_5": {
-          "type": "video_card",
-          "settings": {
-            "title": "PIIFOX FORX Final75 HE",
-            "video_url": "https://www.youtube.com/shorts/CbCfIc0Lv9o"
-          }
-        }
-      },
-      "block_order": [
-        "video_1",
-        "video_2",
-        "video_3",
-        "video_4",
-        "video_5"
-      ],
-      "name": "Video Carousel Action",
-      "settings": {
-        "title": "Watch PIIFOX in Action",
-        "subheading": "Real typing tests, unboxings, and setup inspiration.",
-        "heading_size": "large",
-        "bg_color": "#ffffff",
-        "text_color": "#111111",
-        "padding_top": 48,
-        "padding_bottom": 48
-      }
-    },
     "main_collection_list_tAJGQJ": {
       "type": "main-collection-list",
       "blocks": {
@@ -631,6 +574,87 @@
       "name": "About Us Section",
       "settings": {
         "about_us_title": ""
+      }
+    },
+    "video_carousel_home": {
+      "type": "video-carousel",
+      "blocks": {
+        "video_4": {
+          "type": "video_card",
+          "settings": {
+            "title": "PIIFOX Defender68 HE",
+            "video_url": "https://www.youtube.com/shorts/gcrsJnRckVk"
+          }
+        },
+        "video_1": {
+          "type": "video_card",
+          "settings": {
+            "title": "PIIFOX VEXRO Haze68",
+            "video_url": "https://www.youtube.com/shorts/YmPvzQK0_ek"
+          }
+        },
+        "video_card_mWJQGU": {
+          "type": "video_card",
+          "settings": {
+            "title": "PIIFOX LUNA MUSE 7PRO",
+            "video_url": "https://www.youtube.com/shorts/vpE0kQtrRw8"
+          }
+        },
+        "video_card_3LLgwB": {
+          "type": "video_card",
+          "settings": {
+            "title": "The Most OVERKILL Keyboard Ever!",
+            "video_url": "https://www.youtube.com/shorts/T-Cdc8_YVlk"
+          }
+        },
+        "video_card_pQTkmE": {
+          "type": "video_card",
+          "settings": {
+            "title": "Back to school vibes keycaps! 📝",
+            "video_url": "https://www.youtube.com/shorts/-IKfGAQdtDU"
+          }
+        },
+        "video_2": {
+          "type": "video_card",
+          "settings": {
+            "title": "PIIFOX LUNA Grid98 Keyboard Review",
+            "video_url": "https://www.youtube.com/shorts/4IDG0aq6obY"
+          }
+        },
+        "video_3": {
+          "type": "video_card",
+          "settings": {
+            "title": "Unboxing the PIIFOX Defender 68",
+            "video_url": "https://www.youtube.com/shorts/9PTVbSDxG0s"
+          }
+        },
+        "video_5": {
+          "type": "video_card",
+          "settings": {
+            "title": "PIIFOX FORX Final75 HE",
+            "video_url": "https://www.youtube.com/shorts/CbCfIc0Lv9o"
+          }
+        }
+      },
+      "block_order": [
+        "video_4",
+        "video_1",
+        "video_card_mWJQGU",
+        "video_card_3LLgwB",
+        "video_card_pQTkmE",
+        "video_2",
+        "video_3",
+        "video_5"
+      ],
+      "name": "Video Carousel Action",
+      "settings": {
+        "title": "Watch PIIFOX in Action",
+        "subheading": "Real typing tests, unboxings, and setup inspiration.",
+        "heading_size": "large",
+        "bg_color": "#ffffff",
+        "text_color": "#111111",
+        "padding_top": 36,
+        "padding_bottom": 36
       }
     },
     "joinus_section_YB8Mm3": {
@@ -951,11 +975,11 @@
     "23e7f471-8853-4933-b850-986da236297a",
     "col2_txt_section_RFrVGf",
     "collection_list_LPzqx3",
-    "video_carousel_home",
     "main_collection_list_tAJGQJ",
     "style_studio_theme_grid_home",
     "single_page_width_banner_ihTf8b",
     "about_us_section_nGTcfQ",
+    "video_carousel_home",
     "joinus_section_YB8Mm3",
     "policy_list_section_pP8Ewa",
     "as_seen_on_section_VfrbVB",
