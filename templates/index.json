@@ -298,6 +298,13 @@
     "video_carousel_home": {
       "type": "video-carousel",
       "blocks": {
+        "video_card_pQTkmE": {
+          "type": "video_card",
+          "settings": {
+            "title": "Back to school vibes keycaps! 📝",
+            "video_url": "https://www.youtube.com/shorts/-IKfGAQdtDU"
+          }
+        },
         "video_card_mWJQGU": {
           "type": "video_card",
           "settings": {
@@ -349,6 +356,7 @@
         }
       },
       "block_order": [
+        "video_card_pQTkmE",
         "video_card_mWJQGU",
         "video_1",
         "video_4",
@@ -357,7 +365,6 @@
         "video_3",
         "video_5"
       ],
-      "disabled": true,
       "name": "Video Carousel Action",
       "settings": {
         "title": "Watch PIIFOX in Action",
