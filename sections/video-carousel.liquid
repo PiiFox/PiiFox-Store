@@ -504,14 +504,18 @@
             <div class="video-carousel__media-wrap">
               {%- if block.settings.custom_cover != blank -%}
                 {%- assign cover_val = block.settings.custom_cover -%}
-                {%- if cover_val contains '.png' or cover_val contains '.jpg' or cover_val contains '.webp' -%}
-                  {%- assign cover_src = cover_val | asset_url -%}
+                {%- assign cover_str = cover_val | append: '' -%}
+                {%- if cover_str contains 'http://' or cover_str contains 'https://' or cover_str contains '//' -%}
+                  {%- assign cover_src = cover_val -%}
+                  {%- assign cover_srcset = '' -%}
                 {%- else -%}
                   {%- assign cover_src = cover_val | image_url: width: 600 -%}
+                  {%- capture cover_srcset -%}{{ cover_val | image_url: width: 300 }} 300w, {{ cover_val | image_url: width: 600 }} 600w, {{ cover_val | image_url: width: 800 }} 800w{%- endcapture -%}
                 {%- endif -%}
                 <img
                   src="{{ cover_src }}"
-                  alt="{{ block.settings.title | escape }}"
+                  {% if cover_srcset != blank %}srcset="{{ cover_srcset }}" sizes="(max-width: 768px) 270px, 270px"{% endif %}
+                  alt="{{ block.settings.title | default: 'Video Cover' | escape }}"
                   loading="lazy"
                   decoding="async"
                   width="600"
@@ -564,7 +568,7 @@
                 <a
                   {% if target_link != blank %}href="{{ target_link }}" target="_blank" rel="noopener noreferrer"{% endif %}
                   class="video-carousel__card-title custom-txt-semibold"
-                  title="Watch on YouTube"
+                  title="{% if platform == 'tiktok' %}Watch on TikTok{% elsif platform == 'instagram' %}Watch on Instagram{% elsif platform == 'youtube' %}Watch on YouTube{% else %}Watch video{% endif %}"
                 >
                   {{ block.settings.title }}
                 </a>
