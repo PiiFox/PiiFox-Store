@@ -276,7 +276,7 @@
               "show_newsletter": false,
               "foot_logo": "shopify://shop_images/logo-1.webp",
               "title": "Where Performance Meets Personality.",
-              "text": "<p>Built for the way you work, play, and make your setup yours.</p><p>Support: <a href=\"mailto:service@piifox.com\">service@piifox.com</a></p><p><span>Call &amp; SMS: +852 9572 2944&nbsp;&nbsp;Mon-Fri, 9AM-6PM (PDT)</span></p><p>Business Hours: Mon - Sat : 8AM-7PM (PDT)</p>",
+              "text": "<p>Built for the way you work, play, and make your setup yours.</p><p>Support: <a href=\"mailto:service@piifox.com\">service@piifox.com</a></p><p>Call & SMS: +852-9572-2944&nbsp;&nbsp;Mon-Fri, 9AM-6PM (PDT)</p><p>Business Hours: Mon - Sat : 8AM-7PM (PDT)</p>",
               "container_width": 25
             }
           },
@@ -667,11 +667,6 @@
     },
     "content_for_index": [],
     "blocks": {
-      "14060646107696862457": {
-        "type": "shopify://apps/judge-me-reviews/blocks/judgeme_core/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
-        "disabled": false,
-        "settings": {}
-      },
       "10008203421340698720": {
         "type": "shopify://apps/g-translate-shop-translator/blocks/dropdown/408a74ac-f92d-43cf-a1b1-a044341e66bd",
         "disabled": true,
