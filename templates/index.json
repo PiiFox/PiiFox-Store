@@ -579,6 +579,24 @@
     "video_carousel_home": {
       "type": "video-carousel",
       "blocks": {
+        "video_card_K9pz4B": {
+          "type": "video_card",
+          "disabled": true,
+          "settings": {
+            "title": "tiktok test",
+            "video_url": "https://www.tiktok.com/@hi.kimchiii/video/7685411600781593886?q=piifox&t=1792747764687",
+            "custom_cover": "shopify://shop_images/20261023-175131.jpg"
+          }
+        },
+        "video_card_iJBKGc": {
+          "type": "video_card",
+          "disabled": true,
+          "settings": {
+            "title": "instagram test",
+            "video_url": "https://www.instagram.com/p/DerlI6oM3pN/",
+            "custom_cover": "shopify://shop_images/20261023-175131.jpg"
+          }
+        },
         "video_4": {
           "type": "video_card",
           "settings": {
@@ -637,6 +655,8 @@
         }
       },
       "block_order": [
+        "video_card_K9pz4B",
+        "video_card_iJBKGc",
         "video_4",
         "video_1",
         "video_card_mWJQGU",
