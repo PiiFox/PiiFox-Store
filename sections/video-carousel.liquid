@@ -8,10 +8,14 @@
 {%- endcomment -%}
 
 {%- style -%}
+  .index-section--videoCarousel {
+    margin: 0 !important;
+  }
+
   .video-carousel-section-{{ section.id }} {
     background-color: {{ section.settings.bg_color | default: '#ffffff' }};
-    padding-top: {{ section.settings.padding_top | default: 40 }}px;
-    padding-bottom: {{ section.settings.padding_bottom | default: 40 }}px;
+    padding-top: {% if section.settings.padding_top != blank %}{{ section.settings.padding_top }}{% else %}40{% endif %}px;
+    padding-bottom: {% if section.settings.padding_bottom != blank %}{{ section.settings.padding_bottom }}{% else %}40{% endif %}px;
     overflow: hidden;
     position: relative;
   }
@@ -361,6 +365,11 @@
 
   /* Responsive Adjustments */
   @media screen and (max-width: 768px) {
+    .video-carousel-section-{{ section.id }} {
+      padding-top: {% if section.settings.padding_top != blank %}{% if section.settings.padding_top > 20 %}20{% else %}{{ section.settings.padding_top }}{% endif %}{% else %}20{% endif %}px;
+      padding-bottom: {% if section.settings.padding_bottom != blank %}{% if section.settings.padding_bottom > 28 %}28{% else %}{{ section.settings.padding_bottom }}{% endif %}{% else %}28{% endif %}px;
+    }
+
     .video-carousel-section-{{ section.id }} .video-carousel__title {
       font-size: 1.65rem;
     }
