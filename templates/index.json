@@ -305,6 +305,13 @@
             "video_url": "https://www.youtube.com/shorts/YmPvzQK0_ek"
           }
         },
+        "video_4": {
+          "type": "video_card",
+          "settings": {
+            "title": "PIIFOX Defender68 HE",
+            "video_url": "https://www.youtube.com/shorts/gcrsJnRckVk"
+          }
+        },
         "video_2": {
           "type": "video_card",
           "settings": {
@@ -315,15 +322,8 @@
         "video_3": {
           "type": "video_card",
           "settings": {
-            "title": "Unboxing the PiiFox Defender 68",
-            "video_url": "https://www.youtube.com/shorts/VrpkHxgZ3aM"
-          }
-        },
-        "video_4": {
-          "type": "video_card",
-          "settings": {
-            "title": "PIIFOX LUNA Grid98 (Screen Edition)",
-            "video_url": "https://www.youtube.com/shorts/aOyGh92vOcI"
+            "title": "Unboxing the PIIFOX Defender 68",
+            "video_url": "https://www.youtube.com/shorts/9PTVbSDxG0s"
           }
         },
         "video_5": {
@@ -336,12 +336,11 @@
       },
       "block_order": [
         "video_1",
+        "video_4",
         "video_2",
         "video_3",
-        "video_4",
         "video_5"
       ],
-      "disabled": true,
       "name": "Video Carousel Action",
       "settings": {
         "title": "Watch PIIFOX in Action",
