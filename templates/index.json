@@ -614,11 +614,11 @@
             "video_url": "https://www.youtube.com/shorts/-IKfGAQdtDU"
           }
         },
-        "video_2": {
+        "video_5": {
           "type": "video_card",
           "settings": {
-            "title": "PIIFOX LUNA Grid98 Keyboard Review",
-            "video_url": "https://www.youtube.com/shorts/4IDG0aq6obY"
+            "title": "PIIFOX FORX Final75 HE",
+            "video_url": "https://www.youtube.com/shorts/CbCfIc0Lv9o"
           }
         },
         "video_3": {
@@ -628,11 +628,11 @@
             "video_url": "https://www.youtube.com/shorts/9PTVbSDxG0s"
           }
         },
-        "video_5": {
+        "video_2": {
           "type": "video_card",
           "settings": {
-            "title": "PIIFOX FORX Final75 HE",
-            "video_url": "https://www.youtube.com/shorts/CbCfIc0Lv9o"
+            "title": "PIIFOX LUNA Grid98 Keyboard Review",
+            "video_url": "https://www.youtube.com/shorts/4IDG0aq6obY"
           }
         }
       },
@@ -642,9 +642,9 @@
         "video_card_mWJQGU",
         "video_card_3LLgwB",
         "video_card_pQTkmE",
-        "video_2",
+        "video_5",
         "video_3",
-        "video_5"
+        "video_2"
       ],
       "name": "Video Carousel Action",
       "settings": {
