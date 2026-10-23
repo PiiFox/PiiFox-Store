@@ -1,0 +1,783 @@
+{%- comment -%}
+  Video Action Carousel Section
+  - Responsive horizontal card carousel
+  - High performance facade pattern (zero YouTube iframes on initial load)
+  - Automatic YouTube cover extraction (with custom image override)
+  - Bottom play button triggers video modal (landscape or vertical shorts)
+  - Card title clicks directly through to YouTube
+{%- endcomment -%}
+
+{%- style -%}
+  .video-carousel-section-{{ section.id }} {
+    background-color: {{ section.settings.bg_color | default: '#ffffff' }};
+    padding-top: {{ section.settings.padding_top | default: 40 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | default: 40 }}px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .video-carousel-section-{{ section.id }} .video-carousel__header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin-bottom: 24px;
+    gap: 16px;
+  }
+
+  .video-carousel-section-{{ section.id }} .video-carousel__title {
+    font-size: {% if section.settings.heading_size == 'large' %}2.5rem{% else %}2rem{% endif %};
+    line-height: 1.2;
+    color: {{ section.settings.text_color | default: '#111111' }};
+    margin: 0;
+    letter-spacing: -0.02em;
+  }
+
+  .video-carousel-section-{{ section.id }} .video-carousel__subheading {
+    font-size: 1rem;
+    color: #666666;
+    margin: 8px 0 0 0;
+  }
+
+  .video-carousel-section-{{ section.id }} .video-carousel__nav-arrows {
+    display: flex;
+    gap: 10px;
+  }
+
+  .video-carousel-section-{{ section.id }} .video-carousel__arrow {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    border: 1px solid #e0e0e0;
+    background: #ffffff;
+    color: #111111;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    padding: 0;
+  }
+
+  .video-carousel-section-{{ section.id }} .video-carousel__arrow:hover:not(:disabled) {
+    background: #111111;
+    color: #ffffff;
+    border-color: #111111;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  }
+
+  .video-carousel-section-{{ section.id }} .video-carousel__arrow:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+  }
+
+  /* Carousel Track */
+  .video-carousel-section-{{ section.id }} .video-carousel__track-wrap {
+    position: relative;
+    margin: 0 -10px;
+    padding: 0 10px;
+  }
+
+  .video-carousel-section-{{ section.id }} .video-carousel__track {
+    display: flex;
+    gap: 18px;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
+    padding: 8px 4px 20px 4px;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    cursor: grab;
+    user-select: none;
+  }
+
+  .video-carousel-section-{{ section.id }} .video-carousel__track.is-dragging {
+    cursor: grabbing;
+    scroll-behavior: auto;
+    scroll-snap-type: none;
+  }
+
+  .video-carousel-section-{{ section.id }} .video-carousel__track::-webkit-scrollbar {
+    display: none;
+    width: 0;
+    height: 0;
+  }
+
+  /* Video Card */
+  .video-carousel-section-{{ section.id }} .video-carousel__card {
+    flex: 0 0 270px;
+    min-width: 270px;
+    max-width: 270px;
+    aspect-ratio: 9 / 14;
+    border-radius: 20px;
+    overflow: hidden;
+    position: relative;
+    background-color: #111111;
+    scroll-snap-align: start;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    cursor: pointer;
+  }
+
+  .video-carousel-section-{{ section.id }} .video-carousel__card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.18);
+  }
+
+  .video-carousel-section-{{ section.id }} .video-carousel__media-wrap {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: #1a1a1a;
+  }
+
+  .video-carousel-section-{{ section.id }} .video-carousel__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    -webkit-user-drag: none;
+  }
+
+  .video-carousel-section-{{ section.id }} .video-carousel__card:hover .video-carousel__image {
+    transform: scale(1.06);
+  }
+
+  .video-carousel-section-{{ section.id }} .video-carousel__gradient-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0) 40%, rgba(0, 0, 0, 0.45) 70%, rgba(0, 0, 0, 0.9) 100%);
+    pointer-events: none;
+  }
+
+  /* Card Bottom Info */
+  .video-carousel-section-{{ section.id }} .video-carousel__card-bottom {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 18px 16px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 12px;
+    z-index: 2;
+  }
+
+  .video-carousel-section-{{ section.id }} .video-carousel__card-title {
+    color: #ffffff;
+    font-size: 15px;
+    line-height: 1.35;
+    font-weight: 600;
+    text-decoration: none;
+    margin: 0;
+    flex: 1;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
+    transition: opacity 0.2s ease, text-decoration 0.2s ease;
+  }
+
+  .video-carousel-section-{{ section.id }} .video-carousel__card-title:hover {
+    text-decoration: underline;
+    opacity: 0.9;
+  }
+
+  /* Play Button (Glassmorphism circle) */
+  .video-carousel-section-{{ section.id }} .video-carousel__play-btn {
+    width: 44px;
+    height: 44px;
+    min-width: 44px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.28);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    color: #ffffff;
+    padding: 0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  }
+
+  .video-carousel-section-{{ section.id }} .video-carousel__card:hover .video-carousel__play-btn,
+  .video-carousel-section-{{ section.id }} .video-carousel__play-btn:hover {
+    background: rgba(255, 255, 255, 0.45);
+    transform: scale(1.12);
+    border-color: rgba(255, 255, 255, 0.85);
+  }
+
+  .video-carousel-section-{{ section.id }} .video-carousel__play-icon {
+    width: 18px;
+    height: 18px;
+    fill: #ffffff;
+    margin-left: 2px;
+  }
+
+  /* Video Modal Lightbox */
+  .video-carousel-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 999999;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    opacity: 0;
+    transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .video-carousel-modal.is-active {
+    display: flex;
+    opacity: 1;
+  }
+
+  .video-carousel-modal__backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.86);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+
+  .video-carousel-modal__container {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    max-width: 920px;
+    background: #000000;
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.1);
+    transition: max-width 0.3s ease;
+  }
+
+  .video-carousel-modal.is-short .video-carousel-modal__container {
+    max-width: 440px;
+  }
+
+  .video-carousel-modal__close {
+    position: absolute;
+    top: -50px;
+    right: 0;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(255, 255, 255, 0.22);
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    z-index: 10;
+  }
+
+  .video-carousel-modal__close:hover {
+    background: rgba(255, 255, 255, 0.45);
+    transform: scale(1.1);
+  }
+
+  .video-carousel-modal__player {
+    position: relative;
+    width: 100%;
+    padding-top: 56.25%; /* 16:9 widescreen */
+    background: #000000;
+  }
+
+  .video-carousel-modal.is-short .video-carousel-modal__player {
+    padding-top: 177.77%; /* 9:16 vertical shorts */
+    max-height: 82vh;
+  }
+
+  .video-carousel-modal__player iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+  }
+
+  /* Responsive Adjustments */
+  @media screen and (max-width: 768px) {
+    .video-carousel-section-{{ section.id }} .video-carousel__title {
+      font-size: 1.65rem;
+    }
+
+    .video-carousel-section-{{ section.id }} .video-carousel__card {
+      flex: 0 0 230px;
+      min-width: 230px;
+      max-width: 230px;
+      border-radius: 16px;
+    }
+
+    .video-carousel-section-{{ section.id }} .video-carousel__card-title {
+      font-size: 14px;
+    }
+
+    .video-carousel-section-{{ section.id }} .video-carousel__play-btn {
+      width: 40px;
+      height: 40px;
+      min-width: 40px;
+    }
+
+    .video-carousel-section-{{ section.id }} .video-carousel__play-icon {
+      width: 16px;
+      height: 16px;
+    }
+
+    .video-carousel-modal {
+      padding: 16px;
+    }
+
+    .video-carousel-modal__close {
+      top: 12px;
+      right: 12px;
+      background: rgba(0, 0, 0, 0.65);
+    }
+  }
+{%- endstyle -%}
+
+{%- if section.blocks.size > 0 or request.design_mode -%}
+<div class="video-carousel-section-{{ section.id }} video-carousel-section wow fadeIn">
+  <div class="page-width">
+    <!-- Section Header -->
+    <div class="video-carousel__header">
+      <div class="video-carousel__header-left">
+        {%- if section.settings.title != blank -%}
+          <h2 class="video-carousel__title custom-txt-bold">{{ section.settings.title }}</h2>
+        {%- endif -%}
+        {%- if section.settings.subheading != blank -%}
+          <p class="video-carousel__subheading">{{ section.settings.subheading }}</p>
+        {%- endif -%}
+      </div>
+      <div class="video-carousel__nav-arrows">
+        <button
+          type="button"
+          class="video-carousel__arrow video-carousel__arrow--prev"
+          aria-label="Previous videos"
+          data-target="video-track-{{ section.id }}"
+        >
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="15 18 9 12 15 6"></polyline>
+          </svg>
+        </button>
+        <button
+          type="button"
+          class="video-carousel__arrow video-carousel__arrow--next"
+          aria-label="Next videos"
+          data-target="video-track-{{ section.id }}"
+        >
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Carousel Cards Track -->
+    <div class="video-carousel__track-wrap">
+      <div class="video-carousel__track" id="video-track-{{ section.id }}">
+        {%- for block in section.blocks -%}
+          {%- liquid
+            assign raw_url = block.settings.video_url
+            if raw_url == blank and block.settings.custom_cover == blank
+              unless request.design_mode
+                continue
+              endunless
+            endif
+
+            assign video_id = ''
+            assign is_short = false
+
+            if raw_url contains 'shorts/'
+              assign is_short = true
+              assign video_id = raw_url | split: 'shorts/' | last | split: '?' | first | split: '&' | first | split: '/' | first
+            elsif raw_url contains 'watch?v='
+              assign video_id = raw_url | split: 'watch?v=' | last | split: '?' | first | split: '&' | first | split: '/' | first
+            elsif raw_url contains 'youtu.be/'
+              assign video_id = raw_url | split: 'youtu.be/' | last | split: '?' | first | split: '&' | first | split: '/' | first
+            elsif raw_url contains 'embed/'
+              assign video_id = raw_url | split: 'embed/' | last | split: '?' | first | split: '&' | first | split: '/' | first
+            endif
+
+            assign target_link = block.settings.custom_link
+            if target_link == blank
+              assign target_link = raw_url
+            endif
+          -%}
+
+          <div
+            class="video-carousel__card"
+            {{ block.shopify_attributes }}
+            data-video-id="{{ video_id }}"
+            data-is-short="{{ is_short }}"
+            data-title="{{ block.settings.title | escape }}"
+          >
+            <!-- Media & Cover -->
+            <div class="video-carousel__media-wrap">
+              {%- if block.settings.custom_cover != blank -%}
+                <img
+                  src="{{ block.settings.custom_cover | image_url: width: 600 }}"
+                  alt="{{ block.settings.title | escape }}"
+                  loading="lazy"
+                  decoding="async"
+                  width="600"
+                  height="933"
+                  class="video-carousel__image"
+                >
+              {%- elsif video_id != blank -%}
+                {%- if is_short -%}
+                  {%- assign thumb_primary = 'https://img.youtube.com/vi/' | append: video_id | append: '/oar2.jpg' -%}
+                  {%- assign thumb_fallback = 'https://img.youtube.com/vi/' | append: video_id | append: '/maxresdefault.jpg' -%}
+                {%- else -%}
+                  {%- assign thumb_primary = 'https://img.youtube.com/vi/' | append: video_id | append: '/maxresdefault.jpg' -%}
+                  {%- assign thumb_fallback = 'https://img.youtube.com/vi/' | append: video_id | append: '/hqdefault.jpg' -%}
+                {%- endif -%}
+                <img
+                  src="{{ thumb_primary }}"
+                  onerror="if(!this.dataset.fallback){this.dataset.fallback='1';this.src='{{ thumb_fallback }}';}else{this.onerror=null;this.src='https://img.youtube.com/vi/{{ video_id }}/hqdefault.jpg';}"
+                  alt="{{ block.settings.title | escape }}"
+                  loading="lazy"
+                  decoding="async"
+                  width="600"
+                  height="933"
+                  class="video-carousel__image"
+                >
+              {%- else -%}
+                <div style="width:100%;height:100%;background:#1e1e1e;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#888;padding:20px;text-align:center;">
+                  <span style="font-size:13px;opacity:0.8;">No Video Configured</span>
+                </div>
+              {%- endif -%}
+              <div class="video-carousel__gradient-overlay"></div>
+            </div>
+
+            <!-- Card Bottom Bar -->
+            <div class="video-carousel__card-bottom">
+              {%- if block.settings.title != blank -%}
+                <a
+                  {% if target_link != blank %}href="{{ target_link }}" target="_blank" rel="noopener noreferrer"{% endif %}
+                  class="video-carousel__card-title custom-txt-semibold"
+                  title="Watch on YouTube"
+                >
+                  {{ block.settings.title }}
+                </a>
+              {%- endif -%}
+
+              {%- if video_id != blank -%}
+                <button
+                  type="button"
+                  class="video-carousel__play-btn"
+                  aria-label="Play {{ block.settings.title | default: 'Video' | escape }}"
+                  data-play-trigger
+                >
+                  <svg class="video-carousel__play-icon" viewBox="0 0 24 24">
+                    <path d="M8 5v14l11-7z"/>
+                  </svg>
+                </button>
+              {%- endif -%}
+            </div>
+          </div>
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+
+  <!-- Video Player Lightbox Modal -->
+  <div class="video-carousel-modal" id="video-modal-{{ section.id }}" aria-hidden="true" role="dialog">
+    <div class="video-carousel-modal__backdrop" data-modal-close></div>
+    <div class="video-carousel-modal__container">
+      <button type="button" class="video-carousel-modal__close" data-modal-close aria-label="Close video">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+      <div class="video-carousel-modal__player" id="modal-player-{{ section.id }}">
+        <!-- Injected dynamically on play -->
+      </div>
+    </div>
+  </div>
+</div>
+{%- endif -%}
+
+<script>
+  (function () {
+    const sectionContainer = document.querySelector('.video-carousel-section-{{ section.id }}');
+    if (!sectionContainer) return;
+
+    const track = document.getElementById('video-track-{{ section.id }}');
+    const modal = document.getElementById('video-modal-{{ section.id }}');
+    const playerContainer = document.getElementById('modal-player-{{ section.id }}');
+    const prevBtn = sectionContainer.querySelector('.video-carousel__arrow--prev');
+    const nextBtn = sectionContainer.querySelector('.video-carousel__arrow--next');
+
+    /* 1. Track Arrow Navigation */
+    function updateArrowStates() {
+      if (!track || !prevBtn || !nextBtn) return;
+      const atStart = track.scrollLeft <= 5;
+      const atEnd = track.scrollLeft + track.clientWidth >= track.scrollWidth - 5;
+      prevBtn.disabled = atStart;
+      nextBtn.disabled = atEnd;
+    }
+
+    if (prevBtn && nextBtn && track) {
+      prevBtn.addEventListener('click', function () {
+        const step = Math.max(track.clientWidth * 0.75, 270);
+        track.scrollBy({ left: -step, behavior: 'smooth' });
+      });
+
+      nextBtn.addEventListener('click', function () {
+        const step = Math.max(track.clientWidth * 0.75, 270);
+        track.scrollBy({ left: step, behavior: 'smooth' });
+      });
+
+      track.addEventListener('scroll', updateArrowStates, { passive: true });
+      updateArrowStates();
+    }
+
+    /* 2. Desktop Mouse Drag to Scroll */
+    let isDown = false;
+    let startX = 0;
+    let scrollLeft = 0;
+    let draggedDistance = 0;
+
+    if (track) {
+      track.addEventListener('mousedown', function (e) {
+        if (e.target.closest('a')) return;
+        isDown = true;
+        draggedDistance = 0;
+        startX = e.pageX - track.offsetLeft;
+        scrollLeft = track.scrollLeft;
+      });
+
+      window.addEventListener('mouseup', function () {
+        if (!isDown) return;
+        isDown = false;
+        track.classList.remove('is-dragging');
+      });
+
+      track.addEventListener('mousemove', function (e) {
+        if (!isDown) return;
+        const x = e.pageX - track.offsetLeft;
+        const walk = x - startX;
+        draggedDistance = Math.abs(walk);
+        if (draggedDistance > 5) {
+          track.classList.add('is-dragging');
+          e.preventDefault();
+          track.scrollLeft = scrollLeft - walk;
+        }
+      });
+    }
+
+    /* 3. Modal Player Controller (Facade Pattern) */
+    function openVideoModal(videoId, isShort) {
+      if (!videoId || !modal || !playerContainer) return;
+
+      if (isShort === 'true' || isShort === true) {
+        modal.classList.add('is-short');
+      } else {
+        modal.classList.remove('is-short');
+      }
+
+      // Inject YouTube iframe with autoplay
+      playerContainer.innerHTML = '<iframe src="https://www.youtube.com/embed/' + encodeURIComponent(videoId) +
+        '?autoplay=1&rel=0&playsinline=1&modestbranding=1" ' +
+        'allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" ' +
+        'allowfullscreen></iframe>';
+
+      modal.classList.add('is-active');
+      modal.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeVideoModal() {
+      if (!modal || !playerContainer) return;
+      modal.classList.remove('is-active');
+      modal.setAttribute('aria-hidden', 'true');
+      playerContainer.innerHTML = ''; // Destroy iframe to immediately stop playback and clear memory
+      document.body.style.overflow = '';
+    }
+
+    // Bind card play events
+    const cards = sectionContainer.querySelectorAll('.video-carousel__card');
+    cards.forEach(function (card) {
+      // Prevent opening video if user clicked the title link
+      const titleLink = card.querySelector('.video-carousel__card-title');
+      if (titleLink) {
+        titleLink.addEventListener('click', function (e) {
+          e.stopPropagation();
+        });
+      }
+
+      card.addEventListener('click', function (e) {
+        if (draggedDistance > 6) return; // Ignore if dragging
+        const videoId = card.getAttribute('data-video-id');
+        const isShort = card.getAttribute('data-is-short');
+        openVideoModal(videoId, isShort);
+      });
+    });
+
+    // Close modal triggers
+    const closeButtons = modal.querySelectorAll('[data-modal-close]');
+    closeButtons.forEach(function (btn) {
+      btn.addEventListener('click', closeVideoModal);
+    });
+
+    // Close on Escape key
+    window.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && modal.classList.contains('is-active')) {
+        closeVideoModal();
+      }
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Video Carousel Action",
+  "tag": "section",
+  "class": "index-section--videoCarousel",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section Title",
+      "default": "Watch PIIFOX in Action"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Real typing tests, unboxings, and setup inspiration."
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "label": "Heading Size",
+      "options": [
+        { "value": "medium", "label": "Medium" },
+        { "value": "large", "label": "Large" }
+      ],
+      "default": "large"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#111111"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Top Padding",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom Padding",
+      "default": 48
+    }
+  ],
+  "blocks": [
+    {
+      "type": "video_card",
+      "name": "Video Card",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Video Title / Caption",
+          "info": "Optional. If left blank, only the video play button will be shown."
+        },
+        {
+          "type": "text",
+          "id": "video_url",
+          "label": "YouTube Video URL",
+          "info": "Supports regular YouTube watch links, shorts, or youtu.be links."
+        },
+        {
+          "type": "image_picker",
+          "id": "custom_cover",
+          "label": "Custom Cover Image (Optional)",
+          "info": "If left empty, the official YouTube high-res video frame thumbnail will be used automatically."
+        },
+        {
+          "type": "url",
+          "id": "custom_link",
+          "label": "Custom Link (Optional)",
+          "info": "If left empty, clicking the card title opens the original YouTube video directly."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Video Carousel Action",
+      "blocks": [
+        {
+          "type": "video_card",
+          "settings": {
+            "title": "PIIFOX VEXRO Haze68 HE Pro 8K Keyboard 🟡",
+            "video_url": "https://www.youtube.com/shorts/YmPvzQK0_ek"
+          }
+        },
+        {
+          "type": "video_card",
+          "settings": {
+            "title": "PIIFOX LUNA Grid98 Keyboard Review",
+            "video_url": "https://www.youtube.com/watch?v=vd3a0RwUWOY"
+          }
+        },
+        {
+          "type": "video_card",
+          "settings": {
+            "title": "Unboxing the PiiFox Defender 68 🎀⌨️",
+            "video_url": "https://www.youtube.com/shorts/VrpkHxgZ3aM"
+          }
+        },
+        {
+          "type": "video_card",
+          "settings": {
+            "title": "PIIFOX LUNA Grid98 (Screen Edition)",
+            "video_url": "https://www.youtube.com/shorts/aOyGh92vOcI"
+          }
+        },
+        {
+          "type": "video_card",
+          "settings": {
+            "title": "PIIFOX FORX Final75 HE🖤❤️",
+            "video_url": "https://www.youtube.com/shorts/CbCfIc0Lv9o"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
