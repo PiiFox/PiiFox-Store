@@ -298,18 +298,11 @@
     "video_carousel_home": {
       "type": "video-carousel",
       "blocks": {
-        "video_card_pQTkmE": {
+        "video_4": {
           "type": "video_card",
           "settings": {
-            "title": "Back to school vibes keycaps! 📝",
-            "video_url": "https://www.youtube.com/shorts/-IKfGAQdtDU"
-          }
-        },
-        "video_card_mWJQGU": {
-          "type": "video_card",
-          "settings": {
-            "title": "PIIFOX LUNA MUSE 7PRO",
-            "video_url": "https://www.youtube.com/shorts/vpE0kQtrRw8"
+            "title": "PIIFOX Defender68 HE",
+            "video_url": "https://www.youtube.com/shorts/gcrsJnRckVk"
           }
         },
         "video_1": {
@@ -319,11 +312,11 @@
             "video_url": "https://www.youtube.com/shorts/YmPvzQK0_ek"
           }
         },
-        "video_4": {
+        "video_card_mWJQGU": {
           "type": "video_card",
           "settings": {
-            "title": "PIIFOX Defender68 HE",
-            "video_url": "https://www.youtube.com/shorts/gcrsJnRckVk"
+            "title": "PIIFOX LUNA MUSE 7PRO",
+            "video_url": "https://www.youtube.com/shorts/vpE0kQtrRw8"
           }
         },
         "video_card_3LLgwB": {
@@ -331,6 +324,13 @@
           "settings": {
             "title": "The Most OVERKILL Keyboard Ever!",
             "video_url": "https://www.youtube.com/shorts/T-Cdc8_YVlk"
+          }
+        },
+        "video_card_pQTkmE": {
+          "type": "video_card",
+          "settings": {
+            "title": "Back to school vibes keycaps! 📝",
+            "video_url": "https://www.youtube.com/shorts/-IKfGAQdtDU"
           }
         },
         "video_2": {
@@ -356,11 +356,11 @@
         }
       },
       "block_order": [
-        "video_card_pQTkmE",
-        "video_card_mWJQGU",
-        "video_1",
         "video_4",
+        "video_1",
+        "video_card_mWJQGU",
         "video_card_3LLgwB",
+        "video_card_pQTkmE",
         "video_2",
         "video_3",
         "video_5"
