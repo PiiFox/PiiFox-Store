@@ -298,6 +298,13 @@
     "video_carousel_home": {
       "type": "video-carousel",
       "blocks": {
+        "video_card_mWJQGU": {
+          "type": "video_card",
+          "settings": {
+            "title": "PIIFOX LUNA MUSE 7PRO",
+            "video_url": "https://www.youtube.com/shorts/vpE0kQtrRw8"
+          }
+        },
         "video_1": {
           "type": "video_card",
           "settings": {
@@ -312,11 +319,18 @@
             "video_url": "https://www.youtube.com/shorts/gcrsJnRckVk"
           }
         },
+        "video_card_3LLgwB": {
+          "type": "video_card",
+          "settings": {
+            "title": "The Most OVERKILL Keyboard Ever!",
+            "video_url": "https://www.youtube.com/shorts/T-Cdc8_YVlk"
+          }
+        },
         "video_2": {
           "type": "video_card",
           "settings": {
             "title": "PIIFOX LUNA Grid98 Keyboard Review",
-            "video_url": "https://www.youtube.com/watch?v=vd3a0RwUWOY"
+            "video_url": "https://www.youtube.com/shorts/4IDG0aq6obY"
           }
         },
         "video_3": {
@@ -335,12 +349,15 @@
         }
       },
       "block_order": [
+        "video_card_mWJQGU",
         "video_1",
         "video_4",
+        "video_card_3LLgwB",
         "video_2",
         "video_3",
         "video_5"
       ],
+      "disabled": true,
       "name": "Video Carousel Action",
       "settings": {
         "title": "Watch PIIFOX in Action",
