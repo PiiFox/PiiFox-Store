@@ -85,6 +85,14 @@
         </div>
       {%- endif -%}
 
+      {%- if section.settings.phone_number != blank -%}
+        <div class="info-divider"></div>
+        <div class="info-block">
+          <h4 class="info-block-title">{{ section.settings.phone_title | default: 'Call & SMS:' }}</h4>
+          <p class="business-hours">{{ section.settings.phone_number }}{% if section.settings.phone_hours != blank %} &nbsp;{{ section.settings.phone_hours }}{% endif %}</p>
+        </div>
+      {%- endif -%}
+
       {%- if section.settings.show_social -%}
         <div class="info-divider"></div><div class="info-block"><h4 class="info-block-title">{{ section.settings.social_title }}</h4>{% render 'social-icons', additional_classes: 'footer__social', hide_discord: true %}</div>
       {%- endif -%}
@@ -212,6 +220,24 @@
       "id": "support_email",
       "label": "Support email",
       "default": "service@piifox.com"
+    },
+    {
+      "type": "text",
+      "id": "phone_title",
+      "label": "Phone title",
+      "default": "Call & SMS:"
+    },
+    {
+      "type": "text",
+      "id": "phone_number",
+      "label": "Phone number",
+      "default": "+852 9572 2944"
+    },
+    {
+      "type": "text",
+      "id": "phone_hours",
+      "label": "Phone hours",
+      "default": "Mon-Fri, 9AM-6PM (PDT)"
     },
     {
       "type": "checkbox",
