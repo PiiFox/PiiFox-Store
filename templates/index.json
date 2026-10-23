@@ -301,41 +301,36 @@
         "video_1": {
           "type": "video_card",
           "settings": {
-            "title": "PIIFOX VEXRO Haze68 HE Pro 8K Keyboard 🟡",
-            "video_url": "https://www.youtube.com/shorts/YmPvzQK0_ek",
-            "custom_link": ""
+            "title": "PIIFOX VEXRO Haze68",
+            "video_url": "https://www.youtube.com/shorts/YmPvzQK0_ek"
           }
         },
         "video_2": {
           "type": "video_card",
           "settings": {
             "title": "PIIFOX LUNA Grid98 Keyboard Review",
-            "video_url": "https://www.youtube.com/watch?v=vd3a0RwUWOY",
-            "custom_link": ""
+            "video_url": "https://www.youtube.com/watch?v=vd3a0RwUWOY"
           }
         },
         "video_3": {
           "type": "video_card",
           "settings": {
-            "title": "Unboxing the PiiFox Defender 68 🎀⌨️",
-            "video_url": "https://www.youtube.com/shorts/VrpkHxgZ3aM",
-            "custom_link": ""
+            "title": "Unboxing the PiiFox Defender 68",
+            "video_url": "https://www.youtube.com/shorts/VrpkHxgZ3aM"
           }
         },
         "video_4": {
           "type": "video_card",
           "settings": {
             "title": "PIIFOX LUNA Grid98 (Screen Edition)",
-            "video_url": "https://www.youtube.com/shorts/aOyGh92vOcI",
-            "custom_link": ""
+            "video_url": "https://www.youtube.com/shorts/aOyGh92vOcI"
           }
         },
         "video_5": {
           "type": "video_card",
           "settings": {
-            "title": "PIIFOX FORX Final75 HE🖤❤️",
-            "video_url": "https://www.youtube.com/shorts/CbCfIc0Lv9o",
-            "custom_link": ""
+            "title": "PIIFOX FORX Final75 HE",
+            "video_url": "https://www.youtube.com/shorts/CbCfIc0Lv9o"
           }
         }
       },
