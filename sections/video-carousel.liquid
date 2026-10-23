@@ -297,8 +297,57 @@
   }
 
   .video-carousel-modal.is-short .video-carousel-modal__player {
-    padding-top: 177.77%; /* 9:16 vertical shorts */
+    padding-top: 177.77%; /* 9:16 vertical shorts / tiktok */
     max-height: 82vh;
+  }
+
+  .video-carousel-modal.is-instagram .video-carousel-modal__container {
+    max-width: 440px;
+    background: #ffffff;
+  }
+
+  .video-carousel-modal.is-instagram .video-carousel-modal__player {
+    padding-top: 140%;
+    max-height: 85vh;
+    background: #ffffff;
+  }
+
+  .video-carousel-section-{{ section.id }} .video-carousel__placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+    padding: 20px;
+    text-align: center;
+    gap: 12px;
+    background: #181818;
+  }
+
+  .video-carousel-section-{{ section.id }} .video-carousel__placeholder--tiktok {
+    background: radial-gradient(circle at 30% 30%, rgba(0, 242, 254, 0.25), transparent 60%), radial-gradient(circle at 70% 70%, rgba(254, 44, 85, 0.25), transparent 60%), #0f0f0f;
+    color: #ffffff;
+  }
+
+  .video-carousel-section-{{ section.id }} .video-carousel__placeholder--tiktok span {
+    font-size: 13px;
+    color: #ffffff;
+    font-weight: 500;
+    opacity: 0.9;
+  }
+
+  .video-carousel-section-{{ section.id }} .video-carousel__placeholder--instagram {
+    background: radial-gradient(circle at 20% 20%, rgba(253, 29, 29, 0.3), transparent 60%), radial-gradient(circle at 80% 80%, rgba(131, 58, 180, 0.35), transparent 60%), #121212;
+    color: #ffffff;
+  }
+
+  .video-carousel-section-{{ section.id }} .video-carousel__placeholder--instagram span {
+    font-size: 13px;
+    color: #ffffff;
+    font-weight: 500;
+    opacity: 0.9;
   }
 
   .video-carousel-modal__player iframe {
@@ -400,17 +449,43 @@
             endif
 
             assign video_id = ''
+            assign platform = 'youtube'
             assign is_short = false
 
-            if raw_url contains 'shorts/'
+            if raw_url contains 'tiktok.com'
+              assign platform = 'tiktok'
               assign is_short = true
-              assign video_id = raw_url | split: 'shorts/' | last | split: '?' | first | split: '&' | first | split: '/' | first
-            elsif raw_url contains 'watch?v='
-              assign video_id = raw_url | split: 'watch?v=' | last | split: '?' | first | split: '&' | first | split: '/' | first
-            elsif raw_url contains 'youtu.be/'
-              assign video_id = raw_url | split: 'youtu.be/' | last | split: '?' | first | split: '&' | first | split: '/' | first
-            elsif raw_url contains 'embed/'
-              assign video_id = raw_url | split: 'embed/' | last | split: '?' | first | split: '&' | first | split: '/' | first
+              if raw_url contains '/video/'
+                assign video_id = raw_url | split: '/video/' | last | split: '?' | first | split: '/' | first | split: '&' | first
+              elsif raw_url contains '/v/'
+                assign video_id = raw_url | split: '/v/' | last | split: '?' | first | split: '/' | first | split: '&' | first
+              endif
+            elsif raw_url contains 'instagram.com' or raw_url contains 'instagr.am'
+              assign platform = 'instagram'
+              assign is_short = true
+              if raw_url contains '/reel/'
+                assign video_id = raw_url | split: '/reel/' | last | split: '?' | first | split: '/' | first
+              elsif raw_url contains '/p/'
+                assign video_id = raw_url | split: '/p/' | last | split: '?' | first | split: '/' | first
+              elsif raw_url contains '/tv/'
+                assign video_id = raw_url | split: '/tv/' | last | split: '?' | first | split: '/' | first
+              endif
+            elsif raw_url contains '.mp4'
+              assign platform = 'mp4'
+              assign video_id = raw_url
+              assign is_short = true
+            elsif raw_url contains 'youtube.com' or raw_url contains 'youtu.be'
+              assign platform = 'youtube'
+              if raw_url contains 'shorts/'
+                assign is_short = true
+                assign video_id = raw_url | split: 'shorts/' | last | split: '?' | first | split: '&' | first | split: '/' | first
+              elsif raw_url contains 'watch?v='
+                assign video_id = raw_url | split: 'watch?v=' | last | split: '?' | first | split: '&' | first | split: '/' | first
+              elsif raw_url contains 'youtu.be/'
+                assign video_id = raw_url | split: 'youtu.be/' | last | split: '?' | first | split: '&' | first | split: '/' | first
+              elsif raw_url contains 'embed/'
+                assign video_id = raw_url | split: 'embed/' | last | split: '?' | first | split: '&' | first | split: '/' | first
+              endif
             endif
 
             assign target_link = raw_url
@@ -420,14 +495,22 @@
             class="video-carousel__card"
             {{ block.shopify_attributes }}
             data-video-id="{{ video_id }}"
+            data-platform="{{ platform }}"
+            data-raw-url="{{ raw_url | escape }}"
             data-is-short="{{ is_short }}"
             data-title="{{ block.settings.title | escape }}"
           >
             <!-- Media & Cover -->
             <div class="video-carousel__media-wrap">
               {%- if block.settings.custom_cover != blank -%}
+                {%- assign cover_val = block.settings.custom_cover -%}
+                {%- if cover_val contains '.png' or cover_val contains '.jpg' or cover_val contains '.webp' -%}
+                  {%- assign cover_src = cover_val | asset_url -%}
+                {%- else -%}
+                  {%- assign cover_src = cover_val | image_url: width: 600 -%}
+                {%- endif -%}
                 <img
-                  src="{{ block.settings.custom_cover | image_url: width: 600 }}"
+                  src="{{ cover_src }}"
                   alt="{{ block.settings.title | escape }}"
                   loading="lazy"
                   decoding="async"
@@ -435,7 +518,7 @@
                   height="933"
                   class="video-carousel__image"
                 >
-              {%- elsif video_id != blank -%}
+              {%- elsif platform == 'youtube' and video_id != blank -%}
                 {%- if is_short -%}
                   {%- assign thumb_primary = 'https://img.youtube.com/vi/' | append: video_id | append: '/oar2.jpg' -%}
                   {%- assign thumb_fallback = 'https://img.youtube.com/vi/' | append: video_id | append: '/maxresdefault.jpg' -%}
@@ -453,8 +536,22 @@
                   height="933"
                   class="video-carousel__image"
                 >
+              {%- elsif platform == 'tiktok' -%}
+                <div class="video-carousel__placeholder video-carousel__placeholder--tiktok">
+                  <svg width="40" height="40" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64c.29 0 .58.04.85.12V9.36a6.37 6.37 0 0 0-.85-.06A6.34 6.34 0 0 0 3.15 15.6a6.34 6.34 0 0 0 8.76 5.92 6.3 6.3 0 0 0 3.92-5.85V8.58a8.28 8.28 0 0 0 4.76 1.54v-3.43h-1z"/>
+                  </svg>
+                  <span>TikTok Video</span>
+                </div>
+              {%- elsif platform == 'instagram' -%}
+                <div class="video-carousel__placeholder video-carousel__placeholder--instagram">
+                  <svg width="40" height="40" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                  </svg>
+                  <span>Instagram Reel</span>
+                </div>
               {%- else -%}
-                <div style="width:100%;height:100%;background:#1e1e1e;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#888;padding:20px;text-align:center;">
+                <div class="video-carousel__placeholder">
                   <span style="font-size:13px;opacity:0.8;">No Video Configured</span>
                 </div>
               {%- endif -%}
@@ -579,21 +676,38 @@
       });
     }
 
-    /* 3. Modal Player Controller (Facade Pattern) */
-    function openVideoModal(videoId, isShort) {
-      if (!videoId || !modal || !playerContainer) return;
+    /* 3. Modal Player Controller (Multi-platform Facade Pattern) */
+    function openVideoModal(videoId, isShort, platform, rawUrl) {
+      if (!modal || !playerContainer) return;
+      if (!videoId && !rawUrl) return;
 
-      if (isShort === 'true' || isShort === true) {
+      modal.classList.remove('is-short', 'is-instagram', 'is-tiktok');
+
+      if (platform === 'tiktok') {
+        modal.classList.add('is-short', 'is-tiktok');
+        playerContainer.innerHTML = '<iframe src="https://www.tiktok.com/player/v1/' + encodeURIComponent(videoId) +
+          '?autoplay=1&music_info=1&description=1" ' +
+          'allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" ' +
+          'allowfullscreen></iframe>';
+      } else if (platform === 'instagram') {
+        modal.classList.add('is-instagram');
+        var igPath = (rawUrl && rawUrl.indexOf('/p/') !== -1) ? 'p' : ((rawUrl && rawUrl.indexOf('/tv/') !== -1) ? 'tv' : 'reel');
+        playerContainer.innerHTML = '<iframe src="https://www.instagram.com/' + igPath + '/' + encodeURIComponent(videoId) +
+          '/embed/" allowfullscreen frameborder="0" scrolling="no"></iframe>';
+      } else if (platform === 'mp4') {
         modal.classList.add('is-short');
+        playerContainer.innerHTML = '<video src="' + encodeURI(rawUrl || videoId) +
+          '" controls autoplay playsinline style="width:100%;height:100%;object-fit:contain;background:#000;"></video>';
       } else {
-        modal.classList.remove('is-short');
+        // YouTube default
+        if (isShort === 'true' || isShort === true) {
+          modal.classList.add('is-short');
+        }
+        playerContainer.innerHTML = '<iframe src="https://www.youtube.com/embed/' + encodeURIComponent(videoId) +
+          '?autoplay=1&rel=0&playsinline=1&modestbranding=1" ' +
+          'allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" ' +
+          'allowfullscreen></iframe>';
       }
-
-      // Inject YouTube iframe with autoplay
-      playerContainer.innerHTML = '<iframe src="https://www.youtube.com/embed/' + encodeURIComponent(videoId) +
-        '?autoplay=1&rel=0&playsinline=1&modestbranding=1" ' +
-        'allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" ' +
-        'allowfullscreen></iframe>';
 
       modal.classList.add('is-active');
       modal.setAttribute('aria-hidden', 'false');
@@ -621,9 +735,28 @@
 
       card.addEventListener('click', function (e) {
         if (draggedDistance > 6) return; // Ignore if dragging
-        const videoId = card.getAttribute('data-video-id');
-        const isShort = card.getAttribute('data-is-short');
-        openVideoModal(videoId, isShort);
+        var videoId = card.getAttribute('data-video-id') || '';
+        var platform = card.getAttribute('data-platform') || 'youtube';
+        var rawUrl = card.getAttribute('data-raw-url') || '';
+        var isShort = card.getAttribute('data-is-short');
+
+        // Client-side regex refinement
+        if (/tiktok\.com/i.test(rawUrl)) {
+          platform = 'tiktok';
+          isShort = true;
+          var tt = rawUrl.match(/\/video\/(\d+)/i) || rawUrl.match(/\/v\/(\d+)/i);
+          if (tt) videoId = tt[1];
+        } else if (/instagram\.com|instagr\.am/i.test(rawUrl)) {
+          platform = 'instagram';
+          isShort = true;
+          var ig = rawUrl.match(/\/(?:reel|p|tv)\/([A-Za-z0-9_-]+)/i);
+          if (ig) videoId = ig[1];
+        } else if (/\.mp4/i.test(rawUrl)) {
+          platform = 'mp4';
+          isShort = true;
+        }
+
+        openVideoModal(videoId, isShort, platform, rawUrl);
       });
     });
 
@@ -717,14 +850,14 @@
         {
           "type": "text",
           "id": "video_url",
-          "label": "YouTube Video URL",
-          "info": "Supports regular YouTube watch links, shorts, or youtu.be links."
+          "label": "Video URL (YouTube / TikTok / Instagram)",
+          "info": "Supports YouTube (Watch / Shorts), TikTok (@user/video/ID), Instagram (Reels / Post), or direct .mp4 link."
         },
         {
           "type": "image_picker",
           "id": "custom_cover",
-          "label": "Custom Cover Image (Optional)",
-          "info": "If left empty, the official YouTube high-res video frame thumbnail will be used automatically."
+          "label": "Custom Cover Image",
+          "info": "YouTube will auto-fetch HD cover if blank. For TikTok & Instagram, please upload a custom cover image here."
         }
       ]
     }
