@@ -180,6 +180,7 @@
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
+    min-height: calc(1.35em * 2);
     text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
     transition: opacity 0.2s ease, text-decoration 0.2s ease;
   }
@@ -412,10 +413,7 @@
               assign video_id = raw_url | split: 'embed/' | last | split: '?' | first | split: '&' | first | split: '/' | first
             endif
 
-            assign target_link = block.settings.custom_link
-            if target_link == blank
-              assign target_link = raw_url
-            endif
+            assign target_link = raw_url
           -%}
 
           <div
@@ -727,12 +725,6 @@
           "id": "custom_cover",
           "label": "Custom Cover Image (Optional)",
           "info": "If left empty, the official YouTube high-res video frame thumbnail will be used automatically."
-        },
-        {
-          "type": "url",
-          "id": "custom_link",
-          "label": "Custom Link (Optional)",
-          "info": "If left empty, clicking the card title opens the original YouTube video directly."
         }
       ]
     }
