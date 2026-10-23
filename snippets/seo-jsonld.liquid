@@ -1,12 +1,28 @@
 
 <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    "name": {{ shop.name | json }},
-    "url": "{{ routes.root_url }}",
-    "logo": "{{ shop.image | img_url: 'master' }}"
+{
+  "@context": "https://schema.org",
+  "@type": "OnlineStore",
+  "@id": "https://www.piifox.com/#organization",
+  "name": "PIIFOX",
+  "legalName": "Shenzhen Paishifu Technology Co, Ltd.",
+  "url": "https://www.piifox.com/",
+  "logo": "https://www.piifox.com/cdn/shop/files/logo_small.avif?v=1776848930",
+  "email": "service@piifox.com",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Room 1210, Gangxinda Henggang Building, No. 5008 Longgang Avenue (Henggang Section), Songbai Community, Henggang Subdistrict, Longgang District",
+    "addressLocality": "Shenzhen",
+    "addressRegion": "Guangdong",
+    "postalCode": "518115",
+    "addressCountry": "CN"
+  },
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "contactType": "customer service",
+    "email": "service@piifox.com"
   }
+}
 </script>
 
 {% if request.page_type == 'collection' and collection != blank %}
