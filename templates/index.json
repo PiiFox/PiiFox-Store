@@ -609,6 +609,14 @@
             "custom_cover": "shopify://shop_images/20261024-151434.jpg"
           }
         },
+        "video_card_kEfyD7": {
+          "type": "video_card",
+          "settings": {
+            "title": "Style Meets Space-Saving Board",
+            "video_url": "https://www.instagram.com/silkys3ds/reel/De2FY3hAkeR/",
+            "custom_cover": "shopify://shop_images/20261024-152904.jpg"
+          }
+        },
         "video_card_mWJQGU": {
           "type": "video_card",
           "settings": {
@@ -658,6 +666,7 @@
         "video_card_iJBKGc",
         "video_1",
         "video_card_K9pz4B",
+        "video_card_kEfyD7",
         "video_card_mWJQGU",
         "video_card_3LLgwB",
         "video_card_pQTkmE",
