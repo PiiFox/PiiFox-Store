@@ -613,7 +613,8 @@
           "type": "video_card",
           "settings": {
             "title": "The Most OVERKILL Keyboard Ever!",
-            "video_url": "https://www.youtube.com/shorts/T-Cdc8_YVlk"
+            "video_url": "https://www.youtube.com/shorts/T-Cdc8_YVlk",
+            "custom_cover": "shopify://shop_images/20261025-000758.jpg"
           }
         },
         "video_card_kEfyD7": {
