@@ -579,13 +579,11 @@
     "video_carousel_home": {
       "type": "video-carousel",
       "blocks": {
-        "video_card_K9pz4B": {
+        "video_4": {
           "type": "video_card",
-          "disabled": true,
           "settings": {
-            "title": "tiktok test",
-            "video_url": "https://www.tiktok.com/@hi.kimchiii/video/7685411600781593886?q=piifox&t=1792747764687",
-            "custom_cover": "shopify://shop_images/20261023-175131.jpg"
+            "title": "PIIFOX Defender68 HE",
+            "video_url": "https://www.youtube.com/shorts/gcrsJnRckVk"
           }
         },
         "video_card_iJBKGc": {
@@ -596,18 +594,19 @@
             "custom_cover": "shopify://shop_images/20261024-143044.jpg"
           }
         },
-        "video_4": {
-          "type": "video_card",
-          "settings": {
-            "title": "PIIFOX Defender68 HE",
-            "video_url": "https://www.youtube.com/shorts/gcrsJnRckVk"
-          }
-        },
         "video_1": {
           "type": "video_card",
           "settings": {
             "title": "PIIFOX VEXRO Haze68 PRO",
             "video_url": "https://www.youtube.com/shorts/YmPvzQK0_ek"
+          }
+        },
+        "video_card_K9pz4B": {
+          "type": "video_card",
+          "settings": {
+            "title": "Luna Muse75 PRO",
+            "video_url": "https://www.instagram.com/reel/Dc1vC0UT4lC/",
+            "custom_cover": "shopify://shop_images/20261024-151434.jpg"
           }
         },
         "video_card_mWJQGU": {
@@ -647,6 +646,7 @@
         },
         "video_2": {
           "type": "video_card",
+          "disabled": true,
           "settings": {
             "title": "PIIFOX LUNA Grid98 Keyboard Review",
             "video_url": "https://www.youtube.com/shorts/4IDG0aq6obY"
@@ -654,10 +654,10 @@
         }
       },
       "block_order": [
-        "video_card_K9pz4B",
-        "video_card_iJBKGc",
         "video_4",
+        "video_card_iJBKGc",
         "video_1",
+        "video_card_K9pz4B",
         "video_card_mWJQGU",
         "video_card_3LLgwB",
         "video_card_pQTkmE",
