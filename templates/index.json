@@ -638,19 +638,19 @@
             "video_url": "https://www.youtube.com/shorts/-IKfGAQdtDU"
           }
         },
+        "video_3": {
+          "type": "video_card",
+          "settings": {
+            "title": "Unboxing the PIIFOX Defender 68",
+            "video_url": "https://www.youtube.com/shorts/9PTVbSDxG0s"
+          }
+        },
         "video_5": {
           "type": "video_card",
           "disabled": true,
           "settings": {
             "title": "PIIFOX FORX Final75 HE",
             "video_url": "https://www.youtube.com/shorts/CbCfIc0Lv9o"
-          }
-        },
-        "video_3": {
-          "type": "video_card",
-          "settings": {
-            "title": "Unboxing the PIIFOX Defender 68",
-            "video_url": "https://www.youtube.com/shorts/9PTVbSDxG0s"
           }
         },
         "video_2": {
@@ -671,8 +671,8 @@
         "video_card_kEfyD7",
         "video_card_mWJQGU",
         "video_card_pQTkmE",
-        "video_5",
         "video_3",
+        "video_5",
         "video_2"
       ],
       "name": "Video Carousel Action",
