@@ -640,6 +640,7 @@
         },
         "video_5": {
           "type": "video_card",
+          "disabled": true,
           "settings": {
             "title": "PIIFOX FORX Final75 HE",
             "video_url": "https://www.youtube.com/shorts/CbCfIc0Lv9o"
