@@ -590,11 +590,10 @@
         },
         "video_card_iJBKGc": {
           "type": "video_card",
-          "disabled": true,
           "settings": {
-            "title": "instagram test",
-            "video_url": "https://www.instagram.com/p/DerlI6oM3pN/",
-            "custom_cover": "shopify://shop_images/20261023-175131.jpg"
+            "title": "Perfect Keybord for Gaming",
+            "video_url": "https://www.instagram.com/p/DdZWaT7x8Er/",
+            "custom_cover": "shopify://shop_images/20261024-143044.jpg"
           }
         },
         "video_4": {
