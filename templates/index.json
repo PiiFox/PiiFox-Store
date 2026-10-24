@@ -609,6 +609,13 @@
             "custom_cover": "shopify://shop_images/20261024-151434.jpg"
           }
         },
+        "video_card_3LLgwB": {
+          "type": "video_card",
+          "settings": {
+            "title": "The Most OVERKILL Keyboard Ever!",
+            "video_url": "https://www.youtube.com/shorts/T-Cdc8_YVlk"
+          }
+        },
         "video_card_kEfyD7": {
           "type": "video_card",
           "settings": {
@@ -622,13 +629,6 @@
           "settings": {
             "title": "New Best Sounding Keyboard",
             "video_url": "https://www.youtube.com/shorts/vpE0kQtrRw8"
-          }
-        },
-        "video_card_3LLgwB": {
-          "type": "video_card",
-          "settings": {
-            "title": "The Most OVERKILL Keyboard Ever!",
-            "video_url": "https://www.youtube.com/shorts/T-Cdc8_YVlk"
           }
         },
         "video_card_pQTkmE": {
@@ -667,9 +667,9 @@
         "video_card_iJBKGc",
         "video_1",
         "video_card_K9pz4B",
+        "video_card_3LLgwB",
         "video_card_kEfyD7",
         "video_card_mWJQGU",
-        "video_card_3LLgwB",
         "video_card_pQTkmE",
         "video_5",
         "video_3",
