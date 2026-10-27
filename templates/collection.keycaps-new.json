@@ -47,7 +47,7 @@
         "products_limit": 24,
         "show_carousel": true,
         "carousel_title": "Handpicked for You",
-        "carousel_title_color": "#B82308",
+        "carousel_title_color": "#0A6830",
         "carousel_limit": 10
       }
     }
