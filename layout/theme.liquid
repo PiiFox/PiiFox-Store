@@ -22,9 +22,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     <link rel="dns-prefetch" href="https://maps.googleapis.com">
     <link rel="dns-prefetch" href="https://maps.gstatic.com">
     <link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Dancing+Script:wght@600;700&display=swap" rel="stylesheet">
 
     {%- if settings.favicon != blank -%}
       <link rel="shortcut icon" href="{{ settings.favicon | img_url: '32x32' }}" type="image/png">
@@ -225,6 +222,5 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <!-- **END** Hextom SPM Integration // Main Include - DO NOT MODIFY -->
 
     {% render 'seo-jsonld' %}
-    {% render 'mobile-card-slider' %}
   </body>
 </html>
