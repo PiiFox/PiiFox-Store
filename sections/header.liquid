@@ -1,7 +1,3 @@
-{% if section.settings.timezone_area_limit %}
-  <script src="{{ 'timezone_area_limit.js' | asset_url }}"></script>
-  <script src="{{ 'ip_country_limit.js' | asset_url }}"></script>
-{% endif %}
 {% include 'bucks-cc' %}
 
 {%- liquid
@@ -348,12 +344,6 @@
       "id": "mega_menu_images",
       "label": "t:sections.header.settings.mega_menu_images.label",
       "default": true
-    },
-    {
-      "type": "checkbox",
-      "id": "timezone_area_limit",
-      "label": "Timezone & Area Limit",
-      "default": true,
     },
     {
         "type": "header",
