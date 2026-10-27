@@ -99,22 +99,6 @@
             </div>
 
             <div class="cart__item-row cart__checkout-wrapper">
-              {% style %}
-                #CartPageForm .cart__checkout-wrapper .cart__shopping-continue-btn {
-                  padding: 0.5em 1em;
-                  border-radius: 20em;
-                  background: #ababab;
-                }
-                #CartPageForm .cart__checkout-wrapper .cart__shopping-continue-btn a {
-                  display: inline-block;
-                  width: 100%;
-                  text-align: center;
-                  color: var(--colorBtnPrimaryText);
-                }
-              {% endstyle %}
-              <p class="cart__shopping-continue-btn">
-                {{ 'cart.general.continue_browsing_html' | t: url: 'https://www.piifox.com/collections/all' }}
-              </p>
               <button
                 type="submit"
                 name="checkout"
