@@ -10,7 +10,35 @@
     data-has-slideshow="{% if product.media.size > 1 %}true{% else %}false{% endif %}">
     <div class="product__photos product__photos-{{ section_id }} product__photos--{{ thumbnail_position }}">
 
+      {%- if product.media.size > 1 -%}
+        <!-- Mobile Custom Slide Arrows -->
+        <button
+          type="button"
+          class="product__slide-nav-btn product__slide-nav-btn--prev medium-up--hide"
+          aria-label="Previous Slide"
+        >
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="15 18 9 12 15 6"></polyline>
+          </svg>
+        </button>
+        <button
+          type="button"
+          class="product__slide-nav-btn product__slide-nav-btn--next medium-up--hide"
+          aria-label="Next Slide"
+        >
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
+        </button>
+      {%- endif -%}
+
       <div class="product__main-photos" data-aos data-product-single-media-group data-category="{{ product.category }}">
+        {%- if product.media.size > 1 -%}
+          <!-- Mobile Custom Slide Counter -->
+          <div class="product__slide-counter medium-up--hide">
+            <span class="product__slide-counter-current">1</span>/<span class="product__slide-counter-total">{{ product.media.size }}</span>
+          </div>
+        {%- endif -%}
         <div data-product-photos class="product-slideshow" id="ProductPhotos-{{ section_id }}">
           {%- for media in product.media -%}
             {% liquid
@@ -149,6 +177,109 @@
   <script type="application/json" id="ModelJson-{{ section_id }}">
     {{ product.media | where: 'media_type', 'model' | json }}
   </script>
+
+  {%- if product.media.size > 1 -%}
+    <script>
+      (function () {
+        function initMobileSliderNav_{{ section_id | replace: '-', '_' }}() {
+          var photosWrap = document.querySelector('.product__photos-{{ section_id }}');
+          if (!photosWrap) return;
+
+          var slider = photosWrap.querySelector('#ProductPhotos-{{ section_id }}');
+          var prevBtn = photosWrap.querySelector('.product__slide-nav-btn--prev');
+          var nextBtn = photosWrap.querySelector('.product__slide-nav-btn--next');
+          var currentEl = photosWrap.querySelector('.product__slide-counter-current');
+          var totalEl = photosWrap.querySelector('.product__slide-counter-total');
+
+          if (!slider) return;
+
+          function getFlkty() {
+            if (window.Flickity && slider) {
+              return Flickity.data(slider);
+            }
+            return null;
+          }
+
+          function updateCounter(flkty) {
+            if (!flkty) flkty = getFlkty();
+            if (!flkty) return;
+            var idx = typeof flkty.selectedIndex === 'number' ? flkty.selectedIndex : 0;
+            var total = flkty.slides && flkty.slides.length ? flkty.slides.length : {{ product.media.size }};
+            if (currentEl) currentEl.textContent = idx + 1;
+            if (totalEl) totalEl.textContent = total;
+          }
+
+          if (prevBtn && !prevBtn._navBound) {
+            prevBtn._navBound = true;
+            prevBtn.addEventListener('click', function (e) {
+              e.preventDefault();
+              e.stopPropagation();
+              var flkty = getFlkty();
+              if (flkty) {
+                flkty.previous();
+              }
+            });
+          }
+
+          if (nextBtn && !nextBtn._navBound) {
+            nextBtn._navBound = true;
+            nextBtn.addEventListener('click', function (e) {
+              e.preventDefault();
+              e.stopPropagation();
+              var flkty = getFlkty();
+              if (flkty) {
+                flkty.next();
+              }
+            });
+          }
+
+          var boundFlkty = null;
+          function attachFlickity() {
+            var flkty = getFlkty();
+            if (flkty && flkty !== boundFlkty) {
+              boundFlkty = flkty;
+              flkty.on('select', function () {
+                updateCounter(flkty);
+              });
+              flkty.on('change', function () {
+                updateCounter(flkty);
+              });
+              updateCounter(flkty);
+              if (typeof flkty.resize === 'function') {
+                flkty.resize();
+              }
+              return true;
+            }
+            return false;
+          }
+
+          if (!attachFlickity()) {
+            var attempts = 0;
+            var timer = setInterval(function () {
+              attempts++;
+              if (attachFlickity() || attempts > 60) {
+                clearInterval(timer);
+              }
+            }, 100);
+          }
+
+          if (window.MutationObserver && !slider._navObserved) {
+            slider._navObserved = true;
+            var observer = new MutationObserver(function () {
+              attachFlickity();
+            });
+            observer.observe(slider, { childList: true });
+          }
+        }
+
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', initMobileSliderNav_{{ section_id | replace: '-', '_' }});
+        } else {
+          initMobileSliderNav_{{ section_id | replace: '-', '_' }}();
+        }
+      })();
+    </script>
+  {%- endif -%}
 {%- else -%}
   <div class="product__photos product__photos-{{ section_id }}">
     <div class="product__main-photos" style="width: 100%">

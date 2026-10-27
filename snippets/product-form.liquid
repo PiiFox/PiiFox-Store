@@ -8,16 +8,30 @@ $(function() {
 </script>
 {%- form 'product', product, id: form_id, class: 'product-single__form' -%}
 
-  {%- liquid
-    assign enable_dynamic_buttons = false
-    if show_dynamic_checkout and template != 'product.preorder'
-      assign enable_dynamic_buttons = true
-    endif
-  -%}
+  <div class="product-form__actions-group">
+    <div class="product__stock-status-wrap">
+      <span data-product-quantity-status class="product-quantity-status {% if current_variant.available %}product-quantity-status--in-stock{% else %}product-quantity-status--out-of-stock{% endif %}">
+        {% if current_variant.available %}In Stock{% else %}Out of Stock{% endif %}
+      </span>
+    </div>
 
-  {%- if enable_dynamic_buttons -%}
-    <div class="payment-buttons">
-  {%- endif -%}
+    <div class="payment-buttons product__actions-row">
+      <div class="product__quantity">
+        {% assign qty_id = section_id | default: section.id | default: product.id | append: product.id %}
+        {%- assign current_variant_has_inventory_limit = false -%}
+        {%- if current_variant.inventory_management == 'shopify' and current_variant.inventory_policy == 'deny' -%}
+          {%- assign current_variant_has_inventory_limit = true -%}
+          {%- assign current_variant_max_qty = current_variant.inventory_quantity | at_least: 0 -%}
+        {%- endif -%}
+        {%- render 'quantity-input',
+          form_id: form_id,
+          id: qty_id,
+          qty: 1,
+          min: 1,
+          max: current_variant_max_qty,
+          has_limit: current_variant_has_inventory_limit
+        -%}
+      </div>
 
     {%- liquid
       assign default_text = 'products.product.add_to_cart' | t
@@ -53,7 +67,7 @@ $(function() {
     		  }]
     	  }
       });"
-      class="btn btn--full add-to-cart{% if enable_dynamic_buttons and product.selling_plan_groups == empty %} btn--secondary{% endif %}"
+      class="btn btn--full add-to-cart"
       {% unless current_variant.available %} disabled="disabled"{% endunless %}>
       <span data-add-to-cart-text data-default-text="{{ default_text }}">
         {{ button_text }}
@@ -61,133 +75,86 @@ $(function() {
     </button>
 
     {% style %}
-        .custom-shopify-buy-btn.btn {
-            width: 49%;
-            border: 1px solid var(--colorBtnPrimary);
-            border-radius: 10px;
-            font-size: 14px;
-            height: 50px;
-            padding: 0;
-            display: none;
-          }
-          .shopify-payment-button[data-shopify="payment-button"] .shopify-payment-button__button--branded {
-            display: none
-          }
-          .shopify-payment-button[data-shopify="payment-button"] shopify-paypal-button {
-            display: none
-          }
-          .shopify-payment-button[data-shopify="payment-button"] .shopify-payment-button__more-options {
-            border: 1px solid var(--colorBtnPrimary);
-            border-radius: 10px;
-            font-size: 14px;
-            height: 50px;
-            padding: 0;
-            margin-top: 0;
-            background: var(--colorBtnPrimary);
-            color: #fff;
-            position: relative;
-          }
-          .shopify-payment-button[data-shopify="payment-button"] .shopify-payment-button__more-options::after {
-            content: '{{ 'general.custom.shop_now' | t }}';
-            position: absolute;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background: var(--colorBtnPrimary);
-            color: #fff;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            text-transform: uppercase;
-            font-weight: 700;
+        .payment-buttons {
+          width: 100%;
         }
-        .payment-buttons .add-to-cart.btn--secondary, 
-        .shopify-payment-button .shopify-payment-button__button--unbranded,
-        .shopify-payment-button[data-shopify="payment-button"] .shopify-payment-button__more-options {
+        .payment-buttons .add-to-cart,
+        .payment-buttons .add-to-cart.btn--secondary {
+          width: 100%;
           border-radius: 20em;
           font-weight: 700;
           font-size: 16px;
           font-family: 'PF_Semibold', 'Manrope', sans-serif;
           letter-spacing: 0.1em;
           height: 3.5em;
-          background-size: 100% 200%;
-          background-position: top;   
-          transition: background-position 0.5s ease-out;
+          background-color: var(--colorLightLink);
+          border: 1.5px solid var(--colorLightLink);
+          color: #fff;
           position: relative;
           cursor: pointer;
           overflow: hidden;
-          z-index: 0;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          text-transform: uppercase;
+          transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease, transform 0.15s ease !important;
         }
-        .payment-buttons .add-to-cart.btn--secondary {
-          background-color: var(--colorBtnPrimary);
-          border: 1px solid var(--colorBtnPrimary);
-        }
-        .payment-buttons .add-to-cart.btn--secondary[disabled="disabled"] {
-          background-color: var(--colorBtnDisable);
-          border: 1px solid var(--colorBtnDisable);
-          color: var(--colorBtnPrimaryText);
-        }
-        .shopify-payment-button .shopify-payment-button__button--unbranded,
-        .shopify-payment-button[data-shopify="payment-button"] .shopify-payment-button__more-options {
-          background-color: var(--colorLightLink);
-          border: 1px solid var(--colorLightLink);
-        }
-        .payment-buttons .add-to-cart.btn--secondary::after,
-        .shopify-payment-button .shopify-payment-button__button--unbranded::before,
-        .shopify-payment-button[data-shopify="payment-button"] .shopify-payment-button__more-options::before {
-          content: '';
-          position: absolute;
-          top: 0;
-          left: 0;
-          width: 100%;
-          aspect-ratio: 1/1;
-          border-radius: 50%;
-          background: var(--colorBtnPrimaryText);
-          transform: translateY(40%);       
-          transform-origin: bottom center;  
-          transition: transform 0.5s ease-out;
-          z-index: -1;
-        }
-        .payment-buttons .add-to-cart.btn--secondary:hover::after,
-        .shopify-payment-button .shopify-payment-button__button--unbranded:hover::before,
-        .shopify-payment-button[data-shopify="payment-button"] .shopify-payment-button__more-options:hover::before {
-          top: 0;
-          transform: translateY(-40%);
-        } 
-         
-
-        .payment-buttons .add-to-cart.btn--secondary:hover,
-        .shopify-payment-button .shopify-payment-button__button--unbranded:hover,
-        .shopify-payment-button .shopify-payment-button__button--unbranded:hover:not([disabled]):hover,
-        .shopify-payment-button[data-shopify="payment-button"] .shopify-payment-button__more-options:hover::after {
-          color: var(--colorLightLink);
-          border-color: var(--colorLightLink);
-        }
-
-        .shopify-payment-button[data-shopify="payment-button"] .shopify-payment-button__more-options:hover {
-          border-color: var(--colorLightLink);
-        }
-        .shopify-payment-button[data-shopify="payment-button"] .shopify-payment-button__more-options {
-          color: transparent;
-        }
-        .shopify-payment-button[data-shopify="payment-button"] .shopify-payment-button__more-options:hover::after {
-          background: transparent;
+        .payment-buttons .add-to-cart span,
+        .payment-buttons .add-to-cart.btn--secondary span {
+          position: relative;
           z-index: 1;
+          transition: color 0.25s ease;
         }
-        .payment-buttons .add-to-cart.btn--secondary[disabled="disabled"]:hover {
-          color: var(--colorBtnDisable);
-          border-color: var(--colorBtnDisable);
+        .payment-buttons .add-to-cart::after,
+        .payment-buttons .add-to-cart.btn--secondary::after,
+        .payment-buttons .add-to-cart::before,
+        .payment-buttons .add-to-cart.btn--secondary::before {
+          display: none !important;
+        }
+        .payment-buttons .add-to-cart:hover,
+        .payment-buttons .add-to-cart.btn--secondary:hover {
+          color: var(--colorLightLink) !important;
+          border-color: var(--colorLightLink) !important;
+          background-color: #ffffff !important;
+          box-shadow: 0 4px 16px rgba(10, 104, 48, 0.12);
+        }
+        .payment-buttons .add-to-cart:hover span,
+        .payment-buttons .add-to-cart.btn--secondary:hover span {
+          color: var(--colorLightLink) !important;
+        }
+        .payment-buttons .add-to-cart:active,
+        .payment-buttons .add-to-cart.btn--secondary:active {
+          transform: scale(0.985);
+          background-color: #f2f8f4 !important;
+          box-shadow: 0 2px 8px rgba(10, 104, 48, 0.15);
+        }
+        .payment-buttons .add-to-cart[disabled="disabled"],
+        .payment-buttons .add-to-cart.btn--secondary[disabled="disabled"],
+        .payment-buttons .add-to-cart:disabled {
+          background-color: var(--colorBtnDisable) !important;
+          border: 1px solid var(--colorBtnDisable) !important;
+          color: var(--colorBtnPrimaryText) !important;
+          cursor: not-allowed;
+          box-shadow: none !important;
+          transform: none !important;
+        }
+        .payment-buttons .add-to-cart[disabled="disabled"]:hover,
+        .payment-buttons .add-to-cart.btn--secondary[disabled="disabled"]:hover,
+        .payment-buttons .add-to-cart:disabled:hover {
+          color: var(--colorBtnPrimaryText) !important;
+          border-color: var(--colorBtnDisable) !important;
+          background-color: var(--colorBtnDisable) !important;
+          box-shadow: none !important;
+          transform: none !important;
+        }
+        .custom-shopify-buy-btn,
+        .shopify-payment-button,
+        [data-shopify="payment-button"] {
+          display: none !important;
         }
     {% endstyle %}
-    {%- if enable_dynamic_buttons -%}
-      <button class="custom-shopify-buy-btn btn shopify-payment-button"  type="button" data-testid="sheet-open-button" >{{ 'general.custom.buy_now' | t }}</button>
-      {{ form | payment_button }}
-    {%- endif -%}
-
-  {%- if enable_dynamic_buttons -%}
-    </div>
-  {%- endif -%}
+  </div>
+  </div>
 
   <div class="shopify-payment-terms product__policies">{{ form | payment_terms }}</div>
 

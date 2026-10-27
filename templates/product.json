@@ -54,6 +54,7 @@
         },
         "305ed3aa-d1d3-4b24-a07d-b1efc23c4d2f": {
           "type": "quantity_selector",
+          "disabled": true,
           "settings": {}
         },
         "50aa095d-a2eb-4675-a70f-779c033b08ca": {
@@ -155,7 +156,6 @@
         "price",
         "89e95235-70d0-4267-b49f-dd49763f2af7",
         "separator",
-        "114a8bf7-bfcb-40b5-bc54-44c8a468e495",
         "variant_picker",
         "8bfda07b-08e2-4929-bd33-d1288c14b8f9",
         "305ed3aa-d1d3-4b24-a07d-b1efc23c4d2f",
@@ -163,12 +163,13 @@
         "138ac04d-724c-4b80-b0f1-8ff275ada303",
         "custom_XpJe4X",
         "buy_buttons",
+        "909b5578-0882-45e5-a7a2-fe046b398980",
+        "ddeae6e0-8d17-451f-abf8-de7814de443d",
+        "114a8bf7-bfcb-40b5-bc54-44c8a468e495",
         "rule_note_YRjr63",
         "8b89d97f-65d6-4fda-a00c-3f23a460893d",
         "74f3c2ae-b2b5-4177-a3c4-c43f472adc09",
         "collapse_rule_list_4LHtpy",
-        "909b5578-0882-45e5-a7a2-fe046b398980",
-        "ddeae6e0-8d17-451f-abf8-de7814de443d",
         "af0d8d68-399e-4e03-a410-f08becab3d8f"
       ],
       "custom_css": [

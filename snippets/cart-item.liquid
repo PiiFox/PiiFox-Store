@@ -1,21 +1,71 @@
-<div class="cart__item" data-key="{{ product.key }}">
-  {%- assign img_url = product | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
-  <div class="cart__image">
-    <a href="{{ product.url }}" style="height: 0; padding-bottom: {{ 100 | divided_by: product.image.aspect_ratio }}%;">
-      <img class="lazyload"
-          data-src="{{ img_url }}"
-          data-widths="[180, 360, 540]"
-          data-aspectratio="{{ product.aspect_ratio }}"
-          data-sizes="auto"
-          alt="{{ product.product.title | escape }}">
+{%- assign is_service_item = false -%}
+{%- if product.product.handle == 'manual-keycap-installation-service' or product.product.title contains 'Manual Keycap Installation' or product.properties['Service'] != blank -%}
+  {%- assign is_service_item = true -%}
+{%- endif -%}
 
-      <noscript>
-        <img class="lazyloaded"
-          src="{{ product | img_url: '400x' }}"
-          alt="{{ product.product.title | escape }}">
-      </noscript>
-    </a>
-  </div>
+{%- assign p_type = product.product.type | downcase -%}
+{%- assign p_cat_name = product.product.category.name | downcase -%}
+{%- assign p_title = product.product.title | downcase -%}
+{%- assign is_keyboard = false -%}
+{%- if p_type contains 'keyboard' or p_title contains 'keyboard' or p_cat_name contains 'keyboard' or product.product.tags contains 'keyboard' or product.product.tags contains 'Keyboard' or product.product.tags contains 'keyboards' or product.product.tags contains 'Keyboards' -%}
+  {%- unless p_title contains 'keycap' or p_title contains 'switch' or p_type contains 'keycap' or p_type contains 'switch' or p_title contains 'desk mat' or p_title contains 'holder' -%}
+    {%- assign is_keyboard = true -%}
+  {%- endunless -%}
+{%- endif -%}
+
+{%- assign is_keycap = false -%}
+{%- if p_type == 'keycaps' or p_type == 'keycap' or p_title contains 'keycap' or p_cat_name contains 'keycap' or product.product.tags contains 'keycaps' or product.product.tags contains 'Keycaps' -%}
+  {%- unless is_keyboard or p_title contains 'puller' or p_title contains 'installation' or p_title contains 'service' -%}
+    {%- assign is_keycap = true -%}
+  {%- endunless -%}
+{%- endif -%}
+
+<div class="cart__item{% if is_service_item %} cart__item--service{% endif %}"
+  data-key="{{ product.key }}"
+  data-product-id="{{ product.product.id }}"
+  data-variant-id="{{ product.variant.id }}"
+  data-is-keyboard="{{ is_keyboard }}"
+  data-is-keycap="{{ is_keycap }}"
+  data-line-price="{{ product.original_line_price | default: product.final_line_price }}"
+  data-item-price="{{ product.original_price | default: product.final_price }}"
+  data-item-quantity="{{ product.quantity }}"
+  data-product-type="{{ product.product.type | escape }}"
+  data-product-title="{{ product.product.title | escape }}">
+  {%- if product.image != blank -%}
+    {%- assign img_url = product | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+    <div class="cart__image">
+      <a href="{{ product.url }}" style="height: 0; padding-bottom: {{ 100 | divided_by: product.image.aspect_ratio }}%;">
+        <img class="lazyload"
+            data-src="{{ img_url }}"
+            data-widths="[180, 360, 540]"
+            data-aspectratio="{{ product.aspect_ratio }}"
+            data-sizes="auto"
+            alt="{{ product.product.title | escape }}">
+
+        <noscript>
+          <img class="lazyloaded"
+            src="{{ product | img_url: '400x' }}"
+            alt="{{ product.product.title | escape }}">
+        </noscript>
+      </a>
+    </div>
+  {%- else -%}
+    <div class="cart__image cart__image--placeholder">
+      <div class="cart__image-placeholder{% if is_service_item %} cart__image-placeholder--service{% endif %}">
+        {%- if is_service_item -%}
+          <div class="cart__service-img-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
+            </svg>
+            <span class="cart__service-img-label">SERVICE</span>
+          </div>
+        {%- else -%}
+          {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+        {%- endif -%}
+      </div>
+    </div>
+  {%- endif -%}
+
   <div class="cart__item-details">
     <div class="cart__item-title">
       <a href="{{ product.url }}" class="cart__item-name">
@@ -34,21 +84,64 @@
         </div>
       {%- endif -%}
       {%- assign property_size = product.properties | size -%}
-      {% if property_size > 0 %}
-        {% for p in product.properties %}
-          {%- assign first_character_in_key = p.first | truncate: 1, '' -%}
-          {% unless p.last == blank or first_character_in_key == '_' %}
-            <div>
-              {{ p.first }}:
-              {% if p.last contains '/uploads/' %}
-                <a href="{{ p.last }}">{{ p.last | split: '/' | last }}</a>
-              {% else %}
-                {{ p.last }}
-              {% endif %}
-            </div>
-          {% endunless %}
-        {% endfor %}
-      {% endif %}
+      {%- assign has_for_keyboard = false -%}
+      {% for p in product.properties %}
+        {% if p.first == 'For Keyboard' and p.last != blank %}
+          {%- assign has_for_keyboard = true -%}
+        {% endif %}
+      {% endfor %}
+
+      {%- if is_service_item -%}
+        {%- if property_size > 0 -%}
+          <div class="cart__service-props-list">
+            {% for p in product.properties %}
+              {%- assign first_character_in_key = p.first | truncate: 1, '' -%}
+              {%- assign key_downcase = p.first | downcase -%}
+              {%- assign val_downcase = p.last | downcase -%}
+              {% unless p.last == blank or first_character_in_key == '_' or key_downcase == 'service' or val_downcase contains 'none' %}
+                {%- assign prop_title = p.first -%}
+                {%- if prop_title == 'Keycap Model' -%}
+                  {%- assign prop_title = 'Keycaps Assigned' -%}
+                {%- endif -%}
+                <div class="cart__service-prop-card">
+                  <div class="cart__service-prop-title">{{ prop_title }}:</div>
+                  <div class="cart__service-prop-value">
+                    {% if p.last contains '/uploads/' %}
+                      <a href="{{ p.last }}" class="cart__service-prop-link">{{ p.last | split: '/' | last }}</a>
+                    {% else %}
+                      {%- assign clean_prop_val = p.last | replace: '&lt;span class=money&gt;', '' | replace: '&lt;span class="money"&gt;', '' | replace: '&lt;/span&gt;', '' | replace: '<span class=money>', '' | replace: '<span class="money">', '' | replace: '</span>', '' | strip_html -%}
+                      {%- for i in (1..10) -%}
+                        {%- assign kb_suffix_with_space = ' (Keyboard ' | append: i | append: ')' -%}
+                        {%- assign clean_prop_val = clean_prop_val | remove: kb_suffix_with_space -%}
+                        {%- assign kb_suffix_no_space = '(Keyboard ' | append: i | append: ')' -%}
+                        {%- assign clean_prop_val = clean_prop_val | remove: kb_suffix_no_space -%}
+                      {%- endfor -%}
+                      {{ clean_prop_val }}
+                    {% endif %}
+                  </div>
+                </div>
+              {% endunless %}
+            {% endfor %}
+          </div>
+        {% endif %}
+      {%- else -%}
+        {%- if property_size > 0 -%}
+          {% for p in product.properties %}
+            {%- assign first_character_in_key = p.first | truncate: 1, '' -%}
+            {%- assign key_downcase = p.first | downcase -%}
+            {%- unless p.last == blank or first_character_in_key == '_' or key_downcase contains 'installation' or key_downcase contains 'pre-installed' or key_downcase contains 'assembly' -%}
+              <div>
+                {{ p.first }}:
+                {% if p.last contains '/uploads/' %}
+                  <a href="{{ p.last }}">{{ p.last | split: '/' | last }}</a>
+                {% else %}
+                  {{ p.last }}
+                {% endif %}
+              </div>
+            {%- endunless -%}
+          {% endfor %}
+        {%- endif -%}
+      {%- endif -%}
 
     </div>
     <div class="cart__item-sub">
@@ -85,7 +178,7 @@
                 name="updates[]"
                 class="js-qty__num"
                 value="{% if item_is_maxed %}{{ item_max_qty }}{% else %}{{ product.quantity }}{% endif %}"
-                min="0"
+                min="1"
                 {% if item_has_inventory_limit %}
                   max="{{ item_max_qty }}"
                 {% endif %}
@@ -113,7 +206,37 @@
               {%- endif -%}
             </div>
             <div class="cart__item-price-col text-left">
-              {% if product.original_price != product.final_price %}
+              {%- if cart_has_keyboard == nil -%}
+                {%- assign cart_has_keyboard = false -%}
+                {%- for ci in cart.items -%}
+                  {%- assign ci_t = ci.product.type | downcase -%}
+                  {%- assign ci_title = ci.product.title | downcase -%}
+                  {%- if ci_t contains 'keyboard' or ci_title contains 'keyboard' or ci.product.tags contains 'keyboards' or ci.product.tags contains 'Keyboards' or ci.product.tags contains 'keyboard' or ci.product.tags contains 'Keyboard' -%}
+                    {%- unless ci_title contains 'keycap' or ci_title contains 'switch' or ci_t contains 'keycap' or ci_t contains 'switch' or ci_title contains 'desk mat' or ci_title contains 'holder' -%}
+                      {%- assign cart_has_keyboard = true -%}
+                      {%- break -%}
+                    {%- endunless -%}
+                  {%- endif -%}
+                {%- endfor -%}
+              {%- endif -%}
+
+              {%- if is_keycap -%}
+                {%- if cart_has_keyboard -%}
+                  {%- assign kc_orig_price = product.original_line_price | default: product.original_price | times: product.quantity -%}
+                  {%- assign kc_unit_disc = product.original_price | times: 0.9 | round -%}
+                  {%- assign kc_final_disc = kc_unit_disc | times: product.quantity -%}
+                  <small class="cart__price cart__price--strikethrough" style="text-decoration: line-through; color: #999; margin-right: 6px;">
+                    {{ kc_orig_price | money }}
+                  </small>
+                  <span class="cart__price cart__discount" style="color: #0A6830; font-weight: 600;">
+                    {{ kc_final_disc | money }}
+                  </span>
+                {%- else -%}
+                  <span class="cart__price">
+                    {{ product.original_line_price | default: product.original_price | times: product.quantity | money }}
+                  </span>
+                {%- endif -%}
+              {%- elsif product.original_price != product.final_price -%}
                 <span class="visually-hidden">{{ 'products.general.regular_price' | t }}</span>
                 <small class="cart__price cart__price--strikethrough">
                   {{ product.original_price | times: product.quantity | money }}
@@ -122,14 +245,17 @@
                 <span class="cart__price cart__discount">
                   {{ product.final_price | times: product.quantity | money }}
                 </span>
-              {% else %}
+              {%- else -%}
                 <span class="cart__price">
                   {{ product.original_price | times: product.quantity | money }}
                 </span>
-              {% endif %}
+              {%- endif -%}
 
               {%- if product.line_level_discount_allocations != blank -%}
                 {%- for discount_allocation in product.line_level_discount_allocations -%}
+                  {%- if is_keycap or discount_allocation.discount_application.title contains 'KEYCAP' -%}
+                    {%- continue -%}
+                  {%- endif -%}
                   <small class="cart__discount">{{ discount_allocation.discount_application.title }} (-{{ discount_allocation.amount | money }})</small>
                 {%- endfor -%}
               {%- endif -%}

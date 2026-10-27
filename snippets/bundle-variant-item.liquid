@@ -1,70 +1,87 @@
-{% comment %} 
- variant
+{% comment %}
+  Addon Product / Variant Card Item (matches Complete Your Setup keycap card style)
 {% endcomment %}
 
+{%- assign item_variant = variant -%}
+{%- if variant.variants -%}
+  {%- assign item_variant = variant.selected_or_first_available_variant | default: variant.variants.first -%}
+{%- endif -%}
+
+{%- assign is_available = item_variant.available -%}
+{%- assign item_title = item_variant.product.title | default: item_variant.title -%}
+{%- assign variant_subtitle = '' -%}
+{%- if item_variant.title != 'Default Title' and item_variant.title != blank -%}
+  {%- assign variant_subtitle = item_variant.title -%}
+{%- endif -%}
+
+{%- assign card_image = '' -%}
+{%- if item_variant.featured_image -%}
+  {%- assign card_image = item_variant.featured_image | image_url: width: 360 -%}
+{%- elsif item_variant.image -%}
+  {%- assign card_image = item_variant.image | image_url: width: 360 -%}
+{%- elsif item_variant.product.featured_image -%}
+  {%- assign card_image = item_variant.product.featured_image | image_url: width: 360 -%}
+{%- elsif item_variant.product.images.first -%}
+  {%- assign card_image = item_variant.product.images.first | image_url: width: 360 -%}
+{%- endif -%}
+
 <div
-  class="
-    bundle-product-item
-    {% if variant.available %}available{% else %}sold-out{% endif %}
-  "
-  data-bundle-product="{{ variant.id }}"
+  class="bundle-keycap-card bundle-addon-card {% if is_available %}available{% else %}sold-out{% endif %}"
+  data-variant-id="{{ item_variant.id }}"
+  data-product-title="{{ item_variant.product.title | escape }}"
+  data-variant-title="{{ item_variant.title | escape }}"
+  role="button"
+  tabindex="{% if is_available %}0{% else %}-1{% endif %}"
+  aria-pressed="false"
+  aria-label="{{ item_title | escape }}{% if variant_subtitle != blank %} ({{ variant_subtitle | escape }}){% endif %} - {{ item_variant.price | money }}"
 >
-  {% assign variant_image = '' %}
-  {% if variant.featured_image %}
-    {% assign variant_image = variant.featured_image | image_url %}
-  {% elsif variant.image %}
-    {% assign variant_image = variant.image | image_url %}
-  {% elsif variant.product.featured_image %}
-    {% assign variant_image = variant.product.featured_image | image_url %}
-  {% else %}
-    {% assign variant_image = variant.product.images.first | img_url: '250x250' %}
-  {% endif %}
-  <div class="bundle-product-checked">
-    <input type="checkbox" 
-        id="{{ variant.id }}" 
-        class="bundle-product-checkbox" 
-        data-bundle-product="{{ variant.id }}"
-        {% if variant.available == false %} disabled {% endif %} 
-    />
-    <label for="{{ variant.id }}" class="bundle-product-checkbox-label"></label>
-  </div>
-  <div class="bundle-product-image">
-    <img
-      src="{{ variant_image }}"
-      alt="{{ variant.product.title }}-{{ variant.title }}"
-      loading="lazy"
-      width="250"
-      height="250"
-    >
-  </div>
-  <div class="bundle-product-info">
-    <div class="bundle-product-name">{{ variant.product.title }}</div>
-    <div class="bundle-product-variant">
-      {% if variant.title == 'Default Title' %}
-        {{ 'products.general.default_variant' | t }}
-      {% else %}
-        {{ variant.title }}
-      {% endif %}
+  <input
+    type="checkbox"
+    class="bundle-product-checkbox bundle-addon-checkbox"
+    id="bundle-addon-{{ item_variant.id }}"
+    data-bundle-product="{{ item_variant.id }}"
+    {% unless is_available %}disabled{% endunless %}
+    tabindex="-1"
+    aria-hidden="true"
+    style="display: none;"
+  >
+
+  <div class="bundle-keycap-card__media">
+    {% if card_image != blank %}
+      <img
+        src="{{ card_image }}"
+        alt="{{ item_variant.product.title | escape }} - {{ item_variant.title | escape }}"
+        loading="lazy"
+        width="200"
+        height="200"
+        draggable="false"
+      >
+    {% else %}
+      <div class="bundle-keycap-card__no-img">No Image</div>
+    {% endif %}
+
+    <div class="bundle-keycap-card__badge" aria-hidden="true">
+      <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M13.5 4.5L6.5 11.5L3 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
     </div>
-    <div class="bundle-product-options">
-      <div class="bundle-product-price">{{ variant.price | money }}</div>
-      <div class="bundle-product-qty">
-        {%- assign bundle_variant_has_limit = false -%}
-        {%- if variant.inventory_management == 'shopify' and variant.inventory_policy == 'deny' -%}
-          {%- assign bundle_variant_has_limit = true -%}
-          {%- assign bundle_variant_max_qty = variant.inventory_quantity | at_least: 0 -%}
-        {%- endif -%}
-        {% assign qty_id = 'bundle-variant-form-' | append: variant.id %}
-        {%- render 'quantity-input',
-          form_id: qty_id,
-          id: variant.id,
-          qty: 1,
-          min: 1,
-          max: bundle_variant_max_qty,
-          has_limit: bundle_variant_has_limit
-        -%}
+
+    {% unless is_available %}
+      <div class="bundle-keycap-card__soldout-tag">Sold Out</div>
+    {% endunless %}
+  </div>
+
+  <div class="bundle-keycap-card__info">
+    <div class="bundle-keycap-card__title" title="{{ item_title | escape }}">
+      {{ item_title }}
+    </div>
+    {% if variant_subtitle != blank %}
+      <div class="bundle-keycap-card__variant" title="{{ variant_subtitle | escape }}">
+        {{ variant_subtitle }}
       </div>
+    {% endif %}
+    <div class="bundle-keycap-card__price">
+      {{ item_variant.price | money }}
     </div>
-    
   </div>
 </div>

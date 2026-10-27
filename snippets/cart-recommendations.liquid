@@ -1,0 +1,697 @@
+{%- comment -%}
+  Cart Recommendations Component (只推荐精选键帽，固定 5 款)
+{%- endcomment -%}
+
+{%- assign keycap_collection = collections['keycaps'] -%}
+{%- assign cart_has_keyboard = false -%}
+{%- for ci in cart.items -%}
+  {%- assign ci_t = ci.product.type | downcase -%}
+  {%- assign ci_title = ci.product.title | downcase -%}
+  {%- if ci_t contains 'keyboard' or ci_title contains 'keyboard' or ci.product.tags contains 'keyboards' or ci.product.tags contains 'Keyboards' or ci.product.tags contains 'keyboard' or ci.product.tags contains 'Keyboard' -%}
+    {%- assign cart_has_keyboard = true -%}
+    {%- break -%}
+  {%- endif -%}
+{%- endfor -%}
+
+<div id="CartRecommendations" class="cart-recommendations" data-url="/recommendations/products.json">
+  <div class="cart-recommendations__header">
+    <h3 class="cart-recommendations__title">{{ settings.cart_recommendations_heading | default: 'You may also like' }}</h3>
+    <div class="cart-recommendations__arrows" data-rec-arrows>
+      <button type="button" class="cart-rec-arrow cart-rec-arrow--prev is-disabled" data-rec-prev aria-label="Previous recommendation">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="15 18 9 12 15 6"></polyline>
+        </svg>
+      </button>
+      <button type="button" class="cart-rec-arrow cart-rec-arrow--next" data-rec-next aria-label="Next recommendation">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="9 18 15 12 9 6"></polyline>
+        </svg>
+      </button>
+    </div>
+  </div>
+  <div class="cart-recommendations__subtitle">
+    <svg class="cart-recommendations__subtitle-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path>
+      <line x1="7" y1="7" x2="7.01" y2="7"></line>
+    </svg>
+    <span>Pair a keyboard with keycaps to get <strong>10% off</strong> keycaps.</span>
+  </div>
+  <div class="cart-recommendations__list" id="CartRecommendationsList">
+    {%- comment -%}
+      服务端静态预渲染 5 款键帽精品
+      确保首屏秒开，杜绝客户端加载延迟或空屏
+    {%- endcomment -%}
+    {%- assign keycap_count = 0 -%}
+    {%- if keycap_collection and keycap_collection.products_count > 0 -%}
+      {%- for p in keycap_collection.products -%}
+        {%- assign p_h = p.handle | downcase -%}
+        {%- assign p_t = p.title | downcase -%}
+        {%- assign p_type = p.type | downcase -%}
+        {%- if p_type != 'keycaps' and p.type != blank -%}
+          {%- continue -%}
+        {%- endif -%}
+        {%- if p_h contains 'puller' or p_t contains 'puller' or p_h contains 'installation' or p_h contains 'manual-service' or p_t contains 'installation' or p.title contains '人工安装' or p.title contains '安装服务' or p.type == 'Service' or p.type == 'accessories' -%}
+          {%- continue -%}
+        {%- endif -%}
+        {%- unless p.available -%}
+          {%- continue -%}
+        {%- endunless -%}
+
+        {%- assign v_id = p.first_available_variant.id | default: p.variants.first.id -%}
+        <div class="cart-rec-item" data-rec-product-id="{{ p.id }}" data-rec-variant-id="{{ v_id }}" data-rec-category="keycap" data-rec-handle="{{ p.handle | escape }}">
+          <a href="{{ p.url }}" class="cart-rec-item__image-wrap">
+            <img src="{{ p.featured_image | img_url: '240x' }}" alt="{{ p.title | escape }}" loading="lazy" class="cart-rec-item__image">
+          </a>
+          <div class="cart-rec-item__info">
+            <a href="{{ p.url }}" class="cart-rec-item__title" title="{{ p.title | escape }}">{{ p.title }}</a>
+            {%- assign rec_orig_price = p.price -%}
+            {%- assign rec_disc_price = p.price | times: 0.9 | round -%}
+            <div class="cart-rec-item__price-row" data-price="{{ rec_orig_price }}">
+              {%- if cart_has_keyboard -%}
+                <span class="cart-rec-item__compare-price">{{ rec_orig_price | money }}</span>
+                <span class="cart-rec-item__price">{{ rec_disc_price | money }}</span>
+              {%- else -%}
+                <span class="cart-rec-item__price">{{ rec_orig_price | money }}</span>
+              {%- endif -%}
+            </div>
+          </div>
+          <div class="cart-rec-item__action">
+            <button type="button" class="cart-rec-item__add-btn" data-add-variant="{{ v_id }}" aria-label="Add {{ p.title | escape }} to cart">
+              <span class="cart-rec-item__btn-text">+ Add</span>
+              <span class="cart-rec-item__btn-spinner" style="display: none;">
+                <svg viewBox="0 0 24 24" class="cart-rec-spinner"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="3" fill="none" stroke-dasharray="31.4" stroke-dashoffset="10"/></svg>
+              </span>
+            </button>
+          </div>
+        </div>
+        {%- assign keycap_count = keycap_count | plus: 1 -%}
+        {%- if keycap_count >= 5 -%}{%- break -%}{%- endif -%}
+      {%- endfor -%}
+    {%- endif -%}
+  </div>
+</div>
+
+<script type="application/json" id="CartRecsCategoryPools">
+  {
+    "keycaps": [
+      {%- if keycap_collection and keycap_collection.products_count > 0 -%}
+        {%- assign kc_count = 0 -%}
+        {%- for p in keycap_collection.products -%}
+          {%- assign p_h = p.handle | downcase -%}
+          {%- assign p_t = p.title | downcase -%}
+          {%- assign p_type = p.type | downcase -%}
+          {%- if p_type != 'keycaps' and p.type != blank -%}
+            {%- continue -%}
+          {%- endif -%}
+          {%- if p_h contains 'puller' or p_t contains 'puller' or p_h contains 'installation' or p_h contains 'manual-service' or p_t contains 'installation' or p.title contains '人工安装' or p.title contains '安装服务' or p.type == 'Service' or p.type == 'accessories' -%}
+            {%- continue -%}
+          {%- endif -%}
+          {%- unless p.available -%}
+            {%- continue -%}
+          {%- endunless -%}
+          {%- if kc_count > 0 -%},{%- endif -%}
+          {
+            "id": {{ p.id }},
+            "title": {{ p.title | json }},
+            "handle": {{ p.handle | json }},
+            "url": {{ p.url | json }},
+            "type": {{ p.type | default: '' | json }},
+            "category": "keycap",
+            "category_label": "Keycaps",
+            "featured_image": {{ p.featured_image | img_url: '240x' | json }},
+            "price": {{ p.price | default: 0 }},
+            "price_formatted": {{ p.price | money | json }},
+            "compare_at_price": {{ p.compare_at_price | default: 0 }},
+            "compare_at_price_formatted": {%- if p.compare_at_price > p.price -%}{{ p.compare_at_price | money | json }}{%- else -%}null{%- endif -%},
+            "variant_id": {{ p.first_available_variant.id | default: p.variants.first.id | default: 0 }},
+            "available": {{ p.available | default: true | json }}
+          }
+          {%- assign kc_count = kc_count | plus: 1 -%}
+          {%- if kc_count >= 24 -%}{%- break -%}{%- endif -%}
+        {%- endfor -%}
+      {%- endif -%}
+    ]
+  }
+</script>
+
+<script>
+  (function () {
+    const STATE = {
+      isLoading: false,
+      lastProductId: null,
+      renderedIds: []
+    };
+
+    function getCategoryPools() {
+      try {
+        const el = document.getElementById('CartRecsCategoryPools');
+        return el ? JSON.parse(el.textContent) : { keycaps: [] };
+      } catch (e) {
+        return { keycaps: [] };
+      }
+    }
+
+    function formatMoney(cents) {
+      if (window.theme && window.theme.Currency && typeof window.theme.Currency.formatMoney === 'function') {
+        return window.theme.Currency.formatMoney(cents, window.theme.settings ? window.theme.settings.moneyFormat : '$' + (cents / 100).toFixed(2));
+      }
+      return '$' + (Number(cents) / 100).toFixed(2);
+    }
+
+    // 判断是否为人工安装服务商品
+    function isServiceProduct(p) {
+      if (!p) return false;
+      const handle = String(p.handle || '').toLowerCase();
+      const title = String(p.title || '').toLowerCase();
+      const url = String(p.url || '').toLowerCase();
+      const type = String(p.type || p.product_type || '').toLowerCase();
+      return (
+        handle === 'manual-keycap-installation-service' ||
+        handle.includes('installation') ||
+        handle.includes('manual-service') ||
+        url.includes('manual-keycap-installation-service') ||
+        url.includes('installation') ||
+        title.includes('installation') ||
+        title.includes('人工安装') ||
+        title.includes('安装服务') ||
+        type === 'service'
+      );
+    }
+
+    // 判断商品是否属于纯键帽（严格排除配件、拔键器、轴体、键盘、线材、手托、桌垫等）
+    function isKeycapProduct(p) {
+      if (!p || isServiceProduct(p)) return false;
+
+      const typeLower = String(p.type || p.product_type || '').toLowerCase().trim();
+      const titleLower = String(p.title || '').toLowerCase();
+      const handleLower = String(p.handle || '').toLowerCase();
+
+      // 1. 如果带有明确的非 keycaps product_type（如 accessories, keyboards, switches, manual service 等），直接排除！
+      if (typeLower && typeLower !== 'keycaps' && typeLower !== 'keycap') {
+        return false;
+      }
+
+      // 2. 关键词黑名单：任何拔键器/拔轴器/工具/配件，哪怕标题带有 "keycap"（如 "Keycap & Switch Pullers"），也绝对不能算键帽！
+      const blacklistedTerms = [
+        'puller', 'pullers', 'switch', 'switches', 'tool', 'tools', 'opener', 'lube',
+        'lubricant', 'brush', 'keyboard', 'keyboards', 'mouse', 'mice', 'cable', 'cables',
+        'deskmat', 'mat', 'mats', 'wrist', 'rest', 'pad', 'pads', 'accessory', 'accessories',
+        'case', 'pcb', 'plate', 'stabilizer', 'stabilizers', 'film', 'service', 'installation'
+      ];
+      for (const term of blacklistedTerms) {
+        if (titleLower.includes(term) || handleLower.includes(term)) {
+          return false;
+        }
+      }
+
+      // 3. 必须符合键帽特征
+      return (
+        typeLower === 'keycaps' ||
+        typeLower === 'keycap' ||
+        titleLower.includes('keycap') ||
+        titleLower.includes('keyset') ||
+        titleLower.includes('profile')
+      );
+    }
+
+    // 1. 响应式插槽摆放：PC 端放在右侧槽位；移动端空车时放在空标识下方，非空时放在购物车内容区最底部
+    function repositionCartRecommendations() {
+      const recEl = document.getElementById('CartRecommendations');
+      if (!recEl) return;
+
+      // 实时清理任何非键帽卡片或服务商品
+      const listEl = document.getElementById('CartRecommendationsList');
+      if (listEl) {
+        let removed = false;
+        listEl.querySelectorAll('.cart-rec-item').forEach(card => {
+          const cardHandle = (card.getAttribute('data-rec-handle') || '').toLowerCase();
+          const cardTitle = (card.querySelector('.cart-rec-item__title')?.textContent || '').toLowerCase();
+          if (isServiceProduct({ handle: cardHandle, title: cardTitle }) || !isKeycapProduct({ handle: cardHandle, title: cardTitle })) {
+            card.remove();
+            removed = true;
+          }
+        });
+        if (removed && typeof loadRecommendations === 'function') {
+          loadRecommendations(true);
+        }
+      }
+
+      const isMobile = window.innerWidth <= 768;
+      const pageSlot = document.querySelector('.cart-page__recommendations-slot');
+
+      let targetSlot;
+      if (pageSlot) {
+        targetSlot = pageSlot;
+      } else if (!isMobile) {
+        targetSlot = document.querySelector('.cart-drawer__recommendations-desktop-slot');
+      } else {
+        const drawer = document.querySelector('#CartDrawer');
+        const isCartEmpty = drawer ? drawer.classList.contains('is-empty') : false;
+        if (isCartEmpty) {
+          targetSlot = document.querySelector('.cart-drawer__recommendations-empty-slot') || document.querySelector('.cart-drawer__recommendations-mobile-slot');
+        } else {
+          targetSlot = document.querySelector('.cart-drawer__recommendations-mobile-slot') || document.querySelector('.cart-drawer__recommendations-empty-slot');
+        }
+      }
+
+      if (targetSlot && !targetSlot.contains(recEl)) {
+        targetSlot.appendChild(recEl);
+      }
+    }
+    window.repositionCartRecommendations = repositionCartRecommendations;
+
+    // 2. 获取购物车当前所有 product_id 和 variant_id
+    function getCartItemInfo() {
+      const itemEls = document.querySelectorAll('#CartDrawer .cart__item, #CartPageForm .cart__item, .cart__item');
+      const productIds = new Set();
+      const variantIds = new Set();
+      let firstProductId = null;
+
+      itemEls.forEach((el, index) => {
+        const pId = el.getAttribute('data-product-id');
+        const vId = el.getAttribute('data-variant-id');
+        if (pId) {
+          productIds.add(Number(pId));
+          if (index === 0) firstProductId = Number(pId);
+        }
+        if (vId) {
+          variantIds.add(Number(vId));
+        }
+      });
+
+      return { productIds, variantIds, firstProductId };
+    }
+
+    // 3. 构建单张推荐卡片 HTML
+    function cartHasKeyboard() {
+      const itemEls = document.querySelectorAll('#CartDrawer .cart__item, .cart__item');
+      for (let i = 0; i < itemEls.length; i++) {
+        const el = itemEls[i];
+        const isKb = el.getAttribute('data-is-keyboard') === 'true';
+        const pType = (el.getAttribute('data-product-type') || '').toLowerCase();
+        const pTitle = (el.getAttribute('data-product-title') || el.querySelector('.cart__item-name')?.textContent || '').toLowerCase();
+        if (isKb || pType.includes('keyboard') || pTitle.includes('keyboard') ||
+            pTitle.includes('defender68') || pTitle.includes('swift60') ||
+            pTitle.includes('swift68') || pTitle.includes('haze68') ||
+            pTitle.includes('grid98') || pTitle.includes('final75') ||
+            pTitle.includes('muse65') || pTitle.includes('muse75')) {
+          return true;
+        }
+      }
+      return false;
+    }
+
+    // 3. 构建单张推荐卡片 HTML
+    function buildCardHTML(item) {
+      const origPrice = item.price;
+      const hasKeyboard = cartHasKeyboard();
+      const discPrice = Math.round(item.price * 0.9);
+      const origPriceText = formatMoney(origPrice);
+      const discPriceText = formatMoney(discPrice);
+      const imgSrc = item.featured_image || '';
+      const priceRowHtml = hasKeyboard
+        ? `<span class="cart-rec-item__compare-price">${origPriceText}</span><span class="cart-rec-item__price">${discPriceText}</span>`
+        : `<span class="cart-rec-item__price">${origPriceText}</span>`;
+
+      return `
+        <div class="cart-rec-item" data-rec-product-id="${item.id}" data-rec-variant-id="${item.variant_id}" data-rec-category="keycap" data-rec-handle="${item.handle || ''}">
+          <a href="${item.url || ('/products/' + item.handle)}" class="cart-rec-item__image-wrap">
+            <img src="${imgSrc}" alt="${item.title.replace(/"/g, '&quot;')}" loading="lazy" class="cart-rec-item__image">
+          </a>
+          <div class="cart-rec-item__info">
+            <a href="${item.url || ('/products/' + item.handle)}" class="cart-rec-item__title" title="${item.title.replace(/"/g, '&quot;')}">
+              ${item.title}
+            </a>
+            <div class="cart-rec-item__price-row" data-price="${origPrice}">
+              ${priceRowHtml}
+            </div>
+          </div>
+          <div class="cart-rec-item__action">
+            <button type="button" class="cart-rec-item__add-btn" data-add-variant="${item.variant_id}" aria-label="Add ${item.title.replace(/"/g, '&quot;')} to cart">
+              <span class="cart-rec-item__btn-text">+ Add</span>
+              <span class="cart-rec-item__btn-spinner" style="display: none;">
+                <svg viewBox="0 0 24 24" class="cart-rec-spinner"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="3" fill="none" stroke-dasharray="31.4" stroke-dashoffset="10"/></svg>
+              </span>
+            </button>
+          </div>
+        </div>
+      `;
+    }
+
+    // 4. 纯键帽专属推荐选择器（固定 5 款，优先算法推荐的键帽，键帽备选池兜底补充，严格排除非键帽及人工安装服务）
+    function selectKeycapsOnlyRecommendations(apiProducts, pools, productIds) {
+      const selected = [];
+      const selectedIds = new Set();
+
+      function tryAdd(product) {
+        if (!product || productIds.has(product.id) || selectedIds.has(product.id) || !product.available || isServiceProduct(product) || !isKeycapProduct(product)) {
+          return false;
+        }
+        selected.push(product);
+        selectedIds.add(product.id);
+        return true;
+      }
+
+      // 1. 过滤算法返回的产品，只保留有效键帽
+      const validApiKeycaps = (apiProducts || []).filter(p => isKeycapProduct(p));
+
+      // 2. 键帽备选池
+      const poolKeycaps = (pools.keycaps || []).filter(p => isKeycapProduct(p));
+
+      // 第一轮：优先算法推荐的键帽
+      for (const p of validApiKeycaps) {
+        if (selected.length >= 5) break;
+        tryAdd(p);
+      }
+
+      // 第二轮：若未满 5 款，从键帽备选池中补齐
+      for (const p of poolKeycaps) {
+        if (selected.length >= 5) break;
+        tryAdd(p);
+      }
+
+      return selected.slice(0, 5);
+    }
+
+    // 5. 请求推荐商品并渲染
+    async function loadRecommendations(force = false) {
+      const recContainer = document.getElementById('CartRecommendations');
+      const listEl = document.getElementById('CartRecommendationsList');
+      if (!recContainer || !listEl) return;
+
+      const { productIds, firstProductId } = getCartItemInfo();
+      const pools = getCategoryPools();
+
+      // 如果未强制更新且购物车主商品未变，仅移除已被加购的卡片与非键帽卡片
+      if (!force && firstProductId === STATE.lastProductId && STATE.renderedIds.length > 0) {
+        const currentCards = listEl.querySelectorAll('.cart-rec-item');
+        let visibleCount = 0;
+        currentCards.forEach(card => {
+          const cardPId = Number(card.getAttribute('data-rec-product-id'));
+          const cardHandle = (card.getAttribute('data-rec-handle') || '').toLowerCase();
+          const cardTitle = (card.querySelector('.cart-rec-item__title')?.textContent || '').toLowerCase();
+          if (productIds.has(cardPId) || isServiceProduct({ handle: cardHandle, title: cardTitle }) || !isKeycapProduct({ handle: cardHandle, title: cardTitle })) {
+            card.remove();
+          } else {
+            visibleCount++;
+          }
+        });
+        if (visibleCount < 5) {
+          loadRecommendations(true);
+        } else if (typeof STATE.updateArrowState === 'function') {
+          STATE.updateArrowState();
+        }
+        return;
+      }
+
+      STATE.isLoading = true;
+      STATE.lastProductId = firstProductId;
+
+      let apiProducts = [];
+
+      // 调用 Shopify 原生推荐 API
+      if (firstProductId) {
+        try {
+          const url = `/recommendations/products.json?product_id=${firstProductId}&limit=12&intent=related`;
+          const res = await fetch(url, { credentials: 'same-origin' });
+          if (res.ok) {
+            const data = await res.json();
+            if (data && data.products && data.products.length > 0) {
+              apiProducts = data.products
+                .filter(p => !isServiceProduct(p) && isKeycapProduct(p))
+                .map(p => ({
+                  id: p.id,
+                  title: p.title,
+                  handle: p.handle,
+                  url: p.url,
+                  type: p.type || p.product_type || '',
+                  product_type: p.type || p.product_type || '',
+                  featured_image: p.featured_image,
+                  price: p.price,
+                  compare_at_price: p.compare_at_price,
+                  variant_id: p.variants && p.variants.length > 0 ? p.variants[0].id : null,
+                  available: p.available !== undefined ? p.available : (p.variants && p.variants.length > 0 ? p.variants[0].available : false)
+                }));
+            }
+          }
+        } catch (err) {
+          console.warn('Cart recommendation API fetch failed:', err);
+        }
+      }
+
+      // 仅挑选 5 款键帽商品
+      const keycapsOnlyItems = selectKeycapsOnlyRecommendations(apiProducts, pools, productIds);
+
+      if (keycapsOnlyItems.length > 0) {
+        listEl.innerHTML = keycapsOnlyItems.map(buildCardHTML).join('');
+        STATE.renderedIds = keycapsOnlyItems.map(i => i.id);
+      }
+      recContainer.style.display = '';
+      repositionCartRecommendations();
+
+      STATE.isLoading = false;
+      if (typeof STATE.updateArrowState === 'function') {
+        STATE.updateArrowState();
+      }
+    }
+
+    // 6. 快速加购事件
+    async function handleAddClick(evt) {
+      const btn = evt.target.closest('.cart-rec-item__add-btn');
+      if (!btn || btn.disabled) return;
+
+      const variantId = btn.getAttribute('data-add-variant');
+      if (!variantId) return;
+
+      const card = btn.closest('.cart-rec-item');
+      const textSpan = btn.querySelector('.cart-rec-item__btn-text');
+      const spinnerSpan = btn.querySelector('.cart-rec-item__btn-spinner');
+
+      btn.disabled = true;
+      if (textSpan) textSpan.style.display = 'none';
+      if (spinnerSpan) spinnerSpan.style.display = 'inline-flex';
+
+      try {
+        const addUrl = (window.theme && window.theme.routes && window.theme.routes.cartAdd) || '/cart/add.js';
+        const res = await fetch(addUrl, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+          credentials: 'same-origin',
+          body: JSON.stringify({ id: Number(variantId), quantity: 1 })
+        });
+
+        if (res.ok) {
+          const addedItem = await res.json();
+          btn.classList.add('is-added');
+          if (spinnerSpan) spinnerSpan.style.display = 'none';
+          if (textSpan) {
+            textSpan.textContent = '✓ Added';
+            textSpan.style.display = 'inline-flex';
+          }
+
+          document.dispatchEvent(new CustomEvent('ajaxProduct:added', { detail: { product: addedItem } }));
+          document.dispatchEvent(new CustomEvent('cart:build'));
+
+          setTimeout(() => {
+            if (card) {
+              card.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+              card.style.opacity = '0';
+              card.style.transform = 'scale(0.95)';
+              setTimeout(() => {
+                card.remove();
+                loadRecommendations(true);
+              }, 300);
+            }
+          }, 600);
+        } else {
+          throw new Error('Add to cart failed');
+        }
+      } catch (err) {
+        console.error('Quick add error:', err);
+        btn.disabled = false;
+        if (spinnerSpan) spinnerSpan.style.display = 'none';
+        if (textSpan) {
+          textSpan.textContent = '+ Add';
+          textSpan.style.display = 'inline-flex';
+        }
+      }
+    }
+
+    // 7. 移动端推荐卡片左右滑动箭头控制
+    function initRecArrows() {
+      const recContainer = document.getElementById('CartRecommendations');
+      if (!recContainer) return;
+
+      const listEl = document.getElementById('CartRecommendationsList');
+      const prevBtn = recContainer.querySelector('[data-rec-prev]');
+      const nextBtn = recContainer.querySelector('[data-rec-next]');
+      if (!listEl || !prevBtn || !nextBtn) return;
+
+      function updateArrowState() {
+        if (!listEl) return;
+        const scrollLeft = Math.ceil(listEl.scrollLeft);
+        const maxScroll = listEl.scrollWidth - listEl.clientWidth;
+
+        if (maxScroll <= 2) {
+          prevBtn.classList.add('is-disabled');
+          nextBtn.classList.add('is-disabled');
+          return;
+        }
+
+        if (scrollLeft <= 5) {
+          prevBtn.classList.add('is-disabled');
+        } else {
+          prevBtn.classList.remove('is-disabled');
+        }
+
+        if (scrollLeft >= maxScroll - 5) {
+          nextBtn.classList.add('is-disabled');
+        } else {
+          nextBtn.classList.remove('is-disabled');
+        }
+      }
+
+      function getScrollStep() {
+        const firstCard = listEl.querySelector('.cart-rec-item');
+        if (firstCard) {
+          const style = window.getComputedStyle(listEl);
+          const gap = parseFloat(style.gap) || 12;
+          return firstCard.offsetWidth + gap;
+        }
+        return 220;
+      }
+
+      prevBtn.addEventListener('click', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        const step = getScrollStep();
+        listEl.scrollBy({ left: -step, behavior: 'smooth' });
+        setTimeout(updateArrowState, 350);
+      });
+
+      nextBtn.addEventListener('click', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        const step = getScrollStep();
+        listEl.scrollBy({ left: step, behavior: 'smooth' });
+        setTimeout(updateArrowState, 350);
+      });
+
+      listEl.addEventListener('scroll', updateArrowState, { passive: true });
+      window.addEventListener('resize', updateArrowState, { passive: true });
+
+      STATE.updateArrowState = updateArrowState;
+      updateArrowState();
+    }
+
+    // 8. 初始化与监听器绑定
+    function init() {
+      repositionCartRecommendations();
+      window.addEventListener('resize', repositionCartRecommendations, { passive: true });
+
+      const recContainer = document.getElementById('CartRecommendations');
+      if (recContainer) {
+        recContainer.addEventListener('click', handleAddClick);
+      }
+
+      initRecArrows();
+
+      document.querySelectorAll('[data-products]').forEach(productsContainer => {
+        const observer = new MutationObserver(function () {
+          loadRecommendations(false);
+        });
+        observer.observe(productsContainer, { childList: true, subtree: true });
+      });
+
+      document.addEventListener('cart:build', function () {
+        setTimeout(() => {
+          repositionCartRecommendations();
+          loadRecommendations(false);
+          if (typeof STATE.updateArrowState === 'function') STATE.updateArrowState();
+        }, 150);
+      });
+
+      document.addEventListener('drawerOpen', function () {
+        repositionCartRecommendations();
+        loadRecommendations(false);
+        if (typeof STATE.updateArrowState === 'function') setTimeout(STATE.updateArrowState, 200);
+      });
+
+      document.addEventListener('drawerOpen.CartDrawer', function () {
+        repositionCartRecommendations();
+        loadRecommendations(false);
+        if (typeof STATE.updateArrowState === 'function') setTimeout(STATE.updateArrowState, 200);
+      });
+
+      document.addEventListener('cart:open', function () {
+        repositionCartRecommendations();
+        loadRecommendations(false);
+        if (typeof STATE.updateArrowState === 'function') setTimeout(STATE.updateArrowState, 200);
+      });
+
+      document.querySelectorAll('.site-nav__cart, a[href="/cart"], .js-drawer-open-cart').forEach(btn => {
+        btn.addEventListener('click', function () {
+          setTimeout(() => {
+            repositionCartRecommendations();
+            loadRecommendations(false);
+            if (typeof STATE.updateArrowState === 'function') setTimeout(STATE.updateArrowState, 200);
+          }, 100);
+        });
+      });
+
+      // 9. 实时同步顶部购物车数量 (My Cart · X items)
+      function updateCartCountHeader(count) {
+        const countEl = document.querySelector('[data-cart-count-display]');
+        const countWrap = document.querySelector('[data-cart-count-wrap]');
+        if (!countEl) return;
+        let validCount = typeof count === 'number' && !isNaN(count) ? count : null;
+        if (validCount === null) {
+          const bubble = document.querySelector('.cart-link__bubble-num');
+          if (bubble && bubble.innerText) {
+            validCount = parseInt(bubble.innerText.trim(), 10);
+          }
+        }
+        if (validCount !== null && !isNaN(validCount)) {
+          countEl.textContent = `${validCount} ${validCount === 1 ? 'item' : 'items'}`;
+          if (countWrap) countWrap.style.display = 'inline-flex';
+        }
+      }
+
+      document.addEventListener('ajaxProduct:added', function (evt) {
+        document.querySelectorAll('.drawer, #CartDrawer').forEach(d => d.classList.remove('is-empty'));
+        setTimeout(() => {
+          repositionCartRecommendations();
+          loadRecommendations(false);
+          updateCartCountHeader();
+        }, 100);
+      });
+
+      document.addEventListener('cart:build', function () {
+        setTimeout(() => {
+          repositionCartRecommendations();
+          updateCartCountHeader();
+        }, 150);
+      });
+
+      document.addEventListener('cart:updated', function (evt) {
+        if (evt.detail && evt.detail.cart && typeof evt.detail.cart.item_count !== 'undefined') {
+          updateCartCountHeader(evt.detail.cart.item_count);
+          repositionCartRecommendations();
+        }
+      });
+
+      setTimeout(() => {
+        repositionCartRecommendations();
+        loadRecommendations(true);
+        updateCartCountHeader();
+        if (typeof STATE.updateArrowState === 'function') STATE.updateArrowState();
+      }, 200);
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', init);
+    } else {
+      init();
+    }
+  })();
+</script>

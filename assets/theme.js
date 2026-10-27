@@ -1865,6 +1865,15 @@ lazySizesConfig.expFactor = 4;
             this.buildCart();
           }.bind(this),
         );
+
+        document.addEventListener(
+          "cart:updated",
+          function (evt) {
+            if (evt.detail && evt.detail.cart && typeof evt.detail.cart.item_count !== "undefined") {
+              this.updateCount(evt.detail.cart.item_count);
+            }
+          }.bind(this),
+        );
       },
 
       reInit: function () {
@@ -1909,6 +1918,11 @@ lazySizesConfig.expFactor = 4;
           return;
         }
         var count = parseInt(items.dataset.count, 10);
+        if (isNaN(count)) {
+          count = items.querySelectorAll(".cart__item").length;
+        } else if (count === 0 && items.querySelectorAll(".cart__item").length > 0) {
+          count = items.querySelectorAll(".cart__item").length;
+        }
         var subtotal = items.dataset.cartSubtotal;
         var savings = items.dataset.cartSavings;
 
@@ -1918,8 +1932,10 @@ lazySizesConfig.expFactor = 4;
         if (!isNaN(count)) {
           if (count > 0) {
             this.wrapper.classList.remove("is-empty");
+            document.querySelectorAll(".drawer, #CartDrawer").forEach((d) => d.classList.remove("is-empty"));
           } else {
             this.wrapper.classList.add("is-empty");
+            document.querySelectorAll(".drawer, #CartDrawer").forEach((d) => d.classList.add("is-empty"));
           }
           this.updateCount(count);
         }
@@ -1929,10 +1945,16 @@ lazySizesConfig.expFactor = 4;
         this.products.append(items);
 
         // Update subtotal
-        this.subtotal.innerHTML = theme.Currency.formatMoney(
-          subtotal,
-          theme.settings.moneyFormat,
-        );
+        if (items.dataset.cartDiscountTotal && parseInt(items.dataset.cartDiscountTotal, 10) > 0) {
+          var origSub = theme.Currency.formatMoney(subtotal, theme.settings.moneyFormat);
+          var finalSub = theme.Currency.formatMoney(items.dataset.cartFinalSubtotal, theme.settings.moneyFormat);
+          this.subtotal.innerHTML = '<small style="text-decoration: line-through; color: #888; font-size: 13px; font-weight: 400; margin-right: 6px;">' + origSub + '</small><span style="color: #0A6830; font-weight: 700; font-size: 16px;">' + finalSub + '</span>';
+        } else {
+          this.subtotal.innerHTML = theme.Currency.formatMoney(
+            subtotal,
+            theme.settings.moneyFormat,
+          );
+        }
 
         this.reInit();
 
@@ -1943,6 +1965,8 @@ lazySizesConfig.expFactor = 4;
         if (Shopify && Shopify.StorefrontExpressButtons) {
           Shopify.StorefrontExpressButtons.initialize();
         }
+
+        document.dispatchEvent(new CustomEvent('cart:rendered'));
       },
 
       updateCartDiscounts: function (markup) {
@@ -2037,26 +2061,47 @@ lazySizesConfig.expFactor = 4;
       },
 
       updateCount: function (count) {
+        var validCount = typeof count === "number" && !isNaN(count) ? count : parseInt(count, 10) || 0;
         var countEls = document.querySelectorAll(".cart-link__bubble-num");
 
         if (countEls.length) {
           countEls.forEach((el) => {
-            el.innerText = count;
+            el.innerText = validCount;
           });
         }
 
-        // show/hide bubble(s)
+        // 同步更新抽屉顶部 Header 数量显示 (My Cart · X item / items)
+        var drawerCountEls = document.querySelectorAll("[data-cart-count-display]");
+        if (drawerCountEls.length) {
+          drawerCountEls.forEach((el) => {
+            el.textContent = validCount + (validCount === 1 ? " item" : " items");
+          });
+        }
+        var drawerCountWrap = document.querySelector("[data-cart-count-wrap]");
+        if (drawerCountWrap) {
+          drawerCountWrap.style.display = "inline-flex";
+        }
+
+        // 严格同步抽屉 is-empty 状态类名
+        var drawerEls = document.querySelectorAll(".drawer, #CartDrawer");
+        drawerEls.forEach((d) => {
+          if (validCount > 0) {
+            d.classList.remove("is-empty");
+          } else {
+            d.classList.add("is-empty");
+          }
+        });
+
+        // Always show bubble and display count (even 0)
         var bubbles = document.querySelectorAll(selectors.cartBubble);
         if (bubbles.length) {
-          if (count > 0) {
-            bubbles.forEach((b) => {
-              b.classList.add("cart-link__bubble--visible");
-            });
-          } else {
-            bubbles.forEach((b) => {
-              b.classList.remove("cart-link__bubble--visible");
-            });
-          }
+          bubbles.forEach((b) => {
+            b.classList.add("cart-link__bubble--visible");
+          });
+        }
+
+        if (typeof window.repositionCartRecommendations === "function") {
+          window.repositionCartRecommendations();
         }
       },
     });
@@ -3167,10 +3212,16 @@ lazySizesConfig.expFactor = 4;
 
       productAddToCartRest: function (addToCartEl, products) {
         return new Promise((resolve, reject) => {
-          const items = products.map((product) => ({
-            id: product.id,
-            quantity: product.quantity,
-          }));
+          const items = products.map((product) => {
+            const item = {
+              id: product.id,
+              quantity: product.quantity,
+            };
+            if (product.properties && Object.keys(product.properties).length > 0) {
+              item.properties = product.properties;
+            }
+            return item;
+          });
 
           fetch(theme.routes.cartAdd, {
             method: "POST",
@@ -3233,9 +3284,13 @@ lazySizesConfig.expFactor = 4;
           console.warn("批量加购遇库存上限，降级为逐个商品提交", err);
           for (const product of products) {
             try {
+              const payload = { id: product.id, quantity: product.quantity };
+              if (product.properties && Object.keys(product.properties).length > 0) {
+                payload.properties = product.properties;
+              }
               await fetch(theme.routes.cartAdd, {
                 method: "POST",
-                body: JSON.stringify({ id: product.id, quantity: product.quantity }),
+                body: JSON.stringify(payload),
                 credentials: "same-origin",
                 headers: {
                   "Content-Type": "application/json",
@@ -3554,13 +3609,18 @@ lazySizesConfig.expFactor = 4;
 
         this.minus.addEventListener(
           "click",
-          function () {
+          function (e) {
             if (this._inputTimer) {
               clearTimeout(this._inputTimer);
             }
-            if (this.minus.disabled) return;
             var qty = this._getQty();
-            if (qty <= 1) return;
+            if (this.minus.disabled || this.minus.classList.contains("disabled") || qty <= 1) {
+              if (e) {
+                e.preventDefault();
+                e.stopPropagation();
+              }
+              return;
+            }
             this._change(qty - 1);
           }.bind(this),
         );
@@ -3679,9 +3739,11 @@ lazySizesConfig.expFactor = 4;
         // 数量 <= 1 时禁用减号按钮
         if (qty <= 1) {
           this.minus.disabled = true;
+          this.minus.setAttribute("disabled", "disabled");
           this.minus.classList.add("disabled");
         } else {
           this.minus.disabled = false;
+          this.minus.removeAttribute("disabled");
           this.minus.classList.remove("disabled");
         }
 
@@ -3728,9 +3790,11 @@ lazySizesConfig.expFactor = 4;
 
         if (qty <= 1) {
           this.minus.disabled = true;
+          this.minus.setAttribute("disabled", "disabled");
           this.minus.classList.add("disabled");
         } else {
           this.minus.disabled = false;
+          this.minus.removeAttribute("disabled");
           this.minus.classList.remove("disabled");
         }
 
@@ -4915,6 +4979,10 @@ lazySizesConfig.expFactor = 4;
         document.addEventListener(
           "ajaxProduct:added",
           function (evt) {
+            // 加购成功时立即移除 is-empty，避免抽屉滑开瞬间闪烁空车
+            var drawerEls = document.querySelectorAll(".drawer, #CartDrawer");
+            drawerEls.forEach((d) => d.classList.remove("is-empty"));
+
             this.cartForm.buildCart();
             this.open();
           }.bind(this),
@@ -8058,9 +8126,12 @@ lazySizesConfig.expFactor = 4;
       ==============================================================================*/
       updateColorName: function (color, index) {
         // Updates on radio button change, not variant.js
-        this.container.querySelector(
-          this.selectors.colorLabel + `[data-index="${index}"`,
-        ).textContent = color;
+        var colorLabel = this.container.querySelector(
+          this.selectors.colorLabel + `[data-index="${index}"]`,
+        );
+        if (colorLabel) {
+          colorLabel.textContent = color;
+        }
       },
 
       updateCartButton: function (evt) {
@@ -9590,11 +9661,40 @@ $(".row_two").click(function () {
     .find(".grid-product")
     .addClass("small--one-halfs");
 });
-$(".return-top, .m_product_addToCart, .pc_product_addToCart").click(
+$(".return-top, .pc_product_addToCart").click(
   function () {
     $("body, html").animate({ scrollTop: 0 }, 1000);
   },
 );
+
+$(document).on("click", ".m_product_addToCart", function (e) {
+  e.preventDefault();
+  e.stopPropagation();
+
+  var $btn = $(this);
+  var mainAddBtn = document.querySelector(".product-single__form [data-add-to-cart]") ||
+                   document.querySelector("[data-add-to-cart]") ||
+                   document.querySelector(".product-single__form .add-to-cart");
+
+  if (mainAddBtn && !mainAddBtn.disabled && !mainAddBtn.classList.contains("btn--loading")) {
+    $btn.addClass("btn--loading");
+
+    var onAdded = function () {
+      $btn.removeClass("btn--loading");
+      document.removeEventListener("ajaxProduct:added", onAdded);
+    };
+    document.addEventListener("ajaxProduct:added", onAdded);
+
+    mainAddBtn.click();
+
+    setTimeout(function () {
+      $btn.removeClass("btn--loading");
+      document.removeEventListener("ajaxProduct:added", onAdded);
+    }, 5000);
+  } else {
+    document.dispatchEvent(new CustomEvent("cart:open"));
+  }
+});
 /** 回顶 */
 $(window).scroll(function (e) {
   if ($(window).scrollTop() > 1300) $(".return-top").fadeIn(1000);
@@ -9771,4 +9871,88 @@ $(function () {
     true
   );
 })();
+
+// ==========================================================================
+// 5. 移动端顶部工具栏交互：下滑不显示，上滑才显示（带平滑过渡）
+// ==========================================================================
+(function initMobileScrollHeader() {
+  var lastScrollTop = 0;
+  var threshold = 8; // 最小滚动差值，避免微小手指抖动误触发
+  var ticking = false;
+
+  function onScroll() {
+    // 仅在移动端生效 (<= 768px)
+    if (window.innerWidth > 768) {
+      var headerEl = document.querySelector("#SiteHeader") || document.querySelector(".site-header");
+      if (headerEl) {
+        headerEl.classList.remove("site-header--mobile-hidden");
+      }
+      ticking = false;
+      return;
+    }
+
+    // 当任何抽屉打开（侧边栏菜单、搜索、购物车等）时，保持显示不隐藏
+    if (
+      document.documentElement.classList.contains("js-drawer-open") ||
+      document.body.classList.contains("js-drawer-open")
+    ) {
+      ticking = false;
+      return;
+    }
+
+    var currentScroll = window.pageYOffset || document.documentElement.scrollTop || 0;
+    var header = document.querySelector("#SiteHeader") || document.querySelector(".site-header");
+    if (!header) {
+      ticking = false;
+      return;
+    }
+
+    // 靠近页面顶部（<= 50px）始终展示
+    if (currentScroll <= 50) {
+      header.classList.remove("site-header--mobile-hidden");
+      lastScrollTop = currentScroll <= 0 ? 0 : currentScroll;
+      ticking = false;
+      return;
+    }
+
+    var scrollDiff = currentScroll - lastScrollTop;
+    if (Math.abs(scrollDiff) >= threshold) {
+      if (scrollDiff > 0) {
+        // 向下滚动：隐藏顶部工具栏
+        header.classList.add("site-header--mobile-hidden");
+      } else {
+        // 向上滚动：展示顶部工具栏
+        header.classList.remove("site-header--mobile-hidden");
+      }
+      lastScrollTop = currentScroll <= 0 ? 0 : currentScroll;
+    }
+
+    ticking = false;
+  }
+
+  window.addEventListener(
+    "scroll",
+    function () {
+      if (!ticking) {
+        window.requestAnimationFrame(onScroll);
+        ticking = true;
+      }
+    },
+    { passive: true }
+  );
+
+  window.addEventListener(
+    "resize",
+    function () {
+      if (window.innerWidth > 768) {
+        var header = document.querySelector("#SiteHeader") || document.querySelector(".site-header");
+        if (header) {
+          header.classList.remove("site-header--mobile-hidden");
+        }
+      }
+    },
+    { passive: true }
+  );
+})();
+
 

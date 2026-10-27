@@ -30,6 +30,7 @@
         <p>{{ 'cart.general.empty' | t }}</p>
         {% comment %}<p>{{ 'cart.general.continue_browsing_html' | t: url: routes.all_products_collection_url }}</p>{% endcomment %}
         <p>{{ 'cart.general.continue_browsing_html' | t: url: routes.root_url }}→</p>
+        <div class="cart-page__recommendations-slot cart-page__recommendations-slot--empty"></div>
       {%- endif -%}
     </div>
   </header>
@@ -37,10 +38,24 @@
   {%- if cart.item_count > 0 -%}
     <form action="{{ routes.cart_url }}" method="post" novalidate data-location="page" id="CartPageForm">
       <div class="cart__page">
-        <div data-products class="cart__page-col">
-          {% for item in cart.items %}
-            {%- render 'cart-item', product: item -%}
-          {%- endfor -%}
+        <div class="cart__page-col">
+          <div data-products>
+            {%- assign cart_has_keyboard = false -%}
+            {%- for ci in cart.items -%}
+              {%- assign ci_t = ci.product.type | downcase -%}
+              {%- assign ci_title = ci.product.title | downcase -%}
+              {%- if ci_t contains 'keyboard' or ci_title contains 'keyboard' or ci.product.tags contains 'keyboards' or ci.product.tags contains 'Keyboards' or ci.product.tags contains 'keyboard' or ci.product.tags contains 'Keyboard' -%}
+                {%- unless ci_title contains 'keycap' or ci_title contains 'switch' or ci_t contains 'keycap' or ci_t contains 'switch' or ci_title contains 'desk mat' or ci_title contains 'holder' -%}
+                  {%- assign cart_has_keyboard = true -%}
+                  {%- break -%}
+                {%- endunless -%}
+              {%- endif -%}
+            {%- endfor -%}
+            {% for item in cart.items %}
+              {%- render 'cart-item', product: item, cart_has_keyboard: cart_has_keyboard -%}
+            {%- endfor -%}
+          </div>
+          <div class="cart-page__recommendations-slot"></div>
         </div>
         <div class="cart__page-col">
           <div class="cart-checkout-card">
@@ -71,8 +86,6 @@
               {% endif %}
             </div>
 
-            {% render 'cart-price-detail', section_id: section.id %}
-
             <div class="cart__item-sub cart__item-row">
               <div>{{ 'cart.general.subtotal' | t }}</div>
               <div data-subtotal>{{ cart.total_price | money }}</div>
@@ -91,30 +104,7 @@
               </div>
             {% endif %}
 
-            <div class="cart__item-row text-center">
-              <small>
-                {{ 'cart.general.shipping_at_checkout' | t -}}
-                <br>
-              </small>
-            </div>
-
             <div class="cart__item-row cart__checkout-wrapper">
-              {% style %}
-                #CartPageForm .cart__checkout-wrapper .cart__shopping-continue-btn {
-                  padding: 0.5em 1em;
-                  border-radius: 20em;
-                  background: #ababab;
-                }
-                #CartPageForm .cart__checkout-wrapper .cart__shopping-continue-btn a {
-                  display: inline-block;
-                  width: 100%;
-                  text-align: center;
-                  color: var(--colorBtnPrimaryText);
-                }
-              {% endstyle %}
-              <p class="cart__shopping-continue-btn">
-                {{ 'cart.general.continue_browsing_html' | t: url: routes.root_url }}
-              </p>
               <button
                 type="submit"
                 name="checkout"
@@ -127,6 +117,10 @@
               {% if additional_checkout_buttons and settings.cart_additional_buttons %}
                 <div class="additional-checkout-buttons">{{ content_for_additional_checkout_buttons }}</div>
               {% endif %}
+
+              <div class="cart__shipping-note">
+                {{ 'cart.general.shipping_at_checkout' | t }}
+              </div>
             </div>
           </div>
           <div class="cart-policy-card">

@@ -12,10 +12,9 @@
 {%- endif -%}
 
 {%- assign is_available = item_variant.available -%}
-{%- assign keycap_title = item_variant.product.title -%}
-{%- if item_variant.title != 'Default Title' and item_variant.title != blank -%}
-  {%- assign keycap_title = item_variant.title -%}
-{%- endif -%}
+{%- assign keycap_title = item_variant.product.title | default: item_variant.title -%}
+{%- assign kc_orig_price = item_variant.price -%}
+{%- assign kc_disc_price = item_variant.price | times: 0.9 | round -%}
 
 {%- assign card_image = '' -%}
 {%- if item_variant.featured_image -%}
@@ -64,7 +63,7 @@
   role="button"
   tabindex="{% if is_available %}0{% else %}-1{% endif %}"
   aria-pressed="false"
-  aria-label="{{ keycap_title | escape }} - {{ item_variant.price | money }}"
+  aria-label="{{ keycap_title | escape }} - {{ kc_disc_price | money }}"
 >
   <input
     type="checkbox"
@@ -106,8 +105,11 @@
     <div class="bundle-keycap-card__title" title="{{ keycap_title | escape }}">
       {{ keycap_title }}
     </div>
+    {%- assign kc_orig_price = item_variant.price -%}
+    {%- assign kc_disc_price = item_variant.price | times: 0.9 | round -%}
     <div class="bundle-keycap-card__price">
-      {{ item_variant.price | money }}
+      <span class="bundle-keycap-card__price--original">{{ kc_orig_price | money }}</span>
+      <span class="bundle-keycap-card__price--discount">{{ kc_disc_price | money }}</span>
     </div>
   </div>
 </div>

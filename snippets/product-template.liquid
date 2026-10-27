@@ -129,6 +129,27 @@
 >
   <div class="page-content page-content--product">
     <div class="page-width">
+      {%- unless isModal -%}
+        <div class="product-mobile-header medium-up--hide">
+          <h1 class="h2 product-single__title product-single__title--mobile notranslate" title="{{ product.title | escape }}">
+            {%- unless product.empty? -%}
+              {{ product.title }}
+            {%- else -%}
+              {{ 'home_page.onboarding.product_title' | t }}
+            {%- endunless -%}
+          </h1>
+          {%- assign subtitle_block = blocks | where: 'type', 'text' | first -%}
+          {%- assign subtitle_text = subtitle_block.settings.text -%}
+          {%- if subtitle_text == blank or subtitle_text contains 'product.metafields.custom.short_introduction' -%}
+            {%- assign subtitle_text = product.metafields.custom.short_introduction.value | default: product.metafields.custom.short_introduction -%}
+          {%- endif -%}
+          {%- if subtitle_text != blank -%}
+            <div class="product-single__subtitle product-single__subtitle--mobile">
+              {{ subtitle_text }}
+            </div>
+          {%- endif -%}
+        </div>
+      {%- endunless -%}
       <div class="grid{% unless image_position == 'left' %} grid--product-images-right{% endunless %}{% if mobile_layout == 'partial' %} grid--product-images--partial{% endif %}">
         {%- if image_position == 'left' -%}
           <div class="grid__item {{ product_image_width }} product-single__sticky">
@@ -211,7 +232,7 @@
                   {%- when 'separator' -%}
                     <div class="product-block" {{ block.shopify_attributes }}><hr></div>
                   {%- when 'text' -%}
-                    <div class="product-block" {{ block.shopify_attributes }}>
+                    <div class="product-block small--hide" {{ block.shopify_attributes }}>
                       {{ block.settings.text }}
                     </div>
                   {%- when 'tab' -%}
@@ -299,42 +320,16 @@
                         <span data-unit-price>{{ current_variant.unit_price | money }}</span>/{{ unit_price_base_unit }}
                       </div>
 
-                      {%- if shop.taxes_included or shop.shipping_policy.body != blank -%}
+                      {%- if shop.taxes_included -%}
                         <div class="product__policies rte">
-                          {%- if shop.taxes_included -%}
-                            {{ 'products.product.include_taxes' | t }}
-                          {%- endif -%}
-                          {%- if shop.shipping_policy.body != blank -%}
-                            {{ 'products.product.shipping_policy_html' | t: link: '/pages/shipping-policy' }} 
-                          {%- endif -%}
+                          {{ 'products.product.include_taxes' | t }}
                         </div>
                       {%- endif -%}
                     </div>
                   {%- when 'quantity_selector' -%}
-                    <div class="product-block" {{ block.shopify_attributes }}>
-                      <div class="product__quantity">
-                        {% assign qty_id = section_id | append: product.id %}
-                        <label for="Quantity-{{ qty_id }}">
-                          {{ 'products.product.quantity' | t }}
-                          <span data-product-quantity-status class="product-quantity-status {% if current_variant.available %}product-quantity-status--in-stock{% else %}product-quantity-status--out-of-stock{% endif %}">
-                            {% if current_variant.available %}In Stock{% else %}Out of Stock{% endif %}
-                          </span>
-                        </label>
-                        {%- assign current_variant_has_inventory_limit = false -%}
-                        {%- if current_variant.inventory_management == 'shopify' and current_variant.inventory_policy == 'deny' -%}
-                          {%- assign current_variant_has_inventory_limit = true -%}
-                          {%- assign current_variant_max_qty = current_variant.inventory_quantity | at_least: 0 -%}
-                        {%- endif -%}
-                        {%- render 'quantity-input',
-                          form_id: form_id,
-                          id: qty_id,
-                          qty: 1,
-                          min: 1,
-                          max: current_variant_max_qty,
-                          has_limit: current_variant_has_inventory_limit
-                        -%}
-                      </div>
-                    </div>
+                    {%- comment -%}
+                      Quantity selector has been moved to be inline with the ADD TO CART button in buy_buttons
+                    {%- endcomment -%}
                   {%- when 'size_chart' -%}
                     {% if connect_to_sizechart == false %}
                       {%- capture size_chart_title -%}
@@ -355,7 +350,7 @@
                       </div>
                     {% endif %}
                   {%- when 'variant_picker' -%}
-                    <div class="product-block" {{ block.shopify_attributes }}>
+                    <div class="product-block product-block--variant-picker" {{ block.shopify_attributes }}>
                       {%- unless product.has_only_default_variant -%}
                         {%- for option in product.options_with_values -%}
                           {%- liquid
@@ -408,7 +403,8 @@
                             form_id: form_id,
                             product: product,
                             show_dynamic_checkout: block.settings.show_dynamic_checkout,
-                            current_variant: current_variant
+                            current_variant: current_variant,
+                            section_id: section_id
                           -%}
                         </div>
                       {%- endunless -%}
@@ -642,7 +638,7 @@
                     </div>
                   {%- when 'icon_text' -%}
                     <div class="product-block pc--hide" {{ block.shopify_attributes }}>
-                      {%- render 'icon-text-list', block: icon_list_block.settings -%}
+                      {%- render 'icon-text-list', block: block.settings -%}
                     </div>
                   {%- when 'payment_icon' -%}
                     <div class="product-block pc--hide" {{ block.shopify_attributes }}>
@@ -710,51 +706,342 @@
     bottom: 0;
     left: 0;
     width: 100%;
-    background: #fff;
-    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
-    z-index: 999;
+    background: #ffffff;
+    box-shadow: 0 -3px 16px rgba(0, 0, 0, 0.06);
+    border-top: 1px solid #e8e8e8;
+    z-index: 99;
   }
   .device_bottominfo--wrapper {
-    padding: 0.5em 2em;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    min-height: 98px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    box-sizing: border-box;
   }
   .device_bottominfo--wrapper .m_product_info {
     max-width: 65%;
     display: flex;
     align-items: center;
-    gap: 1em;
+    gap: 20px;
+    overflow: hidden;
   }
   .device_bottominfo--wrapper .m_product_info .m_product_img {
-    width: 5em;
-    height: 5em;
-    object-fit: cover;
-    border-radius: 4px;
+    max-height: 84px;
+    max-width: 140px;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    background: transparent !important;
+    border: none !important;
+    border-radius: 0 !important;
+    flex-shrink: 0;
   }
   .device_bottominfo--wrapper .m_product_info .m_product_title {
-    font-size: 1.5em;
-    font-weight: bold;
+    font-size: 19px;
+    font-weight: 700;
+    line-height: 1.3;
+    margin: 0;
+    color: #000000;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
-
   .device_bottominfo--wrapper .m_product_option {
     display: flex;
     align-items: center;
+    gap: 20px;
+    flex-shrink: 0;
   }
   .device_bottominfo--wrapper .m_product_option .m_product_price {
-    color: var(--colorText);
-    font-size: 1.2em;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0;
+    line-height: 1;
+    white-space: nowrap;
+  }
+  .device_bottominfo--wrapper .m_product_option .m_product_price .product__price,
+  .device_bottominfo--wrapper .m_product_option .m_product_price .product__price .money {
+    color: #0A6830 !important;
+    font-size: 22px !important;
+    font-weight: 700 !important;
+    line-height: 1 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    letter-spacing: normal !important;
+  }
+  .device_bottominfo--wrapper .m_product_option .m_product_price .product__price--compare,
+  .device_bottominfo--wrapper .m_product_option .m_product_price .product__price--compare .money {
+    color: #999999 !important;
+    font-size: 14px !important;
+    text-decoration: line-through;
+    font-weight: 400 !important;
+    margin-left: 4px;
   }
   .device_bottominfo--wrapper .m_product_option .m_product_addToCart {
-    display: inline-block;
-    border-radius: 20em;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    background: #000000 !important;
+    color: #ffffff !important;
+    border-radius: 9999px !important;
+    height: 40px !important;
+    line-height: 40px !important;
+    padding: 0 22px !important;
+    min-width: 0 !important;
+    width: auto !important;
+    font-size: 13px !important;
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.5px !important;
+    border: none !important;
+    cursor: pointer !important;
+    text-decoration: none !important;
+    white-space: nowrap !important;
+    box-shadow: none !important;
+    transition: opacity 0.2s ease, transform 0.15s ease !important;
+  }
+  .device_bottominfo--wrapper .m_product_option .m_product_addToCart:hover {
+    opacity: 0.85 !important;
+    background: #000000 !important;
+    color: #ffffff !important;
+  }
+  .device_bottominfo--wrapper .m_product_option .m_product_addToCart:active {
+    transform: scale(0.98) !important;
+  }
+  .device_bottominfo--wrapper .m_bottom_cart_status {
+    display: none !important;
+  }
+  body.template-product .footer-opera--wrapper {
+    bottom: calc(48px + env(safe-area-inset-bottom, 0px) + 10px) !important;
+  }
+  @media screen and (max-width: 768px) {
+    .device_bottominfo {
+      display: none;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background: linear-gradient(to right, #ffffff 112px, #0A6830 112px) !important;
+      box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.08) !important;
+      border: none !important;
+      border-top: none !important;
+      z-index: 999;
+      padding: 0 !important;
+      padding-bottom: env(safe-area-inset-bottom, 0px) !important;
+      margin: 0 !important;
+    }
+    .device_bottominfo--wrapper {
+      width: 100% !important;
+      max-width: 100% !important;
+      min-height: 48px !important;
+      height: 48px !important;
+      padding: 0 !important;
+      margin: 0 !important;
+      border: none !important;
+      box-shadow: none !important;
+      display: flex !important;
+      align-items: stretch !important;
+      justify-content: flex-start !important;
+      background: transparent !important;
+      box-sizing: border-box !important;
+    }
+    .device_bottominfo--wrapper .m_product_info {
+      max-width: none !important;
+      width: 112px !important;
+      min-width: 112px !important;
+      height: 48px !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      background: #ffffff !important;
+      border: none !important;
+      border-top: none !important;
+      border-bottom: none !important;
+      border-left: none !important;
+      border-right: none !important;
+      box-shadow: none !important;
+      outline: none !important;
+      box-sizing: border-box !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      flex-shrink: 0 !important;
+      overflow: hidden !important;
+      position: relative !important;
+      cursor: pointer;
+    }
+    .device_bottominfo--wrapper .m_product_info .m_product_img {
+      max-height: 100% !important;
+      max-width: 100% !important;
+      width: 100% !important;
+      height: 100% !important;
+      object-fit: contain !important;
+      transform: scale(1.22) !important;
+      transform-origin: center center !important;
+      display: block !important;
+      margin: 0 auto !important;
+      background: transparent !important;
+      border: none !important;
+      border-radius: 0 !important;
+      box-shadow: none !important;
+      outline: none !important;
+    }
+    .device_bottominfo--wrapper .m_product_info .m_product_title {
+      display: none !important;
+    }
+    .device_bottominfo--wrapper .m_product_option {
+      flex: 1 !important;
+      width: calc(100% - 112px) !important;
+      height: 48px !important;
+      display: flex !important;
+      align-items: stretch !important;
+      gap: 0 !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      border: none !important;
+      background: #0A6830 !important;
+      box-sizing: border-box !important;
+    }
+    .device_bottominfo--wrapper .m_product_option .m_product_price {
+      display: none !important;
+    }
+    .device_bottominfo--wrapper .m_product_option .m_product_addToCart {
+      flex: 1 !important;
+      height: 48px !important;
+      line-height: 48px !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      background: #0A6830 !important;
+      color: #ffffff !important;
+      border-radius: 0 !important;
+      border: none !important;
+      padding: 0 20px 0 0 !important;
+      margin: 0 !important;
+      min-width: 0 !important;
+      width: 100% !important;
+      font-size: 13.5px !important;
+      font-weight: 700 !important;
+      text-transform: uppercase !important;
+      letter-spacing: 0.08em !important;
+      white-space: nowrap !important;
+      cursor: pointer !important;
+      text-decoration: none !important;
+      box-shadow: none !important;
+      position: relative !important;
+      transition: background 0.15s ease, opacity 0.15s ease !important;
+      -webkit-tap-highlight-color: transparent !important;
+    }
+    @media screen and (max-width: 360px) {
+      .device_bottominfo--wrapper .m_product_option .m_product_addToCart {
+        font-size: 12.5px !important;
+      }
+    }
+    .device_bottominfo--wrapper .m_product_option .m_product_addToCart:hover {
+      background: #085226 !important;
+      color: #ffffff !important;
+      opacity: 0.95 !important;
+    }
+    .device_bottominfo--wrapper .m_product_option .m_product_addToCart:active {
+      background: #06401d !important;
+      transform: none !important;
+    }
+    .device_bottominfo--wrapper .m_product_option .m_product_addToCart.disabled,
+    .device_bottominfo--wrapper .m_product_option .m_product_addToCart[disabled] {
+      background: #477058 !important;
+      color: #cce0d4 !important;
+      cursor: not-allowed !important;
+    }
+    .device_bottominfo--wrapper .m_bottom_cart_status {
+      display: flex !important;
+      position: absolute !important;
+      right: 0 !important;
+      top: 0 !important;
+      bottom: 0 !important;
+      width: 52px !important;
+      min-width: 52px !important;
+      height: 48px !important;
+      flex-shrink: 0 !important;
+      background: transparent !important;
+      color: #ffffff !important;
+      border: none !important;
+      border-radius: 0 !important;
+      align-items: center !important;
+      justify-content: center !important;
+      padding: 0 !important;
+      margin: 0 !important;
+      text-decoration: none !important;
+      pointer-events: none !important;
+      user-select: none !important;
+      -webkit-tap-highlight-color: transparent !important;
+    }
+    .device_bottominfo--wrapper .m_bottom_cart_status .m_bottom_cart_icon_wrap {
+      position: relative !important;
+      width: 26px !important;
+      height: 26px !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+    }
+    .device_bottominfo--wrapper .m_bottom_cart_status svg,
+    .device_bottominfo--wrapper .m_bottom_cart_status svg.m_bottom_bag_icon {
+      width: 21px !important;
+      height: 21px !important;
+      display: block !important;
+      color: #ffffff !important;
+      stroke: #ffffff !important;
+    }
+    .device_bottominfo--wrapper .m_bottom_cart_status svg path,
+    .device_bottominfo--wrapper .m_bottom_cart_status svg.m_bottom_bag_icon path {
+      stroke: #ffffff !important;
+      stroke-width: 2.2px !important;
+      fill: none !important;
+      display: block !important;
+    }
+    .device_bottominfo--wrapper .m_bottom_cart_status .m_bottom_cart_bubble,
+    .device_bottominfo--wrapper .m_bottom_cart_status .cart-link__bubble,
+    .device_bottominfo--wrapper .m_bottom_cart_status .cart-link__bubble--visible {
+      position: absolute !important;
+      right: -5px !important;
+      bottom: -3px !important;
+      top: auto !important;
+      left: auto !important;
+      background: #ffffff !important;
+      color: #0A6830 !important;
+      border-radius: 50% !important;
+      width: 16px !important;
+      height: 16px !important;
+      min-width: 16px !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      padding: 0 !important;
+      margin: 0 !important;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.35) !important;
+      pointer-events: none !important;
+      z-index: 2 !important;
+    }
+    .device_bottominfo--wrapper .m_bottom_cart_status .cart-link__bubble-num {
+      display: block !important;
+      font-size: 10px !important;
+      font-weight: 800 !important;
+      line-height: 16px !important;
+      text-align: center !important;
+      color: #0A6830 !important;
+      font-family: inherit !important;
+    }
+    body.template-product .footer-opera--wrapper {
+      bottom: calc(48px + env(safe-area-inset-bottom, 0px) + 10px) !important;
+    }
   }
 {% endstyle %}
-<!-- mobile fixed botton -->
+<!-- fixed bottom info (desktop & mobile) -->
 <div class="device_bottominfo">
   <div class="device_bottominfo--wrapper page-width">
     <div class="m_product_info">
-      <img class="m_product_img" src="{{ product.featured_image | img_url:"200x200" }}">
+      <img class="m_product_img" src="{{ product.featured_image | img_url:"400x400" }}" alt="{{ product.title | escape }}">
       <h2 class="m_product_title small--hide">{{ product.title }}</h2>
     </div>
     <div class="m_product_option">
@@ -790,25 +1077,107 @@
           <span data-a11y-price class="visually-hidden">{{ 'products.general.regular_price' | t }}</span>
         {%- endif -%}
       </div>
-      <a href="javascript:;" class="m_product_addToCart btn add-to-cart">Add to cart</a>
+      <a href="javascript:;" class="m_product_addToCart btn add-to-cart">
+        <span class="m_product_addToCart_text">
+          {%- if current_variant.available -%}
+            ADD TO CART
+          {%- else -%}
+            SOLD OUT
+          {%- endif -%}
+        </span>
+        <div class="m_bottom_cart_status medium-up--hide" aria-hidden="true">
+          <div class="m_bottom_cart_icon_wrap">
+            <svg class="m_bottom_bag_icon" width="26" height="26" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+              <path d="M16 11V7C16 4.79086 14.2091 3 12 3C9.79086 3 8 4.79086 8 7V11M5 9H19L20 21H4L5 9Z" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span class="m_bottom_cart_bubble cart-link__bubble cart-link__bubble--visible">
+              <span class="cart-link__bubble-num">{{ cart.item_count | default: 0 }}</span>
+            </span>
+          </div>
+        </div>
+      </a>
     </div>
   </div>
 </div>
 <script>
   document.addEventListener('DOMContentLoaded', function () {
-    // 滚动监听
-    window.addEventListener('scroll', function () {
-      const paymentButtons = document.querySelector('.product-block .payment-buttons');
-      if (paymentButtons) {
-        const btnTop = paymentButtons.getBoundingClientRect().top;
-        const mobileBottomInfo = document.querySelector('.device_bottominfo');
-        if (mobileBottomInfo) {
-          if (btnTop < 59 && btnTop) {
-            mobileBottomInfo.style.display = 'block';
+    // 监听 ADD TO CART 视口可见性
+    function updateDeviceBottomInfo() {
+      const mobileBottomInfo = document.querySelector('.device_bottominfo');
+      if (!mobileBottomInfo) return;
+      const paymentButtons = document.querySelector('.product-single__form [data-add-to-cart]') ||
+                             document.querySelector('[data-add-to-cart]') ||
+                             document.querySelector('.product-block .payment-buttons') ||
+                             document.querySelector('.payment-buttons');
+      if (!paymentButtons) {
+        mobileBottomInfo.style.display = 'none';
+        return;
+      }
+      const rect = paymentButtons.getBoundingClientRect();
+      const stickyHeader = document.querySelector('.site-header--stuck, .header-wrapper--sticky .site-header');
+      const topThreshold = stickyHeader ? stickyHeader.getBoundingClientRect().bottom : 0;
+
+      if (window.innerWidth > 768) {
+        // PC端：向下滚动直到页面里的 ADD TO CART 向上滑出视口（消失在顶部/吸顶导航后）才显示吸底栏
+        const hasScrolledPast = rect.bottom <= topThreshold;
+        mobileBottomInfo.style.display = hasScrolledPast ? 'block' : 'none';
+      } else {
+        // 移动端保持原逻辑不变：视口内没有 ADD TO CART 时显示
+        const inViewport = rect.top < window.innerHeight && rect.bottom > topThreshold;
+        mobileBottomInfo.style.display = inViewport ? 'none' : 'block';
+      }
+    }
+
+    let ticking = false;
+    function requestUpdate() {
+      if (!ticking) {
+        requestAnimationFrame(function () {
+          updateDeviceBottomInfo();
+          ticking = false;
+        });
+        ticking = true;
+      }
+    }
+
+    window.addEventListener('scroll', requestUpdate, { passive: true });
+    window.addEventListener('resize', requestUpdate);
+    window.addEventListener('load', requestUpdate);
+    updateDeviceBottomInfo();
+
+    // 变体切换时同步更新吸底栏主图与状态
+    $(document).on('variantChange', function (e, variant) {
+      if (variant && variant.featured_image && variant.featured_image.src) {
+        const bottomImg = document.querySelector('.device_bottominfo .m_product_img');
+        if (bottomImg) {
+          bottomImg.src = variant.featured_image.src;
+        }
+      }
+      const bottomAddBtn = document.querySelector('.device_bottominfo .m_product_addToCart');
+      if (bottomAddBtn && variant) {
+        const textSpan = bottomAddBtn.querySelector('.m_product_addToCart_text');
+        if (!variant.available) {
+          bottomAddBtn.classList.add('disabled');
+          if (textSpan) {
+            textSpan.textContent = 'SOLD OUT';
           } else {
-            mobileBottomInfo.style.display = 'none';
+            bottomAddBtn.textContent = 'SOLD OUT';
+          }
+        } else {
+          bottomAddBtn.classList.remove('disabled');
+          if (textSpan) {
+            textSpan.textContent = 'ADD TO CART';
+          } else {
+            bottomAddBtn.textContent = 'ADD TO CART';
           }
         }
+      }
+    });
+
+    // 移动端点击底部栏图片平滑滚动回顶部
+    $(document).on('click', '.device_bottominfo .m_product_info', function (e) {
+      if (window.innerWidth <= 768) {
+        e.preventDefault();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
       }
     });
 
