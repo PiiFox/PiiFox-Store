@@ -43,11 +43,13 @@
           {%- endfor -%}
         </div>
 
+        {% comment %}
         <div class="bundle-combo-preview" id="BundleComboPreview-{{ section_id }}" style="display: none;" aria-hidden="true">
           <div class="bundle-combo-preview-wrap">
             <img class="bundle-combo-preview-img" src="" alt="Keyboard + Keycap Combo">
           </div>
         </div>
+        {% endcomment %}
 
         {%- if first_3d_model -%}
           <button

@@ -29,7 +29,7 @@
         >
         <p>{{ 'cart.general.empty' | t }}</p>
         {% comment %}<p>{{ 'cart.general.continue_browsing_html' | t: url: routes.all_products_collection_url }}</p>{% endcomment %}
-        <p>{{ 'cart.general.continue_browsing_html' | t: url: routes.root_url }}→</p>
+        <p>{{ 'cart.general.continue_browsing_html' | t: url: 'https://www.piifox.com/collections/all' }}→</p>
       {%- endif -%}
     </div>
   </header>
@@ -113,7 +113,7 @@
                 }
               {% endstyle %}
               <p class="cart__shopping-continue-btn">
-                {{ 'cart.general.continue_browsing_html' | t: url: routes.root_url }}
+                {{ 'cart.general.continue_browsing_html' | t: url: 'https://www.piifox.com/collections/all' }}
               </p>
               <button
                 type="submit"

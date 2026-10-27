@@ -790,7 +790,17 @@
           <span data-a11y-price class="visually-hidden">{{ 'products.general.regular_price' | t }}</span>
         {%- endif -%}
       </div>
-      <a href="javascript:;" class="m_product_addToCart btn add-to-cart">Add to cart</a>
+      <a
+        href="javascript:;"
+        class="m_product_addToCart btn add-to-cart{% unless current_variant.available %} disabled{% endunless %}"
+        {% unless current_variant.available %}aria-disabled="true"{% endunless %}
+      >
+        {%- if current_variant.available -%}
+          {{ 'products.product.add_to_cart' | t }}
+        {%- else -%}
+          {{ 'products.product.sold_out' | t }}
+        {%- endif -%}
+      </a>
     </div>
   </div>
 </div>

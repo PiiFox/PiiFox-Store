@@ -2635,10 +2635,15 @@ button.btn--loading,
 .add-to-cart.btn--loading,
 [data-add-to-cart].btn--loading,
 button.add-to-cart:disabled,
-[data-add-to-cart]:disabled {
+[data-add-to-cart]:disabled,
+.m_product_addToCart.disabled,
+.pc_product_addToCart.disabled,
+.m_product_addToCart[aria-disabled="true"],
+.pc_product_addToCart[aria-disabled="true"] {
   pointer-events: none !important;
   cursor: not-allowed !important;
   user-select: none !important;
+  opacity: 0.6 !important;
 }
 
 /* ==========================================================================
