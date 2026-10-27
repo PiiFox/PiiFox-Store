@@ -1,85 +1,712 @@
 <div class="keycaps-custom-section" id="keycaps-custom-section-{{ section.id }}">
   <div class="page-width">
-    <div class="keycaps-custom-placeholder">
-      <h1 class="keycaps-custom-title">{{ collection.title | default: 'Keycaps' }}</h1>
-      <p class="keycaps-custom-subtitle">Custom layout in progress. Stay tuned for new arrivals and bestsellers.</p>
-      <div class="keycaps-custom-badge">COMING SOON</div>
+    {%- comment -%} 1. 顶部左对齐标题 {%- endcomment -%}
+    <div class="keycaps-page-header">
+      <h1 class="keycaps-page-title custom-txt-extrabold">{{ section.settings.title | default: collection.title }}</h1>
+      {%- if section.settings.subtitle != blank -%}
+        <p class="keycaps-page-subtitle">{{ section.settings.subtitle }}</p>
+      {%- endif -%}
     </div>
+
+    {%- comment -%} 2. 核心商品网格（PC 4列，Mobile 2列，穿插自定义营销卡片） {%- endcomment -%}
+    {%- liquid
+      assign products_limit = section.settings.products_limit | default: 24
+      assign total_products = collection.products.size
+      assign product_index = 0
+      assign max_slots = products_limit | plus: section.blocks.size
+    -%}
+
+    <div class="grid grid--uniform keycaps-collection-grid">
+      {%- for slot in (1..max_slots) -%}
+        {%- assign promo_block = nil -%}
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'promo_card' and block.settings.position == slot -%}
+            {%- assign promo_block = block -%}
+            {%- break -%}
+          {%- endif -%}
+        {%- endfor -%}
+
+        {%- if promo_block != nil -%}
+          {%- comment -%} 渲染自定义卡片（支持第 1 格、第 8 格等任意位置） {%- endcomment -%}
+          <div
+            class="grid__item grid-product small--one-half medium-up--one-quarter promo-grid-card promo-grid-card-{{ promo_block.id }}"
+            {{ promo_block.shopify_attributes }}
+          >
+            <div class="promo-card__inner promo-card--{{ promo_block.settings.card_theme }}{% if promo_block.settings.bg_image != blank %} promo-card--has-bg{% endif %}">
+              {%- if promo_block.settings.bg_image != blank -%}
+                <img
+                  src="{{ promo_block.settings.bg_image | image_url: width: 800 }}"
+                  alt="{{ promo_block.settings.title | escape }}"
+                  class="promo-card__bg-img"
+                  loading="lazy"
+                  width="800"
+                  height="800"
+                >
+                <div class="promo-card__overlay"></div>
+              {%- endif -%}
+
+              <div class="promo-card__body">
+                {%- if promo_block.settings.tag != blank -%}
+                  <div class="promo-card__tag">{{ promo_block.settings.tag }}</div>
+                {%- endif -%}
+                {%- if promo_block.settings.title != blank -%}
+                  <h3 class="promo-card__title">{{ promo_block.settings.title }}</h3>
+                {%- endif -%}
+                {%- if promo_block.settings.description != blank -%}
+                  <div class="promo-card__desc">{{ promo_block.settings.description | newline_to_br }}</div>
+                {%- endif -%}
+              </div>
+
+              {%- if promo_block.settings.btn_label != blank -%}
+                <div class="promo-card__footer">
+                  <a
+                    href="{{ promo_block.settings.btn_url | default: '#' }}"
+                    class="promo-card__action"
+                  >
+                    <span>{{ promo_block.settings.btn_label }}</span>
+                    <svg class="promo-card__action-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                  </a>
+                </div>
+              {%- endif -%}
+            </div>
+          </div>
+        {%- else -%}
+          {%- comment -%} 渲染标准商品卡片 {%- endcomment -%}
+          {%- if product_index < total_products and product_index < products_limit -%}
+            {%- assign current_prod = collection.products[product_index] -%}
+            {%- render 'product-grid-item',
+              product: current_prod,
+              per_row: 4,
+              quick_shop_enable: settings.quick_shop_enable,
+              short_introduction_enable: false,
+              short_point_desc_enable: false
+            -%}
+            {%- assign product_index = product_index | plus: 1 -%}
+          {%- else -%}
+            {%- break -%}
+          {%- endif -%}
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+
+    {%- comment -%} 3. 卡片下方追加轮播商品模块（Handpicked for You，无数字 12345） {%- endcomment -%}
+    {%- if section.settings.show_carousel -%}
+      {%- liquid
+        assign carousel_col = section.settings.carousel_collection
+        if carousel_col == blank or carousel_col.products.size == 0
+          assign carousel_col = collections['best-sellers']
+        endif
+        if carousel_col == blank or carousel_col.products.size == 0
+          assign carousel_col = collection
+        endif
+      -%}
+
+      <div class="handpicked-carousel-wrapper">
+        <div class="handpicked-header">
+          <h2 class="handpicked-title" style="color: {{ section.settings.carousel_title_color | default: '#B82308' }};">
+            {{ section.settings.carousel_title | default: 'Handpicked for You' }}
+          </h2>
+          <div class="handpicked-nav">
+            <button
+              type="button"
+              class="handpicked-nav-btn handpicked-prev-btn handpicked-prev-{{ section.id }}"
+              aria-label="Previous Products"
+            >
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+            </button>
+            <button
+              type="button"
+              class="handpicked-nav-btn handpicked-next-btn handpicked-next-{{ section.id }}"
+              aria-label="Next Products"
+            >
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="swiper-container handpicked-swiper handpicked-swiper-{{ section.id }}">
+          <div class="swiper-wrapper">
+            {%- for p in carousel_col.products limit: section.settings.carousel_limit -%}
+              <div class="swiper-slide handpicked-slide">
+                <a href="{{ p.url }}" class="handpicked-card-item">
+                  <div class="handpicked-img-box">
+                    {%- if p.featured_image -%}
+                      <img
+                        src="{{ p.featured_image | image_url: width: 600 }}"
+                        alt="{{ p.featured_image.alt | default: p.title | escape }}"
+                        loading="lazy"
+                        width="500"
+                        height="500"
+                        class="handpicked-img"
+                      >
+                    {%- else -%}
+                      <div class="handpicked-placeholder-img">No Image</div>
+                    {%- endif -%}
+                  </div>
+                  <div class="handpicked-details">
+                    <div class="handpicked-p-title">{{ p.title }}</div>
+                    <div class="handpicked-p-type">{{ p.type | default: 'Keycaps' }}</div>
+                    <div class="handpicked-p-price">
+                      <span class="price-current">{{ p.price | money }}</span>
+                      {%- if p.compare_at_price > p.price -%}
+                        <span class="price-compare">{{ p.compare_at_price | money }}</span>
+                      {%- endif -%}
+                    </div>
+                  </div>
+                </a>
+              </div>
+            {%- endfor -%}
+          </div>
+        </div>
+      </div>
+    {%- endif -%}
   </div>
 </div>
 
 <style>
-  /* 仅针对当前页面隐藏 Shop With Confidence 与 Marquee 模块 */
+  /* 隐藏底部不需要的通用板块（如 Shop With Confidence、走马灯） */
   #shopify-section-shop-with-confidence-section,
   #shopify-section-icon-list-marquee-section {
     display: none !important;
   }
 
+  /* 基础容器 */
   .keycaps-custom-section {
-    padding: 120px 0 140px;
-    min-height: 55vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
+    padding: 30px 0 90px;
     background: #ffffff;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   }
 
-  .keycaps-custom-placeholder {
-    max-width: 680px;
-    margin: 0 auto;
+  /* 顶部左对齐大标题 */
+  .keycaps-page-header {
+    text-align: left;
+    margin-bottom: 28px;
+    padding-bottom: 8px;
   }
-
-  .keycaps-custom-title {
-    font-size: 40px;
+  .keycaps-page-title {
+    font-size: 36px;
     font-weight: 800;
+    color: #111111;
+    margin: 0 0 8px;
+    letter-spacing: -0.5px;
+    line-height: 1.2;
+    text-transform: none;
+  }
+  .keycaps-page-subtitle {
+    font-size: 15px;
+    color: #666666;
+    margin: 0;
+    line-height: 1.5;
+  }
+
+  /* 商品网格（PC 4列，Mobile 2列，支持卡片混排） */
+  .keycaps-collection-grid.grid--uniform {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    margin-left: -20px;
+  }
+  .keycaps-collection-grid.grid--uniform::before,
+  .keycaps-collection-grid.grid--uniform::after {
+    display: none !important;
+  }
+  .keycaps-collection-grid .grid__item {
+    float: none !important;
+    clear: none !important;
+    box-sizing: border-box;
+    padding-left: 20px;
+    margin-bottom: 30px;
+  }
+  .keycaps-collection-grid .medium-up--one-quarter {
+    width: 25% !important;
+  }
+
+  /* 自定义广告卡片样式 */
+  .promo-grid-card {
+    display: flex !important;
+  }
+  .promo-card__inner {
+    position: relative;
+    width: 100%;
+    border-radius: 12px;
+    padding: 30px 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-sizing: border-box;
+    overflow: hidden;
+    min-height: 400px;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+  }
+  .promo-card__inner:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+  }
+
+  /* 背景图模式 */
+  .promo-card--has-bg {
+    color: #ffffff !important;
+  }
+  .promo-card__bg-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 1;
+  }
+  .promo-card__overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.75) 100%);
+    z-index: 2;
+  }
+  .promo-card--has-bg .promo-card__body,
+  .promo-card--has-bg .promo-card__footer {
+    position: relative;
+    z-index: 3;
+  }
+
+  /* 样式一：浅灰极简风（第 1 格默认） */
+  .promo-card--light {
+    background: #f4f4f6;
+    color: #111111;
+    border: 1px solid #e8e8ea;
+  }
+  .promo-card--light .promo-card__tag {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 1.2px;
+    color: #0A6830;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .promo-card--light .promo-card__title {
+    font-size: 26px;
+    font-weight: 800;
+    line-height: 1.18;
     color: #111111;
     margin: 0 0 16px;
     letter-spacing: -0.5px;
-    line-height: 1.2;
+  }
+  .promo-card--light .promo-card__desc {
+    font-size: 14px;
+    line-height: 1.7;
+    color: #444444;
+  }
+  .promo-card--light .promo-card__action {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: #111111;
+    font-size: 14px;
+    font-weight: 700;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    cursor: pointer;
+  }
+  .promo-card--light .promo-card__action:hover {
+    color: #0A6830;
   }
 
-  .keycaps-custom-subtitle {
-    font-size: 16px;
-    color: #666666;
-    margin: 0 0 28px;
-    line-height: 1.6;
+  /* 样式二：深色高质感渐变风（第 8 格默认） */
+  .promo-card--dark {
+    background: linear-gradient(145deg, #182e20 0%, #0d1a12 100%);
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.08);
   }
-
-  .keycaps-custom-badge {
+  .promo-card--dark .promo-card__tag {
     display: inline-block;
-    padding: 8px 22px;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    color: #72d572;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .promo-card--dark .promo-card__title {
+    font-size: 26px;
+    font-weight: 800;
+    line-height: 1.18;
+    color: #ffffff;
+    margin: 0 0 14px;
+    letter-spacing: -0.5px;
+  }
+  .promo-card--dark .promo-card__desc {
+    font-size: 14px;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.85);
+  }
+  .promo-card--dark .promo-card__action {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 22px;
+    background: #ffffff;
+    color: #111111;
+    font-size: 13px;
+    font-weight: 700;
+    border-radius: 30px;
+    text-decoration: none;
+    transition: background 0.2s, color 0.2s;
+  }
+  .promo-card--dark .promo-card__action:hover {
     background: #0A6830;
     color: #ffffff;
-    font-size: 12px;
-    font-weight: 700;
-    letter-spacing: 1.5px;
-    border-radius: 4px;
-    text-transform: uppercase;
   }
 
+  /* 轮播卡片区域（Handpicked for You，无数字 12345） */
+  .handpicked-carousel-wrapper {
+    margin-top: 60px;
+    padding-top: 40px;
+    border-top: 1px solid #ebebeb;
+  }
+  .handpicked-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 24px;
+  }
+  .handpicked-title {
+    font-size: 32px;
+    font-weight: 800;
+    margin: 0;
+    letter-spacing: -0.5px;
+    line-height: 1.2;
+    text-transform: none;
+  }
+  .handpicked-nav {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .handpicked-nav-btn {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    border: 1px solid #dcdcdc;
+    background: #ffffff;
+    color: #222222;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  .handpicked-nav-btn:hover:not(.handpicked-btn-disabled) {
+    background: #111111;
+    color: #ffffff;
+    border-color: #111111;
+  }
+  .handpicked-nav-btn.handpicked-btn-disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+  }
+
+  /* 轮播卡片滑动组件 */
+  .handpicked-swiper {
+    width: 100%;
+    overflow: hidden;
+  }
+  .handpicked-swiper .swiper-wrapper {
+    display: flex;
+  }
+  .handpicked-slide {
+    flex-shrink: 0;
+    height: auto;
+  }
+  .handpicked-card-item {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    background: #ffffff;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: transform 0.2s ease;
+  }
+  .handpicked-card-item:hover {
+    transform: translateY(-3px);
+  }
+  .handpicked-img-box {
+    position: relative;
+    width: 100%;
+    padding-bottom: 100%;
+    background: #f8f8f8;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .handpicked-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    padding: 12px;
+    box-sizing: border-box;
+    transition: transform 0.3s ease;
+  }
+  .handpicked-card-item:hover .handpicked-img {
+    transform: scale(1.04);
+  }
+  .handpicked-placeholder-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #999;
+    font-size: 13px;
+  }
+  .handpicked-details {
+    padding: 14px 4px 6px;
+    text-align: left;
+  }
+  .handpicked-p-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: #111111;
+    margin-bottom: 4px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .handpicked-p-type {
+    font-size: 12.5px;
+    color: #717171;
+    margin-bottom: 8px;
+  }
+  .handpicked-p-price {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+  }
+  .price-current {
+    font-size: 15px;
+    font-weight: 700;
+    color: #0A6830;
+  }
+  .price-compare {
+    font-size: 13px;
+    color: #888888;
+    text-decoration: line-through;
+  }
+
+  /* 移动端响应式布局 */
   @media screen and (max-width: 768px) {
     .keycaps-custom-section {
-      padding: 70px 0 90px;
-      min-height: 45vh;
+      padding: 24px 0 60px;
     }
-    .keycaps-custom-title {
-      font-size: 28px;
+    .keycaps-page-title {
+      font-size: 26px;
     }
-    .keycaps-custom-subtitle {
-      font-size: 14px;
+    .keycaps-collection-grid.grid--uniform {
+      margin-left: -12px;
+    }
+    .keycaps-collection-grid .grid__item {
+      padding-left: 12px;
+      margin-bottom: 20px;
+    }
+    .keycaps-collection-grid .small--one-half {
+      width: 50% !important;
+    }
+    .promo-card__inner {
+      min-height: 280px;
+      padding: 20px 16px;
+      border-radius: 8px;
+    }
+    .promo-card--light .promo-card__title,
+    .promo-card--dark .promo-card__title {
+      font-size: 18px;
+      margin-bottom: 8px;
+    }
+    .promo-card--light .promo-card__desc,
+    .promo-card--dark .promo-card__desc {
+      font-size: 12.5px;
+      line-height: 1.5;
+    }
+    .handpicked-carousel-wrapper {
+      margin-top: 40px;
+      padding-top: 30px;
+    }
+    .handpicked-title {
+      font-size: 22px;
+    }
+    .handpicked-nav-btn {
+      width: 32px;
+      height: 32px;
     }
   }
 </style>
 
+<script>
+  (function () {
+    function initHandpickedSwiper() {
+      if (typeof Swiper === 'undefined') {
+        setTimeout(initHandpickedSwiper, 40);
+        return;
+      }
+      const sectionEl = document.getElementById('keycaps-custom-section-{{ section.id }}');
+      if (!sectionEl) return;
+      const swiperContainer = sectionEl.querySelector('.handpicked-swiper-{{ section.id }}');
+      if (!swiperContainer || swiperContainer.swiper) return;
+
+      new Swiper(swiperContainer, {
+        slidesPerView: 1.4,
+        spaceBetween: 12,
+        watchOverflow: true,
+        grabCursor: true,
+        navigation: {
+          prevEl: sectionEl.querySelector('.handpicked-prev-{{ section.id }}'),
+          nextEl: sectionEl.querySelector('.handpicked-next-{{ section.id }}'),
+          disabledClass: 'handpicked-btn-disabled'
+        },
+        breakpoints: {
+          480: { slidesPerView: 2.2, spaceBetween: 14 },
+          768: { slidesPerView: 3.2, spaceBetween: 18 },
+          1024: { slidesPerView: 4.2, spaceBetween: 20 },
+          1280: { slidesPerView: 5, spaceBetween: 20 }
+        }
+      });
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initHandpickedSwiper);
+    } else {
+      initHandpickedSwiper();
+    }
+  })();
+</script>
+
 {% schema %}
 {
-  "name": "Keycaps Custom Section",
+  "name": "Keycaps Custom Page",
   "tag": "section",
-  "settings": [],
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Page Title (Optional, defaults to collection title)"
+    },
+    {
+      "type": "textarea",
+      "id": "subtitle",
+      "label": "Page Subtitle"
+    },
+    {
+      "type": "range",
+      "id": "products_limit",
+      "label": "Products to Show in Grid",
+      "min": 8,
+      "max": 48,
+      "step": 4,
+      "default": 24
+    },
+    {
+      "type": "header",
+      "content": "Carousel: Handpicked for You"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_carousel",
+      "label": "Show Bottom Carousel",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "carousel_title",
+      "label": "Carousel Title",
+      "default": "Handpicked for You"
+    },
+    {
+      "type": "color",
+      "id": "carousel_title_color",
+      "label": "Carousel Title Color",
+      "default": "#B82308"
+    },
+    {
+      "type": "collection",
+      "id": "carousel_collection",
+      "label": "Carousel Products Source (Optional)"
+    },
+    {
+      "type": "range",
+      "id": "carousel_limit",
+      "label": "Carousel Products Limit",
+      "min": 4,
+      "max": 16,
+      "step": 1,
+      "default": 10
+    }
+  ],
+  "blocks": [
+    {
+      "type": "promo_card",
+      "name": "In-Grid Promo Card",
+      "settings": [
+        {
+          "type": "number",
+          "id": "position",
+          "label": "Slot Position in Grid (1, 8, etc.)",
+          "default": 1
+        },
+        {
+          "type": "select",
+          "id": "card_theme",
+          "label": "Card Visual Style",
+          "options": [
+            { "value": "light", "label": "Light Minimal (Grey)" },
+            { "value": "dark", "label": "Dark Aesthetic (Emerald/Black)" }
+          ],
+          "default": "light"
+        },
+        {
+          "type": "image_picker",
+          "id": "bg_image",
+          "label": "Background Image (Optional)"
+        },
+        {
+          "type": "text",
+          "id": "tag",
+          "label": "Top Badge / Small Tag",
+          "default": "MEMBER EXCLUSIVE"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Card Title",
+          "default": "Save on Every Order — Join PIIFOX Club"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Card Description / Perks",
+          "default": "Unlock members-only savings:\nSpend $65, Save 15%\nSpend $125, Save 20%\nSpend $175, Save 25%"
+        },
+        {
+          "type": "text",
+          "id": "btn_label",
+          "label": "Button / Link Text",
+          "default": "Learn More"
+        },
+        {
+          "type": "url",
+          "id": "btn_url",
+          "label": "Button Link"
+        }
+      ]
+    }
+  ],
   "presets": [
     {
-      "name": "Keycaps Custom Section"
+      "name": "Keycaps Custom Page"
     }
   ]
 }
