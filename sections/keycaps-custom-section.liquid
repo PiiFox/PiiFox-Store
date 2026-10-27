@@ -1,12 +1,76 @@
 <div class="keycaps-custom-section" id="keycaps-custom-section-{{ section.id }}">
   <div class="page-width">
-    {% comment %} 
-      这里是键帽专属自定义区域：
-      上方是网站 Header 导航栏，下方是网站 Footer 页脚。
-      你可以在此处编写全新的键帽展示样式。
-    {% endcomment %}
+    <div class="keycaps-custom-placeholder">
+      <h1 class="keycaps-custom-title">{{ collection.title | default: 'Keycaps' }}</h1>
+      <p class="keycaps-custom-subtitle">Custom layout in progress. Stay tuned for new arrivals and bestsellers.</p>
+      <div class="keycaps-custom-badge">COMING SOON</div>
+    </div>
   </div>
 </div>
+
+<style>
+  /* 仅针对当前页面隐藏 Shop With Confidence 与 Marquee 模块 */
+  #shopify-section-shop-with-confidence-section,
+  #shopify-section-icon-list-marquee-section {
+    display: none !important;
+  }
+
+  .keycaps-custom-section {
+    padding: 120px 0 140px;
+    min-height: 55vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background: #ffffff;
+  }
+
+  .keycaps-custom-placeholder {
+    max-width: 680px;
+    margin: 0 auto;
+  }
+
+  .keycaps-custom-title {
+    font-size: 40px;
+    font-weight: 800;
+    color: #111111;
+    margin: 0 0 16px;
+    letter-spacing: -0.5px;
+    line-height: 1.2;
+  }
+
+  .keycaps-custom-subtitle {
+    font-size: 16px;
+    color: #666666;
+    margin: 0 0 28px;
+    line-height: 1.6;
+  }
+
+  .keycaps-custom-badge {
+    display: inline-block;
+    padding: 8px 22px;
+    background: #0A6830;
+    color: #ffffff;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    border-radius: 4px;
+    text-transform: uppercase;
+  }
+
+  @media screen and (max-width: 768px) {
+    .keycaps-custom-section {
+      padding: 70px 0 90px;
+      min-height: 45vh;
+    }
+    .keycaps-custom-title {
+      font-size: 28px;
+    }
+    .keycaps-custom-subtitle {
+      font-size: 14px;
+    }
+  }
+</style>
 
 {% schema %}
 {
