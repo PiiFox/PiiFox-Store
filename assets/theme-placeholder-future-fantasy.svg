@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 190" width="360" height="190">
+  <defs>
+    <linearGradient id="yellowBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fee352"/>
+      <stop offset="50%" stop-color="#fdd835"/>
+      <stop offset="100%" stop-color="#fbc02d"/>
+    </linearGradient>
+  </defs>
+  <rect width="360" height="190" fill="url(#yellowBg)"/>
+
+  <!-- Big Cute White Duck with Blue Baseball Cap on right -->
+  <g transform="translate(245, 25)">
+    <!-- Body/Chest emerging from bottom -->
+    <path d="M 10 165 C 10 115 25 85 55 85 C 85 85 100 115 100 165 Z" fill="#ffffff" stroke="#111" stroke-width="3"/>
+
+    <!-- Duck head -->
+    <ellipse cx="55" cy="78" rx="34" ry="40" fill="#ffffff" stroke="#111" stroke-width="3"/>
+
+    <!-- Blue Baseball Cap -->
+    <!-- Cap dome -->
+    <path d="M 22 55 C 22 28 42 22 62 25 C 80 27 88 44 88 56 Z" fill="#42a5f5" stroke="#111" stroke-width="3"/>
+    <!-- Cap button on top -->
+    <circle cx="56" cy="24" r="4" fill="#1e88e5" stroke="#111" stroke-width="2"/>
+    <!-- Cap visor / brim pointing to the left -->
+    <path d="M 28 54 C 10 52 -10 55 -22 64 C -12 70 12 66 34 58 Z" fill="#42a5f5" stroke="#111" stroke-width="3"/>
+    <path d="M 28 54 C 10 52 -10 55 -22 64" stroke="#111" stroke-width="3"/>
+
+    <!-- Cute oval beady eyes -->
+    <ellipse cx="44" cy="68" rx="3.5" ry="5.5" fill="#111"/>
+    <ellipse cx="66" cy="68" rx="3.5" ry="5.5" fill="#111"/>
+
+    <!-- Yellow / Orange Duck Beak -->
+    <ellipse cx="55" cy="85" rx="14" ry="10" fill="#ffa726" stroke="#111" stroke-width="2.5"/>
+    <path d="M 44 85 Q 55 90 66 85" stroke="#e65100" stroke-width="2" fill="none"/>
+    <circle cx="51" cy="82" r="1.2" fill="#e65100"/>
+    <circle cx="59" cy="82" r="1.2" fill="#e65100"/>
+
+    <!-- Subtle blush -->
+    <ellipse cx="28" cy="82" rx="5" ry="3" fill="#ffab91" opacity="0.5"/>
+    <ellipse cx="82" cy="82" rx="5" ry="3" fill="#ffab91" opacity="0.5"/>
+  </g>
+
+  <!-- Cute orange accent flower on far right like in card 8 -->
+  <g transform="translate(340, 60)" opacity="0.8">
+    <circle cx="0" cy="0" rx="8" ry="14" fill="#fb8c00" transform="rotate(0)"/>
+    <circle cx="0" cy="0" rx="8" ry="14" fill="#fb8c00" transform="rotate(45)"/>
+    <circle cx="0" cy="0" rx="8" ry="14" fill="#fb8c00" transform="rotate(90)"/>
+    <circle cx="0" cy="0" rx="8" ry="14" fill="#fb8c00" transform="rotate(135)"/>
+    <circle cx="0" cy="0" r="5" fill="#fff9c4"/>
+  </g>
+</svg>

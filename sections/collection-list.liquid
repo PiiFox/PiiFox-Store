@@ -1,404 +1,635 @@
-<div class="collection-list-section-{{ section.id }} wow bounceInUp">
-  <div class="collection-list-section--wrapper page-width">
-    <h2 class="collection-list-section-title custom-txt-bold appear-delay{% cycle '','-1','-2','-3','-4' %}">
-      {{ section.settings.title }}
-    </h2>
-    {% comment %} Tab导航点击切换集合 {% endcomment %}
-    <div class="collection-tab-list appear-delay{% cycle '','-1','-2','-3','-4' %}">
-      {% for block in section.blocks %}
-        <div class="tab-item tab-item-{{ block.settings.collection_title }} appear-delay{% cycle '','-1','-2','-3','-4' %} {% if forloop.first %}active{% endif %}">
-          <div class="tab-item-title">{{ block.settings.collection_title }}</div>
-        </div>
-      {% endfor %}
-    </div>
-    {% comment %} 集合产品展示 swiper {% endcomment %}
-    <div class="collection-list appear-delay{% cycle '','-1','-2','-3','-4' %}">
-      {% for block in section.blocks %}
-        <div
-          class="
-            collection-product-list collection-item-{{ block.settings.collection.id }}  swiper-container
-            appear-delay{% cycle '','-1','-2','-3','-4' %}
-             {% if forloop.first %}active{% endif %}
-          "
-          data-collection-id="{{ block.settings.collection.id }}"
-        >
-          <div class="swiper-wrapper">
-            {% for product in block.settings.collection.products %}
-              {% if forloop.index0 < 10 %}
-                {% liquid
-                  assign on_sale = false
-                  if product.compare_at_price > product.price
-                    assign on_sale = true
-                  endif
-                %}
-                {% style %}
-                  .collection-list-section-{{ section.id }} .collection-product-item-{{ product.id }} .product-image {
-                    background: url({{ product.featured_image | image_url: width: 1000, height: 1000, format: 'webp'}}) center center / cover no-repeat;
-                  }
-                {% endstyle %}
-                <div class="collection-product-item swiper-slide collection-product-item-{{ product.id }}">
-                  <a href="{{ product.url }}" class="collection-product-link">
-                    <div class="collection-product-title custom-txt-semibold">{{ product.title }}</div>
-                    <div class="collection-product-introduction">
-                      {{ product.metafields.custom.short_introduction }}
-                    </div>
-                    <div class="collection-product-features">{{ product.metafields.custom.short_features }}</div>
-                    <div class="product-image"></div>
-                    <div class="collection-product-options">
-                      <div class="collection-product-price custom-txt-semibold">
-                        {%- if on_sale -%}
-                          <span class="visually-hidden">{{ 'products.general.sale_price' | t }}</span>
-                        {% endif %}
-                        {%- if product.price_varies -%}
-                          {%- assign price = product.price_min | money -%}
-                          {{ 'products.general.from_text_html' | t: price: price }}
-                        {%- else -%}
-                          {{ product.price | money }}
-                        {%- endif -%}
-
-                        {%- if on_sale -%}
-                          <span class="visually-hidden">{{ 'products.general.regular_price' | t }}</span>
-                          <span class="grid-product__price--original">{{ product.compare_at_price | money }}</span>
-                        {%- endif -%}
-
-                        {%- if on_sale -%}
-                          {%- if settings.product_save_amount -%}
-                            {%- if settings.product_save_type == 'dollar' -%}
-                              {%- capture saved_amount -%}{{ product.compare_at_price | minus: product.price | money }}{%- endcapture -%}
-                            {%- else -%}
-                              {%- capture saved_amount -%}{{ product.compare_at_price | minus: product.price | times: 100.0 | divided_by: product.compare_at_price | round }}%{%- endcapture -%}
-                            {%- endif -%}
-                            <span class="grid-product__price--savings">
-                              {{ 'products.general.save_html' | t: saved_amount: saved_amount }}
-                            </span>
-                          {%- endif -%}
-                        {%- endif -%}
-
-                        {%- assign product_variant = product.selected_or_first_available_variant -%}
-                        {%- if product_variant.unit_price_measurement -%}
-                          <div class="product__unit-price">
-                            {%- capture unit_price_base_unit -%}
-                            {%- if product_variant.unit_price_measurement -%}
-                              {%- if product_variant.unit_price_measurement.reference_value != 1 -%}
-                                {{ product_variant.unit_price_measurement.reference_value }}
-                              {%- endif -%}
-                              {{ product_variant.unit_price_measurement.reference_unit }}
-                            {%- endif -%}
-                          {%- endcapture -%}
-
-                            {{ product_variant.unit_price | money }}/{{ unit_price_base_unit }}
-                          </div>
-                        {%- endif -%}
-                      </div>
-                      <div class="collection-product-btn custom-txt-medium custom-btn">
-                        {{ 'general.custom.button_label' | t }}
-                      </div>
-                    </div>
-                  </a>
-                </div>
-              {% endif %}
-            {% endfor %}
-          </div>
-
-          <div class="swiper-button-prev">
-            <svg
-              class="group-hover/svg:scale-[1.3] transition-scale duration-300 "
-              xmlns="http://www.w3.org/2000/svg"
-              xmlns:xlink="http://www.w3.org/1999/xlink"
-              fill="none"
-              version="1.1"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-            >
-              <g><g transform="matrix(-1,0,0,1,30.833984375,0)"><path d="M15.4169921875,6.166748046875C15.4169921875,6.564568046875,15.5750271875,6.9461080468750005,15.8563321875,7.227408046875L20.6290021875,12.000078046875L15.8563321875,16.772748046875C15.5750271875,17.054048046875,15.4169921875,17.435548046875,15.4169921875,17.833448046875C15.4169921875,18.661848046875,16.0885651875,19.333448046875,16.9169921875,19.333448046875C17.3148121875,19.333448046875,17.6963521875,19.175348046875,17.9776521875,18.894048046875L23.810982187500002,13.060738046875C24.0922921875,12.779438046875,24.2503221875,12.397908046875,24.2503221875,12.000078046875C24.2503221875,11.602258046875,24.0922921875,11.220728046875,23.810982187500002,10.939418046875L17.9776521875,5.106088046875C17.6963521875,4.824783046875,17.3148121875,4.666748046875,16.9169921875,4.666748046875C16.0885651875,4.666748046875,15.4169921875,5.338321046875,15.4169921875,6.166748046875Z" fill-rule="evenodd" fill="#FFFFFF" fill-opacity="1"></path></g></g>
-            </svg>
-          </div>
-          <div class="swiper-button-next">
-            <svg
-              class="group-hover/svg:scale-[1.3] transition-scale duration-300"
-              xmlns="http://www.w3.org/2000/svg"
-              xmlns:xlink="http://www.w3.org/1999/xlink"
-              fill="none"
-              version="1.1"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-            >
-              <g><g><path d="M8.5830078125,6.166748046875C8.5830078125,6.564568046875,8.7410428125,6.9461080468750005,9.0223478125,7.227408046875L13.7950178125,12.000078046875L9.0223478125,16.772748046875C8.7410428125,17.054048046875,8.5830078125,17.435548046875,8.5830078125,17.833448046875C8.5830078125,18.661848046875,9.2545808125,19.333448046875,10.0830078125,19.333448046875C10.4808278125,19.333448046875,10.8623678125,19.175348046875,11.1436678125,18.894048046875L16.976997812500002,13.060738046875C17.2583078125,12.779438046875,17.4163378125,12.397908046875,17.4163378125,12.000078046875C17.4163378125,11.602258046875,17.2583078125,11.220728046875,16.976997812500002,10.939418046875L11.1436678125,5.106088046875C10.8623678125,4.824783046875,10.4808278125,4.666748046875,10.0830078125,4.666748046875C9.2545808125,4.666748046875,8.5830078125,5.338321046875,8.5830078125,6.166748046875Z" fill-rule="evenodd" fill="#FFFFFF" fill-opacity="1"></path></g></g>
-            </svg>
-          </div>
-        </div>
-      {% endfor %}
-    </div>
-  </div>
-</div>
-<script>
-  document.addEventListener('DOMContentLoaded', function () {
-    // Tab 切换逻辑
-    const tabItems = document.querySelectorAll('.tab-item');
-    const collectionLists = document.querySelectorAll('.collection-product-list');
-
-    tabItems.forEach((item, index) => {
-      item.addEventListener('click', () => {
-        tabItems.forEach((tab) => tab.classList.remove('active'));
-        item.classList.add('active');
-        collectionLists.forEach((list) => list.classList.remove('active'));
-        collectionLists[index].classList.add('active');
-
-        // 切换后刷新当前激活的 Swiper
-        const activeContainer = collectionLists[index];
-        if (activeContainer && activeContainer.swiper) {
-          activeContainer.swiper.update();
-        }
-      });
-    });
-
-    requestIdleCallback(() => {
-      // 初始化 Swiper
-      const swiperContainers = document.querySelectorAll('.collection-list-section-{{ section.id }} .swiper-container');
-      const collectionListSwiper = {};
-
-      // 封装 Swiper 初始化（方便 resize 时重新初始化）
-      function initSwiper() {
-        swiperContainers.forEach((container) => {
-          const collectionId = container.getAttribute('data-collection-id');
-          // 先销毁旧实例
-          if (collectionListSwiper[collectionId]) {
-            collectionListSwiper[collectionId].destroy();
-          }
-
-          const nextEl = container.querySelector('.swiper-button-next');
-          const prevEl = container.querySelector('.swiper-button-prev');
-          const pageEl = container.querySelector('.swiper-pagination');
-          const mobile = isMobile();
-
-          // 初始化新实例
-          collectionListSwiper[collectionId] = new Swiper(container, {
-            loop: false,
-            navigation: {
-              nextEl: nextEl,
-              prevEl: prevEl,
-            },
-            breakpoints: {
-              0: {
-                slidesPerView: 1.5, // 你要的 1.5 个
-                spaceBetween: 10,
-              },
-              640: {
-                slidesPerView: 2.5, // 建议改成 2.5 更美观
-                spaceBetween: 10,
-              },
-              768: {
-                slidesPerView: 3,
-                spaceBetween: 20,
-              },
-              1600: {
-                slidesPerView: 3.2, // 1024 比 2560 更合理
-                spaceBetween: 20,
-              },
-              2560: {
-                slidesPerView: 4, // 1024 比 2560 更合理
-                spaceBetween: 30,
-              },
-            },
-          });
-
-          container.swiper = collectionListSwiper[collectionId];
-        });
-      }
-
-      initSwiper();
-
-      let resizeTimer;
-      window.addEventListener('resize', () => {
-        clearTimeout(resizeTimer);
-        resizeTimer = setTimeout(() => {
-          initSwiper();
-        }, 500);
-      });
-    });
-  });
-</script>
 {% style %}
   .collection-list-section-{{ section.id }} {
-    padding: 4em 0;
-    background-color: #fff;
+    padding: 60px 0;
+    background-color: {{ section.settings.section_bg_color | default: '#ffffff' }};
   }
-  .collection-list-section-{{ section.id }} .collection-list-section-title {
-    font-size: 2.5em;
-    font-weight: bold;
-    text-align: left;
-    margin-bottom: 30px;
+
+  .collection-list-section-{{ section.id }} .best-sellers-wrapper {
+    position: relative;
   }
+
+  /* Header: Title on Left, Nav Buttons on Right (Reference Image 1) */
+  .collection-list-section-{{ section.id }} .best-sellers-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 28px;
+  }
+
+  .collection-list-section-{{ section.id }} .best-sellers-title {
+    font-size: 32px;
+    font-weight: 700;
+    color: #111111;
+    margin: 0;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+  }
+
+  .collection-list-section-{{ section.id }} .best-sellers-nav {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .collection-list-section-{{ section.id }} .best-sellers-nav-btn {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    border: 1px solid #dcdcdc;
+    background-color: #ffffff;
+    color: #222222;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    padding: 0;
+    outline: none;
+    user-select: none;
+    box-sizing: border-box;
+  }
+
+  .collection-list-section-{{ section.id }} .best-sellers-nav-btn svg {
+    width: 18px;
+    height: 18px;
+    transition: transform 0.2s ease;
+  }
+
+  .collection-list-section-{{ section.id }} .best-sellers-nav-btn:hover:not(.swiper-button-disabled) {
+    border-color: #111111;
+    background-color: #111111;
+    color: #ffffff;
+  }
+
+  .collection-list-section-{{ section.id }} .best-sellers-nav-btn.swiper-button-disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+    pointer-events: none;
+    border-color: #ebebeb;
+    color: #999999;
+  }
+
+  /* Tabs (if enabled) */
   .collection-list-section-{{ section.id }} .collection-tab-list {
     display: inline-flex;
     justify-content: flex-start;
-    margin-bottom: 30px;
-    background-color: #eaeaec;
+    margin-bottom: 24px;
+    background-color: #f0f0f2;
     border-radius: 20em;
-    padding: 0.4em;
-  }
-  .collection-list-section-{{ section.id }} .tab-item {
-    padding: 10px 20px;
-    cursor: pointer;
-    border-radius: 20em;
-  }
-  .collection-list-section-{{ section.id }} .tab-item.active {
-    background-color: #fff;
-  }
-  .collection-list-section-{{ section.id }} .collection-list {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-  }
-  .collection-list-section-{{ section.id }} .collection-product-list {
-    display: none;
-    flex-wrap: wrap;
-    justify-content: center;
-    width: 100%;
-    overflow: hidden;
-    position: relative;
-  }
-  .collection-list-section-{{ section.id }} .collection-product-list.active {
-    display: flex;
-  }
-  .collection-list-section-{{ section.id }} .collection-product-list .swiper-slide {
-    opacity: 1;
-  }
-  .collection-list-section-{{ section.id }} .collection-product-item {
-    text-align: left;
-    background-color: #fff;
-    padding: 1em;
-    border-radius: 1em;
-    border-top: 5px solid var(--colorThemePrimary);
-    box-shadow: inset 0 0 5px 0px #ccc;
-  }
-  .collection-list-section-{{ section.id }} .collection-product-link {
-    text-decoration: none;
-    color: #000;
-  }
-  .collection-list-section-{{ section.id }} .collection-product-title {
-    font-size: 1.6em;
-    margin: 10px 0;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;          /* 最多显示两行 */
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    text-overflow: ellipsis;        /* 超出部分显示省略号 */
-    line-height: 1.5em;
-    height: 3.0em;
-    max-height: 3.0em;
-  }
-  .collection-list-section-{{ section.id }} .collection-product-introduction {
-    font-size: 1em;
-    color: #666;
-    margin-top: 0.5em;
-    min-height: 1.5em;
-    max-height: 1.5em;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-  }
-  .collection-list-section-{{ section.id }} .collection-product-features {
-    min-height: 1.3em;
-  }
-  .collection-list-section-{{ section.id }} .collection-product-short-features {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    align-items: center;
-    margin-top: 0.5em;
-  }
-  .collection-list-section-{{ section.id }} .collection-product-short-features .collection-product-feature-item {
-    font-size: 0.8em;
-    padding: 0 0.5em;
-    padding: 0 1em;
-    border-right: 1px solid #ccc;
-    display: flex;
-    align-items: center;
-  }
-  .collection-list-section-{{ section.id }} .collection-product-short-features .collection-product-feature-item img {
-    width: 1.5em;
-    aspect-ratio: 1 / 1;
-    padding-right: 0.5em;
-    box-sizing: content-box;
-  }
-  .collection-list-section-{{ section.id }} .collection-product-short-features .collection-product-feature-item:last-child {
-    border-right: none;
-  }
-  .collection-list-section-{{ section.id }} .collection-product-short-features .collection-product-feature-item:first-child {
-    padding-left: 0;
-  }
-  .collection-list-section-{{ section.id }} .product-image {
-    width: 90%;
-    margin: 2em auto;
-    aspect-ratio: 1 / 1;
-    overflow: hidden;
-  }
-  .collection-list-section-{{ section.id }} .collection-product-item:hover .product-image {
-    background-size: 150%;
-    transition: background-size 0.5s linear;
-  }
-  .collection-list-section-{{ section.id }} .collection-product-options {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    padding-bottom: 1em;
-  }
-  .collection-list-section-{{ section.id }} .collection-product-price {
-    font-size: 1.4em;
-    color: var(--colorPrice);
-    margin: 5px 0;
-  }
-  .collection-list-section-{{ section.id }} .collection-product-btn {
-    display: inline-block;
-    padding: 0.5em 1em;
-    /* text-transform: uppercase; */
-    font-size: 1em;
-    margin-top: 10px;
-    border-radius: 20em;
-  }
-  /* 初始状态：所有 Swiper 容器隐藏，避免出现未格式化布局 */
-  .collection-list-section-{{ section.id }} .swiper-container {
-    visibility: hidden;
-    opacity: 0;
-    transition: opacity 0.3s ease;
+    padding: 4px;
+    gap: 4px;
   }
 
-  /* Swiper 初始化完成后显示 */
-  .collection-list-section-{{ section.id }} .swiper-container.swiper-initialized {
-    visibility: visible;
-    opacity: 1;
+  .collection-list-section-{{ section.id }} .tab-item {
+    padding: 8px 18px;
+    cursor: pointer;
+    border-radius: 20em;
+    font-size: 14px;
+    font-weight: 500;
+    color: #555555;
+    transition: all 0.2s ease;
   }
-  @media screen and (max-width: 1024px) {
-    .collection-list-section-{{ section.id }} .collection-product-features {
-      display: none;
+
+  .collection-list-section-{{ section.id }} .tab-item.active {
+    background-color: #ffffff;
+    color: #111111;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+  }
+
+  .collection-list-section-{{ section.id }} .best-sellers-tab-panel {
+    display: none;
+    width: 100%;
+  }
+
+  .collection-list-section-{{ section.id }} .best-sellers-tab-panel.active {
+    display: block;
+  }
+
+  /* Swiper Track */
+  .collection-list-section-{{ section.id }} .best-sellers-swiper {
+    width: 100%;
+    overflow: hidden;
+    padding: 6px 4px 16px;
+    box-sizing: border-box;
+  }
+
+  .collection-list-section-{{ section.id }} .best-sellers-slide {
+    height: auto;
+    display: flex;
+    box-sizing: border-box;
+  }
+
+  /* Prevent FOUC: Pre-layout before Swiper.js executes */
+  .collection-list-section-{{ section.id }} .best-sellers-swiper:not(.swiper-initialized) .swiper-wrapper {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow: hidden;
+    gap: 22px;
+  }
+  .collection-list-section-{{ section.id }} .best-sellers-swiper:not(.swiper-initialized) .best-sellers-slide {
+    flex: 0 0 calc((100% - 3.2 * 22px) / 4.2) !important;
+    width: calc((100% - 3.2 * 22px) / 4.2) !important;
+    max-width: calc((100% - 3.2 * 22px) / 4.2) !important;
+    box-sizing: border-box;
+  }
+  @media screen and (max-width: 1200px) {
+    .collection-list-section-{{ section.id }} .best-sellers-swiper:not(.swiper-initialized) .swiper-wrapper {
+      gap: 20px;
+    }
+    .collection-list-section-{{ section.id }} .best-sellers-swiper:not(.swiper-initialized) .best-sellers-slide {
+      flex: 0 0 calc((100% - 2.2 * 20px) / 3.2) !important;
+      width: calc((100% - 2.2 * 20px) / 3.2) !important;
+      max-width: calc((100% - 2.2 * 20px) / 3.2) !important;
     }
   }
+  @media screen and (max-width: 900px) {
+    .collection-list-section-{{ section.id }} .best-sellers-swiper:not(.swiper-initialized) .swiper-wrapper {
+      gap: 16px;
+    }
+    .collection-list-section-{{ section.id }} .best-sellers-swiper:not(.swiper-initialized) .best-sellers-slide {
+      flex: 0 0 calc((100% - 1.3 * 16px) / 2.3) !important;
+      width: calc((100% - 1.3 * 16px) / 2.3) !important;
+      max-width: calc((100% - 1.3 * 16px) / 2.3) !important;
+    }
+  }
+  @media screen and (max-width: 640px) {
+    .collection-list-section-{{ section.id }} .best-sellers-swiper:not(.swiper-initialized) .swiper-wrapper {
+      gap: 14px;
+    }
+    .collection-list-section-{{ section.id }} .best-sellers-swiper:not(.swiper-initialized) .best-sellers-slide {
+      flex: 0 0 calc((100% - 0.6 * 14px) / 1.6) !important;
+      width: calc((100% - 0.6 * 14px) / 1.6) !important;
+      max-width: calc((100% - 0.6 * 14px) / 1.6) !important;
+    }
+  }
+  @media screen and (max-width: 480px) {
+    .collection-list-section-{{ section.id }} .best-sellers-swiper:not(.swiper-initialized) .swiper-wrapper {
+      gap: 14px;
+    }
+    .collection-list-section-{{ section.id }} .best-sellers-swiper:not(.swiper-initialized) .best-sellers-slide {
+      flex: 0 0 calc((100% - 0.25 * 14px) / 1.25) !important;
+      width: calc((100% - 0.25 * 14px) / 1.25) !important;
+      max-width: calc((100% - 0.25 * 14px) / 1.25) !important;
+    }
+  }
+
+  /* Card Layout (Reference Image 2) */
+  .collection-list-section-{{ section.id }} .best-seller-card {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    background-color: {{ section.settings.card_bg | default: '#ffffff' }};
+    border-radius: 16px;
+    padding: 16px;
+    text-decoration: none;
+    color: inherit;
+    border: 1px solid #ebebeb;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.25s ease;
+    box-sizing: border-box;
+  }
+
+  .collection-list-section-{{ section.id }} .best-seller-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
+    border-color: #d8d8d8;
+  }
+
+  /* Image Wrap */
+  .collection-list-section-{{ section.id }} .best-seller-card-image-wrap {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f7f7f8;
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 14px;
+    padding: 12px;
+    box-sizing: border-box;
+  }
+
+  .collection-list-section-{{ section.id }} .best-seller-card-image {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .collection-list-section-{{ section.id }} .best-seller-card:hover .best-seller-card-image {
+    transform: scale(1.06);
+  }
+
+  /* Product Title */
+  .collection-list-section-{{ section.id }} .best-seller-card-title {
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 1.4;
+    color: #111111;
+    text-align: left;
+    margin: 0 0 16px 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    height: 2.8em;
+    word-break: break-word;
+  }
+
+  /* Button Wrap & Learn More Button (Image 2) */
+  .collection-list-section-{{ section.id }} .best-seller-card-btn-wrap {
+    margin-top: auto;
+    width: 100%;
+  }
+
+  .collection-list-section-{{ section.id }} .best-seller-card-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 10px 18px;
+    border-radius: 9999px;
+    background-color: {{ section.settings.btn_color | default: 'var(--colorThemePrimary, #0A6830)' }};
+    color: {{ section.settings.btn_text_color | default: '#ffffff' }};
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    text-align: center;
+    box-sizing: border-box;
+    transition: all 0.25s ease;
+    box-shadow: 0 2px 6px rgba(10, 104, 48, 0.15);
+  }
+
+  .collection-list-section-{{ section.id }} .best-seller-card:hover .best-seller-card-btn {
+    background-color: {{ section.settings.btn_hover_color | default: '#085427' }};
+    box-shadow: 0 4px 14px rgba(10, 104, 48, 0.28);
+    transform: translateY(-1px);
+  }
+
   @media screen and (max-width: 768px) {
     .collection-list-section-{{ section.id }} {
-      font-size: 0.8em;
+      padding: 36px 0;
     }
-    .collection-list-section-{{ section.id }} .collection-product-item {
-      font-size: 0.8em;
+    .collection-list-section-{{ section.id }} .best-sellers-title {
+      font-size: 24px;
     }
-    .collection-list-section-{{ section.id }} .collection-product-btn {
-      padding: 0.5em;
+    .collection-list-section-{{ section.id }} .best-sellers-nav-btn {
+      width: 36px;
+      height: 36px;
+    }
+    .collection-list-section-{{ section.id }} .best-sellers-nav-btn svg {
+      width: 16px;
+      height: 16px;
+    }
+    .collection-list-section-{{ section.id }} .best-seller-card {
+      padding: 12px;
+      border-radius: 14px;
+    }
+    .collection-list-section-{{ section.id }} .best-seller-card-image-wrap {
+      border-radius: 10px;
+      padding: 8px;
+      margin-bottom: 10px;
+    }
+    .collection-list-section-{{ section.id }} .best-seller-card-title {
+      font-size: 13px;
+      margin-bottom: 12px;
+    }
+    .collection-list-section-{{ section.id }} .best-seller-card-btn {
+      padding: 8px 14px;
+      font-size: 13px;
     }
   }
 {% endstyle %}
 
+<div class="collection-list-section-{{ section.id }} best-sellers-section">
+  <div class="best-sellers-wrapper page-width">
+    <!-- Header: Title on Left, Circular Nav Buttons on Right (Reference Image 1) -->
+    <div class="best-sellers-header">
+      <h2 class="best-sellers-title custom-txt-bold">
+        {{ section.settings.title | default: 'Best Sellers' }}
+      </h2>
+      <div class="best-sellers-nav">
+        <button
+          type="button"
+          class="best-sellers-nav-btn best-sellers-prev-{{ section.id }}"
+          aria-label="{{ 'general.pagination.previous' | t | default: 'Previous' }}"
+        >
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="15 18 9 12 15 6"></polyline>
+          </svg>
+        </button>
+        <button
+          type="button"
+          class="best-sellers-nav-btn best-sellers-next-{{ section.id }}"
+          aria-label="{{ 'general.pagination.next' | t | default: 'Next' }}"
+        >
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    {% if section.settings.enable_tabs and section.blocks.size > 1 %}
+      <div class="collection-tab-list">
+        {% for block in section.blocks %}
+          {% if block.settings.collection != blank %}
+            <div class="tab-item {% if forloop.first %}active{% endif %}" data-tab-index="{{ forloop.index0 }}">
+              <div class="tab-item-title">{{ block.settings.collection_title | default: block.settings.collection.title }}</div>
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+    {% endif %}
+
+    <div class="best-sellers-slider-wrapper">
+      {% if section.settings.enable_tabs and section.blocks.size > 1 %}
+        {% for block in section.blocks %}
+          {% if block.settings.collection != blank %}
+            <div
+              class="best-sellers-tab-panel best-sellers-tab-panel-{{ block.id }} {% if forloop.first %}active{% endif %}"
+              data-panel-index="{{ forloop.index0 }}"
+              {{ block.shopify_attributes }}
+            >
+              <div class="swiper-container best-sellers-swiper">
+                <div class="swiper-wrapper">
+                  {% for product in block.settings.collection.products limit: section.settings.products_limit %}
+                    <div class="swiper-slide best-sellers-slide">
+                      <a href="{{ product.url }}" class="best-seller-card">
+                        <div class="best-seller-card-image-wrap">
+                          {% if product.featured_image %}
+                            <img
+                              src="{{ product.featured_image | image_url: width: 600 }}"
+                              alt="{{ product.featured_image.alt | default: product.title | escape }}"
+                              {% if forloop.index <= 4 %}loading="eager" fetchpriority="high"{% else %}loading="lazy"{% endif %}
+                              width="600"
+                              height="600"
+                              class="best-seller-card-image"
+                            >
+                          {% else %}
+                            {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+                          {% endif %}
+                        </div>
+                        <div class="best-seller-card-title custom-txt-semibold">
+                          {{ product.title }}
+                        </div>
+                        <div class="best-seller-card-btn-wrap">
+                          <span class="best-seller-card-btn">
+                            {{ section.settings.btn_text | default: 'Learn More' }}
+                          </span>
+                        </div>
+                      </a>
+                    </div>
+                  {% endfor %}
+                </div>
+              </div>
+            </div>
+          {% endif %}
+        {% endfor %}
+      {% else %}
+        {% liquid
+          assign current_collection = section.settings.collection
+          if current_collection == blank
+            for block in section.blocks
+              if block.settings.collection != blank
+                assign current_collection = block.settings.collection
+                break
+              endif
+            endfor
+          endif
+          if current_collection == blank
+            assign current_collection = collections['best-sellers']
+          endif
+          if current_collection == blank
+            assign current_collection = collections.first
+          endif
+          assign products_limit = section.settings.products_limit | default: 12
+        %}
+
+        <div class="best-sellers-tab-panel active">
+          <div class="swiper-container best-sellers-swiper">
+            <div class="swiper-wrapper">
+              {% if current_collection and current_collection.products.size > 0 %}
+                {% for product in current_collection.products limit: products_limit %}
+                  <div class="swiper-slide best-sellers-slide">
+                    <a href="{{ product.url }}" class="best-seller-card">
+                      <div class="best-seller-card-image-wrap">
+                        {% if product.featured_image %}
+                          <img
+                            src="{{ product.featured_image | image_url: width: 600 }}"
+                            alt="{{ product.featured_image.alt | default: product.title | escape }}"
+                            {% if forloop.index <= 4 %}loading="eager" fetchpriority="high"{% else %}loading="lazy"{% endif %}
+                            width="600"
+                            height="600"
+                            class="best-seller-card-image"
+                          >
+                        {% else %}
+                          {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+                        {% endif %}
+                      </div>
+                      <div class="best-seller-card-title custom-txt-semibold">
+                        {{ product.title }}
+                      </div>
+                      <div class="best-seller-card-btn-wrap">
+                        <span class="best-seller-card-btn">
+                          {{ section.settings.btn_text | default: 'Learn More' }}
+                        </span>
+                      </div>
+                    </a>
+                  </div>
+                {% endfor %}
+              {% else %}
+                {% for i in (1..6) %}
+                  <div class="swiper-slide best-sellers-slide">
+                    <div class="best-seller-card">
+                      <div class="best-seller-card-image-wrap">
+                        {{ 'product-' | append: i | placeholder_svg_tag: 'placeholder-svg' }}
+                      </div>
+                      <div class="best-seller-card-title custom-txt-semibold">
+                        PIIFOX Mechanical Keyboard
+                      </div>
+                      <div class="best-seller-card-btn-wrap">
+                        <span class="best-seller-card-btn">
+                          {{ section.settings.btn_text | default: 'Learn More' }}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                {% endfor %}
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+<script>
+  (function () {
+    function initBestSellers() {
+      if (typeof Swiper === 'undefined') {
+        setTimeout(initBestSellers, 30);
+        return;
+      }
+
+      const sectionEl = document.querySelector('.collection-list-section-{{ section.id }}');
+      if (!sectionEl) return;
+
+      const prevBtn = sectionEl.querySelector('.best-sellers-prev-{{ section.id }}');
+      const nextBtn = sectionEl.querySelector('.best-sellers-next-{{ section.id }}');
+      const tabItems = sectionEl.querySelectorAll('.tab-item');
+      const tabPanels = sectionEl.querySelectorAll('.best-sellers-tab-panel');
+
+      function initPanelSwiper(panel) {
+        const swiperContainer = panel.querySelector('.best-sellers-swiper');
+        if (!swiperContainer) return;
+
+        if (swiperContainer.swiper) {
+          swiperContainer.swiper.update();
+          return;
+        }
+
+        swiperContainer.swiper = new Swiper(swiperContainer, {
+          slidesPerView: 1.25,
+          spaceBetween: 14,
+          watchOverflow: true,
+          grabCursor: true,
+          navigation: {
+            prevEl: prevBtn,
+            nextEl: nextBtn,
+            disabledClass: 'swiper-button-disabled',
+          },
+          breakpoints: {
+            480: {
+              slidesPerView: 1.6,
+              spaceBetween: 14,
+            },
+            640: {
+              slidesPerView: 2.3,
+              spaceBetween: 16,
+            },
+            900: {
+              slidesPerView: 3.2,
+              spaceBetween: 20,
+            },
+            1200: {
+              slidesPerView: 4.2,
+              spaceBetween: 22,
+            },
+            1600: {
+              slidesPerView: 4.2,
+              spaceBetween: 24,
+            },
+          },
+        });
+      }
+
+      tabPanels.forEach((panel) => {
+        initPanelSwiper(panel);
+      });
+
+      tabItems.forEach((tab, index) => {
+        tab.addEventListener('click', () => {
+          tabItems.forEach((t) => t.classList.remove('active'));
+          tabPanels.forEach((p) => p.classList.remove('active'));
+          tab.classList.add('active');
+          if (tabPanels[index]) {
+            tabPanels[index].classList.add('active');
+            const activeSwiper = tabPanels[index].querySelector('.best-sellers-swiper')?.swiper;
+            if (activeSwiper) {
+              activeSwiper.update();
+            }
+          }
+        });
+      });
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initBestSellers);
+    } else {
+      initBestSellers();
+    }
+
+    window.addEventListener('pageshow', function () {
+      initBestSellers();
+    });
+
+    document.addEventListener('shopify:section:load', function (e) {
+      if (
+        e.target.classList.contains('collection-list-section-{{ section.id }}') ||
+        e.target.querySelector('.collection-list-section-{{ section.id }}')
+      ) {
+        initBestSellers();
+      }
+    });
+  })();
+</script>
+
 {% schema %}
 {
-  "name": "Collection List Section",
+  "name": "Best Sellers Slider",
   "class": "collection-list-section",
   "settings": [
     {
       "type": "text",
       "id": "title",
       "label": "Title",
-      "default": "Discover What's Popular on soundcore"
+      "default": "Best Sellers"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection"
+    },
+    {
+      "type": "range",
+      "id": "products_limit",
+      "min": 4,
+      "max": 24,
+      "step": 1,
+      "default": 12,
+      "label": "Products to show"
+    },
+    {
+      "type": "text",
+      "id": "btn_text",
+      "label": "Button text",
+      "default": "Learn More"
+    },
+    {
+      "type": "color",
+      "id": "btn_color",
+      "label": "Button background color",
+      "default": "#0A6830"
+    },
+    {
+      "type": "color",
+      "id": "btn_text_color",
+      "label": "Button text color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "btn_hover_color",
+      "label": "Button hover background color",
+      "default": "#085427"
+    },
+    {
+      "type": "color",
+      "id": "card_bg",
+      "label": "Card background color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_tabs",
+      "label": "Enable collection tabs (when using blocks)",
+      "default": false
     }
   ],
   "blocks": [
@@ -421,9 +652,9 @@
   ],
   "presets": [
     {
-      "name": "Collection List Section",
+      "name": "Best Sellers Slider",
       "settings": {
-        "title": "Discover What's Popular on soundcore"
+        "title": "Best Sellers"
       },
       "blocks": []
     }

@@ -1,0 +1,50 @@
+{
+  "sections": {
+    "keycaps_custom": {
+      "type": "keycaps-custom-section",
+      "blocks": {
+        "promo_slot_1": {
+          "type": "promo_card",
+          "settings": {
+            "position": 1,
+            "card_theme": "light",
+            "tag": "NEW RELEASE PERKS",
+            "title": "Fresh Drops — Save on New Keycaps",
+            "description": "Unlock first-access savings:\n• Spend $65, Save 15%\n• Spend $125, Save 20%\n• Spend $175, Save 25%",
+            "btn_label": "Learn More",
+            "btn_url": ""
+          }
+        },
+        "promo_slot_8": {
+          "type": "promo_card",
+          "settings": {
+            "position": 8,
+            "card_theme": "dark",
+            "tag": "TRENDING NOVELTIES",
+            "title": "Crafted for Every Typing Style",
+            "description": "From retro warm tones to translucent future fantasy, elevate your desk space.",
+            "btn_label": "View Styles",
+            "btn_url": "/pages/keycaps-themes-lab"
+          }
+        }
+      },
+      "block_order": [
+        "promo_slot_1",
+        "promo_slot_8"
+      ],
+      "settings": {
+        "title": "Keycaps New Arrivals",
+        "subtitle": "Discover our newest keycap drops, fresh profile designs, and artisan-inspired sets.",
+        "products_limit": 24,
+        "show_carousel": true,
+        "carousel_title": "Handpicked for You",
+        "carousel_title_color": "#0A6830",
+        "carousel_limit": 10,
+        "carousel_card_link_type": "product"
+      }
+    }
+  },
+  "order": [
+    "keycaps_custom"
+  ]
+}

@@ -58,6 +58,7 @@
     },
     "card_list_section_ebjLwc": {
       "type": "card-list-section",
+      "disabled": true,
       "blocks": {
         "collection_item_LYJA3M": {
           "type": "collection_item",

@@ -1,7 +1,195 @@
 {% style %}
   .keycap-style-section-title {
-    padding: 4em 0 0em 0;
+    padding: 3.5em 0 0.5em 0;
   }
+
+  /* Theme Cards Navigation */
+  .keycap-theme-nav-container {
+    margin-top: 1.5em;
+    margin-bottom: 2em;
+    position: relative;
+  }
+
+  .keycap-theme-nav {
+    display: flex;
+    gap: 14px;
+    align-items: center;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding: 6px 4px 4px 4px; /* tight bottom padding */
+    cursor: grab;
+  }
+
+  .keycap-theme-nav.is-dragging-cards {
+    cursor: grabbing;
+    user-select: none;
+  }
+
+  .keycap-theme-nav::-webkit-scrollbar {
+    display: none;
+    width: 0;
+    height: 0;
+  }
+
+  .keycap-theme-nav-card {
+    display: block;
+    flex: 0 0 auto;
+    width: 220px;
+    height: 114px;
+    border-radius: 16px;
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    background: #f5f5f5;
+    padding: 0;
+    margin: 0;
+    outline: none;
+    text-align: left;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    transition: transform 0.25s cubic-bezier(0.2, 0, 0.2, 1), box-shadow 0.25s cubic-bezier(0.2, 0, 0.2, 1), border-color 0.2s ease;
+  }
+
+  .keycap-theme-nav-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.12);
+    border-color: rgba(0, 0, 0, 0.25);
+  }
+
+  .keycap-theme-nav-card:focus,
+  .keycap-theme-nav-card:focus-visible,
+  .keycap-theme-nav-card:active {
+    outline: none !important;
+  }
+
+  .keycap-theme-nav-card.is-active {
+    outline: none !important;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+    transform: translateY(-2px);
+  }
+
+  .keycap-theme-nav-card-media {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: 1;
+  }
+
+  .keycap-theme-nav-card-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    user-select: none;
+    -webkit-user-drag: none;
+    transition: transform 0.35s cubic-bezier(0.2, 0, 0.2, 1);
+  }
+
+  .keycap-theme-nav-card:hover .keycap-theme-nav-card-img {
+    transform: scale(1.06);
+  }
+
+  .keycap-theme-nav-card-title {
+    position: absolute;
+    top: 10px;
+    left: 12px;
+    z-index: 3;
+    display: block;
+    text-align: left;
+    margin: 0;
+    padding: 0;
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -0.2px;
+    color: var(--card-text-color, #ffffff);
+    text-shadow: var(--card-text-shadow, 0 1px 3px rgba(0, 0, 0, 0.45));
+    max-width: calc(100% - 24px);
+    word-break: break-word;
+    pointer-events: none;
+  }
+
+  /* Theme Cards Scrollbar - tight against the cards, hidden by default unless content overflows */
+  .keycap-theme-scrollbar-wrap {
+    display: none; /* Only set to flex by JS when scrollWidth > clientWidth */
+    align-items: center;
+    gap: 12px;
+    margin-top: 6px; /* tight against cards */
+    padding: 0 4px;
+    user-select: none;
+    max-width: 100%;
+  }
+
+  .keycap-theme-scrollbar-arrow {
+    background: none;
+    border: none;
+    padding: 6px 3px;
+    margin: 0;
+    cursor: pointer;
+    color: #767676;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    transition: color 0.2s ease, opacity 0.2s ease, transform 0.15s ease;
+    outline: none;
+    flex-shrink: 0;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .keycap-theme-scrollbar-arrow:hover {
+    color: #111111;
+  }
+
+  .keycap-theme-scrollbar-arrow:active {
+    transform: scale(0.88);
+  }
+
+  .keycap-theme-scrollbar-arrow:disabled,
+  .keycap-theme-scrollbar-arrow.is-disabled {
+    opacity: 0.25;
+    cursor: default;
+    pointer-events: none;
+  }
+
+  .keycap-theme-scrollbar-track {
+    flex: 1;
+    height: 10px;
+    background: #dfdfdf;
+    border-radius: 999px;
+    position: relative;
+    cursor: pointer;
+    overflow: hidden;
+  }
+
+  .keycap-theme-scrollbar-thumb {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    min-width: 48px;
+    background: #6e6e6e;
+    border-radius: 999px;
+    cursor: grab;
+    will-change: transform, width;
+    transition: background-color 0.2s ease;
+  }
+
+  .keycap-theme-scrollbar-thumb:hover {
+    background: #555555;
+  }
+
+  .keycap-theme-scrollbar-thumb.is-dragging {
+    cursor: grabbing;
+    background: #2b2b2b;
+  }
+
   /* Tab 容器 */
   .keycap-section-tab {
     margin-bottom: 2em;
@@ -44,8 +232,42 @@
   }
 
   @media screen and (max-width: 768px) {
+    .keycap-style-section-title {
+      padding: 2.5em 0 0.5em 0;
+    }
     .keycap-style-section-title h1 {
       font-size: 2em;
+    }
+    .keycap-theme-nav-container {
+      margin-top: 1em;
+      margin-bottom: 1.2em;
+    }
+    .keycap-theme-nav {
+      gap: 12px;
+      padding: 4px 2px 2px 2px;
+    }
+    .keycap-theme-nav-card {
+      width: 165px;
+      height: 86px;
+      border-radius: 13px;
+    }
+    .keycap-theme-nav-card-title {
+      top: 8px;
+      left: 10px;
+      padding: 0;
+      font-size: 13px;
+      max-width: calc(100% - 20px);
+    }
+    .keycap-theme-scrollbar-wrap {
+      gap: 10px;
+      margin-top: 6px;
+    }
+    .keycap-theme-scrollbar-track {
+      height: 8px;
+    }
+    .keycap-theme-scrollbar-arrow svg {
+      width: 8px;
+      height: 10px;
     }
     .keycap-section-tab {
       gap: 1.5em;
@@ -70,6 +292,7 @@
 
 {% style %}
   .keycap-section-item-wrapper {
+    scroll-margin-top: 100px;
     width: 100%;
     padding: 2em 1em;
     box-sizing: border-box;
@@ -213,6 +436,9 @@
       scroll-snap-align: start;
       scroll-snap-stop: always;
     }
+    .keycap-section-item-wrapper {
+      scroll-margin-top: 70px;
+    }
     .keycap-section-title {
       font-size: 1.35em;
       line-height: 1.2;
@@ -341,19 +567,121 @@
   </div>
 </div>
 
-<div class="keycap-section-tab">
+{% comment %} Theme Nav Cards {% endcomment %}
+<div class="keycap-theme-nav-container">
   <div class="page-width">
-    {% if has_current %}
-      <button class="keycap-section-tab-item active" data-tab="current_themes">{{ section.settings.tab1_title }}</button>
-    {% endif %}
-    {% if has_coming %}
-      <button class="keycap-section-tab-item" data-tab="coming_soon">{{ section.settings.tab2_title }}</button>
-    {% endif %}
-    {% if has_popular %}
-      <button class="keycap-section-tab-item" data-tab="current_popular_themes">{{ section.settings.tab3_title }}</button>
-    {% endif %}
+    <div class="keycap-theme-nav" role="navigation" aria-label="Keycaps Themes Navigation">
+      {% for block in section.blocks %}
+        {% if block.type == 'style_item' and block.settings.is_current_themes and block.settings.collection != blank %}
+          {% assign theme_collection = block.settings.collection %}
+          {% if theme_collection.products.size > 0 %}
+            {% assign theme_title = block.settings.theme_card_title | default: theme_collection.title %}
+            {% assign theme_handle = theme_collection.handle %}
+
+            {%- assign default_text_color = '#ffffff' -%}
+            {%- assign default_text_shadow = '0 1px 3px rgba(0, 0, 0, 0.45)' -%}
+            {%- case theme_handle -%}
+              {%- when 'clean-minimal-theme-keycaps' -%}
+                {%- assign placeholder_img_url = 'theme-placeholder-clean-minimal.jpg' | asset_url -%}
+                {%- assign default_text_color = '#ffffff' -%}
+                {%- assign default_text_shadow = '0 1px 3px rgba(0, 0, 0, 0.45)' -%}
+              {%- when 'game-playful-theme-keycaps' -%}
+                {%- assign placeholder_img_url = 'theme-placeholder-game-playful.jpg' | asset_url -%}
+                {%- assign default_text_color = '#ffffff' -%}
+                {%- assign default_text_shadow = '0 1px 3px rgba(0, 0, 0, 0.45)' -%}
+              {%- when 'cute-colorful-theme-keycaps' -%}
+                {%- assign placeholder_img_url = 'theme-placeholder-cute-colorful.svg' | asset_url -%}
+                {%- assign default_text_color = '#1f1f1f' -%}
+                {%- assign default_text_shadow = '0 1px 2px rgba(255, 255, 255, 0.7)' -%}
+              {%- when 'nature-soft-theme-keycaps' -%}
+                {%- assign placeholder_img_url = 'theme-placeholder-nature-soft.svg' | asset_url -%}
+                {%- assign default_text_color = '#1f1f1f' -%}
+                {%- assign default_text_shadow = '0 1px 2px rgba(255, 255, 255, 0.7)' -%}
+              {%- when 'retro-daily-theme-keycaps' -%}
+                {%- assign placeholder_img_url = 'theme-placeholder-retro-daily.svg' | asset_url -%}
+                {%- assign default_text_color = '#1f1f1f' -%}
+                {%- assign default_text_shadow = '0 1px 2px rgba(255, 255, 255, 0.7)' -%}
+              {%- when 'art-culture-theme-keycaps' -%}
+                {%- assign placeholder_img_url = 'theme-placeholder-art-culture.svg' | asset_url -%}
+                {%- assign default_text_color = '#ffffff' -%}
+                {%- assign default_text_shadow = '0 1px 3px rgba(0, 0, 0, 0.45)' -%}
+              {%- when 'future-fantasy-theme-keycaps' -%}
+                {%- assign placeholder_img_url = 'theme-placeholder-future-fantasy.svg' | asset_url -%}
+                {%- assign default_text_color = '#1f1f1f' -%}
+                {%- assign default_text_shadow = '0 1px 2px rgba(255, 255, 255, 0.7)' -%}
+              {%- else -%}
+                {%- if theme_collection.image != blank -%}
+                  {%- assign placeholder_img_url = theme_collection.image | image_url: width: 360 -%}
+                {%- else -%}
+                  {%- assign placeholder_img_url = 'theme-placeholder-clean-minimal.jpg' | asset_url -%}
+                {%- endif -%}
+            {%- endcase -%}
+
+            {%- if block.settings.theme_card_image != blank -%}
+              {%- assign card_img_src = block.settings.theme_card_image | image_url: width: 360 -%}
+            {%- else -%}
+              {%- assign card_img_src = placeholder_img_url -%}
+            {%- endif -%}
+
+            {%- assign card_text_color = block.settings.theme_card_text_color | default: default_text_color -%}
+
+            <button
+              type="button"
+              class="keycap-theme-nav-card"
+              data-theme-target="theme-{{ theme_handle }}"
+              aria-label="Scroll to {{ theme_title | escape }}"
+              style="--card-text-color: {{ card_text_color }}; --card-text-shadow: {{ default_text_shadow }};"
+              {{ block.shopify_attributes }}
+            >
+              <div class="keycap-theme-nav-card-media">
+                <img
+                  src="{{ card_img_src }}"
+                  alt="{{ theme_title | escape }}"
+                  class="keycap-theme-nav-card-img"
+                  loading="lazy"
+                  width="220" height="114"
+                  draggable="false"
+                >
+              </div>
+              <span class="keycap-theme-nav-card-title">{{ theme_title }}</span>
+            </button>
+          {% endif %}
+        {% endif %}
+      {% endfor %}
+        </div>
+
+    {% comment %} Theme Cards Scrollbar {% endcomment %}
+    <div class="keycap-theme-scrollbar-wrap" aria-hidden="true">
+      <button type="button" class="keycap-theme-scrollbar-arrow keycap-theme-scrollbar-prev" aria-label="Scroll left">
+        <svg width="12" height="14" viewBox="0 0 12 14" fill="currentColor">
+          <polygon points="12,0 0,7 12,14" />
+        </svg>
+      </button>
+      <div class="keycap-theme-scrollbar-track">
+        <div class="keycap-theme-scrollbar-thumb"></div>
+      </div>
+      <button type="button" class="keycap-theme-scrollbar-arrow keycap-theme-scrollbar-next" aria-label="Scroll right">
+        <svg width="12" height="14" viewBox="0 0 12 14" fill="currentColor">
+          <polygon points="0,0 12,7 0,14" />
+        </svg>
+      </button>
+    </div>
   </div>
 </div>
+
+{% comment %} Tab Buttons (Current Themes button removed) {% endcomment %}
+{% if has_coming or has_popular %}
+  <div class="keycap-section-tab">
+    <div class="page-width">
+      {% if has_coming %}
+        <button class="keycap-section-tab-item" data-tab="coming_soon">{{ section.settings.tab2_title }}</button>
+      {% endif %}
+      {% if has_popular %}
+        <button class="keycap-section-tab-item" data-tab="current_popular_themes">{{ section.settings.tab3_title }}</button>
+      {% endif %}
+    </div>
+  </div>
+{% endif %}
 
 {% comment %} 面板内容 {% endcomment %}
 {% if has_current %}
@@ -394,37 +722,313 @@
 
 <script>
   document.addEventListener('DOMContentLoaded', function () {
+    const navCards = document.querySelectorAll('.keycap-theme-nav-card');
+    const navTrack = document.querySelector('.keycap-theme-nav');
+    const scrollbarWrap = document.querySelector('.keycap-theme-scrollbar-wrap');
+    const scrollbarTrack = document.querySelector('.keycap-theme-scrollbar-track');
+    const scrollbarThumb = document.querySelector('.keycap-theme-scrollbar-thumb');
+    const prevBtn = document.querySelector('.keycap-theme-scrollbar-prev');
+    const nextBtn = document.querySelector('.keycap-theme-scrollbar-next');
+
+    if (navTrack) {
+      let isDraggingThumb = false;
+      let thumbDragStartX = 0;
+      let thumbDragStartScrollLeft = 0;
+
+      let isDraggingCards = false;
+      let cardsDragStartX = 0;
+      let cardsDragStartScroll = 0;
+      let hasDraggedCards = false;
+
+      // Update scrollbar visibility & thumb position
+      const updateScrollbar = () => {
+        if (!scrollbarWrap || !scrollbarTrack || !scrollbarThumb) return;
+
+        const scrollWidth = navTrack.scrollWidth;
+        const clientWidth = navTrack.clientWidth;
+        const maxScroll = Math.max(0, scrollWidth - clientWidth);
+
+        // ONLY show scrollbar when card tags width exceeds container / viewport width
+        if (maxScroll <= 3) {
+          scrollbarWrap.style.display = 'none';
+          return;
+        } else {
+          scrollbarWrap.style.display = 'flex';
+        }
+
+        const trackWidth = scrollbarTrack.clientWidth;
+        if (trackWidth <= 0) return;
+
+        const thumbWidth = Math.max((clientWidth / scrollWidth) * trackWidth, 36);
+        scrollbarThumb.style.width = thumbWidth + 'px';
+
+        const maxThumbMove = Math.max(0, trackWidth - thumbWidth);
+        const scrollLeft = Math.max(0, Math.min(navTrack.scrollLeft, maxScroll));
+        const thumbLeft = maxScroll > 0 ? (scrollLeft / maxScroll) * maxThumbMove : 0;
+        scrollbarThumb.style.transform = 'translateX(' + thumbLeft + 'px)';
+
+        if (prevBtn) {
+          const isAtStart = scrollLeft <= 3;
+          prevBtn.disabled = isAtStart;
+          prevBtn.classList.toggle('is-disabled', isAtStart);
+        }
+        if (nextBtn) {
+          const isAtEnd = scrollLeft >= maxScroll - 3;
+          nextBtn.disabled = isAtEnd;
+          nextBtn.classList.toggle('is-disabled', isAtEnd);
+        }
+      };
+
+      // 1. Mouse Wheel Scrolling on cards row
+      navTrack.addEventListener('wheel', (e) => {
+        const maxScroll = navTrack.scrollWidth - navTrack.clientWidth;
+        if (maxScroll > 3) {
+          const delta = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
+          if (delta !== 0) {
+            e.preventDefault();
+            navTrack.scrollLeft += delta;
+          }
+        }
+      }, { passive: false });
+
+      // 2. Click Left / Right Arrows
+      if (prevBtn) {
+        prevBtn.addEventListener('click', (e) => {
+          e.preventDefault();
+          const step = Math.max(navTrack.clientWidth * 0.55, 180);
+          navTrack.scrollBy({ left: -step, behavior: 'smooth' });
+        });
+      }
+
+      if (nextBtn) {
+        nextBtn.addEventListener('click', (e) => {
+          e.preventDefault();
+          const step = Math.max(navTrack.clientWidth * 0.55, 180);
+          navTrack.scrollBy({ left: step, behavior: 'smooth' });
+        });
+      }
+
+      // 3. Click Track to Jump
+      if (scrollbarTrack && scrollbarThumb) {
+        scrollbarTrack.addEventListener('click', (e) => {
+          if (e.target === scrollbarThumb || isDraggingThumb) return;
+          const rect = scrollbarTrack.getBoundingClientRect();
+          const clickX = e.clientX - rect.left;
+          const trackWidth = rect.width;
+          const ratio = Math.max(0, Math.min(clickX / trackWidth, 1));
+          const maxScroll = navTrack.scrollWidth - navTrack.clientWidth;
+          navTrack.scrollTo({
+            left: ratio * maxScroll,
+            behavior: 'smooth'
+          });
+        });
+
+        // 4. Drag Scrollbar Thumb (Mouse)
+        scrollbarThumb.addEventListener('mousedown', (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          isDraggingThumb = true;
+          thumbDragStartX = e.clientX;
+          thumbDragStartScrollLeft = navTrack.scrollLeft;
+          scrollbarThumb.classList.add('is-dragging');
+          document.body.style.userSelect = 'none';
+        });
+
+        window.addEventListener('mousemove', (e) => {
+          if (isDraggingThumb) {
+            const deltaX = e.clientX - thumbDragStartX;
+            const trackWidth = scrollbarTrack.clientWidth;
+            const thumbWidth = scrollbarThumb.offsetWidth;
+            const maxThumbMove = trackWidth - thumbWidth;
+            const maxScroll = navTrack.scrollWidth - navTrack.clientWidth;
+
+            if (maxThumbMove > 0 && maxScroll > 0) {
+              const scrollDelta = (deltaX / maxThumbMove) * maxScroll;
+              navTrack.scrollLeft = thumbDragStartScrollLeft + scrollDelta;
+            }
+          }
+        });
+
+        window.addEventListener('mouseup', () => {
+          if (isDraggingThumb) {
+            isDraggingThumb = false;
+            scrollbarThumb.classList.remove('is-dragging');
+            document.body.style.userSelect = '';
+          }
+        });
+
+        // Drag Scrollbar Thumb (Touch)
+        scrollbarThumb.addEventListener('touchstart', (e) => {
+          if (e.touches.length === 1) {
+            isDraggingThumb = true;
+            thumbDragStartX = e.touches[0].clientX;
+            thumbDragStartScrollLeft = navTrack.scrollLeft;
+            scrollbarThumb.classList.add('is-dragging');
+          }
+        }, { passive: true });
+
+        window.addEventListener('touchmove', (e) => {
+          if (isDraggingThumb && e.touches.length === 1) {
+            const deltaX = e.touches[0].clientX - thumbDragStartX;
+            const trackWidth = scrollbarTrack.clientWidth;
+            const thumbWidth = scrollbarThumb.offsetWidth;
+            const maxThumbMove = trackWidth - thumbWidth;
+            const maxScroll = navTrack.scrollWidth - navTrack.clientWidth;
+
+            if (maxThumbMove > 0 && maxScroll > 0) {
+              const scrollDelta = (deltaX / maxThumbMove) * maxScroll;
+              navTrack.scrollLeft = thumbDragStartScrollLeft + scrollDelta;
+            }
+          }
+        }, { passive: true });
+
+        window.addEventListener('touchend', () => {
+          if (isDraggingThumb) {
+            isDraggingThumb = false;
+            scrollbarThumb.classList.remove('is-dragging');
+          }
+        });
+      }
+
+      // 5. Drag on Cards directly (Desktop drag-to-scroll)
+      navTrack.addEventListener('mousedown', (e) => {
+        isDraggingCards = true;
+        hasDraggedCards = false;
+        cardsDragStartX = e.pageX - navTrack.offsetLeft;
+        cardsDragStartScroll = navTrack.scrollLeft;
+        navTrack.classList.add('is-dragging-cards');
+      });
+
+      window.addEventListener('mousemove', (e) => {
+        if (!isDraggingCards) return;
+        const x = e.pageX - navTrack.offsetLeft;
+        const walk = (x - cardsDragStartX);
+        if (Math.abs(walk) > 4) {
+          hasDraggedCards = true;
+          navTrack.scrollLeft = cardsDragStartScroll - walk;
+        }
+      });
+
+      window.addEventListener('mouseup', () => {
+        if (isDraggingCards) {
+          isDraggingCards = false;
+          navTrack.classList.remove('is-dragging-cards');
+        }
+      });
+
+      // 6. Navigation Cards Click (Scroll to theme section)
+      if (navCards.length > 0) {
+        navCards.forEach((card) => {
+          card.addEventListener('click', function (e) {
+            if (hasDraggedCards) {
+              e.preventDefault();
+              e.stopImmediatePropagation();
+              return;
+            }
+            e.preventDefault();
+            const targetId = this.dataset.themeTarget;
+            const targetEl = document.getElementById(targetId);
+            if (!targetEl) return;
+
+            const header = document.querySelector('.site-header') || document.querySelector('#shopify-section-header');
+            const headerHeight = header ? header.offsetHeight : 70;
+            const targetRect = targetEl.getBoundingClientRect();
+            const targetPos = targetRect.top + window.pageYOffset - (headerHeight + 20);
+
+            window.scrollTo({
+              top: Math.max(0, targetPos),
+              behavior: 'smooth'
+            });
+
+            navCards.forEach((c) => c.classList.remove('is-active'));
+            this.classList.add('is-active');
+
+            const cardLeft = this.offsetLeft;
+            const cardWidth = this.offsetWidth;
+            const trackScroll = navTrack.scrollLeft;
+            const trackWidth = navTrack.clientWidth;
+
+            if (cardLeft < trackScroll || cardLeft + cardWidth > trackScroll + trackWidth) {
+              navTrack.scrollTo({
+                left: cardLeft - 20,
+                behavior: 'smooth'
+              });
+            }
+          });
+        });
+
+        // 7. Scroll Spy (Highlight corresponding card as page scrolls)
+        const themeSections = document.querySelectorAll('.keycap-section-item-wrapper[id]');
+        if (themeSections.length > 0 && 'IntersectionObserver' in window) {
+          const observerOptions = {
+            root: null,
+            rootMargin: '-20% 0px -60% 0px',
+            threshold: 0
+          };
+
+          const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                const activeId = entry.target.id;
+                navCards.forEach((card) => {
+                  const isActive = card.dataset.themeTarget === activeId;
+                  card.classList.toggle('is-active', isActive);
+                  if (isActive) {
+                    const cardLeft = card.offsetLeft;
+                    const cardWidth = card.offsetWidth;
+                    const trackScroll = navTrack.scrollLeft;
+                    const trackWidth = navTrack.clientWidth;
+                    if (cardLeft < trackScroll || cardLeft + cardWidth > trackScroll + trackWidth) {
+                      navTrack.scrollTo({
+                        left: cardLeft - 20,
+                        behavior: 'smooth'
+                      });
+                    }
+                  }
+                });
+              }
+            });
+          }, observerOptions);
+
+          themeSections.forEach((sec) => observer.observe(sec));
+        }
+      }
+
+      navTrack.addEventListener('scroll', updateScrollbar, { passive: true });
+      window.addEventListener('resize', updateScrollbar, { passive: true });
+      window.addEventListener('load', updateScrollbar, { passive: true });
+      setTimeout(updateScrollbar, 100);
+      setTimeout(updateScrollbar, 500);
+    }
+
+    // Existing Tab Switching
     const tabs = document.querySelectorAll('.keycap-section-tab-item');
     const panels = document.querySelectorAll('.keycap-section-wrapper');
 
-    if (!tabs.length) return;
+    if (tabs.length > 0) {
+      const activeTab = document.querySelector('.keycap-section-tab-item.active');
+      if (!activeTab) {
+        tabs[0].classList.add('active');
+        const firstPanel = document.querySelector('.keycap-section-wrapper.' + tabs[0].dataset.tab);
+        if (firstPanel) firstPanel.classList.add('active');
+      } else {
+        const firstPanel = document.querySelector('.keycap-section-wrapper.' + activeTab.dataset.tab);
+        if (firstPanel) firstPanel.classList.add('active');
+      }
 
-    const activeTab = document.querySelector('.keycap-section-tab-item.active');
-    if (!activeTab) {
-      tabs[0].classList.add('active');
-      const firstPanel = document.querySelector('.keycap-section-wrapper.' + tabs[0].dataset.tab);
-      if (firstPanel) firstPanel.classList.add('active');
-    } else {
-      const firstPanel = document.querySelector('.keycap-section-wrapper.' + activeTab.dataset.tab);
-      if (firstPanel) firstPanel.classList.add('active');
-    }
-
-    // 点击切换
-    tabs.forEach((tab) => {
-      tab.addEventListener('click', function (e) {
-        // 移除所有激活状态
-        tabs.forEach((t) => t.classList.remove('active'));
-        panels.forEach((p) => p.classList.remove('active'));
-
-        // 激活当前 Tab
-        this.classList.add('active');
-        const target = this.dataset.tab;
-        const targetPanel = document.querySelector('.keycap-section-wrapper-' + target);
-        if (targetPanel) {
-          targetPanel.classList.add('active');
-        }
+      tabs.forEach((tab) => {
+        tab.addEventListener('click', function (e) {
+          tabs.forEach((t) => t.classList.remove('active'));
+          panels.forEach((p) => p.classList.remove('active'));
+          this.classList.add('active');
+          const target = this.dataset.tab;
+          const targetPanel = document.querySelector('.keycap-section-wrapper-' + target);
+          if (targetPanel) {
+            targetPanel.classList.add('active');
+          }
+        });
       });
-    });
+    }
   });
 </script>
 
@@ -486,6 +1090,21 @@
           "type": "collection",
           "id": "collection",
           "label": "Collection"
+        },
+        {
+          "type": "image_picker",
+          "id": "theme_card_image",
+          "label": "Theme Card Image (Thumbnail)"
+        },
+        {
+          "type": "text",
+          "id": "theme_card_title",
+          "label": "Theme Card Title (Optional Override)"
+        },
+        {
+          "type": "color",
+          "id": "theme_card_text_color",
+          "label": "Theme Card Text Color"
         }
       ]
     }

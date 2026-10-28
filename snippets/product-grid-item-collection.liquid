@@ -111,10 +111,10 @@ Arguments
           </div>
         {%- endif -%}
 
-        {%- if settings.product_hover_image and product.media.size > 1 -%}
-          {%- for media in product.media offset: 1 limit: 1 -%}
-            {%- assign second_image = media.preview_image -%}
-          {%- endfor -%}
+        {%- assign custom_second_image = product.metafields.custom.card_hover_image.value | default: product.metafields.custom.card_hover_image | default: product.metafields.custom.secondary_image.value | default: product.metafields.custom.secondary_image -%}
+        {%- assign fallback_second_image = product.media[1].preview_image | default: product.images[1] -%}
+        {%- assign second_image = custom_second_image | default: fallback_second_image -%}
+        {%- if settings.product_hover_image and second_image != blank -%}
           <div class="grid-product__secondary-image small--hide">
             {%- assign img_url = second_image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
             <img class="lazyload"

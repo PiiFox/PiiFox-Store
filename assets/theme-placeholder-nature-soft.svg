@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 190" width="360" height="190">
+  <defs>
+    <linearGradient id="natureBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fffdf6"/>
+      <stop offset="60%" stop-color="#fff8eb"/>
+      <stop offset="100%" stop-color="#fcedd9"/>
+    </linearGradient>
+  </defs>
+  <rect width="360" height="190" fill="url(#natureBg)"/>
+
+  <!-- Undersea corals and sea flora -->
+  <g opacity="0.85">
+    <!-- Pink coral branches on left -->
+    <path d="M 175 190 C 175 140 160 120 160 95 C 160 85 168 85 170 95 C 172 80 180 80 180 95 C 185 70 195 70 192 100 C 195 125 188 150 188 190 Z" fill="#ff8a80" opacity="0.6"/>
+    <!-- Mint green seagrass -->
+    <path d="M 195 190 C 190 145 205 110 205 80 C 205 70 215 70 213 85 C 218 65 228 68 222 90 C 228 120 215 150 210 190 Z" fill="#80cbc4" opacity="0.7"/>
+    <path d="M 330 190 C 335 150 325 120 335 90 C 340 75 350 80 345 95 C 352 130 348 160 345 190 Z" fill="#a7ffeb" opacity="0.6"/>
+    <!-- Yellow sea fan -->
+    <path d="M 290 190 C 285 155 300 130 305 105 C 310 95 318 100 315 112 C 322 95 330 100 325 120 C 320 150 305 170 305 190 Z" fill="#ffe082" opacity="0.7"/>
+  </g>
+
+  <!-- Big friendly orange octopus -->
+  <g transform="translate(210, 45)">
+    <!-- Swirling tentacles -->
+    <path d="M 40 75 C 20 85 -5 100 10 125 C 20 140 45 130 40 115 C 38 105 50 95 55 85 Z" fill="#ff7043"/>
+    <path d="M 65 75 C 60 95 50 120 65 138 C 75 148 90 140 85 125 C 80 110 82 95 78 80 Z" fill="#ff8a65"/>
+    <path d="M 85 75 C 95 90 110 115 128 120 C 140 122 145 110 135 100 C 122 90 108 85 98 75 Z" fill="#ff7043"/>
+    <path d="M 50 78 C 35 95 30 118 42 132 C 48 138 58 132 55 122 C 52 110 58 98 60 80 Z" fill="#ffab91"/>
+
+    <!-- Suction cups on tentacles -->
+    <circle cx="12" cy="120" r="3" fill="#ffebee"/>
+    <circle cx="25" cy="132" r="3.5" fill="#ffebee"/>
+    <circle cx="70" cy="135" r="3" fill="#ffebee"/>
+    <circle cx="82" cy="128" r="3.5" fill="#ffebee"/>
+    <circle cx="125" cy="115" r="3" fill="#ffebee"/>
+
+    <!-- Octopus bulbous head -->
+    <ellipse cx="68" cy="48" rx="36" ry="34" fill="#ff7043"/>
+    <!-- Stippled / speckled texture dots on top -->
+    <circle cx="58" cy="28" r="3" fill="#f4511e" opacity="0.6"/>
+    <circle cx="72" cy="24" r="4" fill="#f4511e" opacity="0.6"/>
+    <circle cx="85" cy="32" r="3.5" fill="#f4511e" opacity="0.6"/>
+    <circle cx="68" cy="36" r="2.5" fill="#f4511e" opacity="0.6"/>
+
+    <!-- Big cute eyes -->
+    <ellipse cx="54" cy="56" rx="9" ry="10" fill="#ffffff"/>
+    <ellipse cx="82" cy="56" rx="9" ry="10" fill="#ffffff"/>
+    <circle cx="56" cy="56" r="5" fill="#263238"/>
+    <circle cx="84" cy="56" r="5" fill="#263238"/>
+    <circle cx="58" cy="54" r="2" fill="#ffffff"/>
+    <circle cx="86" cy="54" r="2" fill="#ffffff"/>
+
+    <!-- Little smile -->
+    <path d="M 64 66 Q 68 70 72 66" stroke="#bf360c" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+  </g>
+
+  <!-- Swimming tropical fish at top right -->
+  <g transform="translate(290, 25)">
+    <path d="M 35 15 C 20 0 5 15 0 15 C 5 15 20 30 35 15 Z" fill="#26c6da"/>
+    <!-- Tail -->
+    <polygon points="0,15 -12,6 -12,24" fill="#ffd54f"/>
+    <!-- Eye -->
+    <circle cx="28" cy="13" r="2.5" fill="#ffffff"/>
+    <circle cx="29" cy="13" r="1.5" fill="#263238"/>
+    <!-- Stripes -->
+    <path d="M 22 7 Q 18 15 22 23" stroke="#ffd54f" stroke-width="2.5" fill="none"/>
+    <path d="M 14 10 Q 10 15 14 20" stroke="#ffd54f" stroke-width="2" fill="none"/>
+  </g>
+
+  <!-- Tiny sea bubbles -->
+  <circle cx="205" cy="35" r="4" fill="#80deea" opacity="0.5"/>
+  <circle cx="200" cy="22" r="2.5" fill="#80deea" opacity="0.6"/>
+  <circle cx="340" cy="70" r="3" fill="#80deea" opacity="0.5"/>
+</svg>

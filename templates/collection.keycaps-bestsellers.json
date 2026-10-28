@@ -1,0 +1,50 @@
+{
+  "sections": {
+    "keycaps_custom": {
+      "type": "keycaps-custom-section",
+      "blocks": {
+        "promo_slot_1": {
+          "type": "promo_card",
+          "settings": {
+            "position": 1,
+            "card_theme": "light",
+            "tag": "MEMBER EXCLUSIVE",
+            "title": "Save on Every Order — Join PIIFOX VIP",
+            "description": "Unlock members-only perks:\n• Spend $65, Save 15%\n• Spend $125, Save 20%\n• Spend $175, Save 25%",
+            "btn_label": "Learn More",
+            "btn_url": ""
+          }
+        },
+        "promo_slot_8": {
+          "type": "promo_card",
+          "settings": {
+            "position": 8,
+            "card_theme": "dark",
+            "tag": "CUSTOMIZE YOUR SETUP",
+            "title": "Personalize With Unique Keycap Themes",
+            "description": "Discover curated theme keycaps crafted for style, tactile feel, and acoustics.",
+            "btn_label": "Explore Themes",
+            "btn_url": "/pages/keycaps-themes-lab"
+          }
+        }
+      },
+      "block_order": [
+        "promo_slot_1",
+        "promo_slot_8"
+      ],
+      "settings": {
+        "title": "Keycaps Best Sellers",
+        "subtitle": "Discover our top-rated custom mechanical keyboard keycap sets, loved by typing enthusiasts.",
+        "products_limit": 24,
+        "show_carousel": true,
+        "carousel_title": "Handpicked for You",
+        "carousel_title_color": "#0A6830",
+        "carousel_limit": 10,
+        "carousel_card_link_type": "product"
+      }
+    }
+  },
+  "order": [
+    "keycaps_custom"
+  ]
+}

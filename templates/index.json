@@ -218,53 +218,86 @@
     "col2_txt_section_RFrVGf": {
       "type": "col2-txt-section",
       "blocks": {
-        "feature_item_pHQkXV": {
-          "type": "feature_item",
+        "ticker_item_1": {
+          "type": "ticker_item",
           "settings": {
-            "feature_item_title": "Sate your style",
-            "feature_item_context": "Make every setup feel like yours."
+            "prefix_text": "Type your style",
+            "suffix_text": "Make every setup feel like yours."
           }
         },
-        "feature_item_4gLket": {
-          "type": "feature_item",
+        "ticker_item_2": {
+          "type": "ticker_item",
           "settings": {
-            "feature_item_title": "Feel the performance",
-            "feature_item_context": "Smooth. Fast. Comfortable."
+            "prefix_text": "Free standard shipping",
+            "suffix_text": "On all orders over $75"
           }
         },
-        "feature_item_APcm6H": {
-          "type": "feature_item",
+        "ticker_item_3": {
+          "type": "ticker_item",
           "settings": {
-            "feature_item_title": "Quality You Can Trust",
-            "feature_item_context": "Tested for everyday use."
+            "prefix_text": "Feel the performance",
+            "suffix_text": "Smooth. Fast. Comfortable."
+          }
+        },
+        "ticker_item_4": {
+          "type": "ticker_item",
+          "settings": {
+            "prefix_text": "Make it personal",
+            "suffix_text": "Custom crafted keyboards & switches"
+          }
+        },
+        "ticker_item_5": {
+          "type": "ticker_item",
+          "settings": {
+            "prefix_text": "Quality you can trust",
+            "suffix_text": "Tested for everyday use."
           }
         }
       },
       "block_order": [
-        "feature_item_pHQkXV",
-        "feature_item_4gLket",
-        "feature_item_APcm6H"
+        "ticker_item_1",
+        "ticker_item_2",
+        "ticker_item_3",
+        "ticker_item_4",
+        "ticker_item_5"
       ],
-      "name": "Col2 Txt Section",
+      "name": "Marquee Ticker (跑马灯)",
       "settings": {
-        "title": "Type your style"
+        "bg_color": "#ffffff",
+        "show_border": true,
+        "show_bottom_border": false,
+        "border_color": "#ebebeb",
+        "prefix_color": "#0A6830",
+        "suffix_color": "#000000",
+        "prefix_font_style": "script",
+        "prefix_font_size": 22,
+        "suffix_font_size": 16,
+        "mobile_prefix_font_size": 17,
+        "mobile_suffix_font_size": 14,
+        "speed": 28,
+        "direction": "left",
+        "pause_on_hover": false,
+        "gap": 52,
+        "padding_vertical": 26,
+        "enable_separator": false
       }
     },
     "collection_list_LPzqx3": {
       "type": "collection-list",
       "blocks": {
-        "collection_dgEgp4": {
-          "type": "collection",
-          "settings": {
-            "collection": "new-arrivals",
-            "collection_title": "New arrivals"
-          }
-        },
         "collection_KMnRdc": {
           "type": "collection",
           "settings": {
             "collection": "best-sellers",
             "collection_title": "Best Sellers"
+          }
+        },
+        "collection_dgEgp4": {
+          "type": "collection",
+          "disabled": true,
+          "settings": {
+            "collection": "new-arrivals",
+            "collection_title": "New arrivals"
           }
         },
         "collection_aCcJcd": {
@@ -285,14 +318,17 @@
         }
       },
       "block_order": [
-        "collection_dgEgp4",
         "collection_KMnRdc",
+        "collection_dgEgp4",
         "collection_aCcJcd",
         "collection_K8zLam"
       ],
-      "name": "Collection List Section",
+      "name": "Best Sellers Section",
       "settings": {
-        "title": "Discover What's Popular on PIIFOX"
+        "title": "Best Sellers",
+        "collection": "best-sellers",
+        "btn_text": "Learn More",
+        "btn_color": "#0A6830"
       }
     },
     "main_collection_list_tAJGQJ": {

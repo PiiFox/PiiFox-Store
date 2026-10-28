@@ -1,128 +1,562 @@
-<div class="col-txt-section-{{ section.id }} wow bounceInUp">
-  <div class="col-txt-section--wrapper page-width">
-    <h2 class="col-txt-section-title custom-txt-bold appear-delay{% cycle '','-1','-2','-3','-4' %}">{{ section.settings.title }}</h2>
-    <div class="col-txt-section-content appear-delay{% cycle '','-1','-2','-3','-4' %}">
-      {% for block in section.blocks %}
-        <div class="col-txt-section-item appear-delay{% cycle '','-1','-2','-3','-4' %}">
-          <h3 class="col-txt-section-item-title custom-txt-semibold">{{ block.settings.feature_item_title }}</h3>
-          <p class="col-txt-section-item-context">{{ block.settings.feature_item_context }}</p>
+{%- liquid
+  assign bg_color = section.settings.bg_color | default: '#ffffff'
+  assign border_color = section.settings.border_color | default: '#ebebeb'
+  assign show_border = section.settings.show_border
+  assign default_prefix_color = section.settings.prefix_color | default: '#0A6830'
+  assign default_suffix_color = section.settings.suffix_color | default: '#000000'
+  assign speed = section.settings.speed | default: 28
+  assign direction = section.settings.direction | default: 'left'
+  assign pause_on_hover = section.settings.pause_on_hover
+  assign gap = section.settings.gap | default: 52
+  assign padding_v = section.settings.padding_vertical | default: 12
+  assign prefix_font_style = section.settings.prefix_font_style | default: 'script'
+  assign prefix_size = section.settings.prefix_font_size | default: 20
+  assign suffix_size = section.settings.suffix_font_size | default: 15
+  assign m_prefix_size = section.settings.mobile_prefix_font_size | default: 16
+  assign m_suffix_size = section.settings.mobile_suffix_font_size | default: 13
+  
+  # Duplication factor to guarantee seamless infinite loop without blank gaps across large displays
+  assign block_count = section.blocks.size
+  if block_count == 0
+    assign inner_repeats = 4
+  elsif block_count <= 2
+    assign inner_repeats = 6
+  elsif block_count <= 4
+    assign inner_repeats = 4
+  else
+    assign inner_repeats = 2
+  endif
+-%}
+
+{% style %}
+  .col-txt-section-{{ section.id }}.marquee-ticker-container {
+    width: 100%;
+    background-color: {{ bg_color }};
+    {% if show_border %}
+      border-top: 1px solid {{ border_color }};
+    {% else %}
+      border-top: none;
+    {% endif %}
+    {% if section.settings.show_bottom_border %}
+      border-bottom: 1px solid {{ border_color }};
+    {% else %}
+      border-bottom: none;
+    {% endif %}
+    padding: {{ padding_v }}px 0;
+    min-height: 64px;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    position: relative;
+    z-index: 4;
+    box-sizing: border-box;
+  }
+
+  .col-txt-section-{{ section.id }} .marquee-ticker-bar {
+    display: flex;
+    width: 100%;
+    overflow: hidden;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+
+  .col-txt-section-{{ section.id }} .marquee-ticker-track {
+    display: flex;
+    width: max-content;
+    flex-shrink: 0;
+    will-change: transform;
+  }
+
+  .col-txt-section-{{ section.id }} .marquee-ticker-track--left {
+    animation: marquee-scroll-left-{{ section.id }} {{ speed }}s linear infinite;
+  }
+
+  .col-txt-section-{{ section.id }} .marquee-ticker-track--right {
+    animation: marquee-scroll-right-{{ section.id }} {{ speed }}s linear infinite;
+  }
+
+  {% if pause_on_hover %}
+  .col-txt-section-{{ section.id }}[data-pause-on-hover="true"]:hover .marquee-ticker-track {
+    animation-play-state: paused;
+  }
+  {% endif %}
+
+  .col-txt-section-{{ section.id }} .marquee-ticker-group {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+  }
+
+  .col-txt-section-{{ section.id }} .marquee-ticker-item {
+    display: inline-flex;
+    align-items: baseline;
+    flex-shrink: 0;
+    white-space: nowrap;
+    padding-right: {{ gap }}px;
+    text-decoration: none;
+    line-height: 1.35;
+  }
+
+  a.marquee-ticker-item {
+    cursor: pointer;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+  }
+  a.marquee-ticker-item:hover {
+    opacity: 0.8;
+  }
+
+  .col-txt-section-{{ section.id }} .marquee-item-prefix {
+    font-size: {{ prefix_size }}px;
+    margin-right: 8px;
+    display: inline-block;
+    {% case prefix_font_style %}
+      {% when 'script' %}
+        font-family: 'Caveat', 'Dancing Script', 'Brush Script MT', cursive, sans-serif;
+        font-weight: 700;
+        font-style: normal;
+        letter-spacing: 0.02em;
+      {% when 'italic' %}
+        font-family: inherit;
+        font-weight: 600;
+        font-style: italic;
+      {% when 'bold' %}
+        font-family: 'PF_Bold', sans-serif;
+        font-weight: 700;
+        font-style: normal;
+      {% else %}
+        font-family: inherit;
+        font-weight: 500;
+        font-style: normal;
+    {% endcase %}
+  }
+
+  .col-txt-section-{{ section.id }} .marquee-item-suffix {
+    font-size: {{ suffix_size }}px;
+    font-family: inherit;
+    font-weight: 400;
+    letter-spacing: 0.01em;
+    display: inline-block;
+  }
+
+  .col-txt-section-{{ section.id }} .marquee-item-separator {
+    margin-left: {{ gap | divided_by: 2 }}px;
+    color: {{ section.settings.separator_color | default: '#d1d5db' }};
+    font-size: 0.8em;
+    opacity: 0.7;
+  }
+
+  @keyframes marquee-scroll-left-{{ section.id }} {
+    0% {
+      transform: translate3d(0, 0, 0);
+    }
+    100% {
+      transform: translate3d(-50%, 0, 0);
+    }
+  }
+
+  @keyframes marquee-scroll-right-{{ section.id }} {
+    0% {
+      transform: translate3d(-50%, 0, 0);
+    }
+    100% {
+      transform: translate3d(0, 0, 0);
+    }
+  }
+
+  @media screen and (max-width: 768px) {
+    .col-txt-section-{{ section.id }}.marquee-ticker-container {
+      padding: {{ padding_v | times: 0.75 | round }}px 0;
+    }
+    .col-txt-section-{{ section.id }} .marquee-ticker-item {
+      padding-right: {{ gap | times: 0.65 | round }}px;
+    }
+    .col-txt-section-{{ section.id }} .marquee-item-prefix {
+      font-size: {{ m_prefix_size }}px;
+      margin-right: 6px;
+    }
+    .col-txt-section-{{ section.id }} .marquee-item-suffix {
+      font-size: {{ m_suffix_size }}px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .col-txt-section-{{ section.id }} .marquee-ticker-track--left,
+    .col-txt-section-{{ section.id }} .marquee-ticker-track--right {
+      animation-duration: 120s;
+    }
+  }
+{% endstyle %}
+
+<div class="col-txt-section-{{ section.id }} marquee-ticker-container" 
+     id="marquee-ticker-{{ section.id }}" 
+     data-pause-on-hover="{{ pause_on_hover }}"
+     data-section-id="{{ section.id }}"
+     data-section-type="marquee-ticker">
+  
+  <div class="marquee-ticker-bar">
+    <div class="marquee-ticker-track marquee-ticker-track--{{ direction }}">
+      {%- for group_idx in (1..2) -%}
+        <div class="marquee-ticker-group{% if group_idx == 2 %} marquee-ticker-group--clone{% endif %}" 
+             {% if group_idx == 2 %}aria-hidden="true"{% endif %}>
+          {%- for r in (1..inner_repeats) -%}
+            {%- if section.blocks.size > 0 -%}
+              {%- for block in section.blocks -%}
+                {%- liquid
+                  assign prefix = block.settings.prefix_text
+                  if prefix == blank
+                    assign prefix = block.settings.feature_item_title
+                  endif
+                  assign suffix = block.settings.suffix_text
+                  if suffix == blank
+                    assign suffix = block.settings.feature_item_context
+                  endif
+                  assign item_link = block.settings.link
+                  assign item_p_color = block.settings.prefix_color
+                  if item_p_color == blank or item_p_color == 'rgba(0,0,0,0)'
+                    assign item_p_color = default_prefix_color
+                  endif
+                  assign item_s_color = block.settings.suffix_color
+                  if item_s_color == blank or item_s_color == 'rgba(0,0,0,0)'
+                    assign item_s_color = default_suffix_color
+                  endif
+                -%}
+                {%- if prefix != blank or suffix != blank -%}
+                  {%- if item_link != blank -%}
+                    <a href="{{ item_link }}" class="marquee-ticker-item" {{ block.shopify_attributes }}>
+                  {%- else -%}
+                    <div class="marquee-ticker-item" {{ block.shopify_attributes }}>
+                  {%- endif -%}
+                    {%- if prefix != blank -%}
+                      <span class="marquee-item-prefix" style="color: {{ item_p_color }};">{{ prefix }}</span>
+                    {%- endif -%}
+                    {%- if suffix != blank -%}
+                      <span class="marquee-item-suffix" style="color: {{ item_s_color }};">{{ suffix }}</span>
+                    {%- endif -%}
+                    {%- if section.settings.enable_separator -%}
+                      <span class="marquee-item-separator" aria-hidden="true">•</span>
+                    {%- endif -%}
+                  {%- if item_link != blank -%}
+                    </a>
+                  {%- else -%}
+                    </div>
+                  {%- endif -%}
+                {%- endif -%}
+              {%- endfor -%}
+            {%- else -%}
+              <!-- Default demo items if no blocks exist -->
+              <div class="marquee-ticker-item">
+                <span class="marquee-item-prefix" style="color: {{ default_prefix_color }};">Type your style</span>
+                <span class="marquee-item-suffix" style="color: {{ default_suffix_color }};">Make every setup feel like yours.</span>
+              </div>
+              <div class="marquee-ticker-item">
+                <span class="marquee-item-prefix" style="color: {{ default_prefix_color }};">Free standard shipping</span>
+                <span class="marquee-item-suffix" style="color: {{ default_suffix_color }};">On all orders over $75</span>
+              </div>
+              <div class="marquee-ticker-item">
+                <span class="marquee-item-prefix" style="color: {{ default_prefix_color }};">Feel the performance</span>
+                <span class="marquee-item-suffix" style="color: {{ default_suffix_color }};">Smooth. Fast. Comfortable.</span>
+              </div>
+              <div class="marquee-ticker-item">
+                <span class="marquee-item-prefix" style="color: {{ default_prefix_color }};">Make it personal</span>
+                <span class="marquee-item-suffix" style="color: {{ default_suffix_color }};">Custom crafted keyboards & switches</span>
+              </div>
+              <div class="marquee-ticker-item">
+                <span class="marquee-item-prefix" style="color: {{ default_prefix_color }};">Quality you can trust</span>
+                <span class="marquee-item-suffix" style="color: {{ default_suffix_color }};">Tested & certified for everyday use.</span>
+              </div>
+            {%- endif -%}
+          {%- endfor -%}
         </div>
-      {% endfor %}
+      {%- endfor -%}
     </div>
   </div>
 </div>
-{% style %}
-    .col-txt-section-{{ section.id }} {
-      background-color: #fff;
-    }
-    .col-txt-section-{{ section.id }} .col-txt-section--wrapper {
-        padding: 3em 2em;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-    .col-txt-section-{{ section.id }} .col-txt-section--wrapper .col-txt-section-title {
-        font-size: 2.5em;
-        font-weight: 700;
-    }
-    .col-txt-section-{{ section.id }} .col-txt-section--wrapper .col-txt-section-content {
-        display: flex;
-    }
-    .col-txt-section-{{ section.id }} .col-txt-section--wrapper .col-txt-section-item {
-        font-size: 0.9em;
-        font-weight: 500;
-        text-align: left;
-        padding: 0 1em;
-        border-right: 1px solid #e5e7eb;
-    }
-    .col-txt-section-{{ section.id }} .col-txt-section--wrapper .col-txt-section-item:last-child {
-        border-right: none;
-    }
-    @media (max-width: 768px) {
-        .col-txt-section-{{ section.id }} .col-txt-section--wrapper {
-            flex-direction: column;
-            justify-content: flex-start;
-            align-items: flex-start;
-        }
-        .col-txt-section-{{ section.id }} .col-txt-section--wrapper .col-txt-section-title {
-            margin-bottom: 0.5em;
-            font-size: 2em;
-        }
-        .col-txt-section-{{ section.id }} .col-txt-section--wrapper .col-txt-section-item {
-          font-size: 0.8em;
-        }
-        .col-txt-section-{{ section.id }} .col-txt-section--wrapper .col-txt-section-item:first-child {
-            padding-left: 0;
-        }
-        .col-txt-section-{{ section.id }} .col-txt-section--wrapper .col-txt-section-item  h3.col-txt-section-item-title {
-            font-size: 1em;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            line-height: 1.2em;
-            height: 2.4em;
-        }
-    }
-{% endstyle %}
 
 {% schema %}
 {
-  "name": "Col2 Txt Section",
-  "class": "col2-txt-section",
+  "name": "Marquee Ticker (跑马灯)",
+  "class": "marquee-ticker-section",
   "settings": [
     {
-      "type": "text",
-      "id": "title",
-      "label": "Title",
-      "default": "Sound On. Move On."
+      "type": "header",
+      "content": "Style & Colors (样式与颜色)"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color (背景颜色)",
+      "default": "#ffffff"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_border",
+      "label": "Show Top Border (显示顶部边框)",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_bottom_border",
+      "label": "Show Bottom Border (显示底部边框)",
+      "default": false
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Border Color (边框颜色)",
+      "default": "#ebebeb"
+    },
+    {
+      "type": "color",
+      "id": "prefix_color",
+      "label": "Prefix Text Color (前缀默认字体颜色 - 绿色)",
+      "default": "#0A6830"
+    },
+    {
+      "type": "color",
+      "id": "suffix_color",
+      "label": "Suffix Text Color (后缀默认字体颜色 - 黑色)",
+      "default": "#000000"
+    },
+    {
+      "type": "header",
+      "content": "Typography (文字与字体)"
+    },
+    {
+      "type": "select",
+      "id": "prefix_font_style",
+      "label": "Prefix Font Style (前缀文字样式)",
+      "options": [
+        {
+          "value": "script",
+          "label": "Script / Cursive (手写花体 - 仿原图)"
+        },
+        {
+          "value": "italic",
+          "label": "Italic (斜体)"
+        },
+        {
+          "value": "bold",
+          "label": "Bold (粗体)"
+        },
+        {
+          "value": "normal",
+          "label": "Normal (常规体)"
+        }
+      ],
+      "default": "script"
+    },
+    {
+      "type": "range",
+      "id": "prefix_font_size",
+      "label": "Desktop Prefix Font Size (电脑端前缀字号)",
+      "min": 14,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "suffix_font_size",
+      "label": "Desktop Suffix Font Size (电脑端后缀字号)",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 15
+    },
+    {
+      "type": "range",
+      "id": "mobile_prefix_font_size",
+      "label": "Mobile Prefix Font Size (移动端前缀字号)",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "mobile_suffix_font_size",
+      "label": "Mobile Suffix Font Size (移动端后缀字号)",
+      "min": 10,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 13
+    },
+    {
+      "type": "header",
+      "content": "Animation & Layout (滚动动效与间距)"
+    },
+    {
+      "type": "range",
+      "id": "speed",
+      "label": "Scroll Speed (滚动周期/秒，越小越快)",
+      "min": 10,
+      "max": 80,
+      "step": 2,
+      "unit": "s",
+      "default": 28
+    },
+    {
+      "type": "select",
+      "id": "direction",
+      "label": "Scroll Direction (滚动方向)",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left (从右往左)"
+        },
+        {
+          "value": "right",
+          "label": "Right (从左往右)"
+        }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "checkbox",
+      "id": "pause_on_hover",
+      "label": "Pause On Hover (鼠标悬停时暂停)",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "gap",
+      "label": "Gap Between Items (项目之间间距)",
+      "min": 24,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 52
+    },
+    {
+      "type": "range",
+      "id": "padding_vertical",
+      "label": "Vertical Padding (上下内边距 / 控制整体高度)",
+      "min": 10,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "default": 26
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_separator",
+      "label": "Show Separator Dot (显示分隔圆点)",
+      "default": false
+    },
+    {
+      "type": "color",
+      "id": "separator_color",
+      "label": "Separator Dot Color (分隔圆点颜色)",
+      "default": "#d1d5db"
     }
   ],
   "blocks": [
     {
-      "type": "feature_item",
-      "name": "Feature Item",
+      "type": "ticker_item",
+      "name": "Ticker Item (跑马灯项目)",
       "settings": [
+        {
+          "type": "text",
+          "id": "prefix_text",
+          "label": "Prefix Text (前缀/花体文字 - 默认绿色)",
+          "default": "Type your style"
+        },
+        {
+          "type": "text",
+          "id": "suffix_text",
+          "label": "Suffix Text (后缀/普通文字 - 默认黑色)",
+          "default": "Make every setup feel like yours."
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link (跳转链接，可选)"
+        },
+        {
+          "type": "color",
+          "id": "prefix_color",
+          "label": "Custom Prefix Color (自定义前缀颜色，留空继承全局)"
+        },
+        {
+          "type": "color",
+          "id": "suffix_color",
+          "label": "Custom Suffix Color (自定义后缀颜色，留空继承全局)"
+        }
+      ]
+    },
+    {
+      "type": "feature_item",
+      "name": "Feature Item (兼容旧版)",
+      "settings": [
+        {
+          "type": "text",
+          "id": "prefix_text",
+          "label": "Prefix Text (前缀文字)"
+        },
+        {
+          "type": "text",
+          "id": "suffix_text",
+          "label": "Suffix Text (后缀文字)"
+        },
         {
           "type": "html",
           "id": "feature_item_title",
-          "label": "Feature Item"
-        }, 
+          "label": "Title (旧版标题)"
+        },
         {
           "type": "html",
           "id": "feature_item_context",
-          "label": "Feature Item Context"
+          "label": "Context (旧版内容)"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link (链接)"
         }
       ]
     }
   ],
   "presets": [
     {
-      "name": "Col2 Txt Section",
-      "settings": {
-        "title": "Sound On. Move On."
-      },
+      "name": "Marquee Ticker (跑马灯)",
       "blocks": [
         {
-          "type": "feature_item",
+          "type": "ticker_item",
           "settings": {
-            "feature_item_title": "85 Million+",
-            "feature_item_context": "Units Sold"
+            "prefix_text": "Type your style",
+            "suffix_text": "Make every setup feel like yours."
           }
         },
         {
-          "type": "feature_item",
+          "type": "ticker_item",
           "settings": {
-            "feature_item_title": "52 Million",
-            "feature_item_context": "Global Users"
+            "prefix_text": "Free standard shipping",
+            "suffix_text": "On all orders over $75"
           }
         },
         {
-          "type": "feature_item",
+          "type": "ticker_item",
           "settings": {
-            "feature_item_title": "World's Leading*",
-            "feature_item_context": "Wireless Headphone Brand"
+            "prefix_text": "Feel the performance",
+            "suffix_text": "Smooth. Fast. Comfortable."
+          }
+        },
+        {
+          "type": "ticker_item",
+          "settings": {
+            "prefix_text": "Make it personal",
+            "suffix_text": "Custom crafted keyboards & switches"
+          }
+        },
+        {
+          "type": "ticker_item",
+          "settings": {
+            "prefix_text": "Quality you can trust",
+            "suffix_text": "Tested & certified for everyday use."
           }
         }
       ]

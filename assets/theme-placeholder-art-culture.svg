@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 190" width="360" height="190">
+  <rect width="360" height="190" fill="#181818"/>
+
+  <!-- Doodle characters graffiti collage on the right side -->
+  <!-- Green dinosaur character -->
+  <g transform="translate(195, 40)">
+    <!-- Body -->
+    <path d="M 10 70 C 5 45 15 20 35 15 C 50 10 65 25 60 45 C 75 45 85 55 80 75 C 75 90 60 95 40 95 C 20 95 12 85 10 70 Z" fill="#43a047" stroke="#111" stroke-width="2.5"/>
+    <!-- Back spikes -->
+    <polygon points="12,30 2,22 18,20" fill="#fdd835" stroke="#111" stroke-width="1.5"/>
+    <polygon points="26,16 22,4 34,10" fill="#fdd835" stroke="#111" stroke-width="1.5"/>
+    <polygon points="42,12 44,0 52,8" fill="#fdd835" stroke="#111" stroke-width="1.5"/>
+    <!-- Eyes -->
+    <circle cx="48" cy="30" r="5" fill="#ffffff" stroke="#111" stroke-width="1.5"/>
+    <circle cx="49" cy="30" r="2.5" fill="#111"/>
+    <!-- Tooth smile -->
+    <path d="M 38 48 Q 50 54 58 46" stroke="#111" stroke-width="2" fill="none"/>
+    <polygon points="42,49 45,55 48,50" fill="#ffffff"/>
+    <polygon points="50,51 53,55 56,48" fill="#ffffff"/>
+  </g>
+
+  <!-- Big yellow bear / monster face at top -->
+  <g transform="translate(265, 15)">
+    <!-- Ears -->
+    <circle cx="20" cy="22" r="14" fill="#fdd835" stroke="#111" stroke-width="2.5"/>
+    <circle cx="68" cy="22" r="14" fill="#fdd835" stroke="#111" stroke-width="2.5"/>
+    <circle cx="20" cy="22" r="7" fill="#fb8c00"/>
+    <circle cx="68" cy="22" r="7" fill="#fb8c00"/>
+    <!-- Head -->
+    <ellipse cx="44" cy="45" rx="30" ry="26" fill="#fdd835" stroke="#111" stroke-width="2.5"/>
+    <!-- Eyes -->
+    <ellipse cx="34" cy="42" rx="4.5" ry="5.5" fill="#111"/>
+    <ellipse cx="54" cy="42" rx="4.5" ry="5.5" fill="#111"/>
+    <circle cx="33" cy="40" r="1.5" fill="#ffffff"/>
+    <circle cx="53" cy="40" r="1.5" fill="#ffffff"/>
+    <!-- Snout and smile -->
+    <ellipse cx="44" cy="52" rx="10" ry="7" fill="#fff9c4" stroke="#111" stroke-width="1.5"/>
+    <ellipse cx="44" cy="49" rx="4" ry="2.5" fill="#111"/>
+    <path d="M 40 54 Q 44 57 48 54" stroke="#111" stroke-width="2" fill="none"/>
+  </g>
+
+  <!-- Pop Red Love Heart Monster with eyes in middle -->
+  <g transform="translate(240, 85)">
+    <path d="M 28 8 Q 28 0 20 0 Q 10 0 5 10 Q 0 0 -10 0 Q -18 0 -18 8 Q -18 20 5 36 Q 28 20 28 8 Z" fill="#e53935" stroke="#111" stroke-width="2.5"/>
+    <circle cx="-3" cy="12" r="3" fill="#ffffff"/>
+    <circle cx="-3" cy="12" r="1.5" fill="#111"/>
+    <circle cx="13" cy="12" r="3" fill="#ffffff"/>
+    <circle cx="13" cy="12" r="1.5" fill="#111"/>
+    <path d="M 2 20 Q 5 23 8 20" stroke="#111" stroke-width="1.5" fill="none"/>
+  </g>
+
+  <!-- Cute Yellow & Black Bee at bottom right -->
+  <g transform="translate(295, 115)">
+    <!-- Bee wings -->
+    <ellipse cx="14" cy="12" rx="10" ry="6" fill="#e1f5fe" stroke="#111" stroke-width="1.5" transform="rotate(-30 14 12)"/>
+    <ellipse cx="26" cy="12" rx="10" ry="6" fill="#e1f5fe" stroke="#111" stroke-width="1.5" transform="rotate(30 26 12)"/>
+    <!-- Bee body -->
+    <ellipse cx="20" cy="28" rx="18" ry="14" fill="#fbc02d" stroke="#111" stroke-width="2.5"/>
+    <!-- Black stripes -->
+    <path d="M 12 18 L 12 38" stroke="#111" stroke-width="4.5" stroke-linecap="round"/>
+    <path d="M 20 15 L 20 41" stroke="#111" stroke-width="4.5" stroke-linecap="round"/>
+    <path d="M 28 18 L 28 38" stroke="#111" stroke-width="4.5" stroke-linecap="round"/>
+    <!-- Big cute eyes -->
+    <circle cx="6" cy="25" r="5" fill="#ffffff" stroke="#111" stroke-width="1.5"/>
+    <circle cx="6" cy="25" r="2.5" fill="#111"/>
+    <circle cx="5" cy="24" r="1" fill="#ffffff"/>
+    <!-- Stinger -->
+    <polygon points="38,28 44,28 38,32" fill="#111"/>
+  </g>
+
+  <!-- Blue and purple doodle bears peeking around -->
+  <g transform="translate(195, 125)">
+    <circle cx="20" cy="25" r="16" fill="#00acc1" stroke="#111" stroke-width="2"/>
+    <circle cx="10" cy="14" r="6" fill="#00acc1" stroke="#111" stroke-width="1.5"/>
+    <circle cx="30" cy="14" r="6" fill="#00acc1" stroke="#111" stroke-width="1.5"/>
+    <circle cx="16" cy="24" r="2.5" fill="#111"/>
+    <circle cx="24" cy="24" r="2.5" fill="#111"/>
+    <path d="M 17 30 Q 20 33 23 30" stroke="#111" stroke-width="1.5" fill="none"/>
+  </g>
+</svg>

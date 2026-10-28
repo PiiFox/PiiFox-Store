@@ -309,7 +309,7 @@ body {
   white-space: pre;
 }
 .featured-collections .grid .grid__item:hover img:not(.grid__item_more img) {
-  transform: scale(1.1);
+  transform: none;
 }
 .featured-collections:not(.fc_va)
   .grid
@@ -5674,4 +5674,286 @@ button.add-to-cart:disabled,
 .variant-wrapper .variant__label-info:has([data-variant-color-label]),
 .variant-wrapper [data-variant-color-label] {
   display: none !important;
+}
+
+/* ==========================================================================
+   Mobile Product Card 2-Image Slider & Two-Segment Indicator Bar
+   ========================================================================== */
+@media only screen and (max-width: 768px) {
+  /* Slider wrapper on mobile - allow horizontal swipe gestures */
+  .grid-product__mobile-slider {
+    position: relative;
+    width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    touch-action: pan-x pan-y;
+    -webkit-user-select: none;
+    user-select: none;
+  }
+  .grid-product__mobile-slider::-webkit-scrollbar {
+    display: none;
+  }
+
+  .grid-product__mobile-slider-track {
+    display: flex;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    column-gap: 20px;
+  }
+
+  .grid-product__mobile-slide {
+    flex: 0 0 100%;
+    min-width: 100%;
+    width: 100%;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+    position: relative;
+    box-sizing: border-box;
+    overflow: hidden;
+    -webkit-user-select: none;
+    user-select: none;
+  }
+
+  .grid-product__mobile-slide .image-wrap,
+  .grid-product__mobile-slide .grid__image-ratio {
+    width: 100%;
+    position: relative;
+  }
+
+  .grid-product__mobile-slide img {
+    pointer-events: none;
+    -webkit-user-drag: none;
+    user-select: none;
+    display: block;
+    width: 100%;
+    opacity: 1 !important;
+  }
+
+  /* Two-segment horizontal indicator bar below image */
+  .grid-product__mobile-indicator {
+    display: flex !important;
+    width: 100%;
+    gap: 4px;
+    padding: 6px 6px 4px 6px;
+    align-items: center;
+    box-sizing: border-box;
+    position: relative;
+    z-index: 2;
+  }
+
+  .grid-product__mobile-indicator .indicator-bar {
+    flex: 1 1 50%;
+    width: 50%;
+    height: 3px;
+    background-color: #e5e5e5;
+    border-radius: 2px;
+    transition: background-color 0.25s ease;
+    cursor: pointer;
+    position: relative;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* Increase tap target height for thumbs */
+  .grid-product__mobile-indicator .indicator-bar::after {
+    content: "";
+    position: absolute;
+    top: -12px;
+    bottom: -12px;
+    left: 0;
+    right: 0;
+  }
+
+  /* Active state - lighter highlight color */
+  .grid-product__mobile-indicator .indicator-bar.is-active {
+    background-color: #767676;
+  }
+
+  /* ========================================================================
+     Mobile Collection Page - Centered Container & Symmetrical Gutters
+     ======================================================================== */
+  .collection-content .page-width {
+    padding-left: 8px !important;
+    padding-right: 8px !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  .collection-content .grid {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    width: 100% !important;
+  }
+
+  .collection-content .grid__item--content {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    width: 100% !important;
+    margin: 0 !important;
+  }
+
+  .collection-grid__wrapper {
+    padding: 0 !important;
+    margin: 0 !important;
+    width: 100% !important;
+  }
+
+  .collection-filter {
+    margin: 0 0 10px 0 !important;
+    padding: 0 4px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  .selec_row {
+    padding: 0 4px !important;
+    box-sizing: border-box !important;
+  }
+
+  .collection-grid__wrapper > .grid--uniform,
+  .collection-grid__wrapper > .grid--uniform.small--grid--flush {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    width: 100% !important;
+    display: flex !important;
+    flex-wrap: wrap !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Symmetrical padding and sizing for double-row product cards */
+  .collection-grid__wrapper .grid__item.grid-product.small--one-halfs {
+    width: 50% !important;
+    max-width: 50% !important;
+    flex: 0 0 50% !important;
+    padding: 3px 4px !important;
+    box-sizing: border-box !important;
+    margin: 0 !important;
+  }
+
+  /* Symmetrical padding and sizing for single-row product cards */
+  .collection-grid__wrapper .grid__item.grid-product:not(.small--one-halfs) {
+    width: 100% !important;
+    max-width: 100% !important;
+    flex: 0 0 100% !important;
+    padding: 6px 4px !important;
+    box-sizing: border-box !important;
+    margin: 0 !important;
+  }
+
+  /* ========================================================================
+     Mobile Double-Row (双排) Display Optimization
+     1. Enlarge product image
+     2. Reduce title, price, button text sizes
+     3. Tighten spacing between title, price, and button
+     ======================================================================== */
+  .grid__item.grid-product.small--one-halfs {
+    padding: 3px 4px !important;
+    box-sizing: border-box;
+  }
+
+  .grid__item.grid-product.small--one-halfs .grid-product__content {
+    border-radius: 6px !important;
+    overflow: hidden;
+  }
+
+  /* Enlarge product image inside double-row card */
+  .grid__item.grid-product.small--one-halfs .grid-product__image-mask {
+    padding: 0 !important;
+    margin: 0 !important;
+    width: 100% !important;
+  }
+
+  .grid__item.grid-product.small--one-halfs .grid-product__content > .grid-product__link img,
+  .grid__item.grid-product.small--one-halfs .grid-product__mobile-slide img {
+    width: 100% !important;
+    aspect-ratio: 1 / 1 !important;
+    object-fit: contain !important;
+  }
+
+  /* Slim indicator bar for double-row card */
+  .grid__item.grid-product.small--one-halfs .grid-product__mobile-indicator {
+    padding: 4px 6px 2px 6px !important;
+    gap: 3px !important;
+  }
+
+  .grid__item.grid-product.small--one-halfs .grid-product__mobile-indicator .indicator-bar {
+    height: 2px !important;
+  }
+
+  /* Compact meta container */
+  .grid__item.grid-product.small--one-halfs .grid-product__meta {
+    padding: 6px 8px 8px 8px !important;
+  }
+
+  /* Smaller title text and tighter spacing */
+  .grid__item.grid-product.small--one-halfs .grid-product__title,
+  .grid__item.grid-product.small--one-halfs .grid-product__title.grid-product__title--body {
+    font-size: 11.5px !important;
+    line-height: 1.25 !important;
+    height: 29px !important;
+    font-weight: 500 !important;
+    margin: 0 0 2px 0 !important;
+    letter-spacing: -0.01em !important;
+    display: -webkit-box !important;
+    -webkit-line-clamp: 2 !important;
+    -webkit-box-orient: vertical !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+  }
+
+  /* Smaller price text and reduced gap */
+  .grid__item.grid-product.small--one-halfs .grid-product__price {
+    padding: 0 !important;
+    margin: 2px 0 5px 0 !important;
+    line-height: 1.1 !important;
+    text-align: left !important;
+  }
+
+  .grid__item.grid-product.small--one-halfs .grid-product__price > span.money,
+  .grid__item.grid-product.small--one-halfs .grid-product__price .money {
+    font-size: 13px !important;
+    font-weight: 600 !important;
+    color: var(--colorThemePrimary, #107a44) !important;
+  }
+
+  /* Smaller button text and compact button height */
+  .grid__item.grid-product.small--one-halfs .bottom_btn {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+  }
+
+  .grid__item.grid-product.small--one-halfs .bottom_btn a,
+  .grid__item.grid-product.small--one-halfs .bottom_btn a.lm_btn {
+    font-size: 11px !important;
+    font-weight: 500 !important;
+    padding: 5px 0 !important;
+    border-radius: 4px !important;
+    letter-spacing: 0.01em !important;
+    line-height: 1.2 !important;
+    white-space: nowrap !important;
+    width: 100% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+
+  .grid__item.grid-product.small--one-halfs .bottom_btn a svg {
+    display: none !important;
+  }
+}
+
+/* Hide mobile slider & indicator on desktop */
+@media only screen and (min-width: 769px) {
+  .grid-product__mobile-slider,
+  .grid-product__mobile-indicator {
+    display: none !important;
+  }
 }

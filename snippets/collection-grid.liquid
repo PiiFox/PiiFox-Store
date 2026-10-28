@@ -70,6 +70,19 @@ Snippet Arguments
         </div>
     </div>
   </div>
+{%- liquid
+  assign is_keyboard_collection = false
+  assign handle_downcase = collection.handle | downcase
+  assign title_downcase = collection.title | downcase
+  if handle_downcase contains 'keyboard' or handle_downcase contains 'boards' or title_downcase contains 'keyboard' or template.suffix contains 'keyboard' or template.suffix contains 'boards'
+    assign is_keyboard_collection = true
+  endif
+
+  assign card_extra_class = ''
+  unless is_keyboard_collection
+    assign card_extra_class = 'small--one-halfs'
+  endunless
+-%}
 <div class="selec_row">
   <div class="row_one"></div>
   <div class="row_two"></div>
@@ -83,7 +96,8 @@ Snippet Arguments
           quick_shop_enable: quick_shop_enable,
           short_introduction_enable: short_introduction_enable,
           short_point_desc_enable: short_point_desc_enable,
-          product_card_btn_label: product_card_btn_label
+          product_card_btn_label: product_card_btn_label,
+          extra_class: card_extra_class
         -%}
       {%- else -%}
         {%- render 'search-grid-item',
