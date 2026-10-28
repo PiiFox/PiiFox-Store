@@ -222,35 +222,50 @@
           "type": "ticker_item",
           "settings": {
             "prefix_text": "Type your style",
-            "suffix_text": "Make every setup feel like yours."
+            "suffix_text": "Make every setup feel like yours.",
+            "link": "",
+            "prefix_color": "",
+            "suffix_color": ""
           }
         },
         "ticker_item_2": {
           "type": "ticker_item",
           "settings": {
             "prefix_text": "Free standard shipping",
-            "suffix_text": "On all orders over $75"
+            "suffix_text": "On all orders over $75",
+            "link": "",
+            "prefix_color": "",
+            "suffix_color": ""
           }
         },
         "ticker_item_3": {
           "type": "ticker_item",
           "settings": {
             "prefix_text": "Feel the performance",
-            "suffix_text": "Smooth. Fast. Comfortable."
+            "suffix_text": "Smooth. Fast. Comfortable.",
+            "link": "",
+            "prefix_color": "",
+            "suffix_color": ""
           }
         },
         "ticker_item_4": {
           "type": "ticker_item",
           "settings": {
             "prefix_text": "Make it personal",
-            "suffix_text": "Custom crafted keyboards & switches"
+            "suffix_text": "Custom crafted keyboards & switches",
+            "link": "",
+            "prefix_color": "",
+            "suffix_color": ""
           }
         },
         "ticker_item_5": {
           "type": "ticker_item",
           "settings": {
             "prefix_text": "Quality you can trust",
-            "suffix_text": "Tested for everyday use."
+            "suffix_text": "Tested for everyday use.",
+            "link": "",
+            "prefix_color": "",
+            "suffix_color": ""
           }
         }
       },
@@ -261,13 +276,13 @@
         "ticker_item_4",
         "ticker_item_5"
       ],
-      "name": "Marquee Ticker (跑马灯)",
+      "name": "Marquee Ticker",
       "settings": {
         "bg_color": "#ffffff",
         "show_border": true,
         "show_bottom_border": false,
         "border_color": "#ebebeb",
-        "prefix_color": "#0A6830",
+        "prefix_color": "#0a6830",
         "suffix_color": "#000000",
         "prefix_font_style": "script",
         "prefix_font_size": 22,
@@ -279,7 +294,8 @@
         "pause_on_hover": false,
         "gap": 52,
         "padding_vertical": 26,
-        "enable_separator": false
+        "enable_separator": false,
+        "separator_color": "#d1d5db"
       }
     },
     "collection_list_LPzqx3": {
@@ -327,8 +343,13 @@
       "settings": {
         "title": "Best Sellers",
         "collection": "best-sellers",
+        "products_limit": 12,
         "btn_text": "Learn More",
-        "btn_color": "#0A6830"
+        "btn_color": "#0a6830",
+        "btn_text_color": "#ffffff",
+        "btn_hover_color": "#085427",
+        "card_bg": "#ffffff",
+        "enable_tabs": false
       }
     },
     "main_collection_list_tAJGQJ": {
@@ -338,58 +359,64 @@
           "type": "collection",
           "settings": {
             "collection": "keyboards",
-            "cover_image": "shopify://shop_images/37efe26d5b548dfbbb336d3c655a770a.jpg",
-            "cover_image_m": "shopify://shop_images/37efe26d5b548dfbbb336d3c655a770a_a3797839-5436-4acf-ab6f-19ec815f2367.jpg",
-            "collection_title": "Keyboards"
-          }
-        },
-        "collection_NeL9xF": {
-          "type": "collection",
-          "settings": {
-            "collection": "keycaps",
-            "cover_image": "shopify://shop_images/8ec6848585de83611ee764cfa45c5f68_215d3fba-6ff2-45e4-9dd9-aeb64d959838.jpg",
-            "cover_image_m": "shopify://shop_images/8ec6848585de83611ee764cfa45c5f68_b4109303-452f-4a68-b119-60818ba6a54d.jpg",
-            "collection_title": "Keycaps"
+            "collection_title": "Keyboards",
+            "custom_link": "",
+            "card_width": "full",
+            "video_url": "https://cdn.shopify.com/videos/c/o/v/a020c10e46764f5b803c79131dd7269f.mp4",
+            "default_placeholder": "none",
+            "text_color": "#111111"
           }
         },
         "collection_Ax8BCa": {
           "type": "collection",
           "settings": {
             "collection": "switches",
-            "cover_image": "shopify://shop_images/2b8608a79cf0d7cc63e7a6866811edaa.jpg",
-            "cover_image_m": "shopify://shop_images/2b8608a79cf0d7cc63e7a6866811edaa_7b4b6346-a61a-41a4-884f-b7cca85fa098.jpg",
-            "collection_title": "Switches"
-          }
-        },
-        "collection_iYdex4": {
-          "type": "collection",
-          "settings": {
-            "collection": "mice",
-            "cover_image": "shopify://shop_images/118493700f7e3293efadf6b957758203_8a9c4b66-45cc-410a-9db5-bb0c838a9c6a.jpg",
-            "cover_image_m": "shopify://shop_images/118493700f7e3293efadf6b957758203_0ef842c9-042c-4868-896f-7812d2d89fcb.jpg",
-            "collection_title": "Mice"
+            "collection_title": "Switches",
+            "custom_link": "",
+            "card_width": "half",
+            "video_url": "",
+            "default_placeholder": "switches",
+            "text_color": "#111111"
           }
         },
         "collection_gFK3Wa": {
           "type": "collection",
           "settings": {
             "collection": "accessories",
-            "cover_image": "shopify://shop_images/3_acfe87dd-5c72-4a71-b279-a4e78fb3b21d.jpg",
-            "cover_image_m": "shopify://shop_images/05c749914ceb6f0e401d50aac1cec636.jpg",
-            "collection_title": "Accessories"
+            "collection_title": "Accessories",
+            "custom_link": "",
+            "card_width": "half",
+            "video_url": "",
+            "default_placeholder": "accessories",
+            "text_color": "#111111"
+          }
+        },
+        "collection_NeL9xF": {
+          "type": "collection",
+          "settings": {
+            "collection": "keycaps",
+            "collection_title": "Keycaps",
+            "custom_link": "",
+            "card_width": "full",
+            "video_url": "",
+            "default_placeholder": "keycaps",
+            "text_color": "#111111"
           }
         }
       },
       "block_order": [
         "collection_wyacq7",
-        "collection_NeL9xF",
         "collection_Ax8BCa",
-        "collection_iYdex4",
-        "collection_gFK3Wa"
+        "collection_gFK3Wa",
+        "collection_NeL9xF"
       ],
       "name": "Main Collection List",
       "settings": {
-        "title": "SHOP BY CATEGORY"
+        "title": "SHOP BY CATEGORY",
+        "desktop_max_width": 960,
+        "desktop_card_height": 250,
+        "card_radius": 24,
+        "card_gap": 16
       }
     },
     "style_studio_theme_grid_home": {

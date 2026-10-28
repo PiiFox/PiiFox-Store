@@ -1,0 +1,696 @@
+{%- style -%}
+  .handpicked-section-{{ section.id }} {
+    padding-top: {{ section.settings.padding_top | default: 40 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | default: 60 }}px;
+    background-color: {{ section.settings.bg_color | default: '#ffffff' }};
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  }
+  .handpicked-section-{{ section.id }} .handpicked-container {
+    max-width: {{ section.settings.max_width | default: 1400 }}px;
+    margin: 0 auto;
+    padding: 0 20px;
+    box-sizing: border-box;
+  }
+  {%- if section.settings.show_border_top -%}
+    .handpicked-section-{{ section.id }} .handpicked-container {
+      border-top: 1px solid {{ section.settings.border_color | default: '#ebebeb' }};
+      padding-top: {{ section.settings.padding_top | default: 40 }}px;
+    }
+    .handpicked-section-{{ section.id }} {
+      padding-top: 0;
+    }
+  {%- endif -%}
+
+  .handpicked-section-{{ section.id }} .handpicked-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 24px;
+    gap: 16px;
+  }
+  .handpicked-section-{{ section.id }} .handpicked-header-left {
+    flex: 1;
+    min-width: 0;
+  }
+  .handpicked-section-{{ section.id }} .handpicked-title {
+    font-size: {{ section.settings.title_size | default: 32 }}px;
+    font-weight: 800;
+    margin: 0;
+    letter-spacing: -0.5px;
+    line-height: 1.2;
+    text-transform: none;
+    color: {{ section.settings.title_color | default: '#0A6830' }};
+  }
+  .handpicked-section-{{ section.id }} .handpicked-subtitle {
+    margin: 6px 0 0 0;
+    font-size: 14px;
+    color: #666666;
+    line-height: 1.4;
+  }
+  .handpicked-section-{{ section.id }} .handpicked-nav {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+  }
+  .handpicked-section-{{ section.id }} .handpicked-nav-btn {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    border: 1px solid #dcdcdc;
+    background: #ffffff;
+    color: #222222;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    padding: 0;
+  }
+  .handpicked-section-{{ section.id }} .handpicked-nav-btn:hover:not(.handpicked-btn-disabled) {
+    background: #111111;
+    color: #ffffff;
+    border-color: #111111;
+  }
+  .handpicked-section-{{ section.id }} .handpicked-nav-btn.handpicked-btn-disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+
+  /* Swiper styles */
+  .handpicked-section-{{ section.id }} .handpicked-swiper {
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+  }
+  .handpicked-section-{{ section.id }} .handpicked-swiper .swiper-wrapper {
+    display: flex;
+    box-sizing: border-box;
+  }
+  .handpicked-section-{{ section.id }} .handpicked-slide {
+    flex-shrink: 0;
+    height: auto;
+  }
+
+  /* FOUC prevention before swiper loads */
+  .handpicked-section-{{ section.id }} .handpicked-swiper:not(.swiper-initialized):not(.swiper-ready) .swiper-wrapper {
+    overflow: hidden;
+    flex-wrap: nowrap;
+  }
+  .handpicked-section-{{ section.id }} .handpicked-swiper:not(.swiper-initialized):not(.swiper-ready) .handpicked-slide {
+    flex: 0 0 calc((100% - 80px) / 5) !important;
+    width: calc((100% - 80px) / 5) !important;
+    max-width: calc((100% - 80px) / 5) !important;
+    margin-right: 20px !important;
+  }
+  .handpicked-section-{{ section.id }} .handpicked-swiper:not(.swiper-initialized):not(.swiper-ready) .handpicked-slide:last-child {
+    margin-right: 0 !important;
+  }
+
+  @media screen and (max-width: 1279px) {
+    .handpicked-section-{{ section.id }} .handpicked-swiper:not(.swiper-initialized):not(.swiper-ready) .handpicked-slide {
+      flex: 0 0 calc((100% - 64px) / 4.2) !important;
+      width: calc((100% - 64px) / 4.2) !important;
+      max-width: calc((100% - 64px) / 4.2) !important;
+      margin-right: 20px !important;
+    }
+  }
+
+  @media screen and (max-width: 1023px) {
+    .handpicked-section-{{ section.id }} .handpicked-swiper:not(.swiper-initialized):not(.swiper-ready) .handpicked-slide {
+      flex: 0 0 calc((100% - 40px) / 3.2) !important;
+      width: calc((100% - 40px) / 3.2) !important;
+      max-width: calc((100% - 40px) / 3.2) !important;
+      margin-right: 18px !important;
+    }
+  }
+
+  @media screen and (max-width: 767px) {
+    .handpicked-section-{{ section.id }} .handpicked-swiper:not(.swiper-initialized):not(.swiper-ready) .handpicked-slide {
+      flex: 0 0 calc((100% - 17px) / 2.2) !important;
+      width: calc((100% - 17px) / 2.2) !important;
+      max-width: calc((100% - 17px) / 2.2) !important;
+      margin-right: 14px !important;
+    }
+  }
+
+  @media screen and (max-width: 479px) {
+    .handpicked-section-{{ section.id }} .handpicked-swiper:not(.swiper-initialized):not(.swiper-ready) .handpicked-slide {
+      flex: 0 0 calc((100% - 5px) / 1.4) !important;
+      width: calc((100% - 5px) / 1.4) !important;
+      max-width: calc((100% - 5px) / 1.4) !important;
+      margin-right: 12px !important;
+    }
+  }
+
+  /* Card items */
+  .handpicked-section-{{ section.id }} .handpicked-card-item {
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    color: inherit;
+    background: #ffffff;
+    border-radius: 10px;
+    overflow: hidden;
+    height: 100%;
+    transition: transform 0.25s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.25s cubic-bezier(0.25, 1, 0.5, 1);
+  }
+  .handpicked-section-{{ section.id }} .handpicked-card-item:hover {
+    transform: translateY(-4px);
+  }
+  .handpicked-section-{{ section.id }} .handpicked-img-box {
+    position: relative;
+    width: 100%;
+    padding-bottom: 100%;
+    background: #f8f8f8;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .handpicked-section-{{ section.id }} .handpicked-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    padding: 12px;
+    box-sizing: border-box;
+    transition: transform 0.35s ease;
+  }
+  .handpicked-section-{{ section.id }} .handpicked-card-item:hover .handpicked-img {
+    transform: scale(1.05);
+  }
+  .handpicked-section-{{ section.id }} .handpicked-placeholder-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #999999;
+    font-size: 13px;
+    gap: 6px;
+    background: #f4f4f4;
+  }
+  .handpicked-section-{{ section.id }} .handpicked-details {
+    padding: 14px 4px 6px;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+  }
+  .handpicked-section-{{ section.id }} .handpicked-p-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: #111111;
+    margin-bottom: 4px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    line-height: 1.3;
+  }
+  .handpicked-section-{{ section.id }} .handpicked-p-type {
+    font-size: 12px;
+    color: #717171;
+    margin-bottom: 8px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .handpicked-section-{{ section.id }} .handpicked-p-price {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    margin-top: auto;
+  }
+  .handpicked-section-{{ section.id }} .price-current {
+    font-size: 15px;
+    font-weight: 700;
+    color: {{ section.settings.price_color | default: '#0A6830' }};
+  }
+  .handpicked-section-{{ section.id }} .collection-badge {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 600;
+    color: #444444;
+    background: #f0f0f0;
+    padding: 3px 8px;
+    border-radius: 4px;
+    margin-top: auto;
+    width: fit-content;
+  }
+
+  @media screen and (max-width: 768px) {
+    .handpicked-section-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top | default: 40 | divided_by: 1.5 }}px;
+      padding-bottom: {{ section.settings.padding_bottom | default: 60 | divided_by: 1.5 }}px;
+    }
+    .handpicked-section-{{ section.id }} .handpicked-container {
+      padding: 0 15px;
+    }
+    {%- if section.settings.show_border_top -%}
+      .handpicked-section-{{ section.id }} .handpicked-container {
+        padding-top: 24px;
+      }
+    {%- endif -%}
+    .handpicked-section-{{ section.id }} .handpicked-title {
+      font-size: 20px;
+    }
+    .handpicked-section-{{ section.id }} .handpicked-nav-btn {
+      width: 30px;
+      height: 30px;
+    }
+    .handpicked-section-{{ section.id }} .handpicked-details {
+      padding: 10px 2px 4px;
+    }
+    .handpicked-section-{{ section.id }} .handpicked-p-title {
+      font-size: 13px;
+    }
+    .handpicked-section-{{ section.id }} .price-current {
+      font-size: 14px;
+    }
+  }
+{%- endstyle -%}
+
+<div class="handpicked-section handpicked-section-{{ section.id }}" id="handpicked-for-you-{{ section.id }}">
+  <div class="handpicked-container">
+    {%- if section.settings.title != blank or section.settings.show_navigation -%}
+      <div class="handpicked-header">
+        <div class="handpicked-header-left">
+          {%- if section.settings.title != blank -%}
+            <h2 class="handpicked-title">
+              {{ section.settings.title }}
+            </h2>
+          {%- endif -%}
+          {%- if section.settings.subtitle != blank -%}
+            <p class="handpicked-subtitle">{{ section.settings.subtitle }}</p>
+          {%- endif -%}
+        </div>
+
+        {%- if section.settings.show_navigation and section.blocks.size > 1 -%}
+          <div class="handpicked-nav">
+            <button
+              type="button"
+              class="handpicked-nav-btn handpicked-prev-btn handpicked-prev-{{ section.id }}"
+              aria-label="Previous Products"
+            >
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+            </button>
+            <button
+              type="button"
+              class="handpicked-nav-btn handpicked-next-btn handpicked-next-{{ section.id }}"
+              aria-label="Next Products"
+            >
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            </button>
+          </div>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    {%- if section.blocks.size == 0 and request.design_mode -%}
+      <div style="text-align: center; padding: 40px 20px; color: #888; background: #fafafa; border-radius: 8px; border: 1px dashed #ddd;">
+        <p style="margin: 0 0 8px 0; font-size: 15px; font-weight: 600; color: #333;">No Cards Added</p>
+        <p style="margin: 0; font-size: 13px;">Please click "Add Card Item" in the left sidebar to add products or collections.</p>
+      </div>
+    {%- elsif section.blocks.size > 0 -%}
+      <div class="swiper-container handpicked-swiper handpicked-swiper-{{ section.id }}">
+        <div class="swiper-wrapper">
+          {%- for block in section.blocks -%}
+            {%- liquid
+              assign target_prod = block.settings.product
+              assign target_col = block.settings.collection
+
+              # Link resolution: Custom URL > Product URL > Collection URL > '#'
+              assign card_url = block.settings.custom_url
+              if card_url == blank
+                if target_prod != blank
+                  assign card_url = target_prod.url
+                elsif target_col != blank
+                  assign card_url = target_col.url
+                else
+                  assign card_url = '#'
+                endif
+              endif
+
+              # Image resolution: Custom Image > Product Featured Image > Collection Image > Collection First Product Image
+              assign card_img = block.settings.image
+              if card_img == blank
+                if target_prod != blank and target_prod.featured_image != blank
+                  assign card_img = target_prod.featured_image
+                elsif target_col != blank
+                  assign col_img = target_col.image | default: target_col.featured_image
+                  if col_img == blank and target_col.products.first != blank
+                    assign col_img = target_col.products.first.featured_image
+                  endif
+                  assign card_img = col_img
+                endif
+              endif
+
+              # Title resolution: Custom Title > Product Title > Collection Title > 'Featured Item'
+              assign card_title = block.settings.title
+              if card_title == blank
+                if target_prod != blank
+                  assign card_title = target_prod.title
+                elsif target_col != blank
+                  assign card_title = target_col.title
+                else
+                  assign card_title = 'Featured Item'
+                endif
+              endif
+
+              # Subtitle resolution: Custom Subtitle > Product Type > 'Collection'
+              assign card_sub = block.settings.subtitle
+              if card_sub == blank
+                if target_prod != blank
+                  assign card_sub = target_prod.type | default: 'Keycaps'
+                elsif target_col != blank
+                  assign card_sub = 'Collection'
+                endif
+              endif
+
+              # Price resolution: Custom Price > Product Price
+              assign card_price = block.settings.price
+              if card_price == blank and target_prod != blank
+                assign card_price = target_prod.price | money
+              endif
+            -%}
+
+            <div class="swiper-slide handpicked-slide block-{{ block.id }}" {{ block.shopify_attributes }}>
+              <a
+                href="{{ card_url }}"
+                class="handpicked-card-item"
+                {% if block.settings.open_in_new_tab %}target="_blank" rel="noopener"{% endif %}
+              >
+                <div class="handpicked-img-box">
+                  {%- if card_img != blank -%}
+                    <img
+                      src="{{ card_img | image_url: width: 600 }}"
+                      alt="{{ card_title | escape }}"
+                      loading="lazy"
+                      width="500"
+                      height="500"
+                      class="handpicked-img"
+                    >
+                  {%- else -%}
+                    <div class="handpicked-placeholder-img">
+                      <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+                      <span>No Image</span>
+                    </div>
+                  {%- endif -%}
+                </div>
+
+                <div class="handpicked-details">
+                  <div class="handpicked-p-title" title="{{ card_title | escape }}">{{ card_title }}</div>
+                  {%- if card_sub != blank -%}
+                    <div class="handpicked-p-type">{{ card_sub }}</div>
+                  {%- endif -%}
+
+                  {%- if card_price != blank -%}
+                    <div class="handpicked-p-price">
+                      <span class="price-current">{{ card_price }}</span>
+                    </div>
+                  {%- elsif target_col != blank and target_prod == blank -%}
+                    <span class="collection-badge">View Collection &rarr;</span>
+                  {%- endif -%}
+                </div>
+              </a>
+            </div>
+          {%- endfor -%}
+        </div>
+      </div>
+    {%- endif -%}
+  </div>
+</div>
+
+<script>
+  (function () {
+    function initHandpickedSwiper() {
+      if (typeof Swiper === 'undefined') {
+        setTimeout(initHandpickedSwiper, 40);
+        return;
+      }
+      const sectionEl = document.getElementById('handpicked-for-you-{{ section.id }}');
+      if (!sectionEl) return;
+      const swiperContainer = sectionEl.querySelector('.handpicked-swiper-{{ section.id }}');
+      if (!swiperContainer) return;
+
+      if (swiperContainer.swiper) {
+        swiperContainer.swiper.update();
+        return;
+      }
+
+      new Swiper(swiperContainer, {
+        slidesPerView: 1.4,
+        spaceBetween: 12,
+        watchOverflow: true,
+        grabCursor: true,
+        navigation: {
+          prevEl: sectionEl.querySelector('.handpicked-prev-{{ section.id }}'),
+          nextEl: sectionEl.querySelector('.handpicked-next-{{ section.id }}'),
+          disabledClass: 'handpicked-btn-disabled'
+        },
+        breakpoints: {
+          480: { slidesPerView: 2.2, spaceBetween: 14 },
+          768: { slidesPerView: 3.2, spaceBetween: 18 },
+          1024: { slidesPerView: 4.2, spaceBetween: 20 },
+          1280: { slidesPerView: 5, spaceBetween: 20 }
+        }
+      });
+      swiperContainer.classList.add('swiper-ready');
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initHandpickedSwiper);
+    } else {
+      initHandpickedSwiper();
+    }
+
+    document.addEventListener('shopify:section:load', function (e) {
+      if (e.target && (e.target.id === 'shopify-section-{{ section.id }}' || e.target.querySelector('#handpicked-for-you-{{ section.id }}'))) {
+        initHandpickedSwiper();
+      }
+    });
+    document.addEventListener('shopify:section:select', function (e) {
+      if (e.target && (e.target.id === 'shopify-section-{{ section.id }}' || e.target.querySelector('#handpicked-for-you-{{ section.id }}'))) {
+        initHandpickedSwiper();
+      }
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Handpicked for You",
+  "tag": "section",
+  "class": "handpicked-for-you-section-wrapper",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Handpicked for You"
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Heading Color",
+      "default": "#0A6830"
+    },
+    {
+      "type": "range",
+      "id": "title_size",
+      "label": "Heading Font Size",
+      "min": 20,
+      "max": 48,
+      "step": 2,
+      "unit": "px",
+      "default": 32
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle"
+    },
+    {
+      "type": "color",
+      "id": "price_color",
+      "label": "Price Color",
+      "default": "#0A6830"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_border_top",
+      "label": "Show Top Divider",
+      "default": true
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Divider Border Color",
+      "default": "#ebebeb"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_navigation",
+      "label": "Show Arrow Navigation",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "label": "Container Max Width",
+      "min": 1000,
+      "max": 1600,
+      "step": 20,
+      "unit": "px",
+      "default": 1400
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Top Padding",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Bottom Padding",
+      "min": 0,
+      "max": 120,
+      "step": 5,
+      "unit": "px",
+      "default": 60
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#ffffff"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "card",
+      "name": "Card Item",
+      "settings": [
+        {
+          "type": "header",
+          "content": "Card Content"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Custom Image",
+          "info": "Optional. If left blank, automatically uses the associated product or collection image."
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Custom Title",
+          "info": "Optional. If left blank, automatically uses the associated product or collection title."
+        },
+        {
+          "type": "text",
+          "id": "subtitle",
+          "label": "Custom Subtitle",
+          "info": "Optional. If left blank, automatically uses the product type."
+        },
+        {
+          "type": "text",
+          "id": "price",
+          "label": "Custom Price",
+          "info": "Optional (e.g. $45.00). If left blank, automatically uses the product price."
+        },
+        {
+          "type": "header",
+          "content": "Link & Source"
+        },
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Product",
+          "info": "Select a product to automatically fill image, title, and price, and link to its detail page."
+        },
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Collection",
+          "info": "Select a collection to link directly to the collection page."
+        },
+        {
+          "type": "url",
+          "id": "custom_url",
+          "label": "Custom Link URL",
+          "info": "Highest priority. Overrides product or collection link if specified."
+        },
+        {
+          "type": "checkbox",
+          "id": "open_in_new_tab",
+          "label": "Open Link in New Tab",
+          "default": false
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Handpicked for You",
+      "blocks": [
+        {
+          "type": "card",
+          "settings": {
+            "title": "Herbary Cherry Profile Keycaps",
+            "subtitle": "Keycaps",
+            "price": "$45.00",
+            "product": "herbary-cherry-profile-keycap-set"
+          }
+        },
+        {
+          "type": "card",
+          "settings": {
+            "title": "Dashboard Blue Cherry Profile Keycaps",
+            "subtitle": "Keycaps",
+            "price": "$45.00",
+            "product": "dashboard-blue-cherry-profile-keycap-set"
+          }
+        },
+        {
+          "type": "card",
+          "settings": {
+            "title": "Defender 68 HE Magnetic Keyboard",
+            "subtitle": "Magnetic Keyboard",
+            "price": "$129.00",
+            "product": "forx-defender68-he-magnetic-keyboard"
+          }
+        },
+        {
+          "type": "card",
+          "settings": {
+            "title": "Muse 75 Pro Mechanical Keyboard",
+            "subtitle": "Mechanical Keyboard",
+            "price": "$109.00",
+            "product": "luna-muse75-pro-mechanical-keyboard"
+          }
+        },
+        {
+          "type": "card",
+          "settings": {
+            "title": "Explore All Keycaps Collection",
+            "subtitle": "Full Catalog",
+            "collection": "keycaps"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

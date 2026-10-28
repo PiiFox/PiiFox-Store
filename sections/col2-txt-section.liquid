@@ -274,73 +274,73 @@
 
 {% schema %}
 {
-  "name": "Marquee Ticker (跑马灯)",
+  "name": "Marquee Ticker",
   "class": "marquee-ticker-section",
   "settings": [
     {
       "type": "header",
-      "content": "Style & Colors (样式与颜色)"
+      "content": "Style & Colors"
     },
     {
       "type": "color",
       "id": "bg_color",
-      "label": "Background Color (背景颜色)",
+      "label": "Background Color",
       "default": "#ffffff"
     },
     {
       "type": "checkbox",
       "id": "show_border",
-      "label": "Show Top Border (显示顶部边框)",
+      "label": "Show Top Border",
       "default": true
     },
     {
       "type": "checkbox",
       "id": "show_bottom_border",
-      "label": "Show Bottom Border (显示底部边框)",
+      "label": "Show Bottom Border",
       "default": false
     },
     {
       "type": "color",
       "id": "border_color",
-      "label": "Border Color (边框颜色)",
+      "label": "Border Color",
       "default": "#ebebeb"
     },
     {
       "type": "color",
       "id": "prefix_color",
-      "label": "Prefix Text Color (前缀默认字体颜色 - 绿色)",
+      "label": "Default Prefix Text Color",
       "default": "#0A6830"
     },
     {
       "type": "color",
       "id": "suffix_color",
-      "label": "Suffix Text Color (后缀默认字体颜色 - 黑色)",
+      "label": "Default Suffix Text Color",
       "default": "#000000"
     },
     {
       "type": "header",
-      "content": "Typography (文字与字体)"
+      "content": "Typography"
     },
     {
       "type": "select",
       "id": "prefix_font_style",
-      "label": "Prefix Font Style (前缀文字样式)",
+      "label": "Prefix Font Style",
       "options": [
         {
           "value": "script",
-          "label": "Script / Cursive (手写花体 - 仿原图)"
+          "label": "Script / Cursive"
         },
         {
           "value": "italic",
-          "label": "Italic (斜体)"
+          "label": "Italic"
         },
         {
           "value": "bold",
-          "label": "Bold (粗体)"
+          "label": "Bold"
         },
         {
           "value": "normal",
-          "label": "Normal (常规体)"
+          "label": "Normal"
         }
       ],
       "default": "script"
@@ -348,7 +348,7 @@
     {
       "type": "range",
       "id": "prefix_font_size",
-      "label": "Desktop Prefix Font Size (电脑端前缀字号)",
+      "label": "Desktop Prefix Font Size",
       "min": 14,
       "max": 32,
       "step": 1,
@@ -358,7 +358,7 @@
     {
       "type": "range",
       "id": "suffix_font_size",
-      "label": "Desktop Suffix Font Size (电脑端后缀字号)",
+      "label": "Desktop Suffix Font Size",
       "min": 12,
       "max": 24,
       "step": 1,
@@ -368,7 +368,7 @@
     {
       "type": "range",
       "id": "mobile_prefix_font_size",
-      "label": "Mobile Prefix Font Size (移动端前缀字号)",
+      "label": "Mobile Prefix Font Size",
       "min": 12,
       "max": 24,
       "step": 1,
@@ -378,7 +378,7 @@
     {
       "type": "range",
       "id": "mobile_suffix_font_size",
-      "label": "Mobile Suffix Font Size (移动端后缀字号)",
+      "label": "Mobile Suffix Font Size",
       "min": 10,
       "max": 20,
       "step": 1,
@@ -387,12 +387,12 @@
     },
     {
       "type": "header",
-      "content": "Animation & Layout (滚动动效与间距)"
+      "content": "Animation & Layout"
     },
     {
       "type": "range",
       "id": "speed",
-      "label": "Scroll Speed (滚动周期/秒，越小越快)",
+      "label": "Scroll Duration (Seconds)",
       "min": 10,
       "max": 80,
       "step": 2,
@@ -402,15 +402,15 @@
     {
       "type": "select",
       "id": "direction",
-      "label": "Scroll Direction (滚动方向)",
+      "label": "Scroll Direction",
       "options": [
         {
           "value": "left",
-          "label": "Left (从右往左)"
+          "label": "Left (Right to Left)"
         },
         {
           "value": "right",
-          "label": "Right (从左往右)"
+          "label": "Right (Left to Right)"
         }
       ],
       "default": "left"
@@ -418,13 +418,13 @@
     {
       "type": "checkbox",
       "id": "pause_on_hover",
-      "label": "Pause On Hover (鼠标悬停时暂停)",
+      "label": "Pause On Hover",
       "default": false
     },
     {
       "type": "range",
       "id": "gap",
-      "label": "Gap Between Items (项目之间间距)",
+      "label": "Gap Between Items",
       "min": 24,
       "max": 100,
       "step": 4,
@@ -434,7 +434,7 @@
     {
       "type": "range",
       "id": "padding_vertical",
-      "label": "Vertical Padding (上下内边距 / 控制整体高度)",
+      "label": "Vertical Padding",
       "min": 10,
       "max": 80,
       "step": 2,
@@ -444,85 +444,85 @@
     {
       "type": "checkbox",
       "id": "enable_separator",
-      "label": "Show Separator Dot (显示分隔圆点)",
+      "label": "Show Separator Dot",
       "default": false
     },
     {
       "type": "color",
       "id": "separator_color",
-      "label": "Separator Dot Color (分隔圆点颜色)",
+      "label": "Separator Dot Color",
       "default": "#d1d5db"
     }
   ],
   "blocks": [
     {
       "type": "ticker_item",
-      "name": "Ticker Item (跑马灯项目)",
+      "name": "Ticker Item",
       "settings": [
         {
           "type": "text",
           "id": "prefix_text",
-          "label": "Prefix Text (前缀/花体文字 - 默认绿色)",
+          "label": "Prefix Text",
           "default": "Type your style"
         },
         {
           "type": "text",
           "id": "suffix_text",
-          "label": "Suffix Text (后缀/普通文字 - 默认黑色)",
+          "label": "Suffix Text",
           "default": "Make every setup feel like yours."
         },
         {
           "type": "url",
           "id": "link",
-          "label": "Link (跳转链接，可选)"
+          "label": "Link (Optional)"
         },
         {
           "type": "color",
           "id": "prefix_color",
-          "label": "Custom Prefix Color (自定义前缀颜色，留空继承全局)"
+          "label": "Custom Prefix Color"
         },
         {
           "type": "color",
           "id": "suffix_color",
-          "label": "Custom Suffix Color (自定义后缀颜色，留空继承全局)"
+          "label": "Custom Suffix Color"
         }
       ]
     },
     {
       "type": "feature_item",
-      "name": "Feature Item (兼容旧版)",
+      "name": "Feature Item",
       "settings": [
         {
           "type": "text",
           "id": "prefix_text",
-          "label": "Prefix Text (前缀文字)"
+          "label": "Prefix Text"
         },
         {
           "type": "text",
           "id": "suffix_text",
-          "label": "Suffix Text (后缀文字)"
+          "label": "Suffix Text"
         },
         {
           "type": "html",
           "id": "feature_item_title",
-          "label": "Title (旧版标题)"
+          "label": "Title"
         },
         {
           "type": "html",
           "id": "feature_item_context",
-          "label": "Context (旧版内容)"
+          "label": "Context"
         },
         {
           "type": "url",
           "id": "link",
-          "label": "Link (链接)"
+          "label": "Link"
         }
       ]
     }
   ],
   "presets": [
     {
-      "name": "Marquee Ticker (跑马灯)",
+      "name": "Marquee Ticker",
       "blocks": [
         {
           "type": "ticker_item",
