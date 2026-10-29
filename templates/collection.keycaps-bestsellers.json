@@ -96,7 +96,8 @@
       "settings": {
         "title": "Handpicked for You",
         "title_color": "#0A6830",
-        "show_border_top": true,
+        "row_position": 2,
+        "show_border_top": false,
         "show_navigation": true
       }
     }

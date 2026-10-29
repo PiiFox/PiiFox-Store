@@ -274,6 +274,64 @@
       font-size: 14px;
     }
   }
+
+  /* Embedded Grid Row Styles (when row_position > 0 inside Keycaps collection grid) */
+  #shopify-section-{{ section.id }}.handpicked-embedded-row,
+  .handpicked-embedded-row {
+    width: 100% !important;
+    flex: 0 0 100% !important;
+    max-width: 100% !important;
+    padding-left: 20px !important;
+    box-sizing: border-box !important;
+    margin-top: 10px !important;
+    margin-bottom: 25px !important;
+    clear: both !important;
+  }
+  .handpicked-embedded-row .handpicked-section-{{ section.id }} {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    background: transparent !important;
+    border: none !important;
+    border-top: none !important;
+    border-bottom: none !important;
+  }
+  .handpicked-embedded-row .handpicked-section-{{ section.id }} .handpicked-container {
+    max-width: 100% !important;
+    padding: 0 !important;
+    border: none !important;
+    border-top: none !important;
+    border-bottom: none !important;
+  }
+  .handpicked-embedded-row .handpicked-header {
+    margin-bottom: 18px !important;
+  }
+
+  @media screen and (min-width: 769px) and (max-width: 1000px) {
+    #shopify-section-{{ section.id }}.handpicked-embedded-row,
+    .handpicked-embedded-row {
+      padding-left: 12px !important;
+      margin-top: 0 !important;
+      margin-bottom: 24px !important;
+    }
+  }
+
+  @media screen and (max-width: 768px) {
+    #shopify-section-{{ section.id }}.handpicked-embedded-row,
+    .handpicked-embedded-row {
+      padding: 0 4px !important;
+      margin-top: 10px !important;
+      margin-bottom: 16px !important;
+      width: 100% !important;
+      max-width: 100% !important;
+      flex: 0 0 100% !important;
+    }
+    .handpicked-embedded-row .handpicked-title {
+      font-size: 20px !important;
+    }
+    .handpicked-embedded-row .handpicked-header {
+      margin-bottom: 12px !important;
+    }
+  }
 {%- endstyle -%}
 
 <div class="handpicked-section handpicked-section-{{ section.id }}" id="handpicked-for-you-{{ section.id }}">
@@ -427,16 +485,65 @@
   </div>
 </div>
 
+{%- assign row_pos = section.settings.row_position -%}
+{%- if row_pos == blank or row_pos == nil -%}
+  {%- assign row_pos = 2 -%}
+{%- endif -%}
+
 <script>
   (function () {
+    const sectionId = '{{ section.id }}';
+    const rowPos = {{ row_pos }};
+
+    function placeHandpickedSection() {
+      const sectionEl = document.getElementById('handpicked-for-you-' + sectionId);
+      if (!sectionEl) return;
+
+      const sectionWrapper = sectionEl.closest('.shopify-section') || document.getElementById('shopify-section-' + sectionId);
+      const elToMove = sectionWrapper || sectionEl;
+      const targetGrid = document.querySelector('.keycaps-collection-grid');
+
+      if (rowPos > 0 && targetGrid) {
+        elToMove.classList.add('handpicked-embedded-row');
+        sectionEl.classList.add('handpicked-section-embedded');
+
+        // Row N = (N-1) * 4 cards ahead (4 per row on desktop/tablet, 2x2 on mobile)
+        const targetCardIndex = (rowPos - 1) * 4;
+        const gridCards = Array.from(targetGrid.children).filter(function (child) {
+          return child !== elToMove &&
+                 !child.classList.contains('handpicked-embedded-row') &&
+                 child.classList &&
+                 child.classList.contains('grid__item');
+        });
+
+        if (targetCardIndex < gridCards.length) {
+          targetGrid.insertBefore(elToMove, gridCards[targetCardIndex]);
+        } else {
+          targetGrid.appendChild(elToMove);
+        }
+      } else {
+        if (sectionWrapper) {
+          sectionWrapper.classList.remove('handpicked-embedded-row');
+        }
+        sectionEl.classList.remove('handpicked-section-embedded');
+
+        if (targetGrid && targetGrid.contains(elToMove)) {
+          const keycapsSection = targetGrid.closest('.shopify-section') || targetGrid.closest('.keycaps-custom-section');
+          if (keycapsSection && keycapsSection.parentNode) {
+            keycapsSection.parentNode.insertBefore(elToMove, keycapsSection.nextSibling);
+          }
+        }
+      }
+    }
+
     function initHandpickedSwiper() {
       if (typeof Swiper === 'undefined') {
         setTimeout(initHandpickedSwiper, 40);
         return;
       }
-      const sectionEl = document.getElementById('handpicked-for-you-{{ section.id }}');
+      const sectionEl = document.getElementById('handpicked-for-you-' + sectionId);
       if (!sectionEl) return;
-      const swiperContainer = sectionEl.querySelector('.handpicked-swiper-{{ section.id }}');
+      const swiperContainer = sectionEl.querySelector('.handpicked-swiper-' + sectionId);
       if (!swiperContainer) return;
 
       if (swiperContainer.swiper) {
@@ -449,9 +556,12 @@
         spaceBetween: 12,
         watchOverflow: true,
         grabCursor: true,
+        observer: true,
+        observeParents: true,
+        resizeObserver: true,
         navigation: {
-          prevEl: sectionEl.querySelector('.handpicked-prev-{{ section.id }}'),
-          nextEl: sectionEl.querySelector('.handpicked-next-{{ section.id }}'),
+          prevEl: sectionEl.querySelector('.handpicked-prev-' + sectionId),
+          nextEl: sectionEl.querySelector('.handpicked-next-' + sectionId),
           disabledClass: 'handpicked-btn-disabled'
         },
         breakpoints: {
@@ -464,20 +574,27 @@
       swiperContainer.classList.add('swiper-ready');
     }
 
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', initHandpickedSwiper);
-    } else {
+    function setupSection() {
+      placeHandpickedSection();
       initHandpickedSwiper();
     }
 
+    setupSection();
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', setupSection);
+    }
+    window.addEventListener('load', setupSection);
+
+
     document.addEventListener('shopify:section:load', function (e) {
-      if (e.target && (e.target.id === 'shopify-section-{{ section.id }}' || e.target.querySelector('#handpicked-for-you-{{ section.id }}'))) {
-        initHandpickedSwiper();
+      if (e.target && (e.target.id === 'shopify-section-' + sectionId || e.target.querySelector('#handpicked-for-you-' + sectionId))) {
+        setupSection();
       }
     });
     document.addEventListener('shopify:section:select', function (e) {
-      if (e.target && (e.target.id === 'shopify-section-{{ section.id }}' || e.target.querySelector('#handpicked-for-you-{{ section.id }}'))) {
-        initHandpickedSwiper();
+      if (e.target && (e.target.id === 'shopify-section-' + sectionId || e.target.querySelector('#handpicked-for-you-' + sectionId))) {
+        setupSection();
       }
     });
   })();
@@ -523,10 +640,20 @@
       "default": "#0A6830"
     },
     {
+      "type": "range",
+      "id": "row_position",
+      "label": "Grid Row Position",
+      "min": 0,
+      "max": 10,
+      "step": 1,
+      "default": 2,
+      "info": "Display row inside the Keycaps collection grid (0 = bottom standalone section, 1 = Row 1, 2 = Row 2, etc.)."
+    },
+    {
       "type": "checkbox",
       "id": "show_border_top",
       "label": "Show Top Divider",
-      "default": true
+      "default": false
     },
     {
       "type": "color",

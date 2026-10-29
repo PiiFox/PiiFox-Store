@@ -276,26 +276,30 @@
         "ticker_item_4",
         "ticker_item_5"
       ],
-      "name": "Marquee Ticker",
+      "name": "Col2 Txt Section",
       "settings": {
+        "title": "Type your style",
+        "title_color": "#000000",
+        "title_font_size": 32,
+        "mobile_title_font_size": 20,
         "bg_color": "#ffffff",
         "show_border": true,
         "show_bottom_border": false,
+        "show_vertical_divider": false,
         "border_color": "#ebebeb",
         "prefix_color": "#0a6830",
+        "prefix_font_size": 20,
+        "mobile_prefix_font_size": 16,
         "suffix_color": "#000000",
-        "prefix_font_style": "script",
-        "prefix_font_size": 22,
-        "suffix_font_size": 16,
-        "mobile_prefix_font_size": 17,
-        "mobile_suffix_font_size": 14,
+        "suffix_font_size": 15,
+        "mobile_suffix_font_size": 13,
         "speed": 28,
         "direction": "left",
         "pause_on_hover": false,
-        "gap": 52,
-        "padding_vertical": 26,
-        "enable_separator": false,
-        "separator_color": "#d1d5db"
+        "gap": 48,
+        "padding_vertical": 36,
+        "full_width": false,
+        "mobile_layout": "side_by_side"
       }
     },
     "collection_list_LPzqx3": {
@@ -349,6 +353,7 @@
         "btn_text_color": "#ffffff",
         "btn_hover_color": "#085427",
         "card_bg": "#ffffff",
+        "image_bg": "#ffffff",
         "enable_tabs": false
       }
     },
@@ -362,8 +367,8 @@
             "collection_title": "Keyboards",
             "custom_link": "",
             "card_width": "full",
-            "video_url": "https://cdn.shopify.com/videos/c/o/v/a020c10e46764f5b803c79131dd7269f.mp4",
-            "default_placeholder": "none",
+            "cover_image": "shopify://shop_images/p-1-no-text.jpg",
+            "default_placeholder": "keyboards",
             "text_color": "#111111"
           }
         },
@@ -374,7 +379,6 @@
             "collection_title": "Switches",
             "custom_link": "",
             "card_width": "half",
-            "video_url": "",
             "default_placeholder": "switches",
             "text_color": "#111111"
           }
@@ -386,7 +390,6 @@
             "collection_title": "Accessories",
             "custom_link": "",
             "card_width": "half",
-            "video_url": "",
             "default_placeholder": "accessories",
             "text_color": "#111111"
           }
@@ -398,7 +401,6 @@
             "collection_title": "Keycaps",
             "custom_link": "",
             "card_width": "full",
-            "video_url": "",
             "default_placeholder": "keycaps",
             "text_color": "#111111"
           }
@@ -413,8 +415,8 @@
       "name": "Main Collection List",
       "settings": {
         "title": "SHOP BY CATEGORY",
-        "desktop_max_width": 960,
-        "desktop_card_height": 250,
+        "desktop_max_width": 1380,
+        "desktop_card_height": 270,
         "card_radius": 24,
         "card_gap": 16
       }
@@ -566,6 +568,7 @@
         "single_page_width_banner_btfwM4": {
           "type": "single_page_width_banner",
           "settings": {
+            "video_url": "https://cdn.shopify.com/videos/c/o/v/a020c10e46764f5b803c79131dd7269f.mp4",
             "banner": "shopify://shop_images/p-1-no-text.jpg",
             "m_banner": "shopify://shop_images/m-half-bg.png",
             "banner_title": "STATE YOUR\nBOARDS",
@@ -636,7 +639,10 @@
       ],
       "name": "About Us Section",
       "settings": {
-        "about_us_title": ""
+        "about_us_title": "",
+        "desktop_height": 750,
+        "mobile_height": 600,
+        "enable_scroll_pin": false
       }
     },
     "video_carousel_home": {
@@ -1071,7 +1077,6 @@
     "main_collection_list_tAJGQJ",
     "style_studio_theme_grid_home",
     "single_page_width_banner_ihTf8b",
-    "about_us_section_nGTcfQ",
     "video_carousel_home",
     "joinus_section_YB8Mm3",
     "policy_list_section_pP8Ewa",
@@ -1080,6 +1085,7 @@
     "blog_center_section_qL7Qfw",
     "d1067f4b-b19f-43f3-a994-5755b880a327",
     "0d562896-99f8-401d-ac8a-3209b635eb7f",
-    "9dad0aa8-758a-4a98-9a5f-6085668c1cec"
+    "9dad0aa8-758a-4a98-9a5f-6085668c1cec",
+    "about_us_section_nGTcfQ"
   ]
 }

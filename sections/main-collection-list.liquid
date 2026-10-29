@@ -4,7 +4,7 @@
     background-color: #ffffff;
   }
   .main-collection-list-section-{{ section.id }} .main-collection-list-section--wrapper {
-    max-width: {{ section.settings.desktop_max_width | default: 960 }}px;
+    max-width: {{ section.settings.desktop_max_width | default: 1380 }}px;
     margin: 0 auto;
     width: 100%;
   }
@@ -42,7 +42,7 @@
   /* Desktop layout sizing */
   @media screen and (min-width: 769px) {
     .main-collection-list-section-{{ section.id }} .main-collection-item {
-      height: {{ section.settings.desktop_card_height | default: 250 }}px;
+      height: {{ section.settings.desktop_card_height | default: 270 }}px;
     }
     .main-collection-list-section-{{ section.id }} .main-collection-item--full {
       grid-column: 1 / -1;
@@ -174,25 +174,9 @@
             </h3>
           </div>
 
+          {%- assign focal = block.settings.image_focal_point | default: 'center' -%}
           <div class="main-collection-item__media-wrap">
-            {%- if block.settings.video != blank -%}
-              {{ block.settings.video | video_tag: autoplay: true, loop: true, muted: true, controls: false, playsinline: true, class: 'main-collection-item__media' }}
-            {%- elsif block.settings.video_url != blank -%}
-              <video
-                class="main-collection-item__media"
-                src="{{ block.settings.video_url }}"
-                autoplay
-                loop
-                muted
-                playsinline
-                webkit-playsinline
-                disablepictureinpicture
-                preload="auto"
-                {% if block.settings.cover_image != blank %}
-                  poster="{{ block.settings.cover_image | image_url: width: 1200 }}"
-                {% endif %}
-              ></video>
-            {%- elsif block.settings.cover_image != blank -%}
+            {%- if block.settings.cover_image != blank -%}
               <picture class="main-collection-item__picture">
                 {%- if block.settings.cover_image_m != blank -%}
                   <source media="(max-width: 768px)" srcset="{{ block.settings.cover_image_m | image_url: width: 800, format: 'webp' }}">
@@ -204,8 +188,19 @@
                   width="1400"
                   height="auto"
                   class="main-collection-item__media"
+                  style="object-position: {{ focal }};"
                 >
               </picture>
+            {%- elsif block.settings.default_placeholder == 'keyboards' -%}
+              <img
+                src="{{ 'category_placeholder_keyboards.jpg' | asset_url }}"
+                alt="{{ item_title | escape }}"
+                loading="lazy"
+                width="1400"
+                height="800"
+                class="main-collection-item__media"
+                style="object-position: {{ focal }};"
+              >
             {%- elsif block.settings.default_placeholder == 'switches' -%}
               <img
                 src="{{ 'category_placeholder_switches.jpg' | asset_url }}"
@@ -214,6 +209,7 @@
                 width="1000"
                 height="1000"
                 class="main-collection-item__media"
+                style="object-position: {{ focal }};"
               >
             {%- elsif block.settings.default_placeholder == 'accessories' -%}
               <img
@@ -223,6 +219,7 @@
                 width="1000"
                 height="1000"
                 class="main-collection-item__media"
+                style="object-position: {{ focal }};"
               >
             {%- elsif block.settings.default_placeholder == 'keycaps' -%}
               <img
@@ -232,6 +229,7 @@
                 width="1400"
                 height="800"
                 class="main-collection-item__media"
+                style="object-position: {{ focal }};"
               >
             {%- elsif collection.image != blank -%}
               <img
@@ -241,15 +239,18 @@
                 width="1400"
                 height="auto"
                 class="main-collection-item__media"
+                style="object-position: {{ focal }};"
               >
             {%- else -%}
               {%- assign lower_title = item_title | downcase -%}
-              {%- if lower_title contains 'switch' -%}
-                <img src="{{ 'category_placeholder_switches.jpg' | asset_url }}" alt="{{ item_title | escape }}" loading="lazy" width="1000" height="1000" class="main-collection-item__media">
+              {%- if lower_title contains 'keyboard' -%}
+                <img src="{{ 'category_placeholder_keyboards.jpg' | asset_url }}" alt="{{ item_title | escape }}" loading="lazy" width="1400" height="800" class="main-collection-item__media" style="object-position: {{ focal }};">
+              {%- elsif lower_title contains 'switch' -%}
+                <img src="{{ 'category_placeholder_switches.jpg' | asset_url }}" alt="{{ item_title | escape }}" loading="lazy" width="1000" height="1000" class="main-collection-item__media" style="object-position: {{ focal }};">
               {%- elsif lower_title contains 'accessori' -%}
-                <img src="{{ 'category_placeholder_accessories.jpg' | asset_url }}" alt="{{ item_title | escape }}" loading="lazy" width="1000" height="1000" class="main-collection-item__media">
+                <img src="{{ 'category_placeholder_accessories.jpg' | asset_url }}" alt="{{ item_title | escape }}" loading="lazy" width="1000" height="1000" class="main-collection-item__media" style="object-position: {{ focal }};">
               {%- elsif lower_title contains 'keycap' -%}
-                <img src="{{ 'category_placeholder_keycaps.jpg' | asset_url }}" alt="{{ item_title | escape }}" loading="lazy" width="1400" height="800" class="main-collection-item__media">
+                <img src="{{ 'category_placeholder_keycaps.jpg' | asset_url }}" alt="{{ item_title | escape }}" loading="lazy" width="1400" height="800" class="main-collection-item__media" style="object-position: {{ focal }};">
               {%- else -%}
                 <div class="main-collection-item__media" style="background: linear-gradient(135deg, #e0e7ff 0%, #fae8ff 100%);"></div>
               {%- endif -%}
@@ -260,35 +261,6 @@
     </div>
   </div>
 </div>
-
-<script>
-  (function() {
-    function initCategoryVideos() {
-      var section = document.querySelector('.main-collection-list-section-{{ section.id }}');
-      if (!section) return;
-      var videos = section.querySelectorAll('video');
-      videos.forEach(function(vid) {
-        vid.muted = true;
-        if (vid.paused) {
-          var p = vid.play();
-          if (p !== undefined) {
-            p.catch(function() {});
-          }
-        }
-      });
-    }
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', initCategoryVideos);
-    } else {
-      initCategoryVideos();
-    }
-    document.addEventListener('shopify:section:load', function(e) {
-      if (e.target && (e.target.classList.contains('main-collection-list-section-{{ section.id }}') || e.target.querySelector('.main-collection-list-section-{{ section.id }}'))) {
-        initCategoryVideos();
-      }
-    });
-  })();
-</script>
 
 {% schema %}
 {
@@ -304,22 +276,22 @@
     {
       "type": "range",
       "id": "desktop_max_width",
-      "label": "Desktop Max Width",
-      "min": 700,
-      "max": 1400,
+      "label": "PC端板块最大宽度 (Desktop Max Width)",
+      "min": 800,
+      "max": 1600,
       "step": 20,
       "unit": "px",
-      "default": 960
+      "default": 1380
     },
     {
       "type": "range",
       "id": "desktop_card_height",
-      "label": "Desktop Row Height",
-      "min": 180,
+      "label": "PC端卡片行高 (Desktop Card Height)",
+      "min": 160,
       "max": 420,
       "step": 10,
       "unit": "px",
-      "default": 250
+      "default": 270
     },
     {
       "type": "range",
@@ -384,25 +356,27 @@
           ]
         },
         {
-          "type": "video",
-          "id": "video",
-          "label": "Shopify Hosted Video"
-        },
-        {
-          "type": "text",
-          "id": "video_url",
-          "label": "Video MP4 URL",
-          "info": "Direct .mp4 link (e.g., https://cdn.shopify.com/videos/...)"
-        },
-        {
           "type": "image_picker",
           "id": "cover_image",
-          "label": "Cover Image / Video Poster"
+          "label": "上传卡片图片 (Desktop Image)"
         },
         {
           "type": "image_picker",
           "id": "cover_image_m",
-          "label": "Mobile Cover Image (Optional)"
+          "label": "移动端图片 (Mobile Image, Optional)"
+        },
+        {
+          "type": "select",
+          "id": "image_focal_point",
+          "label": "图片裁剪对齐重心 (Image Focal Point)",
+          "default": "center",
+          "options": [
+            { "value": "center", "label": "居中裁剪 (Center)" },
+            { "value": "top", "label": "顶部对齐裁剪 (Top)" },
+            { "value": "bottom", "label": "底部对齐裁剪 (Bottom)" },
+            { "value": "left", "label": "靠左对齐 (Left)" },
+            { "value": "right", "label": "靠右对齐 (Right)" }
+          ]
         },
         {
           "type": "select",
@@ -413,6 +387,10 @@
             {
               "value": "none",
               "label": "None (Use Uploaded Image or Collection Image)"
+            },
+            {
+              "value": "keyboards",
+              "label": "Keyboards Photography"
             },
             {
               "value": "switches",

@@ -202,7 +202,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #f7f7f8;
+    background-color: {{ section.settings.image_bg | default: '#ffffff' }};
     border-radius: 12px;
     overflow: hidden;
     margin-bottom: 14px;
@@ -623,6 +623,12 @@
       "type": "color",
       "id": "card_bg",
       "label": "Card background color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "image_bg",
+      "label": "Product image background color",
       "default": "#ffffff"
     },
     {
