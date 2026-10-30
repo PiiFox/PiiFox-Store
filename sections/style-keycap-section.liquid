@@ -239,8 +239,24 @@
       font-size: 2em;
     }
     .keycap-theme-nav-container {
-      margin-top: 1em;
-      margin-bottom: 1.2em;
+      position: -webkit-sticky;
+      position: sticky;
+      top: var(--header-height, 50px);
+      z-index: 50;
+      background: #ffffff;
+      margin-top: 0;
+      margin-bottom: 0.8em;
+      padding-top: 6px;
+      padding-bottom: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+      transform: translate3d(0, 0, 0);
+      transition: transform 0.35s cubic-bezier(0.165, 0.84, 0.44, 1) !important;
+      will-change: transform;
+    }
+
+    .keycap-theme-nav-container.is-header-hidden {
+      transform: translate3d(0, calc(-1 * var(--header-height, 50px)), 0) !important;
     }
     .keycap-theme-nav {
       gap: 12px;
@@ -437,7 +453,7 @@
       scroll-snap-stop: always;
     }
     .keycap-section-item-wrapper {
-      scroll-margin-top: 70px;
+      scroll-margin-top: 175px;
     }
     .keycap-section-title {
       font-size: 1.35em;
@@ -932,8 +948,12 @@
 
             const header = document.querySelector('.site-header') || document.querySelector('#shopify-section-header');
             const headerHeight = header ? header.offsetHeight : 70;
+            const isMobile = window.innerWidth <= 768;
+            const navContainer = document.querySelector('.keycap-theme-nav-container');
+            const navHeight = (isMobile && navContainer) ? navContainer.offsetHeight : 0;
+            const extraOffset = isMobile ? (navHeight + 12) : 20;
             const targetRect = targetEl.getBoundingClientRect();
-            const targetPos = targetRect.top + window.pageYOffset - (headerHeight + 20);
+            const targetPos = targetRect.top + window.pageYOffset - (headerHeight + extraOffset);
 
             window.scrollTo({
               top: Math.max(0, targetPos),
@@ -999,6 +1019,36 @@
       window.addEventListener('load', updateScrollbar, { passive: true });
       setTimeout(updateScrollbar, 100);
       setTimeout(updateScrollbar, 500);
+
+      // 8. Sticky Nav Top Offset on mobile (sync with sticky header)
+      const navContainerEl = document.querySelector('.keycap-theme-nav-container');
+      const siteHeaderEl = document.querySelector('#SiteHeader') || document.querySelector('.site-header');
+
+      const syncHeaderState = () => {
+        if (!navContainerEl) return;
+        if (window.innerWidth > 768) {
+          navContainerEl.classList.remove('is-header-hidden');
+          navContainerEl.style.removeProperty('--header-height');
+          return;
+        }
+        if (!siteHeaderEl) {
+          navContainerEl.classList.remove('is-header-hidden');
+          return;
+        }
+        const headerHeight = siteHeaderEl.offsetHeight || 50;
+        navContainerEl.style.setProperty('--header-height', headerHeight + 'px');
+
+        const isHidden = siteHeaderEl.classList.contains('site-header--mobile-hidden');
+        navContainerEl.classList.toggle('is-header-hidden', isHidden);
+      };
+
+      if (siteHeaderEl && window.MutationObserver) {
+        const headerObserver = new MutationObserver(syncHeaderState);
+        headerObserver.observe(siteHeaderEl, { attributes: true, attributeFilter: ['class', 'style'] });
+      }
+      window.addEventListener('scroll', syncHeaderState, { passive: true });
+      window.addEventListener('resize', syncHeaderState, { passive: true });
+      syncHeaderState();
     }
 
     // Existing Tab Switching

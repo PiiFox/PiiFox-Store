@@ -276,6 +276,22 @@
   }
 
   /* Embedded Grid Row Styles (when row_position > 0 inside Keycaps collection grid) */
+  {%- if row_pos > 0 -%}
+    #shopify-section-{{ section.id }}.handpicked-for-you-section-wrapper {
+      margin: 0 !important;
+      padding: 0 !important;
+      min-height: 0 !important;
+    }
+    #shopify-section-{{ section.id }}.handpicked-wrapper-hidden,
+    #shopify-section-{{ section.id }}:not(:has(.handpicked-section:not(.handpicked-section-embedded))) {
+      display: none !important;
+      height: 0 !important;
+      overflow: hidden !important;
+      margin: 0 !important;
+      padding: 0 !important;
+    }
+  {%- endif -%}
+
   #shopify-section-{{ section.id }}.handpicked-embedded-row,
   .handpicked-embedded-row {
     width: 100% !important;
@@ -287,7 +303,9 @@
     margin-bottom: 25px !important;
     clear: both !important;
   }
-  .handpicked-embedded-row .handpicked-section-{{ section.id }} {
+  .handpicked-embedded-row.handpicked-section,
+  .handpicked-embedded-row .handpicked-section-{{ section.id }},
+  .handpicked-section-embedded {
     padding-top: 0 !important;
     padding-bottom: 0 !important;
     background: transparent !important;
@@ -295,14 +313,16 @@
     border-top: none !important;
     border-bottom: none !important;
   }
-  .handpicked-embedded-row .handpicked-section-{{ section.id }} .handpicked-container {
+  .handpicked-embedded-row .handpicked-container,
+  .handpicked-section-embedded .handpicked-container {
     max-width: 100% !important;
     padding: 0 !important;
     border: none !important;
     border-top: none !important;
     border-bottom: none !important;
   }
-  .handpicked-embedded-row .handpicked-header {
+  .handpicked-embedded-row .handpicked-header,
+  .handpicked-section-embedded .handpicked-header {
     margin-bottom: 18px !important;
   }
 
@@ -325,10 +345,12 @@
       max-width: 100% !important;
       flex: 0 0 100% !important;
     }
-    .handpicked-embedded-row .handpicked-title {
+    .handpicked-embedded-row .handpicked-title,
+    .handpicked-section-embedded .handpicked-title {
       font-size: 20px !important;
     }
-    .handpicked-embedded-row .handpicked-header {
+    .handpicked-embedded-row .handpicked-header,
+    .handpicked-section-embedded .handpicked-header {
       margin-bottom: 12px !important;
     }
   }
@@ -496,41 +518,90 @@
     const rowPos = {{ row_pos }};
 
     function placeHandpickedSection() {
-      const sectionEl = document.getElementById('handpicked-for-you-' + sectionId);
-      if (!sectionEl) return;
-
-      const sectionWrapper = sectionEl.closest('.shopify-section') || document.getElementById('shopify-section-' + sectionId);
-      const elToMove = sectionWrapper || sectionEl;
+      const sectionWrapper = document.getElementById('shopify-section-' + sectionId);
       const targetGrid = document.querySelector('.keycaps-collection-grid');
 
       if (rowPos > 0 && targetGrid) {
-        elToMove.classList.add('handpicked-embedded-row');
+        // 1. Clean up any previous / duplicate handpicked elements inside targetGrid
+        const oldEmbedded = targetGrid.querySelectorAll('.handpicked-section-embedded, .handpicked-embedded-row');
+
+        // Locate active section element: prioritize newly rendered element inside sectionWrapper
+        let sectionEl = sectionWrapper ? sectionWrapper.querySelector('#handpicked-for-you-' + sectionId) : null;
+        if (!sectionEl && oldEmbedded.length > 0) {
+          sectionEl = oldEmbedded[0];
+        }
+        if (!sectionEl) {
+          sectionEl = document.getElementById('handpicked-for-you-' + sectionId);
+        }
+        if (!sectionEl) return;
+
+        // Remove any other duplicate embedded instances
+        oldEmbedded.forEach(function (el) {
+          if (el !== sectionEl) {
+            el.remove();
+          }
+        });
+
+        // If another duplicate exists in sectionWrapper, remove it
+        if (sectionWrapper) {
+          const wrapperDups = sectionWrapper.querySelectorAll('#handpicked-for-you-' + sectionId);
+          wrapperDups.forEach(function (el) {
+            if (el !== sectionEl) {
+              el.remove();
+            }
+          });
+        }
+
+        sectionEl.classList.add('handpicked-embedded-row');
         sectionEl.classList.add('handpicked-section-embedded');
+
+        // Hide the bottom section wrapper completely
+        if (sectionWrapper) {
+          sectionWrapper.classList.add('handpicked-wrapper-hidden');
+          sectionWrapper.style.setProperty('display', 'none', 'important');
+          sectionWrapper.style.setProperty('height', '0', 'important');
+          sectionWrapper.style.setProperty('margin', '0', 'important');
+          sectionWrapper.style.setProperty('padding', '0', 'important');
+        }
 
         // Row N = (N-1) * 4 cards ahead (4 per row on desktop/tablet, 2x2 on mobile)
         const targetCardIndex = (rowPos - 1) * 4;
         const gridCards = Array.from(targetGrid.children).filter(function (child) {
-          return child !== elToMove &&
+          return child !== sectionEl &&
                  !child.classList.contains('handpicked-embedded-row') &&
                  child.classList &&
                  child.classList.contains('grid__item');
         });
 
         if (targetCardIndex < gridCards.length) {
-          targetGrid.insertBefore(elToMove, gridCards[targetCardIndex]);
+          targetGrid.insertBefore(sectionEl, gridCards[targetCardIndex]);
         } else {
-          targetGrid.appendChild(elToMove);
+          targetGrid.appendChild(sectionEl);
         }
       } else {
-        if (sectionWrapper) {
-          sectionWrapper.classList.remove('handpicked-embedded-row');
+        // Standalone mode at bottom
+        if (targetGrid) {
+          const oldEmbedded = targetGrid.querySelectorAll('.handpicked-section-embedded, .handpicked-embedded-row');
+          oldEmbedded.forEach(function (el) {
+            if (sectionWrapper && !sectionWrapper.contains(el)) {
+              sectionWrapper.insertBefore(el, sectionWrapper.firstChild);
+            }
+          });
         }
-        sectionEl.classList.remove('handpicked-section-embedded');
 
-        if (targetGrid && targetGrid.contains(elToMove)) {
-          const keycapsSection = targetGrid.closest('.shopify-section') || targetGrid.closest('.keycaps-custom-section');
-          if (keycapsSection && keycapsSection.parentNode) {
-            keycapsSection.parentNode.insertBefore(elToMove, keycapsSection.nextSibling);
+        const sectionEl = document.getElementById('handpicked-for-you-' + sectionId);
+        if (sectionEl) {
+          sectionEl.classList.remove('handpicked-embedded-row');
+          sectionEl.classList.remove('handpicked-section-embedded');
+          if (sectionWrapper) {
+            sectionWrapper.classList.remove('handpicked-wrapper-hidden');
+            sectionWrapper.style.removeProperty('display');
+            sectionWrapper.style.removeProperty('height');
+            sectionWrapper.style.removeProperty('margin');
+            sectionWrapper.style.removeProperty('padding');
+            if (!sectionWrapper.contains(sectionEl)) {
+              sectionWrapper.insertBefore(sectionEl, sectionWrapper.firstChild);
+            }
           }
         }
       }
@@ -585,7 +656,6 @@
       document.addEventListener('DOMContentLoaded', setupSection);
     }
     window.addEventListener('load', setupSection);
-
 
     document.addEventListener('shopify:section:load', function (e) {
       if (e.target && (e.target.id === 'shopify-section-' + sectionId || e.target.querySelector('#handpicked-for-you-' + sectionId))) {

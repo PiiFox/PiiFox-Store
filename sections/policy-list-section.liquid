@@ -1,27 +1,34 @@
 <div class="policy-list-section-{{ section.id }}">
   <div class="policy-list-section--wrapper page-width wow bounceInUp">
     <h2 class="policy-list-section-title custom-txt-bold appear-delay{% cycle '','-1','-2','-3','-4' %}"></h2>
-    <div class="policy-list-section--content">
-      {% for block in section.blocks %}
-        <div class="policy-item appear-delay{% cycle '','-1','-2','-3','-4' %}">
-          {% if block.settings.icon != blank %}
-            <div class="policy-item-icon">
-              <img
-                srcset="{{ block.settings.icon | image_url: width: 150, format: 'webp' }}"
-                sizes="150px"
-                width="{{ block.settings.icon.width }}"
-                height="{{ block.settings.icon.height }}"
-                loading="lazy"
-                alt="{{ block.settings.title }}"
-              >
+    <div class="policy-list-section--content swiper-container policy-swiper-{{ section.id }}">
+      <div class="policy-list-track swiper-wrapper">
+        {% for block in section.blocks %}
+          <div class="policy-item swiper-slide appear-delay{% cycle '','-1','-2','-3','-4' %}" {{ block.shopify_attributes }}>
+            <div class="policy-card-box">
+              {% if block.settings.icon != blank %}
+                <div class="policy-item-icon">
+                  <img
+                    srcset="{{ block.settings.icon | image_url: width: 150, format: 'webp' }}"
+                    sizes="150px"
+                    width="{{ block.settings.icon.width }}"
+                    height="{{ block.settings.icon.height }}"
+                    loading="lazy"
+                    alt="{{ block.settings.title | escape }}"
+                  >
+                </div>
+              {% endif %}
+              <div class="policy-item-info">
+                <h3 class="policy-item-title custom-txt-bold">{{ block.settings.title | escape | newline_to_br }}</h3>
+                {% if block.settings.description != blank %}
+                  <p class="policy-item-description">{{ block.settings.description }}</p>
+                {% endif %}
+              </div>
             </div>
-          {% endif %}
-          <div class="policy-item-info">
-            <h3 class="policy-item-title custom-txt-bold">{{ block.settings.title | escape | newline_to_br }}</h3>
-            <p class="policy-item-description">{{ block.settings.description }}</p>
           </div>
-        </div>
-      {% endfor %}
+        {% endfor %}
+      </div>
+      <div class="policy-swiper-pagination policy-swiper-pagination-{{ section.id }}"></div>
     </div>
   </div>
 </div> 
@@ -34,86 +41,289 @@
           font-size: 2.5em;
           text-align: center;
       }
-      .policy-list-section-{{ section.id }} .policy-list-section--content {
-          display: flex;
-          flex-wrap: wrap;
-          justify-content: center; /* 整体居中 */
+      .policy-list-section-{{ section.id }} .policy-list-section-title:empty {
+          display: none;
       }
-      .policy-list-section-{{ section.id }} .policy-item {
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-          border-right: 1px solid #eee;
-          padding: 1em ;
-          text-align: center;
-          flex: 1 0 19%;
-          min-width: 180px;
+      .policy-list-section-{{ section.id }} .policy-swiper-pagination {
+          display: none;
       }
-      .policy-list-section-{{ section.id }} .policy-item:last-child {
-          border-right: none;
+
+      /* Desktop Layout (>= 769px): Grid / Row */
+      @media screen and (min-width: 769px) {
+          .policy-list-section-{{ section.id }} .policy-list-section--content {
+              display: flex;
+              flex-wrap: wrap;
+              justify-content: center;
+          }
+          .policy-list-section-{{ section.id }} .policy-list-track {
+              display: flex;
+              width: 100%;
+              justify-content: center;
+          }
+          .policy-list-section-{{ section.id }} .policy-item {
+              display: flex;
+              flex-direction: column;
+              justify-content: center;
+              align-items: center;
+              border-right: 1px solid #eee;
+              padding: 1em;
+              text-align: center;
+              flex: 1 0 19%;
+              min-width: 180px;
+              box-sizing: border-box;
+          }
+          .policy-list-section-{{ section.id }} .policy-item:last-child {
+              border-right: none;
+          }
+          .policy-list-section-{{ section.id }} .policy-card-box {
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+              justify-content: center;
+              width: 100%;
+              height: 100%;
+          }
+          .policy-list-section-{{ section.id }} .policy-item-icon {
+              width: 6em;
+              height: 6em;
+              margin-bottom: 1em;
+          }
+          .policy-list-section-{{ section.id }} .policy-item-icon img {
+              width: 100%;
+              height: 100%;
+              object-fit: contain;
+          }
+          .policy-list-section-{{ section.id }} .policy-item-title {
+              font-size: 1.8em;
+              margin: 0;
+              display: -webkit-box;
+              -webkit-line-clamp: 2;
+              -webkit-box-orient: vertical;
+              overflow: hidden;
+              word-wrap: break-word;
+              overflow-wrap: break-word;
+              white-space: normal;
+          }
+          .policy-list-section-{{ section.id }} .policy-item-description {
+              margin: 0.5em 0 0;
+              font-size: 1em;
+              color: #666;
+          }
       }
-      .policy-list-section-{{ section.id }} .policy-item-icon {
-          width: 6em;
-          height: 6em;
-          margin-bottom: 1em;
+
+      @media screen and (min-width: 769px) and (max-width: 1440px) {
+          .policy-list-section-{{ section.id }} .policy-list-section--content {
+              font-size: 0.8em;
+          }
       }
-      .policy-list-section-{{ section.id }} .policy-item-icon img {
-          width: 100%;
-          height: 100%;
-          object-fit: contain;
+      @media screen and (min-width: 769px) and (max-width: 1024px) {
+          .policy-list-section-{{ section.id }} .policy-list-section--content {
+              font-size: 0.7em;
+          }
       }
-      .policy-list-section-{{ section.id }} .policy-item-title {
-          font-size: 1.8em;
-          margin: 0;
-          display: -webkit-box;
-          -webkit-line-clamp: 2;
-          -webkit-box-orient: vertical;
-          overflow: hidden;
-          word-wrap: break-word;
-          overflow-wrap: break-word;
-          white-space: normal;
-      }
-      .policy-list-section-{{ section.id }} .policy-item-description {
-          margin: 0.5em 0 0;
-          font-size: 1em;
-          color: #666;
-      }
-      @media screen and (max-width: 1440px) {
-            .policy-list-section-{{ section.id }} .policy-list-section--content {
-                font-size: 0.8em;
-            }
-        }
-      @media screen and (max-width: 1024px) {
-            .policy-list-section-{{ section.id }} .policy-list-section--content {
-                font-size: 0.7em;
-            }
-        }
+
+      /* Mobile Layout (<= 768px): Card Style Single Slide Carousel */
       @media screen and (max-width: 768px) {
-            .policy-list-section-{{ section.id }} .policy-list-section--content {
-                font-size: 0.8em;
-            }
-            .policy-list-section-{{ section.id }} .policy-item {
-                min-width: 300px;
-            }
-            .policy-list-section-{{ section.id }} .policy-item:nth-child(-n+2) {
-                border-bottom: 1px solid #eee;
-            }
-            .policy-list-section-{{ section.id }} .policy-item-title {
-                display: -webkit-box;
-                -webkit-line-clamp: 3;
-                -webkit-box-orient: vertical;
-            }
-      }
-      @media screen and (max-width: 600px) {
-            .policy-list-section-{{ section.id }} .policy-list-section--content {
-                font-size: 0.6em;
-            }
-            .policy-list-section-{{ section.id }} .policy-item {
-                min-width: 180px;
-            }
+          #shopify-section-{{ section.id }} {
+              margin-top: 0 !important;
+              padding-top: 0 !important;
+          }
+          .policy-list-section-{{ section.id }} {
+              padding: 1.2em 0 1.2em;
+              margin-top: 0 !important;
+              background-color: #ffffff !important;
+          }
+          .policy-list-section-{{ section.id }} .policy-list-section--wrapper {
+              padding: 0;
+              box-sizing: border-box;
+          }
+          .policy-list-section-{{ section.id }} .policy-list-section--content {
+              width: 100%;
+              overflow: hidden;
+              position: relative;
+              padding: 4px 0 36px 0;
+              display: block;
+              margin: 0 auto;
+          }
+          .policy-list-section-{{ section.id }} .policy-list-track {
+              display: flex !important;
+              align-items: stretch !important;
+              justify-content: flex-start !important;
+              width: auto !important;
+              box-sizing: content-box !important;
+          }
+          .policy-list-section-{{ section.id }} .policy-item {
+              box-sizing: border-box !important;
+              display: flex !important;
+              justify-content: center !important;
+              align-items: center !important;
+              border: none !important;
+              padding: 4px 20px 8px !important;
+              flex-shrink: 0 !important;
+              height: auto !important;
+              min-width: 0 !important;
+          }
+          .policy-list-section-{{ section.id }} .policy-card-box {
+              background: #ffffff;
+              border-radius: 18px;
+              box-shadow: 0 8px 28px rgba(0, 0, 0, 0.08), 0 2px 8px rgba(0, 0, 0, 0.04);
+              border: 1px solid rgba(0, 0, 0, 0.06);
+              padding: 46px 22px;
+              width: 100%;
+              margin: 0 auto;
+              box-sizing: border-box;
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+              justify-content: center;
+              text-align: center;
+              min-height: 215px;
+          }
+          .policy-list-section-{{ section.id }} .policy-item-icon {
+              width: 58px;
+              height: 58px;
+              margin: 0 auto 16px auto;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+          }
+          .policy-list-section-{{ section.id }} .policy-item-icon img {
+              width: 100%;
+              height: 100%;
+              object-fit: contain;
+              display: block;
+              margin: 0 auto;
+          }
+          .policy-list-section-{{ section.id }} .policy-item-info {
+              width: 100%;
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+              justify-content: center;
+              text-align: center;
+          }
+          .policy-list-section-{{ section.id }} .policy-item-title {
+              font-size: 17px;
+              line-height: 1.35;
+              font-weight: 700;
+              text-align: center;
+              color: #111111;
+              letter-spacing: 0.02em;
+              margin: 0;
+              display: block;
+              -webkit-line-clamp: unset;
+              white-space: normal;
+          }
+          .policy-list-section-{{ section.id }} .policy-item-description {
+              font-size: 14px;
+              line-height: 1.45;
+              color: #666666;
+              margin: 8px auto 0 auto;
+              text-align: center;
+          }
+          .policy-list-section-{{ section.id }} .policy-swiper-pagination {
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              gap: 6px;
+              position: absolute;
+              bottom: 8px;
+              left: 0;
+              width: 100%;
+              z-index: 5;
+          }
+          .policy-list-section-{{ section.id }} .policy-swiper-pagination .swiper-pagination-bullet {
+              width: 7px;
+              height: 7px;
+              border-radius: 50%;
+              background: #888888;
+              opacity: 0.35;
+              margin: 0 !important;
+              transition: all 0.3s ease;
+              cursor: pointer;
+          }
+          .policy-list-section-{{ section.id }} .policy-swiper-pagination .swiper-pagination-bullet-active {
+              width: 20px;
+              border-radius: 4px;
+              background: var(--colorThemePrimary, #0A6830);
+              opacity: 1;
+          }
       }
 {% endstyle %}
+
+<script>
+  (function() {
+    const sectionId = '{{ section.id }}';
+    let swiperInstance = null;
+
+    function initPolicySwiper() {
+      const isMobile = window.innerWidth <= 768;
+      const container = document.querySelector('.policy-swiper-' + sectionId);
+      if (!container) return;
+
+      if (isMobile) {
+        if (typeof Swiper === 'undefined') {
+          setTimeout(initPolicySwiper, 50);
+          return;
+        }
+
+        if (!swiperInstance) {
+          swiperInstance = new Swiper(container, {
+            slidesPerView: 1,
+            spaceBetween: 0,
+            centeredSlides: true,
+            loop: true,
+            autoplay: {
+              delay: 3500,
+              disableOnInteraction: false
+            },
+            speed: 500,
+            grabCursor: true,
+            observer: true,
+            observeParents: true,
+            pagination: {
+              el: '.policy-swiper-pagination-' + sectionId,
+              clickable: true
+            }
+          });
+        } else {
+          swiperInstance.update();
+        }
+      } else {
+        if (swiperInstance) {
+          try {
+            swiperInstance.destroy(true, true);
+          } catch(e) {}
+          swiperInstance = null;
+        }
+      }
+    }
+
+    let resizeTimer;
+    window.addEventListener('resize', function() {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(initPolicySwiper, 200);
+    });
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initPolicySwiper);
+    } else {
+      initPolicySwiper();
+    }
+    window.addEventListener('load', initPolicySwiper);
+
+    document.addEventListener('shopify:section:load', function(e) {
+      if (e.target && (e.target.id === 'shopify-section-' + sectionId || e.target.querySelector('.policy-list-section-' + sectionId))) {
+        initPolicySwiper();
+      }
+    });
+    document.addEventListener('shopify:section:select', function(e) {
+      if (e.target && (e.target.id === 'shopify-section-' + sectionId || e.target.querySelector('.policy-list-section-' + sectionId))) {
+        initPolicySwiper();
+      }
+    });
+  })();
+</script>
 
 {% schema %}
 {

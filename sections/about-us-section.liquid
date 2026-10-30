@@ -1,6 +1,6 @@
 {% assign enable_scroll_pin = section.settings.enable_scroll_pin | default: false %}
-{% assign desktop_height = section.settings.desktop_height | default: 750 %}
-{% assign mobile_height = section.settings.mobile_height | default: 600 %}
+{% assign desktop_height = section.settings.desktop_height | default: 900 %}
+{% assign mobile_height = section.settings.mobile_height | default: 660 %}
 
 {% assign about_us_video = section.blocks | where: 'type', 'con1_video' | first %}
 {% assign about_us_content = section.blocks | where: 'type', 'con2_Content' | first %}
@@ -378,88 +378,271 @@
     });
 </script>
 {% else %}
-<div class="about-us-section-{{ section.id }} about-us-compact-mode">
-  <div class="about-us-compact-wrapper">
-    {%- if section.settings.about_us_title != blank -%}
-      <h2 class="about-us-section-title custom-txt-bold">
-        {{ section.settings.about_us_title }}
-      </h2>
-    {%- endif -%}
-
-    <div class="con2-video" data-section-id="con2-video" data-section-type="video-section">
-      <video
-        width="100%"
-        height="100%"
-        muted
-        autoplay
-        loop
-        playsinline
-        preload="metadata"
-        poster="{{ about_us_thumbnail_url | image_url }}"
-      >
-        {% if about_us_video.settings.video.sources %}
-          {% for source in about_us_video.settings.video.sources %}
-            <source src="{{ source.url }}" type="{{ source.mime_type }}">
-          {% endfor %}
-        {% elsif about_us_video_url != blank %}
-          <source src="{{ about_us_video_url }}" type="video/mp4">
-        {% endif %}
-        <img
-          width="1920"
-          height="auto"
-          src="{{ about_us_thumbnail_url | image_url: width:1920, format: 'webp' }}"
-          srcset="
-            {{ about_us_thumbnail_url | image_url: width:680, format: 'webp' }} 680w,
-            {{ about_us_thumbnail_url | image_url: width:1920, format: 'webp' }} 1920w
-          "
-          sizes="(max-width: 768px) 680px, 1920px"
-          alt="{{ about_us_video.settings.video_thumbnail.alt }}"
-          loading="lazy"
-          class="con2-video-thumbnail"
-        >
-      </video>
-    </div>
-
-    <div class="about-us-banner-overlay">
-      {% if about_us_content.settings.subtitle != blank %}
-        <div class="banner-subtitle custom-txt-semibold">
-          {{ about_us_content.settings.subtitle }}
-        </div>
-      {% endif %}
-      {% if about_us_content.settings.title != blank %}
-        <h2 class="banner-title custom-txt-extrabold">
-          {{ about_us_content.settings.title }}
+<div class="about-us-section-{{ section.id }} about-us-anker-sticky-mode">
+  <div class="about-us-sticky-window">
+    <div class="about-us-sticky-inner">
+      {%- if section.settings.about_us_title != blank -%}
+        <h2 class="about-us-section-title custom-txt-bold">
+          {{ section.settings.about_us_title }}
         </h2>
-      {% endif %}
-      {% if con4_video.settings.btn_label != blank %}
-        <a href="/pages/about-us" class="banner-btn custom-txt-semibold">
-          <span>{{ con4_video.settings.btn_label }}</span>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="18"
-            height="18"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2.5"
-            stroke-linecap="round"
-            stroke-linejoin="round"
+      {%- endif -%}
+
+      <div class="con2-video" data-section-id="con2-video" data-section-type="video-section">
+        <video
+          width="100%"
+          height="100%"
+          muted
+          autoplay
+          loop
+          playsinline
+          webkit-playsinline
+          preload="metadata"
+          poster="{{ about_us_thumbnail_url | image_url }}"
+        >
+          {%- liquid
+            assign m_source = about_us_video.settings.video_m.sources | first
+            assign d_source = about_us_video.settings.video.sources | first
+          -%}
+          {% if m_source != blank %}
+            <source src="{{ m_source.url }}" type="{{ m_source.mime_type }}" media="(max-width: 768px)">
+          {% endif %}
+          {% if d_source != blank %}
+            <source src="{{ d_source.url }}" type="{{ d_source.mime_type }}">
+          {% elsif about_us_video.settings.video.sources %}
+            {% for source in about_us_video.settings.video.sources %}
+              <source src="{{ source.url }}" type="{{ source.mime_type }}">
+            {% endfor %}
+          {% elsif about_us_video_url != blank %}
+            <source src="{{ about_us_video_url }}" type="video/mp4">
+          {% endif %}
+          <img
+            width="1920"
+            height="auto"
+            src="{{ about_us_thumbnail_url | image_url: width:1920, format: 'webp' }}"
+            srcset="
+              {{ about_us_thumbnail_url | image_url: width:680, format: 'webp' }} 680w,
+              {{ about_us_thumbnail_url | image_url: width:1920, format: 'webp' }} 1920w
+            "
+            sizes="(max-width: 768px) 680px, 1920px"
+            alt="{{ about_us_video.settings.video_thumbnail.alt }}"
+            loading="lazy"
+            class="con2-video-thumbnail"
           >
-            <polyline points="9 18 15 12 9 6"></polyline>
-          </svg>
-        </a>
-      {% endif %}
+        </video>
+      </div>
+
+      <div class="about-us-banner-overlay">
+        {% if about_us_content.settings.subtitle != blank %}
+          <div class="banner-subtitle custom-txt-semibold">
+            {{ about_us_content.settings.subtitle }}
+          </div>
+        {% endif %}
+        {% if about_us_content.settings.title != blank %}
+          <h2 class="banner-title custom-txt-extrabold">
+            {{ about_us_content.settings.title }}
+          </h2>
+        {% endif %}
+        {% if con4_video.settings.btn_label != blank %}
+          <a href="/pages/about-us" class="banner-btn custom-txt-semibold">
+            <span>{{ con4_video.settings.btn_label }}</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </a>
+        {% endif %}
+      </div>
     </div>
   </div>
 </div>
+<script src="{{ 'gsap.min.js' | asset_url }}" defer></script>
+<script src="{{ 'ScrollTrigger.min.js' | asset_url }}" defer></script>
 <script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const video = document.querySelector('.about-us-section-{{ section.id }} .con2-video video');
-    if (video) {
-      video.load();
-      video.play().catch((e) => console.log('play error', e));
+  (function() {
+    const sectionId = '{{ section.id }}';
+
+    function initStickyScrollAnimation() {
+      const sectionEl = document.querySelector('.about-us-section-' + sectionId + '.about-us-anker-sticky-mode');
+      if (!sectionEl) return;
+
+      const videoEl = sectionEl.querySelector('.con2-video video');
+      const targetAnimEl = sectionEl.querySelector('.con2-video video') || sectionEl.querySelector('.con2-video');
+      const overlayEl = sectionEl.querySelector('.about-us-banner-overlay');
+
+      if (videoEl) {
+        videoEl.muted = true;
+        videoEl.setAttribute('playsinline', '');
+        videoEl.setAttribute('webkit-playsinline', '');
+        videoEl.play().catch(() => {});
+      }
+
+      const isMobile = window.innerWidth <= 768;
+      // Anker 1:1 Sticky 视窗长行程滑动参数：
+      // 视频位移：PC 端从 -200px 一路顺滑下移至 +200px（总行程达 400px！移动端 -130px 至 +130px，总行程 260px！）
+      // 缩放比例：1.15 -> 1.0 (全画幅细腻展开)
+      // 文案位移：文案跟随视频从 -75px 向下推移至 +75px (移动端 -45px 至 +45px)
+      const startScale = 1.15;
+      const endScale = 1.0;
+      const videoTravel = isMobile ? 130 : 200;
+      const overlayTravel = isMobile ? 45 : 75;
+
+      function applyGsapAnimation() {
+        if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') {
+          return false;
+        }
+
+        gsap.registerPlugin(ScrollTrigger);
+
+        ScrollTrigger.getAll().forEach(function(st) {
+          if (st.trigger === sectionEl) st.kill();
+        });
+
+        // 绑定整个 950px 轨道的滚动进度
+        // start: 'top top' -> 当 section 顶部到达屏幕顶部时，sticky 锁定，动画开始
+        // end: 'bottom bottom' -> 当 950px 轨道滚完时，动画达到 100%，sticky 释放向下走
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: sectionEl,
+            start: 'top top',
+            end: 'bottom bottom',
+            scrub: 1.2,
+            invalidateOnRefresh: true
+          }
+        });
+
+        tl.fromTo(targetAnimEl,
+          {
+            scale: startScale,
+            y: -videoTravel,
+            transformOrigin: 'center center',
+            force3D: true
+          },
+          {
+            scale: endScale,
+            y: videoTravel,
+            ease: 'none'
+          },
+          0
+        );
+
+        if (overlayEl) {
+          tl.fromTo(overlayEl,
+            {
+              y: -overlayTravel,
+              opacity: 0.85,
+              force3D: true
+            },
+            {
+              y: overlayTravel,
+              opacity: 1,
+              ease: 'none'
+            },
+            0
+          );
+        }
+
+        return true;
+      }
+
+      if (!applyGsapAnimation()) {
+        let attempts = 0;
+        const checkInterval = setInterval(function() {
+          attempts++;
+          if (applyGsapAnimation() || attempts > 20) {
+            clearInterval(checkInterval);
+          }
+        }, 100);
+
+        // 高性能 requestAnimationFrame 弹性插值备用方案
+        let targetScale = startScale;
+        let currentScale = startScale;
+        let targetVideoY = -videoTravel;
+        let currentVideoY = -videoTravel;
+        let targetOverlayY = -overlayTravel;
+        let currentOverlayY = -overlayTravel;
+        let isTicking = false;
+
+        function onScroll() {
+          if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') return;
+          const rect = sectionEl.getBoundingClientRect();
+          const winH = window.innerHeight || document.documentElement.clientHeight;
+          const totalDist = sectionEl.offsetHeight - winH;
+          if (totalDist > 0) {
+            const currentDist = -rect.top;
+            const progress = Math.max(0, Math.min(1, currentDist / totalDist));
+            targetScale = startScale - (progress * (startScale - endScale));
+            targetVideoY = -videoTravel + (progress * (videoTravel * 2));
+            targetOverlayY = -overlayTravel + (progress * (overlayTravel * 2));
+
+            if (!isTicking) {
+              isTicking = true;
+              requestAnimationFrame(renderFallback);
+            }
+          }
+        }
+
+        function renderFallback() {
+          if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+            isTicking = false;
+            return;
+          }
+          currentScale += (targetScale - currentScale) * 0.1;
+          currentVideoY += (targetVideoY - currentVideoY) * 0.1;
+          currentOverlayY += (targetOverlayY - currentOverlayY) * 0.1;
+          if (targetAnimEl) {
+            targetAnimEl.style.transform = 'translate3d(0, ' + currentVideoY.toFixed(2) + 'px, 0) scale(' + currentScale.toFixed(4) + ')';
+          }
+          if (overlayEl) {
+            overlayEl.style.transform = 'translate3d(0, ' + currentOverlayY.toFixed(2) + 'px, 0)';
+          }
+          if (Math.abs(currentVideoY - targetVideoY) > 0.1 || Math.abs(currentScale - targetScale) > 0.0005) {
+            requestAnimationFrame(renderFallback);
+          } else {
+            isTicking = false;
+          }
+        }
+
+        window.addEventListener('scroll', onScroll, { passive: true });
+        onScroll();
+      }
     }
-  });
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initStickyScrollAnimation);
+    } else {
+      initStickyScrollAnimation();
+    }
+    window.addEventListener('load', initStickyScrollAnimation);
+
+    let resizeTimer;
+    let lastWidth = window.innerWidth;
+    window.addEventListener('resize', function() {
+      if (window.innerWidth === lastWidth) return;
+      lastWidth = window.innerWidth;
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(initStickyScrollAnimation, 150);
+    });
+
+    document.addEventListener('shopify:section:load', function(e) {
+      if (e.target && (e.target.id === 'shopify-section-' + sectionId || e.target.querySelector('.about-us-section-' + sectionId))) {
+        initStickyScrollAnimation();
+      }
+    });
+    document.addEventListener('shopify:section:select', function(e) {
+      if (e.target && (e.target.id === 'shopify-section-' + sectionId || e.target.querySelector('.about-us-section-' + sectionId))) {
+        initStickyScrollAnimation();
+      }
+    });
+  })();
 </script>
 {% endif %}
 {% style %}
@@ -468,54 +651,87 @@
       padding-bottom: 0 !important;
   }
 
-  /* Compact Mode (Height default 750px, center-cropped video, natural scrolling) */
-  .about-us-section-{{ section.id }}.about-us-compact-mode {
+  /* 方案一：1:1 复刻 Anker 官方 Sticky 视窗长轨道架构 */
+  .about-us-section-{{ section.id }}.about-us-anker-sticky-mode {
       background-color: #0b0b0b;
       padding: 0 !important;
       margin-bottom: 0 !important;
       width: 100%;
-      height: {{ desktop_height }}px;
-      min-height: 750px;
+      /* 核心高度：100vh 视口高度 + 950px 的滚动轨道行程 */
+      height: calc(100vh + 950px);
+      height: calc(100svh + 950px);
       box-sizing: border-box;
-      overflow: hidden;
       position: relative;
       cursor: default;
   }
-  .about-us-section-{{ section.id }}.about-us-compact-mode .about-us-compact-wrapper {
+
+  /* 粘性视窗容器：当滚动到页面视口顶部时吸附停留 (position: sticky; top: 0) */
+  .about-us-section-{{ section.id }}.about-us-anker-sticky-mode .about-us-sticky-window {
+      position: -webkit-sticky;
+      position: sticky;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      height: 100svh;
+      overflow: hidden;
+      z-index: 2;
+  }
+
+  .about-us-section-{{ section.id }}.about-us-anker-sticky-mode .about-us-sticky-inner {
       position: relative;
       width: 100%;
       height: 100%;
       overflow: hidden;
   }
-  .about-us-section-{{ section.id }}.about-us-compact-mode .con2-video {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 1;
-      overflow: hidden;
-  }
-  .about-us-section-{{ section.id }}.about-us-compact-mode .con2-video video,
-  .about-us-section-{{ section.id }}.about-us-compact-mode .con2-video img.con2-video-thumbnail {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center center;
-      display: block;
-  }
-  .about-us-section-{{ section.id }}.about-us-compact-mode .con2-video::after {
+
+  /* 柔和暗角与通透黑色微遮罩，确保文字极致高阶易读 */
+  .about-us-section-{{ section.id }}.about-us-anker-sticky-mode .about-us-sticky-inner::after {
       content: '';
       position: absolute;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      background: linear-gradient(180deg, rgba(0, 0, 0, 0.05) 0%, rgba(0, 0, 0, 0.18) 100%);
+      background: radial-gradient(circle at center, rgba(0, 0, 0, 0.08) 0%, rgba(0, 0, 0, 0.42) 100%), linear-gradient(180deg, rgba(0, 0, 0, 0.08) 0%, rgba(0, 0, 0, 0.32) 100%);
       z-index: 2;
       pointer-events: none;
   }
-  .about-us-section-{{ section.id }}.about-us-compact-mode .about-us-banner-overlay {
+
+  /* 视频容器：超高画幅 (150% 高)，基准定位 top: -25%，在视口内平滑垂直下滑 */
+  .about-us-section-{{ section.id }}.about-us-anker-sticky-mode .con2-video {
+      position: absolute;
+      top: -25%;
+      left: -10%;
+      width: 120%;
+      height: 150%;
+      z-index: 1;
+      overflow: hidden;
+      transform-origin: center center;
+      will-change: transform;
+  }
+  .about-us-section-{{ section.id }}.about-us-anker-sticky-mode .con2-video video,
+  .about-us-section-{{ section.id }}.about-us-anker-sticky-mode .con2-video img.con2-video-thumbnail {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center center;
+      display: block;
+      transform: translate3d(0, -200px, 0) scale(1.15);
+      transform-origin: center center;
+      will-change: transform;
+      -webkit-backface-visibility: hidden;
+      backface-visibility: hidden;
+      transform-style: preserve-3d;
+      image-rendering: -webkit-optimize-contrast;
+      border-radius: 0 !important;
+      border: none !important;
+      outline: none !important;
+      box-shadow: none !important;
+  }
+
+  /* 文案层：跟随视频向下滑动流动 */
+  .about-us-section-{{ section.id }}.about-us-anker-sticky-mode .about-us-banner-overlay {
       position: absolute;
       top: 0;
       left: 0;
@@ -530,20 +746,22 @@
       padding: 2.5rem 2rem;
       box-sizing: border-box;
       pointer-events: none;
+      transform: translate3d(0, -75px, 0);
+      will-change: transform;
   }
-  .about-us-section-{{ section.id }}.about-us-compact-mode .banner-subtitle {
+  .about-us-section-{{ section.id }}.about-us-anker-sticky-mode .banner-subtitle {
       font-size: 1.35rem;
       color: rgba(255, 255, 255, 0.9);
       margin-bottom: 0.6rem;
       letter-spacing: 0.04em;
       text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
   }
-  .about-us-section-{{ section.id }}.about-us-compact-mode .banner-subtitle b {
+  .about-us-section-{{ section.id }}.about-us-anker-sticky-mode .banner-subtitle b {
       color: #ffffff;
       font-weight: 700;
   }
-  .about-us-section-{{ section.id }}.about-us-compact-mode .banner-title {
-      font-size: 3.2rem;
+  .about-us-section-{{ section.id }}.about-us-anker-sticky-mode .banner-title {
+      font-size: 3.4rem;
       font-weight: 900;
       color: #ffffff;
       letter-spacing: 0.06em;
@@ -552,11 +770,11 @@
       line-height: 1.15;
       text-shadow: 0 3px 18px rgba(0, 0, 0, 0.7);
   }
-  .about-us-section-{{ section.id }}.about-us-compact-mode .banner-btn {
+  .about-us-section-{{ section.id }}.about-us-anker-sticky-mode .banner-btn {
       display: inline-flex;
       align-items: center;
       gap: 0.6rem;
-      padding: 0.75rem 2.2rem;
+      padding: 0.75rem 2.4rem;
       background: rgba(255, 255, 255, 0.15);
       backdrop-filter: blur(10px);
       -webkit-backdrop-filter: blur(10px);
@@ -569,36 +787,69 @@
       pointer-events: auto;
       transition: all 0.25s ease;
   }
-  .about-us-section-{{ section.id }}.about-us-compact-mode .banner-btn:hover {
+  .about-us-section-{{ section.id }}.about-us-anker-sticky-mode .banner-btn:hover {
       background: #ffffff;
       color: #000000 !important;
       border-color: #ffffff;
       transform: translateY(-2px);
       box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
   }
-  .about-us-section-{{ section.id }}.about-us-compact-mode .banner-btn svg {
+  .about-us-section-{{ section.id }}.about-us-anker-sticky-mode .banner-btn svg {
       transition: transform 0.25s ease;
   }
-  .about-us-section-{{ section.id }}.about-us-compact-mode .banner-btn:hover svg {
+  .about-us-section-{{ section.id }}.about-us-anker-sticky-mode .banner-btn:hover svg {
       transform: translateX(3px);
   }
+
   @media screen and (max-width: 768px) {
-    .about-us-section-{{ section.id }}.about-us-compact-mode {
-        height: {{ mobile_height }}px;
-        min-height: 520px;
-        padding-top: 0 !important;
+    .about-us-section-{{ section.id }}.about-us-anker-sticky-mode {
+        height: calc(100vh + 650px);
+        height: calc(100svh + 650px);
     }
-    .about-us-section-{{ section.id }}.about-us-compact-mode .banner-subtitle {
-        font-size: 1rem;
+    .about-us-section-{{ section.id }}.about-us-anker-sticky-mode .con2-video {
+        top: -22.5%;
+        left: -10%;
+        width: 120%;
+        height: 145%;
+    }
+    .about-us-section-{{ section.id }}.about-us-anker-sticky-mode .con2-video video,
+    .about-us-section-{{ section.id }}.about-us-anker-sticky-mode .con2-video img.con2-video-thumbnail {
+        transform: translate3d(0, -130px, 0) scale(1.15);
+        border-radius: 0 !important;
+        border: none !important;
+        outline: none !important;
+        box-shadow: none !important;
+    }
+    .about-us-section-{{ section.id }}.about-us-anker-sticky-mode .about-us-banner-overlay {
+        padding: 1.5rem 1rem;
+        transform: translate3d(0, -45px, 0);
+    }
+    .about-us-section-{{ section.id }}.about-us-anker-sticky-mode .banner-subtitle {
+        font-size: clamp(0.85rem, 3.2vw, 0.95rem);
         margin-bottom: 0.35rem;
+        line-height: 1.35;
+        max-width: 92%;
     }
-    .about-us-section-{{ section.id }}.about-us-compact-mode .banner-title {
-        font-size: 1.8rem;
+    .about-us-section-{{ section.id }}.about-us-anker-sticky-mode .banner-title {
+        font-size: clamp(1.05rem, 5vw, 1.45rem);
         margin-bottom: 0.85rem;
+        white-space: nowrap !important;
+        letter-spacing: 0.02em;
+        line-height: 1.2;
+        max-width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
-    .about-us-section-{{ section.id }}.about-us-compact-mode .banner-btn {
+    .about-us-section-{{ section.id }}.about-us-anker-sticky-mode .banner-btn {
         padding: 0.55rem 1.6rem;
         font-size: 0.95rem;
+    }
+  }
+
+  @media screen and (max-width: 400px) {
+    .about-us-section-{{ section.id }}.about-us-anker-sticky-mode .banner-title {
+        font-size: clamp(0.95rem, 4.8vw, 1.25rem);
+        letter-spacing: 0.01em;
     }
   }
 
@@ -864,8 +1115,8 @@
       "max": 1400,
       "step": 10,
       "unit": "px",
-      "default": 750,
-      "info": "Default is 750px high."
+      "default": 900,
+      "info": "Default is 900px high."
     },
     {
       "type": "range",
@@ -875,7 +1126,7 @@
       "max": 900,
       "step": 20,
       "unit": "px",
-      "default": 600
+      "default": 660
     },
     {
       "type": "checkbox",

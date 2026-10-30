@@ -299,7 +299,7 @@
         "gap": 48,
         "padding_vertical": 36,
         "full_width": false,
-        "mobile_layout": "side_by_side"
+        "mobile_layout": "stacked"
       }
     },
     "collection_list_LPzqx3": {
@@ -640,8 +640,8 @@
       "name": "About Us Section",
       "settings": {
         "about_us_title": "",
-        "desktop_height": 750,
-        "mobile_height": 600,
+        "desktop_height": 900,
+        "mobile_height": 660,
         "enable_scroll_pin": false
       }
     },
