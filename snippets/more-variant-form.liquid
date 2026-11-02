@@ -1049,9 +1049,9 @@
         } else {
           params.delete('p');
         }
-        const search = '?' + params.toString();
-        // 地址未变化则不重复写入
-        if (window.location.search === search) return;
+                const search = '?' + params.toString();
+        // 地址未变化则不重复写入（若地址里缺少 variant 则仍需补写，避免商品标识被覆盖丢失）
+        if (window.location.search === search && params.has('variant')) return;
         window.history.replaceState(
           window.history.state,
           '',
@@ -1059,7 +1059,39 @@
         );
       }
 
-            // 收集当前所有已选中卡片的锚点，并同步到地址栏
+      // 记录当前选中的变体，避免主题切换变体时把地址里已有的 p 参数（商品标识）覆盖掉
+      function getVariantFromUrl() {
+        return new URLSearchParams(window.location.search).get('variant') || '';
+      }
+      let lastVariantId = getVariantFromUrl();
+
+      // 主题切换变体会用 replaceState 整体重写地址（只保留 ?variant=xxx），这里在其后再补回 p 参数
+      function keepBundleAnchors() {
+        const currentVariantId = getVariantFromUrl();
+        if (currentVariantId === lastVariantId) return;
+        lastVariantId = currentVariantId;
+
+        const params = new URLSearchParams(window.location.search);
+        const anchors = [];
+        document.querySelectorAll('.bundle-product-list--1 [data-bundle-anchor], .bundle-product-list--addons [data-bundle-anchor]').forEach(card => {
+          if (card.classList.contains('is-selected') && card.dataset.bundleAnchor) {
+            anchors.push(card.dataset.bundleAnchor);
+          }
+        });
+        if (!anchors.length) return;
+
+        params.set('p', Array.from(new Set(anchors)).join(','));
+        const search = '?' + params.toString();
+        if (window.location.search === search) return;
+        window.history.replaceState(
+          window.history.state,
+          '',
+          window.location.pathname + search + window.location.hash
+        );
+            }
+
+
+      // 收集当前所有已选中卡片的锚点，并同步到地址栏
       function syncAnchorFromSelection() {
         const anchors = [];
         // 注意：ANCHOR_LIST_SELECTOR 是逗号分隔的选择器组，需分别拼接锚点选择器，否则逗号会导致匹配错误
@@ -1144,9 +1176,28 @@
         }, 50);
       }
 
-      // 从地址栏恢复（例如分享链接 / 刷新）
+            // 从地址栏恢复（例如分享链接 / 刷新）
       restoreFromUrl();
+
+      // 包装 history.replaceState：主题切换变体后若把 p 参数覆盖掉，立即补回
+      const originalReplaceState = window.history.replaceState;
+      window.history.replaceState = function (state, title, url) {
+        const result = originalReplaceState.apply(this, arguments);
+        setTimeout(keepBundleAnchors, 0);
+        return result;
+      };
+
+      // 兜底：变体选项、变体选择器变化后也检查一次（不依赖 replaceState 的调用时机）
+      ['change', 'variantChange', 'shopify:section:load'].forEach(function (eventName) {
+        document.addEventListener(eventName, function (e) {
+          if (!e.target || !e.target.closest) return;
+          if (e.target.closest('.product-single__form, .variant-input-wrap, [data-product-form], [data-section-type="product"]')) {
+            setTimeout(keepBundleAnchors, 0);
+          }
+        }, true);
+      });
     }
+
 
     function initManualInstallationService() {
       const card = document.getElementById('ManualKeycapServiceCard');
