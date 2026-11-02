@@ -1,6 +1,6 @@
 {% assign enable_scroll_pin = section.settings.enable_scroll_pin | default: false %}
-{% assign desktop_height = section.settings.desktop_height | default: 900 %}
-{% assign mobile_height = section.settings.mobile_height | default: 660 %}
+{% assign desktop_height = section.settings.desktop_height | default: 1600 %}
+{% assign mobile_height = section.settings.mobile_height | default: 1100 %}
 
 {% assign about_us_video = section.blocks | where: 'type', 'con1_video' | first %}
 {% assign about_us_content = section.blocks | where: 'type', 'con2_Content' | first %}
@@ -487,13 +487,14 @@
 
       const isMobile = window.innerWidth <= 768;
       // Anker 1:1 Sticky 视窗长行程滑动参数：
-      // 视频位移：PC 端从 -200px 一路顺滑下移至 +200px（总行程达 400px！移动端 -130px 至 +130px，总行程 260px！）
-      // 缩放比例：1.15 -> 1.0 (全画幅细腻展开)
-      // 文案位移：文案跟随视频从 -75px 向下推移至 +75px (移动端 -45px 至 +45px)
-      const startScale = 1.15;
+      // 视差外轨延长至 1600px（移动端 1100px），滚动吸附与视差行程更沉浸持久
+      // 视频位移：PC 端从 -120px 顺滑下移至 +120px；移动端 -70px 至 +70px
+      // 缩放比例：PC 端 1.2 -> 1.0；移动端 1.15 -> 1.0 (更强烈的全画幅吸附收缩展开)
+      // 文案位移：文案跟随视频从 -60px 向下推移至 +60px (移动端 -35px 至 +35px)
+      const startScale = isMobile ? 1.15 : 1.2;
       const endScale = 1.0;
-      const videoTravel = isMobile ? 130 : 200;
-      const overlayTravel = isMobile ? 45 : 75;
+      const videoTravel = isMobile ? 70 : 120;
+      const overlayTravel = isMobile ? 35 : 60;
 
       function applyGsapAnimation() {
         if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') {
@@ -657,9 +658,9 @@
       padding: 0 !important;
       margin-bottom: 0 !important;
       width: 100%;
-      /* 核心高度：100vh 视口高度 + 950px 的滚动轨道行程 */
-      height: calc(100vh + 950px);
-      height: calc(100svh + 950px);
+      /* 核心高度：100vh 视口高度 + {{ desktop_height }}px 的长视差外轨行程 */
+      height: calc(100vh + {{ desktop_height }}px);
+      height: calc(100svh + {{ desktop_height }}px);
       box-sizing: border-box;
       position: relative;
       cursor: default;
@@ -699,13 +700,13 @@
       pointer-events: none;
   }
 
-  /* 视频容器：超高画幅 (150% 高)，基准定位 top: -25%，在视口内平滑垂直下滑 */
+  /* 视频容器：减小画幅高度至 125%（原 150%），居中定位 top: -12.5%，大幅减少垂直画面裁剪，视野更广阔 */
   .about-us-section-{{ section.id }}.about-us-anker-sticky-mode .con2-video {
       position: absolute;
-      top: -25%;
-      left: -10%;
-      width: 120%;
-      height: 150%;
+      top: -12.5%;
+      left: -6%;
+      width: 112%;
+      height: 125%;
       z-index: 1;
       overflow: hidden;
       transform-origin: center center;
@@ -718,7 +719,7 @@
       object-fit: cover;
       object-position: center center;
       display: block;
-      transform: translate3d(0, -200px, 0) scale(1.15);
+      transform: translate3d(0, -120px, 0) scale(1.2);
       transform-origin: center center;
       will-change: transform;
       -webkit-backface-visibility: hidden;
@@ -804,18 +805,18 @@
 
   @media screen and (max-width: 768px) {
     .about-us-section-{{ section.id }}.about-us-anker-sticky-mode {
-        height: calc(100vh + 650px);
-        height: calc(100svh + 650px);
+        height: calc(100vh + {{ mobile_height }}px);
+        height: calc(100svh + {{ mobile_height }}px);
     }
     .about-us-section-{{ section.id }}.about-us-anker-sticky-mode .con2-video {
-        top: -22.5%;
-        left: -10%;
-        width: 120%;
-        height: 145%;
+        top: -9%;
+        left: -5%;
+        width: 110%;
+        height: 118%;
     }
     .about-us-section-{{ section.id }}.about-us-anker-sticky-mode .con2-video video,
     .about-us-section-{{ section.id }}.about-us-anker-sticky-mode .con2-video img.con2-video-thumbnail {
-        transform: translate3d(0, -130px, 0) scale(1.15);
+        transform: translate3d(0, -70px, 0) scale(1.15);
         border-radius: 0 !important;
         border: none !important;
         outline: none !important;
@@ -1111,23 +1112,24 @@
     {
       "type": "range",
       "id": "desktop_height",
-      "label": "Desktop Section Height (px)",
-      "min": 400,
-      "max": 1400,
-      "step": 10,
+      "label": "Desktop Parallax Scroll Track (px)",
+      "min": 600,
+      "max": 3000,
+      "step": 50,
       "unit": "px",
-      "default": 900,
-      "info": "Default is 900px high."
+      "default": 1600,
+      "info": "Outer scroll track distance (higher = longer sticky parallax duration)."
     },
     {
       "type": "range",
       "id": "mobile_height",
-      "label": "Mobile Section Height (px)",
-      "min": 300,
-      "max": 900,
-      "step": 20,
+      "label": "Mobile Parallax Scroll Track (px)",
+      "min": 400,
+      "max": 2000,
+      "step": 50,
       "unit": "px",
-      "default": 660
+      "default": 1100,
+      "info": "Outer scroll track distance on mobile."
     },
     {
       "type": "checkbox",

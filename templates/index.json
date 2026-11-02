@@ -640,8 +640,8 @@
       "name": "About Us Section",
       "settings": {
         "about_us_title": "",
-        "desktop_height": 900,
-        "mobile_height": 660,
+        "desktop_height": 1600,
+        "mobile_height": 1100,
         "enable_scroll_pin": false
       }
     },
