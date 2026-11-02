@@ -947,7 +947,7 @@
 
             // 键盘商品：检查是否还有其他选中的键帽以切换搭配图
             if (isKeyboardProduct) {
-              const remainingSelected = setup1List.querySelectorAll('.bundle-keycap-card.is-selected');
+                            const remainingSelected = setup1List.querySelectorAll('.bundle-keycap-card.is-selected');
               if (remainingSelected.length > 0) {
                 showKeycapImage(remainingSelected[remainingSelected.length - 1]);
               } else {
@@ -969,6 +969,11 @@
               showKeycapImage(this);
             }
           }
+
+          // 同步地址栏 p 参数（勾选加入，取消移除）
+          if (typeof window.__syncBundleAnchor === 'function') {
+            window.__syncBundleAnchor();
+          }
         });
 
         card.addEventListener('keydown', function(e) {
@@ -984,7 +989,7 @@
       const addonsList = document.querySelector('.bundle-product-list--addons');
       if (!addonsList) return;
 
-      const cards = addonsList.querySelectorAll('.bundle-keycap-card');
+            const cards = addonsList.querySelectorAll('.bundle-keycap-card');
       cards.forEach(card => {
         card.addEventListener('click', function () {
           if (this.classList.contains('sold-out')) return;
@@ -1007,6 +1012,11 @@
               checkbox.dispatchEvent(new Event('change', { bubbles: true }));
             }
           }
+
+          // 同步地址栏 p 参数（勾选加入，取消移除）
+          if (typeof window.__syncBundleAnchor === 'function') {
+            window.__syncBundleAnchor();
+          }
         });
 
         card.addEventListener('keydown', function (e) {
@@ -1018,12 +1028,27 @@
       });
     }
 
-    // 点击搭配区商品卡片时，将商品唯一标识写入地址栏（使用 replaceState，不刷新页面）
+                // 搭配区商品卡片选中状态 <-> 地址栏 p 参数 同步（支持多选，逗号分隔；取消选中则移除）
     function initBundleAnchorUrl() {
-            function writeAnchor(anchor) {
-        if (!anchor) return;
+      // 读取地址栏中的锚点数组
+      function readAnchors() {
         const params = new URLSearchParams(window.location.search);
-        params.set('p', anchor);
+        const raw = params.get('p') || '';
+        return raw
+          .split(',')
+          .map(s => s.trim())
+          .filter(Boolean);
+      }
+
+      // 用一个或多个锚点写入地址栏（replaceState，不刷新页面）
+      function writeAnchors(anchors) {
+        const params = new URLSearchParams(window.location.search);
+        const unique = Array.from(new Set((anchors || []).filter(Boolean)));
+        if (unique.length > 0) {
+          params.set('p', unique.join(','));
+        } else {
+          params.delete('p');
+        }
         const search = '?' + params.toString();
         // 地址未变化则不重复写入
         if (window.location.search === search) return;
@@ -1034,11 +1059,32 @@
         );
       }
 
-      function readAnchor() {
-        const params = new URLSearchParams(window.location.search);
-        return params.get('p') || '';
+            // 收集当前所有已选中卡片的锚点，并同步到地址栏
+      function syncAnchorFromSelection() {
+        const anchors = [];
+        // 注意：ANCHOR_LIST_SELECTOR 是逗号分隔的选择器组，需分别拼接锚点选择器，否则逗号会导致匹配错误
+        document.querySelectorAll('.bundle-product-list--1 [data-bundle-anchor], .bundle-product-list--addons [data-bundle-anchor]').forEach(card => {
+          if (card.classList.contains('is-selected') && card.dataset.bundleAnchor) {
+            anchors.push(card.dataset.bundleAnchor);
+          }
+        });
+        writeAnchors(anchors);
+      }
+      // 暴露给卡片点击逻辑调用（勾选/取消勾选后同步地址栏）
+      window.__syncBundleAnchor = syncAnchorFromSelection;
+
+      // 勾选锚点对应的商品卡片（已勾选或售罄则跳过）
+      // 通过触发卡片点击，复用已有的选中逻辑（同步 is-selected、复选框、搭配图切换、安装服务等）
+      function selectAnchorCard(el) {
+        if (!el || el.classList.contains('sold-out')) return;
+        const checkbox = el.querySelector('.bundle-product-checkbox');
+        if (!checkbox || checkbox.disabled) return;
+        if (checkbox.checked && el.classList.contains('is-selected')) return;
+
+        el.click();
       }
 
+      // 展开分组并将锚点卡片滚动到可视区域
       function scrollToAnchor(anchor, tries) {
         if (!anchor) return;
         const el = document.getElementById('bundle-card-' + anchor);
@@ -1055,7 +1101,7 @@
           if (toggle) toggle.click();
         }
 
-                // 对应滚动容器：清单本身可能带滚动条，需要滚动容器使其显示
+        // 对应滚动容器：清单本身可能带滚动条，需要滚动容器使其显示
         const list = el.closest('.bundle-product-list');
         if (list && list.scrollHeight > list.clientHeight + 4) {
           // 卡片在滚动容器内的相对位置
@@ -1069,23 +1115,37 @@
         }
       }
 
-      // 点击任意搭配区卡片：写入地址栏，不刷新
-      document.addEventListener(
-        'click',
-        function (e) {
-          const card = e.target.closest && e.target.closest('[data-bundle-anchor]');
-          if (!card) return;
-          if (!card.closest('.bundle-product-list--1, .bundle-product-list--addons')) return;
-          writeAnchor(card.dataset.bundleAnchor);
-        },
-        true
-      );
+            // 从地址栏恢复：逐个勾选所有锚点对应商品，并滚动到第一个
+      function restoreFromUrl() {
+        const anchors = readAnchors();
+        if (!anchors.length) return;
 
-      // 从地址栏恢复定位（例如分享链接 / 刷新）
-      const initialAnchor = readAnchor();
-      if (initialAnchor) {
-        scrollToAnchor(initialAnchor, 0);
+        // 若任一锚点商品位于 More Add-ons 面板内，则默认展开该面板
+        anchors.forEach(anchor => {
+          const el = document.getElementById('bundle-card-' + anchor);
+          if (!el) return;
+          const addonGroup = el.closest('[data-bundle-addon-group]');
+          if (addonGroup && !addonGroup.classList.contains('is-open')) {
+            const toggle = addonGroup.querySelector('[data-bundle-addon-toggle]');
+            if (toggle) toggle.click();
+          }
+        });
+
+        anchors.forEach(anchor => {
+          const el = document.getElementById('bundle-card-' + anchor);
+          if (el) selectAnchorCard(el);
+        });
+
+        // 滚动定位到第一个锚点（等勾选渲染完成后）
+        setTimeout(() => {
+          scrollToAnchor(anchors[0], 0);
+          // 确保地址栏与最终选中状态一致（去除无效/售罄锚点）
+          syncAnchorFromSelection();
+        }, 50);
       }
+
+      // 从地址栏恢复（例如分享链接 / 刷新）
+      restoreFromUrl();
     }
 
     function initManualInstallationService() {
@@ -1398,13 +1458,13 @@
       render();
     }
 
-    initBundleAddonGroups();
-    initBundleAnchorUrl();
+        initBundleAddonGroups();
     initBundleQtySelectors();
     initBundleSelection();
     initSetup1KeycapSelection();
     initAddonCardsSelection();
     initManualInstallationService();
+    initBundleAnchorUrl();
     initAddToCart();
 
     updateMobileCardGridScroll();
