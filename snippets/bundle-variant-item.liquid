@@ -9,6 +9,8 @@
 
 {%- assign is_available = item_variant.available -%}
 {%- assign item_title = item_variant.product.title | default: item_variant.title -%}
+{%- comment -%} 每个商品卡片的唯一标识，点击时写入地址栏 {%- endcomment -%}
+{%- assign card_anchor = 'p-' | append: item_variant.id -%}
 {%- assign variant_subtitle = '' -%}
 {%- if item_variant.title != 'Default Title' and item_variant.title != blank -%}
   {%- assign variant_subtitle = item_variant.title -%}
@@ -27,6 +29,8 @@
 
 <div
   class="bundle-keycap-card bundle-addon-card {% if is_available %}available{% else %}sold-out{% endif %}"
+  id="bundle-card-{{ card_anchor }}"
+  data-bundle-anchor="{{ card_anchor }}"
   data-variant-id="{{ item_variant.id }}"
   data-product-title="{{ item_variant.product.title | escape }}"
   data-variant-title="{{ item_variant.title | escape }}"

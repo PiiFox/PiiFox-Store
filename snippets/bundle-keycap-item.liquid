@@ -13,6 +13,8 @@
 
 {%- assign is_available = item_variant.available -%}
 {%- assign keycap_title = item_variant.product.title | default: item_variant.title -%}
+{%- comment -%} 每个商品卡片的唯一标识，点击时写入地址栏 {%- endcomment -%}
+{%- assign card_anchor = 'p-' | append: item_variant.id -%}
 {%- assign kc_orig_price = item_variant.price -%}
 {%- assign kc_disc_price = item_variant.price | times: 0.9 | round -%}
 
@@ -50,7 +52,9 @@
 {%- endif -%}
 
 <div
-  class="bundle-keycap-card {% if is_available %}available{% else %}sold-out{% endif %}"
+    class="bundle-keycap-card {% if is_available %}available{% else %}sold-out{% endif %}"
+  id="bundle-card-{{ card_anchor }}"
+  data-bundle-anchor="{{ card_anchor }}"
   data-variant-id="{{ item_variant.id }}"
   data-keycap-title="{{ keycap_title | escape }}"
   data-product-title="{{ item_variant.product.title | escape }}"

@@ -1018,6 +1018,76 @@
       });
     }
 
+    // 点击搭配区商品卡片时，将商品唯一标识写入地址栏（使用 replaceState，不刷新页面）
+    function initBundleAnchorUrl() {
+            function writeAnchor(anchor) {
+        if (!anchor) return;
+        const params = new URLSearchParams(window.location.search);
+        params.set('p', anchor);
+        const search = '?' + params.toString();
+        // 地址未变化则不重复写入
+        if (window.location.search === search) return;
+        window.history.replaceState(
+          window.history.state,
+          '',
+          window.location.pathname + search + window.location.hash
+        );
+      }
+
+      function readAnchor() {
+        const params = new URLSearchParams(window.location.search);
+        return params.get('p') || '';
+      }
+
+      function scrollToAnchor(anchor, tries) {
+        if (!anchor) return;
+        const el = document.getElementById('bundle-card-' + anchor);
+        if (!el) {
+          if ((tries || 0) < 10) {
+            setTimeout(() => scrollToAnchor(anchor, (tries || 0) + 1), 300);
+          }
+          return;
+        }
+        // 若目标位于折叠的 More Add-ons 面板内，先展开
+        const addonGroup = el.closest('[data-bundle-addon-group]');
+        if (addonGroup && !addonGroup.classList.contains('is-open')) {
+          const toggle = addonGroup.querySelector('[data-bundle-addon-toggle]');
+          if (toggle) toggle.click();
+        }
+
+                // 对应滚动容器：清单本身可能带滚动条，需要滚动容器使其显示
+        const list = el.closest('.bundle-product-list');
+        if (list && list.scrollHeight > list.clientHeight + 4) {
+          // 卡片在滚动容器内的相对位置
+          const cardTop = el.offsetTop - list.offsetTop + list.scrollTop;
+          list.scrollTo({ top: Math.max(0, cardTop), behavior: 'smooth' });
+        }
+        const rect = el.getBoundingClientRect();
+        const inViewport = rect.top >= 0 && rect.bottom <= (window.innerHeight || document.documentElement.clientHeight);
+        if (!inViewport) {
+          el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      }
+
+      // 点击任意搭配区卡片：写入地址栏，不刷新
+      document.addEventListener(
+        'click',
+        function (e) {
+          const card = e.target.closest && e.target.closest('[data-bundle-anchor]');
+          if (!card) return;
+          if (!card.closest('.bundle-product-list--1, .bundle-product-list--addons')) return;
+          writeAnchor(card.dataset.bundleAnchor);
+        },
+        true
+      );
+
+      // 从地址栏恢复定位（例如分享链接 / 刷新）
+      const initialAnchor = readAnchor();
+      if (initialAnchor) {
+        scrollToAnchor(initialAnchor, 0);
+      }
+    }
+
     function initManualInstallationService() {
       const card = document.getElementById('ManualKeycapServiceCard');
       const checkbox = document.getElementById('ManualKeycapServiceCheckbox');
@@ -1329,6 +1399,7 @@
     }
 
     initBundleAddonGroups();
+    initBundleAnchorUrl();
     initBundleQtySelectors();
     initBundleSelection();
     initSetup1KeycapSelection();
