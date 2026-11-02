@@ -34,7 +34,7 @@
             <div class="theme-cell{% if theme_index == initial_theme_index %} is-selected{% endif %}"
                  data-index="{{ theme_index }}"
                  data-collection-handle="{{ theme_collection_handle | escape }}"
-                 style="--theme-highlight-color: {{ block.settings.highlight_color | default: '#f4efe6' }};"
+                 style="--theme-highlight-color: {{ block.settings.card_bg_color | default: block.settings.highlight_color | default: '#f4efe6' }};"
                  {{ block.shopify_attributes }}>
             <div class="theme-card-inner">
               <div class="theme-card-info">
@@ -70,7 +70,8 @@
       </div>
     </div>
 
-    <div class="bottom-style-carousel-wrap">
+        <div class="bottom-style-carousel-wrap"
+         style="--style-card-bg-color: {{ section.settings.style_card_bg_color | default: '#f9f7f5' }};">
       <div class="bottom-style-carousel">
         {%- for block in theme_blocks -%}
           {%- assign style_collection = block.settings.collection -%}
@@ -467,8 +468,8 @@
     box-sizing: border-box;
     scroll-snap-align: start;
   }
-  .style-studio-section-{{ section.id }} .style-card-inner {
-    background-color: #f9f7f5;
+    .style-studio-section-{{ section.id }} .style-card-inner {
+    background-color: var(--style-card-bg-color, #f9f7f5);
     border-radius: 1em;
     padding: 0.85em 0.9em 1em;
     margin-left: 0;
@@ -1268,11 +1269,17 @@
       "label": "Section subtitle",
       "default": "Preview how different keycap themes transform the same keyboard."
     },
-    {
+        {
       "type": "text",
       "id": "style_card_button_label",
       "label": "Product card button label",
       "default": "View Style"
+    },
+    {
+      "type": "color",
+      "id": "style_card_bg_color",
+      "label": "Product card background color (second row)",
+      "default": "#f9f7f5"
     }
   ],
   "blocks": [
@@ -1344,10 +1351,17 @@
           "label": "Button text color",
           "default": "#107a44"
         },
-        {
+                {
           "type": "color",
           "id": "highlight_color",
           "label": "Highlight background color",
+          "default": "#f4efe6"
+        },
+        {
+          "type": "color",
+          "id": "card_bg_color",
+          "label": "Card background color",
+          "info": "Recommended: a light tint of the title color so the card stays readable.",
           "default": "#f4efe6"
         }
       ]

@@ -437,8 +437,9 @@
             "collection": "retro-daily-theme-keycaps",
             "button_label": "Explore Theme",
             "button_link": "",
-            "button_text_color": "#6f3b13",
-            "highlight_color": "#f4efe6"
+                        "button_text_color": "#6f3b13",
+            "highlight_color": "#f4efe6",
+            "card_bg_color": "#f6e8d8"
           }
         },
         "theme-nature-home": {
@@ -454,8 +455,9 @@
             "collection": "nature-soft-theme-keycaps",
             "button_label": "Explore Theme",
             "button_link": "",
-            "button_text_color": "#107a44",
-            "highlight_color": "#f4efe6"
+                        "button_text_color": "#107a44",
+            "highlight_color": "#f4efe6",
+            "card_bg_color": "#e3f2e6"
           }
         },
         "theme_card_ycaA7P": {
@@ -471,8 +473,9 @@
             "collection": "clean-minimal-theme-keycaps",
             "button_label": "Explore Theme",
             "button_link": "",
-            "button_text_color": "#bc896f",
-            "highlight_color": "#f4efe6"
+                        "button_text_color": "#bc896f",
+            "highlight_color": "#f4efe6",
+            "card_bg_color": "#f7ebe3"
           }
         },
         "theme-cute-home": {
@@ -488,8 +491,9 @@
             "collection": "cute-colorful-theme-keycaps",
             "button_label": "Explore Theme",
             "button_link": "",
-            "button_text_color": "#ef5da8",
-            "highlight_color": "#f4efe6"
+                        "button_text_color": "#ef5da8",
+            "highlight_color": "#f4efe6",
+            "card_bg_color": "#fde8f3"
           }
         },
         "theme_card_nUMQFG": {
@@ -505,8 +509,9 @@
             "collection": "game-playful-theme-keycaps",
             "button_label": "Explore Theme",
             "button_link": "",
-            "button_text_color": "#e14f56",
-            "highlight_color": "#f4efe6"
+                        "button_text_color": "#e14f56",
+            "highlight_color": "#f4efe6",
+            "card_bg_color": "#fbe3e3"
           }
         },
         "theme-art-home": {
@@ -522,8 +527,9 @@
             "collection": "art-culture-theme-keycaps",
             "button_label": "Explore Theme",
             "button_link": "",
-            "button_text_color": "#7c3aed",
-            "highlight_color": "#f4efe6"
+                        "button_text_color": "#7c3aed",
+            "highlight_color": "#f4efe6",
+            "card_bg_color": "#ede7fb"
           }
         },
         "theme-fun-home": {
@@ -539,8 +545,9 @@
             "collection": "future-fantasy-theme-keycaps",
             "button_label": "Explore Theme",
             "button_link": "",
-            "button_text_color": "#0f766e",
-            "highlight_color": "#f4efe6"
+                        "button_text_color": "#0f766e",
+            "highlight_color": "#f4efe6",
+            "card_bg_color": "#dcf0ee"
           }
         }
       },
@@ -558,8 +565,9 @@
         "title_before_color": "#121212",
         "title_after": "Many Styles.",
         "title_after_color": "#244f1d",
-        "subtitle": "Preview how different keycap themes transform the same keyboard.",
-        "style_card_button_label": "View Style"
+                "subtitle": "Preview how different keycap themes transform the same keyboard.",
+        "style_card_button_label": "View Style",
+        "style_card_bg_color": "#f9f7f5"
       }
     },
     "single_page_width_banner_ihTf8b": {
