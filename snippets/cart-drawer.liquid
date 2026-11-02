@@ -53,18 +53,11 @@
             {% endif %}
           </div>
 
-          {% render 'cart-price-detail', section_id: section.id %}
+                    {% render 'cart-price-detail', section_id: section.id %}
 
           <div class="cart__item-sub cart__item-row">
             <div class="ajaxcart__subtotal">{{ 'cart.general.total' | t }}</div>
             <div data-subtotal>{{ cart.total_price | money }}</div>
-          </div>
-
-          <div class="cart__item-row text-left">
-            <small>
-              {{ 'cart.general.shipping_at_checkout' | t -}}
-              <br>
-            </small>
           </div>
 
           {% if settings.cart_terms_conditions_enable %}
@@ -95,11 +88,17 @@
               {{ 'cart.general.checkout' | t }}
             </button>
 
-            {% if additional_checkout_buttons and settings.cart_additional_buttons %}
+                        {% if additional_checkout_buttons and settings.cart_additional_buttons %}
               <div class="additional-checkout-buttons additional-checkout-buttons--vertical">
                 {{ content_for_additional_checkout_buttons }}
               </div>
             {% endif %}
+          </div>
+
+                    <div class="cart__item-row text-center">
+            <small style="font-weight: 700; white-space: nowrap; color: #000; font-size: 0.75em; margin-top: 10px; display: block;">
+              {{ 'cart.general.shipping_at_checkout' | t }}
+            </small>
           </div>
         </div>
       </div>
