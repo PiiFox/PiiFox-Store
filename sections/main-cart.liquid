@@ -29,7 +29,7 @@
         >
         <p>{{ 'cart.general.empty' | t }}</p>
         {% comment %}<p>{{ 'cart.general.continue_browsing_html' | t: url: routes.all_products_collection_url }}</p>{% endcomment %}
-        <p>{{ 'cart.general.continue_browsing_html' | t: url: routes.root_url }}→</p>
+        <p>{{ 'cart.general.continue_browsing_html' | t: url: 'https://www.piifox.com/collections/all' }}→</p>
       {%- endif -%}
     </div>
   </header>
@@ -73,8 +73,8 @@
 
             {% render 'cart-price-detail', section_id: section.id %}
 
-            <div class="cart__item-sub cart__item-row">
-              <div>{{ 'cart.general.subtotal' | t }}</div>
+                        <div class="cart__item-sub cart__item-row">
+              <div>{{ 'cart.general.total' | t }}</div>
               <div data-subtotal>{{ cart.total_price | money }}</div>
             </div>
 
@@ -91,30 +91,7 @@
               </div>
             {% endif %}
 
-            <div class="cart__item-row text-center">
-              <small>
-                {{ 'cart.general.shipping_at_checkout' | t -}}
-                <br>
-              </small>
-            </div>
-
-            <div class="cart__item-row cart__checkout-wrapper">
-              {% style %}
-                #CartPageForm .cart__checkout-wrapper .cart__shopping-continue-btn {
-                  padding: 0.5em 1em;
-                  border-radius: 20em;
-                  background: #ababab;
-                }
-                #CartPageForm .cart__checkout-wrapper .cart__shopping-continue-btn a {
-                  display: inline-block;
-                  width: 100%;
-                  text-align: center;
-                  color: var(--colorBtnPrimaryText);
-                }
-              {% endstyle %}
-              <p class="cart__shopping-continue-btn">
-                {{ 'cart.general.continue_browsing_html' | t: url: routes.root_url }}
-              </p>
+                        <div class="cart__item-row cart__checkout-wrapper">
               <button
                 type="submit"
                 name="checkout"
@@ -127,6 +104,12 @@
               {% if additional_checkout_buttons and settings.cart_additional_buttons %}
                 <div class="additional-checkout-buttons">{{ content_for_additional_checkout_buttons }}</div>
               {% endif %}
+            </div>
+
+                        <div class="cart__item-row text-center">
+              <small style="font-weight: 700; white-space: nowrap; color: #000; font-size: 0.75em; margin-top: 10px; display: block;">
+                {{ 'cart.general.shipping_at_checkout' | t }}
+              </small>
             </div>
           </div>
           <div class="cart-policy-card">

@@ -576,6 +576,117 @@
         "about_us_title": ""
       }
     },
+    "video_carousel_home": {
+      "type": "video-carousel",
+      "blocks": {
+        "video_4": {
+          "type": "video_card",
+          "settings": {
+            "title": "PIIFOX Defender68 HE",
+            "video_url": "https://www.youtube.com/shorts/gcrsJnRckVk"
+          }
+        },
+        "video_card_iJBKGc": {
+          "type": "video_card",
+          "settings": {
+            "title": "Perfect Keybord for Gaming",
+            "video_url": "https://www.youtube.com/shorts/eErHAmFV5s4",
+            "custom_cover": "shopify://shop_images/20261024-143044.jpg"
+          }
+        },
+        "video_1": {
+          "type": "video_card",
+          "settings": {
+            "title": "PIIFOX VEXRO Haze68 PRO",
+            "video_url": "https://www.youtube.com/shorts/YmPvzQK0_ek"
+          }
+        },
+        "video_card_K9pz4B": {
+          "type": "video_card",
+          "settings": {
+            "title": "Luna Muse75 PRO",
+            "video_url": "https://www.instagram.com/reel/Dc1vC0UT4lC/",
+            "custom_cover": "shopify://shop_images/20261024-151434.jpg"
+          }
+        },
+        "video_card_3LLgwB": {
+          "type": "video_card",
+          "settings": {
+            "title": "The Most OVERKILL Keyboard Ever!",
+            "video_url": "https://www.youtube.com/shorts/T-Cdc8_YVlk",
+            "custom_cover": "shopify://shop_images/20261025-000758.jpg"
+          }
+        },
+        "video_card_kEfyD7": {
+          "type": "video_card",
+          "settings": {
+            "title": "When Style Meets Space-Saving Board",
+            "video_url": "https://www.instagram.com/silkys3ds/reel/De2FY3hAkeR/",
+            "custom_cover": "shopify://shop_images/20261024-152904.jpg"
+          }
+        },
+        "video_card_mWJQGU": {
+          "type": "video_card",
+          "settings": {
+            "title": "New Best Sounding Keyboard",
+            "video_url": "https://www.youtube.com/shorts/vpE0kQtrRw8"
+          }
+        },
+        "video_card_pQTkmE": {
+          "type": "video_card",
+          "settings": {
+            "title": "Back to school vibes keycaps! 📝",
+            "video_url": "https://www.youtube.com/shorts/-IKfGAQdtDU"
+          }
+        },
+        "video_3": {
+          "type": "video_card",
+          "settings": {
+            "title": "Unboxing the PIIFOX Defender 68",
+            "video_url": "https://www.youtube.com/shorts/9PTVbSDxG0s"
+          }
+        },
+        "video_5": {
+          "type": "video_card",
+          "disabled": true,
+          "settings": {
+            "title": "PIIFOX FORX Final75 HE",
+            "video_url": "https://www.youtube.com/shorts/CbCfIc0Lv9o"
+          }
+        },
+        "video_2": {
+          "type": "video_card",
+          "disabled": true,
+          "settings": {
+            "title": "PIIFOX LUNA Grid98 Keyboard Review",
+            "video_url": "https://www.youtube.com/shorts/4IDG0aq6obY"
+          }
+        }
+      },
+      "block_order": [
+        "video_4",
+        "video_card_iJBKGc",
+        "video_1",
+        "video_card_K9pz4B",
+        "video_card_3LLgwB",
+        "video_card_kEfyD7",
+        "video_card_mWJQGU",
+        "video_card_pQTkmE",
+        "video_3",
+        "video_5",
+        "video_2"
+      ],
+      "name": "Video Carousel Action",
+      "settings": {
+        "title": "Watch PIIFOX in Action",
+        "subheading": "Real typing tests and setup inspiration by pro and experts.",
+        "heading_size": "large",
+        "bg_color": "#ffffff",
+        "text_color": "#111111",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
     "joinus_section_YB8Mm3": {
       "type": "joinus_section",
       "name": "Join Us Section",
@@ -898,6 +1009,7 @@
     "style_studio_theme_grid_home",
     "single_page_width_banner_ihTf8b",
     "about_us_section_nGTcfQ",
+    "video_carousel_home",
     "joinus_section_YB8Mm3",
     "policy_list_section_pP8Ewa",
     "as_seen_on_section_VfrbVB",

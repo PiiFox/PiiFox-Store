@@ -9590,11 +9590,98 @@ $(".row_two").click(function () {
     .find(".grid-product")
     .addClass("small--one-halfs");
 });
-$(".return-top, .m_product_addToCart, .pc_product_addToCart").click(
-  function () {
-    $("body, html").animate({ scrollTop: 0 }, 1000);
-  },
-);
+$(".return-top").click(function () {
+  $("body, html").animate({ scrollTop: 0 }, 1000);
+});
+
+// 吸底栏真实加购（替换原有的点击回顶效果）
+$(document).on("click", ".m_product_addToCart, .pc_product_addToCart", function (e) {
+  e.preventDefault();
+  e.stopPropagation();
+
+  const $btn = $(this);
+  if (
+    $btn.hasClass("btn--loading") ||
+    $btn.hasClass("disabled") ||
+    $btn.is(":disabled") ||
+    $btn.attr("disabled") ||
+    $btn.attr("aria-disabled") === "true"
+  ) {
+    return false;
+  }
+
+  // 优先寻找当前商品详情的真实加购按钮
+  const mainBtn = document.querySelector(
+    "form.product-single__form button[data-add-to-cart], form.product-single__form button.add-to-cart, .product-single__meta button.add-to-cart, .product-single__meta [data-add-to-cart]"
+  );
+
+  if (mainBtn) {
+    if (
+      mainBtn.disabled ||
+      mainBtn.classList.contains("btn--loading") ||
+      mainBtn.getAttribute("disabled") !== null
+    ) {
+      return false;
+    }
+    $btn.addClass("btn--loading");
+    mainBtn.click();
+  } else {
+    // 降级策略：如果未直接找到主按钮，尝试提交商品表单
+    const form = document.querySelector("form.product-single__form");
+    if (form) {
+      $btn.addClass("btn--loading");
+      const formData = new FormData(form);
+      fetch((window.theme && window.theme.routes && window.theme.routes.cartAdd) || "/cart/add.js", {
+        method: "POST",
+        body: formData,
+        headers: {
+          "X-Requested-With": "XMLHttpRequest",
+          Accept: "application/json",
+        },
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          $btn.removeClass("btn--loading");
+          document.dispatchEvent(new CustomEvent("ajaxProduct:added", { detail: { product: data } }));
+        })
+        .catch((err) => {
+          console.error("Sticky bar add to cart failed", err);
+          $btn.removeClass("btn--loading");
+        });
+    }
+  }
+
+  // 安全防超时兜底（5秒后自动重置 loading）
+  setTimeout(function () {
+    $btn.removeClass("btn--loading");
+  }, 5000);
+});
+
+// 加购成功、失败或购物车更新时重置吸底栏按钮 loading 状态
+document.addEventListener("ajaxProduct:added", function () {
+  $(".m_product_addToCart, .pc_product_addToCart").removeClass("btn--loading");
+});
+document.addEventListener("ajaxProduct:error", function () {
+  $(".m_product_addToCart, .pc_product_addToCart").removeClass("btn--loading");
+});
+document.addEventListener("cart:updated", function () {
+  $(".m_product_addToCart, .pc_product_addToCart").removeClass("btn--loading");
+});
+
+// 监听变体变化以同步吸底栏按钮的禁用/售罄状态与文案
+document.addEventListener("variant:change", function (e) {
+  var variant = e.detail && e.detail.variant;
+  if (!variant) return;
+  var $stickyBtns = $(".m_product_addToCart, .pc_product_addToCart");
+  var defaultText = (window.theme && window.theme.strings && window.theme.strings.addToCart) || "Add to cart";
+  var soldOutText = (window.theme && window.theme.strings && window.theme.strings.soldOut) || "Sold Out";
+
+  if (!variant.available) {
+    $stickyBtns.addClass("disabled").attr("aria-disabled", "true").text(soldOutText);
+  } else {
+    $stickyBtns.removeClass("disabled").removeAttr("aria-disabled").text(defaultText);
+  }
+});
 /** 回顶 */
 $(window).scroll(function (e) {
   if ($(window).scrollTop() > 1300) $(".return-top").fadeIn(1000);

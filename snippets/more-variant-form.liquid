@@ -1,6 +1,7 @@
 <script>
   $(function () {
     $('.custom-shopify-buy-btn').click(async function (e) {
+      /* Complete Your Setup bundle Buy Now logic (commented out)
       const appendVariants = typeof window.getBundleAppendVariants === 'function' ? window.getBundleAppendVariants() : [];
       if (appendVariants && appendVariants.length > 0) {
         e.preventDefault();
@@ -27,10 +28,12 @@
         }
         return;
       }
+      */
       $('.shopify-payment-button button.shopify-payment-button__more-options').click();
     });
   });
 </script>
+{% comment %} Complete Your Setup (commented out)
 <div class="bundle-list">
   <label class="bundle-list-title">Complete Your Setup</label>
   <div class="bundle-tab-list">
@@ -73,6 +76,7 @@
     </div>
   </div>
 </div>
+{% endcomment %}
 
 {%- form 'product', product, id: form_id, class: 'product-single__form' -%}
   {%- liquid
@@ -433,10 +437,12 @@
         const items = [
           { id: currentVariantId, quantity: mainQty }
         ];
+        /* Complete Your Setup append variants (commented out)
         const appendVariantIds = getAppendVariantIds();
         if(appendVariantIds) {
           items.push(...appendVariantIds);
         }
+        */
         ajaxCart.MoreProductAddToCart(addBtn, items);
       });
     }
@@ -590,12 +596,15 @@
       });
     }
 
+    /* Complete Your Setup bundle initializations (commented out)
     initBundleTabs();
     initBundleQtySelectors();
     initBundleSelection();
     initSetup1KeycapSelection();
+    */
     initAddToCart();
 
+    /* Complete Your Setup scroll listeners (commented out)
     let resizeTimer;
     window.addEventListener('resize', function () {
       clearTimeout(resizeTimer);
@@ -607,6 +616,7 @@
     window.addEventListener('load', function () {
       updateBundleListScroll();
     });
+    */
   }
 
   if (document.readyState === 'loading') {

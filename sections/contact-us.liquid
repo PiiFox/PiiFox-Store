@@ -85,6 +85,14 @@
         </div>
       {%- endif -%}
 
+      {%- if section.settings.phone_number != blank -%}
+        <div class="info-divider"></div>
+        <div class="info-block">
+          <h4 class="info-block-title">{{ section.settings.phone_title | default: 'Call & SMS:' }}</h4>
+          <p class="business-hours">{{ section.settings.phone_number }}{% if section.settings.phone_hours != blank %} &nbsp;{{ section.settings.phone_hours }}{% endif %}</p>
+        </div>
+      {%- endif -%}
+
       {%- if section.settings.show_social -%}
         <div class="info-divider"></div><div class="info-block"><h4 class="info-block-title">{{ section.settings.social_title }}</h4>{% render 'social-icons', additional_classes: 'footer__social', hide_discord: true %}</div>
       {%- endif -%}
@@ -214,6 +222,24 @@
       "default": "service@piifox.com"
     },
     {
+      "type": "text",
+      "id": "phone_title",
+      "label": "Phone title",
+      "default": "Call & SMS:"
+    },
+    {
+      "type": "text",
+      "id": "phone_number",
+      "label": "Phone number",
+      "default": "+852 9572 2944"
+    },
+    {
+      "type": "text",
+      "id": "phone_hours",
+      "label": "Phone hours",
+      "default": "Mon-Fri, 9AM-6PM (PDT)"
+    },
+    {
       "type": "checkbox",
       "id": "show_social",
       "label": "Show social media",
@@ -259,13 +285,13 @@
       "type": "textarea",
       "id": "company_name",
       "label": "Company legal name",
-      "default": "PIIFOX is operated by Shenzhen Paishifu Technology Co, Ltd."
+      "default": "PIIFOX is operated by Shenzhen Puruidasi Trading Co., Ltd."
     },
     {
       "type": "textarea",
       "id": "company_address",
       "label": "Company detailed address",
-      "default": "Room 1210, Gangxinda Henggang Building, No. 5008 Longgang Avenue (Henggang Section), Songbai Community, Henggang Subdistrict, Longgang District, Shenzhen, Guangdong 518115, China"
+      "default": "Units 109-110, Residential Building F, No. 40 Liulian Road, Huale Community, Henggang Subdistrict, Longgang District, Shenzhen, Guangdong, China"
     }
   ],
   "blocks": [

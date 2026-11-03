@@ -221,7 +221,6 @@
         "settings": {
           "main_menu_link_list": "main-menu",
           "mega_menu_images": true,
-          "timezone_area_limit": false,
           "main_menu1": "Keyboards",
           "main_menu1_tag": "New",
           "main_menu2": "Keycaps",
@@ -276,7 +275,7 @@
               "show_newsletter": false,
               "foot_logo": "shopify://shop_images/logo-1.webp",
               "title": "Where Performance Meets Personality.",
-              "text": "<p>Built for the way you work, play, and make your setup yours.</p><p>Support: <a href=\"mailto:service@piifox.com\">service@piifox.com</a></p><p>Business Hours: Mon - Sat : 8AM-7PM (PDT)</p>",
+              "text": "<p>Built for the way you work, play, and make your setup yours.</p><p>Support: <a href=\"mailto:service@piifox.com\">service@piifox.com</a></p><p>Call & SMS: +852-9572-2944&nbsp;&nbsp;Mon-Fri, 9AM-6PM (PDT)</p><p>Business Hours: Mon - Sat : 8AM-7PM (PDT)</p>",
               "container_width": 25
             }
           },
@@ -332,7 +331,7 @@
           "show_currency_flags": true,
           "show_payment_icons": true,
           "show_copyright": true,
-          "copyright_text": ". Operated by Shenzhen Paishifu Technology Co, Ltd.",
+          "copyright_text": ". Operated by Shenzhen Puruidasi Trading Co., Ltd.",
           "policy_list": "<a href=\"/pages/privacy-policy\" style=\"padding: 0 0.5rem;border-right: 1px solid #fff;\">Privacy Policy</a>      <a href=\"/pages/terms-of-service\" style=\"padding-left: 0.5rem\">Terms &amp; Conditions</a> \n | <a href=\"#\" style=\"padding: 0 0.5rem;\" onclick=\"__ucCmp.showSecondLayer(); return false;\">Cookie Preferences</a>"
         }
       },
@@ -667,11 +666,6 @@
     },
     "content_for_index": [],
     "blocks": {
-      "14060646107696862457": {
-        "type": "shopify://apps/judge-me-reviews/blocks/judgeme_core/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
-        "disabled": false,
-        "settings": {}
-      },
       "10008203421340698720": {
         "type": "shopify://apps/g-translate-shop-translator/blocks/dropdown/408a74ac-f92d-43cf-a1b1-a044341e66bd",
         "disabled": true,
@@ -745,6 +739,11 @@
       "7570552984445421165": {
         "type": "shopify://apps/yotpo-product-reviews/blocks/settings/eb7dfd7d-db44-4334-bc49-c893b51b36cf",
         "disabled": false,
+        "settings": {}
+      },
+      "12439146293631897289": {
+        "type": "shopify://apps/blockify-fraud-filter/blocks/app_embed/2e3e0ba5-0e70-447a-9ec5-3bf76b5ef12e",
+        "disabled": true,
         "settings": {}
       }
     }
