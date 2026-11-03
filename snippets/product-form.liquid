@@ -1,11 +1,3 @@
-<script>
-$(function() {
-  $('.custom-shopify-buy-btn').click(() => {
-    console.log('click');
-    $('.shopify-payment-button button.shopify-payment-button__more-options').click();
-  })
-})
-</script>
 {%- form 'product', product, id: form_id, class: 'product-single__form' -%}
 
   {%- liquid
@@ -60,16 +52,7 @@ $(function() {
       </span>
     </button>
 
-    {% style %}
-        .custom-shopify-buy-btn.btn {
-            width: 49%;
-            border: 1px solid var(--colorBtnPrimary);
-            border-radius: 10px;
-            font-size: 14px;
-            height: 50px;
-            padding: 0;
-            display: none;
-          }
+        {% style %}
           .shopify-payment-button[data-shopify="payment-button"] .shopify-payment-button__button--branded {
             display: none
           }
@@ -180,8 +163,7 @@ $(function() {
           border-color: var(--colorBtnDisable);
         }
     {% endstyle %}
-    {%- if enable_dynamic_buttons -%}
-      <button class="custom-shopify-buy-btn btn shopify-payment-button"  type="button" data-testid="sheet-open-button" >{{ 'general.custom.buy_now' | t }}</button>
+        {%- if enable_dynamic_buttons -%}
       {{ form | payment_button }}
     {%- endif -%}
 

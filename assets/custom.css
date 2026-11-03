@@ -1819,15 +1819,6 @@ input.js-qty__num:focus {
   border: none;
 }
 
-.custom-shopify-buy-btn.btn {
-  width: 49%;
-  border: 1px solid var(--colorBtnPrimary);
-  border-radius: 10px;
-  font-size: 14px;
-  height: 50px;
-  padding: 0;
-  display: none;
-}
 /* .shopify-payment-button[data-shopify="payment-button"] {display: none;} */
 .shopify-payment-button[data-shopify="payment-button"]
   .shopify-payment-button__button--branded {

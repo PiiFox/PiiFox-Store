@@ -1,38 +1,3 @@
-<script>
-  $(function () {
-    $('.custom-shopify-buy-btn').click(async function (e) {
-      /* Complete Your Setup bundle Buy Now logic (commented out)
-      const appendVariants = typeof window.getBundleAppendVariants === 'function' ? window.getBundleAppendVariants() : [];
-      if (appendVariants && appendVariants.length > 0) {
-        e.preventDefault();
-        e.stopPropagation();
-        const currentVariantId = typeof window.getBundleCurrentVariantId === 'function' ? window.getBundleCurrentVariantId() : null;
-        if (!currentVariantId) return;
-        const mainQtyInput = document.querySelector('.product__quantity input[name="quantity"]') || document.querySelector('input[name="quantity"]');
-        const mainQty = mainQtyInput ? Math.max(1, parseInt(mainQtyInput.value, 10) || 1) : 1;
-        const items = [{ id: currentVariantId, quantity: mainQty }, ...appendVariants];
-
-        const buyBtn = e.currentTarget;
-        buyBtn.disabled = true;
-        buyBtn.classList.add('btn--loading');
-        try {
-          await fetch((window.theme && window.theme.routes && window.theme.routes.cartAdd) || '/cart/add.js', {
-            method: 'POST',
-            body: JSON.stringify({ items: items }),
-            headers: { 'Content-Type': 'application/json', Accept: 'application/json' }
-          });
-          window.location.href = '/checkout';
-        } catch (err) {
-          console.error('Buy Now bundle failed', err);
-          window.location.href = '/checkout';
-        }
-        return;
-      }
-      */
-      $('.shopify-payment-button button.shopify-payment-button__more-options').click();
-    });
-  });
-</script>
 {% comment %} Complete Your Setup (commented out)
 <div class="bundle-list">
   <label class="bundle-list-title">Complete Your Setup</label>
@@ -126,9 +91,6 @@
     }
   {% endstyle %}
   {%- if enable_dynamic_buttons -%}
-    <button class="custom-shopify-buy-btn btn shopify-payment-button" type="button" data-testid="sheet-open-button">
-      {{ 'general.custom.buy_now' | t }}
-    </button>
     {{ form | payment_button }}
   {%- endif -%}
 
