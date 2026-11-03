@@ -1,0 +1,524 @@
+{%- comment -%}
+  Style Studio Board Switcher
+  Shows three keyboard bases. Clicking a color option below a base swaps the
+  image to a different keycap "installed" look.
+
+  Each block = one keyboard base.
+    - base_image: image of the empty base (optional, falls back to generated art)
+    - options:    repeatable options, each with a label, a color swatch and an
+                  installed (keycaps on) image.
+{%- endcomment -%}
+
+<section class="ss-switch ss-switch-{{ section.id }}" data-ss-switch>
+  <div class="ss-switch__inner">
+    {%- if section.settings.title != blank or section.settings.subtitle != blank -%}
+      <div class="ss-switch__header">
+        {%- if section.settings.title != blank -%}
+          <h2 class="ss-switch__title">{{ section.settings.title | escape }}</h2>
+        {%- endif -%}
+        {%- if section.settings.subtitle != blank -%}
+          <p class="ss-switch__subtitle">{{ section.settings.subtitle | escape | newline_to_br }}</p>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    <div class="ss-switch__grid">
+      {%- for block in section.blocks -%}
+        {%- assign base_handle = block.settings.base_handle | default: block.id -%}
+        <article class="ss-switch__base" data-ss-base {{ block.shopify_attributes }}>
+          <div class="ss-switch__stage">
+            {%- comment -%} Installed (keycaps on) images, one per option {%- endcomment -%}
+            {%- for i in (1..5) -%}
+              {%- assign image_key = 'option_' | append: i | append: '_image' -%}
+              {%- assign color_key = 'option_' | append: i | append: '_color' -%}
+              {%- assign label_key = 'option_' | append: i | append: '_label' -%}
+              {%- assign opt_image = block.settings[image_key] -%}
+              {%- assign opt_color = block.settings[color_key] -%}
+              {%- assign opt_label = block.settings[label_key] -%}
+              {%- if opt_image != blank or opt_color != blank -%}
+                <div
+                  class="ss-switch__slide{% if forloop.first %} is-active{% endif %}"
+                  data-ss-slide="{{ i }}"
+                >
+                  {%- if opt_image != blank -%}
+                    <img
+                      class="ss-switch__slide-img"
+                      src="{{ opt_image | image_url: width: 1200 }}"
+                      alt="{{ opt_label | default: block.settings.title | escape }}"
+                      loading="lazy"
+                      width="{{ opt_image.width }}"
+                      height="{{ opt_image.height }}"
+                    >
+                  {%- else -%}
+                    <div class="ss-switch__svg">
+                      {%- render 'style-studio-svg-art', name: 'board-base', color: opt_color -%}
+                    </div>
+                  {%- endif -%}
+                </div>
+              {%- endif -%}
+            {%- endfor -%}
+
+            {%- if block.settings.base_image != blank -%}
+              <img
+                class="ss-switch__base-img"
+                src="{{ block.settings.base_image | image_url: width: 1200 }}"
+                alt="{{ block.settings.title | escape }}"
+                loading="lazy"
+                width="{{ block.settings.base_image.width }}"
+                height="{{ block.settings.base_image.height }}"
+              >
+            {%- endif -%}
+          </div>
+
+          {%- if block.settings.title != blank -%}
+            <h3 class="ss-switch__base-title">{{ block.settings.title | escape }}</h3>
+          {%- endif -%}
+
+          <div class="ss-switch__options" role="group" aria-label="{{ block.settings.title | escape | append: ' colors' }}">
+            {%- for i in (1..5) -%}
+              {%- assign color_key = 'option_' | append: i | append: '_color' -%}
+              {%- assign label_key = 'option_' | append: i | append: '_label' -%}
+              {%- assign image_key = 'option_' | append: i | append: '_image' -%}
+              {%- assign opt_color = block.settings[color_key] -%}
+              {%- assign opt_label = block.settings[label_key] -%}
+              {%- assign opt_image = block.settings[image_key] -%}
+              {%- if opt_color != blank or opt_image != blank -%}
+                <button
+                  type="button"
+                  class="ss-switch__option{% if forloop.first %} is-active{% endif %}"
+                  data-ss-option="{{ i }}"
+                  style="--ss-swatch: {{ opt_color | default: '#cccccc' }};"
+                  aria-label="{{ opt_label | default: 'Color' }}"
+                  aria-pressed="{% if forloop.first %}true{% else %}false{% endif %}"
+                >
+                  <span class="ss-switch__swatch" aria-hidden="true"></span>
+                  {%- if opt_label != blank -%}
+                    <span class="ss-switch__option-label">{{ opt_label | escape }}</span>
+                  {%- endif -%}
+                </button>
+              {%- endif -%}
+            {%- endfor -%}
+          </div>
+        </article>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% style %}
+  .ss-switch-{{ section.id }} {
+    width: 100%;
+    background-color: {{ section.settings.background_color }};
+    padding: {{ section.settings.padding_top }}px 0 {{ section.settings.padding_bottom }}px;
+  }
+
+  .ss-switch-{{ section.id }} .ss-switch__inner {
+    width: min(100% - 40px, 1320px);
+    margin: 0 auto;
+  }
+
+  .ss-switch-{{ section.id }} .ss-switch__header {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+
+  .ss-switch-{{ section.id }} .ss-switch__title {
+    margin: 0;
+    color: {{ section.settings.title_color }};
+    font-size: 34px;
+    font-weight: 700;
+    line-height: 1.15;
+  }
+
+  .ss-switch-{{ section.id }} .ss-switch__subtitle {
+    max-width: 46em;
+    margin: 12px auto 0;
+    color: {{ section.settings.subtitle_color }};
+    font-size: 16px;
+    line-height: 1.6;
+  }
+
+  .ss-switch-{{ section.id }} .ss-switch__grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: {{ section.settings.gap }}px;
+  }
+
+  .ss-switch-{{ section.id }} .ss-switch__base {
+    display: flex;
+    flex-direction: column;
+    background-color: {{ section.settings.card_color }};
+    border: 1px solid rgba(0, 0, 0, 0.07);
+    border-radius: 16px;
+    padding: 18px;
+  }
+
+  .ss-switch-{{ section.id }} .ss-switch__stage {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    border-radius: 12px;
+    overflow: hidden;
+    background-color: #f6f4ef;
+  }
+
+  .ss-switch-{{ section.id }} .ss-switch__slide {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.35s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .ss-switch-{{ section.id }} .ss-switch__slide.is-active {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .ss-switch-{{ section.id }} .ss-switch__slide-img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  .ss-switch-{{ section.id }} .ss-switch__svg,
+  .ss-switch-{{ section.id }} .ss-switch__svg svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  .ss-switch-{{ section.id }} .ss-switch__base-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    pointer-events: none;
+    opacity: 0;
+  }
+
+  .ss-switch-{{ section.id }} .ss-switch__base-title {
+    margin: 16px 0 0;
+    color: {{ section.settings.card_title_color }};
+    font-size: 17px;
+    font-weight: 700;
+    line-height: 1.3;
+    text-align: center;
+  }
+
+  .ss-switch-{{ section.id }} .ss-switch__options {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 14px;
+  }
+
+  .ss-switch-{{ section.id }} .ss-switch__option {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 12px 6px 8px;
+    border: 1px solid #dfe3e0;
+    border-radius: 999px;
+    background-color: #ffffff;
+    cursor: pointer;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+    font: inherit;
+  }
+
+  .ss-switch-{{ section.id }} .ss-switch__option:hover {
+    border-color: {{ section.settings.accent_color }};
+  }
+
+  .ss-switch-{{ section.id }} .ss-switch__option.is-active {
+    border-color: {{ section.settings.accent_color }};
+    box-shadow: 0 0 0 2px {{ section.settings.accent_color }}33;
+    background-color: #fbfdfa;
+  }
+
+  .ss-switch-{{ section.id }} .ss-switch__swatch {
+    display: block;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: var(--ss-swatch);
+    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.12);
+  }
+
+  .ss-switch-{{ section.id }} .ss-switch__option-label {
+    color: {{ section.settings.card_title_color }};
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 1;
+    white-space: nowrap;
+  }
+
+  @media screen and (max-width: 989px) {
+    .ss-switch-{{ section.id }} .ss-switch__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media screen and (max-width: 769px) {
+    .ss-switch-{{ section.id }} {
+      padding: {{ section.settings.padding_top | times: 0.65 | round }}px 0 {{ section.settings.padding_bottom | times: 0.65 | round }}px;
+    }
+
+    .ss-switch-{{ section.id }} .ss-switch__inner {
+      width: calc(100% - 32px);
+    }
+
+    .ss-switch-{{ section.id }} .ss-switch__header {
+      margin-bottom: 24px;
+    }
+
+    .ss-switch-{{ section.id }} .ss-switch__title {
+      font-size: 24px;
+    }
+
+    .ss-switch-{{ section.id }} .ss-switch__subtitle {
+      font-size: 14px;
+    }
+
+    .ss-switch-{{ section.id }} .ss-switch__grid {
+      grid-template-columns: minmax(0, 1fr);
+      gap: {{ section.settings.gap | times: 0.7 | round }}px;
+    }
+  }
+{% endstyle %}
+
+<script>
+  (function () {
+    function initSection(root) {
+      if (!root || root.dataset.ssSwitchInit === 'true') return;
+      root.dataset.ssSwitchInit = 'true';
+
+      root.querySelectorAll('[data-ss-base]').forEach(function (base) {
+        var slides = base.querySelectorAll('[data-ss-slide]');
+        var options = base.querySelectorAll('[data-ss-option]');
+
+        options.forEach(function (option) {
+          option.addEventListener('click', function () {
+            var target = option.getAttribute('data-ss-option');
+
+            options.forEach(function (o) {
+              var active = o === option;
+              o.classList.toggle('is-active', active);
+              o.setAttribute('aria-pressed', active ? 'true' : 'false');
+            });
+
+            slides.forEach(function (slide) {
+              slide.classList.toggle(
+                'is-active',
+                slide.getAttribute('data-ss-slide') === target
+              );
+            });
+          });
+        });
+      });
+    }
+
+    function initAll() {
+      document.querySelectorAll('[data-ss-switch]').forEach(initSection);
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initAll);
+    } else {
+      initAll();
+    }
+
+    document.addEventListener('shopify:section:load', function (event) {
+      var section = event.target.querySelector
+        ? event.target.querySelector('[data-ss-switch]')
+        : null;
+      if (section) initSection(section);
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "SS Board Switcher",
+  "tag": "section",
+  "max_blocks": 3,
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "One Base. Many Looks."
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Title color",
+      "default": "#121212"
+    },
+    {
+      "type": "textarea",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Pick a base, then tap a color to preview the keycaps installed on it."
+    },
+    {
+      "type": "color",
+      "id": "subtitle_color",
+      "label": "Subtitle color",
+      "default": "#666666"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Accent color",
+      "default": "#286633"
+    },
+    {
+      "type": "color",
+      "id": "card_color",
+      "label": "Card background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "card_title_color",
+      "label": "Base title color",
+      "default": "#121212"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Section background",
+      "default": "#faf8f5"
+    },
+    {
+      "type": "range",
+      "id": "gap",
+      "label": "Column gap",
+      "min": 8,
+      "max": 48,
+      "step": 2,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding top",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding bottom",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 64
+    }
+  ],
+  "blocks": [
+    {
+      "type": "board",
+      "name": "Keyboard base",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Base name",
+          "default": "Base 01"
+        },
+        {
+          "type": "image_picker",
+          "id": "base_image",
+          "label": "Base image (optional)",
+          "info": "Shown behind the installed keycap preview."
+        },
+        { "type": "header", "content": "Color option 1" },
+        { "type": "text", "id": "option_1_label", "label": "Label", "default": "Forest" },
+        { "type": "color", "id": "option_1_color", "label": "Color", "default": "#286633" },
+        { "type": "image_picker", "id": "option_1_image", "label": "Keycaps installed image" },
+        { "type": "header", "content": "Color option 2" },
+        { "type": "text", "id": "option_2_label", "label": "Label", "default": "Sunset" },
+        { "type": "color", "id": "option_2_color", "label": "Color", "default": "#d97706" },
+        { "type": "image_picker", "id": "option_2_image", "label": "Keycaps installed image" },
+        { "type": "header", "content": "Color option 3" },
+        { "type": "text", "id": "option_3_label", "label": "Label", "default": "Blossom" },
+        { "type": "color", "id": "option_3_color", "label": "Color", "default": "#ef5da8" },
+        { "type": "image_picker", "id": "option_3_image", "label": "Keycaps installed image" },
+        { "type": "header", "content": "Color option 4" },
+        { "type": "text", "id": "option_4_label", "label": "Label", "default": "Ocean" },
+        { "type": "color", "id": "option_4_color", "label": "Color", "default": "#2563eb" },
+        { "type": "image_picker", "id": "option_4_image", "label": "Keycaps installed image" },
+        { "type": "header", "content": "Color option 5" },
+        { "type": "text", "id": "option_5_label", "label": "Label", "default": "Mono" },
+        { "type": "color", "id": "option_5_color", "label": "Color", "default": "#3a3d42" },
+        { "type": "image_picker", "id": "option_5_image", "label": "Keycaps installed image" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "SS Board Switcher",
+      "blocks": [
+        {
+          "type": "board",
+          "settings": {
+            "title": "Base 01",
+            "option_1_label": "Forest",
+            "option_1_color": "#286633",
+            "option_2_label": "Sunset",
+            "option_2_color": "#d97706",
+            "option_3_label": "Blossom",
+            "option_3_color": "#ef5da8",
+            "option_4_label": "Ocean",
+            "option_4_color": "#2563eb",
+            "option_5_label": ""
+          }
+        },
+        {
+          "type": "board",
+          "settings": {
+            "title": "Base 02",
+            "option_1_label": "Mono",
+            "option_1_color": "#3a3d42",
+            "option_2_label": "Sand",
+            "option_2_color": "#b99a6b",
+            "option_3_label": "Mint",
+            "option_3_color": "#10b981",
+            "option_4_label": "Berry",
+            "option_4_color": "#be123c",
+            "option_5_label": ""
+          }
+        },
+        {
+          "type": "board",
+          "settings": {
+            "title": "Base 03",
+            "option_1_label": "Indigo",
+            "option_1_color": "#4f46e5",
+            "option_2_label": "Ivory",
+            "option_2_color": "#e5e1d8",
+            "option_3_label": "Coral",
+            "option_3_color": "#fb7185",
+            "option_4_label": "Slate",
+            "option_4_color": "#475569",
+            "option_5_label": ""
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

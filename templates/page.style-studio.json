@@ -1,344 +1,213 @@
 {
-  "sections": {
-    "hero": {
-      "type": "style-studio-hero",
-      "settings": {
-        "title": "STATE YOUR BOARDS",
-        "subtitle": "We keep a steady release schedule so you can always find new keycap styles to choose from."
-      }
-    },
-    "themes": {
-      "type": "style-studio-themes",
-      "blocks": {
-        "theme-card-1": {
-          "type": "theme_card",
-          "settings": {
-            "number": "01",
-            "title": "Match Your Setup",
-            "subtitle": "Refresh your desk with colors that fit your space.",
-            "background_color": "#eff9d6",
-            "icon_color": "#042106"
-          }
-        },
-        "theme-card-2": {
-          "type": "theme_card",
-          "settings": {
-            "number": "02",
-            "title": "Tell Your Story",
-            "subtitle": "Choose a themed keycap set that shows your personality.",
-            "background_color": "#ffe8c2",
-            "icon_color": "#762e02"
-          }
-        },
-        "theme-card-3": {
-          "type": "theme_card",
-          "settings": {
-            "number": "03",
-            "title": "Change the Vibe",
-            "subtitle": "Switch keycaps when your workspace needs a new feeling.",
-            "background_color": "#f4ddff",
-            "icon_color": "#4e1573"
-          }
-        }
-      },
-      "block_order": [
-        "theme-card-1",
-        "theme-card-2",
-        "theme-card-3"
-      ],
-      "settings": {
-        "title_before": "Switch the Look.",
-        "title_before_color": "#111111",
-        "title_after": "Keep the Feel.",
-        "title_after_color": "#244f1d",
-        "subtitle": "Refresh your keyboard anytime with keycaps that match your setup, style, and mood."
-      }
-    },
-    "board_showcase": {
-      "type": "style-studio-board-showcase",
-      "blocks": {
-        "board-clean-minimal": {
-          "type": "theme",
-          "settings": {
-            "content_title": "Clean & Minimal",
-            "content_subtitle": "Simple. Calm. Focused.",
-            "content_body": "Built for focused workspaces and calm routines, the Clean & Minimal collection keeps things simple, light, and timeless for everyday typing.",
-            "detail_1_title": "Minimal Play",
-            "detail_2_title": "Silence",
-            "detail_3_title": "Dashboard White"
-          }
-        }
-      },
-      "block_order": [
-        "board-clean-minimal"
-      ],
-      "settings": {
-        "card_eyebrow": "Theme Stories",
-        "card_title": "Styles With Stories",
-        "view_all_themes_label": "View All Themes",
-        "view_all_themes_link": "/collections/keycaps"
-      }
-    },
-    "theme_grid": {
-      "type": "style-studio-theme-grid",
-      "blocks": {
-        "theme-retro-home": {
-          "type": "theme_card",
-          "settings": {
-            "title": "Retro & Daily",
-            "title_color": "#6f3b13",
-            "subtitle": "Timeless charm for your daily workflow",
-            "subtitle_color": "#121212",
-            "description": "Classic gray tones, vintage keycap styling, and nostalgic accents for an enduring, comfortable desk experience.",
-            "description_color": "#666666",
-            "product_image": "shopify://shop_images/time_1cb99280-b860-4fd3-b818-82033cf1685b.png",
-            "collection": "retro-daily-theme-keycaps",
-            "button_label": "Explore Theme",
-            "button_link": "",
-            "button_text_color": "#6f3b13",
-            "highlight_color": "#f4efe6"
-          }
-        },
-        "theme-nature-home": {
-          "type": "theme_card",
-          "settings": {
-            "title": "Nature & Soft",
-            "title_color": "#107a44",
-            "subtitle": "Calm tones inspired by nature",
-            "subtitle_color": "#121212",
-            "description": "Soft greens, warm neutrals, and gentle contrast for a relaxed desk setup.",
-            "description_color": "#666666",
-            "product_image": "shopify://shop_images/Herbary_dd09c53b-9219-4056-b731-fc1596051933.png",
-            "collection": "nature-soft-theme-keycaps",
-            "button_label": "Explore Theme",
-            "button_link": "",
-            "button_text_color": "#107a44",
-            "highlight_color": "#f4efe6"
-          }
-        },
-        "theme_card_ycaA7P": {
-          "type": "theme_card",
-          "settings": {
-            "title": "Clean & Minimal",
-            "title_color": "#bc896f",
-            "subtitle": "Pure simplicity designed for deep focus",
-            "subtitle_color": "#121212",
-            "description": "Monochrome palettes, sleek lines, and subtle details for a clean, distraction-free workspace.",
-            "description_color": "#666666",
-            "product_image": "shopify://shop_images/Silence.png",
-            "collection": "clean-minimal-theme-keycaps",
-            "button_label": "Explore Theme",
-            "button_link": "",
-            "button_text_color": "#bc896f",
-            "highlight_color": "#f4efe6"
-          }
-        },
-        "theme-cute-home": {
-          "type": "theme_card",
-          "settings": {
-            "title": "Cute & Colorful",
-            "title_color": "#ef5da8",
-            "subtitle": "Vibrant hues that bring joy to your desk",
-            "subtitle_color": "#121212",
-            "description": "Playful pastels, charming novelties, and cheerful contrasts to brighten up your everyday typing.",
-            "description_color": "#666666",
-            "product_image": "shopify://shop_images/Chocolate.png",
-            "collection": "cute-colorful-theme-keycaps",
-            "button_label": "Explore Theme",
-            "button_link": "",
-            "button_text_color": "#ef5da8",
-            "highlight_color": "#f4efe6"
-          }
-        },
-        "theme_card_nUMQFG": {
-          "type": "theme_card",
-          "settings": {
-            "title": "Game & Playful",
-            "title_color": "#e14f56",
-            "subtitle": "Dynamic energy built for immersive play",
-            "subtitle_color": "#121212",
-            "description": "Bold contrast colors, vivid lighting effects, and mechanical responsiveness for the ultimate gaming vibe.",
-            "description_color": "#666666",
-            "product_image": "shopify://shop_images/Pixelgo.png",
-            "collection": "game-playful-theme-keycaps",
-            "button_label": "Explore Theme",
-            "button_link": "",
-            "button_text_color": "#e14f56",
-            "highlight_color": "#f4efe6"
-          }
-        },
-        "theme-art-home": {
-          "type": "theme_card",
-          "settings": {
-            "title": "Art & Culture",
-            "title_color": "#7c3aed",
-            "subtitle": "Elegant aesthetics inspired by classic art",
-            "subtitle_color": "#121212",
-            "description": "Rich historical tones, refined patterns, and artistic craftsmanship for a sophisticated desktop aesthetic.",
-            "description_color": "#666666",
-            "product_image": "shopify://shop_images/DUNHUANG.png",
-            "collection": "art-culture-theme-keycaps",
-            "button_label": "Explore Theme",
-            "button_link": "",
-            "button_text_color": "#7c3aed",
-            "highlight_color": "#f4efe6"
-          }
-        },
-        "theme-fun-home": {
-          "type": "theme_card",
-          "settings": {
-            "title": "Future & Fantasy",
-            "title_color": "#0f766e",
-            "subtitle": "Bold aesthetics from a world beyond tomorrow",
-            "subtitle_color": "#121212",
-            "description": "Cyber-inspired neon, translucent textures, and sci-fi elements for an otherworldly setup.",
-            "description_color": "#666666",
-            "product_image": "shopify://shop_images/PRISMS.png",
-            "collection": "future-fantasy-theme-keycaps",
-            "button_label": "Explore Theme",
-            "button_link": "",
-            "button_text_color": "#0f766e",
-            "highlight_color": "#f4efe6"
-          }
-        }
-      },
-      "block_order": [
-        "theme-retro-home",
-        "theme-nature-home",
-        "theme_card_ycaA7P",
-        "theme-cute-home",
-        "theme_card_nUMQFG",
-        "theme-art-home",
-        "theme-fun-home"
-      ],
-      "settings": {
-        "title_before": "One Board.",
-        "title_before_color": "#121212",
-        "title_after": "Many Styles.",
-        "title_after_color": "#244f1d",
-        "subtitle": "Preview how different keycap themes transform the same keyboard.",
-        "style_card_button_label": "View Style"
-      }
-    },
-    "service": {
-      "type": "style-studio-service",
-      "settings": {
-        "title_before": "PIIFOX",
-        "title_before_color": "#111111",
-        "title_after": "Style Service",
-        "title_after_color": "#244f1d",
-        "subtitle": "Want us to install your keycaps for you? We can do it before shipping —\nor you can swap them yourself anytime."
-      }
-    },
-    "community": {
-      "type": "style-studio-community",
-      "blocks": {
-        "community-1": {
-          "type": "image",
-          "settings": {
-            "alt": "Community setup"
-          }
-        },
-        "community-2": {
-          "type": "image",
-          "settings": {
-            "alt": "Community setup"
-          }
-        },
-        "community-3": {
-          "type": "image",
-          "settings": {
-            "alt": "Community setup"
-          }
-        },
-        "community-4": {
-          "type": "image",
-          "settings": {
-            "alt": "Community setup"
-          }
-        },
-        "community-5": {
-          "type": "image",
-          "settings": {
-            "alt": "Community setup"
-          }
-        },
-        "community-6": {
-          "type": "image",
-          "settings": {
-            "alt": "Community setup"
-          }
-        },
-        "community-7": {
-          "type": "image",
-          "settings": {
-            "alt": "Community setup"
-          }
-        },
-        "community-8": {
-          "type": "image",
-          "settings": {
-            "alt": "Community setup"
-          }
-        }
-      },
-      "block_order": [
-        "community-1",
-        "community-2",
-        "community-3",
-        "community-4",
-        "community-5",
-        "community-6",
-        "community-7",
-        "community-8"
-      ],
-      "settings": {
-        "title_before": "Real Desks.",
-        "title_before_color": "#111111",
-        "title_after": "Real Styles.",
-        "title_after_color": "#244f1d",
-        "subtitle": "See how different setups bring real PIIFOX keyboards and keycaps."
-      }
-    },
-    "explore": {
-      "type": "style-studio-explore",
-      "blocks": {
-        "shop-keycaps": {
-          "type": "button",
-          "settings": {
-            "label": "Shop Keycaps",
-            "link": "/collections/keycaps",
-            "background_color": "#214d0d",
-            "text_color": "#ffffff"
-          }
-        },
-        "explore-keyboards": {
-          "type": "button",
-          "settings": {
-            "label": "Explore Keyboards",
-            "link": "/collections/keyboards",
-            "background_color": "#ffffff",
-            "text_color": "#111111"
-          }
-        }
-      },
-      "block_order": [
-        "shop-keycaps",
-        "explore-keyboards"
-      ],
-      "settings": {
-        "title": "Build a Setup\nThat Feels Like You.",
-        "subtitle": "Change your keycaps. Build your vibe.\nOne choice at a time."
-      }
-    }
-  },
-  "order": [
-    "hero",
-    "themes",
-    "board_showcase",
-    "theme_grid",
-    "service",
-    "community",
-    "explore"
-  ]
+    "sections":  {
+                     "hero":  {
+                                  "type":  "style-studio-hero",
+                                  "settings":  {
+                                                   "title":  "STATE YOUR BOARDS",
+                                                   "subtitle":  "We keep a steady release schedule so you can always find new keycap styles to choose from."
+                                               }
+                              },
+                     "intro":  {
+                                   "type":  "ss-intro-heading",
+                                   "settings":  {
+                                                    "title":  "Back You Up By A Limited Lifetime Warranty",
+                                                    "subtitle":  "Your satisfaction is always our goal. Every CASETiFY Travel suitcase is built for the journey, but just in case things get bumpy, we\u0027ve got your back with a Limited Lifetime Warranty. We\u0027re here to make sure your suitcase is already ready for life-long travel.",
+                                                    "title_color":  "#121212",
+                                                    "heading_size":  56,
+                                                    "heading_weight":  "700",
+                                                    "subtitle_color":  "#555555",
+                                                    "subtitle_size":  18,
+                                                    "subtitle_gap":  20,
+                                                    "alignment":  "center",
+                                                    "max_width":  900,
+                                                    "background_color":  "#ffffff",
+                                                    "padding_top":  72,
+                                                    "padding_bottom":  56
+                                                }
+                               },
+                     "steps":  {
+                                   "type":  "ss-steps",
+                                   "blocks":  {
+                                                  "step-1":  {
+                                                                 "type":  "step",
+                                                                 "settings":  {
+                                                                                  "art":  "step-product",
+                                                                                  "title":  "Open a keyboard product page",
+                                                                                  "text":  "Pick the keyboard you love and open its product page to start building your setup."
+                                                                              }
+                                                             },
+                                                  "step-2":  {
+                                                                 "type":  "step",
+                                                                 "settings":  {
+                                                                                  "art":  "step-keycap",
+                                                                                  "title":  "Add your keycaps",
+                                                                                  "text":  "Choose a keycap theme and add the keycap set to the same keyboard order."
+                                                                              }
+                                                             },
+                                                  "step-3":  {
+                                                                 "type":  "step",
+                                                                 "settings":  {
+                                                                                  "art":  "step-assembly",
+                                                                                  "title":  "Select assembly service",
+                                                                                  "text":  "Opt in for our manual assembly service and we\u0027ll install the keycaps for you before shipping."
+                                                                              }
+                                                             },
+                                                  "step-4":  {
+                                                                 "type":  "step",
+                                                                 "settings":  {
+                                                                                  "art":  "step-cart",
+                                                                                  "title":  "Add to cart",
+                                                                                  "text":  "Review your board, keycaps and service, then add everything to your cart and check out."
+                                                                              }
+                                                             }
+                                              },
+                                   "block_order":  [
+                                                       "step-1",
+                                                       "step-2",
+                                                       "step-3",
+                                                       "step-4"
+                                                   ],
+                                   "settings":  {
+                                                    "title":  "How to Build Your Board",
+                                                    "subtitle":  "Add keycaps, choose our assembly service and check out - all in a few simple steps.",
+                                                    "accent_color":  "#286633",
+                                                    "background_color":  "#faf8f5",
+                                                    "padding_top":  64,
+                                                    "padding_bottom":  64
+                                                }
+                               },
+                     "features":  {
+                                      "type":  "ss-feature-cards",
+                                      "blocks":  {
+                                                     "feature-1":  {
+                                                                       "settings":  {
+                                                                                        "art":  "theme-nature",
+                                                                                        "title":  "Smart 75% Aesthetic Layout",
+                                                                                        "subtitle":  "Designed for both creators and aesthetic enthusiasts, this compact 75% keyboard features an interactive mini LCD screen and an intuitive CNC rotary knob. Packed with hot-swappable sockets and gasket-mounted damping, it effortlessly balances high-tech utility with tranquil desktop elegance.",
+                                                                                        "accent_color":  "#107a44"
+                                                                                    },
+                                                                       "type":  "feature"
+                                                                   },
+                                                     "feature-2":  {
+                                                                       "settings":  {
+                                                                                        "art":  "theme-retro",
+                                                                                        "title":  "Precision-Tuned Custom Switches",
+                                                                                        "subtitle":  "Experience silky-smooth actuation with our vibrant custom switch collection. Housed in translucent pastel casings with factory-lubricated stems, each switch is engineered for ultra-fast response and delivers the deeply satisfying acoustic profile mechanical keyboard enthusiasts love.",
+                                                                                        "accent_color":  "#6f3b13"
+                                                                                    },
+                                                                       "type":  "feature"
+                                                                   },
+                                                     "feature-3":  {
+                                                                       "settings":  {
+                                                                                        "art":  "theme-mono",
+                                                                                        "title":  "Artisanal Botanical PBT Keycaps",
+                                                                                        "subtitle":  "Crafted from premium, ultra-durable PBT, our novelty keycaps showcase delicate botanical illustrations and serene mountain landscapes. Finished with advanced five-sided dye-sublimation to resist shine and fading, they bring effortless natural harmony to your everyday typing.",
+                                                                                        "accent_color":  "#3a3d42"
+                                                                                    },
+                                                                       "type":  "feature"
+                                                                   }
+                                                 },
+                                      "block_order":  [
+                                                          "feature-1",
+                                                          "feature-2",
+                                                          "feature-3"
+                                                      ],
+                                      "settings":  {
+                                                       "columns":  3,
+                                                       "background_color":  "#ffffff",
+                                                       "padding_top":  64,
+                                                       "padding_bottom":  64
+                                                   }
+                                  },
+                     "board_switcher":  {
+                                            "type":  "ss-board-switcher",
+                                            "blocks":  {
+                                                           "base-1":  {
+                                                                          "type":  "board",
+                                                                          "settings":  {
+                                                                                           "title":  "Base 01",
+                                                                                           "option_1_label":  "Forest",
+                                                                                           "option_1_color":  "#286633",
+                                                                                           "option_2_label":  "Sunset",
+                                                                                           "option_2_color":  "#d97706",
+                                                                                           "option_3_label":  "Blossom",
+                                                                                           "option_3_color":  "#ef5da8"
+                                                                                       }
+                                                                      },
+                                                           "base-2":  {
+                                                                          "type":  "board",
+                                                                          "settings":  {
+                                                                                           "title":  "Base 02",
+                                                                                           "option_1_label":  "Mono",
+                                                                                           "option_1_color":  "#3a3d42",
+                                                                                           "option_2_label":  "Sand",
+                                                                                           "option_2_color":  "#b99a6b",
+                                                                                           "option_3_label":  "Mint",
+                                                                                           "option_3_color":  "#10b981"
+                                                                                       }
+                                                                      },
+                                                           "base-3":  {
+                                                                          "type":  "board",
+                                                                          "settings":  {
+                                                                                           "title":  "Base 03",
+                                                                                           "option_1_label":  "Indigo",
+                                                                                           "option_1_color":  "#4f46e5",
+                                                                                           "option_2_label":  "Ivory",
+                                                                                           "option_2_color":  "#e5e1d8",
+                                                                                           "option_3_label":  "Coral",
+                                                                                           "option_3_color":  "#fb7185"
+                                                                                       }
+                                                                      }
+                                                       },
+                                            "block_order":  [
+                                                                "base-1",
+                                                                "base-2",
+                                                                "base-3"
+                                                            ],
+                                            "settings":  {
+                                                             "title":  "One Base. Many Looks.",
+                                                             "subtitle":  "Pick a base, then tap a color to preview the keycaps installed on it.",
+                                                             "accent_color":  "#286633",
+                                                             "background_color":  "#faf8f5",
+                                                             "padding_top":  64,
+                                                             "padding_bottom":  64
+                                                         }
+                                        },
+                     "text_cta":  {
+                                      "type":  "ss-text-cta",
+                                      "settings":  {
+                                                       "title":  "CASETiFY Travel Artist",
+                                                       "subtitle":  "An expandable canvas for the perpetually inspired.\nWe\u0027re rallying our global artist community to make a statement you can actually touch.",
+                                                       "button_label":  "Shop Now",
+                                                       "button_link":  "/collections/keycaps-theme",
+                                                       "alignment":  "center",
+                                                       "background_color":  "#f4efe6",
+                                                       "padding_top":  80,
+                                                       "padding_bottom":  80
+                                                   }
+                                  },
+                     "best_sellers":  {
+                                          "type":  "ss-best-sellers",
+                                          "settings":  {
+                                                           "title":  "Best Selling Keycaps",
+                                                           "subtitle":  "The keycap sets everyone is loving right now.",
+                                                           "products_to_show":  12,
+                                                           "columns":  4,
+                                                           "view_all_label":  "View All",
+                                                           "accent_color":  "#286633",
+                                                           "background_color":  "#ffffff",
+                                                           "padding_top":  64,
+                                                           "padding_bottom":  64
+                                                       }
+                                      }
+                 },
+    "order":  [
+                  "hero",
+                  "intro",
+                  "steps",
+                  "features",
+                  "board_switcher",
+                  "text_cta",
+                  "best_sellers"
+              ]
 }

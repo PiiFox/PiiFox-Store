@@ -1,0 +1,296 @@
+{%- comment -%}
+  Style Studio Feature Cards
+  Grid of cards: generated image on top, heading + subheading below.
+{%- endcomment -%}
+
+<section class="ss-features ss-features-{{ section.id }}">
+  <div class="ss-features__inner">
+
+    <div class="ss-features__grid">
+      {%- for block in section.blocks -%}
+        <article class="ss-features__card" {{ block.shopify_attributes }}>
+          <div class="ss-features__media">
+            {%- if block.settings.image != blank -%}
+              {{ block.settings.image | image_url: width: 1000 | image_tag: loading: 'lazy', class: 'ss-features__img', alt: block.settings.title }}
+            {%- else -%}
+              {%- assign feature_asset = 'carousel' | append: forloop.index | append: '.png' -%}
+              <img
+                class="ss-features__img"
+                src="{{ feature_asset | asset_url }}"
+                alt="{{ block.settings.title | escape }}"
+                loading="lazy"
+                width="1254"
+                height="1254"
+              >
+            {%- endif -%}
+          </div>
+
+          <div class="ss-features__body">
+            {%- if block.settings.title != blank -%}
+              <h3 class="ss-features__card-title">{{ block.settings.title | escape }}</h3>
+            {%- endif -%}
+            {%- if block.settings.subtitle != blank -%}
+              <p class="ss-features__card-subtitle">{{ block.settings.subtitle | escape | newline_to_br }}</p>
+            {%- endif -%}
+          </div>
+        </article>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% style %}
+  .ss-features-{{ section.id }} {
+    width: 100%;
+    background-color: {{ section.settings.background_color }};
+    padding: {{ section.settings.padding_top }}px 0 {{ section.settings.padding_bottom }}px;
+  }
+
+  .ss-features-{{ section.id }} .ss-features__inner {
+    width: min(100% - 40px, 1320px);
+    margin: 0 auto;
+  }
+
+
+  .ss-features-{{ section.id }} .ss-features__grid {
+    display: grid;
+    grid-template-columns: repeat({{ section.settings.columns }}, minmax(0, 1fr));
+    gap: {{ section.settings.gap }}px;
+  }
+
+  .ss-features-{{ section.id }} .ss-features__card {
+    display: flex;
+    flex-direction: column;
+    background-color: {{ section.settings.card_color }};
+    border: 1px solid rgba(0, 0, 0, 0.07);
+    border-radius: 16px;
+    overflow: hidden;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+  }
+
+  .ss-features-{{ section.id }} .ss-features__card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 32px rgba(0, 0, 0, 0.09);
+  }
+
+  .ss-features-{{ section.id }} .ss-features__media {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    background-color: #f7f7f7;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .ss-features-{{ section.id }} .ss-features__img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .ss-features-{{ section.id }} .ss-features__svg,
+  .ss-features-{{ section.id }} .ss-features__svg svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  .ss-features-{{ section.id }} .ss-features__body {
+    padding: 18px 20px 22px;
+  }
+
+  .ss-features-{{ section.id }} .ss-features__card-title {
+    margin: 0;
+    color: {{ section.settings.card_title_color }};
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 1.3;
+  }
+
+  .ss-features-{{ section.id }} .ss-features__card-subtitle {
+    margin: 8px 0 0;
+    color: {{ section.settings.card_subtitle_color }};
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  @media screen and (max-width: 989px) {
+    .ss-features-{{ section.id }} .ss-features__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media screen and (max-width: 769px) {
+    .ss-features-{{ section.id }} {
+      padding: {{ section.settings.padding_top | times: 0.65 | round }}px 0 {{ section.settings.padding_bottom | times: 0.65 | round }}px;
+    }
+
+    .ss-features-{{ section.id }} .ss-features__inner {
+      width: calc(100% - 32px);
+    }
+
+
+    .ss-features-{{ section.id }} .ss-features__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: {{ section.settings.gap | times: 0.6 | round }}px;
+    }
+
+    .ss-features-{{ section.id }} .ss-features__body {
+      padding: 12px 12px 16px;
+    }
+
+    .ss-features-{{ section.id }} .ss-features__card-title {
+      font-size: 14px;
+    }
+
+    .ss-features-{{ section.id }} .ss-features__card-subtitle {
+      font-size: 12px;
+    }
+  }
+
+  @media screen and (max-width: 479px) {
+    .ss-features-{{ section.id }} .ss-features__grid {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "SS Feature Cards",
+  "tag": "section",
+  "max_blocks": 12,
+  "settings": [
+
+
+
+
+    {
+      "type": "range",
+      "id": "columns",
+      "label": "Columns (desktop)",
+      "min": 2,
+      "max": 4,
+      "step": 1,
+      "default": 3
+    },
+    {
+      "type": "color",
+      "id": "card_color",
+      "label": "Card background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "card_title_color",
+      "label": "Card title color",
+      "default": "#121212"
+    },
+    {
+      "type": "color",
+      "id": "card_subtitle_color",
+      "label": "Card subtitle color",
+      "default": "#666666"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Section background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "gap",
+      "label": "Card gap",
+      "min": 8,
+      "max": 48,
+      "step": 2,
+      "unit": "px",
+      "default": 20
+    },
+
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding top",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding bottom",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 64
+    }
+  ],
+  "blocks": [
+    {
+      "type": "feature",
+      "name": "Feature card",
+      "settings": [
+        {
+          "type": "select",
+          "id": "art",
+          "label": "Illustration",
+          "default": "theme-nature",
+          "options": [
+            { "value": "theme-nature", "label": "Nature & Soft" },
+            { "value": "theme-retro", "label": "Retro & Daily" },
+            { "value": "theme-mono", "label": "Clean & Minimal" },
+            { "value": "theme-cute", "label": "Cute & Colorful" },
+            { "value": "board-base", "label": "Keyboard base" },
+            { "value": "step-keycap", "label": "Keycap set" }
+          ]
+        },
+        {
+          "type": "color",
+          "id": "accent_color",
+          "label": "Illustration accent color",
+          "default": "#286633"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Custom image (optional)",
+          "info": "Overrides the generated illustration."
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Heading",
+          "default": "Nature & Soft"
+        },
+        {
+          "type": "textarea",
+          "id": "subtitle",
+          "label": "Subheading",
+          "default": "Calm tones inspired by nature."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "SS Feature Cards",
+      "blocks": [
+        { "type": "feature", "settings": { "art": "theme-nature", "accent_color": "#107a44", "title": "Nature & Soft", "subtitle": "Calm, earthy tones that keep your desk grounded." } },
+        { "type": "feature", "settings": { "art": "theme-retro", "accent_color": "#6f3b13", "title": "Retro & Daily", "subtitle": "Vintage charm that never goes out of style." } },
+        { "type": "feature", "settings": { "art": "theme-mono", "accent_color": "#3a3d42", "title": "Clean & Minimal", "subtitle": "Simple lines for a distraction-free setup." } },
+        { "type": "feature", "settings": { "art": "theme-cute", "accent_color": "#ef5da8", "title": "Cute & Colorful", "subtitle": "Playful palettes to brighten your typing." } },
+        { "type": "feature", "settings": { "art": "board-base", "accent_color": "#286633", "title": "Built To Last", "subtitle": "Durable bases designed to hold every keycap set." } },
+        { "type": "feature", "settings": { "art": "step-keycap", "accent_color": "#4a7bd7", "title": "Swap Anytime", "subtitle": "Change the look of your board whenever you like." } }
+      ]
+    }
+  ]
+}
+{% endschema %}

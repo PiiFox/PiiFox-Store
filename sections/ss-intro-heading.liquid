@@ -1,0 +1,219 @@
+{%- assign heading_size_mobile = section.settings.heading_size_mobile | default: 26 -%}
+{%- assign subtitle_size_mobile = section.settings.subtitle_size_mobile | default: 14 -%}
+
+<section class="ss-intro ss-intro-{{ section.id }}">
+  <div class="ss-intro__inner">
+    {%- if section.settings.title != blank -%}
+      <h2 class="ss-intro__title">
+        {{ section.settings.title | escape }}
+      </h2>
+    {%- endif -%}
+
+    {%- if section.settings.subtitle != blank -%}
+      <div class="ss-intro__subtitle">
+        {{ section.settings.subtitle | escape | newline_to_br }}
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% style %}
+  .ss-intro-{{ section.id }} {
+    width: 100%;
+    background-color: {{ section.settings.background_color }};
+    padding: {{ section.settings.padding_top }}px 0 {{ section.settings.padding_bottom }}px;
+  }
+
+  .ss-intro-{{ section.id }} .ss-intro__inner {
+    width: min(100% - 40px, {{ section.settings.max_width }}px);
+    margin: 0 auto;
+    text-align: {{ section.settings.alignment }};
+  }
+
+  .ss-intro-{{ section.id }} .ss-intro__title {
+    margin: 0;
+    color: {{ section.settings.title_color }};
+    font-size: {{ section.settings.heading_size }}px;
+    font-weight: {{ section.settings.heading_weight }};
+    line-height: 1.12;
+    letter-spacing: -0.01em;
+  }
+
+  .ss-intro-{{ section.id }} .ss-intro__subtitle {
+    margin-top: {{ section.settings.subtitle_gap }}px;
+    color: {{ section.settings.subtitle_color }};
+    font-size: {{ section.settings.subtitle_size }}px;
+    line-height: 1.6;
+    {% if section.settings.alignment == 'center' %}
+      margin-left: auto;
+      margin-right: auto;
+      max-width: 52em;
+    {% endif %}
+  }
+
+  @media screen and (max-width: 769px) {
+    .ss-intro-{{ section.id }} {
+      padding: {{ section.settings.padding_top | times: 0.7 | round }}px 0 {{ section.settings.padding_bottom | times: 0.7 | round }}px;
+    }
+
+    .ss-intro-{{ section.id }} .ss-intro__inner {
+      width: calc(100% - 32px);
+    }
+
+    .ss-intro-{{ section.id }} .ss-intro__title {
+      font-size: {{ heading_size_mobile }}px;
+    }
+
+    .ss-intro-{{ section.id }} .ss-intro__subtitle {
+      font-size: {{ subtitle_size_mobile }}px;
+      line-height: 1.65;
+    }
+  }
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "SS Intro Heading",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "textarea",
+      "id": "title",
+      "label": "Title",
+      "default": "Back You Up By A Limited Lifetime Warranty"
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Title color",
+      "default": "#121212"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "label": "Title font size (desktop)",
+      "min": 20,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "default": 56
+    },
+    {
+      "type": "range",
+      "id": "heading_size_mobile",
+      "label": "Title font size (mobile)",
+      "min": 16,
+      "max": 48,
+      "step": 1,
+      "unit": "px",
+      "default": 26
+    },
+    {
+      "type": "select",
+      "id": "heading_weight",
+      "label": "Title font weight",
+      "default": "700",
+      "options": [
+        { "value": "400", "label": "Regular" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semibold" },
+        { "value": "700", "label": "Bold" },
+        { "value": "800", "label": "Extra bold" }
+      ]
+    },
+    {
+      "type": "textarea",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Your satisfaction is always our goal. Every CASETiFY Travel suitcase is built for the journey, but just in case things get bumpy, we've got your back with a Limited Lifetime Warranty. We're here to make sure your suitcase is already ready for life-long travel."
+    },
+    {
+      "type": "color",
+      "id": "subtitle_color",
+      "label": "Subtitle color",
+      "default": "#555555"
+    },
+    {
+      "type": "range",
+      "id": "subtitle_size",
+      "label": "Subtitle font size (desktop)",
+      "min": 12,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "subtitle_size_mobile",
+      "label": "Subtitle font size (mobile)",
+      "min": 11,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "subtitle_gap",
+      "label": "Gap between title and subtitle",
+      "min": 0,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "select",
+      "id": "alignment",
+      "label": "Text alignment",
+      "default": "center",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "label": "Content max width",
+      "min": 600,
+      "max": 1400,
+      "step": 20,
+      "unit": "px",
+      "default": 900
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding top",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 72
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding bottom",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 72
+    }
+  ],
+  "presets": [
+    {
+      "name": "SS Intro Heading"
+    }
+  ]
+}
+{% endschema %}
