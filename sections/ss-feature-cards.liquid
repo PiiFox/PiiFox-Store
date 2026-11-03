@@ -129,31 +129,51 @@
     }
 
     .ss-features-{{ section.id }} .ss-features__inner {
-      width: calc(100% - 32px);
+      width: 100%;
+      padding: 0;
     }
 
-
+    /* Horizontal swipe carousel */
     .ss-features-{{ section.id }} .ss-features__grid {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: {{ section.settings.gap | times: 0.6 | round }}px;
+      display: flex;
+      flex-wrap: nowrap;
+      grid-template-columns: none;
+      gap: {{ section.settings.gap_mobile }}px;
+      overflow-x: auto;
+      overflow-y: hidden;
+      scroll-snap-type: x mandatory;
+      scroll-behavior: smooth;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      padding: 4px 16px 10px;
+      scroll-padding-inline: 16px;
+    }
+
+    .ss-features-{{ section.id }} .ss-features__grid::-webkit-scrollbar {
+      display: none;
+    }
+
+    .ss-features-{{ section.id }} .ss-features__card {
+      flex: 0 0 {{ section.settings.card_width_mobile }}%;
+      max-width: {{ section.settings.card_width_mobile }}%;
+      scroll-snap-align: start;
+    }
+
+    .ss-features-{{ section.id }} .ss-features__card:hover {
+      transform: none;
+      box-shadow: none;
     }
 
     .ss-features-{{ section.id }} .ss-features__body {
-      padding: 12px 12px 16px;
+      padding: 14px 14px 18px;
     }
 
     .ss-features-{{ section.id }} .ss-features__card-title {
-      font-size: 14px;
+      font-size: 15px;
     }
 
     .ss-features-{{ section.id }} .ss-features__card-subtitle {
-      font-size: 12px;
-    }
-  }
-
-  @media screen and (max-width: 479px) {
-    .ss-features-{{ section.id }} .ss-features__grid {
-      grid-template-columns: minmax(0, 1fr);
+      font-size: 12.5px;
     }
   }
 {% endstyle %}
@@ -210,6 +230,30 @@
       "step": 2,
       "unit": "px",
       "default": 20
+    },
+    {
+      "type": "header",
+      "content": "Mobile carousel"
+    },
+    {
+      "type": "range",
+      "id": "card_width_mobile",
+      "label": "Card width (mobile)",
+      "min": 55,
+      "max": 95,
+      "step": 1,
+      "unit": "%",
+      "default": 78
+    },
+    {
+      "type": "range",
+      "id": "gap_mobile",
+      "label": "Card gap (mobile)",
+      "min": 8,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "default": 14
     },
 
     {

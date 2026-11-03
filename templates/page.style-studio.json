@@ -21,8 +21,10 @@
                                                     "alignment":  "center",
                                                     "max_width":  900,
                                                     "background_color":  "#ffffff",
-                                                    "padding_top":  72,
-                                                    "padding_bottom":  56
+                                                    "padding_top":  40,
+                                                    "padding_bottom":  32,
+                                                    "heading_size_mobile":  26,
+                                                    "subtitle_size_mobile":  14
                                                 }
                                },
                      "steps":  {
@@ -71,9 +73,9 @@
                                                     "title":  "How to Build Your Board",
                                                     "subtitle":  "Add keycaps, choose our assembly service and check out - all in a few simple steps.",
                                                     "accent_color":  "#286633",
-                                                    "background_color":  "#faf8f5",
-                                                    "padding_top":  64,
-                                                    "padding_bottom":  64
+                                                    "background_color":  "#ffffff",
+                                                    "padding_top":  36,
+                                                    "padding_bottom":  36
                                                 }
                                },
                      "features":  {
@@ -115,8 +117,8 @@
                                       "settings":  {
                                                        "columns":  3,
                                                        "background_color":  "#ffffff",
-                                                       "padding_top":  64,
-                                                       "padding_bottom":  64
+                                                       "padding_top":  36,
+                                                       "padding_bottom":  36
                                                    }
                                   },
                      "board_switcher":  {
@@ -169,8 +171,8 @@
                                                              "subtitle":  "Pick a base, then tap a color to preview the keycaps installed on it.",
                                                              "accent_color":  "#286633",
                                                              "background_color":  "#faf8f5",
-                                                             "padding_top":  64,
-                                                             "padding_bottom":  64
+                                                             "padding_top":  36,
+                                                             "padding_bottom":  36
                                                          }
                                         },
                      "text_cta":  {
@@ -182,8 +184,8 @@
                                                        "button_link":  "/collections/keycaps-theme",
                                                        "alignment":  "center",
                                                        "background_color":  "#f4efe6",
-                                                       "padding_top":  80,
-                                                       "padding_bottom":  80
+                                                       "padding_top":  44,
+                                                       "padding_bottom":  44
                                                    }
                                   },
                      "best_sellers":  {
@@ -196,8 +198,8 @@
                                                            "view_all_label":  "View All",
                                                            "accent_color":  "#286633",
                                                            "background_color":  "#ffffff",
-                                                           "padding_top":  64,
-                                                           "padding_bottom":  64
+                                                           "padding_top":  36,
+                                                           "padding_bottom":  36
                                                        }
                                       }
                  },
