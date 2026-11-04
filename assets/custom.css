@@ -3148,9 +3148,9 @@ button.add-to-cart:disabled,
 }
 
 .manual-service-card.is-disabled {
-  background: #fafafb;
-  border-color: #ededed;
-  cursor: default;
+  background: #ffffff;
+  border-color: #eeeeee;
+  cursor: pointer;
 }
 
 .manual-service-card:not(.is-disabled) {
@@ -3198,16 +3198,16 @@ button.add-to-cart:disabled,
   width: 22px;
   height: 22px;
   border: 1.5px solid #dcdcdc;
-  border-radius: 6px;
+  border-radius: 50%;
   background: #ffffff;
   transition: all 0.2s ease;
   box-sizing: border-box;
 }
 
 .manual-service-card.is-disabled .manual-service-card__checkbox-custom {
-  background: #fafafb;
-  border-color: #e5e5e7;
-  cursor: not-allowed;
+  background: #ffffff;
+  border-color: #dcdcdc;
+  cursor: pointer;
 }
 
 .manual-service-card:not(.is-disabled):hover .manual-service-card__checkbox-custom {
@@ -3265,7 +3265,7 @@ button.add-to-cart:disabled,
   font-size: 13px;
   font-weight: 700;
   color: #ffffff;
-  background: #444444;
+  background: #222222;
   padding: 4px 12px;
   border-radius: 20px;
   line-height: 1.2;
@@ -3290,6 +3290,47 @@ button.add-to-cart:disabled,
   color: #737373;
   line-height: 1.45;
   margin: 2px 0 0 0;
+}
+
+
+.manual-service-card__link {
+  color: #107a44;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  font-weight: 500;
+  transition: opacity 0.2s ease, color 0.2s ease;
+  cursor: pointer;
+}
+
+.manual-service-card__link:hover {
+  color: #0b5830;
+  opacity: 0.85;
+}
+
+.manual-service-card__notice {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #f7f7f8;
+  border-radius: 8px;
+  padding: 8px 12px;
+  margin-top: 8px;
+  font-size: 12.5px;
+  color: #555555;
+  line-height: 1.4;
+  box-sizing: border-box;
+}
+
+.manual-service-card__notice-icon {
+  width: 15px;
+  height: 15px;
+  flex-shrink: 0;
+  color: #666666;
+}
+
+.manual-service-card__notice-text {
+  flex: 1;
+  color: #555555;
 }
 
 .manual-service-card__prompt {
@@ -3415,6 +3456,11 @@ button.add-to-cart:disabled,
   }
   .manual-service-card__desc {
     font-size: 12px;
+  }
+  .manual-service-card__notice {
+    font-size: 11.5px;
+    padding: 7px 10px;
+    margin-top: 8px;
   }
   .manual-service-card__prompt {
     font-size: 11.5px;

@@ -1,5 +1,5 @@
 {%- assign is_service_item = false -%}
-{%- if product.product.handle == 'manual-keycap-installation-service' or product.product.title contains 'Manual Keycap Installation' or product.properties['Service'] != blank -%}
+{%- if product.product.handle == 'manual-keycap-installation-service' or product.product.title contains 'Manual Keycap Installation' or product.product.title contains 'Custom Keycap Installation' or product.properties['Service'] != blank -%}
   {%- assign is_service_item = true -%}
 {%- endif -%}
 

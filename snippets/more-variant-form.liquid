@@ -210,7 +210,7 @@
   -%}
   {%- assign service_variant_id = service_variant.id | default: 67830185656601 -%}
   {%- assign service_price = service_product.price | default: 990 -%}
-  {%- assign service_title = 'Manual Keycap Installation Service' -%}
+  {%- assign service_title = 'Custom Keycap Installation' -%}
 
   <div
     class="manual-service-card is-disabled"
@@ -242,18 +242,24 @@
           <label for="ManualKeycapServiceCheckbox" class="manual-service-card__title">
             {{ service_title }}
           </label>
-          <span class="manual-service-card__price">+{{ service_price | money }}/ set</span>
+          <span class="manual-service-card__price">+{{ service_price | money }} / set</span>
         </div>
         <div class="manual-service-card__desc">
-          Professional hand-assembly & switch testing by our technicians.<br>
-          Ready to type out of the box.
+          We'll professionally install your selected keycaps before shipping, so your keyboard arrives customized to your style and ready to use right out of the box. <a href="/pages/style-studio" class="manual-service-card__link">Learn more about this service.</a>
         </div>
-        <div class="manual-service-card__prompt" id="ManualKeycapServicePrompt">
+        <div class="manual-service-card__notice">
+          <svg viewBox="0 0 16 16" fill="none" class="manual-service-card__notice-icon" aria-hidden="true">
+            <circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.25"/>
+            <path d="M8 7v4M8 4.75h.01" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+          <span class="manual-service-card__notice-text">Original keycaps will not be included in the shipment.</span>
+        </div>
+        <div class="manual-service-card__prompt" id="ManualKeycapServicePrompt" style="display: none;">
           <svg viewBox="0 0 16 16" fill="none" class="manual-service-card__prompt-icon" aria-hidden="true">
             <circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.25"/>
             <path d="M8 7v4M8 4.75h.01" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
           </svg>
-          <span class="manual-service-card__prompt-text"> Select keycaps above to enable installation service. </span>
+          <span class="manual-service-card__prompt-text"></span>
         </div>
         <div class="manual-service-card__assign" id="ManualKeycapServiceAssign" hidden></div>
       </div>
@@ -1370,9 +1376,9 @@
         if (!priceEl) return;
         // 未勾选或禁用时，均标注一套服务的价格（例如 +$9.90/ set），防止客户误认为是 0 元免费服务
         if (!sets || sets <= 1) {
-          priceEl.innerHTML = `+${formatMoney(basePrice)}/ set`;
+          priceEl.innerHTML = `+${formatMoney(basePrice)} / set`;
         } else {
-          priceEl.innerHTML = `+${formatMoney(basePrice * sets)}/ ${sets} sets`;
+          priceEl.innerHTML = `+${formatMoney(basePrice * sets)} / ${sets} sets`;
         }
       }
 
@@ -1393,11 +1399,7 @@
           setChecked(false);
           checkbox.disabled = true;
           card.classList.add('is-disabled');
-          if (promptEl && promptText) {
-            promptEl.classList.remove('is-confirmed');
-            promptText.innerHTML = 'Select keycaps above to enable installation service.';
-            promptEl.style.display = 'flex';
-          }
+          if (promptEl) promptEl.style.display = 'none';
         } else {
           card.classList.remove('is-disabled');
           checkbox.disabled = false;
@@ -1430,9 +1432,15 @@
 
       function toggleState(willBeChecked) {
         if (card.classList.contains('is-disabled')) {
-          if (promptEl) {
+          if (promptEl && promptText) {
+            promptEl.classList.remove('is-confirmed');
+            promptText.innerHTML = 'Please select keycaps above to enable installation service.';
+            promptEl.style.display = 'flex';
             promptEl.style.transform = 'scale(1.02)';
             setTimeout(() => { promptEl.style.transform = ''; }, 200);
+            setTimeout(() => {
+              if (!checkbox.checked) promptEl.style.display = 'none';
+            }, 3000);
           }
           return;
         }
@@ -1442,6 +1450,7 @@
 
       card.addEventListener('click', function (e) {
         if (e.target === checkbox) return;
+        if (e.target.closest && e.target.closest('.manual-service-card__link')) return;
         // 操作下拉框时不切换勾选状态
         if (e.target.closest && e.target.closest('.manual-service-card__assign')) return;
         e.preventDefault();
@@ -1453,6 +1462,7 @@
       });
 
       card.addEventListener('keydown', function (e) {
+        if (e.target.closest && e.target.closest('.manual-service-card__link')) return;
         if (e.target.closest && e.target.closest('.manual-service-card__assign')) return;
         if (e.key === ' ' || e.key === 'Enter') {
           e.preventDefault();
