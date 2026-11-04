@@ -25,7 +25,7 @@
     <div class="ss-switch__carousel-wrapper">
       <div class="ss-switch__grid" data-ss-grid>
         {%- for block in section.blocks -%}
-          {%- assign fallback_base = 'bottom1.png' | asset_url -%}
+          {%- assign fallback_base = 'https://cdn.shopify.com/s/files/1/1001/2383/6697/files/bottom1_7fe49a88-b99d-498f-9dbd-5cd2503ca116.png?v=1793763801' -%}
           {%- assign base_img_url = fallback_base -%}
           {%- if block.settings.base_image != blank -%}
             {%- assign base_img_url = block.settings.base_image | image_url: width: 1400 -%}

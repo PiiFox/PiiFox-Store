@@ -26,10 +26,21 @@
             {%- if block.settings.image != blank -%}
               {{ block.settings.image | image_url: width: 760 | image_tag: loading: 'lazy', class: 'ss-steps__img', alt: block.settings.title }}
             {%- else -%}
-              {%- assign step_asset = 'step' | append: forloop.index | append: '.png' -%}
+              {%- case forloop.index -%}
+                {%- when 1 -%}
+                  {%- assign step_asset = 'https://cdn.shopify.com/s/files/1/1001/2383/6697/files/step1.png?v=1793763815' -%}
+                {%- when 2 -%}
+                  {%- assign step_asset = 'https://cdn.shopify.com/s/files/1/1001/2383/6697/files/step2.png?v=1793763815' -%}
+                {%- when 3 -%}
+                  {%- assign step_asset = 'https://cdn.shopify.com/s/files/1/1001/2383/6697/files/step3.png?v=1793763814' -%}
+                {%- when 4 -%}
+                  {%- assign step_asset = 'https://cdn.shopify.com/s/files/1/1001/2383/6697/files/step4.png?v=1793763815' -%}
+                {%- else -%}
+                  {%- assign step_asset = '' -%}
+              {%- endcase -%}
               <img
                 class="ss-steps__img"
-                src="{{ step_asset | asset_url }}"
+                src="{{ step_asset }}"
                 alt="{{ block.settings.title | escape }}"
                 loading="lazy"
                 width="1086"
