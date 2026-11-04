@@ -62,8 +62,8 @@
 >
   <div class="grid-product__content">
     {%- if has_new_label -%}
-      <div class="grid-product__tag grid-product__tag--sale">
-        {{ 'products.product.new' | t }}
+      <div class="grid-product__tag grid-product__tag--sale grid-product__tag--new">
+        <span class="grid-product__tag-text">{{ 'products.product.new' | t }}</span>
       </div>
     {%- elsif product.available != true -%}
       <div class="grid-product__tag grid-product__tag--sold-out">
@@ -374,6 +374,29 @@
   .grid-product__tag.grid-product__tag--sold-out {
     background: url('{{ 'sale_out.svg' | asset_url }}') center center / 100% 100% no-repeat ;
     letter-spacing: 0em;
+  }
+  /* NEW 标签：以左上角为圆心的四分之一圆，文字逆时针旋转 45° */
+  .grid-product__tag.grid-product__tag--new {
+    display: block;
+    width: 3em;
+    height: 3em;
+    max-width: none;
+    aspect-ratio: 1 / 1;
+    padding: 0;
+    background: #427347;
+    color: #fff;
+    border-radius: 0 0 100% 0;
+    /* 左上角跟随卡片圆角 */
+    border-top-left-radius: inherit;
+  }
+  .grid-product__tag--new .grid-product__tag-text {
+    position: absolute;
+    top: 45%;
+    left: 45%;
+    transform: translate(-50%, -50%) rotate(-45deg);
+    font-size: 0.8em;
+    white-space: nowrap;
+    line-height: 1;
   }
   [data-center-text=true] .grid__item.grid-product .grid-product__colors {
     position: absolute;
