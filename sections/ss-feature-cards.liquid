@@ -1,49 +1,80 @@
 {%- comment -%}
   Style Studio Feature Cards
   Grid of cards: generated image on top, heading + subheading below.
+  Mobile view: Single card centered horizontal carousel, swipe to next card with pagination dots.
 {%- endcomment -%}
 
-<section class="ss-features ss-features-{{ section.id }}">
+<section class="ss-features ss-features-{{ section.id }}" data-ss-features>
   <div class="ss-features__inner">
+    {%- if section.settings.title != blank or section.settings.subtitle != blank -%}
+      <div class="ss-features__header">
+        {%- if section.settings.title != blank -%}
+          <h2 class="ss-features__title">{{ section.settings.title | escape }}</h2>
+        {%- endif -%}
+        {%- if section.settings.subtitle != blank -%}
+          <p class="ss-features__subtitle">{{ section.settings.subtitle | escape | newline_to_br }}</p>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
 
-    <div class="ss-features__grid">
-      {%- for block in section.blocks -%}
-        <article class="ss-features__card" {{ block.shopify_attributes }}>
-          <div class="ss-features__media">
-            {%- if block.settings.image != blank -%}
-              {{ block.settings.image | image_url: width: 1000 | image_tag: loading: 'lazy', class: 'ss-features__img', alt: block.settings.title }}
-            {%- else -%}
-              {%- case forloop.index -%}
-                {%- when 1 -%}
-                  {%- assign feature_asset = 'https://cdn.shopify.com/s/files/1/1001/2383/6697/files/carousel1.png?v=1793763803' -%}
-                {%- when 2 -%}
-                  {%- assign feature_asset = 'https://cdn.shopify.com/s/files/1/1001/2383/6697/files/carousel2.png?v=1793763803' -%}
-                {%- when 3 -%}
-                  {%- assign feature_asset = 'https://cdn.shopify.com/s/files/1/1001/2383/6697/files/carousel3.png?v=1793763803' -%}
-                {%- else -%}
-                  {%- assign feature_asset = '' -%}
-              {%- endcase -%}
-              <img
-                class="ss-features__img"
-                src="{{ feature_asset }}"
-                alt="{{ block.settings.title | escape }}"
-                loading="lazy"
-                width="1254"
-                height="1254"
-              >
-            {%- endif -%}
-          </div>
+    <div class="ss-features__carousel-wrapper">
+      <div class="ss-features__grid" data-ss-features-grid>
+        {%- for block in section.blocks -%}
+          <article
+            class="ss-features__card"
+            data-ss-features-card
+            data-card-index="{{ forloop.index0 }}"
+            {{ block.shopify_attributes }}
+          >
+            <div class="ss-features__media">
+              {%- if block.settings.image != blank -%}
+                {{ block.settings.image | image_url: width: 1000 | image_tag: loading: 'lazy', class: 'ss-features__img', alt: block.settings.title }}
+              {%- else -%}
+                {%- case forloop.index -%}
+                  {%- when 1 -%}
+                    {%- assign feature_asset = 'https://cdn.shopify.com/s/files/1/1001/2383/6697/files/carousel1.png?v=1793763803' -%}
+                  {%- when 2 -%}
+                    {%- assign feature_asset = 'https://cdn.shopify.com/s/files/1/1001/2383/6697/files/carousel2.png?v=1793763803' -%}
+                  {%- when 3 -%}
+                    {%- assign feature_asset = 'https://cdn.shopify.com/s/files/1/1001/2383/6697/files/carousel3.png?v=1793763803' -%}
+                  {%- else -%}
+                    {%- assign feature_asset = '' -%}
+                {%- endcase -%}
+                <img
+                  class="ss-features__img"
+                  src="{{ feature_asset }}"
+                  alt="{{ block.settings.title | escape }}"
+                  loading="lazy"
+                  width="1254"
+                  height="1254"
+                >
+              {%- endif -%}
+            </div>
 
-          <div class="ss-features__body">
-            {%- if block.settings.title != blank -%}
-              <h3 class="ss-features__card-title">{{ block.settings.title | escape }}</h3>
-            {%- endif -%}
-            {%- if block.settings.subtitle != blank -%}
-              <p class="ss-features__card-subtitle">{{ block.settings.subtitle | escape | newline_to_br }}</p>
-            {%- endif -%}
-          </div>
-        </article>
-      {%- endfor -%}
+            <div class="ss-features__body">
+              {%- if block.settings.title != blank -%}
+                <h3 class="ss-features__card-title">{{ block.settings.title | escape }}</h3>
+              {%- endif -%}
+              {%- if block.settings.subtitle != blank -%}
+                <p class="ss-features__card-subtitle">{{ block.settings.subtitle | escape | newline_to_br }}</p>
+              {%- endif -%}
+            </div>
+          </article>
+        {%- endfor -%}
+      </div>
+
+      {%- if section.blocks.size > 1 -%}
+        <div class="ss-features__dots" data-ss-features-dots aria-hidden="true">
+          {%- for block in section.blocks -%}
+            <button
+              type="button"
+              class="ss-features__dot{% if forloop.first %} is-active{% endif %}"
+              data-ss-dot="{{ forloop.index0 }}"
+              aria-label="Go to card {{ forloop.index }}"
+            ></button>
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
     </div>
   </div>
 </section>
@@ -60,6 +91,10 @@
     margin: 0 auto;
   }
 
+  .ss-features-{{ section.id }} .ss-features__carousel-wrapper {
+    position: relative;
+    width: 100%;
+  }
 
   .ss-features-{{ section.id }} .ss-features__grid {
     display: grid;
@@ -126,12 +161,17 @@
     line-height: 1.6;
   }
 
+  .ss-features-{{ section.id }} .ss-features__dots {
+    display: none;
+  }
+
   @media screen and (max-width: 989px) {
     .ss-features-{{ section.id }} .ss-features__grid {
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
   }
 
+  /* Mobile Responsive: Single card centered horizontal carousel */
   @media screen and (max-width: 769px) {
     .ss-features-{{ section.id }} {
       padding: {{ section.settings.padding_top | times: 0.65 | round }}px 0 {{ section.settings.padding_bottom | times: 0.65 | round }}px;
@@ -142,20 +182,20 @@
       padding: 0;
     }
 
-    /* Horizontal swipe carousel */
+    /* Single card centered horizontal scroll with snap */
     .ss-features-{{ section.id }} .ss-features__grid {
       display: flex;
       flex-wrap: nowrap;
       grid-template-columns: none;
-      gap: {{ section.settings.gap_mobile }}px;
+      gap: 16px;
       overflow-x: auto;
       overflow-y: hidden;
       scroll-snap-type: x mandatory;
       scroll-behavior: smooth;
       -webkit-overflow-scrolling: touch;
       scrollbar-width: none;
-      padding: 4px 16px 10px;
-      scroll-padding-inline: 16px;
+      /* Padding ensures single card centers in viewport */
+      padding: 8px calc(50% - (min(86vw, 360px) / 2)) 16px;
     }
 
     .ss-features-{{ section.id }} .ss-features__grid::-webkit-scrollbar {
@@ -163,9 +203,12 @@
     }
 
     .ss-features-{{ section.id }} .ss-features__card {
-      flex: 0 0 {{ section.settings.card_width_mobile }}%;
-      max-width: {{ section.settings.card_width_mobile }}%;
-      scroll-snap-align: start;
+      flex: 0 0 min(86vw, 360px);
+      width: min(86vw, 360px);
+      max-width: min(86vw, 360px);
+      scroll-snap-align: center;
+      scroll-snap-stop: always;
+      border-radius: 20px;
     }
 
     .ss-features-{{ section.id }} .ss-features__card:hover {
@@ -174,18 +217,135 @@
     }
 
     .ss-features-{{ section.id }} .ss-features__body {
-      padding: 14px 14px 18px;
+      padding: 16px 18px 22px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
     }
 
     .ss-features-{{ section.id }} .ss-features__card-title {
-      font-size: 15px;
+      font-size: 17px;
+      line-height: 1.35;
     }
 
     .ss-features-{{ section.id }} .ss-features__card-subtitle {
-      font-size: 12.5px;
+      font-size: 13.5px;
+      line-height: 1.55;
+      margin-top: 8px;
+    }
+
+    /* Mobile Carousel Pagination Dots */
+    .ss-features-{{ section.id }} .ss-features__dots {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 14px;
+      padding: 0 20px;
+    }
+
+    .ss-features-{{ section.id }} .ss-features__dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background-color: #d1d5db;
+      border: none;
+      padding: 0;
+      cursor: pointer;
+      transition: all 0.25s ease;
+    }
+
+    .ss-features-{{ section.id }} .ss-features__dot.is-active {
+      width: 22px;
+      border-radius: 999px;
+      background-color: #111111;
     }
   }
 {% endstyle %}
+
+<script>
+  (function () {
+    function initSection(root) {
+      if (!root || root.dataset.ssFeaturesInit === 'true') return;
+      root.dataset.ssFeaturesInit = 'true';
+
+      var grid = root.querySelector('[data-ss-features-grid]');
+      var cards = root.querySelectorAll('[data-ss-features-card]');
+      var dots = root.querySelectorAll('[data-ss-dot]');
+
+      if (grid && dots.length > 0) {
+        function updateActiveDot() {
+          var gridRect = grid.getBoundingClientRect();
+          var gridCenter = gridRect.left + gridRect.width / 2;
+          var closestIndex = 0;
+          var minDistance = Infinity;
+
+          cards.forEach(function (card, index) {
+            var cardRect = card.getBoundingClientRect();
+            var cardCenter = cardRect.left + cardRect.width / 2;
+            var dist = Math.abs(gridCenter - cardCenter);
+            if (dist < minDistance) {
+              minDistance = dist;
+              closestIndex = index;
+            }
+          });
+
+          dots.forEach(function (dot, i) {
+            dot.classList.toggle('is-active', i === closestIndex);
+          });
+        }
+
+        var scrollTimer = null;
+        grid.addEventListener('scroll', function () {
+          if (scrollTimer) cancelAnimationFrame(scrollTimer);
+          scrollTimer = requestAnimationFrame(updateActiveDot);
+        }, { passive: true });
+
+        window.addEventListener('resize', function () {
+          if (scrollTimer) cancelAnimationFrame(scrollTimer);
+          scrollTimer = requestAnimationFrame(updateActiveDot);
+        });
+
+        dots.forEach(function (dot) {
+          dot.addEventListener('click', function () {
+            var idx = parseInt(dot.getAttribute('data-ss-dot'), 10);
+            var card = cards[idx];
+            if (card) {
+              var cardLeft = card.offsetLeft;
+              var cardWidth = card.offsetWidth;
+              var gridWidth = grid.clientWidth;
+              var targetScroll = cardLeft - (gridWidth - cardWidth) / 2;
+              if (typeof grid.scrollTo === 'function') {
+                grid.scrollTo({ left: targetScroll, behavior: 'smooth' });
+              } else {
+                card.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+              }
+            }
+          });
+        });
+
+        updateActiveDot();
+      }
+    }
+
+    function initAll() {
+      document.querySelectorAll('[data-ss-features]').forEach(initSection);
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initAll);
+    } else {
+      initAll();
+    }
+
+    document.addEventListener('shopify:section:load', function (event) {
+      var section = event.target.querySelector
+        ? event.target.querySelector('[data-ss-features]')
+        : null;
+      if (section) initSection(section);
+    });
+  })();
+</script>
 
 {% schema %}
 {
@@ -193,10 +353,6 @@
   "tag": "section",
   "max_blocks": 12,
   "settings": [
-
-
-
-
     {
       "type": "range",
       "id": "columns",
@@ -240,31 +396,6 @@
       "unit": "px",
       "default": 20
     },
-    {
-      "type": "header",
-      "content": "Mobile carousel"
-    },
-    {
-      "type": "range",
-      "id": "card_width_mobile",
-      "label": "Card width (mobile)",
-      "min": 55,
-      "max": 95,
-      "step": 1,
-      "unit": "%",
-      "default": 78
-    },
-    {
-      "type": "range",
-      "id": "gap_mobile",
-      "label": "Card gap (mobile)",
-      "min": 8,
-      "max": 32,
-      "step": 2,
-      "unit": "px",
-      "default": 14
-    },
-
     {
       "type": "range",
       "id": "padding_top",
