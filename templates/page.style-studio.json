@@ -1,0 +1,217 @@
+{
+  "sections": {
+    "hero": {
+      "type": "style-studio-hero",
+      "settings": {
+        "title": "STATE YOUR BOARDS",
+        "subtitle": "We keep a steady release schedule so you can always find new keycap styles to choose from."
+      }
+    },
+    "intro": {
+      "type": "ss-intro-heading",
+      "settings": {
+        "title": "Back You Up By A Limited Lifetime Warranty",
+        "subtitle": "Your satisfaction is always our goal. Every CASETiFY Travel suitcase is built for the journey, but just in case things get bumpy, we've got your back with a Limited Lifetime Warranty. We're here to make sure your suitcase is already ready for life-long travel.",
+        "title_color": "#121212",
+        "heading_size": 56,
+        "heading_weight": "700",
+        "subtitle_color": "#555555",
+        "subtitle_size": 18,
+        "subtitle_gap": 20,
+        "alignment": "center",
+        "max_width": 900,
+        "background_color": "#ffffff",
+        "padding_top": 40,
+        "padding_bottom": 32,
+        "heading_size_mobile": 26,
+        "subtitle_size_mobile": 14
+      }
+    },
+    "steps": {
+      "type": "ss-steps",
+      "blocks": {
+        "step-1": {
+          "type": "step",
+          "settings": {
+            "art": "step-product",
+            "title": "Open a keyboard product page",
+            "text": "Pick the keyboard you love and open its product page to start building your setup."
+          }
+        },
+        "step-2": {
+          "type": "step",
+          "settings": {
+            "art": "step-keycap",
+            "title": "Add your keycaps",
+            "text": "Choose a keycap theme and add the keycap set to the same keyboard order."
+          }
+        },
+        "step-3": {
+          "type": "step",
+          "settings": {
+            "art": "step-assembly",
+            "title": "Select assembly service",
+            "text": "Opt in for our manual assembly service and we'll install the keycaps for you before shipping."
+          }
+        },
+        "step-4": {
+          "type": "step",
+          "settings": {
+            "art": "step-cart",
+            "title": "Add to cart",
+            "text": "Review your board, keycaps and service, then add everything to your cart and check out."
+          }
+        }
+      },
+      "block_order": [
+        "step-1",
+        "step-2",
+        "step-3",
+        "step-4"
+      ],
+      "settings": {
+        "title": "How to Build Your Board",
+        "subtitle": "Add keycaps, choose our assembly service and check out - all in a few simple steps.",
+        "accent_color": "#286633",
+        "background_color": "#ffffff",
+        "padding_top": 36,
+        "padding_bottom": 36,
+        "media_ratio": "1 / 1"
+      }
+    },
+    "features": {
+      "type": "ss-feature-cards",
+      "blocks": {
+        "feature-1": {
+          "settings": {
+            "art": "theme-nature",
+            "title": "Smart 75% Aesthetic Layout",
+            "subtitle": "Designed for both creators and aesthetic enthusiasts, this compact 75% keyboard features an interactive mini LCD screen and an intuitive CNC rotary knob. Packed with hot-swappable sockets and gasket-mounted damping, it effortlessly balances high-tech utility with tranquil desktop elegance.",
+            "accent_color": "#107a44"
+          },
+          "type": "feature"
+        },
+        "feature-2": {
+          "settings": {
+            "art": "theme-retro",
+            "title": "Precision-Tuned Custom Switches",
+            "subtitle": "Experience silky-smooth actuation with our vibrant custom switch collection. Housed in translucent pastel casings with factory-lubricated stems, each switch is engineered for ultra-fast response and delivers the deeply satisfying acoustic profile mechanical keyboard enthusiasts love.",
+            "accent_color": "#6f3b13"
+          },
+          "type": "feature"
+        },
+        "feature-3": {
+          "settings": {
+            "art": "theme-mono",
+            "title": "Artisanal Botanical PBT Keycaps",
+            "subtitle": "Crafted from premium, ultra-durable PBT, our novelty keycaps showcase delicate botanical illustrations and serene mountain landscapes. Finished with advanced five-sided dye-sublimation to resist shine and fading, they bring effortless natural harmony to your everyday typing.",
+            "accent_color": "#3a3d42"
+          },
+          "type": "feature"
+        }
+      },
+      "block_order": [
+        "feature-1",
+        "feature-2",
+        "feature-3"
+      ],
+      "settings": {
+        "columns": 3,
+        "background_color": "#ffffff",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "board_switcher": {
+      "type": "ss-board-switcher",
+      "blocks": {
+        "base-1": {
+          "type": "board",
+          "settings": {
+            "title": "Luna 75",
+            "button_label": "Shop Now",
+            "button_link": "/pages/keycaps-themes-lab",
+            "option_1_label": "Brown",
+            "option_1_color": "#8d5b4c",
+            "option_2_label": "Green",
+            "option_2_color": "#2d6a4f"
+          }
+        },
+        "base-2": {
+          "type": "board",
+          "settings": {
+            "title": "Defender 68",
+            "button_label": "Shop Now",
+            "button_link": "/pages/keycaps-themes-lab",
+            "option_1_label": "Brown",
+            "option_1_color": "#8d5b4c",
+            "option_2_label": "Green",
+            "option_2_color": "#2d6a4f"
+          }
+        },
+        "base-3": {
+          "type": "board",
+          "settings": {
+            "title": "Grid 98",
+            "button_label": "Shop Now",
+            "button_link": "/pages/keycaps-themes-lab",
+            "option_1_label": "Brown",
+            "option_1_color": "#8d5b4c",
+            "option_2_label": "Green",
+            "option_2_color": "#2d6a4f"
+          }
+        }
+      },
+      "block_order": [
+        "base-1",
+        "base-2",
+        "base-3"
+      ],
+      "settings": {
+        "title": "One Base. Many Looks.",
+        "subtitle": "Pick a base, then tap a color to preview the keycaps installed on it.",
+        "accent_color": "#286633",
+        "background_color": "#ffffff",
+        "card_color": "#ffffff",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "text_cta": {
+      "type": "ss-text-cta",
+      "settings": {
+        "title": "CASETiFY Travel Artist",
+        "subtitle": "An expandable canvas for the perpetually inspired.\nWe're rallying our global artist community to make a statement you can actually touch.",
+        "button_label": "Shop Now",
+        "button_link": "/pages/keycaps-themes-lab",
+        "alignment": "center",
+        "background_color": "#ffffff",
+        "padding_top": 44,
+        "padding_bottom": 44
+      }
+    },
+    "best_sellers": {
+      "type": "ss-best-sellers",
+      "settings": {
+        "title": "Best Selling Keycaps",
+        "subtitle": "The keycap sets everyone is loving right now.",
+        "products_to_show": 12,
+        "columns": 4,
+        "view_all_label": "View All",
+        "accent_color": "#286633",
+        "background_color": "#ffffff",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "intro",
+    "steps",
+    "features",
+    "board_switcher",
+    "text_cta",
+    "best_sellers"
+  ]
+}

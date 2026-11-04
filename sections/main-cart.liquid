@@ -29,8 +29,7 @@
         >
         <p>{{ 'cart.general.empty' | t }}</p>
         {% comment %}<p>{{ 'cart.general.continue_browsing_html' | t: url: routes.all_products_collection_url }}</p>{% endcomment %}
-        <p>{{ 'cart.general.continue_browsing_html' | t: url: routes.root_url }}→</p>
-        <div class="cart-page__recommendations-slot cart-page__recommendations-slot--empty"></div>
+        <p>{{ 'cart.general.continue_browsing_html' | t: url: 'https://www.piifox.com/collections/all' }}→</p>
       {%- endif -%}
     </div>
   </header>
@@ -44,8 +43,20 @@
             {%- for ci in cart.items -%}
               {%- assign ci_t = ci.product.type | downcase -%}
               {%- assign ci_title = ci.product.title | downcase -%}
-              {%- if ci_t contains 'keyboard' or ci_title contains 'keyboard' or ci.product.tags contains 'keyboards' or ci.product.tags contains 'Keyboards' or ci.product.tags contains 'keyboard' or ci.product.tags contains 'Keyboard' -%}
-                {%- unless ci_title contains 'keycap' or ci_title contains 'switch' or ci_t contains 'keycap' or ci_t contains 'switch' or ci_title contains 'desk mat' or ci_title contains 'holder' -%}
+              {%- if ci_t contains 'keyboard'
+                or ci_title contains 'keyboard'
+                or ci.product.tags contains 'keyboards'
+                or ci.product.tags contains 'Keyboards'
+                or ci.product.tags contains 'keyboard'
+                or ci.product.tags contains 'Keyboard'
+              -%}
+                {%- unless ci_title contains 'keycap'
+                  or ci_title contains 'switch'
+                  or ci_t contains 'keycap'
+                  or ci_t contains 'switch'
+                  or ci_title contains 'desk mat'
+                  or ci_title contains 'holder'
+                -%}
                   {%- assign cart_has_keyboard = true -%}
                   {%- break -%}
                 {%- endunless -%}
@@ -86,8 +97,10 @@
               {% endif %}
             </div>
 
+            {% render 'cart-price-detail', section_id: section.id %}
+
             <div class="cart__item-sub cart__item-row">
-              <div>{{ 'cart.general.subtotal' | t }}</div>
+              <div>{{ 'cart.general.total' | t }}</div>
               <div data-subtotal>{{ cart.total_price | money }}</div>
             </div>
 
@@ -121,6 +134,12 @@
               <div class="cart__shipping-note">
                 {{ 'cart.general.shipping_at_checkout' | t }}
               </div>
+            </div>
+
+            <div class="cart__item-row text-center">
+              <small style="font-weight: 700; white-space: nowrap; color: #000; font-size: 0.75em; margin-top: 10px; display: block;">
+                {{ 'cart.general.shipping_at_checkout' | t }}
+              </small>
             </div>
           </div>
           <div class="cart-policy-card">

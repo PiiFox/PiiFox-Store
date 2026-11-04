@@ -8,13 +8,28 @@
           <span class="cart-drawer__count-wrap" data-cart-count-wrap>
             <span class="cart-drawer__count-sep">·</span>
             <span class="cart-drawer__count" data-cart-count-display>
-              {{ cart.item_count }} {{ cart.item_count | pluralize: 'item', 'items' }}
+              {{ cart.item_count }}
+              {{ cart.item_count | pluralize: 'item', 'items' }}
             </span>
           </span>
         </div>
         <div class="cart-drawer__header-right">
-          <button type="button" class="cart-drawer__close-btn js-drawer-close" aria-label="{{ 'cart.general.close_cart' | t }}">
-            <svg class="cart-drawer__close-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <button
+            type="button"
+            class="cart-drawer__close-btn js-drawer-close"
+            aria-label="{{ 'cart.general.close_cart' | t }}"
+          >
+            <svg
+              class="cart-drawer__close-icon"
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
               <line x1="18" y1="6" x2="6" y2="18"></line>
               <line x1="6" y1="6" x2="18" y2="18"></line>
             </svg>
@@ -72,7 +87,13 @@
               {%- for ci in cart.items -%}
                 {%- assign ci_t = ci.product.type | downcase -%}
                 {%- assign ci_title = ci.product.title | downcase -%}
-                {%- if ci_t contains 'keyboard' or ci_title contains 'keyboard' or ci.product.tags contains 'keyboards' or ci.product.tags contains 'Keyboards' or ci.product.tags contains 'keyboard' or ci.product.tags contains 'Keyboard' -%}
+                {%- if ci_t contains 'keyboard'
+                  or ci_title contains 'keyboard'
+                  or ci.product.tags contains 'keyboards'
+                  or ci.product.tags contains 'Keyboards'
+                  or ci.product.tags contains 'keyboard'
+                  or ci.product.tags contains 'Keyboard'
+                -%}
                   {%- assign cart_has_keyboard = true -%}
                 {%- endif -%}
               {%- endfor -%}
@@ -103,18 +124,7 @@
                 </div>
               </div>
 
-              {% if settings.cart_terms_conditions_enable %}
-                <div class="cart__item-row cart__terms">
-                  <input type="checkbox" id="CartTermsDrawer" class="cart__terms-checkbox">
-                  <label for="CartTermsDrawer">
-                    {% if settings.cart_terms_conditions_page != blank %}
-                      {{ 'cart.general.terms_html' | t: url: settings.cart_terms_conditions_page.url }}
-                    {% else %}
-                      {{ 'cart.general.terms' | t }}
-                    {% endif %}
-                  </label>
-                </div>
-              {% endif %}
+              {% render 'cart-price-detail', section_id: section.id %}
 
               <div class="cart__checkout-wrapper">
                 {% style %}
@@ -131,182 +141,256 @@
                   {{ 'cart.general.checkout' | t }}
                 </button>
 
-                {% if additional_checkout_buttons and settings.cart_additional_buttons %}
-                  <div class="additional-checkout-buttons additional-checkout-buttons--vertical">
-                    {{ content_for_additional_checkout_buttons }}
-                  </div>
-                {% endif %}
+                {% if settings.cart_terms_conditions_enable %}
+                  <div class="cart__item-row cart__terms">
+                    <input type="checkbox" id="CartTermsDrawer" class="cart__terms-checkbox">
+                    <label for="CartTermsDrawer">
+                      {% if settings.cart_terms_conditions_page != blank %}
+                        {{ 'cart.general.terms_html' | t: url: settings.cart_terms_conditions_page.url }}
+                      {% else %}
+                        {{ 'cart.general.terms' | t }}
+                      {% endif %}
 
-                <div class="cart__shipping-note">
-                  {{ 'cart.general.shipping_at_checkout' | t }}
-                </div>
-              </div>
-            </div>
-          </div>
+                      <div class="cart__checkout-wrapper">
+                        {% style %}
+                          .btn.cart__checkout {
+                            border-radius: 20em;
+                          }
+                        {% endstyle %}
+                        <button
+                          type="submit"
+                          name="checkout"
+                          data-terms-required="{{ settings.cart_terms_conditions_enable }}"
+                          class="btn cart__checkout"
+                        >
+                          {{ 'cart.general.checkout' | t }}
+                        </button>
 
-          <!-- 空购物车提示：放置在主列内 -->
-          <div class="drawer__cart-empty appear-animation appear-delay-2 empty_info">
-            <div class="drawer__scrollable">
-              <img
-                class="cart-empty-image"
-                src="{{ 'empty_cart_icon.png' | asset_url }}"
-                alt="{{ 'cart.general.empty' | t }}"
-                width="120"
-                height="120"
-                loading="lazy"
-              >
-              <p class="cart-empty-text">{{ 'cart.general.empty' | t }}</p>
-              <p class="cart-empty-btn-wrap">{{ 'cart.general.continue_browsing_html' | t: url: routes.root_url }}</p>
+                        {% if additional_checkout_buttons and settings.cart_additional_buttons %}
+                          <div class="additional-checkout-buttons additional-checkout-buttons--vertical">
+                            {{ content_for_additional_checkout_buttons }}
+                          </div>
+                          </div>
+                          </div>
 
-              <!-- 移动端空购物车推荐插槽：在移动端购物车为空时展示在空标识下方 -->
-              <div class="cart-drawer__recommendations-empty-slot"></div>
-            </div>
-          </div>
-        </div>
+                          <!-- 空购物车提示：放置在主列内 -->
+                          <div class="drawer__cart-empty appear-animation appear-delay-2 empty_info">
+                            <div class="drawer__scrollable">
+                              <img
+                                class="cart-empty-image"
+                                src="{{ 'empty_cart_icon.png' | asset_url }}"
+                                alt="{{ 'cart.general.empty' | t }}"
+                                width="120"
+                                height="120"
+                                loading="lazy"
+                              >
+                              <p class="cart-empty-text">{{ 'cart.general.empty' | t }}</p>
+                              <p class="cart-empty-btn-wrap">
+                                {{ 'cart.general.continue_browsing_html' | t: url: routes.root_url }}
+                              </p>
 
-        <!-- PC端专属插槽：放置在右侧专属栏 -->
-        <div class="cart-drawer__recommendations-desktop-slot"></div>
-      </div>
-    </form>
+                              <!-- 移动端空购物车推荐插槽：在移动端购物车为空时展示在空标识下方 -->
+                              <div class="cart-drawer__recommendations-empty-slot"></div>
+                            </div>
+                          </div>
 
-    {% render 'cart-recommendations' %}
+                          <div class="cart__item-row text-center">
+                            <small style="font-weight: 700; white-space: nowrap; color: #000; font-size: 0.75em; margin-top: 10px; display: block;">
+                              {{ 'cart.general.shipping_at_checkout' | t }}
+                            </small>
+                          </div>
+                          </div>
 
-    <script>
-      (function() {
-        const DISCOUNT_CODE = 'KEYCAP10';
-        let isRedirecting = false;
+                          <div class="drawer__cart-empty appear-animation appear-delay-2 empty_info">
+                            <div class="drawer__scrollable">
+                              <img
+                                class="cart-empty-image"
+                                src="{{ 'empty_cart_icon.png' | asset_url }}"
+                                alt="{{ 'cart.general.empty' | t }}"
+                                width="120"
+                                height="120"
+                                loading="lazy"
+                              >
+                              {{ 'cart.general.empty' | t }}
+                              <p>
+                                {{
+                                  'cart.general.continue_browsing_html'
+                                  | t: url: 'https://www.piifox.com/collections/all'
+                                }}
+                              </p>
+                            </div>
+                          </div>
+                          </form>
 
-        function formatMoney(cents) {
-          if (window.theme && window.theme.Currency && typeof window.theme.Currency.formatMoney === 'function') {
-            const format = window.theme.settings?.moneyFormat || '${{amount}}';
-            return window.theme.Currency.formatMoney(cents, format);
-          }
-          return '$' + (cents / 100).toFixed(2);
-        }
+                          {% render 'cart-recommendations' %}
 
-        function scanCartBundle() {
-          const itemEls = document.querySelectorAll('.cart__item');
-          let hasKeyboard = false;
-          let hasKeycap = false;
-          let keycapsTotalPriceCents = 0;
-          let totalItems = 0;
+                          <script>
+                            (function () {
+                              const DISCOUNT_CODE = 'KEYCAP10';
+                              let isRedirecting = false;
 
-          itemEls.forEach(el => {
-            totalItems++;
-            const isKb = el.getAttribute('data-is-keyboard') === 'true';
-            const isKc = el.getAttribute('data-is-keycap') === 'true';
-            const pType = (el.getAttribute('data-product-type') || '').toLowerCase();
-            const pTitle = (el.getAttribute('data-product-title') || el.querySelector('.cart__item-name')?.textContent || '').toLowerCase();
-            
-            // 获取商品行价格 (cents)
-            let linePrice = parseFloat(el.getAttribute('data-line-price'));
-            if (isNaN(linePrice) || linePrice <= 0) {
-              const priceText = el.querySelector('.cart__price, .cart__item-price')?.textContent || '';
-              const match = priceText.match(/[\d,.]+/);
-              if (match) {
-                linePrice = parseFloat(match[0].replace(/,/g, '')) * 100;
-              }
-            }
-            if (isNaN(linePrice)) linePrice = 0;
+                              function formatMoney(cents) {
+                                if (
+                                  window.theme &&
+                                  window.theme.Currency &&
+                                  typeof window.theme.Currency.formatMoney === 'function'
+                                ) {
+                                  const format = window.theme.settings?.moneyFormat || '${{amount}}';
+                                  return window.theme.Currency.formatMoney(cents, format);
+                                }
+                                return '$' + (cents / 100).toFixed(2);
+                              }
 
-            const matchesKb = isKb || 
-              pType.includes('keyboard') || 
-              pTitle.includes('keyboard') ||
-              pTitle.includes('defender68') ||
-              pTitle.includes('swift60') ||
-              pTitle.includes('swift68') ||
-              pTitle.includes('haze68') ||
-              pTitle.includes('grid98') ||
-              pTitle.includes('final75') ||
-              pTitle.includes('muse65') ||
-              pTitle.includes('muse75');
+                              function scanCartBundle() {
+                                const itemEls = document.querySelectorAll('.cart__item');
+                                let hasKeyboard = false;
+                                let hasKeycap = false;
+                                let keycapsTotalPriceCents = 0;
+                                let totalItems = 0;
 
-            const matchesKc = isKc || 
-              pType === 'keycaps' || 
-              pType === 'keycap' ||
-              (pTitle.includes('keycap') && !matchesKb && !pTitle.includes('puller') && !pTitle.includes('installation'));
+                                itemEls.forEach((el) => {
+                                  totalItems++;
+                                  const isKb = el.getAttribute('data-is-keyboard') === 'true';
+                                  const isKc = el.getAttribute('data-is-keycap') === 'true';
+                                  const pType = (el.getAttribute('data-product-type') || '').toLowerCase();
+                                  const pTitle = (
+                                    el.getAttribute('data-product-title') ||
+                                    el.querySelector('.cart__item-name')?.textContent ||
+                                    ''
+                                  ).toLowerCase();
 
-            if (matchesKb) hasKeyboard = true;
-            if (matchesKc) {
-              hasKeycap = true;
-              keycapsTotalPriceCents += linePrice;
-            }
-          });
+                                  // 获取商品行价格 (cents)
+                                  let linePrice = parseFloat(el.getAttribute('data-line-price'));
+                                  if (isNaN(linePrice) || linePrice <= 0) {
+                                    const priceText =
+                                      el.querySelector('.cart__price, .cart__item-price')?.textContent || '';
+                                    const match = priceText.match(/[\d,.]+/);
+                                    if (match) {
+                                      linePrice = parseFloat(match[0].replace(/,/g, '')) * 100;
+                                    }
+                                  }
+                                  if (isNaN(linePrice)) linePrice = 0;
 
-          const discountAmountCents = hasKeyboard && hasKeycap ? Math.round(keycapsTotalPriceCents * 0.1) : 0;
+                                  const matchesKb =
+                                    isKb ||
+                                    pType.includes('keyboard') ||
+                                    pTitle.includes('keyboard') ||
+                                    pTitle.includes('defender68') ||
+                                    pTitle.includes('swift60') ||
+                                    pTitle.includes('swift68') ||
+                                    pTitle.includes('haze68') ||
+                                    pTitle.includes('grid98') ||
+                                    pTitle.includes('final75') ||
+                                    pTitle.includes('muse65') ||
+                                    pTitle.includes('muse75');
 
-          return {
-            hasKeyboard,
-            hasKeycap,
-            keycapsTotalPriceCents,
-            discountAmountCents,
-            totalItems
-          };
-        }
+                                  const matchesKc =
+                                    isKc ||
+                                    pType === 'keycaps' ||
+                                    pType === 'keycap' ||
+                                    (pTitle.includes('keycap') &&
+                                      !matchesKb &&
+                                      !pTitle.includes('puller') &&
+                                      !pTitle.includes('installation'));
 
-        function updateBundleUI() {
-          const { hasKeyboard, hasKeycap, discountAmountCents } = scanCartBundle();
-          const itemEls = document.querySelectorAll('.cart__item');
-          const subtotalEls = document.querySelectorAll('[data-subtotal]');
+                                  if (matchesKb) hasKeyboard = true;
+                                  if (matchesKc) {
+                                    hasKeycap = true;
+                                    keycapsTotalPriceCents += linePrice;
+                                  }
+                                });
 
-          // A. 推荐区折扣提示文案：保持一直显示
-          const recSubtitle = document.querySelector('.cart-recommendations__subtitle');
-          if (recSubtitle) {
-            recSubtitle.style.display = '';
-          }
+                                const discountAmountCents =
+                                  hasKeyboard && hasKeycap ? Math.round(keycapsTotalPriceCents * 0.1) : 0;
 
-          // B. 控制推荐区卡片价格：有键盘时划线打九折，无键盘时恢复原价
-          const recItems = document.querySelectorAll('#CartRecommendationsList .cart-rec-item');
-          recItems.forEach(card => {
-            const priceRow = card.querySelector('.cart-rec-item__price-row');
-            if (!priceRow) return;
+                                return {
+                                  hasKeyboard,
+                                  hasKeycap,
+                                  keycapsTotalPriceCents,
+                                  discountAmountCents,
+                                  totalItems,
+                                };
+                              }
 
-            let basePrice = parseFloat(priceRow.getAttribute('data-price'));
-            if (isNaN(basePrice) || basePrice <= 0) {
-              const compEl = priceRow.querySelector('.cart-rec-item__compare-price');
-              const priceEl = priceRow.querySelector('.cart-rec-item__price');
-              const text = (compEl ? compEl.textContent : (priceEl ? priceEl.textContent : '')).trim();
-              const match = text.match(/[\d,.]+/);
-              if (match) basePrice = parseFloat(match[0].replace(/,/g, '')) * 100;
-              if (basePrice > 0) priceRow.setAttribute('data-price', basePrice);
-            }
+                              function updateBundleUI() {
+                                const { hasKeyboard, hasKeycap, discountAmountCents } = scanCartBundle();
+                                const itemEls = document.querySelectorAll('.cart__item');
+                                const subtotalEls = document.querySelectorAll('[data-subtotal]');
 
-            if (basePrice > 0) {
-              if (hasKeyboard) {
-                const discPrice = Math.round(basePrice * 0.9);
-                priceRow.innerHTML = `
+                                // A. 推荐区折扣提示文案：保持一直显示
+                                const recSubtitle = document.querySelector('.cart-recommendations__subtitle');
+                                if (recSubtitle) {
+                                  recSubtitle.style.display = '';
+                                }
+
+                                // B. 控制推荐区卡片价格：有键盘时划线打九折，无键盘时恢复原价
+                                const recItems = document.querySelectorAll('#CartRecommendationsList .cart-rec-item');
+                                recItems.forEach((card) => {
+                                  const priceRow = card.querySelector('.cart-rec-item__price-row');
+                                  if (!priceRow) return;
+
+                                  let basePrice = parseFloat(priceRow.getAttribute('data-price'));
+                                  if (isNaN(basePrice) || basePrice <= 0) {
+                                    const compEl = priceRow.querySelector('.cart-rec-item__compare-price');
+                                    const priceEl = priceRow.querySelector('.cart-rec-item__price');
+                                    const text = (
+                                      compEl ? compEl.textContent : priceEl ? priceEl.textContent : ''
+                                    ).trim();
+                                    const match = text.match(/[\d,.]+/);
+                                    if (match) basePrice = parseFloat(match[0].replace(/,/g, '')) * 100;
+                                    if (basePrice > 0) priceRow.setAttribute('data-price', basePrice);
+                                  }
+
+                                  if (basePrice > 0) {
+                                    if (hasKeyboard) {
+                                      const discPrice = Math.round(basePrice * 0.9);
+                                      priceRow.innerHTML = `
                   <span class="cart-rec-item__compare-price">${formatMoney(basePrice)}</span>
                   <span class="cart-rec-item__price">${formatMoney(discPrice)}</span>
                 `;
-              } else {
-                priceRow.innerHTML = `
+                                    } else {
+                                      priceRow.innerHTML = `
                   <span class="cart-rec-item__price">${formatMoney(basePrice)}</span>
                 `;
-              }
-            }
-          });
+                                    }
+                                  }
+                                });
 
-          if (hasKeyboard && hasKeycap && discountAmountCents > 0) {
-            // 1. 键帽单品价格划线并展示 9 折价格
-            itemEls.forEach(el => {
-              const isKc = el.getAttribute('data-is-keycap') === 'true';
-              const pType = (el.getAttribute('data-product-type') || '').toLowerCase();
-              const pTitle = (el.getAttribute('data-product-title') || el.querySelector('.cart__item-name')?.textContent || '').toLowerCase();
-              const isKb = el.getAttribute('data-is-keyboard') === 'true';
-              const matchesKb = isKb || pType.includes('keyboard') || pTitle.includes('keyboard');
-              const matchesKc = isKc || pType === 'keycaps' || pType === 'keycap' || (pTitle.includes('keycap') && !matchesKb && !pTitle.includes('puller') && !pTitle.includes('installation'));
+                                if (hasKeyboard && hasKeycap && discountAmountCents > 0) {
+                                  // 1. 键帽单品价格划线并展示 9 折价格
+                                  itemEls.forEach((el) => {
+                                    const isKc = el.getAttribute('data-is-keycap') === 'true';
+                                    const pType = (el.getAttribute('data-product-type') || '').toLowerCase();
+                                    const pTitle = (
+                                      el.getAttribute('data-product-title') ||
+                                      el.querySelector('.cart__item-name')?.textContent ||
+                                      ''
+                                    ).toLowerCase();
+                                    const isKb = el.getAttribute('data-is-keyboard') === 'true';
+                                    const matchesKb = isKb || pType.includes('keyboard') || pTitle.includes('keyboard');
+                                    const matchesKc =
+                                      isKc ||
+                                      pType === 'keycaps' ||
+                                      pType === 'keycap' ||
+                                      (pTitle.includes('keycap') &&
+                                        !matchesKb &&
+                                        !pTitle.includes('puller') &&
+                                        !pTitle.includes('installation'));
 
-              const priceCol = el.querySelector('.cart__item-price-col');
-              if (priceCol && matchesKc) {
-                let linePrice = parseFloat(el.getAttribute('data-line-price'));
-                if (isNaN(linePrice) || linePrice <= 0) {
-                  const priceText = priceCol.querySelector('.cart__price--strikethrough')?.textContent || priceCol.querySelector('.cart__price')?.textContent || '';
-                  const match = priceText.match(/[\d,.]+/);
-                  if (match) linePrice = parseFloat(match[0].replace(/,/g, '')) * 100;
-                }
-                if (linePrice > 0) {
-                  const discPrice = Math.round(linePrice * 0.9);
-                  priceCol.innerHTML = `
+                                    const priceCol = el.querySelector('.cart__item-price-col');
+                                    if (priceCol && matchesKc) {
+                                      let linePrice = parseFloat(el.getAttribute('data-line-price'));
+                                      if (isNaN(linePrice) || linePrice <= 0) {
+                                        const priceText =
+                                          priceCol.querySelector('.cart__price--strikethrough')?.textContent ||
+                                          priceCol.querySelector('.cart__price')?.textContent ||
+                                          '';
+                                        const match = priceText.match(/[\d,.]+/);
+                                        if (match) linePrice = parseFloat(match[0].replace(/,/g, '')) * 100;
+                                      }
+                                      if (linePrice > 0) {
+                                        const discPrice = Math.round(linePrice * 0.9);
+                                        priceCol.innerHTML = `
                     <small class="cart__price cart__price--strikethrough" style="text-decoration: line-through; color: #999; margin-right: 6px;">
                       ${formatMoney(linePrice)}
                     </small>
@@ -314,33 +398,33 @@
                       ${formatMoney(discPrice)}
                     </span>
                   `;
-                }
-                // 清理所有残留的 KEYCAP 折扣小标签
-                el.querySelectorAll('.cart__discount').forEach(d => {
-                  if (d.textContent.includes('KEYCAP') || d.textContent.includes('-$')) {
-                    d.remove();
-                  }
-                });
-              }
-            });
+                                      }
+                                      // 清理所有残留的 KEYCAP 折扣小标签
+                                      el.querySelectorAll('.cart__discount').forEach((d) => {
+                                        if (d.textContent.includes('KEYCAP') || d.textContent.includes('-$')) {
+                                          d.remove();
+                                        }
+                                      });
+                                    }
+                                  });
 
-            // 2. 底部 Subtotal / Total 划线并展示折后总价
-            let origTotalCents = 0;
-            const cartItemsEl = document.querySelector('.cart__items');
-            if (cartItemsEl && cartItemsEl.getAttribute('data-cart-subtotal')) {
-              origTotalCents = parseFloat(cartItemsEl.getAttribute('data-cart-subtotal'));
-            }
+                                  // 2. 底部 Subtotal / Total 划线并展示折后总价
+                                  let origTotalCents = 0;
+                                  const cartItemsEl = document.querySelector('.cart__items');
+                                  if (cartItemsEl && cartItemsEl.getAttribute('data-cart-subtotal')) {
+                                    origTotalCents = parseFloat(cartItemsEl.getAttribute('data-cart-subtotal'));
+                                  }
 
-            subtotalEls.forEach(subtotalEl => {
-              let currentOrig = origTotalCents;
-              if (!currentOrig || isNaN(currentOrig)) {
-                const match = subtotalEl.textContent.match(/[\d,.]+/);
-                if (match) currentOrig = parseFloat(match[0].replace(/,/g, '')) * 100;
-              }
+                                  subtotalEls.forEach((subtotalEl) => {
+                                    let currentOrig = origTotalCents;
+                                    if (!currentOrig || isNaN(currentOrig)) {
+                                      const match = subtotalEl.textContent.match(/[\d,.]+/);
+                                      if (match) currentOrig = parseFloat(match[0].replace(/,/g, '')) * 100;
+                                    }
 
-              if (currentOrig && !isNaN(currentOrig)) {
-                const finalTotalCents = Math.max(0, currentOrig - discountAmountCents);
-                subtotalEl.innerHTML = `
+                                    if (currentOrig && !isNaN(currentOrig)) {
+                                      const finalTotalCents = Math.max(0, currentOrig - discountAmountCents);
+                                      subtotalEl.innerHTML = `
                   <small style="text-decoration: line-through; color: #888; font-size: 13px; font-weight: 400; margin-right: 6px;">
                     ${formatMoney(currentOrig)}
                   </small>
@@ -348,131 +432,165 @@
                     ${formatMoney(finalTotalCents)}
                   </span>
                 `;
-              }
-            });
+                                    }
+                                  });
+                                } else {
+                                  // 无键盘或无键帽：严格恢复单品原价和 Subtotal
+                                  itemEls.forEach((el) => {
+                                    const isKc = el.getAttribute('data-is-keycap') === 'true';
+                                    const pType = (el.getAttribute('data-product-type') || '').toLowerCase();
+                                    const pTitle = (
+                                      el.getAttribute('data-product-title') ||
+                                      el.querySelector('.cart__item-name')?.textContent ||
+                                      ''
+                                    ).toLowerCase();
+                                    const isKb = el.getAttribute('data-is-keyboard') === 'true';
+                                    const matchesKb = isKb || pType.includes('keyboard') || pTitle.includes('keyboard');
+                                    const matchesKc =
+                                      isKc ||
+                                      pType === 'keycaps' ||
+                                      pType === 'keycap' ||
+                                      (pTitle.includes('keycap') &&
+                                        !matchesKb &&
+                                        !pTitle.includes('puller') &&
+                                        !pTitle.includes('installation'));
 
-          } else {
-            // 无键盘或无键帽：严格恢复单品原价和 Subtotal
-            itemEls.forEach(el => {
-              const isKc = el.getAttribute('data-is-keycap') === 'true';
-              const pType = (el.getAttribute('data-product-type') || '').toLowerCase();
-              const pTitle = (el.getAttribute('data-product-title') || el.querySelector('.cart__item-name')?.textContent || '').toLowerCase();
-              const isKb = el.getAttribute('data-is-keyboard') === 'true';
-              const matchesKb = isKb || pType.includes('keyboard') || pTitle.includes('keyboard');
-              const matchesKc = isKc || pType === 'keycaps' || pType === 'keycap' || (pTitle.includes('keycap') && !matchesKb && !pTitle.includes('puller') && !pTitle.includes('installation'));
+                                    const priceCol = el.querySelector('.cart__item-price-col');
+                                    if (priceCol) {
+                                      priceCol.removeAttribute('data-original-html');
+                                      if (matchesKc) {
+                                        let linePrice = parseFloat(el.getAttribute('data-line-price'));
+                                        if (isNaN(linePrice) || linePrice <= 0) {
+                                          const priceText =
+                                            priceCol.querySelector('.cart__price--strikethrough')?.textContent ||
+                                            priceCol.querySelector('.cart__price')?.textContent ||
+                                            '';
+                                          const match = priceText.match(/[\d,.]+/);
+                                          if (match) linePrice = parseFloat(match[0].replace(/,/g, '')) * 100;
+                                        }
+                                        if (linePrice > 0) {
+                                          priceCol.innerHTML = `<span class="cart__price">${formatMoney(
+                                            linePrice
+                                          )}</span>`;
+                                        }
+                                      }
+                                    }
+                                    // 清理任何残留的 KEYCAP 折扣标签
+                                    el.querySelectorAll('.cart__discount').forEach((d) => {
+                                      if (d.textContent.includes('KEYCAP') || d.textContent.includes('-$')) {
+                                        d.remove();
+                                      }
+                                    });
+                                  });
 
-              const priceCol = el.querySelector('.cart__item-price-col');
-              if (priceCol) {
-                priceCol.removeAttribute('data-original-html');
-                if (matchesKc) {
-                  let linePrice = parseFloat(el.getAttribute('data-line-price'));
-                  if (isNaN(linePrice) || linePrice <= 0) {
-                    const priceText = priceCol.querySelector('.cart__price--strikethrough')?.textContent || priceCol.querySelector('.cart__price')?.textContent || '';
-                    const match = priceText.match(/[\d,.]+/);
-                    if (match) linePrice = parseFloat(match[0].replace(/,/g, '')) * 100;
-                  }
-                  if (linePrice > 0) {
-                    priceCol.innerHTML = `<span class="cart__price">${formatMoney(linePrice)}</span>`;
-                  }
-                }
-              }
-              // 清理任何残留的 KEYCAP 折扣标签
-              el.querySelectorAll('.cart__discount').forEach(d => {
-                if (d.textContent.includes('KEYCAP') || d.textContent.includes('-$')) {
-                  d.remove();
-                }
-              });
-            });
+                                  // 隐藏全局 discounts 中的 KEYCAP 折扣
+                                  document.querySelectorAll('.cart__discounts').forEach((d) => {
+                                    if (d.textContent.includes('KEYCAP')) {
+                                      d.classList.add('hide');
+                                    }
+                                  });
 
-            // 隐藏全局 discounts 中的 KEYCAP 折扣
-            document.querySelectorAll('.cart__discounts').forEach(d => {
-              if (d.textContent.includes('KEYCAP')) {
-                d.classList.add('hide');
-              }
-            });
+                                  let origTotalCents = 0;
+                                  const cartItemsEl = document.querySelector('.cart__items');
+                                  if (cartItemsEl && cartItemsEl.getAttribute('data-cart-subtotal')) {
+                                    origTotalCents = parseFloat(cartItemsEl.getAttribute('data-cart-subtotal'));
+                                  }
+                                  subtotalEls.forEach((subtotalEl) => {
+                                    subtotalEl.removeAttribute('data-original-html');
+                                    if (origTotalCents > 0) {
+                                      subtotalEl.innerHTML = formatMoney(origTotalCents);
+                                    } else {
+                                      const compEl = subtotalEl.querySelector('small');
+                                      if (compEl) {
+                                        subtotalEl.innerHTML = compEl.textContent.trim();
+                                      }
+                                    }
+                                  });
+                                }
+                              }
 
-            let origTotalCents = 0;
-            const cartItemsEl = document.querySelector('.cart__items');
-            if (cartItemsEl && cartItemsEl.getAttribute('data-cart-subtotal')) {
-              origTotalCents = parseFloat(cartItemsEl.getAttribute('data-cart-subtotal'));
-            }
-            subtotalEls.forEach(subtotalEl => {
-              subtotalEl.removeAttribute('data-original-html');
-              if (origTotalCents > 0) {
-                subtotalEl.innerHTML = formatMoney(origTotalCents);
-              } else {
-                const compEl = subtotalEl.querySelector('small');
-                if (compEl) {
-                  subtotalEl.innerHTML = compEl.textContent.trim();
-                }
-              }
-            });
-          }
-        }
+                              function handleCheckoutClick(e) {
+                                const checkoutBtn = e.target.closest('button[name="checkout"], .cart__checkout');
+                                if (!checkoutBtn) return;
 
-        function handleCheckoutClick(e) {
-          const checkoutBtn = e.target.closest('button[name="checkout"], .cart__checkout');
-          if (!checkoutBtn) return;
+                                const { hasKeyboard, hasKeycap } = scanCartBundle();
 
-          const { hasKeyboard, hasKeycap } = scanCartBundle();
+                                if (hasKeyboard && hasKeycap) {
+                                  e.preventDefault();
+                                  e.stopPropagation();
 
-          if (hasKeyboard && hasKeycap) {
-            e.preventDefault();
-            e.stopPropagation();
+                                  if (isRedirecting) return;
+                                  isRedirecting = true;
 
-            if (isRedirecting) return;
-            isRedirecting = true;
+                                  const termsCheckbox = document.querySelector('#CartTermsDrawer, #CartTerms');
+                                  if (termsCheckbox && !termsCheckbox.checked && termsCheckbox.offsetParent !== null) {
+                                    alert(
+                                      (window.theme &&
+                                        window.theme.strings &&
+                                        window.theme.strings.cartTermsConfirmation) ||
+                                        'Please accept the terms and conditions'
+                                    );
+                                    isRedirecting = false;
+                                    return;
+                                  }
 
-            const termsCheckbox = document.querySelector('#CartTermsDrawer, #CartTerms');
-            if (termsCheckbox && !termsCheckbox.checked && termsCheckbox.offsetParent !== null) {
-              alert((window.theme && window.theme.strings && window.theme.strings.cartTermsConfirmation) || 'Please accept the terms and conditions');
-              isRedirecting = false;
-              return;
-            }
+                                  checkoutBtn.classList.add('btn--loading');
+                                  checkoutBtn.disabled = true;
 
-            checkoutBtn.classList.add('btn--loading');
-            checkoutBtn.disabled = true;
+                                  const noteInput = document.querySelector('#CartNoteDrawer, #CartNote');
+                                  const saveNotePromise =
+                                    noteInput &&
+                                    noteInput.value &&
+                                    window.theme &&
+                                    window.theme.cart &&
+                                    window.theme.cart.updateNote
+                                      ? window.theme.cart.updateNote(noteInput.value)
+                                      : Promise.resolve();
 
-            const noteInput = document.querySelector('#CartNoteDrawer, #CartNote');
-            const saveNotePromise = (noteInput && noteInput.value && window.theme && window.theme.cart && window.theme.cart.updateNote)
-              ? window.theme.cart.updateNote(noteInput.value)
-              : Promise.resolve();
+                                  saveNotePromise.finally(() => {
+                                    window.location.href = `/checkout?discount=${encodeURIComponent(DISCOUNT_CODE)}`;
+                                  });
+                                }
+                              }
 
-            saveNotePromise.finally(() => {
-              window.location.href = `/checkout?discount=${encodeURIComponent(DISCOUNT_CODE)}`;
-            });
-          }
-        }
+                              function debouncedUpdateUI() {
+                                updateBundleUI();
+                              }
 
-        function debouncedUpdateUI() {
-          updateBundleUI();
-        }
+                              [
+                                'cart:build',
+                                'cart:updated',
+                                'cart:rendered',
+                                'ajaxProduct:added',
+                                'drawerOpen',
+                                'cart:open',
+                              ].forEach((evtName) => {
+                                document.addEventListener(evtName, debouncedUpdateUI);
+                              });
 
-        ['cart:build', 'cart:updated', 'cart:rendered', 'ajaxProduct:added', 'drawerOpen', 'cart:open'].forEach(evtName => {
-          document.addEventListener(evtName, debouncedUpdateUI);
-        });
+                              // 绑定结账拦截事件（仅监听 checkout 按钮，不影响删除等其他按钮）
+                              document.addEventListener('click', handleCheckoutClick);
 
-        // 绑定结账拦截事件（仅监听 checkout 按钮，不影响删除等其他按钮）
-        document.addEventListener('click', handleCheckoutClick);
+                              document.addEventListener('submit', function (e) {
+                                const form = e.target;
+                                if (form && (form.id === 'CartDrawerForm' || form.id === 'CartPageForm')) {
+                                  const { hasKeyboard, hasKeycap } = scanCartBundle();
+                                  if (hasKeyboard && hasKeycap) {
+                                    e.preventDefault();
+                                    e.stopPropagation();
+                                    window.location.href = `/checkout?discount=${encodeURIComponent(DISCOUNT_CODE)}`;
+                                  }
+                                }
+                              });
 
-        document.addEventListener('submit', function(e) {
-          const form = e.target;
-          if (form && (form.id === 'CartDrawerForm' || form.id === 'CartPageForm')) {
-            const { hasKeyboard, hasKeycap } = scanCartBundle();
-            if (hasKeyboard && hasKeycap) {
-              e.preventDefault();
-              e.stopPropagation();
-              window.location.href = `/checkout?discount=${encodeURIComponent(DISCOUNT_CODE)}`;
-            }
-          }
-        });
-
-        if (document.readyState === 'loading') {
-          document.addEventListener('DOMContentLoaded', debouncedUpdateUI);
-        } else {
-          debouncedUpdateUI();
-        }
-      })();
-    </script>
-  </div>
-{%- endif -%}
+                              if (document.readyState === 'loading') {
+                                document.addEventListener('DOMContentLoaded', debouncedUpdateUI);
+                              } else {
+                                debouncedUpdateUI();
+                              }
+                            })();
+                          </script>
+                          </div>
+                        {%- endif -%}
+                {% endif -%}
+{%- endif %}

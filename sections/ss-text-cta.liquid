@@ -1,0 +1,252 @@
+{%- comment -%}
+  Style Studio Text CTA
+  Pure text block: heading, subheading and a "Shop Now" button.
+{%- endcomment -%}
+
+<section class="ss-cta ss-cta-{{ section.id }}">
+  <div class="ss-cta__inner">
+    {%- if section.settings.title != blank -%}
+      <h2 class="ss-cta__title">{{ section.settings.title | escape }}</h2>
+    {%- endif -%}
+
+    {%- if section.settings.subtitle != blank -%}
+      <div class="ss-cta__subtitle">{{ section.settings.subtitle | escape | newline_to_br }}</div>
+    {%- endif -%}
+
+    {%- if section.settings.button_label != blank -%}
+      <a
+        class="ss-cta__button"
+        href="{{ section.settings.button_link | default: '#' }}"
+        {% if section.settings.button_link == blank %}aria-disabled="true"{% endif %}
+      >
+        {{ section.settings.button_label | escape }}
+      </a>
+    {%- endif -%}
+  </div>
+</section>
+
+{% style %}
+  .ss-cta-{{ section.id }} {
+    width: 100%;
+    background-color: {{ section.settings.background_color }};
+    padding: {{ section.settings.padding_top }}px 0 {{ section.settings.padding_bottom }}px;
+  }
+
+  .ss-cta-{{ section.id }} .ss-cta__inner {
+    width: min(100% - 40px, {{ section.settings.max_width }}px);
+    margin: 0 auto;
+    text-align: {{ section.settings.alignment }};
+  }
+
+  .ss-cta-{{ section.id }} .ss-cta__title {
+    margin: 0;
+    color: {{ section.settings.title_color }};
+    font-size: {{ section.settings.heading_size }}px;
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+  }
+
+  .ss-cta-{{ section.id }} .ss-cta__subtitle {
+    margin: {{ section.settings.subtitle_gap }}px 0 0;
+    color: {{ section.settings.subtitle_color }};
+    font-size: {{ section.settings.subtitle_size }}px;
+    line-height: 1.6;
+    {% if section.settings.alignment == 'center' %}
+      max-width: 44em;
+      margin-left: auto;
+      margin-right: auto;
+    {% endif %}
+  }
+
+  .ss-cta-{{ section.id }} .ss-cta__button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: {{ section.settings.button_gap }}px;
+    padding: 14px 40px;
+    border-radius: 999px;
+    background-color: {{ section.settings.button_bg }};
+    color: {{ section.settings.button_text_color }};
+    font-size: 16px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+  }
+
+  .ss-cta-{{ section.id }} .ss-cta__button:hover {
+    transform: translateY(-2px);
+    opacity: 0.92;
+  }
+
+  @media screen and (max-width: 769px) {
+    .ss-cta-{{ section.id }} {
+      padding: {{ section.settings.padding_top | times: 0.65 | round }}px 0 {{ section.settings.padding_bottom | times: 0.65 | round }}px;
+    }
+
+    .ss-cta-{{ section.id }} .ss-cta__inner {
+      width: calc(100% - 32px);
+    }
+
+    .ss-cta-{{ section.id }} .ss-cta__title {
+      font-size: {{ section.settings.heading_size | times: 0.6 | round }}px;
+    }
+
+    .ss-cta-{{ section.id }} .ss-cta__subtitle {
+      font-size: {{ section.settings.subtitle_size | times: 0.9 | round }}px;
+    }
+
+    .ss-cta-{{ section.id }} .ss-cta__button {
+      padding: 12px 32px;
+      font-size: 15px;
+    }
+  }
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "SS Text CTA",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "CASETiFY Travel Artist"
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Title color",
+      "default": "#121212"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "label": "Title font size (desktop)",
+      "min": 20,
+      "max": 90,
+      "step": 2,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "textarea",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "An expandable canvas for the perpetually inspired.\nWe're rallying our global artist community to make a statement you can actually touch."
+    },
+    {
+      "type": "color",
+      "id": "subtitle_color",
+      "label": "Subtitle color",
+      "default": "#555555"
+    },
+    {
+      "type": "range",
+      "id": "subtitle_size",
+      "label": "Subtitle font size (desktop)",
+      "min": 12,
+      "max": 36,
+      "step": 1,
+      "unit": "px",
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "subtitle_gap",
+      "label": "Gap between title and subtitle",
+      "min": 0,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "default": 18
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "default": "Shop Now"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link",
+      "info": "Point this at your keycaps theme page."
+    },
+    {
+      "type": "range",
+      "id": "button_gap",
+      "label": "Gap above button",
+      "min": 0,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "default": 28
+    },
+    {
+      "type": "color",
+      "id": "button_bg",
+      "label": "Button background",
+      "default": "#286633"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Button text color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "select",
+      "id": "alignment",
+      "label": "Text alignment",
+      "default": "center",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "label": "Content max width",
+      "min": 600,
+      "max": 1400,
+      "step": 20,
+      "unit": "px",
+      "default": 900
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding top",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding bottom",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 80
+    }
+  ],
+  "presets": [
+    {
+      "name": "SS Text CTA"
+    }
+  ]
+}
+{% endschema %}

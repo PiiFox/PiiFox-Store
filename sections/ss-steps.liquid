@@ -1,0 +1,586 @@
+{%- comment -%}
+  Style Studio Steps
+  Step-by-step guide showing how to add keycaps, choose the assembly
+  service and add to cart on a keyboard product page.
+  Images are generated inline SVG illustrations (see style-studio-svg-art).
+  Mobile view: Single card centered horizontal carousel, swipe to next card with pagination dots.
+{%- endcomment -%}
+
+<section class="ss-steps ss-steps-{{ section.id }}" data-ss-steps>
+  <div class="ss-steps__inner">
+    {%- if section.settings.title != blank or section.settings.subtitle != blank -%}
+      <div class="ss-steps__header">
+        {%- if section.settings.title != blank -%}
+          <h2 class="ss-steps__title">{{ section.settings.title | escape }}</h2>
+        {%- endif -%}
+        {%- if section.settings.subtitle != blank -%}
+          <p class="ss-steps__subtitle">{{ section.settings.subtitle | escape | newline_to_br }}</p>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    <div class="ss-steps__carousel-wrapper">
+      <div class="ss-steps__grid" data-ss-steps-grid>
+        {%- for block in section.blocks -%}
+          {%- assign step_number = forloop.index | prepend: '0' | slice: -2, 2 -%}
+          <article
+            class="ss-steps__card"
+            data-ss-steps-card
+            data-card-index="{{ forloop.index0 }}"
+            {{ block.shopify_attributes }}
+          >
+            <div class="ss-steps__media">
+              {%- if block.settings.image != blank -%}
+                {{ block.settings.image | image_url: width: 760 | image_tag: loading: 'lazy', class: 'ss-steps__img', alt: block.settings.title }}
+              {%- else -%}
+                {%- case forloop.index -%}
+                  {%- when 1 -%}
+                    {%- assign step_asset = 'https://cdn.shopify.com/s/files/1/1001/2383/6697/files/ChatGPT_2026_11_4_15_48_00.png?v=1793778543' -%}
+                  {%- when 2 -%}
+                    {%- assign step_asset = 'https://cdn.shopify.com/s/files/1/1001/2383/6697/files/ChatGPT_2026_11_4_15_48_11.png?v=1793778542' -%}
+                  {%- when 3 -%}
+                    {%- assign step_asset = 'https://cdn.shopify.com/s/files/1/1001/2383/6697/files/ChatGPT_2026_11_4_16_33_18-2.png?v=1793781354' -%}
+                  {%- when 4 -%}
+                    {%- assign step_asset = 'https://cdn.shopify.com/s/files/1/1001/2383/6697/files/ChatGPT_2026_11_4_16_33_16-1.png?v=1793781355' -%}
+                  {%- else -%}
+                    {%- assign step_asset = '' -%}
+                {%- endcase -%}
+                <img
+                  class="ss-steps__img"
+                  src="{{ step_asset }}"
+                  alt="{{ block.settings.title | escape }}"
+                  loading="lazy"
+                  width="1254"
+                  height="1254"
+                >
+              {%- endif -%}
+            </div>
+
+            <div class="ss-steps__body">
+              <span class="ss-steps__number">{{ step_number }}</span>
+              {%- if block.settings.title != blank -%}
+                <h3 class="ss-steps__card-title">{{ block.settings.title | escape }}</h3>
+              {%- endif -%}
+              {%- if block.settings.text != blank -%}
+                <p class="ss-steps__card-text">{{ block.settings.text | escape | newline_to_br }}</p>
+              {%- endif -%}
+            </div>
+          </article>
+        {%- endfor -%}
+      </div>
+
+      {%- if section.blocks.size > 1 -%}
+        <div class="ss-steps__dots" data-ss-steps-dots aria-hidden="true">
+          {%- for block in section.blocks -%}
+            <button
+              type="button"
+              class="ss-steps__dot{% if forloop.first %} is-active{% endif %}"
+              data-ss-dot="{{ forloop.index0 }}"
+              aria-label="Go to step {{ forloop.index }}"
+            ></button>
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% style %}
+  .ss-steps-{{ section.id }} {
+    width: 100%;
+    background-color: {{ section.settings.background_color }};
+    padding: {{ section.settings.padding_top }}px 0 {{ section.settings.padding_bottom }}px;
+  }
+
+  .ss-steps-{{ section.id }} .ss-steps__inner {
+    width: min(100% - 40px, 1320px);
+    margin: 0 auto;
+  }
+
+  .ss-steps-{{ section.id }} .ss-steps__header {
+    text-align: center;
+    margin-bottom: 44px;
+  }
+
+  .ss-steps-{{ section.id }} .ss-steps__title {
+    margin: 0;
+    color: {{ section.settings.title_color }};
+    font-size: 34px;
+    font-weight: 700;
+    line-height: 1.15;
+  }
+
+  .ss-steps-{{ section.id }} .ss-steps__subtitle {
+    max-width: 46em;
+    margin: 12px auto 0;
+    color: {{ section.settings.subtitle_color }};
+    font-size: 16px;
+    line-height: 1.6;
+  }
+
+  .ss-steps-{{ section.id }} .ss-steps__carousel-wrapper {
+    position: relative;
+    width: 100%;
+  }
+
+  .ss-steps-{{ section.id }} .ss-steps__grid {
+    display: grid;
+    grid-template-columns: repeat({{ section.blocks.size | at_least: 1 }}, minmax(0, 1fr));
+    gap: {{ section.settings.gap }}px;
+  }
+
+  .ss-steps-{{ section.id }} .ss-steps__card {
+    display: flex;
+    flex-direction: column;
+    background-color: {{ section.settings.card_color }};
+    border: 1px solid rgba(0, 0, 0, 0.07);
+    border-radius: 16px;
+    overflow: hidden;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+  }
+
+  .ss-steps-{{ section.id }} .ss-steps__card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.08);
+  }
+
+  .ss-steps-{{ section.id }} .ss-steps__media {
+    width: 100%;
+    aspect-ratio: {{ section.settings.media_ratio | default: '1 / 1' }};
+    background-color: #ffffff;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .ss-steps-{{ section.id }} .ss-steps__img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
+  }
+
+  .ss-steps-{{ section.id }} .ss-steps__svg,
+  .ss-steps-{{ section.id }} .ss-steps__svg svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  .ss-steps-{{ section.id }} .ss-steps__body {
+    padding: 20px 22px 24px;
+  }
+
+  .ss-steps-{{ section.id }} .ss-steps__number {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 34px;
+    height: 34px;
+    padding: 0 8px;
+    border-radius: 999px;
+    background-color: {{ section.settings.accent_color }};
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+  }
+
+  .ss-steps-{{ section.id }} .ss-steps__card-title {
+    margin: 14px 0 0;
+    color: {{ section.settings.card_title_color }};
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 1.3;
+  }
+
+  .ss-steps-{{ section.id }} .ss-steps__card-text {
+    margin: 8px 0 0;
+    color: {{ section.settings.card_text_color }};
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  .ss-steps-{{ section.id }} .ss-steps__dots {
+    display: none;
+  }
+
+  @media screen and (max-width: 989px) {
+    .ss-steps-{{ section.id }} .ss-steps__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  /* Mobile Responsive: Single card centered horizontal carousel */
+  @media screen and (max-width: 769px) {
+    .ss-steps-{{ section.id }} {
+      padding: {{ section.settings.padding_top | times: 0.65 | round }}px 0 {{ section.settings.padding_bottom | times: 0.65 | round }}px;
+    }
+
+    .ss-steps-{{ section.id }} .ss-steps__inner {
+      width: 100%;
+      padding: 0;
+    }
+
+    .ss-steps-{{ section.id }} .ss-steps__header {
+      margin-bottom: 22px;
+      padding: 0 20px;
+      text-align: center;
+    }
+
+    .ss-steps-{{ section.id }} .ss-steps__title {
+      font-size: 24px;
+    }
+
+    .ss-steps-{{ section.id }} .ss-steps__subtitle {
+      max-width: none;
+      margin-left: auto;
+      margin-right: auto;
+      font-size: 13.5px;
+    }
+
+    /* Single card centered horizontal scroll with snap */
+    .ss-steps-{{ section.id }} .ss-steps__grid {
+      display: flex;
+      flex-wrap: nowrap;
+      grid-template-columns: none;
+      gap: 16px;
+      overflow-x: auto;
+      overflow-y: hidden;
+      scroll-snap-type: x mandatory;
+      scroll-behavior: smooth;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      /* Padding ensures single card centers in viewport */
+      padding: 8px calc(50% - (min(86vw, 360px) / 2)) 16px;
+    }
+
+    .ss-steps-{{ section.id }} .ss-steps__grid::-webkit-scrollbar {
+      display: none;
+    }
+
+    .ss-steps-{{ section.id }} .ss-steps__card {
+      flex: 0 0 min(86vw, 360px);
+      width: min(86vw, 360px);
+      max-width: min(86vw, 360px);
+      scroll-snap-align: center;
+      scroll-snap-stop: always;
+      border-radius: 20px;
+    }
+
+    .ss-steps-{{ section.id }} .ss-steps__card:hover {
+      transform: none;
+      box-shadow: none;
+    }
+
+    .ss-steps-{{ section.id }} .ss-steps__body {
+      padding: 18px 20px 22px;
+    }
+
+    .ss-steps-{{ section.id }} .ss-steps__card-title {
+      font-size: 17px;
+      margin-top: 12px;
+    }
+
+    .ss-steps-{{ section.id }} .ss-steps__card-text {
+      font-size: 13.5px;
+      line-height: 1.55;
+    }
+
+    /* Mobile Carousel Pagination Dots */
+    .ss-steps-{{ section.id }} .ss-steps__dots {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 14px;
+      padding: 0 20px;
+    }
+
+    .ss-steps-{{ section.id }} .ss-steps__dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background-color: #d1d5db;
+      border: none;
+      padding: 0;
+      cursor: pointer;
+      transition: all 0.25s ease;
+    }
+
+    .ss-steps-{{ section.id }} .ss-steps__dot.is-active {
+      width: 22px;
+      border-radius: 999px;
+      background-color: {{ section.settings.accent_color | default: '#111111' }};
+    }
+  }
+{% endstyle %}
+
+<script>
+  (function () {
+    function initSection(root) {
+      if (!root || root.dataset.ssStepsInit === 'true') return;
+      root.dataset.ssStepsInit = 'true';
+
+      var grid = root.querySelector('[data-ss-steps-grid]');
+      var cards = root.querySelectorAll('[data-ss-steps-card]');
+      var dots = root.querySelectorAll('[data-ss-dot]');
+
+      if (grid && dots.length > 0) {
+        function updateActiveDot() {
+          var gridRect = grid.getBoundingClientRect();
+          var gridCenter = gridRect.left + gridRect.width / 2;
+          var closestIndex = 0;
+          var minDistance = Infinity;
+
+          cards.forEach(function (card, index) {
+            var cardRect = card.getBoundingClientRect();
+            var cardCenter = cardRect.left + cardRect.width / 2;
+            var dist = Math.abs(gridCenter - cardCenter);
+            if (dist < minDistance) {
+              minDistance = dist;
+              closestIndex = index;
+            }
+          });
+
+          dots.forEach(function (dot, i) {
+            dot.classList.toggle('is-active', i === closestIndex);
+          });
+        }
+
+        var scrollTimer = null;
+        grid.addEventListener('scroll', function () {
+          if (scrollTimer) cancelAnimationFrame(scrollTimer);
+          scrollTimer = requestAnimationFrame(updateActiveDot);
+        }, { passive: true });
+
+        window.addEventListener('resize', function () {
+          if (scrollTimer) cancelAnimationFrame(scrollTimer);
+          scrollTimer = requestAnimationFrame(updateActiveDot);
+        });
+
+        dots.forEach(function (dot) {
+          dot.addEventListener('click', function () {
+            var idx = parseInt(dot.getAttribute('data-ss-dot'), 10);
+            var card = cards[idx];
+            if (card) {
+              var cardLeft = card.offsetLeft;
+              var cardWidth = card.offsetWidth;
+              var gridWidth = grid.clientWidth;
+              var targetScroll = cardLeft - (gridWidth - cardWidth) / 2;
+              if (typeof grid.scrollTo === 'function') {
+                grid.scrollTo({ left: targetScroll, behavior: 'smooth' });
+              } else {
+                card.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+              }
+            }
+          });
+        });
+
+        updateActiveDot();
+      }
+    }
+
+    function initAll() {
+      document.querySelectorAll('[data-ss-steps]').forEach(initSection);
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initAll);
+    } else {
+      initAll();
+    }
+
+    document.addEventListener('shopify:section:load', function (event) {
+      var section = event.target.querySelector
+        ? event.target.querySelector('[data-ss-steps]')
+        : null;
+      if (section) initSection(section);
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "SS Steps",
+  "tag": "section",
+  "max_blocks": 8,
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "How to Build Your Board"
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Title color",
+      "default": "#121212"
+    },
+    {
+      "type": "textarea",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Add keycaps, choose our assembly service and check out - all in a few simple steps."
+    },
+    {
+      "type": "color",
+      "id": "subtitle_color",
+      "label": "Subtitle color",
+      "default": "#666666"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Accent color",
+      "default": "#286633"
+    },
+    {
+      "type": "select",
+      "id": "media_ratio",
+      "label": "Image aspect ratio",
+      "default": "1 / 1",
+      "options": [
+        { "value": "1 / 1", "label": "Square (1:1)" },
+        { "value": "3 / 4", "label": "Portrait (3:4)" },
+        { "value": "4 / 5", "label": "Portrait (4:5)" },
+        { "value": "4 / 3", "label": "Landscape (4:3)" }
+      ]
+    },
+    {
+      "type": "color",
+      "id": "card_color",
+      "label": "Card background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "card_title_color",
+      "label": "Card title color",
+      "default": "#121212"
+    },
+    {
+      "type": "color",
+      "id": "card_text_color",
+      "label": "Card text color",
+      "default": "#666666"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Section background",
+      "default": "#faf8f5"
+    },
+    {
+      "type": "range",
+      "id": "gap",
+      "label": "Card gap",
+      "min": 8,
+      "max": 48,
+      "step": 2,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding top",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding bottom",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 64
+    }
+  ],
+  "blocks": [
+    {
+      "type": "step",
+      "name": "Step",
+      "settings": [
+        {
+          "type": "select",
+          "id": "art",
+          "label": "Illustration",
+          "default": "step-product",
+          "options": [
+            { "value": "step-product", "label": "Product page" },
+            { "value": "step-keycap", "label": "Choose keycaps" },
+            { "value": "step-assembly", "label": "Assembly service" },
+            { "value": "step-cart", "label": "Add to cart" }
+          ]
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Custom image (optional)",
+          "info": "Overrides the generated illustration."
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Open a keyboard product page"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Text",
+          "default": "Pick the keyboard you love and open its product page."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "SS Steps",
+      "blocks": [
+        {
+          "type": "step",
+          "settings": {
+            "art": "step-product",
+            "title": "Open a keyboard product page",
+            "text": "Pick the keyboard you love and open its product page to start building your setup."
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "art": "step-keycap",
+            "title": "Add your keycaps",
+            "text": "Choose a keycap theme and add the keycap set to the same keyboard order."
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "art": "step-assembly",
+            "title": "Select assembly service",
+            "text": "Opt in for our manual assembly service and we'll install the keycaps for you before shipping."
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "art": "step-cart",
+            "title": "Add to cart",
+            "text": "Review your board, keycaps and service, then add everything to your cart and check out."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

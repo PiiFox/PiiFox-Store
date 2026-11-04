@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "keycaps_custom": {
@@ -35,75 +44,15 @@
       "settings": {
         "title": "Keycaps New Arrivals",
         "subtitle": "Discover our newest keycap drops, fresh profile designs, and artisan-inspired sets.",
-        "products_limit": 24
-      }
-    },
-    "handpicked_for_you": {
-      "type": "handpicked-for-you",
-      "blocks": {
-        "card_herbary": {
-          "type": "card",
-          "settings": {
-            "title": "Herbary Cherry Profile Keycaps",
-            "subtitle": "Keycaps",
-            "price": "$45.00",
-            "product": "herbary-cherry-profile-keycap-set"
-          }
-        },
-        "card_dashboard": {
-          "type": "card",
-          "settings": {
-            "title": "Dashboard Blue Cherry Profile Keycaps",
-            "subtitle": "Keycaps",
-            "price": "$45.00",
-            "product": "dashboard-blue-cherry-profile-keycap-set"
-          }
-        },
-        "card_def68": {
-          "type": "card",
-          "settings": {
-            "title": "Defender 68 HE Magnetic Keyboard",
-            "subtitle": "Magnetic Keyboard",
-            "price": "$129.00",
-            "product": "forx-defender68-he-magnetic-keyboard"
-          }
-        },
-        "card_luna75": {
-          "type": "card",
-          "settings": {
-            "title": "Muse 75 Pro Mechanical Keyboard",
-            "subtitle": "Mechanical Keyboard",
-            "price": "$109.00",
-            "product": "luna-muse75-pro-mechanical-keyboard"
-          }
-        },
-        "card_all_keycaps": {
-          "type": "card",
-          "settings": {
-            "title": "Explore All Keycaps Collection",
-            "subtitle": "Full Catalog",
-            "collection": "keycaps"
-          }
-        }
-      },
-      "block_order": [
-        "card_herbary",
-        "card_dashboard",
-        "card_def68",
-        "card_luna75",
-        "card_all_keycaps"
-      ],
-      "settings": {
-        "title": "Handpicked for You",
-        "title_color": "#0A6830",
-        "row_position": 3,
-        "show_border_top": false,
-        "show_navigation": true
+        "products_limit": 24,
+        "show_carousel": true,
+        "carousel_title": "Handpicked for You",
+        "carousel_title_color": "#0A6830",
+        "carousel_limit": 10
       }
     }
   },
   "order": [
-    "keycaps_custom",
-    "handpicked_for_you"
+    "keycaps_custom"
   ]
 }

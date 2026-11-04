@@ -1,0 +1,480 @@
+{%- comment -%}
+  Style Studio Feature Cards
+  Grid of cards: generated image on top, heading + subheading below.
+  Mobile view: Single card centered horizontal carousel, swipe to next card with pagination dots.
+{%- endcomment -%}
+
+<section class="ss-features ss-features-{{ section.id }}" data-ss-features>
+  <div class="ss-features__inner">
+    {%- if section.settings.title != blank or section.settings.subtitle != blank -%}
+      <div class="ss-features__header">
+        {%- if section.settings.title != blank -%}
+          <h2 class="ss-features__title">{{ section.settings.title | escape }}</h2>
+        {%- endif -%}
+        {%- if section.settings.subtitle != blank -%}
+          <p class="ss-features__subtitle">{{ section.settings.subtitle | escape | newline_to_br }}</p>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    <div class="ss-features__carousel-wrapper">
+      <div class="ss-features__grid" data-ss-features-grid>
+        {%- for block in section.blocks -%}
+          <article
+            class="ss-features__card"
+            data-ss-features-card
+            data-card-index="{{ forloop.index0 }}"
+            {{ block.shopify_attributes }}
+          >
+            <div class="ss-features__media">
+              {%- if block.settings.image != blank -%}
+                {{ block.settings.image | image_url: width: 1000 | image_tag: loading: 'lazy', class: 'ss-features__img', alt: block.settings.title }}
+              {%- else -%}
+                {%- case forloop.index -%}
+                  {%- when 1 -%}
+                    {%- assign feature_asset = 'https://cdn.shopify.com/s/files/1/1001/2383/6697/files/carousel1.png?v=1793763803' -%}
+                  {%- when 2 -%}
+                    {%- assign feature_asset = 'https://cdn.shopify.com/s/files/1/1001/2383/6697/files/carousel2.png?v=1793763803' -%}
+                  {%- when 3 -%}
+                    {%- assign feature_asset = 'https://cdn.shopify.com/s/files/1/1001/2383/6697/files/carousel3.png?v=1793763803' -%}
+                  {%- else -%}
+                    {%- assign feature_asset = '' -%}
+                {%- endcase -%}
+                <img
+                  class="ss-features__img"
+                  src="{{ feature_asset }}"
+                  alt="{{ block.settings.title | escape }}"
+                  loading="lazy"
+                  width="1254"
+                  height="1254"
+                >
+              {%- endif -%}
+            </div>
+
+            <div class="ss-features__body">
+              {%- if block.settings.title != blank -%}
+                <h3 class="ss-features__card-title">{{ block.settings.title | escape }}</h3>
+              {%- endif -%}
+              {%- if block.settings.subtitle != blank -%}
+                <p class="ss-features__card-subtitle">{{ block.settings.subtitle | escape | newline_to_br }}</p>
+              {%- endif -%}
+            </div>
+          </article>
+        {%- endfor -%}
+      </div>
+
+      {%- if section.blocks.size > 1 -%}
+        <div class="ss-features__dots" data-ss-features-dots aria-hidden="true">
+          {%- for block in section.blocks -%}
+            <button
+              type="button"
+              class="ss-features__dot{% if forloop.first %} is-active{% endif %}"
+              data-ss-dot="{{ forloop.index0 }}"
+              aria-label="Go to card {{ forloop.index }}"
+            ></button>
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% style %}
+  .ss-features-{{ section.id }} {
+    width: 100%;
+    background-color: {{ section.settings.background_color }};
+    padding: {{ section.settings.padding_top }}px 0 {{ section.settings.padding_bottom }}px;
+  }
+
+  .ss-features-{{ section.id }} .ss-features__inner {
+    width: min(100% - 40px, 1320px);
+    margin: 0 auto;
+  }
+
+  .ss-features-{{ section.id }} .ss-features__carousel-wrapper {
+    position: relative;
+    width: 100%;
+  }
+
+  .ss-features-{{ section.id }} .ss-features__grid {
+    display: grid;
+    grid-template-columns: repeat({{ section.settings.columns }}, minmax(0, 1fr));
+    gap: {{ section.settings.gap }}px;
+  }
+
+  .ss-features-{{ section.id }} .ss-features__card {
+    display: flex;
+    flex-direction: column;
+    background-color: {{ section.settings.card_color }};
+    border: 1px solid rgba(0, 0, 0, 0.07);
+    border-radius: 16px;
+    overflow: hidden;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+  }
+
+  .ss-features-{{ section.id }} .ss-features__card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 32px rgba(0, 0, 0, 0.09);
+  }
+
+  .ss-features-{{ section.id }} .ss-features__media {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    background-color: #f7f7f7;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .ss-features-{{ section.id }} .ss-features__img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .ss-features-{{ section.id }} .ss-features__svg,
+  .ss-features-{{ section.id }} .ss-features__svg svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  .ss-features-{{ section.id }} .ss-features__body {
+    padding: 18px 20px 22px;
+  }
+
+  .ss-features-{{ section.id }} .ss-features__card-title {
+    margin: 0;
+    color: {{ section.settings.card_title_color }};
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 1.3;
+  }
+
+  .ss-features-{{ section.id }} .ss-features__card-subtitle {
+    margin: 8px 0 0;
+    color: {{ section.settings.card_subtitle_color }};
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  .ss-features-{{ section.id }} .ss-features__dots {
+    display: none;
+  }
+
+  @media screen and (max-width: 989px) {
+    .ss-features-{{ section.id }} .ss-features__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  /* Mobile Responsive: Single card centered horizontal carousel */
+  @media screen and (max-width: 769px) {
+    .ss-features-{{ section.id }} {
+      padding: {{ section.settings.padding_top | times: 0.65 | round }}px 0 {{ section.settings.padding_bottom | times: 0.65 | round }}px;
+    }
+
+    .ss-features-{{ section.id }} .ss-features__inner {
+      width: 100%;
+      padding: 0;
+    }
+
+    /* Single card centered horizontal scroll with snap */
+    .ss-features-{{ section.id }} .ss-features__grid {
+      display: flex;
+      flex-wrap: nowrap;
+      grid-template-columns: none;
+      gap: 16px;
+      overflow-x: auto;
+      overflow-y: hidden;
+      scroll-snap-type: x mandatory;
+      scroll-behavior: smooth;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      /* Padding ensures single card centers in viewport */
+      padding: 8px calc(50% - (min(86vw, 360px) / 2)) 16px;
+    }
+
+    .ss-features-{{ section.id }} .ss-features__grid::-webkit-scrollbar {
+      display: none;
+    }
+
+    .ss-features-{{ section.id }} .ss-features__card {
+      flex: 0 0 min(86vw, 360px);
+      width: min(86vw, 360px);
+      max-width: min(86vw, 360px);
+      scroll-snap-align: center;
+      scroll-snap-stop: always;
+      border-radius: 20px;
+    }
+
+    .ss-features-{{ section.id }} .ss-features__card:hover {
+      transform: none;
+      box-shadow: none;
+    }
+
+    .ss-features-{{ section.id }} .ss-features__body {
+      padding: 16px 18px 22px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .ss-features-{{ section.id }} .ss-features__card-title {
+      font-size: 17px;
+      line-height: 1.35;
+    }
+
+    .ss-features-{{ section.id }} .ss-features__card-subtitle {
+      font-size: 13.5px;
+      line-height: 1.55;
+      margin-top: 8px;
+    }
+
+    /* Mobile Carousel Pagination Dots */
+    .ss-features-{{ section.id }} .ss-features__dots {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 14px;
+      padding: 0 20px;
+    }
+
+    .ss-features-{{ section.id }} .ss-features__dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background-color: #d1d5db;
+      border: none;
+      padding: 0;
+      cursor: pointer;
+      transition: all 0.25s ease;
+    }
+
+    .ss-features-{{ section.id }} .ss-features__dot.is-active {
+      width: 22px;
+      border-radius: 999px;
+      background-color: #111111;
+    }
+  }
+{% endstyle %}
+
+<script>
+  (function () {
+    function initSection(root) {
+      if (!root || root.dataset.ssFeaturesInit === 'true') return;
+      root.dataset.ssFeaturesInit = 'true';
+
+      var grid = root.querySelector('[data-ss-features-grid]');
+      var cards = root.querySelectorAll('[data-ss-features-card]');
+      var dots = root.querySelectorAll('[data-ss-dot]');
+
+      if (grid && dots.length > 0) {
+        function updateActiveDot() {
+          var gridRect = grid.getBoundingClientRect();
+          var gridCenter = gridRect.left + gridRect.width / 2;
+          var closestIndex = 0;
+          var minDistance = Infinity;
+
+          cards.forEach(function (card, index) {
+            var cardRect = card.getBoundingClientRect();
+            var cardCenter = cardRect.left + cardRect.width / 2;
+            var dist = Math.abs(gridCenter - cardCenter);
+            if (dist < minDistance) {
+              minDistance = dist;
+              closestIndex = index;
+            }
+          });
+
+          dots.forEach(function (dot, i) {
+            dot.classList.toggle('is-active', i === closestIndex);
+          });
+        }
+
+        var scrollTimer = null;
+        grid.addEventListener('scroll', function () {
+          if (scrollTimer) cancelAnimationFrame(scrollTimer);
+          scrollTimer = requestAnimationFrame(updateActiveDot);
+        }, { passive: true });
+
+        window.addEventListener('resize', function () {
+          if (scrollTimer) cancelAnimationFrame(scrollTimer);
+          scrollTimer = requestAnimationFrame(updateActiveDot);
+        });
+
+        dots.forEach(function (dot) {
+          dot.addEventListener('click', function () {
+            var idx = parseInt(dot.getAttribute('data-ss-dot'), 10);
+            var card = cards[idx];
+            if (card) {
+              var cardLeft = card.offsetLeft;
+              var cardWidth = card.offsetWidth;
+              var gridWidth = grid.clientWidth;
+              var targetScroll = cardLeft - (gridWidth - cardWidth) / 2;
+              if (typeof grid.scrollTo === 'function') {
+                grid.scrollTo({ left: targetScroll, behavior: 'smooth' });
+              } else {
+                card.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+              }
+            }
+          });
+        });
+
+        updateActiveDot();
+      }
+    }
+
+    function initAll() {
+      document.querySelectorAll('[data-ss-features]').forEach(initSection);
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initAll);
+    } else {
+      initAll();
+    }
+
+    document.addEventListener('shopify:section:load', function (event) {
+      var section = event.target.querySelector
+        ? event.target.querySelector('[data-ss-features]')
+        : null;
+      if (section) initSection(section);
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "SS Feature Cards",
+  "tag": "section",
+  "max_blocks": 12,
+  "settings": [
+    {
+      "type": "range",
+      "id": "columns",
+      "label": "Columns (desktop)",
+      "min": 2,
+      "max": 4,
+      "step": 1,
+      "default": 3
+    },
+    {
+      "type": "color",
+      "id": "card_color",
+      "label": "Card background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "card_title_color",
+      "label": "Card title color",
+      "default": "#121212"
+    },
+    {
+      "type": "color",
+      "id": "card_subtitle_color",
+      "label": "Card subtitle color",
+      "default": "#666666"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Section background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "gap",
+      "label": "Card gap",
+      "min": 8,
+      "max": 48,
+      "step": 2,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding top",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding bottom",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 64
+    }
+  ],
+  "blocks": [
+    {
+      "type": "feature",
+      "name": "Feature card",
+      "settings": [
+        {
+          "type": "select",
+          "id": "art",
+          "label": "Illustration",
+          "default": "theme-nature",
+          "options": [
+            { "value": "theme-nature", "label": "Nature & Soft" },
+            { "value": "theme-retro", "label": "Retro & Daily" },
+            { "value": "theme-mono", "label": "Clean & Minimal" },
+            { "value": "theme-cute", "label": "Cute & Colorful" },
+            { "value": "board-base", "label": "Keyboard base" },
+            { "value": "step-keycap", "label": "Keycap set" }
+          ]
+        },
+        {
+          "type": "color",
+          "id": "accent_color",
+          "label": "Illustration accent color",
+          "default": "#286633"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Custom image (optional)",
+          "info": "Overrides the generated illustration."
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Heading",
+          "default": "Nature & Soft"
+        },
+        {
+          "type": "textarea",
+          "id": "subtitle",
+          "label": "Subheading",
+          "default": "Calm tones inspired by nature."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "SS Feature Cards",
+      "blocks": [
+        { "type": "feature", "settings": { "art": "theme-nature", "accent_color": "#107a44", "title": "Nature & Soft", "subtitle": "Calm, earthy tones that keep your desk grounded." } },
+        { "type": "feature", "settings": { "art": "theme-retro", "accent_color": "#6f3b13", "title": "Retro & Daily", "subtitle": "Vintage charm that never goes out of style." } },
+        { "type": "feature", "settings": { "art": "theme-mono", "accent_color": "#3a3d42", "title": "Clean & Minimal", "subtitle": "Simple lines for a distraction-free setup." } },
+        { "type": "feature", "settings": { "art": "theme-cute", "accent_color": "#ef5da8", "title": "Cute & Colorful", "subtitle": "Playful palettes to brighten your typing." } },
+        { "type": "feature", "settings": { "art": "board-base", "accent_color": "#286633", "title": "Built To Last", "subtitle": "Durable bases designed to hold every keycap set." } },
+        { "type": "feature", "settings": { "art": "step-keycap", "accent_color": "#4a7bd7", "title": "Swap Anytime", "subtitle": "Change the look of your board whenever you like." } }
+      ]
+    }
+  ]
+}
+{% endschema %}

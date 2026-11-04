@@ -1,8 +1,8 @@
 <script>
   $(function () {
     $('.custom-shopify-buy-btn').click(async function (e) {
-      const appendVariants =
-        typeof window.getBundleAppendVariants === 'function' ? window.getBundleAppendVariants() : [];
+      /* Complete Your Setup bundle Buy Now logic (commented out)
+      const appendVariants = typeof window.getBundleAppendVariants === 'function' ? window.getBundleAppendVariants() : [];
       if (appendVariants && appendVariants.length > 0) {
         e.preventDefault();
         e.stopPropagation();
@@ -31,20 +31,57 @@
         }
         return;
       }
+      */
       $('.shopify-payment-button button.shopify-payment-button__more-options').click();
     });
   });
 </script>
-{%- assign is_keyboard = false -%}
-{%- assign is_keycap = false -%}
-{%- assign p_type = product.type | downcase | strip -%}
-{%- assign p_cat_name = product.category.name | default: product.category | downcase | strip -%}
-{%- assign p_handle = product.handle | downcase -%}
-{%- assign p_title = product.title | downcase -%}
+{% comment %}
+  Complete Your Setup (commented out)
+  <div class="bundle-list">
+    <label class="bundle-list-title">Complete Your Setup</label>
+    <div class="bundle-tab-list">
+      {% assign bundle_list_labels = product.metafields.custom.bundle_list_labels.value %}
+      {% for label in bundle_list_labels %}
+        <div class="bundle-tab-item" data-bundle-product-list="{{ label }}">
+          Setup {{ forloop.index }}
+        </div>
+      {% endfor %}
+    </div>
+    <div class="bundle-product-list-container">
+      <div class="bundle-product-list--wrapper">
+        {% assign bundle_1_variants = product.metafields.custom.bundle_1_variants.value %}
+        {% assign bundle_2_variants = product.metafields.custom.bundle_2_variants.value %}
+        {% assign bundle_3_variants = product.metafields.custom.bundle_3_variants.value %}
 
-{%- comment -%} 1. 判断是否为键盘商品 {%- endcomment -%}
-{%- if p_type == 'keyboards' or p_type == 'keyboard' or p_cat_name == 'keyboards' or product.category == 'Keyboards' or product.tags contains 'keyboards' or product.tags contains 'Keyboards' or product.tags contains 'keyboard' or product.tags contains 'Keyboard' -%}
-  {%- unless p_type contains 'keycap'
+  {%- comment -%} 1. 判断是否为键盘商品 {%- endcomment -%}
+  {%- if p_type == 'keyboards' or p_type == 'keyboard' or p_cat_name == 'keyboards' or product.category == 'Keyboards' or product.tags contains 'keyboards' or product.tags contains 'Keyboards' or product.tags contains 'keyboard' or product.tags contains 'Keyboard' -%}
+    {%- unless p_type contains 'keycap'
+      or p_cat_name contains 'keycap'
+      or p_handle contains 'keycap'
+      or p_title contains 'keycap'
+      or product.tags contains 'keycaps'
+      or product.tags contains 'Keycaps'
+      or product.tags contains 'keycap'
+      or product.tags contains 'Keycap'
+      or p_type contains 'switch'
+      or p_cat_name contains 'switch'
+      or p_handle contains 'switch'
+      or p_type contains 'mouse'
+      or p_type contains 'mice'
+      or p_cat_name contains 'mouse'
+      or p_cat_name contains 'mice'
+      or p_handle contains 'mouse'
+      or p_type contains 'accessori'
+      or p_cat_name contains 'accessori'
+      or p_type contains 'service'
+    -%}
+      {%- assign is_keyboard = true -%}
+    {%- endunless -%}
+  {%- endif -%}
+
+  {%- comment -%} 2. 判断是否为键帽商品 {%- endcomment -%}
+  {%- if p_type contains 'keycap'
     or p_cat_name contains 'keycap'
     or p_handle contains 'keycap'
     or p_title contains 'keycap'
@@ -52,262 +89,132 @@
     or product.tags contains 'Keycaps'
     or product.tags contains 'keycap'
     or product.tags contains 'Keycap'
-    or p_type contains 'switch'
-    or p_cat_name contains 'switch'
-    or p_handle contains 'switch'
-    or p_type contains 'mouse'
-    or p_type contains 'mice'
-    or p_cat_name contains 'mouse'
-    or p_cat_name contains 'mice'
-    or p_handle contains 'mouse'
-    or p_type contains 'accessori'
-    or p_cat_name contains 'accessori'
-    or p_type contains 'service'
   -%}
-    {%- assign is_keyboard = true -%}
-  {%- endunless -%}
-{%- endif -%}
-
-{%- comment -%} 2. 判断是否为键帽商品 {%- endcomment -%}
-{%- if p_type contains 'keycap'
-  or p_cat_name contains 'keycap'
-  or p_handle contains 'keycap'
-  or p_title contains 'keycap'
-  or product.tags contains 'keycaps'
-  or product.tags contains 'Keycaps'
-  or product.tags contains 'keycap'
-  or product.tags contains 'Keycap'
--%}
-  {%- unless p_type contains 'switch'
-    or p_cat_name contains 'switch'
-    or p_handle contains 'switch'
-    or p_type contains 'mouse'
-    or p_type contains 'mice'
-    or p_cat_name contains 'mouse'
-    or p_cat_name contains 'mice'
-    or p_handle contains 'mouse'
-    or p_type contains 'accessori'
-    or p_cat_name contains 'accessori'
-    or p_type contains 'service'
-  -%}
-    {%- assign is_keycap = true -%}
-  {%- endunless -%}
-{%- endif -%}
-
-{%- assign bundle_1_variants = product.metafields.custom.bundle_1_variants.value -%}
-{%- assign bundle_2_variants = product.metafields.custom.bundle_2_variants.value -%}
-{%- assign bundle_3_variants = product.metafields.custom.bundle_3_variants.value -%}
-{%- assign bundle_1_count = bundle_1_variants.size | default: 0 -%}
-{%- assign bundle_2_count = bundle_2_variants.size | default: 0 -%}
-{%- assign bundle_3_count = bundle_3_variants.size | default: 0 -%}
-{%- assign bundle_total_count = bundle_1_count | plus: bundle_2_count | plus: bundle_3_count -%}
-
-{%- comment -%} 加购组（原 Setup 2 / Setup 3）：键盘默认折叠，键帽等默认展开 {%- endcomment -%}
-{%- if is_keyboard -%}
-  {%- assign bundle_addons_open = false -%}
-{%- else -%}
-  {%- assign bundle_addons_open = true -%}
-{%- endif -%}
-
-{%- comment -%} 仅键盘和键帽展示搭配区域，轴、鼠标、配件等不展示 {%- endcomment -%}
-{%- assign show_complete_setup = false -%}
-{%- if is_keyboard -%}
-  {%- if bundle_1_count > 0 -%}
-    {%- assign show_complete_setup = true -%}
+    {%- unless p_type contains 'switch'
+      or p_cat_name contains 'switch'
+      or p_handle contains 'switch'
+      or p_type contains 'mouse'
+      or p_type contains 'mice'
+      or p_cat_name contains 'mouse'
+      or p_cat_name contains 'mice'
+      or p_handle contains 'mouse'
+      or p_type contains 'accessori'
+      or p_cat_name contains 'accessori'
+      or p_type contains 'service'
+    -%}
+      {%- assign is_keycap = true -%}
+    {%- endunless -%}
   {%- endif -%}
-{%- elsif is_keycap -%}
-  {%- if bundle_1_count > 0 or bundle_total_count > 0 -%}
-    {%- assign show_complete_setup = true -%}
+
+  {%- assign bundle_1_variants = product.metafields.custom.bundle_1_variants.value -%}
+  {%- assign bundle_2_variants = product.metafields.custom.bundle_2_variants.value -%}
+  {%- assign bundle_3_variants = product.metafields.custom.bundle_3_variants.value -%}
+  {%- assign bundle_1_count = bundle_1_variants.size | default: 0 -%}
+  {%- assign bundle_2_count = bundle_2_variants.size | default: 0 -%}
+  {%- assign bundle_3_count = bundle_3_variants.size | default: 0 -%}
+  {%- assign bundle_total_count = bundle_1_count | plus: bundle_2_count | plus: bundle_3_count -%}
+
+  {%- comment -%} 加购组（原 Setup 2 / Setup 3）：键盘默认折叠，键帽等默认展开 {%- endcomment -%}
+  {%- if is_keyboard -%}
+    {%- assign bundle_addons_open = false -%}
+  {%- else -%}
+    {%- assign bundle_addons_open = true -%}
   {%- endif -%}
-{%- endif -%}
 
-{%- if show_complete_setup -%}
-  <div class="bundle-list">
-    <label class="bundle-list-title">
-      {%- if is_keyboard -%}
-        Style Your Board with Keycaps
-      {%- else -%}
-        Complete Your Setup
-      {%- endif -%}
-    </label>
-    <div class="bundle-list-subtitle">
-      <svg class="bundle-list-subtitle__icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path>
-        <line x1="7" y1="7" x2="7.01" y2="7"></line>
-      </svg>
-      <span>Pair a keyboard with keycaps to get <strong>10% off</strong> keycaps.</span>
-    </div>
-    <div class="bundle-product-list-container">
-      <div class="bundle-product-list--wrapper">
-        <div class="bundle-product-list bundle-product-list--1 active">
-          {% assign bundle_1_combo_images = product.metafields.custom.bundle_1_combo_images.value
-            | default: product.metafields.custom.bundle_1_images.value
-          %}
-          {%- if is_keyboard -%}
-            {% for variant in bundle_1_variants %}
-              {% render 'bundle-keycap-item',
-                variant: variant,
-                forloop: forloop,
-                product: product,
-                combo_images: bundle_1_combo_images
-              %}
-            {% endfor %}
-          {%- else -%}
-            {%- assign seen_addon_ids = ',' -%}
-            {% for item in bundle_1_variants %}
-              {%- assign v = item -%}
-              {%- if item.variants -%}
-                {%- assign v = item.selected_or_first_available_variant | default: item.variants.first -%}
-              {%- endif -%}
-              {%- assign v_id = v.id | append: '' -%}
-              {%- assign key = ',' | append: v_id | append: ',' -%}
-              {%- unless seen_addon_ids contains key -%}
-                {%- if v_id != blank -%}
-                  {%- assign seen_addon_ids = seen_addon_ids | append: v_id | append: ',' -%}
-                {%- endif -%}
-                {% render 'bundle-variant-item', variant: item %}
-              {%- endunless -%}
-            {% endfor %}
-            {% for item in bundle_2_variants %}
-              {%- assign v = item -%}
-              {%- if item.variants -%}
-                {%- assign v = item.selected_or_first_available_variant | default: item.variants.first -%}
-              {%- endif -%}
-              {%- assign v_id = v.id | append: '' -%}
-              {%- assign key = ',' | append: v_id | append: ',' -%}
-              {%- unless seen_addon_ids contains key -%}
-                {%- if v_id != blank -%}
-                  {%- assign seen_addon_ids = seen_addon_ids | append: v_id | append: ',' -%}
-                {%- endif -%}
-                {% render 'bundle-variant-item', variant: item %}
-              {%- endunless -%}
-            {% endfor %}
-            {% for item in bundle_3_variants %}
-              {%- assign v = item -%}
-              {%- if item.variants -%}
-                {%- assign v = item.selected_or_first_available_variant | default: item.variants.first -%}
-              {%- endif -%}
-              {%- assign v_id = v.id | append: '' -%}
-              {%- assign key = ',' | append: v_id | append: ',' -%}
-              {%- unless seen_addon_ids contains key -%}
-                {%- if v_id != blank -%}
-                  {%- assign seen_addon_ids = seen_addon_ids | append: v_id | append: ',' -%}
-                {%- endif -%}
-                {% render 'bundle-variant-item', variant: item %}
-              {%- endunless -%}
-            {% endfor %}
-          {%- endif -%}
-        </div>
-      </div>
-    </div>
-  </div>
-{%- endif -%}
+  {%- comment -%} 仅键盘和键帽展示搭配区域，轴、鼠标、配件等不展示 {%- endcomment -%}
+  {%- assign show_complete_setup = false -%}
+  {%- if is_keyboard -%}
+    {%- if bundle_1_count > 0 -%}
+      {%- assign show_complete_setup = true -%}
+    {%- endif -%}
+  {%- elsif is_keycap -%}
+    {%- if bundle_1_count > 0 or bundle_total_count > 0 -%}
+      {%- assign show_complete_setup = true -%}
+    {%- endif -%}
+  {%- endif -%}
 
-{%- if is_keyboard -%}
-  {%- assign service_product = all_products['manual-keycap-installation-service'] -%}
-  {%- assign service_variant = service_product.selected_or_first_available_variant
-    | default: service_product.variants.first
-  -%}
-  {%- assign service_variant_id = service_variant.id | default: 67830185656601 -%}
-  {%- assign service_price = service_product.price | default: 990 -%}
-  {%- assign service_title = 'Manual Keycap Installation Service' -%}
-
-  <div
-    class="manual-service-card is-disabled"
-    id="ManualKeycapServiceCard"
-    data-variant-id="{{ service_variant_id }}"
-    data-price="{{ service_price }}"
-    tabindex="0"
-    role="checkbox"
-    aria-checked="false"
-  >
-    <div class="manual-service-card__inner">
-      <div class="manual-service-card__checkbox-wrap">
-        <input
-          type="checkbox"
-          id="ManualKeycapServiceCheckbox"
-          class="manual-service-card__checkbox"
-          data-variant-id="{{ service_variant_id }}"
-          aria-label="{{ service_title }}"
-          disabled="disabled"
-        >
-        <span class="manual-service-card__checkbox-custom" aria-hidden="true">
-          <svg viewBox="0 0 12 10" fill="none" class="manual-service-card__check-icon">
-            <path d="M1 5l3.5 3.5L11 1.5" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </span>
-      </div>
-      <div class="manual-service-card__content">
-        <div class="manual-service-card__header">
-          <label for="ManualKeycapServiceCheckbox" class="manual-service-card__title">
-            {{ service_title }}
-          </label>
-          <span class="manual-service-card__price">+{{ service_price | money }}/ set</span>
-        </div>
-        <div class="manual-service-card__desc">
-          Professional hand-assembly & switch testing by our technicians.<br>
-          Ready to type out of the box.
-        </div>
-        <div class="manual-service-card__prompt" id="ManualKeycapServicePrompt">
-          <svg viewBox="0 0 16 16" fill="none" class="manual-service-card__prompt-icon" aria-hidden="true">
-            <circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.25"/>
-            <path d="M8 7v4M8 4.75h.01" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-          </svg>
-          <span class="manual-service-card__prompt-text"> Select keycaps above to enable installation service. </span>
-        </div>
-        <div class="manual-service-card__assign" id="ManualKeycapServiceAssign" hidden></div>
-      </div>
-    </div>
-  </div>
-{%- endif -%}
-
-{%- comment -%} 原 Setup 2 + Setup 3 合并为一个可折叠加购组（仅键盘展示，非键盘已整合至 Complete Your Setup） {%- endcomment -%}
-{%- assign addon_count = bundle_2_count | plus: bundle_3_count -%}
-{%- if is_keyboard and addon_count > 0 -%}
-  {%- assign addon_panel_id = 'BundleAddonPanel-' | append: product.id -%}
-  {%- assign addon_toggle_id = 'BundleAddonToggle-' | append: product.id -%}
-  <div class="bundle-addons">
-    <div class="bundle-addon-group{% if bundle_addons_open %} is-open{% endif %}" data-bundle-addon-group>
-      <button
-        type="button"
-        class="bundle-addon-group__toggle"
-        id="{{ addon_toggle_id }}"
-        aria-expanded="{{ bundle_addons_open }}"
-        aria-controls="{{ addon_panel_id }}"
-        data-bundle-addon-toggle
-      >
-        <span class="bundle-addon-group__heading">
-          <span class="bundle-addon-group__title">More Add-ons</span>
-        </span>
-        <svg class="bundle-addon-group__chevron" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-          <path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+  {%- if show_complete_setup -%}
+    <div class="bundle-list">
+      <label class="bundle-list-title">
+        {%- if is_keyboard -%}
+          Style Your Board with Keycaps
+        {%- else -%}
+          Complete Your Setup
+        {%- endif -%}
+      </label>
+      <div class="bundle-list-subtitle">
+        <svg class="bundle-list-subtitle__icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path>
+          <line x1="7" y1="7" x2="7.01" y2="7"></line>
         </svg>
-      </button>
-      <div
-        class="bundle-addon-group__panel"
-        id="{{ addon_panel_id }}"
-        role="region"
-        aria-labelledby="{{ addon_toggle_id }}"
-      >
-        <div class="bundle-addon-group__panel-inner">
-          <div class="bundle-product-list bundle-product-list--addons active">
-            {%- assign addon_seen_ids = ',' -%}
-            {% for variant in bundle_2_variants %}
-              {%- assign addon_seen_ids = addon_seen_ids | append: variant.id | append: ',' -%}
-              {% render 'bundle-variant-item', variant: variant %}
-            {% endfor %}
-            {% for variant in bundle_3_variants %}
-              {%- assign addon_key = ',' | append: variant.id | append: ',' -%}
-              {%- unless addon_seen_ids contains addon_key -%}
-                {% render 'bundle-variant-item', variant: variant %}
-              {%- endunless -%}
-            {% endfor %}
+        <span>Pair a keyboard with keycaps to get <strong>10% off</strong> keycaps.</span>
+      </div>
+      <div class="bundle-product-list-container">
+        <div class="bundle-product-list--wrapper">
+          <div class="bundle-product-list bundle-product-list--1 active">
+            {% assign bundle_1_combo_images = product.metafields.custom.bundle_1_combo_images.value
+              | default: product.metafields.custom.bundle_1_images.value
+            %}
+            {%- if is_keyboard -%}
+              {% for variant in bundle_1_variants %}
+                {% render 'bundle-keycap-item',
+                  variant: variant,
+                  forloop: forloop,
+                  product: product,
+                  combo_images: bundle_1_combo_images
+                %}
+              {% endfor %}
+            {%- else -%}
+              {%- assign seen_addon_ids = ',' -%}
+              {% for item in bundle_1_variants %}
+                {%- assign v = item -%}
+                {%- if item.variants -%}
+                  {%- assign v = item.selected_or_first_available_variant | default: item.variants.first -%}
+                {%- endif -%}
+                {%- assign v_id = v.id | append: '' -%}
+                {%- assign key = ',' | append: v_id | append: ',' -%}
+                {%- unless seen_addon_ids contains key -%}
+                  {%- if v_id != blank -%}
+                    {%- assign seen_addon_ids = seen_addon_ids | append: v_id | append: ',' -%}
+                  {%- endif -%}
+                  {% render 'bundle-variant-item', variant: item %}
+                {%- endunless -%}
+              {% endfor %}
+              {% for item in bundle_2_variants %}
+                {%- assign v = item -%}
+                {%- if item.variants -%}
+                  {%- assign v = item.selected_or_first_available_variant | default: item.variants.first -%}
+                {%- endif -%}
+                {%- assign v_id = v.id | append: '' -%}
+                {%- assign key = ',' | append: v_id | append: ',' -%}
+                {%- unless seen_addon_ids contains key -%}
+                  {%- if v_id != blank -%}
+                    {%- assign seen_addon_ids = seen_addon_ids | append: v_id | append: ',' -%}
+                  {%- endif -%}
+                  {% render 'bundle-variant-item', variant: item %}
+                {%- endunless -%}
+              {% endfor %}
+              {% for item in bundle_3_variants %}
+                {%- assign v = item -%}
+                {%- if item.variants -%}
+                  {%- assign v = item.selected_or_first_available_variant | default: item.variants.first -%}
+                {%- endif -%}
+                {%- assign v_id = v.id | append: '' -%}
+                {%- assign key = ',' | append: v_id | append: ',' -%}
+                {%- unless seen_addon_ids contains key -%}
+                  {%- if v_id != blank -%}
+                    {%- assign seen_addon_ids = seen_addon_ids | append: v_id | append: ',' -%}
+                  {%- endif -%}
+                  {% render 'bundle-variant-item', variant: item %}
+                {%- endunless -%}
+              {% endfor %}
+            {%- endif -%}
           </div>
         </div>
       </div>
     </div>
   </div>
-{%- endif -%}
+{% endcomment %}
 
 {%- form 'product', product, id: form_id, class: 'product-single__form' -%}
   <div class="product-form__actions-group">
@@ -773,23 +680,12 @@
         const rawItems = [
           { id: currentVariantId, quantity: mainQty }
         ];
+        /* Complete Your Setup append variants (commented out)
         const appendVariantIds = getAppendVariantIds();
         if(appendVariantIds) {
           rawItems.push(...appendVariantIds);
         }
-
-        // 预聚合：相同 variantId 且属性（properties）完全相同的商品预先合并数量，确保提交时就是单条累加数量
-        const items = [];
-        rawItems.forEach(item => {
-          const itemPropsStr = JSON.stringify(item.properties || {});
-          const existing = items.find(m => String(m.id) === String(item.id) && JSON.stringify(m.properties || {}) === itemPropsStr);
-          if (existing) {
-            existing.quantity = (existing.quantity || 1) + (item.quantity || 1);
-          } else {
-            items.push({ ...item });
-          }
-        });
-
+        */
         ajaxCart.MoreProductAddToCart(addBtn, items);
       });
     }
@@ -979,542 +875,15 @@
       });
     }
 
-    function initAddonCardsSelection() {
-      const addonsList = document.querySelector('.bundle-product-list--addons');
-      if (!addonsList) return;
-
-            const cards = addonsList.querySelectorAll('.bundle-keycap-card');
-      cards.forEach(card => {
-        card.addEventListener('click', function () {
-          if (this.classList.contains('sold-out')) return;
-
-          const checkbox = this.querySelector('.bundle-product-checkbox');
-          const isSelected = this.classList.contains('is-selected');
-
-          if (isSelected) {
-            this.classList.remove('is-selected');
-            this.setAttribute('aria-pressed', 'false');
-            if (checkbox) {
-              checkbox.checked = false;
-              checkbox.dispatchEvent(new Event('change', { bubbles: true }));
-            }
-          } else {
-            this.classList.add('is-selected');
-            this.setAttribute('aria-pressed', 'true');
-            if (checkbox) {
-              checkbox.checked = true;
-              checkbox.dispatchEvent(new Event('change', { bubbles: true }));
-            }
-          }
-
-          // 同步地址栏 p 参数（勾选加入，取消移除）
-          if (typeof window.__syncBundleAnchor === 'function') {
-            window.__syncBundleAnchor();
-          }
-        });
-
-        card.addEventListener('keydown', function (e) {
-          if (e.key === 'Enter' || e.key === ' ') {
-            e.preventDefault();
-            this.click();
-          }
-        });
-      });
-    }
-
-                // 搭配区商品卡片选中状态 <-> 地址栏 p 参数 同步（支持多选，逗号分隔；取消选中则移除）
-    function initBundleAnchorUrl() {
-      // 读取地址栏中的锚点数组
-      function readAnchors() {
-        const params = new URLSearchParams(window.location.search);
-        const raw = params.get('p') || '';
-        return raw
-          .split(',')
-          .map(s => s.trim())
-          .filter(Boolean);
-      }
-
-      // 用一个或多个锚点写入地址栏（replaceState，不刷新页面）
-      function writeAnchors(anchors) {
-        const params = new URLSearchParams(window.location.search);
-        const unique = Array.from(new Set((anchors || []).filter(Boolean)));
-        if (unique.length > 0) {
-          params.set('p', unique.join(','));
-        } else {
-          params.delete('p');
-        }
-                const search = '?' + params.toString();
-        // 地址未变化则不重复写入（若地址里缺少 variant 则仍需补写，避免商品标识被覆盖丢失）
-        if (window.location.search === search && params.has('variant')) return;
-        window.history.replaceState(
-          window.history.state,
-          '',
-          window.location.pathname + search + window.location.hash
-        );
-      }
-
-      // 记录当前选中的变体，避免主题切换变体时把地址里已有的 p 参数（商品标识）覆盖掉
-      function getVariantFromUrl() {
-        return new URLSearchParams(window.location.search).get('variant') || '';
-      }
-      let lastVariantId = getVariantFromUrl();
-
-      // 主题切换变体会用 replaceState 整体重写地址（只保留 ?variant=xxx），这里在其后再补回 p 参数
-      function keepBundleAnchors() {
-        const currentVariantId = getVariantFromUrl();
-        if (currentVariantId === lastVariantId) return;
-        lastVariantId = currentVariantId;
-
-        const params = new URLSearchParams(window.location.search);
-        const anchors = [];
-        document.querySelectorAll('.bundle-product-list--1 [data-bundle-anchor], .bundle-product-list--addons [data-bundle-anchor]').forEach(card => {
-          if (card.classList.contains('is-selected') && card.dataset.bundleAnchor) {
-            anchors.push(card.dataset.bundleAnchor);
-          }
-        });
-        if (!anchors.length) return;
-
-        params.set('p', Array.from(new Set(anchors)).join(','));
-        const search = '?' + params.toString();
-        if (window.location.search === search) return;
-        window.history.replaceState(
-          window.history.state,
-          '',
-          window.location.pathname + search + window.location.hash
-        );
-            }
-
-
-      // 收集当前所有已选中卡片的锚点，并同步到地址栏
-      function syncAnchorFromSelection() {
-        const anchors = [];
-        // 注意：ANCHOR_LIST_SELECTOR 是逗号分隔的选择器组，需分别拼接锚点选择器，否则逗号会导致匹配错误
-        document.querySelectorAll('.bundle-product-list--1 [data-bundle-anchor], .bundle-product-list--addons [data-bundle-anchor]').forEach(card => {
-          if (card.classList.contains('is-selected') && card.dataset.bundleAnchor) {
-            anchors.push(card.dataset.bundleAnchor);
-          }
-        });
-        writeAnchors(anchors);
-      }
-      // 暴露给卡片点击逻辑调用（勾选/取消勾选后同步地址栏）
-      window.__syncBundleAnchor = syncAnchorFromSelection;
-
-      // 勾选锚点对应的商品卡片（已勾选或售罄则跳过）
-      // 通过触发卡片点击，复用已有的选中逻辑（同步 is-selected、复选框、搭配图切换、安装服务等）
-      function selectAnchorCard(el) {
-        if (!el || el.classList.contains('sold-out')) return;
-        const checkbox = el.querySelector('.bundle-product-checkbox');
-        if (!checkbox || checkbox.disabled) return;
-        if (checkbox.checked && el.classList.contains('is-selected')) return;
-
-        el.click();
-      }
-
-      // 展开分组并将锚点卡片滚动到可视区域
-      function scrollToAnchor(anchor, tries) {
-        if (!anchor) return;
-        const el = document.getElementById('bundle-card-' + anchor);
-        if (!el) {
-          if ((tries || 0) < 10) {
-            setTimeout(() => scrollToAnchor(anchor, (tries || 0) + 1), 300);
-          }
-          return;
-        }
-        // 若目标位于折叠的 More Add-ons 面板内，先展开
-        const addonGroup = el.closest('[data-bundle-addon-group]');
-        if (addonGroup && !addonGroup.classList.contains('is-open')) {
-          const toggle = addonGroup.querySelector('[data-bundle-addon-toggle]');
-          if (toggle) toggle.click();
-        }
-
-        // 对应滚动容器：清单本身可能带滚动条，需要滚动容器使其显示
-        const list = el.closest('.bundle-product-list');
-        if (list && list.scrollHeight > list.clientHeight + 4) {
-          // 卡片在滚动容器内的相对位置
-          const cardTop = el.offsetTop - list.offsetTop + list.scrollTop;
-          list.scrollTo({ top: Math.max(0, cardTop), behavior: 'smooth' });
-        }
-        const rect = el.getBoundingClientRect();
-        const inViewport = rect.top >= 0 && rect.bottom <= (window.innerHeight || document.documentElement.clientHeight);
-        if (!inViewport) {
-          el.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }
-      }
-
-            // 从地址栏恢复：逐个勾选所有锚点对应商品，并滚动到第一个
-      function restoreFromUrl() {
-        const anchors = readAnchors();
-        if (!anchors.length) return;
-
-        // 若任一锚点商品位于 More Add-ons 面板内，则默认展开该面板
-        anchors.forEach(anchor => {
-          const el = document.getElementById('bundle-card-' + anchor);
-          if (!el) return;
-          const addonGroup = el.closest('[data-bundle-addon-group]');
-          if (addonGroup && !addonGroup.classList.contains('is-open')) {
-            const toggle = addonGroup.querySelector('[data-bundle-addon-toggle]');
-            if (toggle) toggle.click();
-          }
-        });
-
-        anchors.forEach(anchor => {
-          const el = document.getElementById('bundle-card-' + anchor);
-          if (el) selectAnchorCard(el);
-        });
-
-        // 滚动定位到第一个锚点（等勾选渲染完成后）
-        setTimeout(() => {
-          scrollToAnchor(anchors[0], 0);
-          // 确保地址栏与最终选中状态一致（去除无效/售罄锚点）
-          syncAnchorFromSelection();
-        }, 50);
-      }
-
-            // 从地址栏恢复（例如分享链接 / 刷新）
-      restoreFromUrl();
-
-      // 包装 history.replaceState：主题切换变体后若把 p 参数覆盖掉，立即补回
-      const originalReplaceState = window.history.replaceState;
-      window.history.replaceState = function (state, title, url) {
-        const result = originalReplaceState.apply(this, arguments);
-        setTimeout(keepBundleAnchors, 0);
-        return result;
-      };
-
-      // 兜底：变体选项、变体选择器变化后也检查一次（不依赖 replaceState 的调用时机）
-      ['change', 'variantChange', 'shopify:section:load'].forEach(function (eventName) {
-        document.addEventListener(eventName, function (e) {
-          if (!e.target || !e.target.closest) return;
-          if (e.target.closest('.product-single__form, .variant-input-wrap, [data-product-form], [data-section-type="product"]')) {
-            setTimeout(keepBundleAnchors, 0);
-          }
-        }, true);
-      });
-    }
-
-
-    function initManualInstallationService() {
-      const card = document.getElementById('ManualKeycapServiceCard');
-      const checkbox = document.getElementById('ManualKeycapServiceCheckbox');
-      if (!card || !checkbox) return;
-
-      const basePrice = parseInt(card.dataset.price, 10) || 990;
-      const priceEl = card.querySelector('.manual-service-card__price');
-      const promptEl = document.getElementById('ManualKeycapServicePrompt');
-      const promptText = promptEl ? promptEl.querySelector('.manual-service-card__prompt-text') : null;
-      const assignEl = document.getElementById('ManualKeycapServiceAssign');
-      const setup1List = document.querySelector('.bundle-product-list--1');
-      const hasSetup1Keycaps = !!(setup1List && setup1List.querySelector('.bundle-keycap-card'));
-
-      // 一对多时，每把键盘（按顺序）选择安装的键帽 variantId
-      let assignments = [];
-
-      function escapeHtml(str) {
-        return String(str).replace(/[&<>"']/g, ch => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch]));
-      }
-
-      // 缩减下拉选项文字长度，省略末尾的冗余规格词（如 Cherry Profile Keycap Set 等）
-      function formatShortTitle(rawTitle) {
-        if (!rawTitle) return '';
-        let str = String(rawTitle).trim();
-        str = str.replace(/\s+(Cherry|OEM|XDA|MOA|MDA|DSA|KDA|ASA)?\s*(Profile\s*)?Keycaps?(\s*Set)?$/i, '');
-        str = str.replace(/\s+(Cherry|OEM|XDA|MOA|MDA|DSA|KDA|ASA)\s+Profile$/i, '');
-        str = str.replace(/\s+Keycaps?(\s+Set)?$/i, '');
-        str = str.trim();
-        if (str.length > 18) {
-          str = str.slice(0, 16).trim() + '...';
-        }
-        return str || rawTitle;
-      }
-
-      function getKeyboardQty() {
-        const mainQtyInput = document.querySelector('.product__quantity input[name="quantity"]') || document.querySelector('input[name="quantity"]');
-        return mainQtyInput ? Math.max(1, parseInt(mainQtyInput.value, 10) || 1) : 1;
-      }
-
-      // Setup 1 中已选键帽，按勾选先后排序
-      function getSelectedKeycaps() {
-        if (!setup1List) return [];
-        return Array.from(setup1List.querySelectorAll('.bundle-keycap-card.is-selected'))
-          .map((el, domIndex) => {
-            const titleEl = el.querySelector('.bundle-keycap-card__title');
-            const order = parseInt(el.dataset.selectedOrder, 10);
-            return {
-              id: String(el.dataset.variantId || domIndex),
-              title: (el.dataset.keycapTitle || (titleEl && titleEl.textContent) || 'Keycaps').trim(),
-              sortKey: isNaN(order) ? 1e9 + domIndex : order
-            };
-          })
-          .sort((a, b) => a.sortKey - b.sortKey);
-      }
-
-      // 安装方案：
-      // - none：页面没有 Setup 1 键帽，按键盘数量计服务
-      // - empty：未选中任何 Setup 1 键帽
-      // - simple：刚好 1 把键盘 + 1 款键帽，直接全量安装，无需下拉框
-      // - choose：多把键盘 或 多款键帽，为每把键盘提供下拉选择框（包含“不安装”选项）
-      function computePlan() {
-        const keyboards = getKeyboardQty();
-        const selected = getSelectedKeycaps();
-
-        if (!hasSetup1Keycaps) {
-          return { mode: 'none', sets: keyboards, keyboards, selected, keycaps: [] };
-        }
-        if (!selected.length) {
-          return { mode: 'empty', sets: 0, keyboards, selected: [], keycaps: [] };
-        }
-
-        // 仅 1 把键盘 + 选 1 款键帽时，1:1 对齐，直接展示确认信息即可
-        if (keyboards === 1 && selected.length === 1) {
-          assignments = [selected[0].id];
-          return {
-            mode: 'simple',
-            sets: 1,
-            keyboards: 1,
-            selected,
-            keycaps: [{ ...selected[0], keyboardIndex: 1 }]
-          };
-        }
-
-        const validIds = selected.map(k => k.id);
-        const used = new Set();
-        const next = [];
-
-        // 1. 保留用户之前仍然有效的选择（键盘数量大于1时才允许保留显式选择的“不安装”即空字符串 ''）
-        for (let i = 0; i < keyboards; i++) {
-          const prev = assignments[i];
-          if (prev === '') {
-            if (keyboards > 1) {
-              next.push('');
-            } else {
-              next.push(null);
-            }
-          } else if (prev && validIds.includes(prev) && !used.has(prev)) {
-            next.push(prev);
-            used.add(prev);
-          } else {
-            next.push(null);
-          }
-        }
-
-        // 2. 空位按键帽勾选顺序预填未占用的键帽；键盘数量大于1且已无可用键帽时才预填“不安装”
-        for (let i = 0; i < keyboards; i++) {
-          if (next[i] === null) {
-            const free = validIds.find(id => !used.has(id));
-            if (free) {
-              next[i] = free;
-              used.add(free);
-            } else {
-              next[i] = keyboards > 1 ? '' : (validIds[0] || ''); // 仅键盘数量大于1时预填不安装
-            }
-          }
-        }
-        assignments = next;
-
-        const byId = {};
-        selected.forEach(k => { byId[k.id] = k; });
-        const keycaps = [];
-        assignments.forEach((id, idx) => {
-          if (id && byId[id]) {
-            keycaps.push({ ...byId[id], keyboardIndex: idx + 1 });
-          }
-        });
-
-        return {
-          mode: 'choose',
-          sets: keycaps.length,
-          keyboards,
-          selected,
-          keycaps
-        };
-      }
-
-      function renderAssign(plan) {
-        if (!assignEl) return;
-        if (plan.mode !== 'choose' || !checkbox.checked) {
-          assignEl.hidden = true;
-          assignEl.innerHTML = '';
-          return;
-        }
-
-        const isMobile = window.matchMedia && window.matchMedia('(max-width: 768px)').matches;
-
-        let html = '';
-        for (let i = 0; i < plan.keyboards; i++) {
-          const current = assignments[i] || '';
-          // 仅在键盘数量大于 1 时显示 None 选项（移动端 None，PC 端显示全称 None (Do not install)）
-          const noneText = isMobile ? 'None' : 'None (Do not install)';
-          const noneOption = plan.keyboards > 1
-            ? `<option value=""${!current ? ' selected' : ''}>${noneText}</option>`
-            : '';
-          const keycapOptions = plan.selected.map(k => {
-            // 已被其他键盘选中的键帽不可再选（排除当前键盘以及“不安装”选项）
-            const takenElsewhere = assignments.some((id, j) => j !== i && id && id === k.id);
-            // 移动端缩减长度，PC 端显示全名
-            const displayTitle = isMobile ? formatShortTitle(k.title) : k.title;
-            return `<option value="${escapeHtml(k.id)}"${k.id === current ? ' selected' : ''}${takenElsewhere ? ' disabled' : ''}>${escapeHtml(displayTitle)}</option>`;
-          }).join('');
-          const options = noneOption + keycapOptions;
-          const label = plan.keyboards > 1 ? `Keyboard ${i + 1}` : 'Keyboard';
-          html += `<label class="manual-service-card__assign-row">` +
-            `<span class="manual-service-card__assign-label">${label}</span>` +
-            `<select class="manual-service-card__assign-select" data-keyboard-index="${i}">${options}</select>` +
-            `</label>`;
-        }
-        assignEl.innerHTML = html;
-        assignEl.hidden = false;
-      }
-
-
-      function updatePriceDisplay(sets) {
-        if (!priceEl) return;
-        // 未勾选或禁用时，均标注一套服务的价格（例如 +$9.90/ set），防止客户误认为是 0 元免费服务
-        if (!sets || sets <= 1) {
-          priceEl.innerHTML = `+${formatMoney(basePrice)}/ set`;
-        } else {
-          priceEl.innerHTML = `+${formatMoney(basePrice * sets)}/ ${sets} sets`;
-        }
-      }
-
-      function setChecked(isChecked) {
-        checkbox.checked = isChecked;
-        card.classList.toggle('is-active', isChecked);
-        card.setAttribute('aria-checked', isChecked ? 'true' : 'false');
-      }
-
-      function render() {
-        const plan = computePlan();
-
-        if (plan.mode === 'none') {
-          card.classList.remove('is-disabled');
-          checkbox.disabled = false;
-          if (promptEl) promptEl.style.display = 'none';
-        } else if (!plan.selected.length) {
-          setChecked(false);
-          checkbox.disabled = true;
-          card.classList.add('is-disabled');
-          if (promptEl && promptText) {
-            promptEl.classList.remove('is-confirmed');
-            promptText.innerHTML = 'Select keycaps above to enable installation service.';
-            promptEl.style.display = 'flex';
-          }
-        } else {
-          card.classList.remove('is-disabled');
-          checkbox.disabled = false;
-          if (promptEl && promptText) {
-            if (checkbox.checked) {
-              promptEl.classList.add('is-confirmed');
-              if (plan.sets === 0) {
-                promptText.innerHTML = '<strong>0 sets</strong> selected · Please select which keycaps to install below.';
-              } else if (plan.mode === 'simple') {
-                promptText.innerHTML = `<strong>1 set</strong> of installation · Keycaps to be installed: <strong>${escapeHtml(plan.keycaps[0].title)}</strong>`;
-              } else {
-                const setsLabel = `${plan.sets} ${plan.sets > 1 ? 'sets' : 'set'}`;
-                const titles = plan.keycaps.map(k => `<strong>${escapeHtml(k.title)}</strong>${plan.keyboards > 1 ? ` (KB ${k.keyboardIndex})` : ''}`).join(', ');
-                promptText.innerHTML = `<strong>${setsLabel}</strong> of installation · Keycaps to be installed: ${titles}`;
-              }
-              promptEl.style.display = 'flex';
-            } else {
-              promptEl.style.display = 'none';
-            }
-          }
-        }
-
-        renderAssign(plan);
-        updatePriceDisplay(plan.sets);
-        return plan;
-      }
-
-      // 供加购时读取当前安装方案
-      card._getServicePlan = computePlan;
-
-      function toggleState(willBeChecked) {
-        if (card.classList.contains('is-disabled')) {
-          if (promptEl) {
-            promptEl.style.transform = 'scale(1.02)';
-            setTimeout(() => { promptEl.style.transform = ''; }, 200);
-          }
-          return;
-        }
-        setChecked(willBeChecked);
-        render();
-      }
-
-      card.addEventListener('click', function (e) {
-        if (e.target === checkbox) return;
-        // 操作下拉框时不切换勾选状态
-        if (e.target.closest && e.target.closest('.manual-service-card__assign')) return;
-        e.preventDefault();
-        toggleState(!checkbox.checked);
-      });
-
-      checkbox.addEventListener('change', function () {
-        toggleState(checkbox.checked);
-      });
-
-      card.addEventListener('keydown', function (e) {
-        if (e.target.closest && e.target.closest('.manual-service-card__assign')) return;
-        if (e.key === ' ' || e.key === 'Enter') {
-          e.preventDefault();
-          toggleState(!checkbox.checked);
-        }
-      });
-
-      if (assignEl) {
-        assignEl.addEventListener('change', function (e) {
-          const select = e.target.closest('.manual-service-card__assign-select');
-          if (!select) return;
-          assignments[parseInt(select.dataset.keyboardIndex, 10)] = select.value;
-          render();
-        });
-      }
-
-      document.addEventListener('input', function (e) {
-        if (e.target && e.target.matches && e.target.matches('input[name="quantity"], .product__quantity input')) {
-          render();
-        }
-      });
-      document.addEventListener('change', function (e) {
-        if (e.target && e.target.matches && e.target.matches('input[name="quantity"], .product__quantity input')) {
-          render();
-        }
-      });
-      document.addEventListener('click', function (e) {
-        if (e.target && e.target.closest && e.target.closest('.js-qty__adjust')) {
-          setTimeout(render, 50);
-        }
-      });
-
-      if (setup1List) {
-        setup1List.addEventListener('click', function () {
-          setTimeout(render, 50);
-        });
-      }
-
-      let prevIsMobile = window.matchMedia && window.matchMedia('(max-width: 768px)').matches;
-      window.addEventListener('resize', function () {
-        const currentIsMobile = window.matchMedia && window.matchMedia('(max-width: 768px)').matches;
-        if (currentIsMobile !== prevIsMobile) {
-          prevIsMobile = currentIsMobile;
-          render();
-        }
-      });
-
-      render();
-    }
-
-        initBundleAddonGroups();
+    /* Complete Your Setup bundle initializations (commented out)
+    initBundleTabs();
     initBundleQtySelectors();
     initBundleSelection();
     initSetup1KeycapSelection();
-    initAddonCardsSelection();
-    initManualInstallationService();
-    initBundleAnchorUrl();
+    */
     initAddToCart();
 
-    updateMobileCardGridScroll();
-    setTimeout(updateMobileCardGridScroll, 300);
-
+    /* Complete Your Setup scroll listeners (commented out)
     let resizeTimer;
     window.addEventListener('resize', function () {
       clearTimeout(resizeTimer);
@@ -1528,6 +897,7 @@
       updateBundleListScroll();
       updateMobileCardGridScroll();
     });
+    */
   }
 
   if (document.readyState === 'loading') {

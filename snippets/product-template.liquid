@@ -131,7 +131,10 @@
     <div class="page-width">
       {%- unless isModal -%}
         <div class="product-mobile-header medium-up--hide">
-          <h1 class="h2 product-single__title product-single__title--mobile notranslate" title="{{ product.title | escape }}">
+          <h1
+            class="h2 product-single__title product-single__title--mobile notranslate"
+            title="{{ product.title | escape }}"
+          >
             {%- unless product.empty? -%}
               {{ product.title }}
             {%- else -%}
@@ -141,7 +144,9 @@
           {%- assign subtitle_block = blocks | where: 'type', 'text' | first -%}
           {%- assign subtitle_text = subtitle_block.settings.text -%}
           {%- if subtitle_text == blank or subtitle_text contains 'product.metafields.custom.short_introduction' -%}
-            {%- assign subtitle_text = product.metafields.custom.short_introduction.value | default: product.metafields.custom.short_introduction -%}
+            {%- assign subtitle_text = product.metafields.custom.short_introduction.value
+              | default: product.metafields.custom.short_introduction
+            -%}
           {%- endif -%}
           {%- if subtitle_text != blank -%}
             <div class="product-single__subtitle product-single__subtitle--mobile">
@@ -262,7 +267,9 @@
                   {%- when 'price' -%}
                     <div class="product-block product-block--price" {{ block.shopify_attributes }}>
                       <div class="product-block__price-row">
-                        <span data-compare-price-a11y class="visually-hidden"> {{- 'products.general.sale_price' | t -}} </span>
+                        <span data-compare-price-a11y class="visually-hidden">
+                          {{- 'products.general.sale_price' | t -}}
+                        </span>
                         <span
                           data-product-price
                           class="product__price{% if current_variant.compare_at_price > current_variant.price %} on-sale{% endif %}"
@@ -278,7 +285,7 @@
                           {%- if current_variant.compare_at_price > current_variant.price -%}
                             {%- assign hide_sale_price = false -%}
                           {%- endif -%}
-                          <span data-a11y-price class="visually-hidden" aria-hidden="{{ hide_sale_price }}" >
+                          <span data-a11y-price class="visually-hidden" aria-hidden="{{ hide_sale_price }}">
                             {{ 'products.general.regular_price' | t }}
                           </span>
                           <span data-product-price-wrap class="{% if hide_sale_price %} hide{% endif %}">
@@ -289,7 +296,7 @@
                             </span>
                           </span>
                         {%- endif -%}
-                        
+
                         {%- if settings.product_save_amount -%}
                           {%- if settings.product_save_type == 'dollar' -%}
                             {%- capture saved_amount -%}{{ current_variant.compare_at_price | minus: current_variant.price | money }}{%- endcapture -%}
@@ -304,7 +311,10 @@
                         {%- endif -%}
 
                         <div class="product__stock-status-wrap">
-                          <span data-product-quantity-status class="product-quantity-status {% if current_variant.available %}product-quantity-status--in-stock{% else %}product-quantity-status--out-of-stock{% endif %}">
+                          <span
+                            data-product-quantity-status
+                            class="product-quantity-status {% if current_variant.available %}product-quantity-status--in-stock{% else %}product-quantity-status--out-of-stock{% endif %}"
+                          >
                             {% if current_variant.available %}In Stock{% else %}Out of Stock{% endif %}
                           </span>
                         </div>
@@ -620,11 +630,11 @@
                     </div>
                   {%- when 'point_desc' -%}
                     {% if product.metafields.custom.point_description != blank %}
-                    <div class="product-block custom-point-describe-container" {{ block.shopify_attributes }}>
-                      <div class="custom-point-describe--wrapper">
-                        {% render 'product-point-description', product: product %}
+                      <div class="product-block custom-point-describe-container" {{ block.shopify_attributes }}>
+                        <div class="custom-point-describe--wrapper">
+                          {% render 'product-point-description', product: product %}
+                        </div>
                       </div>
-                    </div>
                     {% endif %}
                   {%- when 'form_btn' -%}
                     {% style %}
@@ -772,7 +782,7 @@
   }
   .device_bottominfo--wrapper .m_product_option .m_product_price .product__price,
   .device_bottominfo--wrapper .m_product_option .m_product_price .product__price .money {
-    color: #0A6830 !important;
+    color: #0a6830 !important;
     font-size: 22px !important;
     font-weight: 700 !important;
     line-height: 1 !important;
@@ -832,7 +842,7 @@
       bottom: 0;
       left: 0;
       width: 100%;
-      background: linear-gradient(to right, #ffffff 112px, #0A6830 112px) !important;
+      background: linear-gradient(to right, #ffffff 112px, #0a6830 112px) !important;
       box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.08) !important;
       border: none !important;
       border-top: none !important;
@@ -909,7 +919,7 @@
       margin: 0 !important;
       padding: 0 !important;
       border: none !important;
-      background: #0A6830 !important;
+      background: #0a6830 !important;
       box-sizing: border-box !important;
     }
     .device_bottominfo--wrapper .m_product_option .m_product_price {
@@ -922,7 +932,7 @@
       display: flex !important;
       align-items: center !important;
       justify-content: center !important;
-      background: #0A6830 !important;
+      background: #0a6830 !important;
       color: #ffffff !important;
       border-radius: 0 !important;
       border: none !important;
@@ -1017,7 +1027,7 @@
       top: auto !important;
       left: auto !important;
       background: #ffffff !important;
-      color: #0A6830 !important;
+      color: #0a6830 !important;
       border-radius: 50% !important;
       width: 16px !important;
       height: 16px !important;
@@ -1037,7 +1047,7 @@
       font-weight: 800 !important;
       line-height: 16px !important;
       text-align: center !important;
-      color: #0A6830 !important;
+      color: #0a6830 !important;
       font-family: inherit !important;
     }
     body.template-product .footer-opera--wrapper {
@@ -1049,7 +1059,11 @@
 <div class="device_bottominfo">
   <div class="device_bottominfo--wrapper page-width">
     <div class="m_product_info">
-      <img class="m_product_img" src="{{ product.featured_image | img_url:"400x400" }}" alt="{{ product.title | escape }}">
+      <img
+        class="m_product_img"
+        src="{{ product.featured_image | img_url:"400x400" }}"
+        alt="{{ product.title | escape }}"
+      >
       <h2 class="m_product_title small--hide">{{ product.title }}</h2>
     </div>
     <div class="m_product_option">
@@ -1070,7 +1084,7 @@
           {%- if current_variant.compare_at_price > current_variant.price -%}
             {%- assign hide_sale_price = false -%}
           {%- endif -%}
-          <span data-a11y-price class="visually-hidden" aria-hidden="{{ hide_sale_price }}" >
+          <span data-a11y-price class="visually-hidden" aria-hidden="{{ hide_sale_price }}">
             {{ 'products.general.regular_price' | t }}
           </span>
           <span data-product-price-wrap class="{% if hide_sale_price %} hide{% endif %}">
@@ -1085,24 +1099,18 @@
           <span data-a11y-price class="visually-hidden">{{ 'products.general.regular_price' | t }}</span>
         {%- endif -%}
       </div>
-      <a href="javascript:;" class="m_product_addToCart btn add-to-cart">
-        <span class="m_product_addToCart_text">
-          {%- if current_variant.available -%}
-            ADD TO CART
-          {%- else -%}
-            SOLD OUT
-          {%- endif -%}
-        </span>
-        <div class="m_bottom_cart_status medium-up--hide" aria-hidden="true">
-          <div class="m_bottom_cart_icon_wrap">
-            <svg class="m_bottom_bag_icon" width="26" height="26" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
-              <path d="M16 11V7C16 4.79086 14.2091 3 12 3C9.79086 3 8 4.79086 8 7V11M5 9H19L20 21H4L5 9Z" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-            <span class="m_bottom_cart_bubble cart-link__bubble cart-link__bubble--visible">
-              <span class="cart-link__bubble-num">{{ cart.item_count | default: 0 }}</span>
-            </span>
-          </div>
-        </div>
+      <a
+        href="javascript:;"
+        class="m_product_addToCart btn add-to-cart{% unless current_variant.available %} disabled{% endunless %}"
+        {% unless current_variant.available %}
+          aria-disabled="true"
+        {% endunless %}
+      >
+        {%- if current_variant.available -%}
+          {{ 'products.product.add_to_cart' | t }}
+        {%- else -%}
+          {{ 'products.product.sold_out' | t }}
+        {%- endif -%}
       </a>
     </div>
   </div>
@@ -1113,10 +1121,11 @@
     function updateDeviceBottomInfo() {
       const mobileBottomInfo = document.querySelector('.device_bottominfo');
       if (!mobileBottomInfo) return;
-      const paymentButtons = document.querySelector('.product-single__form [data-add-to-cart]') ||
-                             document.querySelector('[data-add-to-cart]') ||
-                             document.querySelector('.product-block .payment-buttons') ||
-                             document.querySelector('.payment-buttons');
+      const paymentButtons =
+        document.querySelector('.product-single__form [data-add-to-cart]') ||
+        document.querySelector('[data-add-to-cart]') ||
+        document.querySelector('.product-block .payment-buttons') ||
+        document.querySelector('.payment-buttons');
       if (!paymentButtons) {
         mobileBottomInfo.style.display = 'none';
         return;

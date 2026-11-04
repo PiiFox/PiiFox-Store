@@ -1,0 +1,895 @@
+{%- comment -%}
+  Style Studio Board Switcher
+  Horizontal layout showing 3 keyboard base cards: Luna 75, Defender 68, Grid 98.
+  Each card features:
+    - Base stage displaying keyboard base with keycaps layer precisely fitted inside
+    - Base title
+    - Circular color swatches (Brown -> Keycap 1, Green -> Keycap 2)
+    - "Shop Now" call to action button
+  Mobile view: Single card centered horizontal carousel, swipe to next card with pagination dots.
+{%- endcomment -%}
+
+<section class="ss-switch ss-switch-{{ section.id }}" data-ss-switch>
+  <div class="ss-switch__inner">
+    {%- if section.settings.title != blank or section.settings.subtitle != blank -%}
+      <div class="ss-switch__header">
+        {%- if section.settings.title != blank -%}
+          <h2 class="ss-switch__title">{{ section.settings.title | escape }}</h2>
+        {%- endif -%}
+        {%- if section.settings.subtitle != blank -%}
+          <p class="ss-switch__subtitle">{{ section.settings.subtitle | escape | newline_to_br }}</p>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    <div class="ss-switch__carousel-wrapper">
+      <div class="ss-switch__grid" data-ss-grid>
+        {%- for block in section.blocks -%}
+          {%- assign fallback_base = 'https://cdn.shopify.com/s/files/1/1001/2383/6697/files/bottom1_7fe49a88-b99d-498f-9dbd-5cd2503ca116.png?v=1793763801' -%}
+          {%- assign base_img_url = fallback_base -%}
+          {%- if block.settings.base_image != blank -%}
+            {%- assign base_img_url = block.settings.base_image | image_url: width: 1400 -%}
+          {%- endif -%}
+
+          {%- assign keycap_mode = block.settings.keycap_mode | default: 'overlay' -%}
+
+          <article
+            class="ss-switch__base ss-switch__base--{{ keycap_mode }}"
+            data-ss-base
+            data-card-index="{{ forloop.index0 }}"
+            {{ block.shopify_attributes }}
+          >
+            {%- comment -%} Keyboard Showcase Stage {%- endcomment -%}
+            <div class="ss-switch__stage ss-switch__stage--{{ section.settings.stage_aspect_ratio | default: '4-3' }}" data-ss-stage>
+              <div class="ss-switch__board-wrap">
+                {%- comment -%} Chassis Image {%- endcomment -%}
+                <img
+                  class="ss-switch__base-img"
+                  src="{{ base_img_url }}"
+                  alt="{{ block.settings.title | default: 'Keyboard Base' | escape }}"
+                  loading="lazy"
+                  width="600"
+                  height="300"
+                >
+
+                {%- comment -%} Keycaps overlay layers container {%- endcomment -%}
+                <div class="ss-switch__keycaps-layer">
+                  {%- for i in (1..5) -%}
+                    {%- assign image_key = 'option_' | append: i | append: '_image' -%}
+                    {%- assign color_key = 'option_' | append: i | append: '_color' -%}
+                    {%- assign label_key = 'option_' | append: i | append: '_label' -%}
+                    {%- assign link_key = 'option_' | append: i | append: '_link' -%}
+                    {%- assign opt_image = block.settings[image_key] -%}
+                    {%- assign opt_color = block.settings[color_key] -%}
+                    {%- assign opt_label = block.settings[label_key] -%}
+                    {%- assign opt_link = block.settings[link_key] -%}
+
+                    {%- assign keycap_src = '' -%}
+                    {%- if opt_image != blank -%}
+                      {%- assign keycap_src = opt_image | image_url: width: 1400 -%}
+                    {%- elsif i == 1 -%}
+                      {%- assign keycap_src = 'keycap1.png' | asset_url -%}
+                    {%- elsif i == 2 -%}
+                      {%- assign keycap_src = 'keycap2.png' | asset_url -%}
+                    {%- endif -%}
+
+                    {%- if keycap_src != blank or opt_color != blank -%}
+                      <div
+                        class="ss-switch__slide{% if forloop.first %} is-active{% endif %}"
+                        data-ss-slide="{{ i }}"
+                        data-opt-link="{{ opt_link | default: '' | escape }}"
+                      >
+                        {%- if keycap_src != blank -%}
+                          <img
+                            class="ss-switch__slide-img"
+                            src="{{ keycap_src }}"
+                            alt="{{ opt_label | default: block.settings.title | escape }}"
+                            loading="lazy"
+                            width="600"
+                            height="300"
+                          >
+                        {%- else -%}
+                          <div class="ss-switch__svg">
+                            {%- render 'style-studio-svg-art', name: 'board-base', color: opt_color -%}
+                          </div>
+                        {%- endif -%}
+                      </div>
+                    {%- endif -%}
+                  {%- endfor -%}
+                </div>
+              </div>
+            </div>
+
+            {%- comment -%} Card Info & Controls {%- endcomment -%}
+            <div class="ss-switch__info">
+              {%- if block.settings.title != blank -%}
+                <h3 class="ss-switch__base-title">{{ block.settings.title | escape }}</h3>
+              {%- endif -%}
+
+              {%- comment -%} Circular Swatches {%- endcomment -%}
+              <div class="ss-switch__options-wrap">
+                <div
+                  class="ss-switch__options"
+                  role="radiogroup"
+                  aria-label="{{ block.settings.title | escape | append: ' color options' }}"
+                >
+                  {%- for i in (1..5) -%}
+                    {%- assign color_key = 'option_' | append: i | append: '_color' -%}
+                    {%- assign label_key = 'option_' | append: i | append: '_label' -%}
+                    {%- assign image_key = 'option_' | append: i | append: '_image' -%}
+                    {%- assign link_key = 'option_' | append: i | append: '_link' -%}
+                    {%- assign opt_color = block.settings[color_key] -%}
+                    {%- assign opt_label = block.settings[label_key] -%}
+                    {%- assign opt_image = block.settings[image_key] -%}
+                    {%- assign opt_link = block.settings[link_key] -%}
+
+                    {%- if opt_color != blank or opt_image != blank or i <= 2 -%}
+                      {%- assign swatch_color = opt_color -%}
+                      {%- if swatch_color == blank -%}
+                        {%- if i == 1 %}{% assign swatch_color = '#8d5b4c' %}{% endif -%}
+                        {%- if i == 2 %}{% assign swatch_color = '#5e7545' %}{% endif -%}
+                      {%- endif -%}
+                      {%- assign swatch_label = opt_label -%}
+                      {%- if swatch_label == blank -%}
+                        {%- if i == 1 %}{% assign swatch_label = 'Brown' %}{% endif -%}
+                        {%- if i == 2 %}{% assign swatch_label = 'Green' %}{% endif -%}
+                      {%- endif -%}
+
+                      <button
+                        type="button"
+                        role="radio"
+                        class="ss-switch__option{% if forloop.first %} is-active{% endif %}"
+                        data-ss-option="{{ i }}"
+                        data-label="{{ swatch_label | escape }}"
+                        data-link="{{ opt_link | default: '' | escape }}"
+                        style="--ss-swatch: {{ swatch_color | default: '#cccccc' }};"
+                        aria-label="{{ swatch_label | escape }}"
+                        title="{{ swatch_label | escape }}"
+                        aria-checked="{% if forloop.first %}true{% else %}false{% endif %}"
+                      >
+                        <span class="ss-switch__swatch-circle" aria-hidden="true"></span>
+                      </button>
+                    {%- endif -%}
+                  {%- endfor -%}
+                </div>
+              </div>
+
+              {%- comment -%} Shop Now Button {%- endcomment -%}
+              {%- assign btn_text = block.settings.button_label | default: section.settings.button_label | default: 'Shop Now' -%}
+              {%- assign fallback_link = block.settings.button_link | default: section.settings.button_link | default: '/pages/keycaps-themes-lab' -%}
+              {%- assign initial_link = block.settings.option_1_link | default: fallback_link -%}
+              <div class="ss-switch__action">
+                <a
+                  href="{{ initial_link }}"
+                  class="ss-switch__btn"
+                  data-ss-btn
+                  data-default-link="{{ fallback_link | escape }}"
+                >
+                  {{ btn_text | escape }}
+                </a>
+              </div>
+            </div>
+          </article>
+        {%- endfor -%}
+      </div>
+
+      {%- comment -%} Mobile Carousel Indicator Dots {%- endcomment -%}
+      {%- if section.blocks.size > 1 -%}
+        <div class="ss-switch__dots" data-ss-dots aria-hidden="true">
+          {%- for block in section.blocks -%}
+            <button
+              type="button"
+              class="ss-switch__dot{% if forloop.first %} is-active{% endif %}"
+              data-ss-dot="{{ forloop.index0 }}"
+              aria-label="Go to card {{ forloop.index }}"
+            ></button>
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% style %}
+  .ss-switch-{{ section.id }} {
+    width: 100%;
+    background-color: {{ section.settings.background_color | default: '#ffffff' }};
+    padding: {{ section.settings.padding_top }}px 0 {{ section.settings.padding_bottom }}px;
+  }
+
+  .ss-switch-{{ section.id }} .ss-switch__inner {
+    width: min(100% - 40px, 1320px);
+    margin: 0 auto;
+  }
+
+  .ss-switch-{{ section.id }} .ss-switch__header {
+    text-align: center;
+    margin-bottom: 48px;
+  }
+
+  .ss-switch-{{ section.id }} .ss-switch__title {
+    margin: 0;
+    color: {{ section.settings.title_color | default: '#111111' }};
+    font-size: 36px;
+    font-weight: 700;
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+  }
+
+  .ss-switch-{{ section.id }} .ss-switch__subtitle {
+    max-width: 48em;
+    margin: 14px auto 0;
+    color: {{ section.settings.subtitle_color | default: '#666666' }};
+    font-size: 16px;
+    line-height: 1.6;
+  }
+
+  .ss-switch-{{ section.id }} .ss-switch__carousel-wrapper {
+    position: relative;
+    width: 100%;
+  }
+
+  /* Desktop Grid: 3 cards horizontal */
+  .ss-switch-{{ section.id }} .ss-switch__grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: {{ section.settings.gap | default: 24 }}px;
+  }
+
+  /* Card styling: Minimalist, modern with premium soft shadow */
+  .ss-switch-{{ section.id }} .ss-switch__base {
+    display: flex;
+    flex-direction: column;
+    background-color: {{ section.settings.card_color | default: '#ffffff' }};
+    border-radius: 24px;
+    padding: 24px 22px 28px;
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    box-shadow:
+      0 4px 12px -2px rgba(0, 0, 0, 0.04),
+      0 16px 36px -6px rgba(0, 0, 0, 0.05);
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+                box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+                border-color 0.35s ease;
+    user-select: none;
+  }
+
+  .ss-switch-{{ section.id }} .ss-switch__base:hover {
+    transform: translateY(-6px);
+    border-color: rgba(0, 0, 0, 0.1);
+    box-shadow:
+      0 6px 14px rgba(0, 0, 0, 0.03),
+      0 20px 44px -4px rgba(0, 0, 0, 0.08),
+      0 36px 72px -12px rgba(0, 0, 0, 0.06);
+  }
+
+  /* Stage display: Base chassis and keycap overlays */
+  .ss-switch-{{ section.id }} .ss-switch__stage {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    border-radius: 18px;
+    overflow: hidden;
+    background: radial-gradient(ellipse at 50% 50%, #ffffff 0%, #f6f6f8 100%);
+    border: 1px solid rgba(0, 0, 0, 0.04);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px 12px;
+  }
+
+  .ss-switch-{{ section.id }} .ss-switch__stage--1-1 { aspect-ratio: 1 / 1; }
+  .ss-switch-{{ section.id }} .ss-switch__stage--4-3 { aspect-ratio: 4 / 3; }
+  .ss-switch-{{ section.id }} .ss-switch__stage--16-11 { aspect-ratio: 16 / 11; }
+  .ss-switch-{{ section.id }} .ss-switch__stage--16-9 { aspect-ratio: 16 / 9; }
+
+  /* Board wrapper keeps exact chassis aspect ratio regardless of stage height */
+  .ss-switch-{{ section.id }} .ss-switch__board-wrap {
+    position: relative;
+    width: 100%;
+    max-width: 100%;
+    aspect-ratio: 1774 / 887;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .ss-switch-{{ section.id }} .ss-switch__base-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  /* Keycaps layer: Exactly mapped to inner keyboard recess */
+  .ss-switch-{{ section.id }} .ss-switch__base--overlay .ss-switch__keycaps-layer {
+    position: absolute;
+    left: 7.78%;
+    top: 20.07%;
+    width: 83.13%;
+    height: 58.06%;
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  .ss-switch-{{ section.id }} .ss-switch__base--full .ss-switch__keycaps-layer {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  .ss-switch-{{ section.id }} .ss-switch__slide {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    visibility: hidden;
+    transform: scale(0.98);
+    transition: opacity 0.35s cubic-bezier(0.2, 0.8, 0.2, 1),
+                transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .ss-switch-{{ section.id }} .ss-switch__slide.is-active {
+    opacity: 1;
+    visibility: visible;
+    transform: scale(1);
+    pointer-events: auto;
+  }
+
+  .ss-switch-{{ section.id }} .ss-switch__slide-img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  .ss-switch-{{ section.id }} .ss-switch__svg,
+  .ss-switch-{{ section.id }} .ss-switch__svg svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  .ss-switch-{{ section.id }} .ss-switch__info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin-top: 22px;
+    flex-grow: 1;
+  }
+
+  .ss-switch-{{ section.id }} .ss-switch__base-title {
+    margin: 0;
+    color: {{ section.settings.card_title_color | default: '#111111' }};
+    font-size: 21px;
+    font-weight: 700;
+    line-height: 1.25;
+    letter-spacing: -0.015em;
+  }
+
+  /* Circular swatches container */
+  .ss-switch-{{ section.id }} .ss-switch__options-wrap {
+    margin-top: 14px;
+  }
+
+  .ss-switch-{{ section.id }} .ss-switch__options {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 5px 12px;
+    background: #f5f5f7;
+    border-radius: 999px;
+    border: 1px solid rgba(0, 0, 0, 0.04);
+  }
+
+  .ss-switch-{{ section.id }} .ss-switch__option {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: 2px solid transparent;
+    padding: 0;
+    background: transparent;
+    cursor: pointer;
+    outline: none;
+    transition: transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1),
+                border-color 0.2s ease;
+  }
+
+  .ss-switch-{{ section.id }} .ss-switch__option:hover {
+    transform: scale(1.14);
+  }
+
+  .ss-switch-{{ section.id }} .ss-switch__option.is-active {
+    border-color: #111111;
+    transform: scale(1.08);
+  }
+
+  .ss-switch-{{ section.id }} .ss-switch__swatch-circle {
+    display: block;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background-color: var(--ss-swatch);
+    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.15);
+  }
+
+  /* Shop Now button */
+  .ss-switch-{{ section.id }} .ss-switch__action {
+    margin-top: 20px;
+    width: 100%;
+  }
+
+  .ss-switch-{{ section.id }} .ss-switch__btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 13px 24px;
+    background-color: #111111;
+    color: #ffffff;
+    font-size: 14.5px;
+    font-weight: 600;
+    border-radius: 999px;
+    text-decoration: none;
+    letter-spacing: 0.01em;
+    transition: background-color 0.25s ease,
+                transform 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+                box-shadow 0.25s ease;
+  }
+
+  .ss-switch-{{ section.id }} .ss-switch__btn:hover {
+    background-color: {{ section.settings.accent_color | default: '#286633' }};
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(40, 102, 51, 0.28);
+  }
+
+  /* Pagination dots (hidden on desktop) */
+  .ss-switch-{{ section.id }} .ss-switch__dots {
+    display: none;
+  }
+
+  /* Tablet layout */
+  @media screen and (max-width: 1024px) and (min-width: 900px) {
+    .ss-switch-{{ section.id }} .ss-switch__grid {
+      gap: 16px;
+    }
+    .ss-switch-{{ section.id }} .ss-switch__base {
+      padding: 20px 16px 24px;
+    }
+    .ss-switch-{{ section.id }} .ss-switch__base-title {
+      font-size: 18px;
+    }
+  }
+
+  /* Mobile Responsive: Single card centered horizontal carousel */
+  @media screen and (max-width: 899px) {
+    .ss-switch-{{ section.id }} {
+      padding: {{ section.settings.padding_top | times: 0.65 | round }}px 0 {{ section.settings.padding_bottom | times: 0.65 | round }}px;
+    }
+
+    .ss-switch-{{ section.id }} .ss-switch__inner {
+      width: 100%;
+      padding: 0;
+    }
+
+    .ss-switch-{{ section.id }} .ss-switch__header {
+      margin-bottom: 24px;
+      padding: 0 20px;
+    }
+
+    .ss-switch-{{ section.id }} .ss-switch__title {
+      font-size: 26px;
+    }
+
+    .ss-switch-{{ section.id }} .ss-switch__subtitle {
+      font-size: 14px;
+    }
+
+    /* Single card centered horizontal scroll with snap */
+    .ss-switch-{{ section.id }} .ss-switch__grid {
+      display: flex;
+      flex-wrap: nowrap;
+      grid-template-columns: none;
+      gap: 16px;
+      overflow-x: auto;
+      overflow-y: hidden;
+      scroll-snap-type: x mandatory;
+      scroll-behavior: smooth;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      /* Padding ensures single card centers in viewport */
+      padding: 8px calc(50% - (min(86vw, 360px) / 2)) 20px;
+    }
+
+    .ss-switch-{{ section.id }} .ss-switch__grid::-webkit-scrollbar {
+      display: none;
+    }
+
+    .ss-switch-{{ section.id }} .ss-switch__base {
+      flex: 0 0 min(86vw, 360px);
+      width: min(86vw, 360px);
+      max-width: min(86vw, 360px);
+      scroll-snap-align: center;
+      scroll-snap-stop: always;
+      padding: 22px 18px 24px;
+      border-radius: 22px;
+    }
+
+    .ss-switch-{{ section.id }} .ss-switch__base:hover {
+      transform: none;
+    }
+
+    .ss-switch-{{ section.id }} .ss-switch__base-title {
+      font-size: 19px;
+    }
+
+    /* Mobile Carousel Pagination Dots */
+    .ss-switch-{{ section.id }} .ss-switch__dots {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 14px;
+      padding: 0 20px;
+    }
+
+    .ss-switch-{{ section.id }} .ss-switch__dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background-color: #d1d5db;
+      border: none;
+      padding: 0;
+      cursor: pointer;
+      transition: all 0.25s ease;
+    }
+
+    .ss-switch-{{ section.id }} .ss-switch__dot.is-active {
+      width: 22px;
+      border-radius: 999px;
+      background-color: #111111;
+    }
+  }
+{% endstyle %}
+
+<script>
+  (function () {
+    function initSection(root) {
+      if (!root || root.dataset.ssSwitchInit === 'true') return;
+      root.dataset.ssSwitchInit = 'true';
+
+      var grid = root.querySelector('[data-ss-grid]');
+      var cards = root.querySelectorAll('[data-ss-base]');
+      var dots = root.querySelectorAll('[data-ss-dot]');
+
+      // Keycap switching within each card
+      cards.forEach(function (base) {
+        var slides = base.querySelectorAll('[data-ss-slide]');
+        var options = base.querySelectorAll('[data-ss-option]');
+        var btn = base.querySelector('[data-ss-btn]');
+        var defaultLink = btn ? btn.getAttribute('data-default-link') : '';
+
+        function switchSlide(targetIndex) {
+          var chosenOption = null;
+
+          options.forEach(function (o) {
+            var active = o.getAttribute('data-ss-option') === targetIndex;
+            o.classList.toggle('is-active', active);
+            o.setAttribute('aria-checked', active ? 'true' : 'false');
+            if (active) chosenOption = o;
+          });
+
+          slides.forEach(function (slide) {
+            var active = slide.getAttribute('data-ss-slide') === targetIndex;
+            slide.classList.toggle('is-active', active);
+          });
+
+          if (btn && chosenOption) {
+            var customLink = chosenOption.getAttribute('data-link');
+            btn.setAttribute('href', customLink && customLink.trim() !== '' ? customLink : defaultLink);
+          }
+        }
+
+        options.forEach(function (option) {
+          option.addEventListener('click', function (e) {
+            e.stopPropagation();
+            var target = option.getAttribute('data-ss-option');
+            switchSlide(target);
+          });
+        });
+      });
+
+      // Mobile Carousel: sync active dot on scroll & swipe
+      if (grid && dots.length > 0) {
+        function updateActiveDot() {
+          var gridRect = grid.getBoundingClientRect();
+          var gridCenter = gridRect.left + gridRect.width / 2;
+          var closestIndex = 0;
+          var minDistance = Infinity;
+
+          cards.forEach(function (card, index) {
+            var cardRect = card.getBoundingClientRect();
+            var cardCenter = cardRect.left + cardRect.width / 2;
+            var dist = Math.abs(gridCenter - cardCenter);
+            if (dist < minDistance) {
+              minDistance = dist;
+              closestIndex = index;
+            }
+          });
+
+          dots.forEach(function (dot, i) {
+            dot.classList.toggle('is-active', i === closestIndex);
+          });
+        }
+
+        var scrollTimer = null;
+        grid.addEventListener('scroll', function () {
+          if (scrollTimer) cancelAnimationFrame(scrollTimer);
+          scrollTimer = requestAnimationFrame(updateActiveDot);
+        }, { passive: true });
+
+        dots.forEach(function (dot) {
+          dot.addEventListener('click', function () {
+            var idx = parseInt(dot.getAttribute('data-ss-dot'), 10);
+            if (cards[idx]) {
+              cards[idx].scrollIntoView({
+                behavior: 'smooth',
+                inline: 'center',
+                block: 'nearest'
+              });
+            }
+          });
+        });
+      }
+    }
+
+    function initAll() {
+      document.querySelectorAll('[data-ss-switch]').forEach(initSection);
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initAll);
+    } else {
+      initAll();
+    }
+
+    document.addEventListener('shopify:section:load', function (event) {
+      var section = event.target.querySelector
+        ? event.target.querySelector('[data-ss-switch]')
+        : null;
+      if (section) initSection(section);
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "SS Board Switcher",
+  "tag": "section",
+  "max_blocks": 6,
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "One Base. Many Looks."
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Title color",
+      "default": "#111111"
+    },
+    {
+      "type": "textarea",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Pick a base, then tap a color to preview the keycaps installed on it."
+    },
+    {
+      "type": "color",
+      "id": "subtitle_color",
+      "label": "Subtitle color",
+      "default": "#666666"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Accent / Hover color",
+      "default": "#286633"
+    },
+    {
+      "type": "color",
+      "id": "card_color",
+      "label": "Card background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "card_title_color",
+      "label": "Card title color",
+      "default": "#111111"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Section background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Default button label",
+      "default": "Shop Now"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Default button link"
+    },
+    {
+      "type": "select",
+      "id": "stage_aspect_ratio",
+      "label": "Image stage ratio",
+      "options": [
+        { "value": "4-3", "label": "Tall (4:3)" },
+        { "value": "1-1", "label": "Square (1:1)" },
+        { "value": "16-11", "label": "Medium (16:11)" },
+        { "value": "16-9", "label": "Wide (16:9)" }
+      ],
+      "default": "4-3"
+    },
+    {
+      "type": "range",
+      "id": "gap",
+      "label": "Column gap (desktop)",
+      "min": 12,
+      "max": 48,
+      "step": 2,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding top",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding bottom",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 64
+    }
+  ],
+  "blocks": [
+    {
+      "type": "board",
+      "name": "Keyboard base",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Base model name",
+          "default": "Luna 75"
+        },
+        {
+          "type": "image_picker",
+          "id": "base_image",
+          "label": "Base chassis image (optional)",
+          "info": "Chassis shown behind the installed keycaps. Defaults to bottom1.png if blank."
+        },
+        {
+          "type": "select",
+          "id": "keycap_mode",
+          "label": "Keycaps fitting mode",
+          "options": [
+            { "value": "overlay", "label": "Overlay inside chassis" },
+            { "value": "full", "label": "Full stage image" }
+          ],
+          "default": "overlay"
+        },
+        {
+          "type": "text",
+          "id": "button_label",
+          "label": "Button label",
+          "default": "Shop Now"
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "Button link"
+        },
+        { "type": "header", "content": "Option 1 (Brown Swatch -> Keycap 1)" },
+        { "type": "text", "id": "option_1_label", "label": "Label", "default": "Brown" },
+        { "type": "color", "id": "option_1_color", "label": "Color", "default": "#8d5b4c" },
+        { "type": "image_picker", "id": "option_1_image", "label": "Keycaps image", "info": "Defaults to keycap1.png if blank" },
+        { "type": "url", "id": "option_1_link", "label": "Keycap product link", "info": "Product opened when this color is active" },
+        { "type": "header", "content": "Option 2 (Green Swatch -> Keycap 2)" },
+        { "type": "text", "id": "option_2_label", "label": "Label", "default": "Green" },
+        { "type": "color", "id": "option_2_color", "label": "Color", "default": "#5e7545" },
+        { "type": "image_picker", "id": "option_2_image", "label": "Keycaps image", "info": "Defaults to keycap2.png if blank" },
+        { "type": "url", "id": "option_2_link", "label": "Keycap product link", "info": "Product opened when this color is active" },
+        { "type": "header", "content": "Option 3 (Optional)" },
+        { "type": "text", "id": "option_3_label", "label": "Label" },
+        { "type": "color", "id": "option_3_color", "label": "Color" },
+        { "type": "image_picker", "id": "option_3_image", "label": "Keycaps image" },
+        { "type": "url", "id": "option_3_link", "label": "Keycap product link", "info": "Product opened when this color is active" },
+        { "type": "header", "content": "Option 4 (Optional)" },
+        { "type": "text", "id": "option_4_label", "label": "Label" },
+        { "type": "color", "id": "option_4_color", "label": "Color" },
+        { "type": "image_picker", "id": "option_4_image", "label": "Keycaps image" },
+        { "type": "url", "id": "option_4_link", "label": "Keycap product link", "info": "Product opened when this color is active" },
+        { "type": "header", "content": "Option 5 (Optional)" },
+        { "type": "text", "id": "option_5_label", "label": "Label" },
+        { "type": "color", "id": "option_5_color", "label": "Color" },
+        { "type": "image_picker", "id": "option_5_image", "label": "Keycaps image" },
+        { "type": "url", "id": "option_5_link", "label": "Keycap product link", "info": "Product opened when this color is active" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "SS Board Switcher",
+      "blocks": [
+        {
+          "type": "board",
+          "settings": {
+            "title": "Luna 75",
+            "button_label": "Shop Now",
+            "button_link": "/pages/keycaps-themes-lab",
+            "option_1_label": "Brown",
+            "option_1_color": "#8d5b4c",
+            "option_2_label": "Green",
+            "option_2_color": "#5e7545"
+          }
+        },
+        {
+          "type": "board",
+          "settings": {
+            "title": "Defender 68",
+            "button_label": "Shop Now",
+            "button_link": "/pages/keycaps-themes-lab",
+            "option_1_label": "Brown",
+            "option_1_color": "#8d5b4c",
+            "option_2_label": "Green",
+            "option_2_color": "#5e7545"
+          }
+        },
+        {
+          "type": "board",
+          "settings": {
+            "title": "Grid 98",
+            "button_label": "Shop Now",
+            "button_link": "/pages/keycaps-themes-lab",
+            "option_1_label": "Brown",
+            "option_1_color": "#8d5b4c",
+            "option_2_label": "Green",
+            "option_2_color": "#5e7545"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
