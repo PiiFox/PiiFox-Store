@@ -75,7 +75,8 @@
         "accent_color": "#286633",
         "background_color": "#ffffff",
         "padding_top": 36,
-        "padding_bottom": 36
+        "padding_bottom": 36,
+        "media_ratio": "1 / 1"
       }
     },
     "features": {

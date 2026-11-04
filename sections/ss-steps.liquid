@@ -3,9 +3,10 @@
   Step-by-step guide showing how to add keycaps, choose the assembly
   service and add to cart on a keyboard product page.
   Images are generated inline SVG illustrations (see style-studio-svg-art).
+  Mobile view: Single card centered horizontal carousel, swipe to next card with pagination dots.
 {%- endcomment -%}
 
-<section class="ss-steps ss-steps-{{ section.id }}">
+<section class="ss-steps ss-steps-{{ section.id }}" data-ss-steps>
   <div class="ss-steps__inner">
     {%- if section.settings.title != blank or section.settings.subtitle != blank -%}
       <div class="ss-steps__header">
@@ -18,48 +19,68 @@
       </div>
     {%- endif -%}
 
-    <div class="ss-steps__grid">
-      {%- for block in section.blocks -%}
-        {%- assign step_number = forloop.index | prepend: '0' | slice: -2, 2 -%}
-        <article class="ss-steps__card" {{ block.shopify_attributes }}>
-          <div class="ss-steps__media">
-            {%- if block.settings.image != blank -%}
-              {{ block.settings.image | image_url: width: 760 | image_tag: loading: 'lazy', class: 'ss-steps__img', alt: block.settings.title }}
-            {%- else -%}
-              {%- case forloop.index -%}
-                {%- when 1 -%}
-                  {%- assign step_asset = 'https://cdn.shopify.com/s/files/1/1001/2383/6697/files/step1.png?v=1793763815' -%}
-                {%- when 2 -%}
-                  {%- assign step_asset = 'https://cdn.shopify.com/s/files/1/1001/2383/6697/files/step2.png?v=1793763815' -%}
-                {%- when 3 -%}
-                  {%- assign step_asset = 'https://cdn.shopify.com/s/files/1/1001/2383/6697/files/step3.png?v=1793763814' -%}
-                {%- when 4 -%}
-                  {%- assign step_asset = 'https://cdn.shopify.com/s/files/1/1001/2383/6697/files/step4.png?v=1793763815' -%}
-                {%- else -%}
-                  {%- assign step_asset = '' -%}
-              {%- endcase -%}
-              <img
-                class="ss-steps__img"
-                src="{{ step_asset }}"
-                alt="{{ block.settings.title | escape }}"
-                loading="lazy"
-                width="1086"
-                height="1448"
-              >
-            {%- endif -%}
-          </div>
+    <div class="ss-steps__carousel-wrapper">
+      <div class="ss-steps__grid" data-ss-steps-grid>
+        {%- for block in section.blocks -%}
+          {%- assign step_number = forloop.index | prepend: '0' | slice: -2, 2 -%}
+          <article
+            class="ss-steps__card"
+            data-ss-steps-card
+            data-card-index="{{ forloop.index0 }}"
+            {{ block.shopify_attributes }}
+          >
+            <div class="ss-steps__media">
+              {%- if block.settings.image != blank -%}
+                {{ block.settings.image | image_url: width: 760 | image_tag: loading: 'lazy', class: 'ss-steps__img', alt: block.settings.title }}
+              {%- else -%}
+                {%- case forloop.index -%}
+                  {%- when 1 -%}
+                    {%- assign step_asset = 'https://cdn.shopify.com/s/files/1/1001/2383/6697/files/ChatGPT_2026_11_4_15_48_00.png?v=1793778543' -%}
+                  {%- when 2 -%}
+                    {%- assign step_asset = 'https://cdn.shopify.com/s/files/1/1001/2383/6697/files/ChatGPT_2026_11_4_15_48_11.png?v=1793778542' -%}
+                  {%- when 3 -%}
+                    {%- assign step_asset = 'https://cdn.shopify.com/s/files/1/1001/2383/6697/files/ChatGPT_2026_11_4_16_33_18-2.png?v=1793781354' -%}
+                  {%- when 4 -%}
+                    {%- assign step_asset = 'https://cdn.shopify.com/s/files/1/1001/2383/6697/files/ChatGPT_2026_11_4_16_33_16-1.png?v=1793781355' -%}
+                  {%- else -%}
+                    {%- assign step_asset = '' -%}
+                {%- endcase -%}
+                <img
+                  class="ss-steps__img"
+                  src="{{ step_asset }}"
+                  alt="{{ block.settings.title | escape }}"
+                  loading="lazy"
+                  width="1254"
+                  height="1254"
+                >
+              {%- endif -%}
+            </div>
 
-          <div class="ss-steps__body">
-            <span class="ss-steps__number">{{ step_number }}</span>
-            {%- if block.settings.title != blank -%}
-              <h3 class="ss-steps__card-title">{{ block.settings.title | escape }}</h3>
-            {%- endif -%}
-            {%- if block.settings.text != blank -%}
-              <p class="ss-steps__card-text">{{ block.settings.text | escape | newline_to_br }}</p>
-            {%- endif -%}
-          </div>
-        </article>
-      {%- endfor -%}
+            <div class="ss-steps__body">
+              <span class="ss-steps__number">{{ step_number }}</span>
+              {%- if block.settings.title != blank -%}
+                <h3 class="ss-steps__card-title">{{ block.settings.title | escape }}</h3>
+              {%- endif -%}
+              {%- if block.settings.text != blank -%}
+                <p class="ss-steps__card-text">{{ block.settings.text | escape | newline_to_br }}</p>
+              {%- endif -%}
+            </div>
+          </article>
+        {%- endfor -%}
+      </div>
+
+      {%- if section.blocks.size > 1 -%}
+        <div class="ss-steps__dots" data-ss-steps-dots aria-hidden="true">
+          {%- for block in section.blocks -%}
+            <button
+              type="button"
+              class="ss-steps__dot{% if forloop.first %} is-active{% endif %}"
+              data-ss-dot="{{ forloop.index0 }}"
+              aria-label="Go to step {{ forloop.index }}"
+            ></button>
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
     </div>
   </div>
 </section>
@@ -97,6 +118,11 @@
     line-height: 1.6;
   }
 
+  .ss-steps-{{ section.id }} .ss-steps__carousel-wrapper {
+    position: relative;
+    width: 100%;
+  }
+
   .ss-steps-{{ section.id }} .ss-steps__grid {
     display: grid;
     grid-template-columns: repeat({{ section.blocks.size | at_least: 1 }}, minmax(0, 1fr));
@@ -120,8 +146,8 @@
 
   .ss-steps-{{ section.id }} .ss-steps__media {
     width: 100%;
-    aspect-ratio: {{ section.settings.media_ratio }};
-    background-color: #f7f4ee;
+    aspect-ratio: {{ section.settings.media_ratio | default: '1 / 1' }};
+    background-color: #ffffff;
     overflow: hidden;
     display: flex;
     align-items: center;
@@ -132,7 +158,8 @@
     display: block;
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
+    object-position: center;
   }
 
   .ss-steps-{{ section.id }} .ss-steps__svg,
@@ -176,12 +203,17 @@
     line-height: 1.6;
   }
 
+  .ss-steps-{{ section.id }} .ss-steps__dots {
+    display: none;
+  }
+
   @media screen and (max-width: 989px) {
     .ss-steps-{{ section.id }} .ss-steps__grid {
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
   }
 
+  /* Mobile Responsive: Single card centered horizontal carousel */
   @media screen and (max-width: 769px) {
     .ss-steps-{{ section.id }} {
       padding: {{ section.settings.padding_top | times: 0.65 | round }}px 0 {{ section.settings.padding_bottom | times: 0.65 | round }}px;
@@ -194,35 +226,35 @@
 
     .ss-steps-{{ section.id }} .ss-steps__header {
       margin-bottom: 22px;
-      padding: 0 16px;
+      padding: 0 20px;
       text-align: center;
     }
 
     .ss-steps-{{ section.id }} .ss-steps__title {
-      font-size: 22px;
+      font-size: 24px;
     }
 
     .ss-steps-{{ section.id }} .ss-steps__subtitle {
       max-width: none;
       margin-left: auto;
       margin-right: auto;
-      font-size: 13px;
+      font-size: 13.5px;
     }
 
-    /* Horizontal swipe carousel */
+    /* Single card centered horizontal scroll with snap */
     .ss-steps-{{ section.id }} .ss-steps__grid {
       display: flex;
       flex-wrap: nowrap;
       grid-template-columns: none;
-      gap: {{ section.settings.gap_mobile }}px;
+      gap: 16px;
       overflow-x: auto;
       overflow-y: hidden;
       scroll-snap-type: x mandatory;
       scroll-behavior: smooth;
       -webkit-overflow-scrolling: touch;
       scrollbar-width: none;
-      padding: 4px 16px 10px;
-      scroll-padding-inline: 16px;
+      /* Padding ensures single card centers in viewport */
+      padding: 8px calc(50% - (min(86vw, 360px) / 2)) 16px;
     }
 
     .ss-steps-{{ section.id }} .ss-steps__grid::-webkit-scrollbar {
@@ -230,17 +262,145 @@
     }
 
     .ss-steps-{{ section.id }} .ss-steps__card {
-      flex: 0 0 {{ section.settings.card_width_mobile }}%;
-      max-width: {{ section.settings.card_width_mobile }}%;
-      scroll-snap-align: start;
+      flex: 0 0 min(86vw, 360px);
+      width: min(86vw, 360px);
+      max-width: min(86vw, 360px);
+      scroll-snap-align: center;
+      scroll-snap-stop: always;
+      border-radius: 20px;
     }
 
     .ss-steps-{{ section.id }} .ss-steps__card:hover {
       transform: none;
       box-shadow: none;
     }
+
+    .ss-steps-{{ section.id }} .ss-steps__body {
+      padding: 18px 20px 22px;
+    }
+
+    .ss-steps-{{ section.id }} .ss-steps__card-title {
+      font-size: 17px;
+      margin-top: 12px;
+    }
+
+    .ss-steps-{{ section.id }} .ss-steps__card-text {
+      font-size: 13.5px;
+      line-height: 1.55;
+    }
+
+    /* Mobile Carousel Pagination Dots */
+    .ss-steps-{{ section.id }} .ss-steps__dots {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 14px;
+      padding: 0 20px;
+    }
+
+    .ss-steps-{{ section.id }} .ss-steps__dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background-color: #d1d5db;
+      border: none;
+      padding: 0;
+      cursor: pointer;
+      transition: all 0.25s ease;
+    }
+
+    .ss-steps-{{ section.id }} .ss-steps__dot.is-active {
+      width: 22px;
+      border-radius: 999px;
+      background-color: {{ section.settings.accent_color | default: '#111111' }};
+    }
   }
 {% endstyle %}
+
+<script>
+  (function () {
+    function initSection(root) {
+      if (!root || root.dataset.ssStepsInit === 'true') return;
+      root.dataset.ssStepsInit = 'true';
+
+      var grid = root.querySelector('[data-ss-steps-grid]');
+      var cards = root.querySelectorAll('[data-ss-steps-card]');
+      var dots = root.querySelectorAll('[data-ss-dot]');
+
+      if (grid && dots.length > 0) {
+        function updateActiveDot() {
+          var gridRect = grid.getBoundingClientRect();
+          var gridCenter = gridRect.left + gridRect.width / 2;
+          var closestIndex = 0;
+          var minDistance = Infinity;
+
+          cards.forEach(function (card, index) {
+            var cardRect = card.getBoundingClientRect();
+            var cardCenter = cardRect.left + cardRect.width / 2;
+            var dist = Math.abs(gridCenter - cardCenter);
+            if (dist < minDistance) {
+              minDistance = dist;
+              closestIndex = index;
+            }
+          });
+
+          dots.forEach(function (dot, i) {
+            dot.classList.toggle('is-active', i === closestIndex);
+          });
+        }
+
+        var scrollTimer = null;
+        grid.addEventListener('scroll', function () {
+          if (scrollTimer) cancelAnimationFrame(scrollTimer);
+          scrollTimer = requestAnimationFrame(updateActiveDot);
+        }, { passive: true });
+
+        window.addEventListener('resize', function () {
+          if (scrollTimer) cancelAnimationFrame(scrollTimer);
+          scrollTimer = requestAnimationFrame(updateActiveDot);
+        });
+
+        dots.forEach(function (dot) {
+          dot.addEventListener('click', function () {
+            var idx = parseInt(dot.getAttribute('data-ss-dot'), 10);
+            var card = cards[idx];
+            if (card) {
+              var cardLeft = card.offsetLeft;
+              var cardWidth = card.offsetWidth;
+              var gridWidth = grid.clientWidth;
+              var targetScroll = cardLeft - (gridWidth - cardWidth) / 2;
+              if (typeof grid.scrollTo === 'function') {
+                grid.scrollTo({ left: targetScroll, behavior: 'smooth' });
+              } else {
+                card.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+              }
+            }
+          });
+        });
+
+        updateActiveDot();
+      }
+    }
+
+    function initAll() {
+      document.querySelectorAll('[data-ss-steps]').forEach(initSection);
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initAll);
+    } else {
+      initAll();
+    }
+
+    document.addEventListener('shopify:section:load', function (event) {
+      var section = event.target.querySelector
+        ? event.target.querySelector('[data-ss-steps]')
+        : null;
+      if (section) initSection(section);
+    });
+  })();
+</script>
 
 {% schema %}
 {
@@ -282,11 +442,11 @@
       "type": "select",
       "id": "media_ratio",
       "label": "Image aspect ratio",
-      "default": "3 / 4",
+      "default": "1 / 1",
       "options": [
+        { "value": "1 / 1", "label": "Square (1:1)" },
         { "value": "3 / 4", "label": "Portrait (3:4)" },
         { "value": "4 / 5", "label": "Portrait (4:5)" },
-        { "value": "1 / 1", "label": "Square (1:1)" },
         { "value": "4 / 3", "label": "Landscape (4:3)" }
       ]
     },
@@ -323,30 +483,6 @@
       "step": 2,
       "unit": "px",
       "default": 24
-    },
-    {
-      "type": "header",
-      "content": "Mobile carousel"
-    },
-    {
-      "type": "range",
-      "id": "card_width_mobile",
-      "label": "Card width (mobile)",
-      "min": 55,
-      "max": 95,
-      "step": 1,
-      "unit": "%",
-      "default": 78
-    },
-    {
-      "type": "range",
-      "id": "gap_mobile",
-      "label": "Card gap (mobile)",
-      "min": 8,
-      "max": 32,
-      "step": 2,
-      "unit": "px",
-      "default": 14
     },
     {
       "type": "range",
