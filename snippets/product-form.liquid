@@ -9,12 +9,6 @@ $(function() {
 {%- form 'product', product, id: form_id, class: 'product-single__form' -%}
 
   <div class="product-form__actions-group">
-    <div class="product__stock-status-wrap">
-      <span data-product-quantity-status class="product-quantity-status {% if current_variant.available %}product-quantity-status--in-stock{% else %}product-quantity-status--out-of-stock{% endif %}">
-        {% if current_variant.available %}In Stock{% else %}Out of Stock{% endif %}
-      </span>
-    </div>
-
     <div class="payment-buttons product__actions-row">
       <div class="product__quantity">
         {% assign qty_id = section_id | default: section.id | default: product.id | append: product.id %}

@@ -3533,25 +3533,19 @@ button.add-to-cart:disabled,
    Product Page - Stock Status Badge & Inline Quantity Selector + Add to Cart
    ========================================================================== */
 
-.product-form__actions-group {
-  display: grid !important;
-  grid-template-columns: 144px 1fr !important;
-  grid-template-rows: auto 46px !important;
-  column-gap: 12px !important;
-  row-gap: 4px !important;
-  align-items: stretch !important;
-  width: 100% !important;
-  margin-top: 16px !important;
-  margin-bottom: 12px !important;
-}
-
-/* Stock status badge in Column 1, Row 1 */
-.product__stock-status-wrap {
-  grid-column: 1 !important;
-  grid-row: 1 !important;
+/* Price row & Stock status badge on right side of price */
+.product-block--price .product-block__price-row {
   display: flex !important;
   align-items: center !important;
-  justify-content: flex-start !important;
+  flex-wrap: wrap !important;
+  gap: 8px 12px !important;
+}
+
+.product-block--price .product__stock-status-wrap {
+  display: inline-flex !important;
+  align-items: center !important;
+  margin: 0 !important;
+  padding: 0 !important;
   line-height: 1 !important;
 }
 
@@ -3564,15 +3558,16 @@ button.add-to-cart:disabled,
   font-weight: 700 !important;
   letter-spacing: 0.04em !important;
   line-height: 1 !important;
-  padding: 3.5px 8px !important;
+  padding: 4px 9px !important;
   text-transform: uppercase !important;
+  white-space: nowrap !important;
 }
 
 .product__stock-status-wrap .product-quantity-status::before {
   content: "" !important;
   display: inline-block !important;
-  width: 5px !important;
-  height: 5px !important;
+  width: 6px !important;
+  height: 6px !important;
   border-radius: 50% !important;
 }
 
@@ -3596,31 +3591,45 @@ button.add-to-cart:disabled,
   box-shadow: 0 0 0 2px rgba(180, 35, 24, 0.2) !important;
 }
 
-/* Sub-container displays as contents so children become direct grid items */
-.payment-buttons.product__actions-row {
-  display: contents !important;
+/* Actions group: Quantity selector & ADD TO CART button have identical size & height */
+.product-form__actions-group {
+  display: block !important;
+  width: 100% !important;
+  margin-top: 16px !important;
+  margin-bottom: 12px !important;
 }
 
-/* Quantity selector in Column 1, Row 2 (compact 46px height) */
+.payment-buttons.product__actions-row {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: stretch !important;
+  gap: 12px !important;
+  width: 100% !important;
+}
+
+/* Quantity selector */
 .product__actions-row .product__quantity {
-  grid-column: 1 !important;
-  grid-row: 2 !important;
-  flex: none !important;
+  flex: 0 0 144px !important;
   width: 144px !important;
   max-width: 144px !important;
   min-width: 125px !important;
-  height: 46px !important;
+  height: 56px !important;
+  min-height: 56px !important;
+  max-height: 56px !important;
   margin: 0 !important;
   padding: 0 !important;
   position: relative !important;
   display: flex !important;
   align-items: center !important;
+  box-sizing: border-box !important;
 }
 
-/* Pill shape quantity wrapper matching ADD TO CART */
+/* Pill shape quantity wrapper matching ADD TO CART in height, radius, and border */
 .product__actions-row .product__quantity .js-qty__wrapper {
   width: 100% !important;
-  height: 100% !important;
+  height: 56px !important;
+  min-height: 56px !important;
+  max-height: 56px !important;
   display: flex !important;
   flex-direction: row !important;
   align-items: center !important;
@@ -3629,7 +3638,7 @@ button.add-to-cart:disabled,
   background-color: #ffffff !important;
   border: 1.5px solid #dcdcdc !important;
   box-sizing: border-box !important;
-  padding: 0 4px !important;
+  padding: 0 6px !important;
   position: relative !important;
   transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease !important;
 }
@@ -3658,7 +3667,7 @@ button.add-to-cart:disabled,
   margin: 0 !important;
   padding: 0 !important;
   text-align: center !important;
-  font-size: 15px !important;
+  font-size: 16px !important;
   font-weight: 700 !important;
   font-family: inherit !important;
   color: #111827 !important;
@@ -3683,10 +3692,10 @@ button.add-to-cart:disabled,
 /* Adjust plus/minus buttons */
 .product__actions-row .js-qty__adjust {
   position: static !important;
-  width: 33px !important;
-  height: 33px !important;
-  min-width: 33px !important;
-  min-height: 33px !important;
+  width: 42px !important;
+  height: 42px !important;
+  min-width: 42px !important;
+  min-height: 42px !important;
   border-radius: 50% !important;
   margin: 0 !important;
   padding: 0 !important;
@@ -3723,29 +3732,28 @@ button.add-to-cart:disabled,
 }
 
 .product__actions-row .js-qty__adjust .icon {
-  width: 13px !important;
-  height: 13px !important;
-  font-size: 13px !important;
+  width: 14px !important;
+  height: 14px !important;
+  font-size: 14px !important;
   fill: currentColor !important;
   pointer-events: none !important;
 }
 
-/* ADD TO CART button spans Row 1 + Row 2 (compacted height ~68px) */
+/* ADD TO CART button matching quantity selector height */
 .product__actions-row .add-to-cart,
 .product__actions-row .add-to-cart.btn--secondary {
-  grid-column: 2 !important;
-  grid-row: 1 / span 2 !important;
-  width: 100% !important;
-  height: 100% !important;
-  min-height: 100% !important;
-  max-height: none !important;
-  align-self: stretch !important;
+  flex: 1 1 auto !important;
+  width: auto !important;
+  height: 56px !important;
+  min-height: 56px !important;
+  max-height: 56px !important;
   margin: 0 !important;
   border-radius: 20em !important;
   white-space: nowrap !important;
   font-size: 16px !important;
   font-weight: 700 !important;
-  letter-spacing: 0.06em !important;
+  letter-spacing: 0.08em !important;
+  box-sizing: border-box !important;
 }
 
 /* Stock warning notification under quantity */
@@ -3761,64 +3769,94 @@ button.add-to-cart:disabled,
   z-index: 10 !important;
 }
 
-/* Mobile responsive adjustments */
+/* Responsive adjustments */
 @media screen and (max-width: 768px) {
-  .product-form__actions-group {
-    grid-template-columns: 132px 1fr !important;
+  .product-block--price .product-block__price-row {
+    gap: 6px 10px !important;
   }
 
   .product__actions-row .product__quantity {
+    flex: 0 0 132px !important;
     width: 132px !important;
     max-width: 132px !important;
-  }
-}
-
-@media screen and (max-width: 480px) {
-  .product-form__actions-group {
-    grid-template-columns: 120px 1fr !important;
-    grid-template-rows: auto 42px !important;
-    column-gap: 10px !important;
-    row-gap: 4px !important;
+    height: 50px !important;
+    min-height: 50px !important;
+    max-height: 50px !important;
   }
 
-  .product__stock-status-wrap .product-quantity-status {
-    font-size: 10.5px !important;
-    padding: 2.5px 7px !important;
-    gap: 4px !important;
-  }
-
-  .product__actions-row .product__quantity {
-    grid-column: 1 !important;
-    grid-row: 2 !important;
-    width: 120px !important;
-    max-width: 120px !important;
-    min-width: 110px !important;
-    height: 42px !important;
+  .product__actions-row .product__quantity .js-qty__wrapper {
+    height: 50px !important;
+    min-height: 50px !important;
+    max-height: 50px !important;
+    padding: 0 5px !important;
   }
 
   .product__actions-row .js-qty__adjust {
-    width: 29px !important;
-    height: 29px !important;
-    min-width: 29px !important;
-    min-height: 29px !important;
-  }
-
-  .product__actions-row .js-qty__adjust .icon {
-    width: 11px !important;
-    height: 11px !important;
-    font-size: 11px !important;
-  }
-
-  .product__actions-row .js-qty__num {
-    font-size: 14px !important;
+    width: 38px !important;
+    height: 38px !important;
+    min-width: 38px !important;
+    min-height: 38px !important;
   }
 
   .product__actions-row .add-to-cart,
   .product__actions-row .add-to-cart.btn--secondary {
-    grid-column: 2 !important;
-    grid-row: 1 / span 2 !important;
-    height: 100% !important;
-    min-height: 100% !important;
+    height: 50px !important;
+    min-height: 50px !important;
+    max-height: 50px !important;
+    font-size: 15px !important;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .payment-buttons.product__actions-row {
+    gap: 10px !important;
+  }
+
+  .product__stock-status-wrap .product-quantity-status {
+    font-size: 10.5px !important;
+    padding: 3px 7px !important;
+    gap: 4px !important;
+  }
+
+  .product__actions-row .product__quantity {
+    flex: 0 0 120px !important;
+    width: 120px !important;
+    max-width: 120px !important;
+    min-width: 110px !important;
+    height: 48px !important;
+    min-height: 48px !important;
+    max-height: 48px !important;
+  }
+
+  .product__actions-row .product__quantity .js-qty__wrapper {
+    height: 48px !important;
+    min-height: 48px !important;
+    max-height: 48px !important;
+    padding: 0 4px !important;
+  }
+
+  .product__actions-row .js-qty__adjust {
+    width: 36px !important;
+    height: 36px !important;
+    min-width: 36px !important;
+    min-height: 36px !important;
+  }
+
+  .product__actions-row .js-qty__adjust .icon {
+    width: 12px !important;
+    height: 12px !important;
+    font-size: 12px !important;
+  }
+
+  .product__actions-row .js-qty__num {
+    font-size: 14.5px !important;
+  }
+
+  .product__actions-row .add-to-cart,
+  .product__actions-row .add-to-cart.btn--secondary {
+    height: 48px !important;
+    min-height: 48px !important;
+    max-height: 48px !important;
     font-size: 14.5px !important;
     letter-spacing: 0.05em !important;
     padding-left: 10px !important;
@@ -3827,22 +3865,49 @@ button.add-to-cart:disabled,
 }
 
 @media screen and (max-width: 360px) {
-  .product-form__actions-group {
-    grid-template-columns: 110px 1fr !important;
-    column-gap: 8px !important;
+  .payment-buttons.product__actions-row {
+    gap: 8px !important;
   }
 
   .product__actions-row .product__quantity {
+    flex: 0 0 110px !important;
     width: 110px !important;
     max-width: 110px !important;
-    min-width: 102px !important;
+    min-width: 100px !important;
+    height: 44px !important;
+    min-height: 44px !important;
+    max-height: 44px !important;
+  }
+
+  .product__actions-row .product__quantity .js-qty__wrapper {
+    height: 44px !important;
+    min-height: 44px !important;
+    max-height: 44px !important;
+    padding: 0 3px !important;
   }
 
   .product__actions-row .js-qty__adjust {
-    width: 26px !important;
-    height: 26px !important;
-    min-width: 26px !important;
-    min-height: 26px !important;
+    width: 32px !important;
+    height: 32px !important;
+    min-width: 32px !important;
+    min-height: 32px !important;
+  }
+
+  .product__actions-row .js-qty__adjust .icon {
+    width: 10px !important;
+    height: 10px !important;
+  }
+
+  .product__actions-row .js-qty__num {
+    font-size: 13.5px !important;
+  }
+
+  .product__actions-row .add-to-cart,
+  .product__actions-row .add-to-cart.btn--secondary {
+    height: 44px !important;
+    min-height: 44px !important;
+    max-height: 44px !important;
+    font-size: 13.5px !important;
   }
 }
 

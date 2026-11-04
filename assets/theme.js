@@ -8163,17 +8163,19 @@ lazySizesConfig.expFactor = 4;
       },
 
       updateQuantityStatus: function (evt) {
-        var status = this.container.querySelector(this.selectors.quantityStatus);
+        var statuses = this.container.querySelectorAll(this.selectors.quantityStatus);
         var variant = evt.detail.variant;
 
-        if (!status) {
+        if (!statuses || !statuses.length) {
           return;
         }
 
         var inStock = variant && variant.available;
-        status.textContent = inStock ? "In Stock" : "Out of Stock";
-        status.classList.toggle("product-quantity-status--in-stock", inStock);
-        status.classList.toggle("product-quantity-status--out-of-stock", !inStock);
+        statuses.forEach(function (status) {
+          status.textContent = inStock ? "In Stock" : "Out of Stock";
+          status.classList.toggle("product-quantity-status--in-stock", inStock);
+          status.classList.toggle("product-quantity-status--out-of-stock", !inStock);
+        });
       },
 
       updateQuantityMax: function (evt) {

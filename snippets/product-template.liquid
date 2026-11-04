@@ -261,46 +261,54 @@
                     </div>
                   {%- when 'price' -%}
                     <div class="product-block product-block--price" {{ block.shopify_attributes }}>
-                      <span data-compare-price-a11y class="visually-hidden"> {{- 'products.general.sale_price' | t -}} </span>
-                      <span
-                        data-product-price
-                        class="product__price{% if current_variant.compare_at_price > current_variant.price %} on-sale{% endif %}"
-                      >
-                        {%- unless product.empty? -%}
-                          {{ current_variant.price | money }}
-                        {%- else -%}
-                          {{ 1999 | money }}
-                        {%- endunless -%}
-                      </span>
-                      {%- assign hide_sale_price = true -%}
-                      {%- if product.compare_at_price_max > product.price -%}
-                        {%- if current_variant.compare_at_price > current_variant.price -%}
-                          {%- assign hide_sale_price = false -%}
-                        {%- endif -%}
-                        <span data-a11y-price class="visually-hidden" aria-hidden="{{ hide_sale_price }}" >
-                          {{ 'products.general.regular_price' | t }}
-                        </span>
-                        <span data-product-price-wrap class="{% if hide_sale_price %} hide{% endif %}">
-                          <span data-compare-price class="product__price product__price--compare">
-                            {%- if current_variant.compare_at_price > current_variant.price -%}
-                              {{ current_variant.compare_at_price | money }}
-                            {%- endif -%}
-                          </span>
-                        </span>
-                      {%- endif -%}
-                      
-                      {%- if settings.product_save_amount -%}
-                        {%- if settings.product_save_type == 'dollar' -%}
-                          {%- capture saved_amount -%}{{ current_variant.compare_at_price | minus: current_variant.price | money }}{%- endcapture -%}
-                        {%- else -%}
-                          {%- capture saved_amount -%}{{ current_variant.compare_at_price | minus: current_variant.price | times: 100.0 | divided_by: current_variant.compare_at_price | round }}%{%- endcapture -%}
-                        {%- endif -%}
-                        <span data-save-price class="product__price-savings{% if hide_sale_price %} hide{% endif %}">
-                          {%- unless hide_sale_price -%}
-                            {{ 'products.general.save_html' | t: saved_amount: saved_amount }}
+                      <div class="product-block__price-row">
+                        <span data-compare-price-a11y class="visually-hidden"> {{- 'products.general.sale_price' | t -}} </span>
+                        <span
+                          data-product-price
+                          class="product__price{% if current_variant.compare_at_price > current_variant.price %} on-sale{% endif %}"
+                        >
+                          {%- unless product.empty? -%}
+                            {{ current_variant.price | money }}
+                          {%- else -%}
+                            {{ 1999 | money }}
                           {%- endunless -%}
                         </span>
-                      {%- endif -%}
+                        {%- assign hide_sale_price = true -%}
+                        {%- if product.compare_at_price_max > product.price -%}
+                          {%- if current_variant.compare_at_price > current_variant.price -%}
+                            {%- assign hide_sale_price = false -%}
+                          {%- endif -%}
+                          <span data-a11y-price class="visually-hidden" aria-hidden="{{ hide_sale_price }}" >
+                            {{ 'products.general.regular_price' | t }}
+                          </span>
+                          <span data-product-price-wrap class="{% if hide_sale_price %} hide{% endif %}">
+                            <span data-compare-price class="product__price product__price--compare">
+                              {%- if current_variant.compare_at_price > current_variant.price -%}
+                                {{ current_variant.compare_at_price | money }}
+                              {%- endif -%}
+                            </span>
+                          </span>
+                        {%- endif -%}
+                        
+                        {%- if settings.product_save_amount -%}
+                          {%- if settings.product_save_type == 'dollar' -%}
+                            {%- capture saved_amount -%}{{ current_variant.compare_at_price | minus: current_variant.price | money }}{%- endcapture -%}
+                          {%- else -%}
+                            {%- capture saved_amount -%}{{ current_variant.compare_at_price | minus: current_variant.price | times: 100.0 | divided_by: current_variant.compare_at_price | round }}%{%- endcapture -%}
+                          {%- endif -%}
+                          <span data-save-price class="product__price-savings{% if hide_sale_price %} hide{% endif %}">
+                            {%- unless hide_sale_price -%}
+                              {{ 'products.general.save_html' | t: saved_amount: saved_amount }}
+                            {%- endunless -%}
+                          </span>
+                        {%- endif -%}
+
+                        <div class="product__stock-status-wrap">
+                          <span data-product-quantity-status class="product-quantity-status {% if current_variant.available %}product-quantity-status--in-stock{% else %}product-quantity-status--out-of-stock{% endif %}">
+                            {% if current_variant.available %}In Stock{% else %}Out of Stock{% endif %}
+                          </span>
+                        </div>
+                      </div>
 
                       <div
                         data-unit-price-wrapper
