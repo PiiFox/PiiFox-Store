@@ -308,11 +308,11 @@
                       endif
                       assign item_link = block.settings.link
                       assign item_p_color = block.settings.prefix_color
-                      if item_p_color == blank or item_p_color == 'rgba(0,0,0,0)'
+                      if item_p_color == blank or item_p_color == 'rgba(0,0,0,0)' or item_p_color == '#00000000' or item_p_color == 'transparent'
                         assign item_p_color = default_prefix_color
                       endif
                       assign item_s_color = block.settings.suffix_color
-                      if item_s_color == blank or item_s_color == 'rgba(0,0,0,0)'
+                      if item_s_color == blank or item_s_color == 'rgba(0,0,0,0)' or item_s_color == '#00000000' or item_s_color == 'transparent'
                         assign item_s_color = default_suffix_color
                       endif
                     -%}
@@ -420,7 +420,8 @@
     {
       "type": "color",
       "id": "prefix_color",
-      "label": "Default Prefix Color (前缀字体颜色 - 绿色)",
+      "label": "Default Prefix Color (全局默认前缀字体颜色)",
+      "info": "若各组跑马灯未单独设置颜色，将默认使用此颜色",
       "default": "#0A6830"
     },
     {
@@ -590,29 +591,31 @@
         {
           "type": "text",
           "id": "prefix_text",
-          "label": "Prefix Text (前缀文字 - 默认绿色系统字体)",
+          "label": "Prefix Text (前缀文字)",
           "default": "Type your style"
+        },
+        {
+          "type": "color",
+          "id": "prefix_color",
+          "label": "Prefix Font Color (前缀字体颜色)",
+          "info": "单独设置该前缀的字体颜色，留空则继承全局默认前缀颜色"
         },
         {
           "type": "text",
           "id": "suffix_text",
-          "label": "Suffix Text (后缀文字 - 默认黑色系统字体)",
+          "label": "Suffix Text (后缀文字)",
           "default": "Make every setup feel like yours."
+        },
+        {
+          "type": "color",
+          "id": "suffix_color",
+          "label": "Suffix Font Color (后缀字体颜色)",
+          "info": "单独设置该后缀的字体颜色，留空则继承全局默认后缀颜色"
         },
         {
           "type": "url",
           "id": "link",
           "label": "Link (跳转链接，可选)"
-        },
-        {
-          "type": "color",
-          "id": "prefix_color",
-          "label": "Custom Prefix Color (自定义前缀颜色，留空继承全局)"
-        },
-        {
-          "type": "color",
-          "id": "suffix_color",
-          "label": "Custom Suffix Color (自定义后缀颜色，留空继承全局)"
         }
       ]
     },
@@ -626,9 +629,21 @@
           "label": "Prefix Text (前缀文字)"
         },
         {
+          "type": "color",
+          "id": "prefix_color",
+          "label": "Prefix Font Color (前缀字体颜色)",
+          "info": "单独设置该前缀的字体颜色，留空则继承全局默认前缀颜色"
+        },
+        {
           "type": "text",
           "id": "suffix_text",
           "label": "Suffix Text (后缀文字)"
+        },
+        {
+          "type": "color",
+          "id": "suffix_color",
+          "label": "Suffix Font Color (后缀字体颜色)",
+          "info": "单独设置该后缀的字体颜色，留空则继承全局默认后缀颜色"
         },
         {
           "type": "html",
