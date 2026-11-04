@@ -68,9 +68,9 @@
                     {%- if opt_image != blank -%}
                       {%- assign keycap_src = opt_image | image_url: width: 1400 -%}
                     {%- elsif i == 1 -%}
-                      {%- assign keycap_src = 'keycap1.png' | asset_url -%}
+                      {%- assign keycap_src = 'https://cdn.shopify.com/s/files/1/1001/2383/6697/files/keycap1.png?v=1793787600' -%}
                     {%- elsif i == 2 -%}
-                      {%- assign keycap_src = 'keycap2.png' | asset_url -%}
+                      {%- assign keycap_src = 'https://cdn.shopify.com/s/files/1/1001/2383/6697/files/keycap2.png?v=1793787600' -%}
                     {%- endif -%}
 
                     {%- if keycap_src != blank or opt_color != blank -%}
@@ -823,12 +823,12 @@
         { "type": "header", "content": "Option 1 (Brown Swatch -> Keycap 1)" },
         { "type": "text", "id": "option_1_label", "label": "Label", "default": "Brown" },
         { "type": "color", "id": "option_1_color", "label": "Color", "default": "#8d5b4c" },
-        { "type": "image_picker", "id": "option_1_image", "label": "Keycaps image", "info": "Defaults to keycap1.png if blank" },
+        { "type": "image_picker", "id": "option_1_image", "label": "Keycaps image", "info": "Defaults to keycap1 CDN image if blank" },
         { "type": "url", "id": "option_1_link", "label": "Keycap product link", "info": "Product opened when this color is active" },
         { "type": "header", "content": "Option 2 (Green Swatch -> Keycap 2)" },
         { "type": "text", "id": "option_2_label", "label": "Label", "default": "Green" },
         { "type": "color", "id": "option_2_color", "label": "Color", "default": "#5e7545" },
-        { "type": "image_picker", "id": "option_2_image", "label": "Keycaps image", "info": "Defaults to keycap2.png if blank" },
+        { "type": "image_picker", "id": "option_2_image", "label": "Keycaps image", "info": "Defaults to keycap2 CDN image if blank" },
         { "type": "url", "id": "option_2_link", "label": "Keycap product link", "info": "Product opened when this color is active" },
         { "type": "header", "content": "Option 3 (Optional)" },
         { "type": "text", "id": "option_3_label", "label": "Label" },
