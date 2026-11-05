@@ -58,7 +58,6 @@
     },
     "card_list_section_ebjLwc": {
       "type": "card-list-section",
-      "disabled": true,
       "blocks": {
         "collection_item_LYJA3M": {
           "type": "collection_item",
@@ -210,6 +209,7 @@
         "product_item_UV7dCW",
         "product_item_EXzAbC"
       ],
+      "disabled": true,
       "name": "Card List Section",
       "settings": {
         "card_list_title": "Shop by Top Picks",
@@ -222,6 +222,19 @@
     "main-collection": {
       "type": "main-collection",
       "blocks": {
+        "promo_card_F43dRt": {
+          "type": "promo_card",
+          "settings": {
+            "position": 1,
+            "show_on_all_pages": false,
+            "card_theme": "light",
+            "tag": "MEMBER EXCLUSIVE",
+            "title": "Save on Every Order — Join PIIFOX Club",
+            "description": "Unlock members-only savings:\nSpend $65, Save 15%\nSpend $125, Save 20%\nSpend $175, Save 25%",
+            "btn_label": "Learn More",
+            "btn_url": ""
+          }
+        },
         "collection_description_VLVVit": {
           "type": "collection_description",
           "settings": {}
@@ -244,6 +257,7 @@
         }
       },
       "block_order": [
+        "promo_card_F43dRt",
         "collection_description_VLVVit",
         "subcollections",
         "product_grid"
