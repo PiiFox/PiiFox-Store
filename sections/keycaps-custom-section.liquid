@@ -20,56 +20,21 @@
       {%- for slot in (1..max_slots) -%}
         {%- assign promo_block = nil -%}
         {%- for block in section.blocks -%}
-          {%- if block.type == 'promo_card' and block.settings.position == slot -%}
-            {%- assign promo_block = block -%}
-            {%- break -%}
+          {%- if block.type == 'promo_card' or block.type == 'image_card' -%}
+            {%- assign block_pos = block.settings.position | plus: 0 -%}
+            {%- if block_pos == slot -%}
+              {%- assign promo_block = block -%}
+              {%- break -%}
+            {%- endif -%}
           {%- endif -%}
         {%- endfor -%}
 
         {%- if promo_block != nil -%}
-          {%- comment -%} 渲染自定义卡片（支持第 1 格、第 8 格等任意位置） {%- endcomment -%}
-          <div
-            class="grid__item grid-product small--one-half medium-up--one-quarter promo-grid-card promo-grid-card-{{ promo_block.id }}"
-            {{ promo_block.shopify_attributes }}
-          >
-            <div class="promo-card__inner promo-card--{{ promo_block.settings.card_theme }}{% if promo_block.settings.bg_image != blank %} promo-card--has-bg{% endif %}">
-              {%- if promo_block.settings.bg_image != blank -%}
-                <img
-                  src="{{ promo_block.settings.bg_image | image_url: width: 800 }}"
-                  alt="{{ promo_block.settings.title | escape }}"
-                  class="promo-card__bg-img"
-                  loading="lazy"
-                  width="800"
-                  height="800"
-                >
-                <div class="promo-card__overlay"></div>
-              {%- endif -%}
-
-              <div class="promo-card__body">
-                {%- if promo_block.settings.tag != blank -%}
-                  <div class="promo-card__tag">{{ promo_block.settings.tag }}</div>
-                {%- endif -%}
-                {%- if promo_block.settings.title != blank -%}
-                  <h3 class="promo-card__title">{{ promo_block.settings.title }}</h3>
-                {%- endif -%}
-                {%- if promo_block.settings.description != blank -%}
-                  <div class="promo-card__desc">{{ promo_block.settings.description | newline_to_br }}</div>
-                {%- endif -%}
-              </div>
-
-              {%- if promo_block.settings.btn_label != blank -%}
-                <div class="promo-card__footer">
-                  <a
-                    href="{{ promo_block.settings.btn_url | default: '#' }}"
-                    class="promo-card__action"
-                  >
-                    <span>{{ promo_block.settings.btn_label }}</span>
-                    <svg class="promo-card__action-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-                  </a>
-                </div>
-              {%- endif -%}
-            </div>
-          </div>
+          {%- render 'promo-grid-card',
+            block: promo_block,
+            per_row: 4,
+            card_extra_class: 'small--one-halfs'
+          -%}
         {%- else -%}
           {%- comment -%} 渲染标准商品卡片 {%- endcomment -%}
           {%- if product_index < total_products and product_index < products_limit -%}
@@ -607,6 +572,54 @@
     }
   ],
   "blocks": [
+    {
+      "type": "image_card",
+      "name": "In-Grid Image Card",
+      "settings": [
+        {
+          "type": "number",
+          "id": "position",
+          "label": "Slot Position in Grid (1, 8, etc.)",
+          "default": 1
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Card Image"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_mobile",
+          "label": "Mobile Card Image (Optional)"
+        },
+        {
+          "type": "select",
+          "id": "image_fit",
+          "label": "Image Fit",
+          "options": [
+            { "value": "cover", "label": "Fill / Cover Card (Recommended)" },
+            { "value": "contain", "label": "Contain (Keep Full Image Visible)" }
+          ],
+          "default": "cover"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Image Link (Optional)"
+        },
+        {
+          "type": "checkbox",
+          "id": "open_in_new_tab",
+          "label": "Open link in new tab",
+          "default": false
+        },
+        {
+          "type": "text",
+          "id": "alt_text",
+          "label": "Image Alt Text (Optional)"
+        }
+      ]
+    },
     {
       "type": "promo_card",
       "name": "In-Grid Promo Card",

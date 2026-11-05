@@ -123,19 +123,30 @@
 
 {%- if show_complete_setup -%}
   <div class="bundle-list">
-    <label class="bundle-list-title">
+    <div class="bundle-list-header">
       {%- if is_keyboard -%}
-        Style Your Board with Keycaps
+        <div class="bundle-list-badge bundle-list-badge--lime">
+          STYLE YOUR BOARD
+        </div>
+        <div class="bundle-list-subtitle bundle-list-subtitle--lime">
+          <svg class="bundle-list-subtitle__icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#70bb00" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path>
+            <line x1="7" y1="7" x2="7.01" y2="7"></line>
+          </svg>
+          <span>Pair a keyboard with keycaps to get <strong>15% off keycaps.</strong></span>
+        </div>
       {%- else -%}
-        Complete Your Setup
+        <div class="bundle-list-badge bundle-list-badge--pink">
+          DOUBLE YOUR STYLE
+        </div>
+        <div class="bundle-list-subtitle bundle-list-subtitle--pink">
+          <svg class="bundle-list-subtitle__icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ff007f" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path>
+            <line x1="7" y1="7" x2="7.01" y2="7"></line>
+          </svg>
+          <span>Buy 2 keycap sets to get <strong>10% off keycaps.</strong></span>
+        </div>
       {%- endif -%}
-    </label>
-    <div class="bundle-list-subtitle">
-      <svg class="bundle-list-subtitle__icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path>
-        <line x1="7" y1="7" x2="7.01" y2="7"></line>
-      </svg>
-      <span>Pair a keyboard with keycaps to get <strong>10% off</strong> keycaps.</span>
     </div>
     <div class="bundle-product-list-container">
       <div class="bundle-product-list--wrapper">

@@ -4,12 +4,18 @@
 
 {%- assign keycap_collection = collections['keycaps'] -%}
 {%- assign cart_has_keyboard = false -%}
+{%- assign cart_has_keycap = false -%}
 {%- for ci in cart.items -%}
   {%- assign ci_t = ci.product.type | downcase -%}
+  {%- assign ci_h = ci.product.handle | downcase -%}
   {%- assign ci_title = ci.product.title | downcase -%}
   {%- if ci_t contains 'keyboard' or ci_title contains 'keyboard' or ci.product.tags contains 'keyboards' or ci.product.tags contains 'Keyboards' or ci.product.tags contains 'keyboard' or ci.product.tags contains 'Keyboard' -%}
     {%- assign cart_has_keyboard = true -%}
-    {%- break -%}
+  {%- endif -%}
+  {%- if ci_t contains 'keycap' or ci_title contains 'keycap' or ci_title contains 'keyset' or ci.product.tags contains 'keycaps' or ci.product.tags contains 'Keycaps' -%}
+    {%- unless ci_h contains 'puller' or ci_title contains 'puller' or ci_h contains 'installation' or ci_title contains 'installation' or ci_title contains '人工安装' or ci_title contains '安装服务' or ci_t == 'service' or ci_t == 'accessories' -%}
+      {%- assign cart_has_keycap = true -%}
+    {%- endunless -%}
   {%- endif -%}
 {%- endfor -%}
 
@@ -29,12 +35,28 @@
       </button>
     </div>
   </div>
-  <div class="cart-recommendations__subtitle">
-    <svg class="cart-recommendations__subtitle-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path>
-      <line x1="7" y1="7" x2="7.01" y2="7"></line>
-    </svg>
-    <span>Pair a keyboard with keycaps to get <strong>10% off</strong> keycaps.</span>
+  <div class="cart-recommendations__banner-wrapper" id="CartRecBannerWrapper" style="{% unless cart_has_keyboard or cart_has_keycap %}display: none;{% endunless %}">
+    <div class="cart-rec-banner-img-wrap" id="CartRecBannerKeyboard" style="{% unless cart_has_keyboard %}display: none;{% endunless %}">
+      <img
+        src="https://cdn.shopify.com/s/files/1/1001/2383/6697/files/ChatGPT_2026_11_5_15_05_14.png?v=1793862333"
+        alt="Style Your Board - Pair a keyboard with keycaps to get 15% off keycaps."
+        class="cart-rec-banner-img"
+        loading="lazy"
+        width="542"
+        height="136"
+      >
+    </div>
+
+    <div class="cart-rec-banner-img-wrap" id="CartRecBannerKeycap" style="{% if cart_has_keyboard or cart_has_keycap == false %}display: none;{% endif %}">
+      <img
+        src="https://cdn.shopify.com/s/files/1/1001/2383/6697/files/ChatGPT_2026_11_5_15_05_02.png?v=1793862333"
+        alt="Double Your Style - Buy 2 keycap sets to get 10% off keycaps."
+        class="cart-rec-banner-img"
+        loading="lazy"
+        width="543"
+        height="108"
+      >
+    </div>
   </div>
   <div class="cart-recommendations__list" id="CartRecommendationsList">
     {%- comment -%}
@@ -65,9 +87,15 @@
           <div class="cart-rec-item__info">
             <a href="{{ p.url }}" class="cart-rec-item__title" title="{{ p.title | escape }}">{{ p.title }}</a>
             {%- assign rec_orig_price = p.price -%}
-            {%- assign rec_disc_price = p.price | times: 0.9 | round -%}
+            {%- if cart_has_keyboard -%}
+              {%- assign rec_disc_price = p.price | times: 0.85 | round -%}
+            {%- elsif cart_has_keycap -%}
+              {%- assign rec_disc_price = p.price | times: 0.9 | round -%}
+            {%- else -%}
+              {%- assign rec_disc_price = p.price -%}
+            {%- endif -%}
             <div class="cart-rec-item__price-row" data-price="{{ rec_orig_price }}">
-              {%- if cart_has_keyboard -%}
+              {%- if cart_has_keyboard or cart_has_keycap -%}
                 <span class="cart-rec-item__compare-price">{{ rec_orig_price | money }}</span>
                 <span class="cart-rec-item__price">{{ rec_disc_price | money }}</span>
               {%- else -%}
@@ -282,36 +310,99 @@
       return { productIds, variantIds, firstProductId };
     }
 
-    // 3. 构建单张推荐卡片 HTML
-    function cartHasKeyboard() {
+    // 3. 获取购物车折扣策略状态 (Rule 1, 2, 3, 4)
+    function getCartDiscountState() {
       const itemEls = document.querySelectorAll('#CartDrawer .cart__item, .cart__item');
+      let hasKeyboard = false;
+      let hasKeycap = false;
+
       for (let i = 0; i < itemEls.length; i++) {
         const el = itemEls[i];
         const isKb = el.getAttribute('data-is-keyboard') === 'true';
+        const isKc = el.getAttribute('data-is-keycap') === 'true';
         const pType = (el.getAttribute('data-product-type') || '').toLowerCase();
         const pTitle = (el.getAttribute('data-product-title') || el.querySelector('.cart__item-name')?.textContent || '').toLowerCase();
-        if (isKb || pType.includes('keyboard') || pTitle.includes('keyboard') ||
-            pTitle.includes('defender68') || pTitle.includes('swift60') ||
-            pTitle.includes('swift68') || pTitle.includes('haze68') ||
-            pTitle.includes('grid98') || pTitle.includes('final75') ||
-            pTitle.includes('muse65') || pTitle.includes('muse75')) {
-          return true;
-        }
-      }
-      return false;
-    }
+        const pHandle = (el.getAttribute('data-product-handle') || '').toLowerCase();
 
-    // 3. 构建单张推荐卡片 HTML
+        const matchesKb = isKb ||
+          pType.includes('keyboard') ||
+          pTitle.includes('keyboard') ||
+          pTitle.includes('defender68') ||
+          pTitle.includes('swift60') ||
+          pTitle.includes('swift68') ||
+          pTitle.includes('haze68') ||
+          pTitle.includes('grid98') ||
+          pTitle.includes('final75') ||
+          pTitle.includes('muse65') ||
+          pTitle.includes('muse75');
+
+        const matchesKc = isKc ||
+          pType === 'keycaps' ||
+          pType === 'keycap' ||
+          (pTitle.includes('keycap') && !matchesKb && !pTitle.includes('puller') && !pTitle.includes('installation') && !pHandle.includes('puller') && !pHandle.includes('installation'));
+
+        if (matchesKb) hasKeyboard = true;
+        if (matchesKc) hasKeycap = true;
+      }
+
+      // 规则 1 & 4：有键盘时（无论有无键帽），最高力度 8 折优先，显示 STYLE YOUR BOARD
+      if (hasKeyboard) {
+        return { mode: 'keyboard', discountRatio: 0.85, discountCode: 'KEYCAP15' };
+      }
+      // 规则 2：无键盘、有键帽时，9 折，显示 DOUBLE YOUR STYLE
+      else if (hasKeycap) {
+        return { mode: 'keycap', discountRatio: 0.9, discountCode: 'KEYCAP10' };
+      }
+      // 规则 3：无键盘无键帽，不显示折扣
+      else {
+        return { mode: 'none', discountRatio: 1.0, discountCode: '' };
+      }
+    }
+    window.getCartDiscountState = getCartDiscountState;
+
+    function updateRecBanners() {
+      const discountState = getCartDiscountState();
+      const wrapper = document.getElementById('CartRecBannerWrapper');
+      const kbBanner = document.getElementById('CartRecBannerKeyboard');
+      const kcBanner = document.getElementById('CartRecBannerKeycap');
+
+      if (!wrapper || !kbBanner || !kcBanner) return;
+
+      if (discountState.mode === 'keyboard') {
+        wrapper.style.display = '';
+        kbBanner.style.display = '';
+        kcBanner.style.display = 'none';
+      } else if (discountState.mode === 'keycap') {
+        wrapper.style.display = '';
+        kbBanner.style.display = 'none';
+        kcBanner.style.display = '';
+      } else {
+        wrapper.style.display = 'none';
+        kbBanner.style.display = 'none';
+        kcBanner.style.display = 'none';
+      }
+    }
+    window.updateRecBanners = updateRecBanners;
+
+    // 4. 构建单张推荐卡片 HTML
     function buildCardHTML(item) {
       const origPrice = item.price;
-      const hasKeyboard = cartHasKeyboard();
-      const discPrice = Math.round(item.price * 0.9);
+      const discountState = getCartDiscountState();
       const origPriceText = formatMoney(origPrice);
-      const discPriceText = formatMoney(discPrice);
       const imgSrc = item.featured_image || '';
-      const priceRowHtml = hasKeyboard
-        ? `<span class="cart-rec-item__compare-price">${origPriceText}</span><span class="cart-rec-item__price">${discPriceText}</span>`
-        : `<span class="cart-rec-item__price">${origPriceText}</span>`;
+      let priceRowHtml = '';
+
+      if (discountState.mode === 'keyboard') {
+        const discPrice = Math.round(origPrice * 0.85);
+        const discPriceText = formatMoney(discPrice);
+        priceRowHtml = '<span class="cart-rec-item__compare-price">' + origPriceText + '</span><span class="cart-rec-item__price">' + discPriceText + '</span>';
+      } else if (discountState.mode === 'keycap') {
+        const discPrice = Math.round(origPrice * 0.9);
+        const discPriceText = formatMoney(discPrice);
+        priceRowHtml = '<span class="cart-rec-item__compare-price">' + origPriceText + '</span><span class="cart-rec-item__price">' + discPriceText + '</span>';
+      } else {
+        priceRowHtml = '<span class="cart-rec-item__price">' + origPriceText + '</span>';
+      }
 
       return `
         <div class="cart-rec-item" data-rec-product-id="${item.id}" data-rec-variant-id="${item.variant_id}" data-rec-category="keycap" data-rec-handle="${item.handle || ''}">
@@ -448,6 +539,7 @@
       }
       recContainer.style.display = '';
       repositionCartRecommendations();
+      updateRecBanners();
 
       STATE.isLoading = false;
       if (typeof STATE.updateArrowState === 'function') {

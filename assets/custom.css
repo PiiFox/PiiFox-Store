@@ -2050,9 +2050,17 @@ input.js-qty__num:focus {
   transform: none !important;
 }
 
-/* 整体外层 */
+/* 整体外层：收紧与上方变体/价格模块的间距 */
+.product-block:has(.bundle-list) {
+  margin-top: 0 !important;
+}
+.product-block:has(+ .product-block:has(.bundle-list)),
+.product-block--variant-picker:has(+ .product-block:has(.bundle-list)) {
+  margin-bottom: 12px !important;
+}
+
 .bundle-list {
-  margin: 2rem 0;
+  margin: 14px 0 2rem 0;
 }
 
 /* 键盘页：下方紧跟人工安装服务卡片时，收紧间距 */
@@ -4225,11 +4233,11 @@ button.add-to-cart:disabled,
     padding: 2px 0 10px !important;
   }
 
-  /* 5. Variant selector font size reduction & remove bottom margin on mobile */
+  /* 5. Variant selector font size reduction & reasonable margin on mobile */
   .product-block--variant-picker,
   .product-block:has(.variant-wrapper),
   .product-block:has(.variant-input-wrap) {
-    margin-bottom: 0 !important;
+    margin-bottom: 12px !important;
   }
   .variant-wrapper .variant__label {
     font-size: 13px !important;
@@ -6066,5 +6074,450 @@ button.add-to-cart:disabled,
   .grid-product__mobile-slider,
   .grid-product__mobile-indicator {
     display: none !important;
+  }
+}
+
+
+/* ==========================================================================
+   In-Grid Functional Cards (Promo Card & Image Card)
+   ========================================================================== */
+.promo-grid-card {
+  display: flex !important;
+  flex-direction: column !important;
+  margin-bottom: 30px;
+  box-sizing: border-box;
+}
+
+.promo-card__inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 400px;
+  border-radius: 12px;
+  padding: 30px 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-sizing: border-box;
+  overflow: hidden;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.promo-card__inner:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+}
+
+/* Background image mode for promo text card */
+.promo-card--has-bg {
+  color: #ffffff !important;
+}
+.promo-card__bg-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 1;
+}
+.promo-card__overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.75) 100%);
+  z-index: 2;
+}
+.promo-card--has-bg .promo-card__body,
+.promo-card--has-bg .promo-card__footer {
+  position: relative;
+  z-index: 3;
+}
+
+/* Theme 1: Light Minimal */
+.promo-card--light {
+  background: #f4f4f6;
+  color: #111111;
+  border: 1px solid #e8e8ea;
+}
+.promo-card--light .promo-card__tag {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1.2px;
+  color: #0A6830;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+.promo-card--light .promo-card__title {
+  font-size: 26px;
+  font-weight: 800;
+  line-height: 1.18;
+  color: #111111;
+  margin: 0 0 16px;
+  letter-spacing: -0.5px;
+}
+.promo-card--light .promo-card__desc {
+  font-size: 14px;
+  line-height: 1.7;
+  color: #444444;
+}
+.promo-card--light .promo-card__action {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #111111;
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  cursor: pointer;
+}
+.promo-card--light .promo-card__action:hover {
+  color: #0A6830;
+}
+
+/* Theme 2: Dark Aesthetic */
+.promo-card--dark {
+  background: linear-gradient(145deg, #182e20 0%, #0d1a12 100%);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+.promo-card--dark .promo-card__tag {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  color: #72d572;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+.promo-card--dark .promo-card__title {
+  font-size: 26px;
+  font-weight: 800;
+  line-height: 1.18;
+  color: #ffffff;
+  margin: 0 0 14px;
+  letter-spacing: -0.5px;
+}
+.promo-card--dark .promo-card__desc {
+  font-size: 14px;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.85);
+}
+.promo-card--dark .promo-card__action {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 22px;
+  background: #ffffff;
+  color: #111111;
+  font-size: 13px;
+  font-weight: 700;
+  border-radius: 30px;
+  text-decoration: none;
+  transition: background 0.2s, color 0.2s;
+}
+.promo-card--dark .promo-card__action:hover {
+  background: #0A6830;
+  color: #ffffff;
+}
+
+/* ==========================================================================
+   Image Card Specific Styles
+   ========================================================================== */
+.promo-card__inner--image {
+  padding: 0 !important;
+  background: #f7f7f8;
+  border: 1px solid #e8e8ea;
+  display: flex !important;
+  overflow: hidden;
+}
+.promo-card__image-link {
+  display: block;
+  width: 100%;
+  height: 100%;
+  text-decoration: none;
+  border-radius: 12px;
+  overflow: hidden;
+}
+.promo-card__picture {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.promo-card__full-img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 12px;
+  transition: transform 0.35s ease;
+}
+.promo-card--fit-contain .promo-card__full-img {
+  object-fit: contain;
+}
+.promo-card--has-link:hover .promo-card__full-img {
+  transform: scale(1.03);
+}
+.promo-card__placeholder {
+  width: 100%;
+  height: 100%;
+  min-height: 380px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: #f4f4f6;
+  border: 2px dashed #d5d5da;
+  border-radius: 12px;
+  box-sizing: border-box;
+  padding: 20px;
+}
+.promo-card__placeholder svg {
+  width: 50px;
+  height: 50px;
+  opacity: 0.35;
+  margin-bottom: 8px;
+}
+.promo-card__placeholder-text {
+  font-size: 13px;
+  color: #777777;
+  text-align: center;
+}
+
+/* Mobile Responsive */
+@media screen and (max-width: 768px) {
+  .promo-grid-card {
+    margin-bottom: 10px !important;
+  }
+  .collection-grid__wrapper .grid__item.grid-product.promo-grid-card.small--one-halfs {
+    width: 50% !important;
+    max-width: 50% !important;
+    flex: 0 0 50% !important;
+    padding: 3px 4px !important;
+  }
+  .promo-card__inner {
+    min-height: unset !important;
+    height: 100% !important;
+    padding: 16px 12px !important;
+    border-radius: 8px !important;
+  }
+  .promo-card__inner--image {
+    padding: 0 !important;
+    border-radius: 8px !important;
+    min-height: unset !important;
+  }
+  .promo-card__image-link,
+  .promo-card__full-img {
+    border-radius: 8px !important;
+  }
+  .promo-card__placeholder {
+    min-height: 160px !important;
+    border-radius: 8px !important;
+    padding: 12px;
+  }
+  .promo-card__placeholder svg {
+    width: 36px;
+    height: 36px;
+  }
+  .promo-card__placeholder-text {
+    font-size: 11px;
+  }
+  .promo-card--light .promo-card__tag,
+  .promo-card--dark .promo-card__tag {
+    font-size: 9px !important;
+    letter-spacing: 0.8px !important;
+    margin-bottom: 6px !important;
+  }
+  .promo-card--light .promo-card__title,
+  .promo-card--dark .promo-card__title {
+    font-size: 15px !important;
+    line-height: 1.22 !important;
+    margin-bottom: 8px !important;
+    letter-spacing: -0.2px !important;
+    overflow-wrap: break-word;
+  }
+  .promo-card--light .promo-card__desc,
+  .promo-card--dark .promo-card__desc {
+    font-size: 11.5px !important;
+    line-height: 1.45 !important;
+  }
+  .promo-card--light .promo-card__action,
+  .promo-card--dark .promo-card__action {
+    font-size: 11.5px !important;
+  }
+  .promo-card--dark .promo-card__action {
+    padding: 6px 12px !important;
+  }
+  .promo-card__footer {
+    margin-top: 10px;
+  }
+}
+
+
+/* ==========================================================================
+   Product Detail Page: Bundle Badges & Subtitle Pills (图三、图四)
+   ========================================================================== */
+.bundle-list-header {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+  width: 100%;
+}
+
+.bundle-list-badge {
+  display: inline-block;
+  align-self: flex-start;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  color: #000000;
+  padding: 6px 14px;
+  text-transform: uppercase;
+  margin-top: 0;
+  margin-bottom: 8px;
+  line-height: 1.2;
+}
+
+.bundle-list-badge--lime {
+  background-color: #bfff00;
+}
+
+.bundle-list-badge--pink {
+  background-color: #ff007f;
+}
+
+.bundle-list-subtitle--lime {
+  display: inline-flex;
+  align-self: flex-start;
+  align-items: center;
+  gap: 8px;
+  background: #ffffff;
+  border: 2.5px solid #a6ff00;
+  border-radius: 9999px;
+  padding: 7px 18px;
+  margin: 0 0 16px 0;
+  font-size: 13px;
+  color: #111111;
+  line-height: 1.4;
+  box-sizing: border-box;
+  max-width: 100%;
+}
+
+.bundle-list-subtitle--lime .bundle-list-subtitle__icon {
+  flex-shrink: 0;
+  stroke: #70bb00;
+}
+
+.bundle-list-subtitle--lime strong {
+  color: #65a300;
+  font-weight: 700;
+}
+
+.bundle-list-subtitle--pink {
+  display: inline-flex;
+  align-self: flex-start;
+  align-items: center;
+  gap: 8px;
+  background: #ffffff;
+  border: 2.5px solid #ff007f;
+  border-radius: 9999px;
+  padding: 7px 18px;
+  margin: 0 0 16px 0;
+  font-size: 13px;
+  color: #111111;
+  line-height: 1.4;
+  box-sizing: border-box;
+  max-width: 100%;
+}
+
+.bundle-list-subtitle--pink .bundle-list-subtitle__icon {
+  flex-shrink: 0;
+  stroke: #ff007f;
+}
+
+.bundle-list-subtitle--pink strong {
+  color: #ff007f;
+  font-weight: 700;
+}
+
+@media (max-width: 768px) {
+  .bundle-list {
+    margin-top: 14px !important;
+  }
+  .bundle-list-header {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+  }
+  .bundle-list-badge {
+    font-size: 11.5px;
+    padding: 5px 12px;
+    margin-top: 0;
+    margin-bottom: 7px;
+  }
+  .bundle-list-subtitle--lime,
+  .bundle-list-subtitle--pink {
+    font-size: 11.5px;
+    padding: 6px 14px;
+    gap: 6px;
+    margin-bottom: 12px;
+  }
+}
+
+/* ==========================================================================
+   Cart Drawer: You May Also Like Dynamic Discount Image Banners
+   ========================================================================== */
+.cart-recommendations__banner-wrapper {
+  margin: 3px 0 6px 0 !important;
+  width: 100%;
+}
+
+.cart-rec-banner-img-wrap {
+  width: 100%;
+  display: block;
+  line-height: 0;
+}
+
+.cart-rec-banner-img {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+/* PC Drawer 右侧专属栏：收紧标题下边距与推荐列表顶部内边距 */
+.cart-drawer__recommendations-desktop-slot .cart-recommendations__header {
+  padding: 16px 20px 8px 20px !important;
+}
+
+.cart-drawer__recommendations-desktop-slot .cart-recommendations__banner-wrapper {
+  margin: 2px 0 6px 0 !important;
+  padding: 0 20px !important;
+  box-sizing: border-box !important;
+}
+
+.cart-drawer__recommendations-desktop-slot .cart-recommendations__list {
+  padding: 2px 20px 20px 20px !important;
+}
+
+.cart-drawer__recommendations-desktop-slot .cart-recommendations__list .cart-rec-item:first-child {
+  margin-top: 2px !important;
+}
+
+/* 移动端抽屉：收紧标题与横幅上下边距 */
+@media (max-width: 768px) {
+  .cart-drawer__recommendations-mobile-slot .cart-recommendations__header,
+  .cart-drawer__recommendations-empty-slot .cart-recommendations__header {
+    padding: 0 0 6px 0 !important;
+  }
+  .cart-recommendations__banner-wrapper,
+  .cart-drawer__recommendations-mobile-slot .cart-recommendations__banner-wrapper,
+  .cart-drawer__recommendations-empty-slot .cart-recommendations__banner-wrapper {
+    margin: 2px 0 6px 0 !important;
   }
 }

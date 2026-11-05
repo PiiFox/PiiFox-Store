@@ -173,7 +173,6 @@
 
     <script>
       (function() {
-        const DISCOUNT_CODE = 'KEYCAP10';
         let isRedirecting = false;
 
         function formatMoney(cents) {
@@ -197,6 +196,7 @@
             const isKc = el.getAttribute('data-is-keycap') === 'true';
             const pType = (el.getAttribute('data-product-type') || '').toLowerCase();
             const pTitle = (el.getAttribute('data-product-title') || el.querySelector('.cart__item-name')?.textContent || '').toLowerCase();
+            const pHandle = (el.getAttribute('data-product-handle') || '').toLowerCase();
             
             // 获取商品行价格 (cents)
             let linePrice = parseFloat(el.getAttribute('data-line-price'));
@@ -224,7 +224,7 @@
             const matchesKc = isKc || 
               pType === 'keycaps' || 
               pType === 'keycap' ||
-              (pTitle.includes('keycap') && !matchesKb && !pTitle.includes('puller') && !pTitle.includes('installation'));
+              (pTitle.includes('keycap') && !matchesKb && !pTitle.includes('puller') && !pTitle.includes('installation') && !pHandle.includes('puller') && !pHandle.includes('installation'));
 
             if (matchesKb) hasKeyboard = true;
             if (matchesKc) {
@@ -233,29 +233,71 @@
             }
           });
 
-          const discountAmountCents = hasKeyboard && hasKeycap ? Math.round(keycapsTotalPriceCents * 0.1) : 0;
+          // 规则 1 & 4: 有键盘（无论有无键帽），最高力度 8 折优先 (KEYCAP20)
+          // 规则 2: 无键盘有键帽，9 折 (KEYCAP10)
+          // 规则 3: 无键盘无键帽，不打折
+          let discountMode = 'none';
+          let discountRatio = 1.0;
+          let discountCode = '';
+          let discountAmountCents = 0;
+
+          if (hasKeyboard) {
+            discountMode = 'keyboard';
+            discountRatio = 0.85;
+            discountCode = 'KEYCAP15';
+            if (hasKeycap) {
+              discountAmountCents = Math.round(keycapsTotalPriceCents * 0.15);
+            }
+          } else if (hasKeycap) {
+            discountMode = 'keycap';
+            discountRatio = 0.9;
+            discountCode = 'KEYCAP10';
+            discountAmountCents = Math.round(keycapsTotalPriceCents * 0.1);
+          }
 
           return {
             hasKeyboard,
             hasKeycap,
             keycapsTotalPriceCents,
+            discountMode,
+            discountRatio,
+            discountCode,
             discountAmountCents,
             totalItems
           };
         }
 
         function updateBundleUI() {
-          const { hasKeyboard, hasKeycap, discountAmountCents } = scanCartBundle();
+          const bundleState = scanCartBundle();
+          const { hasKeyboard, hasKeycap, discountMode, discountRatio, discountCode, discountAmountCents } = bundleState;
           const itemEls = document.querySelectorAll('.cart__item');
           const subtotalEls = document.querySelectorAll('[data-subtotal]');
 
-          // A. 推荐区折扣提示文案：保持一直显示
-          const recSubtitle = document.querySelector('.cart-recommendations__subtitle');
-          if (recSubtitle) {
-            recSubtitle.style.display = '';
+          // A. 推荐区折扣提示横幅切换 (Rule 1, 2, 3)
+          if (typeof window.updateRecBanners === 'function') {
+            window.updateRecBanners();
+          } else {
+            const wrapper = document.getElementById('CartRecBannerWrapper');
+            const kbBanner = document.getElementById('CartRecBannerKeyboard');
+            const kcBanner = document.getElementById('CartRecBannerKeycap');
+            if (wrapper && kbBanner && kcBanner) {
+              if (discountMode === 'keyboard') {
+                wrapper.style.display = '';
+                kbBanner.style.display = '';
+                kcBanner.style.display = 'none';
+              } else if (discountMode === 'keycap') {
+                wrapper.style.display = '';
+                kbBanner.style.display = 'none';
+                kcBanner.style.display = '';
+              } else {
+                wrapper.style.display = 'none';
+                kbBanner.style.display = 'none';
+                kcBanner.style.display = 'none';
+              }
+            }
           }
 
-          // B. 控制推荐区卡片价格：有键盘时划线打九折，无键盘时恢复原价
+          // B. 控制推荐区卡片价格：有键盘时 8 折，有键帽无键盘时 9 折，无键盘无键帽原价
           const recItems = document.querySelectorAll('#CartRecommendationsList .cart-rec-item');
           recItems.forEach(card => {
             const priceRow = card.querySelector('.cart-rec-item__price-row');
@@ -272,7 +314,13 @@
             }
 
             if (basePrice > 0) {
-              if (hasKeyboard) {
+              if (discountMode === 'keyboard') {
+                const discPrice = Math.round(basePrice * 0.85);
+                priceRow.innerHTML = `
+                  <span class="cart-rec-item__compare-price">${formatMoney(basePrice)}</span>
+                  <span class="cart-rec-item__price">${formatMoney(discPrice)}</span>
+                `;
+              } else if (discountMode === 'keycap') {
                 const discPrice = Math.round(basePrice * 0.9);
                 priceRow.innerHTML = `
                   <span class="cart-rec-item__compare-price">${formatMoney(basePrice)}</span>
@@ -286,15 +334,17 @@
             }
           });
 
-          if (hasKeyboard && hasKeycap && discountAmountCents > 0) {
-            // 1. 键帽单品价格划线并展示 9 折价格
+          // C. 购物车内部商品与总额折后计算
+          if (discountAmountCents > 0) {
+            // 键帽单品价格划线并展示折后价格
             itemEls.forEach(el => {
               const isKc = el.getAttribute('data-is-keycap') === 'true';
               const pType = (el.getAttribute('data-product-type') || '').toLowerCase();
               const pTitle = (el.getAttribute('data-product-title') || el.querySelector('.cart__item-name')?.textContent || '').toLowerCase();
+              const pHandle = (el.getAttribute('data-product-handle') || '').toLowerCase();
               const isKb = el.getAttribute('data-is-keyboard') === 'true';
               const matchesKb = isKb || pType.includes('keyboard') || pTitle.includes('keyboard');
-              const matchesKc = isKc || pType === 'keycaps' || pType === 'keycap' || (pTitle.includes('keycap') && !matchesKb && !pTitle.includes('puller') && !pTitle.includes('installation'));
+              const matchesKc = isKc || pType === 'keycaps' || pType === 'keycap' || (pTitle.includes('keycap') && !matchesKb && !pTitle.includes('puller') && !pTitle.includes('installation') && !pHandle.includes('puller') && !pHandle.includes('installation'));
 
               const priceCol = el.querySelector('.cart__item-price-col');
               if (priceCol && matchesKc) {
@@ -305,12 +355,13 @@
                   if (match) linePrice = parseFloat(match[0].replace(/,/g, '')) * 100;
                 }
                 if (linePrice > 0) {
-                  const discPrice = Math.round(linePrice * 0.9);
+                  const discPrice = Math.round(linePrice * discountRatio);
+                  const discountColor = '#107a44';
                   priceCol.innerHTML = `
                     <small class="cart__price cart__price--strikethrough" style="text-decoration: line-through; color: #999; margin-right: 6px;">
                       ${formatMoney(linePrice)}
                     </small>
-                    <span class="cart__price cart__discount" style="color: #0A6830; font-weight: 600;">
+                    <span class="cart__price cart__discount" style="color: ${discountColor}; font-weight: 600;">
                       ${formatMoney(discPrice)}
                     </span>
                   `;
@@ -324,7 +375,7 @@
               }
             });
 
-            // 2. 底部 Subtotal / Total 划线并展示折后总价
+            // 底部 Subtotal / Total 划线并展示折后总价
             let origTotalCents = 0;
             const cartItemsEl = document.querySelector('.cart__items');
             if (cartItemsEl && cartItemsEl.getAttribute('data-cart-subtotal')) {
@@ -340,11 +391,12 @@
 
               if (currentOrig && !isNaN(currentOrig)) {
                 const finalTotalCents = Math.max(0, currentOrig - discountAmountCents);
+                const discountColor = '#107a44';
                 subtotalEl.innerHTML = `
                   <small style="text-decoration: line-through; color: #888; font-size: 13px; font-weight: 400; margin-right: 6px;">
                     ${formatMoney(currentOrig)}
                   </small>
-                  <span style="color: #0A6830; font-weight: 700; font-size: 16px;">
+                  <span style="color: ${discountColor}; font-weight: 700; font-size: 16px;">
                     ${formatMoney(finalTotalCents)}
                   </span>
                 `;
@@ -414,9 +466,10 @@
           const checkoutBtn = e.target.closest('button[name="checkout"], .cart__checkout');
           if (!checkoutBtn) return;
 
-          const { hasKeyboard, hasKeycap } = scanCartBundle();
+          const bundleState = scanCartBundle();
+          const discountCodeToApply = bundleState.discountCode;
 
-          if (hasKeyboard && hasKeycap) {
+          if (discountCodeToApply && bundleState.discountAmountCents > 0) {
             e.preventDefault();
             e.stopPropagation();
 
@@ -439,7 +492,7 @@
               : Promise.resolve();
 
             saveNotePromise.finally(() => {
-              window.location.href = `/checkout?discount=${encodeURIComponent(DISCOUNT_CODE)}`;
+              window.location.href = '/checkout?discount=' + encodeURIComponent(discountCodeToApply);
             });
           }
         }
@@ -458,11 +511,11 @@
         document.addEventListener('submit', function(e) {
           const form = e.target;
           if (form && (form.id === 'CartDrawerForm' || form.id === 'CartPageForm')) {
-            const { hasKeyboard, hasKeycap } = scanCartBundle();
-            if (hasKeyboard && hasKeycap) {
+            const bundleState = scanCartBundle();
+            if (bundleState.discountCode && bundleState.discountAmountCents > 0) {
               e.preventDefault();
               e.stopPropagation();
-              window.location.href = `/checkout?discount=${encodeURIComponent(DISCOUNT_CODE)}`;
+              window.location.href = '/checkout?discount=' + encodeURIComponent(bundleState.discountCode);
             }
           }
         });

@@ -84,8 +84,23 @@
         {{ variant_subtitle }}
       </div>
     {% endif %}
+    {%- assign p_type = item_variant.product.type | downcase -%}
+    {%- assign p_title = item_title | downcase -%}
+    {%- assign is_kc = false -%}
+    {%- if p_type contains 'keycap' or p_title contains 'keycap' or p_title contains 'keyset' or item_variant.product.tags contains 'keycaps' or item_variant.product.tags contains 'Keycaps' -%}
+      {%- unless p_title contains 'puller' or p_title contains 'installation' or p_title contains '人工安装' or p_title contains '安装服务' -%}
+        {%- assign is_kc = true -%}
+      {%- endunless -%}
+    {%- endif -%}
     <div class="bundle-keycap-card__price">
-      {{ item_variant.price | money }}
+      {%- if is_kc -%}
+        {%- assign kc_orig_price = item_variant.price -%}
+        {%- assign kc_disc_price = item_variant.price | times: 0.9 | round -%}
+        <span class="bundle-keycap-card__price--original">{{ kc_orig_price | money }}</span>
+        <span class="bundle-keycap-card__price--discount">{{ kc_disc_price | money }}</span>
+      {%- else -%}
+        {{ item_variant.price | money }}
+      {%- endif -%}
     </div>
   </div>
 </div>

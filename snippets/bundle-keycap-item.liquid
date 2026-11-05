@@ -16,7 +16,7 @@
 {%- comment -%} 每个商品卡片的唯一标识，点击时写入地址栏 {%- endcomment -%}
 {%- assign card_anchor = 'p-' | append: item_variant.id -%}
 {%- assign kc_orig_price = item_variant.price -%}
-{%- assign kc_disc_price = item_variant.price | times: 0.9 | round -%}
+{%- assign kc_disc_price = item_variant.price | times: 0.85 | round -%}
 
 {%- assign card_image = '' -%}
 {%- if item_variant.featured_image -%}
@@ -110,7 +110,7 @@
       {{ keycap_title }}
     </div>
     {%- assign kc_orig_price = item_variant.price -%}
-    {%- assign kc_disc_price = item_variant.price | times: 0.9 | round -%}
+    {%- assign kc_disc_price = item_variant.price | times: 0.85 | round -%}
     <div class="bundle-keycap-card__price">
       <span class="bundle-keycap-card__price--original">{{ kc_orig_price | money }}</span>
       <span class="bundle-keycap-card__price--discount">{{ kc_disc_price | money }}</span>
