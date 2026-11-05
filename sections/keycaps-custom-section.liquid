@@ -11,6 +11,7 @@
     {%- comment -%} 2. 核心商品网格（PC 4列，Mobile 2列，穿插自定义营销卡片） {%- endcomment -%}
     {%- liquid
       assign products_limit = section.settings.products_limit | default: 24
+      assign per_row = section.settings.per_row | default: 4
       assign total_products = collection.products.size
       assign product_index = 0
       assign max_slots = products_limit | plus: section.blocks.size
@@ -32,7 +33,7 @@
         {%- if promo_block != nil -%}
           {%- render 'promo-grid-card',
             block: promo_block,
-            per_row: 4,
+            per_row: per_row,
             card_extra_class: 'small--one-halfs'
           -%}
         {%- else -%}
@@ -41,7 +42,7 @@
             {%- assign current_prod = collection.products[product_index] -%}
             {%- render 'product-grid-item',
               product: current_prod,
-              per_row: 4,
+              per_row: per_row,
               quick_shop_enable: settings.quick_shop_enable,
               short_introduction_enable: false,
               short_point_desc_enable: false,
@@ -110,25 +111,26 @@
     padding-left: 20px;
     margin-bottom: 30px;
   }
-  .keycaps-collection-grid .medium-up--one-quarter {
-    width: 25% !important;
-  }
 
   /* 自定义广告卡片样式 */
   .promo-grid-card {
     display: flex !important;
+    flex-direction: column !important;
+    height: auto !important;
   }
   .promo-card__inner {
     position: relative;
     width: 100%;
+    height: 100% !important;
+    min-height: 0 !important;
     border-radius: 12px;
     padding: 30px 24px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-between !important;
     box-sizing: border-box;
     overflow: hidden;
-    min-height: 400px;
+    flex: 1 1 auto !important;
     transition: transform 0.25s ease, box-shadow 0.25s ease;
   }
   .promo-card__inner:hover {
@@ -292,7 +294,7 @@
     }
     .keycaps-collection-grid .grid__item {
       padding: 3px 4px !important;
-      margin-bottom: 10px !important;
+      margin-bottom: 0 !important;
       width: 50% !important;
       max-width: 50% !important;
       flex: 0 0 50% !important;
@@ -303,116 +305,12 @@
       width: 50% !important;
     }
 
-    /* 商品卡片内部容器与边框 */
-    .keycaps-collection-grid .grid-product__content {
-      border-radius: 6px !important;
-      overflow: hidden !important;
-      height: 100% !important;
-      display: flex !important;
-      flex-direction: column !important;
-      justify-content: space-between !important;
-    }
-
-    /* 放大商品图片 */
-    .keycaps-collection-grid .grid-product__image-mask {
-      padding: 0 !important;
-      margin: 0 !important;
-      width: 100% !important;
-    }
-    .keycaps-collection-grid .grid-product__content > .grid-product__link img,
-    .keycaps-collection-grid .grid-product__mobile-slide img {
-      width: 100% !important;
-      aspect-ratio: 1 / 1 !important;
-      object-fit: contain !important;
-    }
-
-    /* 紧凑双段滑块指示条 */
-    .keycaps-collection-grid .grid-product__mobile-indicator {
-      padding: 3px 6px 1px 6px !important;
-      gap: 3px !important;
-    }
-    .keycaps-collection-grid .grid-product__mobile-indicator .indicator-bar {
-      height: 2px !important;
-    }
-
-    /* 分类标签紧凑化 */
-    .keycaps-collection-grid .keycap-style-label {
-      font-size: 8.5px !important;
-      padding: 2px 6px !important;
-      right: 3% !important;
-      bottom: 4% !important;
-      border-width: 1px !important;
-    }
-
-    /* 卡片文本容器与间距紧凑化 */
-    .keycaps-collection-grid .grid-product__meta {
-      padding: 4px 6px 6px 6px !important;
-      display: flex !important;
-      flex-direction: column !important;
-      flex: 1 !important;
-      justify-content: space-between !important;
-    }
-
-    /* 标题字号减小、行高和外边距紧凑 */
-    .keycaps-collection-grid .grid-product__title,
-    .keycaps-collection-grid .grid-product__title.grid-product__title--body {
-      font-size: 11px !important;
-      line-height: 1.25 !important;
-      height: 28px !important;
-      font-weight: 500 !important;
-      margin: 0 0 2px 0 !important;
-      letter-spacing: -0.01em !important;
-      display: -webkit-box !important;
-      -webkit-line-clamp: 2 !important;
-      -webkit-box-orient: vertical !important;
-      overflow: hidden !important;
-      text-overflow: ellipsis !important;
-    }
-
-    /* 价格字号减小、上下间距减小 */
-    .keycaps-collection-grid .grid-product__price {
-      padding: 0 !important;
-      margin: 1px 0 4px 0 !important;
-      line-height: 1.1 !important;
-      text-align: left !important;
-    }
-    .keycaps-collection-grid .grid-product__price > span.money,
-    .keycaps-collection-grid .grid-product__price .money {
-      font-size: 12.5px !important;
-      font-weight: 600 !important;
-      color: var(--colorThemePrimary, #107a44) !important;
-    }
-
-    /* 按钮文案减小、紧凑按钮高度 */
-    .keycaps-collection-grid .bottom_btn {
-      margin-top: 0 !important;
-      padding-top: 0 !important;
-    }
-    .keycaps-collection-grid .bottom_btn a,
-    .keycaps-collection-grid .bottom_btn a.lm_btn {
-      font-size: 10.5px !important;
-      font-weight: 500 !important;
-      padding: 4.5px 0 !important;
-      border-radius: 4px !important;
-      letter-spacing: 0.01em !important;
-      line-height: 1.2 !important;
-      white-space: nowrap !important;
-      width: 100% !important;
-      display: flex !important;
-      align-items: center !important;
-      justify-content: center !important;
-    }
-    .keycaps-collection-grid .bottom_btn a svg {
-      display: none !important;
-    }
-
-    /* 营销卡片紧凑化，降低高度以匹配商品卡片 */
     .promo-grid-card {
       padding: 3px 4px !important;
-      margin-bottom: 10px !important;
+      margin-bottom: 0 !important;
     }
     .promo-card__inner {
-      min-height: unset !important;
+      min-height: 0 !important;
       height: 100% !important;
       padding: 14px 12px !important;
       border-radius: 6px !important;
@@ -442,108 +340,6 @@
       padding: 5px 12px !important;
     }
   }
-
-  /* Tablet layout (769px - 1000px): keep 4 columns, compact cards */
-  @media screen and (min-width: 769px) and (max-width: 1000px) {
-    .keycaps-custom-section {
-      padding: 24px 0 60px;
-    }
-    .keycaps-page-title {
-      font-size: 28px;
-    }
-    .keycaps-page-subtitle {
-      font-size: 14px;
-    }
-    .keycaps-collection-grid.grid--uniform {
-      margin-left: -12px;
-    }
-    .keycaps-collection-grid .grid__item,
-    .keycaps-collection-grid .medium-up--one-quarter {
-      width: 25% !important;
-      max-width: 25% !important;
-      flex: 0 0 25% !important;
-      padding-left: 12px;
-      margin-bottom: 18px;
-    }
-
-    /* Product card text */
-    .keycaps-collection-grid .grid-product__meta {
-      padding-left: 10px !important;
-      padding-right: 10px !important;
-    }
-    .keycaps-collection-grid .grid-product__title,
-    .keycaps-collection-grid .grid-product__title.grid-product__title--body {
-      font-size: 13px !important;
-      line-height: 1.3 !important;
-      height: 2.6em !important;
-      max-height: 2.6em !important;
-      margin-bottom: 4px !important;
-      display: -webkit-box !important;
-      -webkit-line-clamp: 2 !important;
-      -webkit-box-orient: vertical !important;
-      overflow: hidden !important;
-      text-overflow: ellipsis !important;
-      white-space: normal !important;
-    }
-    .keycaps-collection-grid .grid-product__price,
-    .keycaps-collection-grid .grid-product__price .money {
-      font-size: 14px !important;
-    }
-    .keycaps-collection-grid .bottom_btn a,
-    .keycaps-collection-grid .bottom_btn a.lm_btn {
-      font-size: 12px !important;
-      padding-top: 7px !important;
-      padding-bottom: 7px !important;
-      white-space: nowrap !important;
-      letter-spacing: 0.01em !important;
-      gap: 4px !important;
-    }
-    .keycaps-collection-grid .bottom_btn a svg {
-      width: 14px !important;
-      height: 14px !important;
-    }
-    .keycaps-collection-grid .keycap-style-label {
-      font-size: 9px !important;
-      padding: 2px 6px !important;
-    }
-
-    /* Promo card */
-    .promo-card__inner {
-      min-height: unset !important;
-      height: 100% !important;
-      padding: 16px 12px !important;
-      border-radius: 8px !important;
-    }
-    .promo-card--light .promo-card__tag,
-    .promo-card--dark .promo-card__tag {
-      font-size: 9px !important;
-      letter-spacing: 0.8px !important;
-      margin-bottom: 6px !important;
-    }
-    .promo-card--light .promo-card__title,
-    .promo-card--dark .promo-card__title {
-      font-size: 16px !important;
-      line-height: 1.22 !important;
-      margin-bottom: 8px !important;
-      letter-spacing: -0.2px !important;
-      overflow-wrap: break-word;
-    }
-    .promo-card--light .promo-card__desc,
-    .promo-card--dark .promo-card__desc {
-      font-size: 11.5px !important;
-      line-height: 1.45 !important;
-    }
-    .promo-card--light .promo-card__action,
-    .promo-card--dark .promo-card__action {
-      font-size: 12px !important;
-    }
-    .promo-card--dark .promo-card__action {
-      padding: 7px 14px !important;
-    }
-    .promo-card__footer {
-      margin-top: 10px;
-    }
-  }
 {%- endstyle -%}
 
 {% schema %}
@@ -560,6 +356,15 @@
       "type": "textarea",
       "id": "subtitle",
       "label": "Page Subtitle"
+    },
+    {
+      "type": "range",
+      "id": "per_row",
+      "label": "Products per row",
+      "default": 4,
+      "min": 2,
+      "max": 5,
+      "step": 1
     },
     {
       "type": "range",

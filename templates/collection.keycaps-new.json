@@ -56,6 +56,7 @@
       "settings": {
         "title": "Keycaps New Arrivals",
         "subtitle": "Discover our newest keycap drops, fresh profile designs, and artisan-inspired sets.",
+        "per_row": 4,
         "products_limit": 24
       }
     },

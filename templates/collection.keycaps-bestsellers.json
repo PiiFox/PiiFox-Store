@@ -44,6 +44,7 @@
       "settings": {
         "title": "Keycaps Best Sellers",
         "subtitle": "Discover our top-rated custom mechanical keyboard keycap sets, loved by typing enthusiasts.",
+        "per_row": 4,
         "products_limit": 24
       }
     },

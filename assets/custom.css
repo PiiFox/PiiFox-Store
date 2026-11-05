@@ -6079,28 +6079,109 @@ button.add-to-cart:disabled,
 
 
 /* ==========================================================================
-   In-Grid Functional Cards (Promo Card & Image Card)
+   In-Grid Functional Cards (Promo Card & Image Card) & Equal Height Grids
    ========================================================================== */
+.collection-grid__wrapper > .grid--uniform,
+.collection-grid__wrapper > .grid,
+.keycaps-collection-grid.grid--uniform {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  align-items: stretch !important;
+}
+
+.collection-grid__wrapper > .grid--uniform::before,
+.collection-grid__wrapper > .grid--uniform::after,
+.collection-grid__wrapper > .grid::before,
+.collection-grid__wrapper > .grid::after,
+.keycaps-collection-grid.grid--uniform::before,
+.keycaps-collection-grid.grid--uniform::after {
+  display: none !important;
+}
+
+.collection-grid__wrapper > .grid--uniform > .grid__item,
+.collection-grid__wrapper > .grid > .grid__item,
+.keycaps-collection-grid.grid--uniform > .grid__item {
+  float: none !important;
+  clear: none !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-self: stretch !important;
+  box-sizing: border-box !important;
+  flex-grow: 0 !important;
+  flex-shrink: 0 !important;
+}
+
+/* Ensure product cards fill 100% height and align bottom buttons */
+.collection-grid__wrapper .grid__item.grid-product,
+.keycaps-collection-grid .grid__item.grid-product {
+  display: flex !important;
+  flex-direction: column !important;
+  height: auto !important;
+}
+
+.collection-grid__wrapper .grid__item.grid-product .grid-product__content,
+.keycaps-collection-grid .grid__item.grid-product .grid-product__content {
+  height: 100% !important;
+  flex: 1 1 auto !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: space-between !important;
+  box-sizing: border-box !important;
+}
+
+.collection-grid__wrapper .grid__item.grid-product .grid-product__link,
+.keycaps-collection-grid .grid__item.grid-product .grid-product__link {
+  height: 100% !important;
+  flex: 1 1 auto !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: space-between !important;
+}
+
+.collection-grid__wrapper .grid__item.grid-product .grid-product__meta,
+.keycaps-collection-grid .grid__item.grid-product .grid-product__meta {
+  flex: 1 1 auto !important;
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+.collection-grid__wrapper .grid__item.grid-product .bottom_btn,
+.keycaps-collection-grid .grid__item.grid-product .bottom_btn {
+  margin-top: auto !important;
+}
+
 .promo-grid-card {
   display: flex !important;
   flex-direction: column !important;
+  height: auto !important;
   margin-bottom: 30px;
-  box-sizing: border-box;
+  box-sizing: border-box !important;
 }
 
 .promo-card__inner {
   position: relative;
   width: 100%;
-  height: 100%;
-  min-height: 400px;
+  height: 100% !important;
+  min-height: 0 !important;
   border-radius: 12px;
   padding: 30px 24px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  box-sizing: border-box;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: space-between !important;
+  box-sizing: border-box !important;
   overflow: hidden;
+  flex: 1 1 auto !important;
   transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.promo-card__body {
+  flex: 1 1 auto !important;
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+.promo-card__footer {
+  margin-top: auto !important;
 }
 
 .promo-card__inner:hover {
@@ -6233,39 +6314,48 @@ button.add-to-cart:disabled,
   background: #f7f7f8;
   border: 1px solid #e8e8ea;
   display: flex !important;
+  flex-direction: column !important;
   overflow: hidden;
+  height: 100% !important;
+  min-height: 0 !important;
+  flex: 1 1 auto !important;
 }
 .promo-card__image-link {
-  display: block;
+  display: flex !important;
+  flex-direction: column !important;
   width: 100%;
-  height: 100%;
+  height: 100% !important;
+  flex: 1 1 auto !important;
   text-decoration: none;
   border-radius: 12px;
   overflow: hidden;
 }
 .promo-card__picture {
-  display: block;
+  display: flex !important;
   width: 100%;
-  height: 100%;
+  height: 100% !important;
+  flex: 1 1 auto !important;
 }
 .promo-card__full-img {
-  display: block;
+  display: block !important;
   width: 100%;
-  height: 100%;
-  object-fit: cover;
+  height: 100% !important;
+  flex: 1 1 auto !important;
+  object-fit: cover !important;
   border-radius: 12px;
   transition: transform 0.35s ease;
 }
 .promo-card--fit-contain .promo-card__full-img {
-  object-fit: contain;
+  object-fit: contain !important;
 }
 .promo-card--has-link:hover .promo-card__full-img {
   transform: scale(1.03);
 }
 .promo-card__placeholder {
   width: 100%;
-  height: 100%;
-  min-height: 380px;
+  height: 100% !important;
+  min-height: 180px !important;
+  flex: 1 1 auto !important;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -6291,16 +6381,26 @@ button.add-to-cart:disabled,
 /* Mobile Responsive */
 @media screen and (max-width: 768px) {
   .promo-grid-card {
-    margin-bottom: 10px !important;
+    margin-bottom: 0 !important;
   }
-  .collection-grid__wrapper .grid__item.grid-product.promo-grid-card.small--one-halfs {
+  .collection-grid__wrapper .grid__item.grid-product.promo-grid-card.small--one-halfs,
+  .keycaps-collection-grid .grid__item.grid-product.promo-grid-card.small--one-halfs {
     width: 50% !important;
     max-width: 50% !important;
     flex: 0 0 50% !important;
     padding: 3px 4px !important;
+    margin: 0 !important;
+  }
+  .collection-grid__wrapper .grid__item.grid-product.promo-grid-card:not(.small--one-halfs),
+  .keycaps-collection-grid .grid__item.grid-product.promo-grid-card:not(.small--one-halfs) {
+    width: 100% !important;
+    max-width: 100% !important;
+    flex: 0 0 100% !important;
+    padding: 6px 4px !important;
+    margin: 0 !important;
   }
   .promo-card__inner {
-    min-height: unset !important;
+    min-height: 0 !important;
     height: 100% !important;
     padding: 16px 12px !important;
     border-radius: 8px !important;
@@ -6308,14 +6408,16 @@ button.add-to-cart:disabled,
   .promo-card__inner--image {
     padding: 0 !important;
     border-radius: 8px !important;
-    min-height: unset !important;
+    min-height: 0 !important;
+    height: 100% !important;
   }
   .promo-card__image-link,
   .promo-card__full-img {
     border-radius: 8px !important;
+    height: 100% !important;
   }
   .promo-card__placeholder {
-    min-height: 160px !important;
+    min-height: 140px !important;
     border-radius: 8px !important;
     padding: 12px;
   }
