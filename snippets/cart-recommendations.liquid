@@ -317,6 +317,7 @@
       const itemEls = document.querySelectorAll('#CartDrawer .cart__item, .cart__item');
       let hasKeyboard = false;
       let hasKeycap = false;
+      let keycapsCount = 0;
 
       for (let i = 0; i < itemEls.length; i++) {
         const el = itemEls[i];
@@ -325,6 +326,13 @@
         const pType = (el.getAttribute('data-product-type') || '').toLowerCase();
         const pTitle = (el.getAttribute('data-product-title') || el.querySelector('.cart__item-name')?.textContent || '').toLowerCase();
         const pHandle = (el.getAttribute('data-product-handle') || '').toLowerCase();
+
+        let itemQty = parseInt(el.getAttribute('data-item-quantity'), 10);
+        if (isNaN(itemQty) || itemQty <= 0) {
+          const qtyInput = el.querySelector('.js-qty__num, input[name="updates[]"]');
+          if (qtyInput) itemQty = parseInt(qtyInput.value, 10);
+        }
+        if (isNaN(itemQty) || itemQty <= 0) itemQty = 1;
 
         const matchesKb = isKb ||
           pType.includes('keyboard') ||
@@ -344,20 +352,30 @@
           (pTitle.includes('keycap') && !matchesKb && !pTitle.includes('puller') && !pTitle.includes('installation') && !pHandle.includes('puller') && !pHandle.includes('installation'));
 
         if (matchesKb) hasKeyboard = true;
-        if (matchesKc) hasKeycap = true;
+        if (matchesKc) {
+          hasKeycap = true;
+          keycapsCount += itemQty;
+        }
       }
 
-      // 规则 1 & 4：有键盘时（无论有无键帽），最高力度 8 折优先，显示 STYLE YOUR BOARD
+      // 规则 1 & 4：有键盘时（无论有无键帽），最高力度 85 折优先，显示 STYLE YOUR BOARD
       if (hasKeyboard) {
-        return { mode: 'keyboard', discountRatio: 0.85, discountCode: 'KEYCAP15' };
+        return { mode: 'keyboard', discountRatio: 0.85, discountCode: 'KEYCAP15', hasKeycap: hasKeycap, keycapsCount: keycapsCount, isDiscountActive: hasKeycap };
       }
-      // 规则 2：无键盘、有键帽时，9 折，显示 DOUBLE YOUR STYLE
+      // 规则 2：无键盘、有键帽时，显示 DOUBLE YOUR STYLE；满 2 把及以上生效 9 折 (KEYCAP10)
       else if (hasKeycap) {
-        return { mode: 'keycap', discountRatio: 0.9, discountCode: 'KEYCAP10' };
+        return { 
+          mode: 'keycap', 
+          discountRatio: 0.9, 
+          discountCode: 'KEYCAP10', 
+          hasKeycap: true, 
+          keycapsCount: keycapsCount,
+          isDiscountActive: keycapsCount >= 2
+        };
       }
       // 规则 3：无键盘无键帽，不显示折扣
       else {
-        return { mode: 'none', discountRatio: 1.0, discountCode: '' };
+        return { mode: 'none', discountRatio: 1.0, discountCode: '', hasKeycap: false, keycapsCount: 0, isDiscountActive: false };
       }
     }
     window.getCartDiscountState = getCartDiscountState;

@@ -68,29 +68,36 @@
               </div>
 
               {%- assign cart_has_keyboard = false -%}
+              {%- assign keycaps_count = 0 -%}
+              {%- assign keycaps_total_price = 0 -%}
               {%- assign keycaps_discount_total = 0 -%}
               {%- for ci in cart.items -%}
                 {%- assign ci_t = ci.product.type | downcase -%}
                 {%- assign ci_title = ci.product.title | downcase -%}
+                {%- assign ci_h = ci.product.handle | downcase -%}
                 {%- if ci_t contains 'keyboard' or ci_title contains 'keyboard' or ci.product.tags contains 'keyboards' or ci.product.tags contains 'Keyboards' or ci.product.tags contains 'keyboard' or ci.product.tags contains 'Keyboard' -%}
-                  {%- assign cart_has_keyboard = true -%}
+                  {%- unless ci_title contains 'keycap' or ci_title contains 'switch' or ci_t contains 'keycap' or ci_t contains 'switch' or ci_title contains 'desk mat' or ci_title contains 'holder' -%}
+                    {%- assign cart_has_keyboard = true -%}
+                  {%- endunless -%}
+                {%- endif -%}
+                {%- if ci_t == 'keycaps' or ci_t == 'keycap' or ci_title contains 'keycap' or ci.product.tags contains 'keycaps' or ci.product.tags contains 'Keycaps' -%}
+                  {%- unless ci_title contains 'puller' or ci_title contains 'installation' or ci_title contains 'service' or ci_h contains 'puller' or ci_h contains 'installation' -%}
+                    {%- assign keycaps_count = keycaps_count | plus: ci.quantity -%}
+                    {%- assign item_lp = ci.original_line_price | default: ci.final_line_price -%}
+                    {%- assign keycaps_total_price = keycaps_total_price | plus: item_lp -%}
+                  {%- endunless -%}
                 {%- endif -%}
               {%- endfor -%}
-              {%- if cart_has_keyboard -%}
-                {%- for ci in cart.items -%}
-                  {%- assign ci_t = ci.product.type | downcase -%}
-                  {%- assign ci_title = ci.product.title | downcase -%}
-                  {%- if ci_t == 'keycaps' or ci_t == 'keycap' or ci_title contains 'keycap' -%}
-                    {%- assign item_disc = ci.final_line_price | times: 0.1 | round -%}
-                    {%- assign keycaps_discount_total = keycaps_discount_total | plus: item_disc -%}
-                  {%- endif -%}
-                {%- endfor -%}
+              {%- if cart_has_keyboard and keycaps_count > 0 -%}
+                {%- assign keycaps_discount_total = keycaps_total_price | times: 0.15 | round -%}
+              {%- elsif cart_has_keyboard == false and keycaps_count >= 2 -%}
+                {%- assign keycaps_discount_total = keycaps_total_price | times: 0.1 | round -%}
               {%- endif -%}
 
               <div class="cart__item-sub cart__item-row">
                 <div class="ajaxcart__subtotal">{{ 'cart.general.total' | t }}</div>
                 <div data-subtotal>
-                  {%- if cart_has_keyboard and keycaps_discount_total > 0 -%}
+                  {%- if keycaps_discount_total > 0 -%}
                     <small style="text-decoration: line-through; color: #888; font-size: 13px; font-weight: 400; margin-right: 6px;">
                       {{ cart.total_price | money }}
                     </small>
@@ -188,6 +195,7 @@
           let hasKeyboard = false;
           let hasKeycap = false;
           let keycapsTotalPriceCents = 0;
+          let keycapsCount = 0;
           let totalItems = 0;
 
           itemEls.forEach(el => {
@@ -226,15 +234,26 @@
               pType === 'keycap' ||
               (pTitle.includes('keycap') && !matchesKb && !pTitle.includes('puller') && !pTitle.includes('installation') && !pHandle.includes('puller') && !pHandle.includes('installation'));
 
+            // 获取商品数量
+            let itemQty = parseInt(el.getAttribute('data-item-quantity'), 10);
+            if (isNaN(itemQty) || itemQty <= 0) {
+              const qtyInput = el.querySelector('.js-qty__num, input[name="updates[]"]');
+              if (qtyInput) {
+                itemQty = parseInt(qtyInput.value, 10);
+              }
+            }
+            if (isNaN(itemQty) || itemQty <= 0) itemQty = 1;
+
             if (matchesKb) hasKeyboard = true;
             if (matchesKc) {
               hasKeycap = true;
+              keycapsCount += itemQty;
               keycapsTotalPriceCents += linePrice;
             }
           });
 
-          // 规则 1 & 4: 有键盘（无论有无键帽），最高力度 8 折优先 (KEYCAP20)
-          // 规则 2: 无键盘有键帽，9 折 (KEYCAP10)
+          // 规则 1 & 4: 有键盘（无论有无键帽），搭配键帽最高力度 85 折优先 (KEYCAP15)
+          // 规则 2: 无键盘，满 2 把及以上键帽 9 折 (KEYCAP10)；单单只有 1 把键帽不打折
           // 规则 3: 无键盘无键帽，不打折
           let discountMode = 'none';
           let discountRatio = 1.0;
@@ -248,7 +267,7 @@
             if (hasKeycap) {
               discountAmountCents = Math.round(keycapsTotalPriceCents * 0.15);
             }
-          } else if (hasKeycap) {
+          } else if (hasKeycap && keycapsCount >= 2) {
             discountMode = 'keycap';
             discountRatio = 0.9;
             discountCode = 'KEYCAP10';
@@ -258,6 +277,7 @@
           return {
             hasKeyboard,
             hasKeycap,
+            keycapsCount,
             keycapsTotalPriceCents,
             discountMode,
             discountRatio,
@@ -285,7 +305,7 @@
                 wrapper.style.display = '';
                 kbBanner.style.display = '';
                 kcBanner.style.display = 'none';
-              } else if (discountMode === 'keycap') {
+              } else if (discountMode === 'keycap' || hasKeycap) {
                 wrapper.style.display = '';
                 kbBanner.style.display = 'none';
                 kcBanner.style.display = '';
@@ -320,7 +340,7 @@
                   <span class="cart-rec-item__compare-price">${formatMoney(basePrice)}</span>
                   <span class="cart-rec-item__price">${formatMoney(discPrice)}</span>
                 `;
-              } else if (discountMode === 'keycap') {
+              } else if (discountMode === 'keycap' || hasKeycap) {
                 const discPrice = Math.round(basePrice * 0.9);
                 priceRow.innerHTML = `
                   <span class="cart-rec-item__compare-price">${formatMoney(basePrice)}</span>
@@ -411,7 +431,7 @@
               const pTitle = (el.getAttribute('data-product-title') || el.querySelector('.cart__item-name')?.textContent || '').toLowerCase();
               const isKb = el.getAttribute('data-is-keyboard') === 'true';
               const matchesKb = isKb || pType.includes('keyboard') || pTitle.includes('keyboard');
-              const matchesKc = isKc || pType === 'keycaps' || pType === 'keycap' || (pTitle.includes('keycap') && !matchesKb && !pTitle.includes('puller') && !pTitle.includes('installation'));
+              const matchesKc = isKc || pType === 'keycaps' || pType === 'keycap' || (pTitle.includes('keycap') && !matchesKb && !pTitle.includes('puller') && !pTitle.includes('installation') && !pHandle.includes('puller') && !pHandle.includes('installation'));
 
               const priceCol = el.querySelector('.cart__item-price-col');
               if (priceCol) {

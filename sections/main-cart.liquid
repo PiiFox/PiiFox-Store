@@ -41,18 +41,36 @@
         <div class="cart__page-col">
           <div data-products>
             {%- assign cart_has_keyboard = false -%}
+            {%- assign keycaps_count = 0 -%}
+            {%- assign keycaps_total_price = 0 -%}
+            {%- assign keycaps_discount_total = 0 -%}
             {%- for ci in cart.items -%}
               {%- assign ci_t = ci.product.type | downcase -%}
               {%- assign ci_title = ci.product.title | downcase -%}
+              {%- assign ci_h = ci.product.handle | downcase -%}
               {%- if ci_t contains 'keyboard' or ci_title contains 'keyboard' or ci.product.tags contains 'keyboards' or ci.product.tags contains 'Keyboards' or ci.product.tags contains 'keyboard' or ci.product.tags contains 'Keyboard' -%}
                 {%- unless ci_title contains 'keycap' or ci_title contains 'switch' or ci_t contains 'keycap' or ci_t contains 'switch' or ci_title contains 'desk mat' or ci_title contains 'holder' -%}
                   {%- assign cart_has_keyboard = true -%}
-                  {%- break -%}
+                {%- endunless -%}
+              {%- endif -%}
+              {%- if ci_t == 'keycaps' or ci_t == 'keycap' or ci_title contains 'keycap' or ci.product.tags contains 'keycaps' or ci.product.tags contains 'Keycaps' -%}
+                {%- unless ci_title contains 'puller' or ci_title contains 'installation' or ci_title contains 'service' or ci_h contains 'puller' or ci_h contains 'installation' -%}
+                  {%- assign keycaps_count = keycaps_count | plus: ci.quantity -%}
+                  {%- assign item_lp = ci.original_line_price | default: ci.final_line_price -%}
+                  {%- assign keycaps_total_price = keycaps_total_price | plus: item_lp -%}
                 {%- endunless -%}
               {%- endif -%}
             {%- endfor -%}
+            {%- assign keycaps_discount_active = false -%}
+            {%- if cart_has_keyboard and keycaps_count > 0 -%}
+              {%- assign keycaps_discount_total = keycaps_total_price | times: 0.15 | round -%}
+              {%- assign keycaps_discount_active = true -%}
+            {%- elsif cart_has_keyboard == false and keycaps_count >= 2 -%}
+              {%- assign keycaps_discount_total = keycaps_total_price | times: 0.1 | round -%}
+              {%- assign keycaps_discount_active = true -%}
+            {%- endif -%}
             {% for item in cart.items %}
-              {%- render 'cart-item', product: item, cart_has_keyboard: cart_has_keyboard -%}
+              {%- render 'cart-item', product: item, cart_has_keyboard: cart_has_keyboard, keycaps_discount_active: keycaps_discount_active -%}
             {%- endfor -%}
           </div>
           <div class="cart-page__recommendations-slot"></div>
@@ -88,7 +106,18 @@
 
             <div class="cart__item-sub cart__item-row">
               <div>{{ 'cart.general.subtotal' | t }}</div>
-              <div data-subtotal>{{ cart.total_price | money }}</div>
+              <div data-subtotal>
+                {%- if keycaps_discount_total > 0 -%}
+                  <small style="text-decoration: line-through; color: #888; font-size: 13px; font-weight: 400; margin-right: 6px;">
+                    {{ cart.total_price | money }}
+                  </small>
+                  <span style="color: #0A6830; font-weight: 700; font-size: 16px;">
+                    {{ cart.total_price | minus: keycaps_discount_total | money }}
+                  </span>
+                {%- else -%}
+                  {{ cart.total_price | money }}
+                {%- endif -%}
+              </div>
             </div>
 
             {% if settings.cart_terms_conditions_enable %}
