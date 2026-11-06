@@ -36,26 +36,28 @@
     </div>
   </div>
   <div class="cart-recommendations__banner-wrapper" id="CartRecBannerWrapper" style="{% unless cart_has_keyboard or cart_has_keycap %}display: none;{% endunless %}">
-    <div class="cart-rec-banner-img-wrap" id="CartRecBannerKeyboard" style="{% unless cart_has_keyboard %}display: none;{% endunless %}">
-      <img
-        src="https://cdn.shopify.com/s/files/1/1001/2383/6697/files/ChatGPT_2026_11_5_15_05_14.png?v=1793862333"
-        alt="Style Your Board - Pair a keyboard with keycaps to get 15% off keycaps."
-        class="cart-rec-banner-img"
-        loading="lazy"
-        width="542"
-        height="136"
-      >
+    <!-- 键盘推荐键帽横幅 (15% OFF) -->
+    <div class="cart-rec-banner-card cart-rec-banner--keyboard" id="CartRecBannerKeyboard" style="{% unless cart_has_keyboard %}display: none;{% endunless %}">
+      <span class="cart-rec-banner__badge">STYLE YOUR BOARD</span>
+      <div class="cart-rec-banner__content">
+        <svg class="cart-rec-banner__icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path>
+          <line x1="7" y1="7" x2="7.01" y2="7"></line>
+        </svg>
+        <span class="cart-rec-banner__text">Pair a keyboard with keycaps to get <strong class="cart-rec-banner__highlight">15% off keycaps.</strong></span>
+      </div>
     </div>
 
-    <div class="cart-rec-banner-img-wrap" id="CartRecBannerKeycap" style="{% if cart_has_keyboard or cart_has_keycap == false %}display: none;{% endif %}">
-      <img
-        src="https://cdn.shopify.com/s/files/1/1001/2383/6697/files/ChatGPT_2026_11_5_15_05_02.png?v=1793862333"
-        alt="Double Your Style - Buy 2 keycap sets to get 10% off keycaps."
-        class="cart-rec-banner-img"
-        loading="lazy"
-        width="543"
-        height="108"
-      >
+    <!-- 键帽加购横幅 (10% OFF - 方案一：紧凑横幅样式) -->
+    <div class="cart-rec-banner-card cart-rec-banner--keycap" id="CartRecBannerKeycap" style="{% if cart_has_keyboard or cart_has_keycap == false %}display: none;{% endif %}">
+      <span class="cart-rec-banner__badge">DOUBLE YOUR STYLE</span>
+      <div class="cart-rec-banner__content">
+        <svg class="cart-rec-banner__icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path>
+          <line x1="7" y1="7" x2="7.01" y2="7"></line>
+        </svg>
+        <span class="cart-rec-banner__text">Buy 2 keycap sets to get <strong class="cart-rec-banner__highlight">10% off keycaps.</strong></span>
+      </div>
     </div>
   </div>
   <div class="cart-recommendations__list" id="CartRecommendationsList">
