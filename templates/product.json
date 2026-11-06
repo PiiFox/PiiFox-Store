@@ -145,6 +145,10 @@
           "type": "payment_icon",
           "settings": {}
         },
+        "keyboard_features_grid": {
+          "type": "keyboard_features_grid",
+          "settings": {}
+        },
         "af0d8d68-399e-4e03-a410-f08becab3d8f": {
           "type": "share",
           "disabled": true,
@@ -170,6 +174,7 @@
         "8b89d97f-65d6-4fda-a00c-3f23a460893d",
         "74f3c2ae-b2b5-4177-a3c4-c43f472adc09",
         "collapse_rule_list_4LHtpy",
+        "keyboard_features_grid",
         "af0d8d68-399e-4e03-a410-f08becab3d8f"
       ],
       "custom_css": [

@@ -60,7 +60,7 @@
       transition: all 0.4s ease;
   }
   .custom-point-describe--wrapper {
-      max-height: 180px;
+      max-height: 100px;
       overflow-y: hidden;
   }
   .product-block.custom-point-describe-container::after {
@@ -74,6 +74,7 @@
       display: flex;
       align-items: flex-end;
       pointer-events:auto;
+      cursor: pointer;
       transition: all 0.4s ease;
   }
   .product-block.custom-point-describe-container.active .custom-point-describe--wrapper {
@@ -546,6 +547,10 @@
                     {% endif %}
                   {%- when 'inventory_status' -%}
                     {%- render 'product-inventory', product: product, current_variant: current_variant, block: block -%}
+                  {%- when 'keyboard_features_grid' -%}
+                    <div class="product-block keyboard-features-grid-block" {{ block.shopify_attributes }}>
+                      {%- render 'keyboard-features-grid', product: product, block: block -%}
+                    </div>
                   {%- when 'share' -%}
                     <div class="product-block" {{ block.shopify_attributes }}>
                       {%- render 'social-sharing',
@@ -589,7 +594,7 @@
                   {%- when 'point_desc' -%}
                     <div class="product-block custom-point-describe-container" {{ block.shopify_attributes }}>
                       <div class="custom-point-describe--wrapper">
-                        {{ product.metafields.custom.point_description }}
+                        {% render 'product-point-description', product: product %}
                       </div>
                     </div>
                   {%- when 'form_btn' -%}

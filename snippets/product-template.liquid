@@ -65,7 +65,7 @@
       transition: all 0.4s ease;
   }
   .custom-point-describe--wrapper {
-      max-height: 140px;
+      max-height: 100px;
       overflow-y: hidden;
   }
   .product-block.custom-point-describe-container::after {
@@ -80,6 +80,7 @@
       display: flex;
       align-items: flex-end;
       pointer-events:auto;
+      cursor: pointer;
       transition: all 0.4s ease;
   }
   .product-block.custom-point-describe-container.active .custom-point-describe--wrapper {
@@ -582,6 +583,10 @@
                       current_variant: current_variant,
                       block: block
                     -%}
+                  {%- when 'keyboard_features_grid' -%}
+                    <div class="product-block keyboard-features-grid-block" {{ block.shopify_attributes }}>
+                      {%- render 'keyboard-features-grid', product: product, block: block -%}
+                    </div>
                   {%- when 'share' -%}
                     <div class="product-block product-social-share-block" {{ block.shopify_attributes }}>
                       {% render 'social-share', product: product %}
