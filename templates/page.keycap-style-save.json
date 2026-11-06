@@ -3,7 +3,7 @@
     "hero": {
       "type": "kss-hero",
       "settings": {
-        "eyebrow": "KEYCAP STYLE & SAVE",
+        "eyebrow": "",
         "eyebrow_color": "#286633",
         "eyebrow_bg": "#f0f7f2",
         "eyebrow_border": "#286633",
