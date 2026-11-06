@@ -1,0 +1,292 @@
+{%- comment -%}
+  Keycap Style & Save - Hero Section
+  Split layout matching reference: Left rounded image, Right minimal typography.
+  Contains only: Eyebrow, Main Title, Subtitle.
+{%- endcomment -%}
+
+{%- liquid
+  assign hero_img = section.settings.image
+-%}
+
+<section id="kss-hero-{{ section.id }}" class="kss-hero kss-hero-{{ section.id }}">
+  <div class="kss-hero__inner">
+    <div class="kss-hero__grid">
+      <!-- Left Media Column -->
+      <div class="kss-hero__media-col">
+        <div class="kss-hero__image-wrapper">
+          {%- if hero_img != blank -%}
+            {{
+              hero_img
+              | image_url: width: 1400
+              | image_tag:
+                loading: 'eager',
+                class: 'kss-hero__image',
+                alt: section.settings.title
+            }}
+          {%- else -%}
+            <img
+              src="https://cdn.shopify.com/s/files/1/1001/2383/6697/files/keycap-style-save-hero.png?v=1793949264"
+              alt="{{ section.settings.title | escape }}"
+              class="kss-hero__image"
+              loading="eager"
+              width="1431"
+              height="1099"
+            >
+          {%- endif -%}
+        </div>
+      </div>
+
+      <!-- Right Content Column -->
+      <div class="kss-hero__content-col">
+        <div class="kss-hero__content">
+          {%- if section.settings.eyebrow != blank -%}
+            <span class="kss-hero__eyebrow">{{ section.settings.eyebrow | escape }}</span>
+          {%- endif -%}
+
+          {%- if section.settings.title != blank -%}
+            <h1 class="kss-hero__title">{{ section.settings.title | escape }}</h1>
+          {%- endif -%}
+
+          {%- if section.settings.subtitle != blank -%}
+            <p class="kss-hero__subtitle">{{ section.settings.subtitle | escape }}</p>
+          {%- endif -%}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% style %}
+  .kss-hero-{{ section.id }} {
+    width: 100%;
+    background-color: {{ section.settings.background_color }};
+    padding: {{ section.settings.padding_top }}px 0 {{ section.settings.padding_bottom }}px;
+  }
+
+  .kss-hero-{{ section.id }} .kss-hero__inner {
+    width: 90%;
+    max-width: 90%;
+    margin: 0 auto;
+  }
+
+  .kss-hero-{{ section.id }} .kss-hero__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    align-items: center;
+  }
+
+  .kss-hero-{{ section.id }} .kss-hero__media-col {
+    position: relative;
+    width: 100%;
+  }
+
+  .kss-hero-{{ section.id }} .kss-hero__image-wrapper {
+    position: relative;
+    border-radius: 24px;
+    overflow: hidden;
+    background-color: #f7f7f7;
+    aspect-ratio: 1431 / 1099;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  }
+
+  .kss-hero-{{ section.id }} .kss-hero__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .kss-hero-{{ section.id }} .kss-hero__content-col {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .kss-hero-{{ section.id }} .kss-hero__content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .kss-hero-{{ section.id }} .kss-hero__eyebrow {
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 16px;
+    border-radius: 999px;
+    border: 1px solid {{ section.settings.eyebrow_border }};
+    background-color: {{ section.settings.eyebrow_bg }};
+    color: {{ section.settings.eyebrow_color }};
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    line-height: 1.2;
+    margin-bottom: 16px;
+  }
+
+  .kss-hero-{{ section.id }} .kss-hero__title {
+    margin: 0 0 14px;
+    color: {{ section.settings.title_color }};
+    font-size: {{ section.settings.title_size }}px;
+    font-weight: 800;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+  }
+
+  .kss-hero-{{ section.id }} .kss-hero__subtitle {
+    margin: 0;
+    color: {{ section.settings.subtitle_color }};
+    font-size: {{ section.settings.subtitle_size }}px;
+    font-weight: 500;
+    line-height: 1.5;
+  }
+
+  @media screen and (max-width: 960px) {
+    .kss-hero-{{ section.id }} {
+      padding: {{ section.settings.padding_top | times: 0.7 | round }}px 0 {{ section.settings.padding_bottom | times: 0.7 | round }}px;
+    }
+
+    .kss-hero-{{ section.id }} .kss-hero__inner {
+      width: 90%;
+      max-width: 90%;
+    }
+
+    .kss-hero-{{ section.id }} .kss-hero__grid {
+      grid-template-columns: 1fr;
+      gap: 32px;
+    }
+
+    .kss-hero-{{ section.id }} .kss-hero__image-wrapper {
+      border-radius: 20px;
+      aspect-ratio: 1431 / 1099;
+    }
+
+    .kss-hero-{{ section.id }} .kss-hero__title {
+      font-size: {{ section.settings.title_size | times: 0.75 | round }}px;
+    }
+
+    .kss-hero-{{ section.id }} .kss-hero__subtitle {
+      font-size: 15px;
+    }
+  }
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "KSS Hero",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Hero Image",
+      "info": "Optional custom image. Defaults to CDN hero image."
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow badge",
+      "default": "KEYCAP STYLE & SAVE"
+    },
+    {
+      "type": "color",
+      "id": "eyebrow_color",
+      "label": "Eyebrow text color",
+      "default": "#286633"
+    },
+    {
+      "type": "color",
+      "id": "eyebrow_bg",
+      "label": "Eyebrow background color",
+      "default": "#f0f7f2"
+    },
+    {
+      "type": "color",
+      "id": "eyebrow_border",
+      "label": "Eyebrow border color",
+      "default": "rgba(40, 102, 51, 0.25)"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Meet Keycap Style & Save"
+    },
+    {
+      "type": "range",
+      "id": "title_size",
+      "label": "Title font size (desktop)",
+      "min": 28,
+      "max": 64,
+      "step": 2,
+      "unit": "px",
+      "default": 42
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Title color",
+      "default": "#111111"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "The easiest way to style your keyboard and build your dream keycap collection."
+    },
+    {
+      "type": "range",
+      "id": "subtitle_size",
+      "label": "Subtitle font size (desktop)",
+      "min": 13,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "color",
+      "id": "subtitle_color",
+      "label": "Subtitle color",
+      "default": "#222222"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 56
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 56
+    }
+  ],
+  "presets": [
+    {
+      "name": "KSS Hero"
+    }
+  ]
+}
+{% endschema %}

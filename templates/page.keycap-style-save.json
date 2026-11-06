@@ -1,0 +1,55 @@
+{
+  "sections": {
+    "hero": {
+      "type": "kss-hero",
+      "settings": {
+        "eyebrow": "KEYCAP STYLE & SAVE",
+        "eyebrow_color": "#286633",
+        "eyebrow_bg": "#f0f7f2",
+        "eyebrow_border": "#286633",
+        "title": "Meet Keycap Style & Save",
+        "subtitle": "The easiest way to style your keyboard and build your dream keycap collection.",
+        "background_color": "#ffffff",
+        "padding_top": 56,
+        "padding_bottom": 56
+      }
+    },
+    "promo_guide": {
+      "type": "kss-promo-guide",
+      "settings": {
+        "banner_title": "Keycap Style & Save",
+        "banner_subtitle": "More styles. More ways to make it yours.",
+        "offer_1_badge": "STYLE YOUR BOARD",
+        "offer_1_discount": "15% OFF",
+        "offer_1_condition": "On Keycaps with a Keyboard Purchase",
+        "offer_2_badge": "DOUBLE YOUR STYLE",
+        "offer_2_discount": "10% OFF",
+        "offer_2_condition": "On Keycaps When You Buy 2 Sets",
+        "banner_motto": "MORE STYLES. MORE YOU.",
+        "background_color": "#000000",
+        "card_bg": "#111111",
+        "padding_top": 64,
+        "padding_bottom": 72
+      }
+    },
+    "best_sellers": {
+      "type": "ss-best-sellers",
+      "settings": {
+        "title": "Best Selling Keycaps",
+        "subtitle": "The keycap sets everyone is loving right now.",
+        "products_to_show": 12,
+        "columns": 4,
+        "view_all_label": "View All",
+        "accent_color": "#286633",
+        "background_color": "#ffffff",
+        "padding_top": 48,
+        "padding_bottom": 48
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "promo_guide",
+    "best_sellers"
+  ]
+}
