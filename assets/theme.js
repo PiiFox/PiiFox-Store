@@ -5852,7 +5852,7 @@ lazySizesConfig.expFactor = 4;
                 ${image}
               </div>
               <div class="grid-product__meta">
-                <div class="grid-product__title">${product.title}</div>
+                <div class="grid-product__title grid-product__title--body">${product.title}</div>
               </div>
             </a>
           </div>

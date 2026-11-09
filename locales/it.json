@@ -14,8 +14,10 @@
       "subtext_html": "<p>La pagina che stavi cercando non esiste. </p><p><a href='{{ url }}'>Continua a comprare</a></p>"
     },
     "NotFound": {
+      "heading": "Oops! The Page Is Missing",
       "title": "The page you're looking for can't be found.",
-      "subtext_html": "<p><a class='return-home-btn' href='{{ url }}'>Continue shopping</a><a class='go-sitemap-btn' href='/pages/sitemap'>Or see our site map</a></p>"
+      "return_home": "Return to Home",
+      "subtext_html": "<p><a class='return-home-btn' href='{{ url }}'>Return to Home</a></p>"
     },
     "accessibility": {
       "skip_to_content": "Vai direttamente ai contenuti",

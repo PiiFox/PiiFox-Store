@@ -3155,6 +3155,11 @@ button.add-to-cart:disabled,
   display: block !important;
 }
 
+.grid__item.grid-product .grid-product__content {
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 0.4em;
+}
+
 /* ==========================================================================
    Manual Keycap Installation Service Card
    ========================================================================== */
@@ -3211,7 +3216,6 @@ button.add-to-cart:disabled,
 .manual-service-card.has-sale-ribbon .manual-service-card__header {
   padding-right: 18px;
 }
-
 
 .manual-service-card.is-disabled {
   background: #ffffff;

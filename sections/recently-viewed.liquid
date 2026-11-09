@@ -45,6 +45,73 @@
   </div>
 </div>
 
+{% style %}
+  [data-section-type="recently-viewed"] .grid__item.grid-product {
+    padding: 0.5em;
+  }
+  [data-section-type="recently-viewed"] .grid-product__content {
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 0.4em;
+    background: #fff;
+    overflow: hidden;
+    text-align: left !important;
+  }
+  [data-section-type="recently-viewed"] .grid-product .grid-product__content > .grid-product__link img {
+    aspect-ratio: 1 / 1;
+    object-fit: contain;
+  }
+  [data-section-type="recently-viewed"] .grid-product__meta {
+    text-align: left !important;
+  }
+  [data-section-type="recently-viewed"] .grid-product__title {
+    text-align: left !important;
+    font-size: calc(var(--typeBaseSize) - 2px);
+    font-weight: 600;
+    -webkit-line-clamp: 2;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1.35;
+    height: 2.7em;
+    min-height: 2.7em;
+    word-break: normal;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    white-space: normal;
+    margin-bottom: 0;
+  }
+  @media only screen and (min-width: 769px) {
+    [data-section-type="recently-viewed"] .grid {
+      display: flex;
+      flex-wrap: wrap;
+    }
+    [data-section-type="recently-viewed"] .grid__item {
+      display: flex;
+      flex-direction: column;
+    }
+    [data-section-type="recently-viewed"] .grid-product__content {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      width: 100%;
+    }
+    [data-section-type="recently-viewed"] .grid-product__link {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      width: 100%;
+    }
+    [data-section-type="recently-viewed"] .grid-product__meta {
+      flex: 1 1 auto;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      padding: 15px 12px;
+    }
+  }
+{% endstyle %}
+
 {% schema %}
 {
   "name": "t:sections.recently-viewed.name",
