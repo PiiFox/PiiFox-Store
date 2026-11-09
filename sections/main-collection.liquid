@@ -100,9 +100,14 @@
   ul.no-bullets.tag-list.tag-list--active-tags {
     display: inline-flex;
     flex-wrap: wrap;
+    gap: 8px;
+    margin: 0;
   }
   ul.no-bullets.tag-list.tag-list--active-tags li.tag--remove {
-    margin-right: 0.4rem;
+    margin: 0;
+    position: relative;
+    display: inline-flex;
+    align-items: center;
   }
   #CollectionAjaxContent .breadcrumbs {padding: 0 1em;}
   .collection-sidebar__group .collapsible-trigger-btn {
@@ -116,63 +121,220 @@
     width: 1.2em;
     height: 1.2em;
   }
-  .collection-sidebar__group  label.tag__checkbox-wrapper {
-    font-size: 0.9em;
-    font-weight: 200;
-    letter-spacing: 0.1em;
-    color: #121212;
+
+  /* Filter Options: rounded rectangle cards imitating Casetify */
+  .filter-form ul.tag-list:not(.tag-list--swatches) {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin: 8px 0 16px;
+    padding: 0;
+    list-style: none;
   }
-  .filter-form .tag__checkbox:before {
-    width: 1.4em;
-    height: 1.4em;
-    border-color: #121212;
-    border-radius: 0.2em;
+
+  .filter-form .tag:not(.tag--swatch) {
+    margin: 0 !important;
+    display: block !important;
+    width: 100% !important;
   }
-  /* 选中状态的复选框样式, 选中时设置背景图，平时隐藏 */
-  .filter-form .tag__checkbox:after {
-    width: 1.4em;
-    height: 1.4em;
-    left: 0;
-    border-radius: 0.2em;
+
+  /* Aggressively hide square checkbox */
+  .filter-form .tag:not(.tag--swatch) .tag__checkbox,
+  .tag__checkbox {
+    display: none !important;
+    visibility: hidden !important;
+    width: 0 !important;
+    height: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    border: none !important;
   }
-  .filter-form .tag--active .tag__checkbox:after {
-    background: url({{ 'checkbox-checked.svg' | asset_url }}) center center / 100% 100% no-repeat #000;
+  .tag__checkbox:before,
+  .tag__checkbox:after {
+    display: none !important;
+    content: none !important;
   }
+
+  /* Unselected Pill State: border-radius: 8px, strictly left-aligned text */
+  .filter-form .tag:not(.tag--swatch) label.tag__checkbox-wrapper {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    text-align: left !important;
+    width: 100% !important;
+    min-height: 40px !important;
+    padding: 9px 16px !important;
+    margin: 0 !important;
+    border-radius: 8px !important;
+    border: 1px solid #e2e2e2 !important;
+    background: #ffffff !important;
+    color: #121212 !important;
+    font-size: 13.5px !important;
+    font-weight: 500 !important;
+    letter-spacing: 0.01em !important;
+    box-sizing: border-box !important;
+    cursor: pointer !important;
+    transition: all 0.2s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
+    user-select: none !important;
+    text-decoration: none !important;
+    position: relative !important;
+  }
+
+  .filter-form .tag:not(.tag--swatch) label.tag__checkbox-wrapper:hover {
+    border-color: #181818 !important;
+    background-color: #f8f8f8 !important;
+    text-decoration: none !important;
+  }
+
+  .filter-form .tag:not(.tag--swatch) label.tag__checkbox-wrapper .tag__label-and-count,
+  .filter-form .tag:not(.tag--swatch) label.tag__checkbox-wrapper > span {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 4px !important;
+    color: inherit !important;
+    text-decoration: none !important;
+    margin-right: auto !important;
+    text-align: left !important;
+  }
+
+  .filter-form .tag:not(.tag--swatch) label.tag__checkbox-wrapper .tag__text {
+    text-align: left !important;
+  }
+
+  .filter-form .tag:not(.tag--swatch) label.tag__checkbox-wrapper .tag__count {
+    color: inherit !important;
+    opacity: 0.75 !important;
+    font-size: 0.9em !important;
+  }
+
+  .filter-form .tag:not(.tag--swatch) label:hover,
+  .filter-form .tag:not(.tag--swatch) label:hover * {
+    text-decoration: none !important;
+  }
+
+  /* Selected / Active State: #181818, border-radius: 8px */
+  .filter-form .tag:not(.tag--swatch).tag--active label.tag__checkbox-wrapper {
+    background: #181818 !important;
+    border-color: #181818 !important;
+    color: #ffffff !important;
+  }
+
+  .filter-form .tag:not(.tag--swatch).tag--active label.tag__checkbox-wrapper:hover {
+    background: #181818 !important;
+    border-color: #181818 !important;
+  }
+
+  .filter-form .tag:not(.tag--swatch).tag--active label.tag__checkbox-wrapper span,
+  .filter-form .tag:not(.tag--swatch).tag--active label.tag__checkbox-wrapper .tag__text,
+  .filter-form .tag:not(.tag--swatch).tag--active label.tag__checkbox-wrapper .tag__count {
+    color: #ffffff !important;
+  }
+
+  /* Right-side close icon (✕) when selected, pushed to the far right */
+  .filter-form .tag:not(.tag--swatch).tag--active label.tag__checkbox-wrapper::after {
+    content: "✕" !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    margin-left: auto !important;
+    font-size: 11.5px !important;
+    font-weight: 600 !important;
+    line-height: 1 !important;
+    color: #ffffff !important;
+    flex-shrink: 0 !important;
+    opacity: 0.9 !important;
+  }
+
+  /* Active Filter Tags at Top ("这里做成圆框。黑框白字") */
   .collection-filter-tag-list {
     display: flex;
     flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 16px;
   }
-  .collection-filter-tag-list .btn--small {
-    text-transform: unset;
-    border-radius: 0;
-    background: var(--colorLightLink);
-    color: var(--colorThemePrimary);
-    padding: 0.4em 2.5em 0.4em 1em;
+  .collection-filter-tag-list .tag--remove {
+    margin: 0 !important;
+    position: relative !important;
+    display: inline-flex !important;
+    align-items: center !important;
   }
   .collection-filter-tag-list .tag--remove .btn--small {
-    color: #fff;
+    text-transform: unset !important;
+    border-radius: 9999px !important;
+    background: #181818 !important;
+    border: 1px solid #181818 !important;
+    color: #ffffff !important;
+    padding: 6px 14px 6px 14px !important;
+    font-size: 13px !important;
+    line-height: 1.4 !important;
+    font-weight: 500 !important;
+    letter-spacing: 0.02em !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    transition: none !important;
+    cursor: pointer !important;
+    box-shadow: none !important;
+  }
+
+  /* Cross icon right on the text's right side */
+  .collection-filter-tag-list .tag--remove .tag-close-x {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-size: 11px !important;
+    line-height: 1 !important;
+    font-weight: 600 !important;
+    color: #ffffff !important;
+    opacity: 0.9 !important;
+    margin-left: 2px !important;
+  }
+
+  /* Top tag hover: NO highlight effect, keep #181818 */
+  .collection-filter-tag-list .tag--remove:hover .btn--small,
+  .collection-filter-tag-list .tag--remove .btn--small:hover,
+  [data-button_style=square] .collection-filter-tag-list .tag--remove .btn--small:hover {
+    background: #181818 !important;
+    border-color: #181818 !important;
+    color: #ffffff !important;
+    box-shadow: none !important;
+    transform: none !important;
+    filter: none !important;
+  }
+  .collection-filter-tag-list .tag--remove .icon {
+    display: none !important;
   }
 
   .collection-filter-tag-list .tag--clear {
-    display: inline-block;
+    display: block;
+    width: 100%;
+    margin-top: 6px;
+    margin-bottom: 8px;
   }
   .collection-filter-tag-list .tag--clear .btn--small {
-    background: none;
-    padding: 0.4em 0 ;
-    min-width: unset;
-    border-bottom: 1px solid currentColor;
+    background: none !important;
+    padding: 2px 0 !important;
+    min-width: unset !important;
+    border: none !important;
+    border-bottom: 1px solid #777777 !important;
+    border-radius: 0 !important;
+    font-size: 13px !important;
+    color: #555555 !important;
+    text-transform: none !important;
+    letter-spacing: 0.02em !important;
+    line-height: 1.3 !important;
+    display: inline-block !important;
+    transition: color 0.2s ease, border-color 0.2s ease !important;
+  }
+  .collection-filter-tag-list .tag--clear .btn--small:hover,
+  .tag--clear .btn:not(.btn--secondary):not(.btn--tertiary):not(.btn--inverse):not(.btn--body):not(.btn--static):hover {
+    background: transparent !important;
+    color: #000000 !important;
+    border-bottom-color: #000000 !important;
   }
   .collection-filter-tag-list .tag--clear .btn--small.tag-item--hide {
-    display: none;
-  }
-  .collection-filter-tag-list .tag--remove .icon {
-    color: #fff;
-  }
-  [data-button_style=square] .btn:not(.btn--secondary):not(.btn--tertiary):not(.btn--inverse):not(.btn--body):not(.btn--static):hover {
-    background: var(--colorLightLink);
-  }
-  .tag--clear .btn:not(.btn--secondary):not(.btn--tertiary):not(.btn--inverse):not(.btn--body):not(.btn--static):hover {
-    background: transparent;
+    display: none !important;
   }
   @media screen and (max-width: 1400px) {
     .grid--uniform .medium-up--one-quarter:nth-of-type(4n+1) {

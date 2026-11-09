@@ -230,7 +230,10 @@
   .handpicked-section-{{ section.id }} .price-current {
     font-size: 15px;
     font-weight: 700;
-    color: {{ section.settings.price_color | default: '#0A6830' }};
+    color: #111111;
+  }
+  .handpicked-section-{{ section.id }} .handpicked-p-price.on-sale .price-current {
+    color: var(--colorLightLink, #0A6830);
   }
   .handpicked-section-{{ section.id }} .collection-badge {
     display: inline-block;
@@ -491,7 +494,14 @@
                   {%- endif -%}
 
                   {%- if card_price != blank -%}
-                    <div class="handpicked-p-price">
+                    {%- assign is_card_on_sale = false -%}
+                    {%- if target_prod != blank and target_prod.compare_at_price > target_prod.price -%}
+                      {%- assign is_card_on_sale = true -%}
+                    {%- endif -%}
+                    <div class="handpicked-p-price{% if is_card_on_sale %} on-sale{% endif %}">
+                      {%- if is_card_on_sale -%}
+                        <span class="price-compare" style="text-decoration: line-through; color: #999; font-size: 12px; margin-right: 4px;">{{ target_prod.compare_at_price | money }}</span>
+                      {%- endif -%}
                       <span class="price-current">{{ card_price }}</span>
                     </div>
                   {%- elsif target_col != blank and target_prod == blank -%}

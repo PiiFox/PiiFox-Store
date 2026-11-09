@@ -240,6 +240,28 @@ html[dir="rtl"] .collection-filter__item--count {
   background: url({{ 'col_2.svg' | asset_url }}) center center / 50% 50% no-repeat #000;
 }
 
+.collection-filter select,
+.collection-filter__sort-container,
+.collection-filter__sort-container select,
+#SortBy {
+  border-radius: 8px !important;
+}
+.collection-filter select {
+  border: 1px solid var(--colorBorder, #e5e5e5) !important;
+  background-color: #ffffff;
+  padding: 8px 32px 8px 14px !important;
+  height: 42px !important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  color: #111111 !important;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.collection-filter select:hover,
+.collection-filter select:focus {
+  border-color: #999999 !important;
+  outline: none;
+}
+
 @media screen and (max-width: 768px) {
   .selec_row .row_one,.selec_row .row_two  {
     width: 2rem;

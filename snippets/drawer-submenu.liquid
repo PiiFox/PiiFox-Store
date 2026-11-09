@@ -94,17 +94,89 @@
     transform: translateX(0);
   }
   #{{ subnav_id }}-NavSubDrawer .drawer__fixed-header {
-    padding-left: 1em !important;
+    padding-left: 20px !important;
+    padding-right: 20px !important;
     border-bottom: 0.6px solid rgba(0, 0, 0, 0.1);
   }
   #{{ subnav_id }}-NavSubDrawer .drawer__fixed-header .drawer__title {
     text-align: center;
     position: relative;
     font-size: 1.4em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 54px;
+    padding: 0 44px;
+    margin: 0;
   }
-  #{{ subnav_id }}-NavSubDrawer .drawer__fixed-header .drawer__title button {
+  #{{ subnav_id }}-NavSubDrawer .drawer__fixed-header .drawer__title button.{{ subnav_id }}-drawer-button {
     position: absolute;
     left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    background: transparent;
+    border: none;
+    padding: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    line-height: 1;
+  }
+  #{{ subnav_id }}-NavSubDrawer .drawer__fixed-header .drawer__title .drawer__close {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: auto;
+  }
+  #{{ subnav_id }}-NavSubDrawer .drawer__fixed-header .drawer__title .drawer__close-button {
+    position: static;
+    right: auto;
+    padding: 4px;
+    background: transparent;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: #333333;
+    line-height: 1;
+  }
+  #{{ subnav_id }}-NavSubDrawer .drawer__fixed-header .drawer__title button.{{ subnav_id }}-drawer-button svg,
+  #{{ subnav_id }}-NavSubDrawer .drawer__fixed-header .drawer__title .drawer__close-button svg {
+    width: 22px;
+    height: 22px;
+    display: block;
+  }
+  #{{ subnav_id }}-NavSubDrawer .mobile-nav__item--shop-all {
+    margin-top: 24px;
+    padding: 0 20px 30px;
+    list-style: none;
+  }
+  #{{ subnav_id }}-NavSubDrawer .drawer-submenu-shop-all-btn {
+    display: block;
+    width: 100%;
+    padding: 12px 20px;
+    background-color: #181818;
+    color: #ffffff !important;
+    text-align: center;
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 1.4;
+    border-radius: 9999px;
+    border: 1px solid #181818;
+    text-decoration: none;
+    box-sizing: border-box;
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+  }
+  #{{ subnav_id }}-NavSubDrawer .drawer-submenu-shop-all-btn:hover {
+    opacity: 0.9;
+    color: #ffffff !important;
   }
   #{{ subnav_id }}-NavSubDrawer .drawer__scrollable {
     padding: 0;
@@ -123,13 +195,31 @@
     <div class="drawer__fixed-header">
       <div class="drawer__header appear-animation appear-delay-{{ animation_row }}">
         <div class="drawer__title">
-          <button type="button" class="{{ subnav_id }}-drawer-button">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <button type="button" class="{{ subnav_id }}-drawer-button" aria-label="{{ 'general.drawers.close_menu' | t }}">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M19 12H5M5 12L12 19M5 12L12 5" stroke="#333333" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
             <span class="icon__fallback-text">{{ 'general.drawers.close_menu' | t }}</span>
           </button>
           <span class="custom-txt-semibold">{{ link.title }}</span>
+          <div class="drawer__close">
+            <button
+              type="button"
+              class="drawer__close-button js-drawer-close"
+              aria-label="{{ 'general.drawers.close_menu' | t }}"
+            >
+              <svg
+                width="22"
+                height="22"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path d="M18 6L6 18M6 6l12 12" stroke="#333333" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <span class="icon__fallback-text">{{ 'general.drawers.close_menu' | t }}</span>
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -206,13 +296,47 @@
         </form>
       </div>
     {%- endif -%}
+    {%- assign is_keycaps = false -%}
+    {%- assign link_title_down = link.title | downcase | strip -%}
+    {%- if link_title_down == 'keycaps' or link.handle == 'keycaps' -%}
+      {%- assign is_keycaps = true -%}
+    {%- endif -%}
+
+    {%- assign shop_all_url = link.url -%}
+    {%- assign shop_all_title = 'Shop All' -%}
+    {%- for childlink in link.links -%}
+      {%- assign child_title_down = childlink.title | downcase | strip -%}
+      {%- if child_title_down == 'shop all' -%}
+        {%- assign shop_all_url = childlink.url -%}
+        {%- assign shop_all_title = childlink.title -%}
+        {%- break -%}
+      {%- endif -%}
+    {%- endfor -%}
+
     <div class="drawer__scrollable">
       <ul
         class="mobile-nav__sublist"
         role="navigation"
         aria-label="Primary"
       >
+        {%- if is_keycaps -%}
+          <li class="mobile-nav__item">
+            <div class="mobile-nav__child-item">
+              <a
+                href="/collections/keycaps-new"
+                class="notranslate mobile-nav__link"
+              >
+                New Arrival
+              </a>
+            </div>
+          </li>
+        {%- endif -%}
         {%- for childlink in link.links -%}
+          {%- assign child_title_down = childlink.title | downcase | strip -%}
+          {%- if child_title_down == 'shop all' -%}
+            {%- continue -%}
+          {%- endif -%}
+
           {%- assign has_sub_dropdown = false -%}
           {%- assign grand_child_list_handle = childlink.url | handleize | append: forloop.index -%}
 
@@ -221,7 +345,7 @@
           {%- endif -%}
 
           {% assign strip_title = childlink.title | strip %}
-          {%- if strip_title == 'New Arrival' -%}
+          {%- if strip_title == 'New Arrival' or strip_title == 'New Arrivals' or strip_title == 'Featured & New' -%}
             {%- assign has_sub_dropdown = true -%}
           {%- endif -%}
           <li class="mobile-nav__item">
@@ -240,7 +364,11 @@
                     {% endif %}
                     data-tag="{{ mega_tag }}"
                   >
-                    {{ childlink.title }}
+                    {%- if childlink.title == 'New Arrival' or childlink.title == 'New Arrivals' -%}
+                      Featured & New
+                    {%- else -%}
+                      {{ childlink.title }}
+                    {%- endif -%}
                   </span>
                   <div class="mobile-nav__toggle">
                     <span class="faux-button">
@@ -264,7 +392,11 @@
                     {% endif %}
                   {% endif %}
                 >
-                  {{ childlink.title | escape }}
+                  {%- if childlink.title == 'New Arrival' or childlink.title == 'New Arrivals' -%}
+                    Featured & New
+                  {%- else -%}
+                    {{ childlink.title | escape }}
+                  {%- endif -%}
                 </a>
               {%- endif -%}
             </div>
@@ -280,7 +412,10 @@
               >
                 <div class="collapsible-content__inner">
                   <ul class="mobile-nav__grandchildlist">
-                    {% if childlink.title == 'New Arrival' %}
+                    {% if childlink.title == 'New Arrival'
+                      or childlink.title == 'New Arrivals'
+                      or childlink.title == 'Featured & New'
+                    %}
                       {% render 'new-arrival-nav-item',
                         childlink: childlink,
                         mega_tag: mega_tag,
@@ -324,6 +459,13 @@
             {%- endif -%}
           </li>
         {%- endfor -%}
+        {%- if shop_all_url != blank -%}
+          <li class="mobile-nav__item mobile-nav__item--shop-all">
+            <a href="{{ shop_all_url }}" class="drawer-submenu-shop-all-btn">
+              {{ shop_all_title }}
+            </a>
+          </li>
+        {%- endif -%}
       </ul>
     </div>
   </div>
@@ -336,19 +478,36 @@
     }
 
     (function () {
-      const subnavId = '{{ subnav_id }}'; 
+      const subnavId = '{{ subnav_id }}';
       const drawerId = subnavId + '-NavSubDrawer';
       const drawerName = subnavId;
 
       const drawerInstance = new theme.Drawers(drawerId, drawerName);
       const backBtn = drawerInstance.drawer.querySelector(`.${subnavId}-drawer-button`);
+      const closeBtn = drawerInstance.drawer.querySelector('.drawer__close-button');
 
       if (backBtn) {
         backBtn.addEventListener('click', function (evt) {
           evt.preventDefault();
           evt.stopPropagation();
-          
+
           drawerInstance.back();
+        });
+      }
+
+      if (closeBtn) {
+        closeBtn.addEventListener('click', function (evt) {
+          evt.preventDefault();
+          evt.stopPropagation();
+
+          drawerInstance.close();
+          if (window.theme && window.theme.NavDrawer) {
+            window.theme.NavDrawer.close();
+          }
+          document.querySelectorAll('.drawer').forEach(function (d) {
+            d.classList.remove('drawer--is-open');
+          });
+          document.documentElement.classList.remove('js-drawer-open', 'drawer--is-open');
         });
       }
     })();

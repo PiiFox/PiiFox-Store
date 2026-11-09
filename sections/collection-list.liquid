@@ -253,21 +253,35 @@
     width: 100%;
     padding: 10px 18px;
     border-radius: 9999px;
-    background-color: {{ section.settings.btn_color | default: 'var(--colorThemePrimary, #0A6830)' }};
+    background-color: {{ section.settings.btn_color | default: '#111111' }};
     color: {{ section.settings.btn_text_color | default: '#ffffff' }};
+    border: 1px solid {{ section.settings.btn_color | default: '#111111' }};
     font-size: 14px;
     font-weight: 500;
     letter-spacing: 0.01em;
     text-align: center;
     box-sizing: border-box;
-    transition: all 0.25s ease;
-    box-shadow: 0 2px 6px rgba(10, 104, 48, 0.15);
+    transition: background-color 0.3s cubic-bezier(0.25, 0.8, 0.25, 1),
+                border-color 0.3s cubic-bezier(0.25, 0.8, 0.25, 1),
+                color 0.3s cubic-bezier(0.25, 0.8, 0.25, 1),
+                box-shadow 0.3s cubic-bezier(0.25, 0.8, 0.25, 1),
+                transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
   }
 
-  .collection-list-section-{{ section.id }} .best-seller-card:hover .best-seller-card-btn {
-    background-color: {{ section.settings.btn_hover_color | default: '#085427' }};
-    box-shadow: 0 4px 14px rgba(10, 104, 48, 0.28);
+  .collection-list-section-{{ section.id }} .best-seller-card:hover .best-seller-card-btn,
+  .collection-list-section-{{ section.id }} .best-seller-card-btn:hover,
+  .collection-list-section-{{ section.id }} .best-seller-card:active .best-seller-card-btn,
+  .collection-list-section-{{ section.id }} .best-seller-card-btn:active {
+    background-color: {{ section.settings.btn_hover_color | default: 'var(--colorThemePrimary, #0A6830)' }};
+    color: #ffffff;
+    border-color: {{ section.settings.btn_hover_color | default: 'var(--colorThemePrimary, #0A6830)' }};
+    box-shadow: 0 4px 14px rgba(10, 104, 48, 0.32);
     transform: translateY(-1px);
+  }
+
+  .collection-list-section-{{ section.id }} .best-seller-card-btn:active {
+    transform: scale(0.98);
   }
 
   @media screen and (max-width: 768px) {

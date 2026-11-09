@@ -349,9 +349,9 @@
         "collection": "best-sellers",
         "products_limit": 12,
         "btn_text": "Learn More",
-        "btn_color": "#0a6830",
+        "btn_color": "#111111",
         "btn_text_color": "#ffffff",
-        "btn_hover_color": "#085427",
+        "btn_hover_color": "#0a6830",
         "card_bg": "#ffffff",
         "image_bg": "#ffffff",
         "enable_tabs": false

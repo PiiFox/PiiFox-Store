@@ -12,11 +12,9 @@
       {%- for filter_value in filter.active_values -%}
         <li class="tag tag--remove">
           <a class="btn btn--small" href="{{ filter_value.url_to_remove }}">
-            {{ filter_value.label | escape }}
+            <span>{{ filter_value.label | escape }}</span>
+            <span class="tag-close-x" aria-hidden="true">✕</span>
           </a>
-          <svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-close" viewBox="0 0 64 64">
-            <path d="M19 17.61l27.12 27.13m0-27.12L19 44.74"/>
-          </svg>
         </li>
       {%- endfor -%}
     {%- endfor -%}
@@ -69,7 +67,7 @@
                   endif
                 -%}
 
-                <ul class="no-bullets tag-list">
+                <ul class="no-bullets tag-list{% if is_color %} tag-list--swatches{% endif %}">
                   {%- assign tag_count = filter.values.size -%}
                   {%- for filter_value in filter.values -%}
                     {%- liquid
@@ -102,9 +100,9 @@
                           </span>
                           <span class="tag__text hide">{{ filter_value.label | escape }}</span>
                         {%- else -%}
-                          <span class="tag__checkbox"></span>
-                          <span>
-                            <span class="tag__text">{{ filter_value.label | escape }}</span> ({{ filter_value.count }})
+                          <span class="tag__label-and-count">
+                            <span class="tag__text">{{ filter_value.label | escape }}</span>
+                            <span class="tag__count">({{ filter_value.count }})</span>
                           </span>
                         {%- endif -%}
                       </label>

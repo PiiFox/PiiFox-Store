@@ -71,9 +71,8 @@
                       </span>
                       <span class="tag__text hide">{{ filter_value.label | escape }}</span>
                       {%- else -%}
-                      <span class="tag__checkbox"></span>
-                      <span>
-                          <span class="tag__text">{{ filter_value.label | escape }}</span> ({{ filter_value.count }})
+                      <span class="tag__label-and-count">
+                          <span class="tag__text">{{ filter_value.label | escape }}</span> <span class="tag__count">({{ filter_value.count }})</span>
                       </span>
                       {%- endif -%}
                   </label>

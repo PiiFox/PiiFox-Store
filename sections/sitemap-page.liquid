@@ -21,7 +21,7 @@
       <section class="sitemap-section" data-level="1">
         <div class="section-title custom-txt-semibold">SHOP BY CATEGORY</div>
         {% liquid
-          assign collections_str = 'keyboards, keycaps, switches, mice, accessories'
+          assign collections_str = 'keyboards, keycaps, switches, accessories'
           assign collection_handles = collections_str | split: ', '
         %}
         <div class="section-list">
@@ -298,19 +298,7 @@
           </ul>
         </div>
       </section>
-      <section class="sitemap-section" data-level="1">
-        <div class="section-title custom-txt-semibold">MICE</div>
-        <div class="section-list">
-          <ul>
-            <li>
-              <a href="{{ collections['mice'].url }}/New-Arrival" target="_blank">New Arrival</a>
-            </li>
-            <li>
-              <a href="{{ collections['mice'].url }}" target="_blank">Shop All Mice</a>
-            </li>
-          </ul>
-        </div>
-      </section>
+
       <section class="sitemap-section" data-level="1">
         <div class="section-title custom-txt-semibold">ACCESSORIES</div>
         <div class="section-list">

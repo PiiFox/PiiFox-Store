@@ -7415,7 +7415,7 @@ lazySizesConfig.expFactor = 4;
                 const newTagLink = document.createElement("a");
                 newTag.classList.add("tag", "tag--remove");
                 newTagLink.classList.add("btn", "btn--small");
-                newTagLink.innerText = textEl.innerText;
+                newTagLink.innerHTML = '<span>' + textEl.innerText + '</span><span class="tag-close-x" aria-hidden="true">✕</span>';
                 newTag.appendChild(newTagLink);
 
                 list.appendChild(newTag);
@@ -7462,7 +7462,7 @@ lazySizesConfig.expFactor = 4;
                 const newTagLink = document.createElement("a");
                 newTag.classList.add("tag", "tag--remove");
                 newTagLink.classList.add("btn", "btn--small");
-                newTagLink.innerText = textEl.innerText;
+                newTagLink.innerHTML = '<span>' + textEl.innerText + '</span><span class="tag-close-x" aria-hidden="true">✕</span>';
                 newTag.appendChild(newTagLink);
 
                 list.appendChild(newTag);

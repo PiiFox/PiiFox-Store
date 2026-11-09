@@ -43,7 +43,7 @@
 
 {% assign faq_group_keys_string = '' %}
 {% assign seen_faq_group_tokens = '|' %}
-{% assign faq_group_order = 'policy-faq,keyboards,keycaps,switches,mice,accessories' | split: ',' %}
+{% assign faq_group_order = 'policy-faq,keyboards,keycaps,switches,accessories' | split: ',' %}
 
 {% for item in faq_entries %}
   {% assign category_tags = item['categories'].value %}

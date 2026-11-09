@@ -11,7 +11,7 @@
   "current": {
     "color_body_bg": "#ffffff",
     "color_body_text": "#000000",
-    "color_price": "#0A6830",
+    "color_price": "#111111",
     "color_savings_text": "#C20000",
     "color_borders": "#e6e6e6",
     "color_button": "#000000",
@@ -228,7 +228,7 @@
           "main_menu2_tag": "New",
           "main_menu3": "Switches",
           "main_menu3_tag": "",
-          "main_menu4": "Mice",
+          "main_menu4": "",
           "main_menu4_tag": "",
           "main_menu5": "Accessories",
           "main_menu5_tag": "",

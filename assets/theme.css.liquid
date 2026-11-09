@@ -24,7 +24,7 @@
   --colorOriginalPrice: {{ settings.color_original_price | default: "#918f8f" }};
 
   --colorTextBody:{{ settings.color_body_text | default: "#1c1d1d" }};
-  --colorPrice:{{ settings.color_price | default: "#0A6830" }};
+  --colorPrice:{{ settings.color_price | default: "#111111" }};
   --colorTextSavings:{{ settings.color_savings_text | default: "#1c1d1d" }};
   --colorSaleTag:{{ settings.color_sale_tag | default: "#1c1d1d" }};
   --colorSaleTagText:{{ settings.color_sale_tag_text | default: "#ffffff" }};
@@ -11343,7 +11343,7 @@ html[dir=rtl] .product-single__meta .rte{
 .product__price.on-sale{
     padding-right:5px;
     font-size: 22px;
-    color: var(--colorPrice);
+    color: var(--colorLightLink, #0A6830);
     font-weight: 500;
   }
 

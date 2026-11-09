@@ -277,22 +277,31 @@
       </div>
     {%- endif -%}
     <div class="grid-product__meta">
-      <div class="grid-product__title grid-product__title--{{ settings.type_product_style }} custom-txt-semibold notranslate">
+      <a href="{{ product.url | within: collection }}" class="grid-product__title grid-product__title--{{ settings.type_product_style }} custom-txt-semibold notranslate">
         {{ product.title }}
-      </div>
+      </a>
       {%- if settings.vendor_enable -%}
         <div class="grid-product__vendor">{{ product.vendor }}</div>
       {%- endif -%}
 
-      <div class="grid-product__price">
+      <div class="grid-product__price{% if on_sale %} on-sale{% endif %}">
         {%- if on_sale -%}
           <span class="visually-hidden">{{ 'products.general.sale_price' | t }}</span>
-        {% endif %}
-        {%- if product.price_varies -%}
-          {%- assign price = product.price_min | money -%}
-          {{ 'products.general.from_text_html' | t: price: price }}
+          <span class="grid-product__price--sale">
+            {%- if product.price_varies -%}
+              {%- assign price = product.price_min | money -%}
+              {{ 'products.general.from_text_html' | t: price: price }}
+            {%- else -%}
+              {{ product.price | money }}
+            {%- endif -%}
+          </span>
         {%- else -%}
-          {{ product.price | money }}
+          {%- if product.price_varies -%}
+            {%- assign price = product.price_min | money -%}
+            {{ 'products.general.from_text_html' | t: price: price }}
+          {%- else -%}
+            {{ product.price | money }}
+          {%- endif -%}
         {%- endif -%}
 
         {%- if on_sale -%}
@@ -434,10 +443,11 @@
     object-fit: contain;
     transform: none !important;
   }
-  .grid-product__content:hover .grid-product__secondary-image,
-  .grid-product__link:hover .grid-product__secondary-image,
+  .grid-product__content:hover .grid-product__secondary-image {
+    opacity: 0;
+  }
   .grid-product__image-mask:hover .grid-product__secondary-image {
-    opacity: 1;
+    opacity: 1 !important;
     animation: none !important;
   }
   .grid__item.grid-product:hover img,
@@ -451,7 +461,8 @@
   }
   .grid__item.grid-product .grid-product__content {
     border: 1px solid rgba(0, 0, 0, 0.1);
-    border-radius: 0.4em;
+    border-radius: 14px;
+    overflow: hidden;
   }
   .grid__item.grid-product .grid-product__link {
     position: relative;
@@ -473,39 +484,79 @@
   }
   .grid__item.grid-product .grid-product__meta .bottom_btn {}
   .grid__item.grid-product .bottom_btn a {
-    background: #fff;
-    color: var(--colorThemePrimary);
-    border: 1px solid var(--colorThemePrimary);
-    border-radius: 0.4em;
+    background: #181818;
+    color: #ffffff;
+    border: 1px solid #181818;
+    border-radius: 9999px;
     width: 100%;
     text-align: center;
     display: flex;
     justify-content: center;
     align-items: center;
     font-size: 1em;
-    font-weight: 300;
-    letter-spacing: 0.1em;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    box-sizing: border-box;
+    cursor: pointer;
+    transition: background-color 0.3s cubic-bezier(0.25, 0.8, 0.25, 1),
+                border-color 0.3s cubic-bezier(0.25, 0.8, 0.25, 1),
+                color 0.3s cubic-bezier(0.25, 0.8, 0.25, 1),
+                transform 0.25s ease,
+                box-shadow 0.25s ease;
   }
   .grid__item.grid-product .bottom_btn a.lm_btn svg {
     width: 1.2em;
     height: 1.2em;
-    margin-right: 1em;
+    margin-right: 0.6em;
+    stroke: currentColor;
+    transition: transform 0.2s ease;
   }
   .grid__item.grid-product .bottom_btn a.lm_btn {
-    background: var(--colorThemePrimary);
-    color: #fff;
-    border: 1px solid var(--colorThemePrimary);
+    background: #181818;
+    color: #ffffff;
+    border: 1px solid #181818;
+    border-radius: 9999px;
     padding: 0.7em 0;
   }
-  .grid__item.grid-product .bottom_btn a.lm_btn:hover {
-    background: #f1f6ee;
-    color: var(--colorThemePrimary);
+  .grid__item.grid-product .bottom_btn a.lm_btn:hover,
+  .grid__item.grid-product .bottom_btn a:hover {
+    background: var(--colorThemePrimary, #0A6830);
+    color: #ffffff;
+    border-color: var(--colorThemePrimary, #0A6830);
+    box-shadow: 0 4px 12px rgba(10, 104, 48, 0.28);
+    transform: translateY(-1px);
+  }
+  .grid__item.grid-product .bottom_btn a.lm_btn:active,
+  .grid__item.grid-product .bottom_btn a:active {
+    background: var(--colorThemePrimary, #0A6830);
+    color: #ffffff;
+    border-color: var(--colorThemePrimary, #0A6830);
+    transform: scale(0.98);
   }
 
-  .grid-product__price > span.money {
-    color: var(--colorThemePrimary);
-    font-weight: 500;
+  .grid-product__price {
+    color: #111111;
     font-size: 1.2em;
+    font-weight: 500;
+  }
+  .grid-product__price > span.money,
+  .grid-product__price .money {
+    color: #111111;
+    font-weight: 500;
+  }
+  .grid-product__price.on-sale .grid-product__price--sale,
+  .grid-product__price.on-sale .grid-product__price--sale .money,
+  .grid-product__price.on-sale > .money:first-of-type {
+    color: var(--colorLightLink, #0A6830) !important;
+    font-weight: 600;
+  }
+  .grid-product__price--original,
+  .grid-product__price--original .money {
+    color: #999999 !important;
+    text-decoration: line-through;
+    font-size: 0.85em;
+    margin-left: 6px;
+    font-weight: 400;
   }
   ul.short-descrbe-list--wrapper {
     font-size: 0.8rem;
@@ -513,6 +564,17 @@
     text-align: left;
   }
   
+  .grid-product__title {
+    color: #111111;
+    text-decoration: none;
+    cursor: pointer;
+    display: block;
+    transition: opacity 0.2s ease;
+  }
+  .grid-product__title:hover {
+    color: #111111;
+    opacity: 0.8;
+  }
   .grid-product__title.grid-product__title--body {
     font-weight: 600;
     -webkit-line-clamp: 2;

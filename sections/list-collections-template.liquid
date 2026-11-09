@@ -40,10 +40,12 @@
       -%}
       {%- if section.settings.sort == 'products_low' or section.settings.sort == 'date' or section.settings.sort == 'alphabetical' -%}
         {%- for collection in collections -%}
+          {%- if collection.handle == 'mice' -%}{%- continue -%}{%- endif -%}
           {%- render 'collection-grid-item', collection: collection, grid_item_width: grid_item_width -%}
         {%- endfor -%}
       {%- else -%}
         {%- for collection in collections reversed -%}
+          {%- if collection.handle == 'mice' -%}{%- continue -%}{%- endif -%}
           {%- render 'collection-grid-item', collection: collection, grid_item_width: grid_item_width -%}
         {%- endfor -%}
       {%- endif -%}

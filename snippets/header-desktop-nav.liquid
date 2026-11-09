@@ -22,6 +22,11 @@
 >
   {%- for link in main_menu.links limit: limit offset: offset -%}
     {%- liquid
+      assign link_title_down = link.title | downcase | strip
+      if link_title_down == 'mice' or link.url contains '/collections/mice'
+        continue
+      endif
+
       assign has_dropdown = false
       assign is_megamenu = false
       if link.links != blank
@@ -148,14 +153,31 @@
         <div class="site-nav__dropdown megamenu mega_title text-center">
           <div class="page-width">
             <div class="megamenu-filter-list">
+              {%- assign is_keycaps_parent = false -%}
+              {%- assign link_title_down = link.title | downcase | strip -%}
+              {%- if link_title_down == 'keycaps' or link.handle == 'keycaps' -%}
+                {%- assign is_keycaps_parent = true -%}
+              {%- endif -%}
               {% for childlink in link.links %}
                 <a
                   {% if forloop.index0 == 0 %} href="{{ childlink.url }}" {% endif %}
                   class="megamenu-filter-item custom-text-light{% if forloop.index0 == 1 %} megamenu-filter-item--active  {% endif %}{% if forloop.first %} megamenu-item-all {% endif %}"
                   data-trigger-title="{{ childlink.title }}"
                 >
-                  {{ childlink.title }}
+                  {%- if childlink.title == 'New Arrival' or childlink.title == 'New Arrivals' -%}
+                    Featured & New
+                  {%- else -%}
+                    {{ childlink.title }}
+                  {%- endif -%}
                 </a>
+                {%- if forloop.first and is_keycaps_parent -%}
+                  <a
+                    href="/collections/keycaps-new"
+                    class="megamenu-filter-item custom-text-light megamenu-item-all megamenu-item-keycaps-new"
+                  >
+                    New Arrival
+                  </a>
+                {%- endif -%}
               {% endfor %}
             </div>
             <div class="mm-content {% if has_sub_dropdown %} site-nav__dropdown-link--has-children{% endif %} {% if forloop.index == 1 %} site-nav__dropdown-active{% endif %}">
@@ -178,14 +200,14 @@
               <div class="mm_menus">
                 {% for childlink in link.links %}
                   <div
-                    class="mega-filter-content {% if forloop.index == 1 %} mega-filter-content--active{% endif %}"
+                    class="mega-filter-content {% if forloop.index == 2 or childlink.title == 'New Arrival' or childlink.title == 'New Arrivals' %} mega-filter-content--active{% endif %}"
                     data-filter-title="{{ childlink.title }}"
                   >
                     {%- assign has_sub_dropdown = false -%}
                     {% if childlink.links != blank %}
                       {%- assign has_sub_dropdown = true -%}
                     {% endif %}
-                    {% if childlink.title == 'New Arrival' %}
+                    {% if childlink.title == 'New Arrival' or childlink.title == 'New Arrivals' or childlink.title == 'Featured & New' %}
                       {% render 'new-arrival-nav-item',
                         childlink: childlink,
                         mega_tag: mega_tag
@@ -304,8 +326,11 @@
         if (!currentItem) return;
 
         const currentMegaMenu = e.target.closest('.site-nav--has-dropdown.site-nav--is-megamenu .megamenu');
+        if (!currentMegaMenu) return;
 
-        menuFilterList.forEach((item) => item.classList.remove('megamenu-filter-item--active'));
+        currentMegaMenu
+          .querySelectorAll('.megamenu-filter-item:not(.megamenu-item-all)')
+          .forEach((item) => item.classList.remove('megamenu-filter-item--active'));
         currentMegaMenu
           .querySelectorAll('.mega-filter-content')
           .forEach((item) => item.classList.remove('mega-filter-content--active'));
@@ -324,9 +349,10 @@
   document.querySelectorAll('.site-nav--has-dropdown.site-nav--is-megamenu').forEach((item) => {
     item.addEventListener('mouseenter', function (e) {
       e.preventDefault();
-      let activeItem = item.querySelector('.megamenu .megamenu-filter-list .megamenu-filter-item:nth-child(2)');
+      let activeItem = item.querySelector('.megamenu .megamenu-filter-list .megamenu-filter-item:not(.megamenu-item-all)');
+      if (!activeItem) return;
       let activeUrl = activeItem.href;
-      if(window.location.href == activeUrl) {
+      if (activeUrl && window.location.href == activeUrl) {
         activeItem.classList.add('megamenu-filter-item--active');
         return;
       }
@@ -355,18 +381,41 @@
   .megamenu .megamenu-filter-list .megamenu-filter-item {
     text-align: center;
     padding: 0.4em 2em;
-    font-weight: 100;
+    font-weight: 500;
     letter-spacing: 0.02em;
     box-sizing: border-box;
     border-radius: 20em;
-    background-color: #f6f6f6;
-    color: #000;
+    background-color: #ffffff;
+    color: #181818;
+    border: 1px solid #181818;
     user-select: none;
     cursor: pointer;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1.4;
+    transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
   }
-  .megamenu .megamenu-filter-list .megamenu-filter-item--active {
+  .megamenu .megamenu-filter-list .megamenu-filter-item.megamenu-item-all {
     background-color: #181818;
-    color: #fff;
+    color: #ffffff !important;
+    border: 1px solid #181818;
+  }
+  .megamenu .megamenu-filter-list .megamenu-filter-item.megamenu-item-all:hover {
+    background-color: #2b2b2b;
+    border-color: #2b2b2b;
+    color: #ffffff !important;
+  }
+  .megamenu .megamenu-filter-list .megamenu-filter-item:not(.megamenu-item-all).megamenu-filter-item--active {
+    background-color: #f6f6f6;
+    color: #181818;
+    border: 1px solid #f6f6f6;
+  }
+  .megamenu .megamenu-filter-list .megamenu-filter-item:not(.megamenu-item-all):not(.megamenu-filter-item--active):hover {
+    background-color: #fafafa;
+    color: #181818;
+    border-color: #181818;
   }
   .megamenu .mm-content {
     display: grid;
@@ -424,12 +473,17 @@
     font-weight: 600;
   }
   .megamenu .mega__item .sub-link-content .sub-link-title sup {
-    color: var(--colorLightLink);
-    border: 1px solid currentColor;
-    padding: 0.2em 0.5em;
+    background-color: var(--colorLightLink, #0A6830);
+    color: #ffffff !important;
+    border: 1px solid var(--colorLightLink, #0A6830);
+    padding: 0.15em 0.55em;
     border-radius: 20em;
     font-size: 0.6em;
-    font-weight: 400;
+    font-weight: 500;
+    line-height: 1.2;
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 4px;
   }
   .megamenu .mega__item .sub-link-content .sub-link-desc {
     overflow: hidden;
