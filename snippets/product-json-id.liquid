@@ -57,7 +57,7 @@
       {%- for variant in product.variants -%}
         {
           "@type": "Offer",
-          "sku": "shopify_ZZ_{{ product.id }}_{{ variant.id }}",
+          "sku": "shopify_US_{{ product.id }}_{{ variant.id }}",
           {%- if variant.title != blank -%}
             "name": {{ variant.title | json }},
           {%- endif -%}
