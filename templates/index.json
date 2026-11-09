@@ -442,6 +442,41 @@
             "card_bg_color": "#f6e8d8"
           }
         },
+        "theme_card_36t6dX": {
+          "type": "theme_card",
+          "disabled": true,
+          "settings": {
+            "title": "Nature & Soft",
+            "title_color": "#107a44",
+            "subtitle": "Calm tones inspired by nature.",
+            "subtitle_color": "#121212",
+            "description": "Soft greens, warm neutrals, and gentle contrast for a relaxed desk setup.",
+            "description_color": "#666666",
+            "collection": "",
+            "button_label": "Explore Theme",
+            "button_link": "",
+            "button_text_color": "#107a44",
+            "highlight_color": "#f4efe6"
+          }
+        },
+        "theme_card_GxkcXj": {
+          "type": "theme_card",
+          "settings": {
+            "title": "Space & Sci-Fi",
+            "title_color": "#000000",
+            "subtitle": "Take your setup beyond the stars",
+            "subtitle_color": "#121212",
+            "description": "Cosmic artwork and futuristic accents give your keyboard the feeling of a journey through the unknown.",
+            "description_color": "#666666",
+            "product_image": "shopify://shop_images/20261109-174350.png",
+            "collection": "space-sci-fi",
+            "button_label": "Explore Theme",
+            "button_link": "",
+            "button_text_color": "#6f3b13",
+            "highlight_color": "#f4efe6",
+            "card_bg_color": "#f0f2f5"
+          }
+        },
         "theme-nature-home": {
           "type": "theme_card",
           "settings": {
@@ -535,14 +570,14 @@
         "theme-fun-home": {
           "type": "theme_card",
           "settings": {
-            "title": "Future & Fantasy",
+            "title": "Fantasy & Magic",
             "title_color": "#0f766e",
             "subtitle": "Bold aesthetics from a world beyond tomorrow",
             "subtitle_color": "#121212",
             "description": "Cyber-inspired neon, translucent textures, and sci-fi elements for an otherworldly setup.",
             "description_color": "#666666",
             "product_image": "shopify://shop_images/PRISMS.png",
-            "collection": "future-fantasy-theme-keycaps",
+            "collection": "fantasy-magic-theme-keycaps",
             "button_label": "Explore Theme",
             "button_link": "",
                         "button_text_color": "#0f766e",
@@ -553,6 +588,8 @@
       },
       "block_order": [
         "theme-retro-home",
+        "theme_card_36t6dX",
+        "theme_card_GxkcXj",
         "theme-nature-home",
         "theme_card_ycaA7P",
         "theme-cute-home",
