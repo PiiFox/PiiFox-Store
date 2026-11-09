@@ -376,6 +376,22 @@
             "highlight_color": "#f4efe6"
           }
         },
+        "theme_card_36t6dX": {
+          "type": "theme_card",
+          "settings": {
+            "title": "Nature & Soft",
+            "title_color": "#107a44",
+            "subtitle": "Calm tones inspired by nature.",
+            "subtitle_color": "#121212",
+            "description": "Soft greens, warm neutrals, and gentle contrast for a relaxed desk setup.",
+            "description_color": "#666666",
+            "collection": "",
+            "button_label": "Explore Theme",
+            "button_link": "",
+            "button_text_color": "#107a44",
+            "highlight_color": "#f4efe6"
+          }
+        },
         "theme_card_GxkcXj": {
           "type": "theme_card",
           "disabled": true,
@@ -387,7 +403,7 @@
             "description": "",
             "description_color": "#666666",
             "product_image": "shopify://shop_images/20261109-174350.png",
-            "collection": "retro-daily-theme-keycaps",
+            "collection": "space-sci-fi",
             "button_label": "Explore Theme",
             "button_link": "",
             "button_text_color": "#6f3b13",
@@ -499,6 +515,7 @@
       },
       "block_order": [
         "theme-retro-home",
+        "theme_card_36t6dX",
         "theme_card_GxkcXj",
         "theme-nature-home",
         "theme_card_ycaA7P",
