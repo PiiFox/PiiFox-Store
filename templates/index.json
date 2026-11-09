@@ -378,7 +378,6 @@
         },
         "theme_card_GxkcXj": {
           "type": "theme_card",
-          "disabled": true,
           "settings": {
             "title": "Space & Sci-Fi",
             "title_color": "#6f3b13",
