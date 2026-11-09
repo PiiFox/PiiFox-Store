@@ -22,20 +22,104 @@
     {%- if theme_blocks.size > 2 -%}
       {%- assign initial_theme_index = 2 -%}
     {%- endif -%}
+    {%- assign initial_theme_block = theme_blocks[initial_theme_index] -%}
+    {%- assign initial_collection_handle = initial_theme_block.settings.collection.handle | default: '' -%}
 
-    <div class="top-theme-carousel-wrap">
-      <div class="top-theme-carousel">
-        {%- assign theme_index = 0 -%}
-        {%- for block in section.blocks -%}
-          {%- if block.type == 'theme_card' -%}
-            {%- assign theme_image = block.settings.product_image -%}
-            {%- assign theme_collection_handle = block.settings.collection.handle | default: '' -%}
-            {%- assign theme_button_link = block.settings.button_link | default: block.settings.collection.url | default: '#' -%}
-            <div class="theme-cell{% if theme_index == initial_theme_index %} is-selected{% endif %}"
-                 data-index="{{ theme_index }}"
-                 data-collection-handle="{{ theme_collection_handle | escape }}"
-                 style="--theme-highlight-color: {{ block.settings.card_bg_color | default: block.settings.highlight_color | default: '#f4efe6' }};"
-                 {{ block.shopify_attributes }}>
+    <div class="style-studio-body">
+      <!-- Skeleton Screen Placeholder (displayed until section is fully loaded) -->
+      <div class="style-studio-skeleton" aria-hidden="true">
+        <div class="skeleton-top-wrap">
+          <div class="skeleton-top-track">
+            <!-- Left Side Card Skeleton -->
+            <div class="skeleton-theme-cell skeleton-theme-cell--left">
+              <div class="skeleton-theme-card-inner">
+                <div class="skeleton-theme-header">
+                  <div class="skeleton-line skeleton-line--title" style="width: 55%;"></div>
+                  <div class="skeleton-line skeleton-line--desc" style="width: 80%;"></div>
+                  <div class="skeleton-line skeleton-line--desc" style="width: 65%;"></div>
+                </div>
+                <div class="skeleton-theme-media">
+                  <div class="skeleton-keyboard-shape"></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Center Active Card Skeleton (Prominent) -->
+            <div class="skeleton-theme-cell skeleton-theme-cell--center">
+              <div class="skeleton-theme-card-inner">
+                <div class="skeleton-theme-header">
+                  <div class="skeleton-line skeleton-line--title-lg" style="width: 48%;"></div>
+                  <div class="skeleton-line skeleton-line--subtitle" style="width: 68%;"></div>
+                  <div class="skeleton-line skeleton-line--desc" style="width: 88%;"></div>
+                </div>
+                <div class="skeleton-theme-media">
+                  <div class="skeleton-keyboard-shape skeleton-keyboard-shape--main"></div>
+                </div>
+                <div class="skeleton-theme-action">
+                  <div class="skeleton-btn skeleton-btn--pill"></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Right Side Card Skeleton -->
+            <div class="skeleton-theme-cell skeleton-theme-cell--right">
+              <div class="skeleton-theme-card-inner">
+                <div class="skeleton-theme-header">
+                  <div class="skeleton-line skeleton-line--title" style="width: 55%;"></div>
+                  <div class="skeleton-line skeleton-line--desc" style="width: 80%;"></div>
+                  <div class="skeleton-line skeleton-line--desc" style="width: 65%;"></div>
+                </div>
+                <div class="skeleton-theme-media">
+                  <div class="skeleton-keyboard-shape"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bottom Style Cards Skeleton -->
+        <div class="skeleton-bottom-wrap">
+          <div class="skeleton-bottom-track">
+            {%- for i in (1..7) -%}
+              <div class="skeleton-style-cell{% if forloop.index > 3 %} skeleton-hide-mobile{% endif %}">
+                <div class="skeleton-style-card-inner">
+                  <div class="skeleton-style-media">
+                    <div class="skeleton-style-img"></div>
+                  </div>
+                  <div class="skeleton-style-info">
+                    <div class="skeleton-line skeleton-line--small" style="width: 70%;"></div>
+                    <div class="skeleton-btn skeleton-btn--mini"></div>
+                  </div>
+                </div>
+              </div>
+            {%- endfor -%}
+          </div>
+          <!-- Skeleton Dots -->
+          <div class="skeleton-dots-wrap">
+            <div class="skeleton-dot skeleton-dot--active"></div>
+            <div class="skeleton-dot"></div>
+            <div class="skeleton-dot"></div>
+            <div class="skeleton-dot"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Real Carousels Content -->
+      <div class="style-studio-content">
+        <div class="top-theme-carousel-wrap">
+          <div class="top-theme-carousel">
+            {%- assign theme_index = 0 -%}
+            {%- for block in section.blocks -%}
+              {%- if block.type == 'theme_card' -%}
+                {%- assign theme_image = block.settings.product_image -%}
+                {%- assign theme_collection_handle = block.settings.collection.handle | default: '' -%}
+                {%- assign theme_button_link = block.settings.button_link | default: block.settings.collection.url | default: '#' -%}
+                {%- assign relative_index = theme_index | minus: initial_theme_index -%}
+                <div class="theme-cell{% if theme_index == initial_theme_index %} is-selected{% elsif relative_index < 0 %} is-before-selected{% elsif relative_index > 0 %} is-after-selected{% endif %}"
+                     data-index="{{ theme_index }}"
+                     data-collection-handle="{{ theme_collection_handle | escape }}"
+                     style="--theme-highlight-color: {{ block.settings.card_bg_color | default: block.settings.highlight_color | default: '#f4efe6' }};"
+                     {{ block.shopify_attributes }}>
             <div class="theme-card-inner">
               <div class="theme-card-info">
                 <h3 class="theme-title notranslate" style="color: {{ block.settings.title_color | default: '#107a44' }};">{{ block.settings.title }}</h3>
@@ -82,6 +166,7 @@
               {%- if style_image != blank and style_name != blank -%}
                 <div
                   class="style-cell"
+                  {% if initial_collection_handle != blank and style_collection.handle != initial_collection_handle %}hidden{% endif %}
                   data-collection-handle="{{ style_collection.handle | escape }}"
                   data-product-handle="{{ style_product.handle | escape }}"
                 >
@@ -132,8 +217,10 @@
         </div>
       </div>
     </div>
-  </div>
-</div>
+      </div><!-- /.style-studio-content -->
+    </div><!-- /.style-studio-body -->
+  </div><!-- /.style-studio-inner -->
+</div><!-- /.style-studio-section -->
 
 {% style %}
   #shopify-section-{{ section.id }}.index-section {
@@ -158,6 +245,240 @@
     padding-bottom: 0 !important;
     padding-left: 2.5em;
     box-sizing: border-box;
+  }
+  .style-studio-section-{{ section.id }} .style-studio-body {
+    position: relative;
+    width: 100%;
+  }
+  .style-studio-section-{{ section.id }} .style-studio-content {
+    width: 100%;
+    transition: opacity 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+  }
+  .style-studio-section-{{ section.id }}:not(.is-loaded) .style-studio-content {
+    opacity: 0;
+    pointer-events: none;
+  }
+  .style-studio-section-{{ section.id }}.is-loaded .style-studio-content {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  /* Skeleton Overlay & Shimmer */
+  .style-studio-section-{{ section.id }} .style-studio-skeleton {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    min-height: 38em;
+    z-index: 10;
+    background-color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    pointer-events: auto;
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.35s cubic-bezier(0.25, 1, 0.5, 1), visibility 0.35s ease;
+    overflow: hidden;
+  }
+  .style-studio-section-{{ section.id }}.is-loaded .style-studio-skeleton {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+
+  @keyframes styleStudioSkeletonShimmer {
+    0% {
+      background-position: -200% 0;
+    }
+    100% {
+      background-position: 200% 0;
+    }
+  }
+
+  .style-studio-section-{{ section.id }} .skeleton-line,
+  .style-studio-section-{{ section.id }} .skeleton-keyboard-shape,
+  .style-studio-section-{{ section.id }} .skeleton-style-img,
+  .style-studio-section-{{ section.id }} .skeleton-btn,
+  .style-studio-section-{{ section.id }} .skeleton-dot {
+    background: linear-gradient(
+      90deg,
+      #eceeed 0%,
+      #f6f8f7 35%,
+      #eceeed 70%
+    );
+    background-size: 200% 100%;
+    animation: styleStudioSkeletonShimmer 1.8s infinite ease-in-out;
+  }
+
+  .style-studio-section-{{ section.id }} .skeleton-top-wrap {
+    width: 100%;
+    margin-bottom: 1.5em;
+    overflow: hidden;
+  }
+  .style-studio-section-{{ section.id }} .skeleton-top-track {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0;
+    padding: 2.5em 0;
+    overflow: visible;
+  }
+  .style-studio-section-{{ section.id }} .skeleton-theme-cell {
+    box-sizing: border-box;
+    border-radius: 1.2em;
+    padding: 1.8em 1.7em 1.55em;
+    position: relative;
+    flex: 0 0 clamp(15em, 28vw, 26em);
+    width: clamp(15em, 28vw, 26em);
+    pointer-events: none;
+  }
+  .style-studio-section-{{ section.id }} .skeleton-theme-cell--center {
+    background-color: #f1f5f2;
+    transform: scale(1.2, 1.15);
+    z-index: 3;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  }
+  .style-studio-section-{{ section.id }} .skeleton-theme-cell--left {
+    background-color: #f7f4ef;
+    transform: translateX(19%) scaleX(0.82);
+    margin-right: -3em;
+    z-index: 1;
+    opacity: 0.75;
+  }
+  .style-studio-section-{{ section.id }} .skeleton-theme-cell--right {
+    background-color: #f8f1ec;
+    transform: translateX(-19%) scaleX(0.82);
+    margin-left: -3em;
+    z-index: 1;
+    opacity: 0.75;
+  }
+  .style-studio-section-{{ section.id }} .skeleton-theme-card-inner {
+    height: 28em;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+  }
+  .style-studio-section-{{ section.id }} .skeleton-theme-header {
+    margin-bottom: 0.5em;
+  }
+  .style-studio-section-{{ section.id }} .skeleton-line--title {
+    height: 1.3em;
+    border-radius: 6px;
+    margin-bottom: 0.4em;
+  }
+  .style-studio-section-{{ section.id }} .skeleton-line--title-lg {
+    height: 2.2em;
+    border-radius: 8px;
+    margin-bottom: 0.5em;
+  }
+  .style-studio-section-{{ section.id }} .skeleton-line--subtitle {
+    height: 1.05em;
+    border-radius: 6px;
+    margin-bottom: 0.45em;
+  }
+  .style-studio-section-{{ section.id }} .skeleton-line--desc {
+    height: 0.85em;
+    border-radius: 4px;
+    margin-bottom: 0.35em;
+  }
+  .style-studio-section-{{ section.id }} .skeleton-theme-media {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0.8em 0;
+    overflow: hidden;
+  }
+  .style-studio-section-{{ section.id }} .skeleton-keyboard-shape {
+    width: 90%;
+    height: 60%;
+    border-radius: 12px;
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.04);
+  }
+  .style-studio-section-{{ section.id }} .skeleton-keyboard-shape--main {
+    width: 96%;
+    height: 72%;
+    border-radius: 14px;
+    transform: rotate(-3deg);
+  }
+  .style-studio-section-{{ section.id }} .skeleton-theme-action {
+    display: flex;
+    justify-content: center;
+    min-height: 2.5em;
+  }
+  .style-studio-section-{{ section.id }} .skeleton-btn--pill {
+    width: 8.5em;
+    height: 2.5em;
+    border-radius: 999em;
+  }
+
+  .style-studio-section-{{ section.id }} .skeleton-bottom-wrap {
+    width: 100%;
+  }
+  .style-studio-section-{{ section.id }} .skeleton-bottom-track {
+    display: flex;
+    gap: 1.05em;
+    align-items: stretch;
+    overflow: hidden;
+  }
+  .style-studio-section-{{ section.id }} .skeleton-style-cell {
+    flex: 0 0 clamp(8em, calc((100% - 6.3em) / 7), 16em);
+    box-sizing: border-box;
+  }
+  .style-studio-section-{{ section.id }} .skeleton-style-card-inner {
+    background-color: var(--style-card-bg-color, #f9f7f5);
+    border-radius: 1em;
+    padding: 0.85em 0.9em 1em;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+  }
+  .style-studio-section-{{ section.id }} .skeleton-style-media {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0.8em 0;
+  }
+  .style-studio-section-{{ section.id }} .skeleton-style-img {
+    width: 90%;
+    height: 5em;
+    border-radius: 8px;
+  }
+  .style-studio-section-{{ section.id }} .skeleton-style-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .style-studio-section-{{ section.id }} .skeleton-line--small {
+    height: 0.9em;
+    border-radius: 4px;
+    margin: 0.35em 0 0.55em;
+  }
+  .style-studio-section-{{ section.id }} .skeleton-btn--mini {
+    width: 5.5em;
+    height: 1.8em;
+    border-radius: 999em;
+  }
+
+  .style-studio-section-{{ section.id }} .skeleton-dots-wrap {
+    display: flex;
+    justify-content: center;
+    gap: 0.65em;
+    margin-top: 1.3em;
+  }
+  .style-studio-section-{{ section.id }} .skeleton-dot {
+    width: 1.7em;
+    height: 0.35em;
+    border-radius: 999em;
+  }
+  .style-studio-section-{{ section.id }} .skeleton-dot--active {
+    background: #121212 !important;
+    animation: none;
   }
   .style-studio-section-{{ section.id }} .section-header {
     margin-bottom: 1.25em;
@@ -748,6 +1069,35 @@
     .style-studio-section-{{ section.id }} .top-theme-carousel .theme-cell:not(.is-selected) .theme-card-img {
       transform: translateX(-50%);
     }
+
+    /* Skeleton mobile rules */
+    .style-studio-section-{{ section.id }} .skeleton-theme-cell--left,
+    .style-studio-section-{{ section.id }} .skeleton-theme-cell--right {
+      display: none;
+    }
+
+    .style-studio-section-{{ section.id }} .skeleton-theme-cell--center {
+      transform: none;
+      flex: 0 0 92%;
+      width: 92%;
+      padding: 1.2em 1.4em;
+    }
+
+    .style-studio-section-{{ section.id }} .skeleton-theme-card-inner {
+      height: 20em;
+    }
+
+    .style-studio-section-{{ section.id }} .skeleton-bottom-track {
+      gap: 0.65em;
+    }
+
+    .style-studio-section-{{ section.id }} .skeleton-style-cell {
+      flex-basis: clamp(7.5em, 31vw, 10em);
+    }
+
+    .style-studio-section-{{ section.id }} .skeleton-hide-mobile {
+      display: none;
+    }
   }
 
   @media screen and (min-width: 769px) and (max-width: 1450px) {
@@ -887,6 +1237,13 @@
   }
 
 {% endstyle %}
+
+<noscript>
+  <style>
+    .style-studio-section-{{ section.id }} .style-studio-skeleton { display: none !important; }
+    .style-studio-section-{{ section.id }} .style-studio-content { opacity: 1 !important; pointer-events: auto !important; }
+  </style>
+</noscript>
 
 <script>
   (function() {
@@ -1215,7 +1572,36 @@
       bottomCarouselEl.addEventListener('scroll', updateDots, { passive: true });
       window.addEventListener('resize', updateDots);
       updateDots();
+
+      const markSectionLoaded = function() {
+        if (root.classList.contains('is-loaded')) return;
+        window.requestAnimationFrame(function() {
+          root.classList.add('is-loaded');
+          if (flktyTop) {
+            flktyTop.resize();
+            flktyTop.reposition();
+          }
+        });
+      };
+
+      const selectedCell = themeCells[topSelectedIndex] || themeCells[0];
+      const selectedImg = selectedCell ? selectedCell.querySelector('.theme-card-img') : null;
+
+      if (selectedImg && !selectedImg.complete) {
+        selectedImg.addEventListener('load', markSectionLoaded, { once: true });
+        selectedImg.addEventListener('error', markSectionLoaded, { once: true });
+        window.setTimeout(markSectionLoaded, 600);
+      } else {
+        window.setTimeout(markSectionLoaded, 80);
+      }
     };
+
+    window.setTimeout(function() {
+      const root = document.querySelector(rootSelector);
+      if (root && !root.classList.contains('is-loaded')) {
+        root.classList.add('is-loaded');
+      }
+    }, 2500);
 
     if (document.readyState === 'loading') {
       document.addEventListener('DOMContentLoaded', function() {
@@ -1227,7 +1613,15 @@
 
     document.addEventListener('shopify:section:load', function(e) {
       if (e.detail.sectionId === '{{ section.id }}') {
+        const root = document.querySelector(rootSelector);
+        if (root) {
+          root.dataset.initialized = 'false';
+          root.classList.remove('is-loaded');
+        }
         initStyleStudio(0);
+        window.setTimeout(function() {
+          if (root) root.classList.add('is-loaded');
+        }, 80);
       }
     });
   })();
