@@ -397,7 +397,7 @@
           "type": "theme_card",
           "settings": {
             "title": "Space & Sci-Fi",
-            "title_color": "#6f3b13",
+            "title_color": "#000000",
             "subtitle": "Take your setup beyond the stars",
             "subtitle_color": "#121212",
             "description": "Cosmic artwork and futuristic accents give your keyboard the feeling of a journey through the unknown.",
