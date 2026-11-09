@@ -376,6 +376,24 @@
             "highlight_color": "#f4efe6"
           }
         },
+        "theme_card_GxkcXj": {
+          "type": "theme_card",
+          "disabled": true,
+          "settings": {
+            "title": "Space & Sci-Fi",
+            "title_color": "#6f3b13",
+            "subtitle": "",
+            "subtitle_color": "#121212",
+            "description": "",
+            "description_color": "#666666",
+            "product_image": "shopify://shop_images/20261109-174350.png",
+            "collection": "retro-daily-theme-keycaps",
+            "button_label": "Explore Theme",
+            "button_link": "",
+            "button_text_color": "#6f3b13",
+            "highlight_color": "#f4efe6"
+          }
+        },
         "theme-nature-home": {
           "type": "theme_card",
           "settings": {
@@ -481,6 +499,7 @@
       },
       "block_order": [
         "theme-retro-home",
+        "theme_card_GxkcXj",
         "theme-nature-home",
         "theme_card_ycaA7P",
         "theme-cute-home",
