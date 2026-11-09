@@ -2862,5 +2862,11 @@ button.add-to-cart:disabled,
   display: block !important;
 }
 
+.grid__item.grid-product .grid-product__content {
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 0.4em;
+}
+
+
 
 

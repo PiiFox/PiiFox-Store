@@ -1,44 +1,75 @@
 <div class="page-width page-content no-found-page-container">
   <img src="{{ '404.svg' | asset_url }}" alt="404 Not Found" width="355" height="200" />
   <header class="section-header section-header--404">
-    {% comment %}
-    <h1 class="section-header__title">{{ 'general.404.title' | t }}</h1>
-    {% endcomment %}
-    <h1 class="section-header__title">{{ 'general.NotFound.title' | t }}</h1>
-    <div class="rte text-spacing">
-      {% comment %}
-      {{ 'general.404.subtext_html' | t: url: routes.root_url }}
-      {% endcomment %}
-      {{ 'general.NotFound.subtext_html' | t: url: routes.root_url }}
+    <h1 class="section-header__title not-found__heading">{{ 'general.NotFound.heading' | t: default: 'Oops! The Page Is Missing' }}</h1>
+    <p class="not-found__subtext">{{ 'general.NotFound.title' | t: default: "The page you're looking for can't be found." }}</p>
+    <div class="not-found__actions">
+      <a class="return-home-btn" href="{{ routes.root_url }}">{{ 'general.NotFound.return_home' | t: default: 'Return to Home' }}</a>
     </div>
   </header>
 </div>
 {% style %}
   .no-found-page-container {
     text-align: center;
+    padding-top: 2rem;
+    padding-bottom: 4rem;
   }
-  .rte-setting a:not(.rte__image):not(.btn):not(.spr-summary-actions-newreview), .rte a:not(.rte__image):not(.btn):not(.spr-summary-actions-newreview) {
-    border-bottom: 1px solid var(--colorThemePrimary);
-  }
-  .rte-setting a:not(.btn):not(.spr-summary-actions-newreview):after, .rte a:not(.btn):not(.spr-summary-actions-newreview):after {
-    border-bottom: unset;
-  }
-  .rte a.return-home-btn, .rte a.go-sitemap-btn {
+  .no-found-page-container img {
     display: inline-block;
-    padding: 0.5rem 2rem;
+    max-width: 100%;
+    height: auto;
+    margin: 0 auto;
+  }
+  .no-found-page-container .section-header--404 {
+    padding-top: 0 !important;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+  }
+  .no-found-page-container .not-found__heading {
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin-top: 1.6rem !important;
+    margin-bottom: 0.75rem;
+    color: var(--colorTextBody, #1c1d1d);
+    line-height: 1.25;
+  }
+  .no-found-page-container .not-found__subtext {
+    font-size: 1.15rem;
+    color: var(--colorTextBody, #1c1d1d);
+    margin-bottom: 1.8rem;
+    line-height: 1.4;
+  }
+  .no-found-page-container .return-home-btn {
+    display: inline-block;
+    padding: 0.75rem 2.8rem;
     border: 1px solid var(--colorThemePrimary);
-    outline: 0;
-    border-radius: 8px;
-    margin: 2rem;
-    box-sizing: border-box;
-  }
-  .rte a.return-home-btn, .rte a.go-sitemap-btn:hover {
-    color: var(--colorThemePrimary);
-    background: #fff;
-  }
-  .rte a.go-sitemap-btn, .rte a.return-home-btn:hover {
-    color: #fff;
     background: var(--colorThemePrimary);
+    color: #ffffff !important;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 50px;
+    box-sizing: border-box;
+    text-decoration: none !important;
+    transition: all 0.3s ease;
+  }
+  .no-found-page-container .return-home-btn:hover {
+    background: #ffffff;
+    color: var(--colorThemePrimary) !important;
+    border-color: var(--colorThemePrimary);
+  }
+  @media only screen and (max-width: 768px) {
+    .no-found-page-container .not-found__heading {
+      font-size: 1.6rem;
+      margin-top: 1.2rem !important;
+    }
+    .no-found-page-container .not-found__subtext {
+      font-size: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    .no-found-page-container .return-home-btn {
+      padding: 0.65rem 2.2rem;
+      font-size: 14px;
+    }
   }
 {% endstyle %}
 {% schema %}
