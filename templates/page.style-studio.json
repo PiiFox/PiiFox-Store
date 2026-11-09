@@ -94,6 +94,31 @@
         "padding_bottom": 36
       }
     },
+    "steps_note": {
+      "type": "ss-text-note",
+      "settings": {
+        "title": "Made for Your Style. Ready Out of the Box.",
+        "content": "<p>Our Custom Keycap Installation service is designed to deliver a keyboard that's already personalized to your style — not two separate sets of keycaps.</p><p>We replace the standard keycaps with your chosen design before shipping, so your keyboard arrives fully customized and ready to use.</p><p><strong>Please note:</strong> As this is a keycap replacement service, the original keycaps are not included in your shipment.</p><p><strong>Still want to keep the original keycaps?</strong>&nbsp; If you'd like to receive them as well, please contact our customer support team.</p>",
+        "title_color": "#121212",
+        "title_size": 26,
+        "title_size_mobile": 20,
+        "title_weight": "800",
+        "text_color": "#333333",
+        "text_size": 15,
+        "text_size_mobile": 14,
+        "alignment": "left",
+        "content_bg_color": "#f6f6f6",
+        "border_color": "#e5e5e5",
+        "border_width": 0,
+        "border_radius": 20,
+        "card_padding": 32,
+        "card_padding_mobile": 20,
+        "max_width": 1320,
+        "background_color": "#ffffff",
+        "padding_top": 15,
+        "padding_bottom": 15
+      }
+    },
     "features": {
       "type": "ss-feature-cards",
       "blocks": {
@@ -288,6 +313,7 @@
     "hero",
     "intro",
     "steps",
+    "steps_note",
     "features",
     "board_switcher",
     "text_cta",

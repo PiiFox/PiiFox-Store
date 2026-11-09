@@ -152,10 +152,14 @@
     height: 22px;
     display: block;
   }
-  #{{ subnav_id }}-NavSubDrawer .mobile-nav__item--shop-all {
+  #{{ subnav_id }}-NavSubDrawer .mobile-nav__item--shop-all,
+  #{{ subnav_id }}-NavSubDrawer .mobile-nav__item--bottom-buttons {
     margin-top: 24px;
     padding: 0 20px 30px;
     list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
   }
   #{{ subnav_id }}-NavSubDrawer .drawer-submenu-shop-all-btn {
     display: block;
@@ -319,18 +323,6 @@
         role="navigation"
         aria-label="Primary"
       >
-        {%- if is_keycaps -%}
-          <li class="mobile-nav__item">
-            <div class="mobile-nav__child-item">
-              <a
-                href="/collections/keycaps-new"
-                class="notranslate mobile-nav__link"
-              >
-                New Arrival
-              </a>
-            </div>
-          </li>
-        {%- endif -%}
         {%- for childlink in link.links -%}
           {%- assign child_title_down = childlink.title | downcase | strip -%}
           {%- if child_title_down == 'shop all' -%}
@@ -459,11 +451,18 @@
             {%- endif -%}
           </li>
         {%- endfor -%}
-        {%- if shop_all_url != blank -%}
-          <li class="mobile-nav__item mobile-nav__item--shop-all">
-            <a href="{{ shop_all_url }}" class="drawer-submenu-shop-all-btn">
-              {{ shop_all_title }}
-            </a>
+        {%- if is_keycaps or shop_all_url != blank -%}
+          <li class="mobile-nav__item mobile-nav__item--bottom-buttons">
+            {%- if is_keycaps -%}
+              <a href="/collections/keycaps-new" class="drawer-submenu-shop-all-btn">
+                New Arrivals
+              </a>
+            {%- endif -%}
+            {%- if shop_all_url != blank -%}
+              <a href="{{ shop_all_url }}" class="drawer-submenu-shop-all-btn">
+                {{ shop_all_title }}
+              </a>
+            {%- endif -%}
           </li>
         {%- endif -%}
       </ul>

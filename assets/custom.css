@@ -7282,3 +7282,29 @@ ul.no-bullets.tag-list.tag-list--active-tags li.tag--remove .icon {
   flex-shrink: 0 !important;
   opacity: 0.9 !important;
 }
+
+/* PC端筛选条件区域直接全展开展示，不限制高度也不内部滚动（仅修改PC端） */
+@media only screen and (min-width: 769px) {
+  .grid__item--sidebar,
+  .collection-content .grid__item--sidebar,
+  .collection-sidebar,
+  #CollectionSidebar {
+    position: static !important;
+    max-height: none !important;
+    height: auto !important;
+    overflow: visible !important;
+    overflow-y: visible !important;
+    scrollbar-width: none !important; /* Firefox */
+    -ms-overflow-style: none !important; /* IE/Edge */
+  }
+
+  .grid__item--sidebar::-webkit-scrollbar,
+  .collection-content .grid__item--sidebar::-webkit-scrollbar,
+  .collection-sidebar::-webkit-scrollbar,
+  #CollectionSidebar::-webkit-scrollbar {
+    display: none !important;
+    width: 0 !important;
+    height: 0 !important;
+    background: transparent !important;
+  }
+}
