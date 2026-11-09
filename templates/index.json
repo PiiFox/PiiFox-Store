@@ -378,6 +378,7 @@
         },
         "theme_card_36t6dX": {
           "type": "theme_card",
+          "disabled": true,
           "settings": {
             "title": "Nature & Soft",
             "title_color": "#107a44",
@@ -394,13 +395,12 @@
         },
         "theme_card_GxkcXj": {
           "type": "theme_card",
-          "disabled": true,
           "settings": {
             "title": "Space & Sci-Fi",
             "title_color": "#6f3b13",
-            "subtitle": "",
+            "subtitle": "Take your setup beyond the stars",
             "subtitle_color": "#121212",
-            "description": "",
+            "description": "Cosmic artwork and futuristic accents give your keyboard the feeling of a journey through the unknown.",
             "description_color": "#666666",
             "product_image": "shopify://shop_images/20261109-174350.png",
             "collection": "space-sci-fi",
