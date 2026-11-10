@@ -221,9 +221,9 @@
         "ticker_item_1": {
           "type": "ticker_item",
           "settings": {
-            "prefix_text": "Type your style",
-            "prefix_color": "",
-            "suffix_text": "Make every setup feel like yours.",
+            "prefix_text": "Style Your Setup",
+            "prefix_color": "#FC36AA",
+            "suffix_text": "More Ways to Personalize.",
             "suffix_color": "",
             "link": ""
           }
@@ -231,9 +231,9 @@
         "ticker_item_2": {
           "type": "ticker_item",
           "settings": {
-            "prefix_text": "Free standard shipping",
-            "prefix_color": "",
-            "suffix_text": "On all orders over $75",
+            "prefix_text": "Make It Yours",
+            "prefix_color": "#CBFB07",
+            "suffix_text": "Explore Endless Styles.",
             "suffix_color": "",
             "link": ""
           }
@@ -242,18 +242,8 @@
           "type": "ticker_item",
           "settings": {
             "prefix_text": "Feel the performance",
-            "prefix_color": "",
+            "prefix_color": "#E03B39",
             "suffix_text": "Smooth. Fast. Comfortable.",
-            "suffix_color": "",
-            "link": ""
-          }
-        },
-        "ticker_item_4": {
-          "type": "ticker_item",
-          "settings": {
-            "prefix_text": "Make it personal",
-            "prefix_color": "",
-            "suffix_text": "Custom crafted keyboards & switches",
             "suffix_color": "",
             "link": ""
           }
@@ -273,7 +263,6 @@
         "ticker_item_1",
         "ticker_item_2",
         "ticker_item_3",
-        "ticker_item_4",
         "ticker_item_5"
       ],
       "name": "Col2 Txt Section",
@@ -297,7 +286,7 @@
         "padding_vertical": 36,
         "full_width": false,
         "mobile_layout": "stacked",
-        "speed": 28,
+        "speed": 62,
         "direction": "left",
         "pause_on_hover": false,
         "gap": 48
@@ -545,6 +534,29 @@
         "style_card_bg_color": "#f9f7f5"
       }
     },
+    "single_page_width_banner_ihTf8b": {
+      "type": "single-page-width-banner",
+      "blocks": {
+        "single_page_width_banner_btfwM4": {
+          "type": "single_page_width_banner",
+          "settings": {
+            "video_url": "",
+            "banner": "shopify://shop_images/222222.webp",
+            "m_banner": "shopify://shop_images/222222.webp",
+            "banner_title": "STATE YOUR\nBOARDS",
+            "sub_title": "Browse curated PIIFOX keycap themes \nand build a setup with more personality.",
+            "text_color": "#ffffff",
+            "btn_link": "shopify://pages/keycaps-themes-lab",
+            "btn_label": "SHOP KEYCAP THEMES"
+          }
+        }
+      },
+      "block_order": [
+        "single_page_width_banner_btfwM4"
+      ],
+      "name": "Single Page Width Banner",
+      "settings": {}
+    },
     "main_collection_list_tAJGQJ": {
       "type": "main-collection-list",
       "blocks": {
@@ -570,7 +582,7 @@
             "collection_title": "Switches",
             "custom_link": "",
             "card_width": "half",
-            "cover_image": "shopify://shop_images/999.webp",
+            "cover_image": "shopify://shop_images/33331212312.png",
             "image_focal_point": "center",
             "default_placeholder": "switches",
             "text_color": "#111111",
@@ -624,29 +636,6 @@
         "card_radius": 24,
         "card_gap": 16
       }
-    },
-    "single_page_width_banner_ihTf8b": {
-      "type": "single-page-width-banner",
-      "blocks": {
-        "single_page_width_banner_btfwM4": {
-          "type": "single_page_width_banner",
-          "settings": {
-            "video_url": "",
-            "banner": "shopify://shop_images/222222.webp",
-            "m_banner": "shopify://shop_images/222222.webp",
-            "banner_title": "STATE YOUR\nBOARDS",
-            "sub_title": "Browse curated PIIFOX keycap themes \nand build a setup with more personality.",
-            "text_color": "#ffffff",
-            "btn_link": "shopify://pages/keycaps-themes-lab",
-            "btn_label": "SHOP KEYCAP THEMES"
-          }
-        }
-      },
-      "block_order": [
-        "single_page_width_banner_btfwM4"
-      ],
-      "name": "Single Page Width Banner",
-      "settings": {}
     },
     "video_carousel_home": {
       "type": "video-carousel",
