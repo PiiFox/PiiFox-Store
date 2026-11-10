@@ -367,7 +367,7 @@
             "collection_title": "Keyboards",
             "custom_link": "",
             "card_width": "full",
-            "cover_image": "shopify://shop_images/p-1-no-text.jpg",
+            "cover_image": "shopify://shop_images/333.webp",
             "default_placeholder": "keyboards",
             "text_color": "#111111"
           }
@@ -379,6 +379,7 @@
             "collection_title": "Switches",
             "custom_link": "",
             "card_width": "half",
+            "cover_image": "shopify://shop_images/999.webp",
             "default_placeholder": "switches",
             "text_color": "#111111"
           }
@@ -390,6 +391,7 @@
             "collection_title": "Accessories",
             "custom_link": "",
             "card_width": "half",
+            "cover_image": "shopify://shop_images/444.jpg",
             "default_placeholder": "accessories",
             "text_color": "#111111"
           }
@@ -401,8 +403,11 @@
             "collection_title": "Keycaps",
             "custom_link": "",
             "card_width": "full",
+            "cover_image": "shopify://shop_images/yyyy.jpg",
             "default_placeholder": "keycaps",
-            "text_color": "#111111"
+            "text_color": "#111111",
+            "desktop_card_height": 0,
+            "mobile_aspect_ratio": "auto"
           }
         }
       },
@@ -415,8 +420,9 @@
       "name": "Main Collection List",
       "settings": {
         "title": "SHOP BY CATEGORY",
+        "image_display_mode": "cover",
         "desktop_max_width": 1380,
-        "desktop_card_height": 270,
+        "desktop_card_height": 280,
         "card_radius": 24,
         "card_gap": 16
       }
@@ -613,11 +619,12 @@
         "single_page_width_banner_btfwM4": {
           "type": "single_page_width_banner",
           "settings": {
-            "video_url": "https://cdn.shopify.com/videos/c/o/v/a020c10e46764f5b803c79131dd7269f.mp4",
-            "banner": "shopify://shop_images/p-1-no-text.jpg",
-            "m_banner": "shopify://shop_images/m-half-bg.png",
+            "video_url": "",
+            "banner": "shopify://shop_images/222222.webp",
+            "m_banner": "shopify://shop_images/222222.webp",
             "banner_title": "STATE YOUR\nBOARDS",
             "sub_title": "Browse curated PIIFOX keycap themes \nand build a setup with more personality.",
+            "text_color": "#ffffff",
             "btn_link": "shopify://pages/keycaps-themes-lab",
             "btn_label": "SHOP KEYCAP THEMES"
           }
@@ -805,7 +812,7 @@
       "type": "joinus_section",
       "name": "Join Us Section",
       "settings": {
-        "joinus_image": "shopify://shop_images/ChatGPT_Image_2026_7_8_12_46_34_1.png",
+        "joinus_image": "shopify://shop_images/5656.jpg",
         "banner_title": "JOIN OUR DISCORD COMMUNITY",
         "sub_title": "PIIFOX Community",
         "context": "Get early access to drops, setup inspiration, support, giveaways, and real-time chatwith fellow keyboard fans.",

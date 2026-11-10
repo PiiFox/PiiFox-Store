@@ -1,3 +1,4 @@
+{%- assign display_mode = section.settings.image_display_mode | default: 'adapt' -%}
 {%- style -%}
   .main-collection-list-section-{{ section.id }} {
     padding: 3.5em 0;
@@ -19,6 +20,9 @@
   .main-collection-list-section-{{ section.id }} .main-collection-list-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
+    {% if display_mode == 'adapt' %}
+      align-items: start;
+    {% endif %}
     gap: {{ section.settings.card_gap | default: 16 }}px;
     width: 100%;
   }
@@ -42,7 +46,11 @@
   /* Desktop layout sizing */
   @media screen and (min-width: 769px) {
     .main-collection-list-section-{{ section.id }} .main-collection-item {
-      height: {{ section.settings.desktop_card_height | default: 270 }}px;
+      {% if display_mode == 'adapt' %}
+        height: auto;
+      {% else %}
+        height: {{ section.settings.desktop_card_height | default: 280 }}px;
+      {% endif %}
     }
     .main-collection-list-section-{{ section.id }} .main-collection-item--full {
       grid-column: 1 / -1;
@@ -53,23 +61,44 @@
   }
 
   .main-collection-list-section-{{ section.id }} .main-collection-item__media-wrap {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
+    {% if display_mode == 'adapt' %}
+      position: relative;
+      width: 100%;
+    {% else %}
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+    {% endif %}
     z-index: 1;
     overflow: hidden;
   }
+  .main-collection-list-section-{{ section.id }} .main-collection-item__picture {
+    display: block;
+    width: 100%;
+    {% unless display_mode == 'adapt' %}
+      height: 100%;
+    {% endunless %}
+  }
   .main-collection-list-section-{{ section.id }} .main-collection-item__media {
     width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
+    {% if display_mode == 'adapt' %}
+      height: auto;
+    {% else %}
+      height: 100%;
+      object-fit: {{ display_mode }};
+      object-position: center;
+    {% endif %}
     display: block;
     border: none;
     transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
     pointer-events: none;
   }
+  {% if display_mode == 'adapt' %}
+    .main-collection-list-section-{{ section.id }} div.main-collection-item__media {
+      min-height: 220px;
+    }
+  {% endif %}
   .main-collection-list-section-{{ section.id }} .main-collection-item:hover .main-collection-item__media {
     transform: scale(1.035);
   }
@@ -116,11 +145,15 @@
     }
     .main-collection-list-section-{{ section.id }} .main-collection-item--full {
       grid-column: 1 / -1;
-      aspect-ratio: 2.15 / 1;
+      {% unless display_mode == 'adapt' %}
+        aspect-ratio: 1.8 / 1;
+      {% endunless %}
     }
     .main-collection-list-section-{{ section.id }} .main-collection-item--half {
       grid-column: span 1;
-      aspect-ratio: 1 / 1;
+      {% unless display_mode == 'adapt' %}
+        aspect-ratio: 1 / 1.15;
+      {% endunless %}
     }
     .main-collection-list-section-{{ section.id }} .main-collection-item__header {
       top: 14px;
@@ -132,6 +165,25 @@
       line-height: 1.2;
     }
   }
+
+  {% unless display_mode == 'adapt' %}
+    {%- for block in section.blocks -%}
+      {%- if block.settings.desktop_card_height > 0 -%}
+        @media screen and (min-width: 769px) {
+          .main-collection-list-section-{{ section.id }} .main-collection-item-{{ block.id }} {
+            height: {{ block.settings.desktop_card_height }}px;
+          }
+        }
+      {%- endif -%}
+      {%- if block.settings.mobile_aspect_ratio != blank and block.settings.mobile_aspect_ratio != 'auto' -%}
+        @media screen and (max-width: 768px) {
+          .main-collection-list-section-{{ section.id }} .main-collection-item-{{ block.id }} {
+            aspect-ratio: {{ block.settings.mobile_aspect_ratio }};
+          }
+        }
+      {%- endif -%}
+    {%- endfor -%}
+  {% endunless %}
 {%- endstyle -%}
 
 <div class="main-collection-list-section-{{ section.id }} wow fadeIn">
@@ -185,8 +237,8 @@
                   src="{{ block.settings.cover_image | image_url: width: 1400, format: 'webp' }}"
                   alt="{{ item_title | escape }}"
                   loading="lazy"
-                  width="1400"
-                  height="auto"
+                  width="{{ block.settings.cover_image.width | default: 1400 }}"
+                  height="{{ block.settings.cover_image.height | default: 800 }}"
                   class="main-collection-item__media"
                   style="object-position: {{ focal }};"
                 >
@@ -274,6 +326,26 @@
       "default": "SHOP BY CATEGORY"
     },
     {
+      "type": "select",
+      "id": "image_display_mode",
+      "label": "图片展示方式 (Image Display Mode)",
+      "default": "cover",
+      "options": [
+        {
+          "value": "adapt",
+          "label": "自适应原图比例（完整展示无裁剪）"
+        },
+        {
+          "value": "cover",
+          "label": "固定高度裁剪铺满 (Cover)"
+        },
+        {
+          "value": "contain",
+          "label": "固定高度完整缩放 (Contain)"
+        }
+      ]
+    },
+    {
       "type": "range",
       "id": "desktop_max_width",
       "label": "PC端板块最大宽度 (Desktop Max Width)",
@@ -288,10 +360,10 @@
       "id": "desktop_card_height",
       "label": "PC端卡片行高 (Desktop Card Height)",
       "min": 160,
-      "max": 420,
+      "max": 800,
       "step": 10,
       "unit": "px",
-      "default": 270
+      "default": 280
     },
     {
       "type": "range",
@@ -411,6 +483,30 @@
           "id": "text_color",
           "label": "Text Color",
           "default": "#111111"
+        },
+        {
+          "type": "range",
+          "id": "desktop_card_height",
+          "label": "PC端单独卡片高度 (Custom Desktop Height)",
+          "info": "0 为跟随板块全局行高；大于 0 时单独覆盖当前卡片高度",
+          "min": 0,
+          "max": 700,
+          "step": 10,
+          "unit": "px",
+          "default": 0
+        },
+        {
+          "type": "select",
+          "id": "mobile_aspect_ratio",
+          "label": "移动端单独宽高比 (Mobile Aspect Ratio)",
+          "default": "auto",
+          "options": [
+            { "value": "auto", "label": "跟随默认 (Default)" },
+            { "value": "1.8 / 1", "label": "1.8 : 1" },
+            { "value": "1.5 / 1", "label": "1.5 : 1 (较高)" },
+            { "value": "4 / 3", "label": "4 : 3 (更高)" },
+            { "value": "1 / 1", "label": "1 : 1 (正方形)" }
+          ]
         }
       ]
     }
