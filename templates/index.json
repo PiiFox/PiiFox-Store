@@ -222,50 +222,50 @@
           "type": "ticker_item",
           "settings": {
             "prefix_text": "Type your style",
-            "suffix_text": "Make every setup feel like yours.",
-            "link": "",
             "prefix_color": "",
-            "suffix_color": ""
+            "suffix_text": "Make every setup feel like yours.",
+            "suffix_color": "",
+            "link": ""
           }
         },
         "ticker_item_2": {
           "type": "ticker_item",
           "settings": {
             "prefix_text": "Free standard shipping",
-            "suffix_text": "On all orders over $75",
-            "link": "",
             "prefix_color": "",
-            "suffix_color": ""
+            "suffix_text": "On all orders over $75",
+            "suffix_color": "",
+            "link": ""
           }
         },
         "ticker_item_3": {
           "type": "ticker_item",
           "settings": {
             "prefix_text": "Feel the performance",
-            "suffix_text": "Smooth. Fast. Comfortable.",
-            "link": "",
             "prefix_color": "",
-            "suffix_color": ""
+            "suffix_text": "Smooth. Fast. Comfortable.",
+            "suffix_color": "",
+            "link": ""
           }
         },
         "ticker_item_4": {
           "type": "ticker_item",
           "settings": {
             "prefix_text": "Make it personal",
-            "suffix_text": "Custom crafted keyboards & switches",
-            "link": "",
             "prefix_color": "",
-            "suffix_color": ""
+            "suffix_text": "Custom crafted keyboards & switches",
+            "suffix_color": "",
+            "link": ""
           }
         },
         "ticker_item_5": {
           "type": "ticker_item",
           "settings": {
             "prefix_text": "Quality you can trust",
-            "suffix_text": "Tested for everyday use.",
-            "link": "",
             "prefix_color": "",
-            "suffix_color": ""
+            "suffix_text": "Tested for everyday use.",
+            "suffix_color": "",
+            "link": ""
           }
         }
       },
@@ -282,24 +282,25 @@
         "title_color": "#000000",
         "title_font_size": 32,
         "mobile_title_font_size": 20,
-        "bg_color": "#ffffff",
-        "show_border": true,
-        "show_bottom_border": false,
-        "show_vertical_divider": false,
-        "border_color": "#ebebeb",
+        "title_link": "",
         "prefix_color": "#0a6830",
         "prefix_font_size": 20,
         "mobile_prefix_font_size": 16,
         "suffix_color": "#000000",
         "suffix_font_size": 15,
         "mobile_suffix_font_size": 13,
+        "bg_color": "#ffffff",
+        "show_border": true,
+        "show_bottom_border": false,
+        "show_vertical_divider": false,
+        "border_color": "#ebebeb",
+        "padding_vertical": 36,
+        "full_width": false,
+        "mobile_layout": "stacked",
         "speed": 28,
         "direction": "left",
         "pause_on_hover": false,
-        "gap": 48,
-        "padding_vertical": 36,
-        "full_width": false,
-        "mobile_layout": "stacked"
+        "gap": 48
       }
     },
     "collection_list_LPzqx3": {
@@ -357,76 +358,6 @@
         "enable_tabs": false
       }
     },
-    "main_collection_list_tAJGQJ": {
-      "type": "main-collection-list",
-      "blocks": {
-        "collection_wyacq7": {
-          "type": "collection",
-          "settings": {
-            "collection": "keyboards",
-            "collection_title": "Keyboards",
-            "custom_link": "",
-            "card_width": "full",
-            "cover_image": "shopify://shop_images/sss.jpg",
-            "default_placeholder": "keyboards",
-            "text_color": "#111111"
-          }
-        },
-        "collection_Ax8BCa": {
-          "type": "collection",
-          "settings": {
-            "collection": "switches",
-            "collection_title": "Switches",
-            "custom_link": "",
-            "card_width": "half",
-            "cover_image": "shopify://shop_images/999.webp",
-            "default_placeholder": "switches",
-            "text_color": "#111111"
-          }
-        },
-        "collection_gFK3Wa": {
-          "type": "collection",
-          "settings": {
-            "collection": "accessories",
-            "collection_title": "Accessories",
-            "custom_link": "",
-            "card_width": "half",
-            "cover_image": "shopify://shop_images/444.jpg",
-            "default_placeholder": "accessories",
-            "text_color": "#111111"
-          }
-        },
-        "collection_NeL9xF": {
-          "type": "collection",
-          "settings": {
-            "collection": "keycaps",
-            "collection_title": "Keycaps",
-            "custom_link": "",
-            "card_width": "full",
-            "cover_image": "shopify://shop_images/yyyy.jpg",
-            "default_placeholder": "keycaps",
-            "text_color": "#111111",
-            "desktop_card_height": 0,
-            "mobile_aspect_ratio": "auto"
-          }
-        }
-      },
-      "block_order": [
-        "collection_wyacq7",
-        "collection_Ax8BCa",
-        "collection_gFK3Wa",
-        "collection_NeL9xF"
-      ],
-      "name": "Main Collection List",
-      "settings": {
-        "title": "SHOP BY CATEGORY",
-        "image_display_mode": "cover",
-        "desktop_max_width": 1380,
-        "desktop_card_height": 280,
-        "card_radius": 24,
-        "card_gap": 16
-      }
-    },
     "style_studio_theme_grid_home": {
       "type": "style-studio-theme-grid",
       "blocks": {
@@ -443,7 +374,7 @@
             "collection": "retro-daily-theme-keycaps",
             "button_label": "Explore Theme",
             "button_link": "",
-                        "button_text_color": "#6f3b13",
+            "button_text_color": "#6f3b13",
             "highlight_color": "#f4efe6",
             "card_bg_color": "#f6e8d8"
           }
@@ -462,7 +393,8 @@
             "button_label": "Explore Theme",
             "button_link": "",
             "button_text_color": "#107a44",
-            "highlight_color": "#f4efe6"
+            "highlight_color": "#f4efe6",
+            "card_bg_color": "#f4efe6"
           }
         },
         "theme_card_GxkcXj": {
@@ -496,7 +428,7 @@
             "collection": "nature-soft-theme-keycaps",
             "button_label": "Explore Theme",
             "button_link": "",
-                        "button_text_color": "#107a44",
+            "button_text_color": "#107a44",
             "highlight_color": "#f4efe6",
             "card_bg_color": "#e3f2e6"
           }
@@ -514,7 +446,7 @@
             "collection": "clean-minimal-theme-keycaps",
             "button_label": "Explore Theme",
             "button_link": "",
-                        "button_text_color": "#bc896f",
+            "button_text_color": "#bc896f",
             "highlight_color": "#f4efe6",
             "card_bg_color": "#f7ebe3"
           }
@@ -532,7 +464,7 @@
             "collection": "cute-colorful-theme-keycaps",
             "button_label": "Explore Theme",
             "button_link": "",
-                        "button_text_color": "#ef5da8",
+            "button_text_color": "#ef5da8",
             "highlight_color": "#f4efe6",
             "card_bg_color": "#fde8f3"
           }
@@ -550,7 +482,7 @@
             "collection": "game-playful-theme-keycaps",
             "button_label": "Explore Theme",
             "button_link": "",
-                        "button_text_color": "#e14f56",
+            "button_text_color": "#e14f56",
             "highlight_color": "#f4efe6",
             "card_bg_color": "#fbe3e3"
           }
@@ -568,7 +500,7 @@
             "collection": "art-culture-theme-keycaps",
             "button_label": "Explore Theme",
             "button_link": "",
-                        "button_text_color": "#7c3aed",
+            "button_text_color": "#7c3aed",
             "highlight_color": "#f4efe6",
             "card_bg_color": "#ede7fb"
           }
@@ -586,7 +518,7 @@
             "collection": "fantasy-magic-theme-keycaps",
             "button_label": "Explore Theme",
             "button_link": "",
-                        "button_text_color": "#0f766e",
+            "button_text_color": "#0f766e",
             "highlight_color": "#f4efe6",
             "card_bg_color": "#dcf0ee"
           }
@@ -608,9 +540,89 @@
         "title_before_color": "#121212",
         "title_after": "Many Styles.",
         "title_after_color": "#244f1d",
-                "subtitle": "Preview how different keycap themes transform the same keyboard.",
+        "subtitle": "Preview how different keycap themes transform the same keyboard.",
         "style_card_button_label": "View Style",
         "style_card_bg_color": "#f9f7f5"
+      }
+    },
+    "main_collection_list_tAJGQJ": {
+      "type": "main-collection-list",
+      "blocks": {
+        "collection_wyacq7": {
+          "type": "collection",
+          "settings": {
+            "collection": "keyboards",
+            "collection_title": "Keyboards",
+            "custom_link": "",
+            "card_width": "full",
+            "cover_image": "shopify://shop_images/sss.jpg",
+            "image_focal_point": "center",
+            "default_placeholder": "keyboards",
+            "text_color": "#111111",
+            "desktop_card_height": 0,
+            "mobile_aspect_ratio": "auto"
+          }
+        },
+        "collection_Ax8BCa": {
+          "type": "collection",
+          "settings": {
+            "collection": "switches",
+            "collection_title": "Switches",
+            "custom_link": "",
+            "card_width": "half",
+            "cover_image": "shopify://shop_images/999.webp",
+            "image_focal_point": "center",
+            "default_placeholder": "switches",
+            "text_color": "#111111",
+            "desktop_card_height": 0,
+            "mobile_aspect_ratio": "auto"
+          }
+        },
+        "collection_gFK3Wa": {
+          "type": "collection",
+          "settings": {
+            "collection": "accessories",
+            "collection_title": "Accessories",
+            "custom_link": "",
+            "card_width": "half",
+            "cover_image": "shopify://shop_images/444.jpg",
+            "image_focal_point": "center",
+            "default_placeholder": "accessories",
+            "text_color": "#111111",
+            "desktop_card_height": 0,
+            "mobile_aspect_ratio": "auto"
+          }
+        },
+        "collection_NeL9xF": {
+          "type": "collection",
+          "settings": {
+            "collection": "keycaps",
+            "collection_title": "Keycaps",
+            "custom_link": "",
+            "card_width": "full",
+            "cover_image": "shopify://shop_images/yyyy.jpg",
+            "image_focal_point": "center",
+            "default_placeholder": "keycaps",
+            "text_color": "#111111",
+            "desktop_card_height": 0,
+            "mobile_aspect_ratio": "auto"
+          }
+        }
+      },
+      "block_order": [
+        "collection_wyacq7",
+        "collection_Ax8BCa",
+        "collection_gFK3Wa",
+        "collection_NeL9xF"
+      ],
+      "name": "Main Collection List",
+      "settings": {
+        "title": "SHOP BY CATEGORY",
+        "image_display_mode": "cover",
+        "desktop_max_width": 1380,
+        "desktop_card_height": 280,
+        "card_radius": 24,
+        "card_gap": 16
       }
     },
     "single_page_width_banner_ihTf8b": {
@@ -635,67 +647,6 @@
       ],
       "name": "Single Page Width Banner",
       "settings": {}
-    },
-    "about_us_section_nGTcfQ": {
-      "type": "about-us-section",
-      "blocks": {
-        "con2_content_JR4TqN": {
-          "type": "con2_Content",
-          "settings": {
-            "subtitle": "Where <b>performance</b> meets <b>personality</b>",
-            "title": "YOUR SETUP. YOUR STYLE.",
-            "context": ""
-          }
-        },
-        "con1_video_UEfMHp": {
-          "type": "con1_video",
-          "settings": {
-            "video": "shopify://files/videos/about-us.mp4",
-            "video_m": "shopify://files/videos/about-us-m.mp4",
-            "video_thumbnail": "shopify://shop_images/about-us-thumbnail.jpg"
-          }
-        },
-        "con3_video_97YpPF": {
-          "type": "con3_video",
-          "settings": {
-            "video_thumbnail": "shopify://shop_images/about-us-bg-thumbnail.jpg"
-          }
-        },
-        "con4_video_QkDTQG": {
-          "type": "con4_video",
-          "settings": {
-            "video_thumbnail": "shopify://shop_images/app_logo.png",
-            "context": "To become a <b>new-generation keyboard brand</b> where performance meets design and desk culture.",
-            "btn_label": "See Brand Story"
-          }
-        },
-        "con4_content_aA4f3D": {
-          "type": "con4_content",
-          "disabled": true,
-          "settings": {
-            "block1": "<b>120+</b> Countries &amp; Regions",
-            "block2": "<b>30</b> Subsidiaries",
-            "block3": "<b>13</b> Years of Innovation",
-            "block4": "<b>22</b> Global Service Stations",
-            "block5": "<b>5M+</b> Trusted Global Users",
-            "block6": "<b>847</b> Patents"
-          }
-        }
-      },
-      "block_order": [
-        "con2_content_JR4TqN",
-        "con1_video_UEfMHp",
-        "con3_video_97YpPF",
-        "con4_video_QkDTQG",
-        "con4_content_aA4f3D"
-      ],
-      "name": "About Us Section",
-      "settings": {
-        "about_us_title": "",
-        "desktop_height": 1600,
-        "mobile_height": 1100,
-        "enable_scroll_pin": false
-      }
     },
     "video_carousel_home": {
       "type": "video-carousel",
@@ -1120,15 +1071,79 @@
         "color_background": "#f9f9f9",
         "color_text": "#1c1d1d"
       }
+    },
+    "about_us_section_nGTcfQ": {
+      "type": "about-us-section",
+      "blocks": {
+        "con2_content_JR4TqN": {
+          "type": "con2_Content",
+          "settings": {
+            "subtitle": "Where <b>performance</b> meets <b>personality</b>",
+            "title": "YOUR SETUP. YOUR STYLE.",
+            "context": ""
+          }
+        },
+        "con1_video_UEfMHp": {
+          "type": "con1_video",
+          "settings": {
+            "video": "shopify://files/videos/about-us.mp4",
+            "video_m": "shopify://files/videos/about-us-m.mp4",
+            "video_thumbnail": "shopify://shop_images/about-us-thumbnail.jpg"
+          }
+        },
+        "con3_video_97YpPF": {
+          "type": "con3_video",
+          "settings": {
+            "video_thumbnail": "shopify://shop_images/about-us-bg-thumbnail.jpg"
+          }
+        },
+        "con4_video_QkDTQG": {
+          "type": "con4_video",
+          "settings": {
+            "video_thumbnail": "shopify://shop_images/app_logo.png",
+            "context": "To become a <b>new-generation keyboard brand</b> where performance meets design and desk culture.",
+            "btn_label": "See Brand Story"
+          }
+        },
+        "con4_content_aA4f3D": {
+          "type": "con4_content",
+          "disabled": true,
+          "settings": {
+            "block1": "<b>120+</b> Countries &amp; Regions",
+            "block2": "<b>30</b> Subsidiaries",
+            "block3": "<b>13</b> Years of Innovation",
+            "block4": "<b>22</b> Global Service Stations",
+            "block5": "<b>5M+</b> Trusted Global Users",
+            "block6": "<b>847</b> Patents"
+          }
+        }
+      },
+      "block_order": [
+        "con2_content_JR4TqN",
+        "con1_video_UEfMHp",
+        "con3_video_97YpPF",
+        "con4_video_QkDTQG",
+        "con4_content_aA4f3D"
+      ],
+      "name": "About Us Section",
+      "settings": {
+        "about_us_title": "",
+        "desktop_height": 1600,
+        "mobile_height": 1100,
+        "enable_scroll_pin": false,
+        "top_offset": 0,
+        "top_offset_mobile": 0,
+        "overlay_opacity": 100
+      }
     }
   },
   "order": [
     "23e7f471-8853-4933-b850-986da236297a",
     "col2_txt_section_RFrVGf",
     "collection_list_LPzqx3",
-    "main_collection_list_tAJGQJ",
     "style_studio_theme_grid_home",
     "single_page_width_banner_ihTf8b",
+    "main_collection_list_tAJGQJ",
     "video_carousel_home",
     "joinus_section_YB8Mm3",
     "policy_list_section_pP8Ewa",
