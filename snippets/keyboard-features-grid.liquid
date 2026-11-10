@@ -1,0 +1,246 @@
+{%- liquid
+  assign show_grid = true
+  assign enforce_keycaps_only = true
+  if block.settings.show_only_keycaps == false or block.settings.show_only_keyboards == false
+    assign enforce_keycaps_only = false
+  endif
+
+  if enforce_keycaps_only
+    assign p_category = product.category | default: ''
+    assign p_type = product.type | default: '' | downcase | strip
+    assign p_tags = product.tags | join: ',' | downcase
+    assign is_keycap = false
+
+    if p_category == 'Keyboard Keycaps' or p_category == 'Keycaps'
+      assign is_keycap = true
+    elsif p_type == 'keycaps' or p_type == 'keycap' or p_type == 'keyboard keycaps'
+      assign is_keycap = true
+    elsif p_tags contains 'keycaps' or p_tags contains 'keycap'
+      assign is_keycap = true
+    endif
+
+    if p_type contains 'puller' or p_tags contains 'puller'
+      assign is_keycap = false
+    endif
+
+    unless is_keycap
+      assign show_grid = false
+    endunless
+  endif
+
+  if block.settings.item1_image != blank
+    assign img1 = block.settings.item1_image | image_url: width: 240
+  else
+    assign img1 = 'https://cdn.shopify.com/s/files/1/1001/2383/6697/files/whiteboard_exported_image_1.png?v=1793954950'
+  endif
+
+  if block.settings.item2_image != blank
+    assign img2 = block.settings.item2_image | image_url: width: 240
+  else
+    assign img2 = 'https://cdn.shopify.com/s/files/1/1001/2383/6697/files/whiteboard_exported_image_2.png?v=1793954950'
+  endif
+
+  if block.settings.item3_image != blank
+    assign img3 = block.settings.item3_image | image_url: width: 240
+  else
+    assign img3 = 'https://cdn.shopify.com/s/files/1/1001/2383/6697/files/whiteboard_exported_image_3.png?v=1793954949'
+  endif
+
+  if block.settings.item4_image != blank
+    assign img4 = block.settings.item4_image | image_url: width: 240
+  else
+    assign img4 = 'https://cdn.shopify.com/s/files/1/1001/2383/6697/files/whiteboard_exported_image_4_b5425be8-4137-4857-b06b-b95357f09821.png?v=1793954950'
+  endif
+
+  if block.settings.item5_image != blank
+    assign img5 = block.settings.item5_image | image_url: width: 240
+  else
+    assign img5 = 'https://cdn.shopify.com/s/files/1/1001/2383/6697/files/whiteboard_exported_image_5_f9ee2cb6-5cd6-4aa8-8a8d-b9ea0dd61812.png?v=1793954950'
+  endif
+
+  if block.settings.item6_image != blank
+    assign img6 = block.settings.item6_image | image_url: width: 240
+  else
+    assign img6 = 'https://cdn.shopify.com/s/files/1/1001/2383/6697/files/whiteboard_exported_image_6_ab738143-e6f7-48ef-a419-badf73d9d670.png?v=1793954950'
+  endif
+
+  assign title1 = block.settings.item1_title | default: 'Signature PIIFOX™ Designs'
+  assign text1 = block.settings.item1_text | default: 'Stand out with unique PIIFOX styles.'
+
+  assign title2 = block.settings.item2_title | default: 'Refresh Your Setup'
+  assign text2 = block.settings.item2_text | default: 'Give your keyboard a whole new look.'
+
+  assign title3 = block.settings.item3_title | default: 'Comfort by Design'
+  assign text3 = block.settings.item3_text | default: 'Carefully shaped for comfort in every keystroke.'
+
+  assign title4 = block.settings.item4_title | default: 'Built for Daily Use'
+  assign text4 = block.settings.item4_text | default: 'Made to handle everyday typing.'
+
+  assign title5 = block.settings.item5_title | default: 'Long-Lasting Prints'
+  assign text5 = block.settings.item5_text | default: 'Tested for up to 10 million keystrokes.'
+
+  assign title6 = block.settings.item6_title | default: 'Find Your Fit'
+  assign text6 = block.settings.item6_text | default: 'Options for different keyboard layouts.'
+-%}
+
+{%- if show_grid -%}
+  <div class="keyboard-features-grid-wrapper">
+    <div class="keyboard-features-grid">
+      <!-- Item 1 -->
+      <div class="keyboard-features-grid__item">
+        <div class="keyboard-features-grid__icon">
+          <img src="{{ img1 }}" alt="{{ title1 | escape }}" width="70" height="70" loading="lazy">
+        </div>
+        <div class="keyboard-features-grid__title">{{ title1 }}</div>
+        <div class="keyboard-features-grid__text">{{ text1 }}</div>
+      </div>
+
+      <!-- Item 2 -->
+      <div class="keyboard-features-grid__item">
+        <div class="keyboard-features-grid__icon">
+          <img src="{{ img2 }}" alt="{{ title2 | escape }}" width="70" height="70" loading="lazy">
+        </div>
+        <div class="keyboard-features-grid__title">{{ title2 }}</div>
+        <div class="keyboard-features-grid__text">{{ text2 }}</div>
+      </div>
+
+      <!-- Item 3 -->
+      <div class="keyboard-features-grid__item">
+        <div class="keyboard-features-grid__icon">
+          <img src="{{ img3 }}" alt="{{ title3 | escape }}" width="70" height="70" loading="lazy">
+        </div>
+        <div class="keyboard-features-grid__title">{{ title3 }}</div>
+        <div class="keyboard-features-grid__text">{{ text3 }}</div>
+      </div>
+
+      <!-- Item 4 -->
+      <div class="keyboard-features-grid__item">
+        <div class="keyboard-features-grid__icon">
+          <img src="{{ img4 }}" alt="{{ title4 | escape }}" width="70" height="70" loading="lazy">
+        </div>
+        <div class="keyboard-features-grid__title">{{ title4 }}</div>
+        <div class="keyboard-features-grid__text">{{ text4 }}</div>
+      </div>
+
+      <!-- Item 5 -->
+      <div class="keyboard-features-grid__item">
+        <div class="keyboard-features-grid__icon">
+          <img src="{{ img5 }}" alt="{{ title5 | escape }}" width="70" height="70" loading="lazy">
+        </div>
+        <div class="keyboard-features-grid__title">{{ title5 }}</div>
+        <div class="keyboard-features-grid__text">{{ text5 }}</div>
+      </div>
+
+      <!-- Item 6 -->
+      <div class="keyboard-features-grid__item">
+        <div class="keyboard-features-grid__icon">
+          <img src="{{ img6 }}" alt="{{ title6 | escape }}" width="70" height="70" loading="lazy">
+        </div>
+        <div class="keyboard-features-grid__title">{{ title6 }}</div>
+        <div class="keyboard-features-grid__text">{{ text6 }}</div>
+      </div>
+    </div>
+  </div>
+
+  {% style %}
+    .product-block.keyboard-features-grid-block {
+      margin-top: 14px;
+      margin-bottom: 18px;
+    }
+    .keyboard-features-grid-wrapper {
+      margin: 0;
+      padding: 0 0.25rem 0.25rem;
+      box-sizing: border-box;
+      clear: both;
+    }
+    .keyboard-features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      row-gap: 12px;
+      column-gap: 12px;
+      align-items: start;
+    }
+    .keyboard-features-grid__item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+    .keyboard-features-grid__icon {
+      width: 70px;
+      height: 70px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 0px;
+    }
+    .keyboard-features-grid__icon img {
+      max-width: 100%;
+      max-height: 100%;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+      display: block;
+    }
+    .keyboard-features-grid__title {
+      font-size: 13.5px;
+      font-weight: 700;
+      color: #101010;
+      line-height: 1.22;
+      margin: 2px 0 4px 0;
+      font-family: 'PF_Semibold', 'Manrope', -apple-system, BlinkMacSystemFont, sans-serif;
+      letter-spacing: -0.01em;
+    }
+    .keyboard-features-grid__text {
+      font-size: 11.5px;
+      color: #666666;
+      line-height: 1.35;
+      margin: 0;
+      font-family: 'PF_Normal', 'Manrope', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+    @media screen and (max-width: 768px) {
+      .product-block.keyboard-features-grid-block {
+        margin-top: 10px;
+        margin-bottom: 14px;
+      }
+      .keyboard-features-grid-wrapper {
+        margin: 0;
+        padding: 0;
+      }
+      .keyboard-features-grid {
+        row-gap: 10px;
+        column-gap: 8px;
+      }
+      .keyboard-features-grid__icon {
+        width: 56px;
+        height: 56px;
+        margin-bottom: 0px;
+      }
+      .keyboard-features-grid__title {
+        font-size: 12px;
+        margin-top: 2px;
+        margin-bottom: 3px;
+      }
+      .keyboard-features-grid__text {
+        font-size: 10.5px;
+        line-height: 1.3;
+      }
+    }
+    @media screen and (max-width: 380px) {
+      .keyboard-features-grid {
+        column-gap: 6px;
+      }
+      .keyboard-features-grid__icon {
+        width: 48px;
+        height: 48px;
+        margin-bottom: 0px;
+      }
+      .keyboard-features-grid__title {
+        font-size: 11px;
+      }
+      .keyboard-features-grid__text {
+        font-size: 9.5px;
+      }
+    }
+  {% endstyle %}
+{%- endif -%}

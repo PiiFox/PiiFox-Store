@@ -218,53 +218,106 @@
     "col2_txt_section_RFrVGf": {
       "type": "col2-txt-section",
       "blocks": {
-        "feature_item_pHQkXV": {
-          "type": "feature_item",
+        "ticker_item_1": {
+          "type": "ticker_item",
           "settings": {
-            "feature_item_title": "Sate your style",
-            "feature_item_context": "Make every setup feel like yours."
+            "prefix_text": "Type your style",
+            "suffix_text": "Make every setup feel like yours.",
+            "link": "",
+            "prefix_color": "",
+            "suffix_color": ""
           }
         },
-        "feature_item_4gLket": {
-          "type": "feature_item",
+        "ticker_item_2": {
+          "type": "ticker_item",
           "settings": {
-            "feature_item_title": "Feel the performance",
-            "feature_item_context": "Smooth. Fast. Comfortable."
+            "prefix_text": "Free standard shipping",
+            "suffix_text": "On all orders over $75",
+            "link": "",
+            "prefix_color": "",
+            "suffix_color": ""
           }
         },
-        "feature_item_APcm6H": {
-          "type": "feature_item",
+        "ticker_item_3": {
+          "type": "ticker_item",
           "settings": {
-            "feature_item_title": "Quality You Can Trust",
-            "feature_item_context": "Tested for everyday use."
+            "prefix_text": "Feel the performance",
+            "suffix_text": "Smooth. Fast. Comfortable.",
+            "link": "",
+            "prefix_color": "",
+            "suffix_color": ""
+          }
+        },
+        "ticker_item_4": {
+          "type": "ticker_item",
+          "settings": {
+            "prefix_text": "Make it personal",
+            "suffix_text": "Custom crafted keyboards & switches",
+            "link": "",
+            "prefix_color": "",
+            "suffix_color": ""
+          }
+        },
+        "ticker_item_5": {
+          "type": "ticker_item",
+          "settings": {
+            "prefix_text": "Quality you can trust",
+            "suffix_text": "Tested for everyday use.",
+            "link": "",
+            "prefix_color": "",
+            "suffix_color": ""
           }
         }
       },
       "block_order": [
-        "feature_item_pHQkXV",
-        "feature_item_4gLket",
-        "feature_item_APcm6H"
+        "ticker_item_1",
+        "ticker_item_2",
+        "ticker_item_3",
+        "ticker_item_4",
+        "ticker_item_5"
       ],
       "name": "Col2 Txt Section",
       "settings": {
-        "title": "Type your style"
+        "title": "Type your style",
+        "title_color": "#000000",
+        "title_font_size": 32,
+        "mobile_title_font_size": 20,
+        "bg_color": "#ffffff",
+        "show_border": true,
+        "show_bottom_border": false,
+        "show_vertical_divider": false,
+        "border_color": "#ebebeb",
+        "prefix_color": "#0a6830",
+        "prefix_font_size": 20,
+        "mobile_prefix_font_size": 16,
+        "suffix_color": "#000000",
+        "suffix_font_size": 15,
+        "mobile_suffix_font_size": 13,
+        "speed": 28,
+        "direction": "left",
+        "pause_on_hover": false,
+        "gap": 48,
+        "padding_vertical": 36,
+        "full_width": false,
+        "mobile_layout": "stacked"
       }
     },
     "collection_list_LPzqx3": {
       "type": "collection-list",
       "blocks": {
-        "collection_dgEgp4": {
-          "type": "collection",
-          "settings": {
-            "collection": "new-arrivals",
-            "collection_title": "New arrivals"
-          }
-        },
         "collection_KMnRdc": {
           "type": "collection",
           "settings": {
             "collection": "best-sellers",
             "collection_title": "Best Sellers"
+          }
+        },
+        "collection_dgEgp4": {
+          "type": "collection",
+          "disabled": true,
+          "settings": {
+            "collection": "new-arrivals",
+            "collection_title": "New arrivals"
           }
         },
         "collection_aCcJcd": {
@@ -285,14 +338,23 @@
         }
       },
       "block_order": [
-        "collection_dgEgp4",
         "collection_KMnRdc",
+        "collection_dgEgp4",
         "collection_aCcJcd",
         "collection_K8zLam"
       ],
-      "name": "Collection List Section",
+      "name": "Best Sellers Section",
       "settings": {
-        "title": "Discover What's Popular on PIIFOX"
+        "title": "Best Sellers",
+        "collection": "best-sellers",
+        "products_limit": 12,
+        "btn_text": "Learn More",
+        "btn_color": "#111111",
+        "btn_text_color": "#ffffff",
+        "btn_hover_color": "#0a6830",
+        "card_bg": "#ffffff",
+        "image_bg": "#ffffff",
+        "enable_tabs": false
       }
     },
     "main_collection_list_tAJGQJ": {
@@ -302,58 +364,67 @@
           "type": "collection",
           "settings": {
             "collection": "keyboards",
-            "cover_image": "shopify://shop_images/37efe26d5b548dfbbb336d3c655a770a.jpg",
-            "cover_image_m": "shopify://shop_images/37efe26d5b548dfbbb336d3c655a770a_a3797839-5436-4acf-ab6f-19ec815f2367.jpg",
-            "collection_title": "Keyboards"
-          }
-        },
-        "collection_NeL9xF": {
-          "type": "collection",
-          "settings": {
-            "collection": "keycaps",
-            "cover_image": "shopify://shop_images/8ec6848585de83611ee764cfa45c5f68_215d3fba-6ff2-45e4-9dd9-aeb64d959838.jpg",
-            "cover_image_m": "shopify://shop_images/8ec6848585de83611ee764cfa45c5f68_b4109303-452f-4a68-b119-60818ba6a54d.jpg",
-            "collection_title": "Keycaps"
+            "collection_title": "Keyboards",
+            "custom_link": "",
+            "card_width": "full",
+            "cover_image": "shopify://shop_images/333.webp",
+            "default_placeholder": "keyboards",
+            "text_color": "#111111"
           }
         },
         "collection_Ax8BCa": {
           "type": "collection",
           "settings": {
             "collection": "switches",
-            "cover_image": "shopify://shop_images/2b8608a79cf0d7cc63e7a6866811edaa.jpg",
-            "cover_image_m": "shopify://shop_images/2b8608a79cf0d7cc63e7a6866811edaa_7b4b6346-a61a-41a4-884f-b7cca85fa098.jpg",
-            "collection_title": "Switches"
-          }
-        },
-        "collection_iYdex4": {
-          "type": "collection",
-          "settings": {
-            "collection": "mice",
-            "cover_image": "shopify://shop_images/118493700f7e3293efadf6b957758203_8a9c4b66-45cc-410a-9db5-bb0c838a9c6a.jpg",
-            "cover_image_m": "shopify://shop_images/118493700f7e3293efadf6b957758203_0ef842c9-042c-4868-896f-7812d2d89fcb.jpg",
-            "collection_title": "Mice"
+            "collection_title": "Switches",
+            "custom_link": "",
+            "card_width": "half",
+            "cover_image": "shopify://shop_images/999.webp",
+            "default_placeholder": "switches",
+            "text_color": "#111111"
           }
         },
         "collection_gFK3Wa": {
           "type": "collection",
           "settings": {
             "collection": "accessories",
-            "cover_image": "shopify://shop_images/3_acfe87dd-5c72-4a71-b279-a4e78fb3b21d.jpg",
-            "cover_image_m": "shopify://shop_images/05c749914ceb6f0e401d50aac1cec636.jpg",
-            "collection_title": "Accessories"
+            "collection_title": "Accessories",
+            "custom_link": "",
+            "card_width": "half",
+            "cover_image": "shopify://shop_images/444.jpg",
+            "default_placeholder": "accessories",
+            "text_color": "#111111"
+          }
+        },
+        "collection_NeL9xF": {
+          "type": "collection",
+          "settings": {
+            "collection": "keycaps",
+            "collection_title": "Keycaps",
+            "custom_link": "",
+            "card_width": "full",
+            "cover_image": "shopify://shop_images/yyyy.jpg",
+            "default_placeholder": "keycaps",
+            "text_color": "#111111",
+            "desktop_card_height": 0,
+            "mobile_aspect_ratio": "auto"
           }
         }
       },
       "block_order": [
         "collection_wyacq7",
-        "collection_NeL9xF",
         "collection_Ax8BCa",
-        "collection_iYdex4",
-        "collection_gFK3Wa"
+        "collection_gFK3Wa",
+        "collection_NeL9xF"
       ],
       "name": "Main Collection List",
       "settings": {
-        "title": "SHOP BY CATEGORY"
+        "title": "SHOP BY CATEGORY",
+        "image_display_mode": "cover",
+        "desktop_max_width": 1380,
+        "desktop_card_height": 280,
+        "card_radius": 24,
+        "card_gap": 16
       }
     },
     "style_studio_theme_grid_home": {
@@ -372,8 +443,9 @@
             "collection": "retro-daily-theme-keycaps",
             "button_label": "Explore Theme",
             "button_link": "",
-            "button_text_color": "#6f3b13",
-            "highlight_color": "#f4efe6"
+                        "button_text_color": "#6f3b13",
+            "highlight_color": "#f4efe6",
+            "card_bg_color": "#f6e8d8"
           }
         },
         "theme_card_36t6dX": {
@@ -407,7 +479,8 @@
             "button_label": "Explore Theme",
             "button_link": "",
             "button_text_color": "#6f3b13",
-            "highlight_color": "#f4efe6"
+            "highlight_color": "#f4efe6",
+            "card_bg_color": "#f0f2f5"
           }
         },
         "theme-nature-home": {
@@ -423,8 +496,9 @@
             "collection": "nature-soft-theme-keycaps",
             "button_label": "Explore Theme",
             "button_link": "",
-            "button_text_color": "#107a44",
-            "highlight_color": "#f4efe6"
+                        "button_text_color": "#107a44",
+            "highlight_color": "#f4efe6",
+            "card_bg_color": "#e3f2e6"
           }
         },
         "theme_card_ycaA7P": {
@@ -440,8 +514,9 @@
             "collection": "clean-minimal-theme-keycaps",
             "button_label": "Explore Theme",
             "button_link": "",
-            "button_text_color": "#bc896f",
-            "highlight_color": "#f4efe6"
+                        "button_text_color": "#bc896f",
+            "highlight_color": "#f4efe6",
+            "card_bg_color": "#f7ebe3"
           }
         },
         "theme-cute-home": {
@@ -457,8 +532,9 @@
             "collection": "cute-colorful-theme-keycaps",
             "button_label": "Explore Theme",
             "button_link": "",
-            "button_text_color": "#ef5da8",
-            "highlight_color": "#f4efe6"
+                        "button_text_color": "#ef5da8",
+            "highlight_color": "#f4efe6",
+            "card_bg_color": "#fde8f3"
           }
         },
         "theme_card_nUMQFG": {
@@ -474,8 +550,9 @@
             "collection": "game-playful-theme-keycaps",
             "button_label": "Explore Theme",
             "button_link": "",
-            "button_text_color": "#e14f56",
-            "highlight_color": "#f4efe6"
+                        "button_text_color": "#e14f56",
+            "highlight_color": "#f4efe6",
+            "card_bg_color": "#fbe3e3"
           }
         },
         "theme-art-home": {
@@ -491,8 +568,9 @@
             "collection": "art-culture-theme-keycaps",
             "button_label": "Explore Theme",
             "button_link": "",
-            "button_text_color": "#7c3aed",
-            "highlight_color": "#f4efe6"
+                        "button_text_color": "#7c3aed",
+            "highlight_color": "#f4efe6",
+            "card_bg_color": "#ede7fb"
           }
         },
         "theme-fun-home": {
@@ -508,8 +586,9 @@
             "collection": "fantasy-magic-theme-keycaps",
             "button_label": "Explore Theme",
             "button_link": "",
-            "button_text_color": "#0f766e",
-            "highlight_color": "#f4efe6"
+                        "button_text_color": "#0f766e",
+            "highlight_color": "#f4efe6",
+            "card_bg_color": "#dcf0ee"
           }
         }
       },
@@ -529,8 +608,9 @@
         "title_before_color": "#121212",
         "title_after": "Many Styles.",
         "title_after_color": "#244f1d",
-        "subtitle": "Preview how different keycap themes transform the same keyboard.",
-        "style_card_button_label": "View Style"
+                "subtitle": "Preview how different keycap themes transform the same keyboard.",
+        "style_card_button_label": "View Style",
+        "style_card_bg_color": "#f9f7f5"
       }
     },
     "single_page_width_banner_ihTf8b": {
@@ -539,10 +619,12 @@
         "single_page_width_banner_btfwM4": {
           "type": "single_page_width_banner",
           "settings": {
-            "banner": "shopify://shop_images/p-1-no-text.jpg",
-            "m_banner": "shopify://shop_images/m-half-bg.png",
+            "video_url": "",
+            "banner": "shopify://shop_images/222222.webp",
+            "m_banner": "shopify://shop_images/222222.webp",
             "banner_title": "STATE YOUR\nBOARDS",
             "sub_title": "Browse curated PIIFOX keycap themes \nand build a setup with more personality.",
+            "text_color": "#ffffff",
             "btn_link": "shopify://pages/keycaps-themes-lab",
             "btn_label": "SHOP KEYCAP THEMES"
           }
@@ -609,7 +691,10 @@
       ],
       "name": "About Us Section",
       "settings": {
-        "about_us_title": ""
+        "about_us_title": "",
+        "desktop_height": 1600,
+        "mobile_height": 1100,
+        "enable_scroll_pin": false
       }
     },
     "video_carousel_home": {
@@ -727,7 +812,7 @@
       "type": "joinus_section",
       "name": "Join Us Section",
       "settings": {
-        "joinus_image": "shopify://shop_images/ChatGPT_Image_2026_7_8_12_46_34_1.png",
+        "joinus_image": "shopify://shop_images/5656.jpg",
         "banner_title": "JOIN OUR DISCORD COMMUNITY",
         "sub_title": "PIIFOX Community",
         "context": "Get early access to drops, setup inspiration, support, giveaways, and real-time chatwith fellow keyboard fans.",
@@ -1044,7 +1129,6 @@
     "main_collection_list_tAJGQJ",
     "style_studio_theme_grid_home",
     "single_page_width_banner_ihTf8b",
-    "about_us_section_nGTcfQ",
     "video_carousel_home",
     "joinus_section_YB8Mm3",
     "policy_list_section_pP8Ewa",
@@ -1053,6 +1137,7 @@
     "blog_center_section_qL7Qfw",
     "d1067f4b-b19f-43f3-a994-5755b880a327",
     "0d562896-99f8-401d-ac8a-3209b635eb7f",
-    "9dad0aa8-758a-4a98-9a5f-6085668c1cec"
+    "9dad0aa8-758a-4a98-9a5f-6085668c1cec",
+    "about_us_section_nGTcfQ"
   ]
 }

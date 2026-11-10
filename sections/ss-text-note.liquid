@@ -1,0 +1,314 @@
+{%- comment -%}
+  Style Studio Text Note
+  Informational text banner / note section explaining keycap replacement details, warranties, etc.
+  With customizable border, border color, content background color, and responsive typography.
+{%- endcomment -%}
+
+{%- assign heading_size_mobile = section.settings.title_size_mobile | default: 20 -%}
+{%- assign text_size_mobile = section.settings.text_size_mobile | default: 14 -%}
+
+<section class="ss-text-note ss-text-note-{{ section.id }}" data-ss-text-note>
+  <div class="ss-text-note__inner">
+    <div class="ss-text-note__card">
+      {%- if section.settings.title != blank -%}
+        <h3 class="ss-text-note__title">{{ section.settings.title | escape }}</h3>
+      {%- endif -%}
+
+      {%- if section.settings.content != blank -%}
+        <div class="ss-text-note__content rte">
+          {{ section.settings.content }}
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% style %}
+  .ss-text-note-{{ section.id }} {
+    width: 100%;
+    background-color: {{ section.settings.background_color }};
+    padding: {{ section.settings.padding_top }}px 0 {{ section.settings.padding_bottom }}px;
+  }
+
+  .ss-text-note-{{ section.id }} .ss-text-note__inner {
+    width: min(100% - 40px, {{ section.settings.max_width }}px);
+    margin: 0 auto;
+  }
+
+  .ss-text-note-{{ section.id }} .ss-text-note__card {
+    background-color: {{ section.settings.content_bg_color }};
+    border: {{ section.settings.border_width }}px solid {{ section.settings.border_color }};
+    border-radius: {{ section.settings.border_radius }}px;
+    padding: {{ section.settings.card_padding }}px;
+    text-align: {{ section.settings.alignment }};
+    box-sizing: border-box;
+  }
+
+  .ss-text-note-{{ section.id }} .ss-text-note__title {
+    margin: 0 0 16px 0;
+    color: {{ section.settings.title_color }};
+    font-size: {{ section.settings.title_size }}px;
+    font-weight: {{ section.settings.title_weight | default: '800' }};
+    line-height: 1.25;
+    letter-spacing: -0.02em;
+  }
+
+  .ss-text-note-{{ section.id }} .ss-text-note__content {
+    color: {{ section.settings.text_color }};
+    font-size: {{ section.settings.text_size }}px;
+    line-height: 1.6;
+  }
+
+  .ss-text-note-{{ section.id }} .ss-text-note__content p {
+    margin: 0 0 10px 0;
+    color: {{ section.settings.text_color }};
+    font-size: {{ section.settings.text_size }}px;
+    line-height: 1.6;
+  }
+
+  .ss-text-note-{{ section.id }} .ss-text-note__content p:last-child {
+    margin-bottom: 0;
+  }
+
+  .ss-text-note-{{ section.id }} .ss-text-note__content strong,
+  .ss-text-note-{{ section.id }} .ss-text-note__content b {
+    font-weight: 700;
+    color: {{ section.settings.title_color }};
+  }
+
+  .ss-text-note-{{ section.id }} .ss-text-note__content a {
+    color: inherit;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    transition: opacity 0.2s ease;
+  }
+
+  .ss-text-note-{{ section.id }} .ss-text-note__content a:hover {
+    opacity: 0.75;
+  }
+
+  @media screen and (max-width: 769px) {
+    .ss-text-note-{{ section.id }} {
+      padding: {{ section.settings.padding_top | times: 0.7 | round }}px 0 {{ section.settings.padding_bottom | times: 0.7 | round }}px;
+    }
+
+    .ss-text-note-{{ section.id }} .ss-text-note__inner {
+      width: calc(100% - 40px);
+    }
+
+    .ss-text-note-{{ section.id }} .ss-text-note__card {
+      padding: {{ section.settings.card_padding_mobile }}px;
+      border-radius: {{ section.settings.border_radius | at_most: 16 }}px;
+    }
+
+    .ss-text-note-{{ section.id }} .ss-text-note__title {
+      font-size: {{ heading_size_mobile }}px;
+      margin-bottom: 12px;
+    }
+
+    .ss-text-note-{{ section.id }} .ss-text-note__content,
+    .ss-text-note-{{ section.id }} .ss-text-note__content p {
+      font-size: {{ text_size_mobile }}px;
+      margin-bottom: 10px;
+      line-height: 1.55;
+    }
+  }
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "SS Text Note",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Made for Your Style. Ready Out of the Box."
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Title color",
+      "default": "#121212"
+    },
+    {
+      "type": "range",
+      "id": "title_size",
+      "label": "Title font size (desktop)",
+      "min": 16,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "default": 26
+    },
+    {
+      "type": "range",
+      "id": "title_size_mobile",
+      "label": "Title font size (mobile)",
+      "min": 14,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "select",
+      "id": "title_weight",
+      "label": "Title font weight",
+      "default": "800",
+      "options": [
+        { "value": "400", "label": "Regular" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semibold" },
+        { "value": "700", "label": "Bold" },
+        { "value": "800", "label": "Extra bold" },
+        { "value": "900", "label": "Black" }
+      ]
+    },
+    {
+      "type": "richtext",
+      "id": "content",
+      "label": "Content",
+      "default": "<p>Our Custom Keycap Installation service is designed to deliver a keyboard that's already personalized to your style — not two separate sets of keycaps.</p><p>We replace the standard keycaps with your chosen design before shipping, so your keyboard arrives fully customized and ready to use.</p><p><strong>Please note:</strong> As this is a keycap replacement service, the original keycaps are not included in your shipment.</p><p><strong>Still want to keep the original keycaps?</strong>&nbsp; If you'd like to receive them as well, please contact our customer support team.</p>"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#333333"
+    },
+    {
+      "type": "range",
+      "id": "text_size",
+      "label": "Text font size (desktop)",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 15
+    },
+    {
+      "type": "range",
+      "id": "text_size_mobile",
+      "label": "Text font size (mobile)",
+      "min": 11,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "select",
+      "id": "alignment",
+      "label": "Text alignment",
+      "default": "left",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Box Border & Background"
+    },
+    {
+      "type": "color",
+      "id": "content_bg_color",
+      "label": "Content background color",
+      "default": "#f6f6f6"
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Border color",
+      "default": "#e5e5e5"
+    },
+    {
+      "type": "range",
+      "id": "border_width",
+      "label": "Border width",
+      "min": 0,
+      "max": 10,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "border_radius",
+      "label": "Border radius",
+      "min": 0,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "card_padding",
+      "label": "Content padding (desktop)",
+      "min": 12,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "card_padding_mobile",
+      "label": "Content padding (mobile)",
+      "min": 8,
+      "max": 50,
+      "step": 2,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "header",
+      "content": "Section Layout"
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "label": "Content max width",
+      "min": 600,
+      "max": 1400,
+      "step": 20,
+      "unit": "px",
+      "default": 1320
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Section background color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding top",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 15
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding bottom",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 15
+    }
+  ],
+  "presets": [
+    {
+      "name": "SS Text Note"
+    }
+  ]
+}
+{% endschema %}

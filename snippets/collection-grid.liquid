@@ -70,28 +70,125 @@ Snippet Arguments
         </div>
     </div>
   </div>
+{%- liquid
+  assign is_keyboard_collection = false
+  assign handle_downcase = collection.handle | downcase
+  assign title_downcase = collection.title | downcase
+  if handle_downcase contains 'keyboard' or handle_downcase contains 'boards' or title_downcase contains 'keyboard' or template.suffix contains 'keyboard' or template.suffix contains 'boards'
+    assign is_keyboard_collection = true
+  endif
+
+  assign card_extra_class = ''
+  unless is_keyboard_collection
+    assign card_extra_class = 'small--one-halfs'
+  endunless
+-%}
 <div class="selec_row">
   <div class="row_one"></div>
   <div class="row_two"></div>
 </div>
+{%- liquid
+    assign current_page = current_page | default: 1
+    assign has_promo_cards = false
+    if section_blocks != blank
+      for block in section_blocks
+        if block.type == 'promo_card' or block.type == 'image_card'
+          if block.settings.show_on_all_pages or current_page == 1
+            assign has_promo_cards = true
+            break
+          endif
+        endif
+      endfor
+    endif
+  -%}
   <div class="grid grid--uniform{% if mobile_flush_grid %} small--grid--flush{% endif %}"{% unless enable_collection_count %} data-scroll-to{% endunless %}>
-    {%- for item in items -%}
-      {%- if item.object_type == 'product' -%}
-        {%- render 'product-grid-item',
-          product: item,
-          per_row: per_row,
-          quick_shop_enable: quick_shop_enable,
-          short_introduction_enable: short_introduction_enable,
-          short_point_desc_enable: short_point_desc_enable,
-          product_card_btn_label: product_card_btn_label
-        -%}
-      {%- else -%}
-        {%- render 'search-grid-item',
-          item: item,
-          per_row: per_row
-        %}
-      {%- endif -%}
-    {%- endfor -%}
+    {%- if has_promo_cards -%}
+      {%- liquid
+        assign total_items = items.size
+        assign product_index = 0
+        assign max_slots = total_items | plus: 50
+      -%}
+      {%- for slot in (1..max_slots) -%}
+        {%- assign promo_block = nil -%}
+        {%- for block in section_blocks -%}
+          {%- if block.type == 'promo_card' or block.type == 'image_card' -%}
+            {%- assign show_card = false -%}
+            {%- if block.settings.show_on_all_pages or current_page == 1 -%}
+              {%- assign show_card = true -%}
+            {%- endif -%}
+            {%- assign block_pos = block.settings.position | plus: 0 -%}
+            {%- if show_card and block_pos == slot -%}
+              {%- assign promo_block = block -%}
+              {%- break -%}
+            {%- endif -%}
+          {%- endif -%}
+        {%- endfor -%}
+
+        {%- if promo_block != nil -%}
+          {%- render 'promo-grid-card',
+            block: promo_block,
+            per_row: per_row,
+            card_extra_class: card_extra_class
+          -%}
+        {%- elsif product_index < total_items -%}
+          {%- assign item = items[product_index] -%}
+          {%- if item.object_type == 'product' -%}
+            {%- render 'product-grid-item',
+              product: item,
+              per_row: per_row,
+              quick_shop_enable: quick_shop_enable,
+              short_introduction_enable: short_introduction_enable,
+              short_point_desc_enable: short_point_desc_enable,
+              product_card_btn_label: product_card_btn_label,
+              extra_class: card_extra_class
+            -%}
+          {%- else -%}
+            {%- render 'search-grid-item',
+              item: item,
+              per_row: per_row
+            -%}
+          {%- endif -%}
+          {%- assign product_index = product_index | plus: 1 -%}
+        {%- else -%}
+          {%- assign has_future_promo = false -%}
+          {%- for block in section_blocks -%}
+            {%- if block.type == 'promo_card' or block.type == 'image_card' -%}
+              {%- assign show_card = false -%}
+              {%- if block.settings.show_on_all_pages or current_page == 1 -%}
+                {%- assign show_card = true -%}
+              {%- endif -%}
+              {%- assign block_pos = block.settings.position | plus: 0 -%}
+              {%- if show_card and block_pos > slot -%}
+                {%- assign has_future_promo = true -%}
+                {%- break -%}
+              {%- endif -%}
+            {%- endif -%}
+          {%- endfor -%}
+          {%- unless has_future_promo -%}
+            {%- break -%}
+          {%- endunless -%}
+        {%- endif -%}
+      {%- endfor -%}
+    {%- else -%}
+      {%- for item in items -%}
+        {%- if item.object_type == 'product' -%}
+          {%- render 'product-grid-item',
+            product: item,
+            per_row: per_row,
+            quick_shop_enable: quick_shop_enable,
+            short_introduction_enable: short_introduction_enable,
+            short_point_desc_enable: short_point_desc_enable,
+            product_card_btn_label: product_card_btn_label,
+            extra_class: card_extra_class
+          -%}
+        {%- else -%}
+          {%- render 'search-grid-item',
+            item: item,
+            per_row: per_row
+          -%}
+        {%- endif -%}
+      {%- endfor -%}
+    {%- endif -%}
   </div>
 </div>
 
@@ -141,6 +238,28 @@ html[dir="rtl"] .collection-filter__item--count {
 }
 .selec_row .row_two {
   background: url({{ 'col_2.svg' | asset_url }}) center center / 50% 50% no-repeat #000;
+}
+
+.collection-filter select,
+.collection-filter__sort-container,
+.collection-filter__sort-container select,
+#SortBy {
+  border-radius: 8px !important;
+}
+.collection-filter select {
+  border: 1px solid var(--colorBorder, #e5e5e5) !important;
+  background-color: #ffffff;
+  padding: 8px 32px 8px 14px !important;
+  height: 42px !important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  color: #111111 !important;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.collection-filter select:hover,
+.collection-filter select:focus {
+  border-color: #999999 !important;
+  outline: none;
 }
 
 @media screen and (max-width: 768px) {

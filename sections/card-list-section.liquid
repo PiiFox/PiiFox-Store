@@ -53,23 +53,32 @@
                       {%- endif %}
                     </div>
                     <div class="card-list-section-option">
-                      <div class="card-list-section-price custom-txt-bold">
-                        {% liquid
-                          assign on_sale = false
-                          if product.compare_at_price > product.price
-                            assign on_sale = true
-                          endif
-                        %}
+                      {% liquid
+                        assign on_sale = false
+                        if product.compare_at_price > product.price
+                          assign on_sale = true
+                        endif
+                      %}
+                      <div class="card-list-section-price{% if on_sale %} on-sale{% endif %} custom-txt-bold">
                         {%- if on_sale -%}
                           <span class="visually-hidden">{{ 'products.general.regular_price' | t }}</span>
                           <span class="grid-product__price--original">{{ product.compare_at_price | money }}</span>
                           <span class="visually-hidden">{{ 'products.general.sale_price' | t }}</span>
-                        {%- endif -%}
-                        {%- if product.price_varies -%}
-                          {%- assign price = product.price_min | money -%}
-                          {{ 'products.general.from_text_html' | t: price: price }}
+                          <span class="card-list-section-price--sale">
+                            {%- if product.price_varies -%}
+                              {%- assign price = product.price_min | money -%}
+                              {{ 'products.general.from_text_html' | t: price: price }}
+                            {%- else -%}
+                              {{ product.price | money }}
+                            {%- endif -%}
+                          </span>
                         {%- else -%}
-                          {{ product.price | money }}
+                          {%- if product.price_varies -%}
+                            {%- assign price = product.price_min | money -%}
+                            {{ 'products.general.from_text_html' | t: price: price }}
+                          {%- else -%}
+                            {{ product.price | money }}
+                          {%- endif -%}
                         {%- endif -%}
                         {%- if on_sale -%}
                           {%- if settings.product_save_amount -%}
@@ -383,7 +392,16 @@
   .card-list-section-{{ section.id }} .card-list-section-price {
       font-size: 1.6em;
       font-weight: bold;
-      color: var(--colorThemePrimary);
+      color: #111111;
+  }
+  .card-list-section-{{ section.id }} .card-list-section-price.on-sale,
+  .card-list-section-{{ section.id }} .card-list-section-price.on-sale .card-list-section-price--sale {
+      color: var(--colorLightLink, #0A6830);
+  }
+  .card-list-section-{{ section.id }} .card-list-section-price .grid-product__price--original {
+      color: #999999 !important;
+      text-decoration: line-through;
+      font-size: 0.7em;
   }
   .card-list-section-{{ section.id }} .card-list-section-price .grid-product__price--savings {
       font-size: 1.1em;

@@ -1,0 +1,533 @@
+{%- comment -%}
+  Style Studio Best Sellers
+  Horizontal scrolling row of keycap product cards with prev / next arrows.
+
+  Products come from the selected collection (defaults to a keycap collection).
+  Falls back to the collection's best selling sort.
+{%- endcomment -%}
+
+{%- liquid
+  assign source_collection = section.settings.collection
+  if source_collection == blank
+    assign source_collection = collections['keycaps']
+  endif
+
+  assign limit = section.settings.products_to_show
+  assign products = source_collection.products
+-%}
+
+<section id="best-selling-keycaps" class="ss-best ss-best-{{ section.id }}" data-ss-best>
+  <div class="ss-best__inner">
+    <div class="ss-best__header">
+      <div class="ss-best__heading">
+        {%- if section.settings.title != blank -%}
+          <h2 class="ss-best__title">{{ section.settings.title | escape }}</h2>
+        {%- endif -%}
+        {%- if section.settings.subtitle != blank -%}
+          <p class="ss-best__subtitle">{{ section.settings.subtitle | escape | newline_to_br }}</p>
+        {%- endif -%}
+      </div>
+
+      {%- if section.settings.view_all_label != blank -%}
+        <a
+          class="ss-best__view-all"
+          href="{{ section.settings.view_all_link | default: source_collection.url | default: '#' }}"
+        >
+          {{ section.settings.view_all_label | escape }}
+        </a>
+      {%- endif -%}
+    </div>
+
+    <div class="ss-best__viewport">
+      <button
+        type="button"
+        class="ss-best__arrow ss-best__arrow--prev"
+        data-ss-best-prev
+        aria-label="Previous products"
+      >
+        <svg viewBox="0 0 284.49 497.14" aria-hidden="true" focusable="false">
+          <path fill="currentColor" d="M229.88 497.14a15 15 0 0 1-11.23-5.11L14.65 260.88a15 15 0 0 1 0-21.22L218.65 8.11a15 15 0 1 1 22.46 19.94L50.41 249.27l190.7 218.65a15 15 0 0 1-11.23 29.22z"/>
+        </svg>
+      </button>
+
+      <div class="ss-best__track" data-ss-best-track>
+        {%- if products.size > 0 -%}
+          {%- for product in products limit: limit -%}
+            <div class="ss-best__item">
+              {%- render 'product-grid-item-keycap',
+                product: product,
+                per_row: 6,
+                short_point_desc_enable: false,
+                product_card_btn_label: section.settings.card_button_label
+              -%}
+            </div>
+          {%- endfor -%}
+        {%- else -%}
+          {%- for i in (1..6) -%}
+            <div class="ss-best__item">
+              <div class="ss-best__placeholder">
+                <div class="ss-best__placeholder-img"></div>
+                <div class="ss-best__placeholder-line"></div>
+                <div class="ss-best__placeholder-line ss-best__placeholder-line--short"></div>
+              </div>
+            </div>
+          {%- endfor -%}
+        {%- endif -%}
+      </div>
+
+      <button
+        type="button"
+        class="ss-best__arrow ss-best__arrow--next"
+        data-ss-best-next
+        aria-label="Next products"
+      >
+        <svg viewBox="0 0 284.49 497.14" aria-hidden="true" focusable="false">
+          <path fill="currentColor" d="M54.61 497.14a15 15 0 0 1-11.23-29.22l190.7-218.65L43.38 30.62a15 15 0 1 1 22.46-19.94l204 231.55a15 15 0 0 1 0 21.22L65.84 492a15 15 0 0 1-11.23 5.11z"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+</section>
+
+{% style %}
+  .ss-best-{{ section.id }} {
+    width: 100%;
+    background-color: {{ section.settings.background_color }};
+    padding: {{ section.settings.padding_top }}px 0 {{ section.settings.padding_bottom }}px;
+    overflow: hidden;
+  }
+
+  .ss-best-{{ section.id }} .ss-best__inner {
+    width: min(100% - 40px, 1320px);
+    margin: 0 auto;
+  }
+
+  .ss-best-{{ section.id }} .ss-best__header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 20px;
+    margin-bottom: 24px;
+  }
+
+  .ss-best-{{ section.id }} .ss-best__title {
+    margin: 0;
+    color: {{ section.settings.title_color }};
+    font-size: 30px;
+    font-weight: 700;
+    line-height: 1.15;
+  }
+
+  .ss-best-{{ section.id }} .ss-best__subtitle {
+    margin: 8px 0 0;
+    color: {{ section.settings.subtitle_color }};
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  .ss-best-{{ section.id }} .ss-best__view-all {
+    flex: 0 0 auto;
+    color: {{ section.settings.accent_color }};
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    border-bottom: 1px solid currentColor;
+    padding-bottom: 2px;
+    white-space: nowrap;
+  }
+
+  .ss-best-{{ section.id }} .ss-best__viewport {
+    position: relative;
+  }
+
+  .ss-best-{{ section.id }} .ss-best__track {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: {{ section.settings.gap }}px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-behavior: smooth;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+    padding: 2px;
+  }
+
+  .ss-best-{{ section.id }} .ss-best__track::-webkit-scrollbar {
+    display: none;
+  }
+
+  .ss-best-{{ section.id }} .ss-best__item {
+    flex: 0 0 calc((100% - ({{ section.settings.columns | minus: 1 }} * {{ section.settings.gap }}px)) / {{ section.settings.columns }});
+    max-width: calc((100% - ({{ section.settings.columns | minus: 1 }} * {{ section.settings.gap }}px)) / {{ section.settings.columns }});
+    min-width: 0;
+    scroll-snap-align: start;
+  }
+
+  /* Nudge the inner card styling so it sits nicely inside the rail */
+  .ss-best-{{ section.id }} .ss-best__item .grid__item.grid-product {
+    width: 100%;
+    padding: 0;
+  }
+
+  .ss-best-{{ section.id }} .ss-best__arrow {
+    position: absolute;
+    top: 38%;
+    z-index: 5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    border: none;
+    border-radius: 50%;
+    background-color: {{ section.settings.arrow_bg }};
+    color: {{ section.settings.arrow_color }};
+    cursor: pointer;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.16);
+    transform: translateY(-50%);
+    transition: opacity 0.2s ease, transform 0.2s ease;
+  }
+
+  .ss-best-{{ section.id }} .ss-best__arrow svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  .ss-best-{{ section.id }} .ss-best__arrow--prev {
+    left: -22px;
+  }
+
+  .ss-best-{{ section.id }} .ss-best__arrow--next {
+    right: -22px;
+  }
+
+  .ss-best-{{ section.id }} .ss-best__arrow[disabled] {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .ss-best-{{ section.id }} .ss-best__arrow:hover {
+    transform: translateY(-50%) scale(1.06);
+  }
+
+  .ss-best-{{ section.id }} .ss-best__placeholder {
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 8px;
+    padding: 10px;
+  }
+
+  .ss-best-{{ section.id }} .ss-best__placeholder-img {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    border-radius: 6px;
+    background-color: #eee;
+  }
+
+  .ss-best-{{ section.id }} .ss-best__placeholder-line {
+    height: 12px;
+    margin-top: 12px;
+    border-radius: 6px;
+    background-color: #eee;
+  }
+
+  .ss-best-{{ section.id }} .ss-best__placeholder-line--short {
+    width: 60%;
+  }
+
+  @media screen and (max-width: 989px) {
+    .ss-best-{{ section.id }} .ss-best__item {
+      flex-basis: calc((100% - (2 * {{ section.settings.gap }}px)) / 3);
+      max-width: calc((100% - (2 * {{ section.settings.gap }}px)) / 3);
+    }
+  }
+
+  @media screen and (max-width: 769px) {
+    .ss-best-{{ section.id }} {
+      padding: {{ section.settings.padding_top | times: 0.65 | round }}px 0 {{ section.settings.padding_bottom | times: 0.65 | round }}px;
+    }
+
+    .ss-best-{{ section.id }} .ss-best__inner {
+      width: calc(100% - 32px);
+    }
+
+    .ss-best-{{ section.id }} .ss-best__title {
+      font-size: 22px;
+    }
+
+    .ss-best-{{ section.id }} .ss-best__subtitle {
+      font-size: 13px;
+    }
+
+    .ss-best-{{ section.id }} .ss-best__item {
+      flex-basis: calc((100% - {{ section.settings.gap }}px) / 2);
+      max-width: calc((100% - {{ section.settings.gap }}px) / 2);
+    }
+
+    .ss-best-{{ section.id }} .ss-best__arrow {
+      width: 36px;
+      height: 36px;
+    }
+
+    .ss-best-{{ section.id }} .ss-best__arrow--prev {
+      left: -8px;
+    }
+
+    .ss-best-{{ section.id }} .ss-best__arrow--next {
+      right: -8px;
+    }
+
+    /* Mobile product card compact styling */
+    .ss-best-{{ section.id }} .grid__item.grid-product .grid-product__meta {
+      padding: 10px 8px 12px;
+    }
+
+    .ss-best-{{ section.id }} .grid-product__title,
+    .ss-best-{{ section.id }} .grid-product__title.grid-product__title--body {
+      font-size: 13px;
+      line-height: 1.3;
+      height: 2.6em;
+      margin: 0;
+      -webkit-line-clamp: 2;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .ss-best-{{ section.id }} .grid__item.grid-product .grid-product__meta .grid-product__price {
+      padding: 0;
+      margin: 4px 0 8px;
+      font-size: 13px;
+      line-height: 1.25;
+      display: flex;
+      align-items: baseline;
+      flex-wrap: wrap;
+      gap: 3px;
+    }
+
+    .ss-best-{{ section.id }} .grid-product__price,
+    .ss-best-{{ section.id }} .grid-product__price > span.money {
+      font-size: 13.5px;
+      font-weight: 600;
+    }
+
+    .ss-best-{{ section.id }} .grid-product__price--original {
+      font-size: 11px;
+    }
+
+    .ss-best-{{ section.id }} .grid-product__price--savings {
+      font-size: 10px;
+    }
+
+    .ss-best-{{ section.id }} .grid__item.grid-product .bottom_btn {
+      margin-top: 0;
+    }
+
+    .ss-best-{{ section.id }} .grid__item.grid-product .bottom_btn a.lm_btn {
+      font-size: 12px;
+      font-weight: 500;
+      padding: 6px 4px;
+      letter-spacing: 0.02em;
+      border-radius: 9999px;
+      line-height: 1.2;
+    }
+
+    .ss-best-{{ section.id }} .grid__item.grid-product .bottom_btn a.lm_btn svg {
+      width: 12px;
+      height: 12px;
+      margin-right: 4px;
+    }
+  }
+{% endstyle %}
+
+<script>
+  (function () {
+    function initBest(root) {
+      if (!root || root.dataset.ssBestInit === 'true') return;
+      root.dataset.ssBestInit = 'true';
+
+      var track = root.querySelector('[data-ss-best-track]');
+      var prev = root.querySelector('[data-ss-best-prev]');
+      var next = root.querySelector('[data-ss-best-next]');
+      if (!track || !prev || !next) return;
+
+      function step() {
+        var first = track.querySelector('.ss-best__item');
+        if (!first) return track.clientWidth;
+        var itemWidth = first.getBoundingClientRect().width;
+        var gap = parseFloat(getComputedStyle(track).columnGap) || 0;
+        return itemWidth + gap;
+      }
+
+      function updateArrows() {
+        var maxScroll = track.scrollWidth - track.clientWidth - 1;
+        prev.disabled = track.scrollLeft <= 0;
+        next.disabled = track.scrollLeft >= maxScroll;
+      }
+
+      prev.addEventListener('click', function () {
+        track.scrollBy({ left: -step(), behavior: 'smooth' });
+      });
+
+      next.addEventListener('click', function () {
+        track.scrollBy({ left: step(), behavior: 'smooth' });
+      });
+
+      track.addEventListener('scroll', updateArrows, { passive: true });
+      window.addEventListener('resize', updateArrows);
+      updateArrows();
+    }
+
+    function initAll() {
+      document.querySelectorAll('[data-ss-best]').forEach(initBest);
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initAll);
+    } else {
+      initAll();
+    }
+
+    document.addEventListener('shopify:section:load', function (event) {
+      var section = event.target.querySelector
+        ? event.target.querySelector('[data-ss-best]')
+        : null;
+      if (section) initBest(section);
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "SS Best Sellers",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Best Selling Keycaps"
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Title color",
+      "default": "#121212"
+    },
+    {
+      "type": "textarea",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "The keycap sets everyone is loving right now."
+    },
+    {
+      "type": "color",
+      "id": "subtitle_color",
+      "label": "Subtitle color",
+      "default": "#666666"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection",
+      "info": "Defaults to the 'keycaps' collection."
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "label": "Products to show",
+      "min": 4,
+      "max": 24,
+      "step": 1,
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "columns",
+      "label": "Columns visible (desktop)",
+      "min": 3,
+      "max": 6,
+      "step": 1,
+      "default": 4
+    },
+    {
+      "type": "range",
+      "id": "gap",
+      "label": "Card gap",
+      "min": 8,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "text",
+      "id": "card_button_label",
+      "label": "Card button label",
+      "default": "Shop Now"
+    },
+    {
+      "type": "text",
+      "id": "view_all_label",
+      "label": "View all label",
+      "default": "View All"
+    },
+    {
+      "type": "url",
+      "id": "view_all_link",
+      "label": "View all link",
+      "info": "Defaults to the collection URL."
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Accent color",
+      "default": "#286633"
+    },
+    {
+      "type": "color",
+      "id": "arrow_bg",
+      "label": "Arrow background",
+      "default": "#121212"
+    },
+    {
+      "type": "color",
+      "id": "arrow_color",
+      "label": "Arrow color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Section background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding top",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding bottom",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 64
+    }
+  ],
+  "presets": [
+    {
+      "name": "SS Best Sellers"
+    }
+  ]
+}
+{% endschema %}

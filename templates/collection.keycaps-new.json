@@ -12,6 +12,17 @@
     "keycaps_custom": {
       "type": "keycaps-custom-section",
       "blocks": {
+        "image_card_4kUxgE": {
+          "type": "image_card",
+          "settings": {
+            "position": 4,
+            "image": "shopify://shop_images/whiteboard_exported_image.png",
+            "image_fit": "cover",
+            "link": "",
+            "open_in_new_tab": false,
+            "alt_text": ""
+          }
+        },
         "promo_slot_1": {
           "type": "promo_card",
           "settings": {
@@ -38,21 +49,107 @@
         }
       },
       "block_order": [
+        "image_card_4kUxgE",
         "promo_slot_1",
         "promo_slot_8"
       ],
       "settings": {
         "title": "Keycaps New Arrivals",
         "subtitle": "Discover our newest keycap drops, fresh profile designs, and artisan-inspired sets.",
-        "products_limit": 24,
-        "show_carousel": true,
-        "carousel_title": "Handpicked for You",
-        "carousel_title_color": "#0A6830",
-        "carousel_limit": 10
+        "per_row": 4,
+        "products_limit": 24
+      }
+    },
+    "handpicked_for_you": {
+      "type": "handpicked-for-you",
+      "blocks": {
+        "card_herbary": {
+          "type": "card",
+          "settings": {
+            "title": "Herbary Cherry Profile Keycaps",
+            "subtitle": "Keycaps",
+            "price": "$45.00",
+            "product": "herbary-cherry-profile-keycap-set",
+            "collection": "",
+            "custom_url": "",
+            "open_in_new_tab": false
+          }
+        },
+        "card_dashboard": {
+          "type": "card",
+          "settings": {
+            "title": "Dashboard Blue Cherry Profile Keycaps",
+            "subtitle": "Keycaps",
+            "price": "$45.00",
+            "product": "dashboard-blue-cherry-profile-keycap-set",
+            "collection": "",
+            "custom_url": "",
+            "open_in_new_tab": false
+          }
+        },
+        "card_def68": {
+          "type": "card",
+          "settings": {
+            "title": "Defender 68 HE Magnetic Keyboard",
+            "subtitle": "Magnetic Keyboard",
+            "price": "$129.00",
+            "product": "forx-defender68-he-magnetic-keyboard",
+            "collection": "",
+            "custom_url": "",
+            "open_in_new_tab": false
+          }
+        },
+        "card_luna75": {
+          "type": "card",
+          "settings": {
+            "title": "Muse 75 Pro Mechanical Keyboard",
+            "subtitle": "Mechanical Keyboard",
+            "price": "$109.00",
+            "product": "luna-muse75-pro-mechanical-keyboard",
+            "collection": "",
+            "custom_url": "",
+            "open_in_new_tab": false
+          }
+        },
+        "card_all_keycaps": {
+          "type": "card",
+          "settings": {
+            "title": "Explore All Keycaps Collection",
+            "subtitle": "Full Catalog",
+            "price": "",
+            "product": "",
+            "collection": "keycaps",
+            "custom_url": "",
+            "open_in_new_tab": false
+          }
+        }
+      },
+      "block_order": [
+        "card_herbary",
+        "card_dashboard",
+        "card_def68",
+        "card_luna75",
+        "card_all_keycaps"
+      ],
+      "settings": {
+        "title": "Handpicked for You",
+        "title_color": "#0a6830",
+        "title_size": 32,
+        "subtitle": "",
+        "price_color": "#0a6830",
+        "row_position": 3,
+        "show_border_top": false,
+        "border_color": "#ebebeb",
+        "show_navigation": true,
+        "max_width": 1400,
+        "padding_top": 40,
+        "padding_bottom": 60,
+        "bg_color": "#ffffff"
       }
     }
   },
   "order": [
-    "keycaps_custom"
+    "keycaps_custom",
+    "handpicked_for_you"
   ]
 }

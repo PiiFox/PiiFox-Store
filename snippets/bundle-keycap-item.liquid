@@ -12,10 +12,11 @@
 {%- endif -%}
 
 {%- assign is_available = item_variant.available -%}
-{%- assign keycap_title = item_variant.product.title -%}
-{%- if item_variant.title != 'Default Title' and item_variant.title != blank -%}
-  {%- assign keycap_title = item_variant.title -%}
-{%- endif -%}
+{%- assign keycap_title = item_variant.product.title | default: item_variant.title -%}
+{%- comment -%} 每个商品卡片的唯一标识，点击时写入地址栏 {%- endcomment -%}
+{%- assign card_anchor = 'p-' | append: item_variant.id -%}
+{%- assign kc_orig_price = item_variant.price -%}
+{%- assign kc_disc_price = item_variant.price | times: 0.85 | round -%}
 
 {%- assign card_image = '' -%}
 {%- if item_variant.featured_image -%}
@@ -51,7 +52,9 @@
 {%- endif -%}
 
 <div
-  class="bundle-keycap-card {% if is_available %}available{% else %}sold-out{% endif %}"
+    class="bundle-keycap-card {% if is_available %}available{% else %}sold-out{% endif %}"
+  id="bundle-card-{{ card_anchor }}"
+  data-bundle-anchor="{{ card_anchor }}"
   data-variant-id="{{ item_variant.id }}"
   data-keycap-title="{{ keycap_title | escape }}"
   data-product-title="{{ item_variant.product.title | escape }}"
@@ -64,7 +67,7 @@
   role="button"
   tabindex="{% if is_available %}0{% else %}-1{% endif %}"
   aria-pressed="false"
-  aria-label="{{ keycap_title | escape }} - {{ item_variant.price | money }}"
+  aria-label="{{ keycap_title | escape }} - {{ kc_disc_price | money }}"
 >
   <input
     type="checkbox"
@@ -106,8 +109,11 @@
     <div class="bundle-keycap-card__title" title="{{ keycap_title | escape }}">
       {{ keycap_title }}
     </div>
+    {%- assign kc_orig_price = item_variant.price -%}
+    {%- assign kc_disc_price = item_variant.price | times: 0.85 | round -%}
     <div class="bundle-keycap-card__price">
-      {{ item_variant.price | money }}
+      <span class="bundle-keycap-card__price--original">{{ kc_orig_price | money }}</span>
+      <span class="bundle-keycap-card__price--discount">{{ kc_disc_price | money }}</span>
     </div>
   </div>
 </div>

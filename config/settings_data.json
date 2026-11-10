@@ -11,7 +11,7 @@
   "current": {
     "color_body_bg": "#ffffff",
     "color_body_text": "#000000",
-    "color_price": "#0A6830",
+    "color_price": "#111111",
     "color_savings_text": "#C20000",
     "color_borders": "#e6e6e6",
     "color_button": "#000000",
@@ -60,7 +60,7 @@
     "quick_shop_text": "Quick look",
     "product_grid_image_size": "natural",
     "product_grid_image_fill": false,
-    "product_hover_image": false,
+    "product_hover_image": true,
     "enable_swatches": true,
     "collection_grid_style": "overlaid-box",
     "collection_grid_shape": "landscape",
@@ -227,7 +227,7 @@
           "main_menu2_tag": "New",
           "main_menu3": "Switches",
           "main_menu3_tag": "",
-          "main_menu4": "Mice",
+          "main_menu4": "",
           "main_menu4_tag": "",
           "main_menu5": "Accessories",
           "main_menu5_tag": "",
@@ -739,11 +739,6 @@
       "7570552984445421165": {
         "type": "shopify://apps/yotpo-product-reviews/blocks/settings/eb7dfd7d-db44-4334-bc49-c893b51b36cf",
         "disabled": false,
-        "settings": {}
-      },
-      "12439146293631897289": {
-        "type": "shopify://apps/blockify-fraud-filter/blocks/app_embed/2e3e0ba5-0e70-447a-9ec5-3bf76b5ef12e",
-        "disabled": true,
         "settings": {}
       }
     }

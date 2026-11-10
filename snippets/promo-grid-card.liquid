@@ -1,0 +1,115 @@
+{% comment %}
+  Snippet: promo-grid-card.liquid
+  Renders an in-grid functional card (Promo Text Card or Image Card).
+
+  Arguments:
+  - block: Shopify section block object (promo_card or image_card)
+  - per_row: number of columns (default: 4)
+  - card_extra_class: extra CSS class string (e.g. 'small--one-halfs')
+{% endcomment %}
+
+{%- liquid
+  assign per_row = per_row | default: 4
+
+  case per_row
+    when 1
+      assign grid_item_width = ''
+    when 2
+      assign grid_item_width = 'medium-up--one-half'
+    when 3
+      assign grid_item_width = 'small--one-half medium-up--one-third'
+    when 4
+      assign grid_item_width = 'small--one-half medium-up--one-quarter'
+    when 5
+      assign grid_item_width = 'small--one-half medium-up--one-fifth'
+    when 6
+      assign grid_item_width = 'small--one-half medium-up--one-sixth'
+    else
+      assign grid_item_width = 'small--one-half medium-up--one-quarter'
+  endcase
+-%}
+
+<div
+  class="grid__item grid-product promo-grid-card promo-grid-card--{{ block.type }} promo-grid-card--{{ block.id }} {{ grid_item_width }}{% if card_extra_class != blank %} {{ card_extra_class }}{% endif %}"
+  {{ block.shopify_attributes }}
+>
+  {%- if block.type == 'image_card' -%}
+    {%- comment -%} 纯图片功能卡片 (Image Card) {%- endcomment -%}
+    <div class="promo-card__inner promo-card__inner--image promo-card--fit-{{ block.settings.image_fit | default: 'cover' }}{% if block.settings.link != blank %} promo-card--has-link{% endif %}">
+      {%- if block.settings.link != blank -%}
+        <a
+          href="{{ block.settings.link }}"
+          class="promo-card__image-link"
+          {% if block.settings.open_in_new_tab %}target="_blank" rel="noopener"{% endif %}
+          aria-label="{{ block.settings.alt_text | default: block.settings.image.alt | default: 'Collection promotion' | escape }}"
+        >
+      {%- endif -%}
+
+      {%- if block.settings.image != blank -%}
+        <picture class="promo-card__picture">
+          {%- if block.settings.image_mobile != blank -%}
+            <source media="(max-width: 768px)" srcset="{{ block.settings.image_mobile | image_url: width: 800 }}">
+          {%- endif -%}
+          <img
+            src="{{ block.settings.image | image_url: width: 1000 }}"
+            alt="{{ block.settings.alt_text | default: block.settings.image.alt | default: 'Collection promotion' | escape }}"
+            class="promo-card__full-img"
+            loading="lazy"
+            width="{{ block.settings.image.width | default: 800 }}"
+            height="{{ block.settings.image.height | default: 800 }}"
+          >
+        </picture>
+      {%- else -%}
+        <div class="promo-card__placeholder">
+          {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+          <span class="promo-card__placeholder-text">Click to upload card image</span>
+        </div>
+      {%- endif -%}
+
+      {%- if block.settings.link != blank -%}
+        </a>
+      {%- endif -%}
+    </div>
+
+  {%- else -%}
+    {%- comment -%} 营销文案功能卡片 (Promo Text Card) {%- endcomment -%}
+    <div class="promo-card__inner promo-card--{{ block.settings.card_theme | default: 'light' }}{% if block.settings.bg_image != blank %} promo-card--has-bg{% endif %}">
+      {%- if block.settings.bg_image != blank -%}
+        <img
+          src="{{ block.settings.bg_image | image_url: width: 800 }}"
+          alt="{{ block.settings.title | escape }}"
+          class="promo-card__bg-img"
+          loading="lazy"
+          width="800"
+          height="800"
+        >
+        <div class="promo-card__overlay"></div>
+      {%- endif -%}
+
+      <div class="promo-card__body">
+        {%- if block.settings.tag != blank -%}
+          <div class="promo-card__tag">{{ block.settings.tag }}</div>
+        {%- endif -%}
+        {%- if block.settings.title != blank -%}
+          <h3 class="promo-card__title">{{ block.settings.title }}</h3>
+        {%- endif -%}
+        {%- if block.settings.description != blank -%}
+          <div class="promo-card__desc">{{ block.settings.description | newline_to_br }}</div>
+        {%- endif -%}
+      </div>
+
+      {%- if block.settings.btn_label != blank -%}
+        <div class="promo-card__footer">
+          <a
+            href="{{ block.settings.btn_url | default: '#' }}"
+            class="promo-card__action"
+          >
+            <span>{{ block.settings.btn_label }}</span>
+            <svg class="promo-card__action-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </a>
+        </div>
+      {%- endif -%}
+    </div>
+  {%- endif -%}
+</div>
+

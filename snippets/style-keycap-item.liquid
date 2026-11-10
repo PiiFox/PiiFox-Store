@@ -6,7 +6,7 @@
 {% assign section_collection = collection %}
 {% assign product_count = section_collection.products | size %}
 
-<div class="keycap-section-item-wrapper">
+<div class="keycap-section-item-wrapper" id="theme-{{ section_collection.handle }}" data-theme-section="{{ section_collection.handle }}">
     <div class="keycap-section-header">
       <h2 class="keycap-section-title">
         {{ section_collection.title }}

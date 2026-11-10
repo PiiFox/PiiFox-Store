@@ -1,0 +1,815 @@
+{%- comment -%}
+  Keycap Style & Save - Promo Guide Section
+  Dark theme section detailing the 15% & 10% keycap promotions, terms, and checkout examples.
+{%- endcomment -%}
+
+<section id="kss-promo-guide" class="kss-guide kss-guide-{{ section.id }}">
+  <div class="kss-guide__inner">
+    <!-- Top Summary Banner (Matching Template Image 2) -->
+    <div class="kss-guide__banner-card">
+      <div class="kss-guide__banner-header">
+        <h2 class="kss-guide__banner-title">{{ section.settings.banner_title | escape }}</h2>
+        <p class="kss-guide__banner-subtitle">{{ section.settings.banner_subtitle | escape }}</p>
+      </div>
+
+      <div class="kss-guide__promo-grid">
+        <!-- Promo 1: Style Your Board -->
+        <div class="kss-guide__promo-box kss-guide__promo-box--lime">
+          <div class="kss-guide__promo-badge kss-guide__promo-badge--lime">
+            {{ section.settings.offer_1_badge | default: 'STYLE YOUR BOARD' | escape }}
+          </div>
+          <div class="kss-guide__promo-rate kss-guide__promo-rate--lime">
+            {{ section.settings.offer_1_discount | default: '15% OFF' | escape }}
+          </div>
+          <div class="kss-guide__promo-cond">
+            {{ section.settings.offer_1_condition | default: 'On Keycaps with a Keyboard Purchase' | escape }}
+          </div>
+        </div>
+
+        <!-- Promo 2: Double Your Style -->
+        <div class="kss-guide__promo-box kss-guide__promo-box--pink">
+          <div class="kss-guide__promo-badge kss-guide__promo-badge--pink">
+            {{ section.settings.offer_2_badge | default: 'DOUBLE YOUR STYLE' | escape }}
+          </div>
+          <div class="kss-guide__promo-rate kss-guide__promo-rate--pink">
+            {{ section.settings.offer_2_discount | default: '10% OFF' | escape }}
+          </div>
+          <div class="kss-guide__promo-cond">
+            {{ section.settings.offer_2_condition | default: 'On Keycaps When You Buy 2 Sets' | escape }}
+          </div>
+        </div>
+      </div>
+
+      <div class="kss-guide__tagline-bar">
+        <span class="kss-guide__dash kss-guide__dash--lime" aria-hidden="true"></span>
+        <span class="kss-guide__tagline-text">{{ section.settings.banner_motto | default: 'MORE STYLES. MORE YOU.' | escape }}</span>
+        <span class="kss-guide__dash kss-guide__dash--pink" aria-hidden="true"></span>
+      </div>
+    </div>
+
+    <!-- Detailed Text Section on Black Background (Matching Template Image 2 & 3) -->
+    <div class="kss-guide__details">
+      <!-- Part 1: Philosophy Intro -->
+      <div class="kss-guide__intro-block">
+        <h3 class="kss-guide__heading">{{ section.settings.intro_heading | default: 'Your Style. A Little Extra from Us.' | escape }}</h3>
+        {%- if section.settings.intro_text_1 != blank -%}
+          <p class="kss-guide__para">
+            {{ section.settings.intro_text_1 | escape }}
+          </p>
+        {%- endif -%}
+        {%- if section.settings.intro_text_2 != blank -%}
+          <p class="kss-guide__para">
+            {{ section.settings.intro_text_2 | escape }}
+          </p>
+        {%- endif -%}
+      </div>
+
+      <!-- Part 2: Two Detailed Feature Cards -->
+      <div class="kss-guide__features-grid">
+        <!-- Feature 1: Style Your Board -->
+        <div class="kss-guide__feature-card kss-guide__feature-card--lime">
+          <div class="kss-guide__feature-header">
+            <span class="kss-guide__mini-pill kss-guide__mini-pill--lime">
+              {{ section.settings.card_1_badge | default: 'STYLE YOUR BOARD' | escape }}
+            </span>
+            <h4 class="kss-guide__feature-title">
+              {{ section.settings.card_1_title | default: '15% OFF KEYCAPS' | escape }}
+            </h4>
+            <span class="kss-guide__feature-sub">
+              {{ section.settings.card_1_sub | default: 'With a Keyboard Purchase' | escape }}
+            </span>
+          </div>
+          <div class="kss-guide__feature-body">
+            {{ section.settings.card_1_body | default: 'A great keyboard deserves a look that feels right for you.<br><br>Choose a keyboard you love, pair it with a keycap set that matches your personality, and enjoy 15% off your keycaps when purchased together.' | newline_to_br }}
+          </div>
+          {%- if section.settings.card_1_footer != blank -%}
+            <div class="kss-guide__feature-footer kss-guide__feature-footer--lime">
+              {{ section.settings.card_1_footer | escape }}
+            </div>
+          {%- endif -%}
+        </div>
+
+        <!-- Feature 2: Double Your Style -->
+        <div class="kss-guide__feature-card kss-guide__feature-card--pink">
+          <div class="kss-guide__feature-header">
+            <span class="kss-guide__mini-pill kss-guide__mini-pill--pink">
+              {{ section.settings.card_2_badge | default: 'DOUBLE YOUR STYLE' | escape }}
+            </span>
+            <h4 class="kss-guide__feature-title">
+              {{ section.settings.card_2_title | default: '10% OFF KEYCAPS' | escape }}
+            </h4>
+            <span class="kss-guide__feature-sub">
+              {{ section.settings.card_2_sub | default: 'When You Buy 2 Keycap Sets' | escape }}
+            </span>
+          </div>
+          <div class="kss-guide__feature-body">
+            {{ section.settings.card_2_body | default: "One keyboard doesn't have to mean one style.<br><br>Keep things minimal during the week. Switch to something colorful for the weekend. Or simply have different looks ready whenever you're in the mood for a change.<br><br>Pick two keycap sets and enjoy 10% off your keycaps." | newline_to_br }}
+          </div>
+          {%- if section.settings.card_2_footer != blank -%}
+            <div class="kss-guide__feature-footer kss-guide__feature-footer--pink">
+              {{ section.settings.card_2_footer | escape }}
+            </div>
+          {%- endif -%}
+        </div>
+      </div>
+
+      <!-- Part 3: How Your Savings Work & Examples -->
+      <div id="savings-rules" class="kss-guide__rules-card">
+        <h3 class="kss-guide__heading">
+          {{ section.settings.rules_heading | default: 'How Your Savings Work' | escape }}
+        </h3>
+        {%- if section.settings.rules_highlight != blank -%}
+          <p class="kss-guide__para kss-guide__para--highlight">
+            {{ section.settings.rules_highlight | escape }}
+          </p>
+        {%- endif -%}
+        {%- if section.settings.rules_muted != blank -%}
+          <p class="kss-guide__para kss-guide__para--muted">
+            {{ section.settings.rules_muted | escape }}
+          </p>
+        {%- endif -%}
+
+        <div class="kss-guide__examples-wrapper">
+          <div class="kss-guide__examples-title">
+            {{ section.settings.rules_examples_title | default: 'For example:' | escape }}
+          </div>
+          <ul class="kss-guide__examples-list">
+            {%- if section.settings.example_1 != blank -%}
+              <li class="kss-guide__example-item">
+                <span class="kss-guide__example-result">{{ section.settings.example_1 | escape }}</span>
+              </li>
+            {%- endif -%}
+            {%- if section.settings.example_2 != blank -%}
+              <li class="kss-guide__example-item">
+                <span class="kss-guide__example-result">{{ section.settings.example_2 | escape }}</span>
+              </li>
+            {%- endif -%}
+            {%- if section.settings.example_3 != blank -%}
+              <li class="kss-guide__example-item">
+                <span class="kss-guide__example-result">{{ section.settings.example_3 | escape }}</span>
+              </li>
+            {%- endif -%}
+          </ul>
+        </div>
+
+        {%- if section.settings.rules_motto != blank -%}
+          <div class="kss-guide__rules-footer">
+            <span class="kss-guide__check-icon" aria-hidden="true">✔</span>
+            <span class="kss-guide__rules-motto">{{ section.settings.rules_motto | escape }}</span>
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% style %}
+  .kss-guide-{{ section.id }} {
+    width: 100%;
+    background-color: {{ section.settings.background_color }};
+    color: #ffffff;
+    padding: {{ section.settings.padding_top }}px 0 {{ section.settings.padding_bottom }}px;
+    font-family: inherit;
+  }
+
+  .kss-guide-{{ section.id }} .kss-guide__inner {
+    width: min(100% - 40px, 1080px);
+    margin: 0 auto;
+  }
+
+  /* Top Summary Banner Card */
+  .kss-guide-{{ section.id }} .kss-guide__banner-card {
+    background-color: {{ section.settings.card_bg }};
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 24px;
+    padding: 48px 36px 40px;
+    margin-bottom: 48px;
+    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.4);
+    text-align: center;
+  }
+
+  .kss-guide-{{ section.id }} .kss-guide__banner-title {
+    margin: 0 0 10px;
+    color: #ffffff;
+    font-size: 34px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+  }
+
+  .kss-guide-{{ section.id }} .kss-guide__banner-subtitle {
+    margin: 0;
+    color: #a0a0a0;
+    font-size: 16px;
+    line-height: 1.5;
+  }
+
+  .kss-guide-{{ section.id }} .kss-guide__promo-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+    max-width: 820px;
+    margin: 36px auto 28px;
+  }
+
+  .kss-guide-{{ section.id }} .kss-guide__promo-box {
+    background-color: rgba(255, 255, 255, 0.03);
+    border-radius: 18px;
+    padding: 28px 20px 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .kss-guide-{{ section.id }} .kss-guide__promo-box--lime {
+    border: 1px solid rgba(187, 244, 38, 0.35);
+  }
+
+  .kss-guide-{{ section.id }} .kss-guide__promo-box--pink {
+    border: 1px solid rgba(255, 51, 133, 0.35);
+  }
+
+  .kss-guide-{{ section.id }} .kss-guide__promo-badge {
+    display: inline-block;
+    padding: 8px 22px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    line-height: 1.2;
+  }
+
+  .kss-guide-{{ section.id }} .kss-guide__promo-badge--lime {
+    background-color: #bbf426;
+    color: #111111;
+  }
+
+  .kss-guide-{{ section.id }} .kss-guide__promo-badge--pink {
+    background-color: #ff3385;
+    color: #ffffff;
+  }
+
+  .kss-guide-{{ section.id }} .kss-guide__promo-rate {
+    font-size: 44px;
+    font-weight: 900;
+    line-height: 1.1;
+    margin: 18px 0 10px;
+    letter-spacing: -0.02em;
+  }
+
+  .kss-guide-{{ section.id }} .kss-guide__promo-rate--lime {
+    color: #bbf426;
+  }
+
+  .kss-guide-{{ section.id }} .kss-guide__promo-rate--pink {
+    color: #ff3385;
+  }
+
+  .kss-guide-{{ section.id }} .kss-guide__promo-cond {
+    color: #e5e5e5;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.4;
+  }
+
+  .kss-guide-{{ section.id }} .kss-guide__tagline-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    margin-top: 12px;
+  }
+
+  .kss-guide-{{ section.id }} .kss-guide__dash {
+    display: inline-block;
+    width: 28px;
+    height: 5px;
+    border-radius: 999px;
+  }
+
+  .kss-guide-{{ section.id }} .kss-guide__dash--lime {
+    background-color: #bbf426;
+  }
+
+  .kss-guide-{{ section.id }} .kss-guide__dash--pink {
+    background-color: #ff3385;
+  }
+
+  .kss-guide-{{ section.id }} .kss-guide__tagline-text {
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    color: #ffffff;
+    text-transform: uppercase;
+  }
+
+  /* Details Section */
+  .kss-guide-{{ section.id }} .kss-guide__details {
+    display: flex;
+    flex-direction: column;
+    gap: 36px;
+  }
+
+  .kss-guide-{{ section.id }} .kss-guide__heading {
+    margin: 0 0 16px;
+    font-size: 26px;
+    font-weight: 700;
+    color: #ffffff;
+    letter-spacing: -0.01em;
+    line-height: 1.25;
+  }
+
+  .kss-guide-{{ section.id }} .kss-guide__para {
+    margin: 0 0 12px;
+    color: #d1d5db;
+    font-size: 16px;
+    line-height: 1.7;
+  }
+
+  .kss-guide-{{ section.id }} .kss-guide__para:last-child {
+    margin-bottom: 0;
+  }
+
+  .kss-guide-{{ section.id }} .kss-guide__intro-block {
+    background-color: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 20px;
+    padding: 32px 36px;
+  }
+
+  /* Features Stacked (上下排列) */
+  .kss-guide-{{ section.id }} .kss-guide__features-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .kss-guide-{{ section.id }} .kss-guide__feature-card {
+    background-color: rgba(255, 255, 255, 0.03);
+    border-radius: 20px;
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .kss-guide-{{ section.id }} .kss-guide__feature-card--lime {
+    border: 1px solid rgba(187, 244, 38, 0.25);
+  }
+
+  .kss-guide-{{ section.id }} .kss-guide__feature-card--pink {
+    border: 1px solid rgba(255, 51, 133, 0.25);
+  }
+
+  .kss-guide-{{ section.id }} .kss-guide__mini-pill {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+
+  .kss-guide-{{ section.id }} .kss-guide__mini-pill--lime {
+    background-color: #bbf426;
+    color: #111111;
+  }
+
+  .kss-guide-{{ section.id }} .kss-guide__mini-pill--pink {
+    background-color: #ff3385;
+    color: #ffffff;
+  }
+
+  .kss-guide-{{ section.id }} .kss-guide__feature-title {
+    margin: 0 0 6px;
+    font-size: 24px;
+    font-weight: 800;
+    color: #ffffff;
+    letter-spacing: -0.01em;
+  }
+
+  .kss-guide-{{ section.id }} .kss-guide__feature-sub {
+    display: block;
+    color: #9ca3af;
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 18px;
+  }
+
+  .kss-guide-{{ section.id }} .kss-guide__feature-body p {
+    margin: 0 0 12px;
+    color: #d1d5db;
+    font-size: 15px;
+    line-height: 1.65;
+  }
+
+  .kss-guide-{{ section.id }} .kss-guide__feature-body p:last-child {
+    margin-bottom: 0;
+  }
+
+  .kss-guide-{{ section.id }} .kss-guide__feature-footer {
+    margin-top: 24px;
+    padding-top: 16px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    font-size: 14px;
+    font-weight: 700;
+    font-style: italic;
+  }
+
+  .kss-guide-{{ section.id }} .kss-guide__feature-footer--lime {
+    color: #bbf426;
+  }
+
+  .kss-guide-{{ section.id }} .kss-guide__feature-footer--pink {
+    color: #ff3385;
+  }
+
+  /* How Savings Work & Rules Card */
+  .kss-guide-{{ section.id }} .kss-guide__rules-card {
+    background-color: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 20px;
+    padding: 36px 40px;
+  }
+
+  .kss-guide-{{ section.id }} .kss-guide__para--highlight {
+    color: #ffffff;
+    font-weight: 600;
+  }
+
+  .kss-guide-{{ section.id }} .kss-guide__para--muted {
+    color: #9ca3af;
+    font-size: 15px;
+  }
+
+  .kss-guide-{{ section.id }} .kss-guide__examples-wrapper {
+    margin: 28px 0 24px;
+    background-color: rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 14px;
+    padding: 24px 28px;
+  }
+
+  .kss-guide-{{ section.id }} .kss-guide__examples-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 16px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .kss-guide-{{ section.id }} .kss-guide__examples-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .kss-guide-{{ section.id }} .kss-guide__example-item {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    font-size: 15px;
+    line-height: 1.6;
+    color: #d1d5db;
+  }
+
+  .kss-guide-{{ section.id }} .kss-guide__example-case {
+    color: #ffffff;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  .kss-guide-{{ section.id }} .kss-guide__example-result {
+    color: #e5e5e5;
+  }
+
+  .kss-guide-{{ section.id }} .kss-guide__rules-footer {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding-top: 18px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .kss-guide-{{ section.id }} .kss-guide__check-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background-color: #bbf426;
+    color: #111111;
+    font-size: 12px;
+    font-weight: bold;
+    flex-shrink: 0;
+  }
+
+  .kss-guide-{{ section.id }} .kss-guide__rules-motto {
+    font-size: 15px;
+    font-weight: 700;
+    color: #ffffff;
+    letter-spacing: 0.02em;
+  }
+
+  @media screen and (max-width: 768px) {
+    .kss-guide-{{ section.id }} .kss-guide__banner-card {
+      padding: 32px 20px 28px;
+      border-radius: 18px;
+    }
+
+    .kss-guide-{{ section.id }} .kss-guide__banner-title {
+      font-size: 26px;
+    }
+
+    .kss-guide-{{ section.id }} .kss-guide__promo-grid {
+      grid-template-columns: 1fr;
+      gap: 16px;
+      margin: 24px auto 20px;
+    }
+
+    .kss-guide-{{ section.id }} .kss-guide__promo-rate {
+      font-size: 36px;
+      margin: 14px 0 8px;
+    }
+
+    .kss-guide-{{ section.id }} .kss-guide__features-grid {
+      gap: 18px;
+    }
+
+    .kss-guide-{{ section.id }} .kss-guide__intro-block,
+    .kss-guide-{{ section.id }} .kss-guide__feature-card,
+    .kss-guide-{{ section.id }} .kss-guide__rules-card {
+      padding: 24px 20px;
+      border-radius: 16px;
+    }
+
+    .kss-guide-{{ section.id }} .kss-guide__examples-wrapper {
+      padding: 18px 16px;
+    }
+
+    .kss-guide-{{ section.id }} .kss-guide__example-item {
+      flex-direction: column;
+      gap: 2px;
+    }
+  }
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "KSS Promo Guide",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Banner Summary Settings"
+    },
+    {
+      "type": "text",
+      "id": "banner_title",
+      "label": "Banner Title",
+      "default": "Keycap Style & Save"
+    },
+    {
+      "type": "text",
+      "id": "banner_subtitle",
+      "label": "Banner Subtitle",
+      "default": "More styles. More ways to make it yours."
+    },
+    {
+      "type": "text",
+      "id": "offer_1_badge",
+      "label": "Offer 1 Badge",
+      "default": "STYLE YOUR BOARD"
+    },
+    {
+      "type": "text",
+      "id": "offer_1_discount",
+      "label": "Offer 1 Discount",
+      "default": "15% OFF"
+    },
+    {
+      "type": "text",
+      "id": "offer_1_condition",
+      "label": "Offer 1 Condition",
+      "default": "On Keycaps with a Keyboard Purchase"
+    },
+    {
+      "type": "text",
+      "id": "offer_2_badge",
+      "label": "Offer 2 Badge",
+      "default": "DOUBLE YOUR STYLE"
+    },
+    {
+      "type": "text",
+      "id": "offer_2_discount",
+      "label": "Offer 2 Discount",
+      "default": "10% OFF"
+    },
+    {
+      "type": "text",
+      "id": "offer_2_condition",
+      "label": "Offer 2 Condition",
+      "default": "On Keycaps When You Buy 2 Sets"
+    },
+    {
+      "type": "text",
+      "id": "banner_motto",
+      "label": "Banner Motto",
+      "default": "MORE STYLES. MORE YOU."
+    },
+    {
+      "type": "header",
+      "content": "Intro Text Section"
+    },
+    {
+      "type": "text",
+      "id": "intro_heading",
+      "label": "Intro Heading",
+      "default": "Your Style. A Little Extra from Us."
+    },
+    {
+      "type": "textarea",
+      "id": "intro_text_1",
+      "label": "Intro Paragraph 1",
+      "default": "We want to make it easier for you to experiment with different looks, try new combinations, and create a keyboard that truly feels like yours."
+    },
+    {
+      "type": "textarea",
+      "id": "intro_text_2",
+      "label": "Intro Paragraph 2",
+      "default": "That's why we offer two ways to enjoy extra savings on keycaps."
+    },
+    {
+      "type": "header",
+      "content": "Card 1: Style Your Board"
+    },
+    {
+      "type": "text",
+      "id": "card_1_badge",
+      "label": "Card 1 Badge",
+      "default": "STYLE YOUR BOARD"
+    },
+    {
+      "type": "text",
+      "id": "card_1_title",
+      "label": "Card 1 Title",
+      "default": "15% OFF KEYCAPS"
+    },
+    {
+      "type": "text",
+      "id": "card_1_sub",
+      "label": "Card 1 Subtitle",
+      "default": "With a Keyboard Purchase"
+    },
+    {
+      "type": "textarea",
+      "id": "card_1_body",
+      "label": "Card 1 Body Text",
+      "default": "A great keyboard deserves a look that feels right for you.\n\nChoose a keyboard you love, pair it with a keycap set that matches your personality, and enjoy 15% off your keycaps when purchased together."
+    },
+    {
+      "type": "text",
+      "id": "card_1_footer",
+      "label": "Card 1 Footer Motto",
+      "default": "Your keyboard. Your keycaps. Your style."
+    },
+    {
+      "type": "header",
+      "content": "Card 2: Double Your Style"
+    },
+    {
+      "type": "text",
+      "id": "card_2_badge",
+      "label": "Card 2 Badge",
+      "default": "DOUBLE YOUR STYLE"
+    },
+    {
+      "type": "text",
+      "id": "card_2_title",
+      "label": "Card 2 Title",
+      "default": "10% OFF KEYCAPS"
+    },
+    {
+      "type": "text",
+      "id": "card_2_sub",
+      "label": "Card 2 Subtitle",
+      "default": "When You Buy 2 Keycap Sets"
+    },
+    {
+      "type": "textarea",
+      "id": "card_2_body",
+      "label": "Card 2 Body Text",
+      "default": "One keyboard doesn't have to mean one style.\n\nKeep things minimal during the week. Switch to something colorful for the weekend. Or simply have different looks ready whenever you're in the mood for a change.\n\nPick two keycap sets and enjoy 10% off your keycaps."
+    },
+    {
+      "type": "text",
+      "id": "card_2_footer",
+      "label": "Card 2 Footer Motto",
+      "default": "Two sets. More ways to express yourself."
+    },
+    {
+      "type": "header",
+      "content": "How Savings Work & Rules"
+    },
+    {
+      "type": "text",
+      "id": "rules_heading",
+      "label": "Rules Heading",
+      "default": "How Your Savings Work"
+    },
+    {
+      "type": "textarea",
+      "id": "rules_highlight",
+      "label": "Rules Highlight Paragraph",
+      "default": "Both Style Your Board (15% OFF) and Double Your Style (10% OFF) are automatically applied at checkout. No discount code needed!"
+    },
+    {
+      "type": "textarea",
+      "id": "rules_muted",
+      "label": "Rules Note Paragraph",
+      "default": "These offers cannot be combined. If your order qualifies for both, we'll automatically apply the offer that gives you the biggest savings."
+    },
+    {
+      "type": "text",
+      "id": "rules_examples_title",
+      "label": "Examples Title",
+      "default": "For example:"
+    },
+    {
+      "type": "text",
+      "id": "example_1",
+      "label": "Example 1",
+      "default": "1 Keyboard + 1 Keycap Set: Enjoy 15% off your keycaps."
+    },
+    {
+      "type": "text",
+      "id": "example_2",
+      "label": "Example 2",
+      "default": "2 Keycap Sets: Enjoy 10% off your keycaps."
+    },
+    {
+      "type": "text",
+      "id": "example_3",
+      "label": "Example 3",
+      "default": "1 Keyboard + 2 Keycap Sets: Both offers qualify, but we'll automatically apply the higher 15% discount on eligible keycaps instead of combining them."
+    },
+    {
+      "type": "text",
+      "id": "rules_motto",
+      "label": "Rules Bottom Motto",
+      "default": "No codes. No extra steps. Just more ways to style & save."
+    },
+    {
+      "type": "header",
+      "content": "Section Appearance"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Section Background",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "card_bg",
+      "label": "Card Background",
+      "default": "#111111"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding Top",
+      "min": 20,
+      "max": 140,
+      "step": 4,
+      "unit": "px",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding Bottom",
+      "min": 20,
+      "max": 140,
+      "step": 4,
+      "unit": "px",
+      "default": 72
+    }
+  ],
+  "presets": [
+    {
+      "name": "KSS Promo Guide"
+    }
+  ]
+}
+{% endschema %}
+
