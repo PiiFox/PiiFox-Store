@@ -222,10 +222,22 @@
     "main-collection": {
       "type": "main-collection",
       "blocks": {
+        "image_card_i3kPKN": {
+          "type": "image_card",
+          "settings": {
+            "position": 4,
+            "show_on_all_pages": false,
+            "image": "shopify://shop_images/Keycap_Style_Save_Poster.png",
+            "image_fit": "cover",
+            "link": "",
+            "open_in_new_tab": false,
+            "alt_text": ""
+          }
+        },
         "promo_card_F43dRt": {
           "type": "promo_card",
           "settings": {
-            "position": 4,
+            "position": 8,
             "show_on_all_pages": false,
             "card_theme": "light",
             "tag": "Keycap Style & Save",
@@ -257,6 +269,7 @@
         }
       },
       "block_order": [
+        "image_card_i3kPKN",
         "promo_card_F43dRt",
         "collection_description_VLVVit",
         "subcollections",
