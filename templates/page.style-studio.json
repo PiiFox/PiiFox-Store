@@ -19,7 +19,9 @@
         "video_url": "https://cdn.shopify.com/videos/c/o/v/fbc3f84973e54949bb999e41160928fe.mp4",
         "video_url_mobile": "https://cdn.shopify.com/videos/c/o/v/1512aebe62804c178813fd38e625ec59.mp4",
         "desktop_max_height": 70,
-        "mobile_max_height": 65
+        "mobile_max_height": 65,
+        "button_label": "",
+        "button_link": ""
       }
     },
     "intro": {
@@ -104,11 +106,11 @@
       "type": "ss-text-note",
       "settings": {
         "title": "Made for Your Style. Ready Out of the Box.",
-        "content": "<p>Our Custom Keycap Installation service is designed to deliver a keyboard that's already personalized to your style — not two separate sets of keycaps.</p><p>We replace the standard keycaps with your chosen design before shipping, so your keyboard arrives fully customized and ready to use.</p><p><strong>Please note:</strong> As this is a keycap replacement service, the original keycaps are not included in your shipment.</p><p><strong>Still want to keep the original keycaps?</strong>&nbsp; If you'd like to receive them as well, please contact our customer support team.</p>",
         "title_color": "#121212",
         "title_size": 26,
         "title_size_mobile": 20,
         "title_weight": "800",
+        "content": "<p>Our Custom Keycap Installation service is designed to deliver a keyboard that's already personalized to your style — not two separate sets of keycaps.</p><p>We replace the standard keycaps with your chosen design before shipping, so your keyboard arrives fully customized and ready to use.</p><p><strong>Please note:</strong> As this is a keycap replacement service, the original keycaps are not included in your shipment.</p><p><strong>Still want to keep the original keycaps?</strong>&nbsp; If you'd like to receive them as well, please contact our customer support team.</p>",
         "text_color": "#333333",
         "text_size": 15,
         "text_size_mobile": 14,
@@ -133,6 +135,7 @@
           "settings": {
             "art": "theme-nature",
             "accent_color": "#107a44",
+            "image": "shopify://shop_images/DSC02098.jpg",
             "title": "Your Keyboard, Your Choice",
             "subtitle": "Start with a PIIFOX keyboard that matches your everyday needs, from productivity to gaming."
           }
@@ -142,6 +145,7 @@
           "settings": {
             "art": "theme-retro",
             "accent_color": "#6f3b13",
+            "image": "shopify://shop_images/8-12-2.jpg",
             "title": "Installed with Care",
             "subtitle": "Our team carefully installs your chosen keycaps before shipping, saving you the time and effort of doing it yourself."
           }
@@ -151,6 +155,7 @@
           "settings": {
             "art": "theme-mono",
             "accent_color": "#3a3d42",
+            "image": "shopify://shop_images/DSC00167.jpg",
             "title": "Designed to Express You",
             "subtitle": "Discover distinctive keycap styles, colors, and themes that make your keyboard feel uniquely yours."
           }
@@ -253,6 +258,7 @@
         "base-2",
         "base-3"
       ],
+      "disabled": true,
       "settings": {
         "title": "One Base. Many Looks.",
         "title_color": "#111111",
