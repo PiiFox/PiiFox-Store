@@ -3,7 +3,7 @@
   Step-by-step guide showing how to add keycaps, choose the assembly
   service and add to cart on a keyboard product page.
   Images are generated inline SVG illustrations (see style-studio-svg-art).
-  Mobile view: Single card centered horizontal carousel, swipe to next card with pagination dots.
+  Mobile view: Vertical stack of 4 cards with compact spacing.
 {%- endcomment -%}
 
 <section class="ss-steps ss-steps-{{ section.id }}" data-ss-steps>
@@ -57,10 +57,12 @@
             </div>
 
             <div class="ss-steps__body">
-              <span class="ss-steps__number">{{ step_number }}</span>
-              {%- if block.settings.title != blank -%}
-                <h3 class="ss-steps__card-title">{{ block.settings.title | escape }}</h3>
-              {%- endif -%}
+              <div class="ss-steps__card-header">
+                <span class="ss-steps__number">{{ step_number }}</span>
+                {%- if block.settings.title != blank -%}
+                  <h3 class="ss-steps__card-title">{{ block.settings.title | escape }}</h3>
+                {%- endif -%}
+              </div>
               {%- if block.settings.text != blank -%}
                 <p class="ss-steps__card-text">{{ block.settings.text | escape | newline_to_br }}</p>
               {%- endif -%}
@@ -133,8 +135,9 @@
     display: flex;
     flex-direction: column;
     background-color: {{ section.settings.card_color }};
-    border: 1px solid rgba(0, 0, 0, 0.07);
+    border: 1px solid rgba(0, 0, 0, 0.16);
     border-radius: 16px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
     overflow: hidden;
     transition: transform 0.25s ease, box-shadow 0.25s ease;
   }
@@ -171,6 +174,12 @@
 
   .ss-steps-{{ section.id }} .ss-steps__body {
     padding: 20px 22px 24px;
+  }
+
+  .ss-steps-{{ section.id }} .ss-steps__card-header {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
   }
 
   .ss-steps-{{ section.id }} .ss-steps__number {
@@ -213,48 +222,43 @@
     }
   }
 
-  /* Mobile Responsive: Single card centered horizontal carousel */
+  /* Mobile Responsive: Vertical stack of 4 cards */
   @media screen and (max-width: 769px) {
     .ss-steps-{{ section.id }} {
       padding: {{ section.settings.padding_top | times: 0.65 | round }}px 0 {{ section.settings.padding_bottom | times: 0.65 | round }}px;
     }
 
     .ss-steps-{{ section.id }} .ss-steps__inner {
-      width: 100%;
+      width: min(100% - 32px, 1320px);
+      margin: 0 auto;
       padding: 0;
     }
 
     .ss-steps-{{ section.id }} .ss-steps__header {
-      margin-bottom: 22px;
-      padding: 0 20px;
+      margin-bottom: 20px;
+      padding: 0;
       text-align: center;
     }
 
     .ss-steps-{{ section.id }} .ss-steps__title {
-      font-size: 24px;
+      font-size: 22px;
     }
 
     .ss-steps-{{ section.id }} .ss-steps__subtitle {
       max-width: none;
-      margin-left: auto;
-      margin-right: auto;
+      margin: 8px auto 0;
       font-size: 13.5px;
+      line-height: 1.5;
     }
 
-    /* Single card centered horizontal scroll with snap */
+    /* Vertical stack layout instead of horizontal scroll */
     .ss-steps-{{ section.id }} .ss-steps__grid {
       display: flex;
-      flex-wrap: nowrap;
-      grid-template-columns: none;
-      gap: 16px;
-      overflow-x: auto;
-      overflow-y: hidden;
-      scroll-snap-type: x mandatory;
-      scroll-behavior: smooth;
-      -webkit-overflow-scrolling: touch;
-      scrollbar-width: none;
-      /* Padding ensures single card centers in viewport */
-      padding: 8px calc(50% - (min(86vw, 360px) / 2)) 16px;
+      flex-direction: column;
+      gap: 14px;
+      overflow: visible;
+      padding: 0;
+      scroll-snap-type: none;
     }
 
     .ss-steps-{{ section.id }} .ss-steps__grid::-webkit-scrollbar {
@@ -262,58 +266,61 @@
     }
 
     .ss-steps-{{ section.id }} .ss-steps__card {
-      flex: 0 0 min(86vw, 360px);
-      width: min(86vw, 360px);
-      max-width: min(86vw, 360px);
-      scroll-snap-align: center;
-      scroll-snap-stop: always;
-      border-radius: 20px;
+      flex: none;
+      width: 100%;
+      max-width: 100%;
+      border: 1px solid rgba(0, 0, 0, 0.16);
+      border-radius: 14px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+      scroll-snap-align: none;
+      scroll-snap-stop: normal;
     }
 
     .ss-steps-{{ section.id }} .ss-steps__card:hover {
       transform: none;
-      box-shadow: none;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
     }
 
+    /* Compact card body spacing */
     .ss-steps-{{ section.id }} .ss-steps__body {
-      padding: 18px 20px 22px;
+      padding: 12px 14px 14px;
     }
 
-    .ss-steps-{{ section.id }} .ss-steps__card-title {
-      font-size: 17px;
-      margin-top: 12px;
-    }
-
-    .ss-steps-{{ section.id }} .ss-steps__card-text {
-      font-size: 13.5px;
-      line-height: 1.55;
-    }
-
-    /* Mobile Carousel Pagination Dots */
-    .ss-steps-{{ section.id }} .ss-steps__dots {
-      display: flex;
+    /* Step number before card title in a single row */
+    .ss-steps-{{ section.id }} .ss-steps__card-header {
+      flex-direction: row;
       align-items: center;
-      justify-content: center;
       gap: 8px;
-      margin-top: 14px;
-      padding: 0 20px;
     }
 
-    .ss-steps-{{ section.id }} .ss-steps__dot {
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      background-color: #d1d5db;
-      border: none;
-      padding: 0;
-      cursor: pointer;
-      transition: all 0.25s ease;
-    }
-
-    .ss-steps-{{ section.id }} .ss-steps__dot.is-active {
-      width: 22px;
+    .ss-steps-{{ section.id }} .ss-steps__number {
+      min-width: 24px;
+      height: 24px;
+      padding: 0 6px;
+      font-size: 12px;
+      font-weight: 700;
+      flex-shrink: 0;
       border-radius: 999px;
-      background-color: {{ section.settings.accent_color | default: '#111111' }};
+      line-height: 1;
+    }
+
+    /* Reduced card title font size */
+    .ss-steps-{{ section.id }} .ss-steps__card-title {
+      margin: 0;
+      font-size: 15px;
+      line-height: 1.35;
+    }
+
+    /* Reduced spacing and font size for card text */
+    .ss-steps-{{ section.id }} .ss-steps__card-text {
+      margin: 6px 0 0;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    /* Hide dots in vertical layout */
+    .ss-steps-{{ section.id }} .ss-steps__dots {
+      display: none !important;
     }
   }
 {% endstyle %}
@@ -330,6 +337,7 @@
 
       if (grid && dots.length > 0) {
         function updateActiveDot() {
+          if (window.innerWidth <= 769) return;
           var gridRect = grid.getBoundingClientRect();
           var gridCenter = gridRect.left + gridRect.width / 2;
           var closestIndex = 0;
