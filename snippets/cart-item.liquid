@@ -26,10 +26,12 @@
   data-variant-id="{{ product.variant.id }}"
   data-is-keyboard="{{ is_keyboard }}"
   data-is-keycap="{{ is_keycap }}"
+  data-is-service="{{ is_service_item }}"
   data-line-price="{{ product.original_line_price | default: product.final_line_price }}"
   data-item-price="{{ product.original_price | default: product.final_price }}"
   data-item-quantity="{{ product.quantity }}"
   data-product-type="{{ product.product.type | escape }}"
+  data-product-handle="{{ product.product.handle | escape }}"
   data-product-title="{{ product.product.title | escape }}">
   {%- if product.image != blank -%}
     {%- assign img_url = product | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
@@ -255,6 +257,28 @@
                 {%- else -%}
                   <span class="cart__price">
                     {{ product.original_line_price | default: product.original_price | times: product.quantity | money }}
+                  </span>
+                {%- endif -%}
+              {%- elsif is_service_item -%}
+                {%- assign service_orig_price = product.variant.compare_at_price | default: 0 -%}
+                {%- if product.original_price > service_orig_price -%}
+                  {%- assign service_orig_price = product.original_price -%}
+                {%- endif -%}
+                {%- if service_orig_price <= product.final_price and product.final_price < 990 -%}
+                  {%- assign service_orig_price = 990 -%}
+                {%- endif -%}
+                {%- if service_orig_price > product.final_price -%}
+                  <span class="visually-hidden">{{ 'products.general.regular_price' | t }}</span>
+                  <small class="cart__price cart__price--strikethrough" style="text-decoration: line-through; color: #999; margin-right: 6px;">
+                    {{ service_orig_price | times: product.quantity | money }}
+                  </small>
+                  <span class="visually-hidden">{{ 'products.general.sale_price' | t }}</span>
+                  <span class="cart__price cart__discount" style="color: #0A6830; font-weight: 600;">
+                    {{ product.final_price | times: product.quantity | money }}
+                  </span>
+                {%- else -%}
+                  <span class="cart__price">
+                    {{ product.final_price | times: product.quantity | money }}
                   </span>
                 {%- endif -%}
               {%- elsif product.original_price != product.final_price -%}

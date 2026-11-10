@@ -190,6 +190,39 @@
           return '$' + (cents / 100).toFixed(2);
         }
 
+        function classifyCartItem(el) {
+          const isKb = el.getAttribute('data-is-keyboard') === 'true';
+          const isKc = el.getAttribute('data-is-keycap') === 'true';
+          const isServiceAttr = el.getAttribute('data-is-service') === 'true';
+          const pType = (el.getAttribute('data-product-type') || '').toLowerCase();
+          const pTitle = (el.getAttribute('data-product-title') || el.querySelector('.cart__item-name')?.textContent || '').toLowerCase();
+          const pHandle = (el.getAttribute('data-product-handle') || '').toLowerCase();
+          const isService = isServiceAttr || pTitle.includes('installation') || pTitle.includes('service') || pHandle.includes('installation') || pHandle.includes('service');
+
+          const matchesKb = !isService && (
+            isKb ||
+            pType.includes('keyboard') ||
+            pTitle.includes('keyboard') ||
+            pTitle.includes('defender68') ||
+            pTitle.includes('swift60') ||
+            pTitle.includes('swift68') ||
+            pTitle.includes('haze68') ||
+            pTitle.includes('grid98') ||
+            pTitle.includes('final75') ||
+            pTitle.includes('muse65') ||
+            pTitle.includes('muse75')
+          );
+
+          const matchesKc = !isService && (
+            isKc ||
+            pType === 'keycaps' ||
+            pType === 'keycap' ||
+            (pTitle.includes('keycap') && !matchesKb && !pTitle.includes('puller') && !pHandle.includes('puller'))
+          );
+
+          return { matchesKb, matchesKc, isService };
+        }
+
         function scanCartBundle() {
           const itemEls = document.querySelectorAll('.cart__item');
           let hasKeyboard = false;
@@ -200,12 +233,8 @@
 
           itemEls.forEach(el => {
             totalItems++;
-            const isKb = el.getAttribute('data-is-keyboard') === 'true';
-            const isKc = el.getAttribute('data-is-keycap') === 'true';
-            const pType = (el.getAttribute('data-product-type') || '').toLowerCase();
-            const pTitle = (el.getAttribute('data-product-title') || el.querySelector('.cart__item-name')?.textContent || '').toLowerCase();
-            const pHandle = (el.getAttribute('data-product-handle') || '').toLowerCase();
-            
+            const { matchesKb, matchesKc } = classifyCartItem(el);
+
             // 获取商品行价格 (cents)
             let linePrice = parseFloat(el.getAttribute('data-line-price'));
             if (isNaN(linePrice) || linePrice <= 0) {
@@ -216,23 +245,6 @@
               }
             }
             if (isNaN(linePrice)) linePrice = 0;
-
-            const matchesKb = isKb || 
-              pType.includes('keyboard') || 
-              pTitle.includes('keyboard') ||
-              pTitle.includes('defender68') ||
-              pTitle.includes('swift60') ||
-              pTitle.includes('swift68') ||
-              pTitle.includes('haze68') ||
-              pTitle.includes('grid98') ||
-              pTitle.includes('final75') ||
-              pTitle.includes('muse65') ||
-              pTitle.includes('muse75');
-
-            const matchesKc = isKc || 
-              pType === 'keycaps' || 
-              pType === 'keycap' ||
-              (pTitle.includes('keycap') && !matchesKb && !pTitle.includes('puller') && !pTitle.includes('installation') && !pHandle.includes('puller') && !pHandle.includes('installation'));
 
             // 获取商品数量
             let itemQty = parseInt(el.getAttribute('data-item-quantity'), 10);
@@ -358,13 +370,7 @@
           if (discountAmountCents > 0) {
             // 键帽单品价格划线并展示折后价格
             itemEls.forEach(el => {
-              const isKc = el.getAttribute('data-is-keycap') === 'true';
-              const pType = (el.getAttribute('data-product-type') || '').toLowerCase();
-              const pTitle = (el.getAttribute('data-product-title') || el.querySelector('.cart__item-name')?.textContent || '').toLowerCase();
-              const pHandle = (el.getAttribute('data-product-handle') || '').toLowerCase();
-              const isKb = el.getAttribute('data-is-keyboard') === 'true';
-              const matchesKb = isKb || pType.includes('keyboard') || pTitle.includes('keyboard');
-              const matchesKc = isKc || pType === 'keycaps' || pType === 'keycap' || (pTitle.includes('keycap') && !matchesKb && !pTitle.includes('puller') && !pTitle.includes('installation') && !pHandle.includes('puller') && !pHandle.includes('installation'));
+              const { matchesKc } = classifyCartItem(el);
 
               const priceCol = el.querySelector('.cart__item-price-col');
               if (priceCol && matchesKc) {
@@ -426,12 +432,7 @@
           } else {
             // 无键盘或无键帽：严格恢复单品原价和 Subtotal
             itemEls.forEach(el => {
-              const isKc = el.getAttribute('data-is-keycap') === 'true';
-              const pType = (el.getAttribute('data-product-type') || '').toLowerCase();
-              const pTitle = (el.getAttribute('data-product-title') || el.querySelector('.cart__item-name')?.textContent || '').toLowerCase();
-              const isKb = el.getAttribute('data-is-keyboard') === 'true';
-              const matchesKb = isKb || pType.includes('keyboard') || pTitle.includes('keyboard');
-              const matchesKc = isKc || pType === 'keycaps' || pType === 'keycap' || (pTitle.includes('keycap') && !matchesKb && !pTitle.includes('puller') && !pTitle.includes('installation') && !pHandle.includes('puller') && !pHandle.includes('installation'));
+              const { matchesKc } = classifyCartItem(el);
 
               const priceCol = el.querySelector('.cart__item-price-col');
               if (priceCol) {
