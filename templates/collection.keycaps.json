@@ -222,17 +222,29 @@
     "main-collection": {
       "type": "main-collection",
       "blocks": {
+        "image_card_i3kPKN": {
+          "type": "image_card",
+          "settings": {
+            "position": 4,
+            "show_on_all_pages": false,
+            "image": "shopify://shop_images/Keycap_Style_Save_Poster.png",
+            "image_fit": "cover",
+            "link": "",
+            "open_in_new_tab": false,
+            "alt_text": ""
+          }
+        },
         "promo_card_F43dRt": {
           "type": "promo_card",
           "settings": {
-            "position": 1,
+            "position": 8,
             "show_on_all_pages": false,
             "card_theme": "light",
-            "tag": "MEMBER EXCLUSIVE",
-            "title": "Save on Every Order — Join PIIFOX Club",
-            "description": "Unlock members-only savings:\nSpend $65, Save 15%\nSpend $125, Save 20%\nSpend $175, Save 25%",
+            "tag": "Keycap Style & Save",
+            "title": "More ways to save on keycaps",
+            "description": "• 15% OFF ON KEYCAPS WITH A KEYBOARD PURCHASE\n\n• 10% OFF ON KEYCAPS WHEN YOU BUY 2 SETS",
             "btn_label": "Learn More",
-            "btn_url": ""
+            "btn_url": "shopify://pages/keycap-style-save"
           }
         },
         "collection_description_VLVVit": {
@@ -257,6 +269,7 @@
         }
       },
       "block_order": [
+        "image_card_i3kPKN",
         "promo_card_F43dRt",
         "collection_description_VLVVit",
         "subcollections",

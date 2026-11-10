@@ -25,6 +25,7 @@
         },
         "promo_slot_1": {
           "type": "promo_card",
+          "disabled": true,
           "settings": {
             "position": 1,
             "card_theme": "light",
@@ -37,6 +38,7 @@
         },
         "promo_slot_8": {
           "type": "promo_card",
+          "disabled": true,
           "settings": {
             "position": 8,
             "card_theme": "dark",
@@ -131,6 +133,7 @@
         "card_luna75",
         "card_all_keycaps"
       ],
+      "disabled": true,
       "settings": {
         "title": "Handpicked for You",
         "title_color": "#0a6830",
