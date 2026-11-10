@@ -14,12 +14,12 @@
       "settings": {
         "title": "YOUR STYLE. READY TO TYPE.",
         "subtitle": "Your keyboard, your chosen keycaps — professionally installed before shipping and ready to use right out of the box.",
-        "video_url": "https://cdn.shopify.com/videos/c/o/v/6f5b65d7e3db40b18b0b62dd77203259.mp4",
-        "video_url_mobile": "https://cdn.shopify.com/videos/c/o/v/55d4dbfcfd344f93aa04dcb388f5b350.mp4",
-        "enable_sticky": true,
-        "desktop_height": 1600,
-        "mobile_height": 1100,
-        "overlay_opacity": 100
+        "show_overlay": true,
+        "overlay_opacity": 25,
+        "video_url": "https://cdn.shopify.com/videos/c/o/v/fbc3f84973e54949bb999e41160928fe.mp4",
+        "video_url_mobile": "https://cdn.shopify.com/videos/c/o/v/1512aebe62804c178813fd38e625ec59.mp4",
+        "desktop_max_height": 70,
+        "mobile_max_height": 65
       }
     },
     "intro": {

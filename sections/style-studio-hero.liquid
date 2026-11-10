@@ -1,13 +1,14 @@
 {%- assign title = section.settings.title | default: 'YOUR STYLE. READY TO TYPE.' -%}
 {%- assign subtitle = section.settings.subtitle | default: 'Your keyboard, your chosen keycaps — professionally installed before shipping and ready to use right out of the box.' -%}
-{%- assign desktop_video_url = section.settings.video_url | default: 'https://cdn.shopify.com/videos/c/o/v/6f5b65d7e3db40b18b0b62dd77203259.mp4' -%}
-{%- assign mobile_video_url = section.settings.video_url_mobile | default: 'https://cdn.shopify.com/videos/c/o/v/55d4dbfcfd344f93aa04dcb388f5b350.mp4' -%}
-{%- assign desktop_height = section.settings.desktop_height | default: 1600 -%}
-{%- assign mobile_height = section.settings.mobile_height | default: 1100 -%}
-{%- assign enable_sticky = section.settings.enable_sticky -%}
-{%- if enable_sticky == nil -%}
-  {%- assign enable_sticky = true -%}
+{%- assign desktop_video_url = section.settings.video_url | default: 'https://cdn.shopify.com/videos/c/o/v/fbc3f84973e54949bb999e41160928fe.mp4' -%}
+{%- assign mobile_video_url = section.settings.video_url_mobile | default: 'https://cdn.shopify.com/videos/c/o/v/1512aebe62804c178813fd38e625ec59.mp4' -%}
+{%- assign show_overlay = section.settings.show_overlay -%}
+{%- if show_overlay == nil -%}
+  {%- assign show_overlay = true -%}
 {%- endif -%}
+{%- assign desktop_max_height = section.settings.desktop_max_height | default: 70 -%}
+{%- assign mobile_max_height = section.settings.mobile_max_height | default: 65 -%}
+{%- assign overlay_opacity = section.settings.overlay_opacity | default: 30 -%}
 
 {%- if section.settings.video != blank -%}
   {%- assign d_source = section.settings.video.sources | first -%}
@@ -28,46 +29,46 @@
   {%- assign poster_image = section.settings.video.preview_image -%}
 {%- endif -%}
 
-<div class="style-studio-hero-section style-studio-hero-{{ section.id }}{% if enable_sticky %} style-studio-hero--sticky-mode{% else %} style-studio-hero--static-mode{% endif %}">
-  <div class="style-studio-hero__window">
-    <div class="style-studio-hero__inner">
-      <div class="style-studio-hero__video-wrap" data-section-id="{{ section.id }}" data-section-type="video-section">
-        <video
-          class="style-studio-hero__video"
-          width="100%"
-          height="100%"
-          muted
-          autoplay
-          loop
-          playsinline
-          webkit-playsinline
-          preload="metadata"
-          {% if poster_image != blank %}poster="{{ poster_image | image_url: width: 1920 }}"{% endif %}
-        >
-          {% if mobile_video_url != blank %}
-            <source src="{{ mobile_video_url }}" type="video/mp4" media="(max-width: 768px)">
-          {% endif %}
-          {% if desktop_video_url != blank %}
-            <source src="{{ desktop_video_url }}" type="video/mp4">
-          {% endif %}
-          {% if poster_image != blank %}
-            <img
-              width="1920"
-              height="auto"
-              src="{{ poster_image | image_url: width: 1920, format: 'webp' }}"
-              srcset="
-                {{ poster_image | image_url: width: 680, format: 'webp' }} 680w,
-                {{ poster_image | image_url: width: 1920, format: 'webp' }} 1920w
-              "
-              sizes="(max-width: 768px) 680px, 1920px"
-              alt="{{ poster_image.alt | default: title | escape }}"
-              loading="lazy"
-              class="style-studio-hero__thumbnail"
-            >
-          {% endif %}
-        </video>
-      </div>
+<section class="style-studio-hero-section style-studio-hero-{{ section.id }}" aria-label="{{ title | default: 'Style Studio' | escape }}">
+  <div class="style-studio-hero__container">
+    <div class="style-studio-hero__video-box">
+      <video
+        class="style-studio-hero__video"
+        width="100%"
+        height="100%"
+        muted
+        autoplay
+        loop
+        playsinline
+        webkit-playsinline
+        preload="metadata"
+        {% if poster_image != blank %}poster="{{ poster_image | image_url: width: 1920 }}"{% endif %}
+      >
+        {% if mobile_video_url != blank %}
+          <source src="{{ mobile_video_url }}" type="video/mp4" media="(max-width: 768px)">
+        {% endif %}
+        {% if desktop_video_url != blank %}
+          <source src="{{ desktop_video_url }}" type="video/mp4">
+        {% endif %}
+        {% if poster_image != blank %}
+          <img
+            width="1920"
+            height="auto"
+            src="{{ poster_image | image_url: width: 1920, format: 'webp' }}"
+            srcset="
+              {{ poster_image | image_url: width: 680, format: 'webp' }} 680w,
+              {{ poster_image | image_url: width: 1920, format: 'webp' }} 1920w
+            "
+            sizes="(max-width: 768px) 680px, 1920px"
+            alt="{{ poster_image.alt | default: title | escape }}"
+            loading="lazy"
+            class="style-studio-hero__thumbnail"
+          >
+        {% endif %}
+      </video>
+    </div>
 
+    {%- if show_overlay and title != blank or subtitle != blank -%}
       <div class="style-studio-hero__overlay">
         {% if title != blank %}
           <h1 class="style-studio-hero__title banner-title custom-txt-extrabold">
@@ -98,26 +99,17 @@
           </a>
         {% endif %}
       </div>
-    </div>
+    {%- endif -%}
   </div>
-</div>
-
-<script src="{{ 'gsap.min.js' | asset_url }}" defer></script>
-<script src="{{ 'ScrollTrigger.min.js' | asset_url }}" defer></script>
+</section>
 
 <script>
   (function() {
     const sectionId = '{{ section.id }}';
-    const isSticky = {% if enable_sticky %}true{% else %}false{% endif %};
-
-    function initStyleStudioHero() {
+    function initStyleStudioVideo() {
       const sectionEl = document.querySelector('.style-studio-hero-' + sectionId);
       if (!sectionEl) return;
-
-      const videoEl = sectionEl.querySelector('.style-studio-hero__video-wrap video');
-      const targetAnimEl = sectionEl.querySelector('.style-studio-hero__video-wrap video') || sectionEl.querySelector('.style-studio-hero__video-wrap');
-      const overlayEl = sectionEl.querySelector('.style-studio-hero__overlay');
-
+      const videoEl = sectionEl.querySelector('video');
       if (videoEl) {
         videoEl.muted = true;
         videoEl.setAttribute('playsinline', '');
@@ -127,168 +119,17 @@
           p.catch(function() {});
         }
       }
-
-      if (!isSticky || !sectionEl.classList.contains('style-studio-hero--sticky-mode')) {
-        return;
-      }
-
-      const isMobile = window.innerWidth <= 768;
-      const startScale = 1.2;
-      const endScale = 1.0;
-      const videoTravel = isMobile ? 70 : 120;
-      const overlayTravel = isMobile ? 35 : 60;
-
-      function applyGsapAnimation() {
-        if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') {
-          return false;
-        }
-
-        gsap.registerPlugin(ScrollTrigger);
-
-        ScrollTrigger.getAll().forEach(function(st) {
-          if (st.trigger === sectionEl) st.kill();
-        });
-
-        const tl = gsap.timeline({
-          scrollTrigger: {
-            trigger: sectionEl,
-            start: 'top top',
-            end: 'bottom bottom',
-            scrub: 1.2,
-            invalidateOnRefresh: true
-          }
-        });
-
-        tl.fromTo(targetAnimEl,
-          {
-            scale: startScale,
-            y: -videoTravel,
-            transformOrigin: 'center center',
-            force3D: true
-          },
-          {
-            scale: endScale,
-            y: videoTravel,
-            ease: 'none'
-          },
-          0
-        );
-
-        if (overlayEl) {
-          tl.fromTo(overlayEl,
-            {
-              y: -overlayTravel,
-              opacity: 0.85,
-              force3D: true
-            },
-            {
-              y: overlayTravel,
-              opacity: 1,
-              ease: 'none'
-            },
-            0
-          );
-        }
-
-        return true;
-      }
-
-      if (!applyGsapAnimation()) {
-        let attempts = 0;
-        const checkInterval = setInterval(function() {
-          attempts++;
-          if (applyGsapAnimation() || attempts > 20) {
-            clearInterval(checkInterval);
-          }
-        }, 100);
-
-        let targetScale = startScale;
-        let currentScale = startScale;
-        let targetVideoY = -videoTravel;
-        let currentVideoY = -videoTravel;
-        let targetOverlayY = -overlayTravel;
-        let currentOverlayY = -overlayTravel;
-        let isTicking = false;
-
-        function onScroll() {
-          if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') return;
-          const rect = sectionEl.getBoundingClientRect();
-          const winH = window.innerHeight || document.documentElement.clientHeight;
-          const totalDist = sectionEl.offsetHeight - winH;
-          if (totalDist > 0) {
-            const currentDist = -rect.top;
-            const progress = Math.max(0, Math.min(1, currentDist / totalDist));
-            targetScale = startScale - (progress * (startScale - endScale));
-            targetVideoY = -videoTravel + (progress * (videoTravel * 2));
-            targetOverlayY = -overlayTravel + (progress * (overlayTravel * 2));
-
-            if (!isTicking) {
-              isTicking = true;
-              requestAnimationFrame(renderFallback);
-            }
-          }
-        }
-
-        function renderFallback() {
-          if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
-            isTicking = false;
-            return;
-          }
-          currentScale += (targetScale - currentScale) * 0.1;
-          currentVideoY += (targetVideoY - currentVideoY) * 0.1;
-          currentOverlayY += (targetOverlayY - currentOverlayY) * 0.1;
-          if (targetAnimEl) {
-            targetAnimEl.style.transform = 'translate3d(0, ' + currentVideoY.toFixed(2) + 'px, 0) scale(' + currentScale.toFixed(4) + ')';
-          }
-          if (overlayEl) {
-            overlayEl.style.transform = 'translate3d(0, ' + currentOverlayY.toFixed(2) + 'px, 0)';
-          }
-          if (Math.abs(currentVideoY - targetVideoY) > 0.1 || Math.abs(currentScale - targetScale) > 0.0005) {
-            requestAnimationFrame(renderFallback);
-          } else {
-            isTicking = false;
-          }
-        }
-
-        window.addEventListener('scroll', onScroll, { passive: true });
-        onScroll();
-      }
     }
 
     if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', initStyleStudioHero);
+      document.addEventListener('DOMContentLoaded', initStyleStudioVideo);
     } else {
-      initStyleStudioHero();
+      initStyleStudioVideo();
     }
-    window.addEventListener('load', initStyleStudioHero);
-
-    let resizeTimer;
-    let lastWidth = window.innerWidth;
-    let lastIsMobile = window.innerWidth <= 768;
-    window.addEventListener('resize', function() {
-      if (window.innerWidth === lastWidth) return;
-      lastWidth = window.innerWidth;
-      const currentIsMobile = window.innerWidth <= 768;
-      if (currentIsMobile !== lastIsMobile) {
-        lastIsMobile = currentIsMobile;
-        const videoEl = document.querySelector('.style-studio-hero-' + sectionId + ' video');
-        if (videoEl) {
-          videoEl.load();
-          videoEl.play().catch(function() {});
-        }
-      }
-      clearTimeout(resizeTimer);
-      resizeTimer = setTimeout(initStyleStudioHero, 150);
-    });
 
     document.addEventListener('shopify:section:load', function(e) {
       if (e.target && (e.target.id === 'shopify-section-' + sectionId || e.target.querySelector('.style-studio-hero-' + sectionId))) {
-        initStyleStudioHero();
-      }
-    });
-    document.addEventListener('shopify:section:select', function(e) {
-      if (e.target && (e.target.id === 'shopify-section-' + sectionId || e.target.querySelector('.style-studio-hero-' + sectionId))) {
-        initStyleStudioHero();
+        initStyleStudioVideo();
       }
     });
   })();
@@ -296,265 +137,181 @@
 
 {% style %}
   #shopify-section-{{ section.id }} {
-      margin-bottom: 0 !important;
-      padding-bottom: 0 !important;
+    margin-bottom: 0 !important;
+    padding-bottom: 0 !important;
   }
 
-  .style-studio-hero-{{ section.id }}.style-studio-hero--sticky-mode {
-      background-color: #0b0b0b;
-      padding: 0 !important;
-      margin-bottom: 0 !important;
-      width: 100%;
-      height: calc(100vh + {{ desktop_height }}px);
-      height: calc(100svh + {{ desktop_height }}px);
-      box-sizing: border-box;
-      position: relative;
-      cursor: default;
+  .style-studio-hero-{{ section.id }} {
+    position: relative;
+    width: 100%;
+    background-color: #0b0b0b;
+    overflow: hidden;
   }
 
-  .style-studio-hero-{{ section.id }}.style-studio-hero--static-mode {
-      background-color: #0b0b0b;
-      padding: 0 !important;
-      margin-bottom: 0 !important;
-      width: 100%;
-      height: 100vh;
-      height: 100svh;
-      box-sizing: border-box;
-      position: relative;
-      cursor: default;
+  .style-studio-hero-{{ section.id }} .style-studio-hero__container {
+    position: relative;
+    width: 100%;
+    /* PC 端采用 16:9 画幅，高度上限不超过 {{ desktop_max_height }}vh，不占满全屏 */
+    aspect-ratio: 16 / 9;
+    max-height: {{ desktop_max_height }}vh;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
-  .style-studio-hero-{{ section.id }} .style-studio-hero__window {
-      position: -webkit-sticky;
-      position: sticky;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100vh;
-      height: 100svh;
-      overflow: hidden;
-      z-index: 2;
+  .style-studio-hero-{{ section.id }} .style-studio-hero__video-box {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
   }
 
-  .style-studio-hero-{{ section.id }} .style-studio-hero__inner {
-      position: relative;
-      width: 100%;
-      height: 100%;
-      overflow: hidden;
+  .style-studio-hero-{{ section.id }} .style-studio-hero__video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center center;
+    display: block;
+    border: none;
+    outline: none;
   }
 
-  /* 柔和透光微暗角遮罩，提亮视频通透感，同时保持文字高对比度 */
-  .style-studio-hero-{{ section.id }} .style-studio-hero__inner::after {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: radial-gradient(circle at center, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.16) 100%), linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.12) 100%);
-      opacity: {{ section.settings.overlay_opacity | default: 100 | divided_by: 100.0 }};
-      z-index: 2;
-      pointer-events: none;
+  .style-studio-hero-{{ section.id }} .style-studio-hero__thumbnail {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center center;
+    display: block;
   }
 
-  /* 视频容器：画幅高度 125%，居中定位 top: -12.5% */
-  .style-studio-hero-{{ section.id }}.style-studio-hero--sticky-mode .style-studio-hero__video-wrap {
-      position: absolute;
-      top: -12.5%;
-      left: -6%;
-      width: 112%;
-      height: 125%;
-      z-index: 1;
-      overflow: hidden;
-      transform-origin: center center;
-      will-change: transform;
-  }
-
-  .style-studio-hero-{{ section.id }}.style-studio-hero--static-mode .style-studio-hero__video-wrap {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 1;
-      overflow: hidden;
-  }
-
-  .style-studio-hero-{{ section.id }}.style-studio-hero--sticky-mode .style-studio-hero__video-wrap video,
-  .style-studio-hero-{{ section.id }}.style-studio-hero--sticky-mode .style-studio-hero__video-wrap img.style-studio-hero__thumbnail {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center center;
-      display: block;
-      transform: translate3d(0, -120px, 0) scale(1.2);
-      transform-origin: center center;
-      will-change: transform;
-      -webkit-backface-visibility: hidden;
-      backface-visibility: hidden;
-      transform-style: preserve-3d;
-      image-rendering: -webkit-optimize-contrast;
-      border-radius: 0 !important;
-      border: none !important;
-      outline: none !important;
-      box-shadow: none !important;
-  }
-
-  .style-studio-hero-{{ section.id }}.style-studio-hero--static-mode .style-studio-hero__video-wrap video,
-  .style-studio-hero-{{ section.id }}.style-studio-hero--static-mode .style-studio-hero__video-wrap img.style-studio-hero__thumbnail {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center center;
-      display: block;
-      border-radius: 0 !important;
-      border: none !important;
-      outline: none !important;
-      box-shadow: none !important;
-  }
-
-  /* 文案层：居中覆盖，吸附与视差流动 */
+  /* 遮罩与文案层 */
   .style-studio-hero-{{ section.id }} .style-studio-hero__overlay {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 3;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      padding: 2.5rem 2rem;
-      box-sizing: border-box;
-      pointer-events: none;
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 2.5rem 1.5rem;
+    box-sizing: border-box;
+    pointer-events: none;
   }
 
-  .style-studio-hero-{{ section.id }}.style-studio-hero--sticky-mode .style-studio-hero__overlay {
-      transform: translate3d(0, -75px, 0);
-      will-change: transform;
+  .style-studio-hero-{{ section.id }} .style-studio-hero__overlay::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at center, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.35) 100%), linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.22) 100%);
+    opacity: {{ overlay_opacity | divided_by: 100.0 }};
+    pointer-events: none;
+    z-index: -1;
   }
 
   .style-studio-hero-{{ section.id }} .banner-title,
   .style-studio-hero-{{ section.id }} .style-studio-hero__title {
-      font-size: 3.4rem;
-      font-weight: 900;
-      color: #ffffff;
-      letter-spacing: 0.06em;
-      margin: 0 0 1rem 0;
-      text-transform: uppercase;
-      line-height: 1.15;
-      text-shadow: 0 3px 18px rgba(0, 0, 0, 0.7);
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    font-weight: 900;
+    color: #ffffff;
+    letter-spacing: 0.06em;
+    margin: 0 0 1rem 0;
+    text-transform: uppercase;
+    line-height: 1.15;
+    text-shadow: 0 3px 18px rgba(0, 0, 0, 0.7);
   }
 
   .style-studio-hero-{{ section.id }} .banner-subtitle,
   .style-studio-hero-{{ section.id }} .style-studio-hero__subtitle {
-      font-size: 1.35rem;
-      color: rgba(255, 255, 255, 0.9);
-      margin-bottom: 1.5rem;
-      letter-spacing: 0.04em;
-      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
-      max-width: 860px;
-      line-height: 1.45;
-  }
-
-  .style-studio-hero-{{ section.id }} .banner-subtitle b,
-  .style-studio-hero-{{ section.id }} .style-studio-hero__subtitle b {
-      color: #ffffff;
-      font-weight: 700;
+    font-size: clamp(1rem, 1.4vw, 1.25rem);
+    color: rgba(255, 255, 255, 0.92);
+    margin-bottom: 1.5rem;
+    letter-spacing: 0.04em;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+    max-width: 820px;
+    line-height: 1.45;
   }
 
   .style-studio-hero-{{ section.id }} .banner-btn,
   .style-studio-hero-{{ section.id }} .style-studio-hero__btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.6rem;
-      padding: 0.75rem 2.4rem;
-      background: rgba(255, 255, 255, 0.15);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      border: 1.5px solid rgba(255, 255, 255, 0.75);
-      border-radius: 35px;
-      color: #ffffff !important;
-      text-decoration: none;
-      font-size: 1.05rem;
-      cursor: pointer;
-      pointer-events: auto;
-      transition: all 0.25s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.75rem 2.4rem;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1.5px solid rgba(255, 255, 255, 0.75);
+    border-radius: 35px;
+    color: #ffffff !important;
+    text-decoration: none;
+    font-size: 1.05rem;
+    cursor: pointer;
+    pointer-events: auto;
+    transition: all 0.25s ease;
   }
 
   .style-studio-hero-{{ section.id }} .banner-btn:hover,
   .style-studio-hero-{{ section.id }} .style-studio-hero__btn:hover {
-      background: #ffffff;
-      color: #000000 !important;
-      border-color: #ffffff;
-      transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+    background: #ffffff;
+    color: #000000 !important;
+    border-color: #ffffff;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
   }
 
   .style-studio-hero-{{ section.id }} .banner-btn svg,
   .style-studio-hero-{{ section.id }} .style-studio-hero__btn svg {
-      transition: transform 0.25s ease;
+    transition: transform 0.25s ease;
   }
 
   .style-studio-hero-{{ section.id }} .banner-btn:hover svg,
   .style-studio-hero-{{ section.id }} .style-studio-hero__btn:hover svg {
-      transform: translateX(3px);
+    transform: translateX(3px);
   }
 
   @media screen and (max-width: 768px) {
-    .style-studio-hero-{{ section.id }}.style-studio-hero--sticky-mode {
-        height: calc(100vh + {{ mobile_height }}px);
-        height: calc(100svh + {{ mobile_height }}px);
+    .style-studio-hero-{{ section.id }} .style-studio-hero__container {
+      /* 移动端视频为 3:4 原生比例，宽度 100% 充满，高度约 520px（约 60% 屏幕高度），不占满全屏且无裁切 */
+      aspect-ratio: 3 / 4;
+      max-height: {{ mobile_max_height }}vh;
     }
-    .style-studio-hero-{{ section.id }}.style-studio-hero--sticky-mode .style-studio-hero__video-wrap {
-        top: -9%;
-        left: -5%;
-        width: 110%;
-        height: 118%;
-    }
-    .style-studio-hero-{{ section.id }}.style-studio-hero--sticky-mode .style-studio-hero__video-wrap video,
-    .style-studio-hero-{{ section.id }}.style-studio-hero--sticky-mode .style-studio-hero__video-wrap img.style-studio-hero__thumbnail {
-        transform: translate3d(0, -70px, 0) scale(1.2);
-        border-radius: 0 !important;
-        border: none !important;
-        outline: none !important;
-        box-shadow: none !important;
-    }
+
     .style-studio-hero-{{ section.id }} .style-studio-hero__overlay {
-        padding: 1.5rem 1rem;
+      padding: 1.5rem 1rem;
     }
-    .style-studio-hero-{{ section.id }}.style-studio-hero--sticky-mode .style-studio-hero__overlay {
-        transform: translate3d(0, -45px, 0);
-    }
+
     .style-studio-hero-{{ section.id }} .banner-title,
     .style-studio-hero-{{ section.id }} .style-studio-hero__title {
-        font-size: clamp(1.2rem, 5.5vw, 1.8rem);
-        margin-bottom: 0.6rem;
-        letter-spacing: 0.02em;
-        line-height: 1.2;
-        max-width: 95%;
+      font-size: clamp(1.2rem, 5.5vw, 1.8rem);
+      margin-bottom: 0.6rem;
+      letter-spacing: 0.02em;
+      line-height: 1.2;
+      max-width: 95%;
     }
+
     .style-studio-hero-{{ section.id }} .banner-subtitle,
     .style-studio-hero-{{ section.id }} .style-studio-hero__subtitle {
-        font-size: clamp(0.85rem, 3.2vw, 0.95rem);
-        margin-bottom: 1rem;
-        line-height: 1.35;
-        max-width: 92%;
+      font-size: clamp(0.85rem, 3.2vw, 0.95rem);
+      margin-bottom: 1rem;
+      line-height: 1.35;
+      max-width: 92%;
     }
+
     .style-studio-hero-{{ section.id }} .banner-btn,
     .style-studio-hero-{{ section.id }} .style-studio-hero__btn {
-        padding: 0.55rem 1.6rem;
-        font-size: 0.95rem;
+      padding: 0.55rem 1.6rem;
+      font-size: 0.95rem;
     }
   }
 
   @media screen and (max-width: 400px) {
     .style-studio-hero-{{ section.id }} .banner-title,
     .style-studio-hero-{{ section.id }} .style-studio-hero__title {
-        font-size: clamp(1.05rem, 5vw, 1.4rem);
-        letter-spacing: 0.01em;
+      font-size: clamp(1.05rem, 5vw, 1.4rem);
+      letter-spacing: 0.01em;
     }
   }
 {% endstyle %}
@@ -577,16 +334,55 @@
       "default": "Your keyboard, your chosen keycaps — professionally installed before shipping and ready to use right out of the box."
     },
     {
+      "type": "checkbox",
+      "id": "show_overlay",
+      "label": "Show Text Overlay",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "label": "Text Mask Darkness (%)",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 30,
+      "info": "Adjust how dark the background overlay behind text is (lower = lighter/more transparent)."
+    },
+    {
       "type": "text",
       "id": "video_url",
       "label": "Desktop Video URL (MP4)",
-      "default": "https://cdn.shopify.com/videos/c/o/v/6f5b65d7e3db40b18b0b62dd77203259.mp4"
+      "default": "https://cdn.shopify.com/videos/c/o/v/fbc3f84973e54949bb999e41160928fe.mp4"
     },
     {
       "type": "text",
       "id": "video_url_mobile",
       "label": "Mobile Video URL (MP4)",
-      "default": "https://cdn.shopify.com/videos/c/o/v/55d4dbfcfd344f93aa04dcb388f5b350.mp4"
+      "default": "https://cdn.shopify.com/videos/c/o/v/1512aebe62804c178813fd38e625ec59.mp4"
+    },
+    {
+      "type": "range",
+      "id": "desktop_max_height",
+      "label": "Desktop Max Height (% of screen)",
+      "min": 40,
+      "max": 90,
+      "step": 5,
+      "unit": "%",
+      "default": 70,
+      "info": "Keeps video banner height within viewport (default 70% of screen)."
+    },
+    {
+      "type": "range",
+      "id": "mobile_max_height",
+      "label": "Mobile Max Height (% of screen)",
+      "min": 40,
+      "max": 85,
+      "step": 5,
+      "unit": "%",
+      "default": 65,
+      "info": "Keeps video banner height within mobile viewport (default 65% of screen)."
     },
     {
       "type": "video",
@@ -614,46 +410,6 @@
       "type": "url",
       "id": "button_link",
       "label": "Button Link"
-    },
-    {
-      "type": "checkbox",
-      "id": "enable_sticky",
-      "label": "Enable Sticky Parallax Scroll",
-      "default": true,
-      "info": "When enabled, pins the hero window during scroll with immersive video parallax, matching the homepage About Us section."
-    },
-    {
-      "type": "range",
-      "id": "desktop_height",
-      "label": "Desktop Parallax Scroll Track (px)",
-      "min": 600,
-      "max": 3000,
-      "step": 50,
-      "unit": "px",
-      "default": 1600,
-      "info": "Outer scroll track distance (higher = longer sticky parallax duration)."
-    },
-    {
-      "type": "range",
-      "id": "mobile_height",
-      "label": "Mobile Parallax Scroll Track (px)",
-      "min": 400,
-      "max": 2000,
-      "step": 50,
-      "unit": "px",
-      "default": 1100,
-      "info": "Outer scroll track distance on mobile."
-    },
-    {
-      "type": "range",
-      "id": "overlay_opacity",
-      "label": "Video Overlay Opacity",
-      "min": 0,
-      "max": 100,
-      "step": 5,
-      "unit": "%",
-      "default": 100,
-      "info": "Adjust darkness of the video overlay mask (lower is lighter/more transparent)"
     }
   ],
   "presets": [
