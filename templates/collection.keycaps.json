@@ -225,12 +225,12 @@
         "promo_card_F43dRt": {
           "type": "promo_card",
           "settings": {
-            "position": 1,
+            "position": 4,
             "show_on_all_pages": false,
             "card_theme": "light",
-            "tag": "MEMBER EXCLUSIVE",
-            "title": "Save on Every Order — Join PIIFOX Club",
-            "description": "Unlock members-only savings:\nSpend $65, Save 15%\nSpend $125, Save 20%\nSpend $175, Save 25%",
+            "tag": "Keycap Style & Save",
+            "title": "More ways to save on keycaps",
+            "description": "• 15% OFF ON KEYCAPS WITH A KEYBOARD PURCHASE\n\n• 10% OFF ON KEYCAPS WHEN YOU BUY 2 SETS",
             "btn_label": "Learn More",
             "btn_url": ""
           }
