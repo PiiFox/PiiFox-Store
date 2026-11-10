@@ -23,11 +23,41 @@
           <div class="collapsible-content__inner">
             <div class="footer__collapsible{% unless block.settings.show_footer_title %} footer_collapsible--disabled{% endunless %}">
               <ul class="no-bullets site-footer__linklist">
+                {%- assign link_title_norm = link.title | strip | downcase -%}
+                {%- assign has_keycap_style_save = false -%}
+                {%- assign has_state_your_board = false -%}
                 {%- for sub in link.links -%}
+                  {%- assign sub_title_norm = sub.title | strip | downcase -%}
+                  {%- if sub_title_norm == 'keycap style & save' or sub_title_norm == 'keycap style &amp; save' -%}
+                    {%- assign has_keycap_style_save = true -%}
+                  {%- endif -%}
+                  {%- if sub_title_norm == 'state your board' -%}
+                    {%- assign has_state_your_board = true -%}
+                  {%- endif -%}
                   <li>
                     <a href="{{ sub.url }}">{{ sub.title }}</a>
                   </li>
                 {%- endfor -%}
+                {%- if link_title_norm == 'piifox' -%}
+                  {%- assign keycap_style_save_url = pages['keycap-style-save'].url -%}
+                  {%- if keycap_style_save_url == blank -%}
+                    {%- assign keycap_style_save_url = pages['discount'].url -%}
+                  {%- endif -%}
+                  {%- if keycap_style_save_url == blank -%}
+                    {%- assign keycap_style_save_url = '/pages/keycap-style-save' -%}
+                  {%- endif -%}
+                  {%- assign style_studio_url = pages['style-studio'].url | default: '/pages/style-studio' -%}
+                  {%- unless has_keycap_style_save -%}
+                    <li>
+                      <a href="{{ keycap_style_save_url }}">Keycap Style &amp; Save</a>
+                    </li>
+                  {%- endunless -%}
+                  {%- unless has_state_your_board -%}
+                    <li>
+                      <a href="{{ style_studio_url }}">State Your Board</a>
+                    </li>
+                  {%- endunless -%}
+                {%- endif -%}
               </ul>
             </div>
           </div>
