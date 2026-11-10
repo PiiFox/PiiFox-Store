@@ -570,7 +570,7 @@
             "cover_image": "shopify://shop_images/sss.jpg",
             "image_focal_point": "center",
             "default_placeholder": "keyboards",
-            "text_color": "#111111",
+            "text_color": "#FFFFFF",
             "desktop_card_height": 0,
             "mobile_aspect_ratio": "auto"
           }
@@ -585,7 +585,7 @@
             "cover_image": "shopify://shop_images/999.webp",
             "image_focal_point": "center",
             "default_placeholder": "switches",
-            "text_color": "#111111",
+            "text_color": "#FFFFFF",
             "desktop_card_height": 0,
             "mobile_aspect_ratio": "auto"
           }
@@ -600,7 +600,7 @@
             "cover_image": "shopify://shop_images/444.jpg",
             "image_focal_point": "center",
             "default_placeholder": "accessories",
-            "text_color": "#111111",
+            "text_color": "#FFFFFF",
             "desktop_card_height": 0,
             "mobile_aspect_ratio": "auto"
           }
@@ -615,7 +615,7 @@
             "cover_image": "shopify://shop_images/yyyy.jpg",
             "image_focal_point": "center",
             "default_placeholder": "keycaps",
-            "text_color": "#111111",
+            "text_color": "#FFFFFF",
             "desktop_card_height": 0,
             "mobile_aspect_ratio": "auto"
           }
