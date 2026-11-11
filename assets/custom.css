@@ -2980,8 +2980,8 @@ button.add-to-cart:disabled,
 }
 
 .bundle-keycap-card.is-selected {
-  border-color: #121212;
-  box-shadow: 0 0 0 1px #121212, 0 4px 12px rgba(0, 0, 0, 0.08);
+  border-color: #777777;
+  box-shadow: 0 0 0 1px rgba(119, 119, 119, 0.22), 0 4px 12px rgba(0, 0, 0, 0.06);
   background: #ffffff;
 }
 
@@ -3174,6 +3174,7 @@ button.add-to-cart:disabled,
   margin: 0 0 20px 0;
   padding: 18px 20px;
   background: #ffffff;
+  background-clip: padding-box;
   border: 1px solid #eeeeee;
   border-radius: 16px;
   transition: all 0.25s ease;
@@ -3184,13 +3185,13 @@ button.add-to-cart:disabled,
 /* Top-Right Corner Sale Quarter-Circle Badge */
 .manual-service-card__sale-badge {
   position: absolute;
-  top: 0;
-  right: 0;
-  width: 40px;
-  height: 40px;
+  top: -1px;
+  right: -1px;
+  width: 41px;
+  height: 41px;
   background: linear-gradient(135deg, #0e7043 0%, #07653c 100%);
   border-bottom-left-radius: 100%;
-  border-top-right-radius: 16px;
+  border-top-right-radius: 0;
   pointer-events: none;
   z-index: 3;
   overflow: hidden;
@@ -3199,11 +3200,13 @@ button.add-to-cart:disabled,
 
 .manual-service-card__sale-text {
   position: absolute;
-  top: 11px;
-  right: 3px;
+  top: 12px;
+  right: 4px;
   width: 28px;
   height: 12px;
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-size: 8.5px;
   font-weight: 700;
   line-height: 12px;
@@ -3212,6 +3215,7 @@ button.add-to-cart:disabled,
   letter-spacing: 1.2px;
   text-indent: 1.2px;
   text-transform: uppercase;
+  white-space: nowrap;
   transform: rotate(45deg);
   transform-origin: center;
   user-select: none;
@@ -3237,8 +3241,9 @@ button.add-to-cart:disabled,
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03);
 }
 
-.manual-service-card.is-active {
-  border-color: #222222;
+.manual-service-card.is-active,
+.manual-service-card.is-active:hover {
+  border-color: #888888;
   background: #ffffff;
   box-shadow: 0 4px 18px rgba(0, 0, 0, 0.05);
 }
@@ -3564,13 +3569,12 @@ button.add-to-cart:disabled,
     gap: 8px 10px;
   }
   .manual-service-card__sale-badge {
-    width: 36px;
-    height: 36px;
-    border-top-right-radius: 12px;
+    width: 37px;
+    height: 37px;
   }
   .manual-service-card__sale-text {
-    top: 10px;
-    right: 2px;
+    top: 11px;
+    right: 3px;
     width: 24px;
     height: 10px;
     font-size: 8px;

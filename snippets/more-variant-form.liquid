@@ -213,36 +213,26 @@
     | default: service_product.variants.first
   -%}
   {%- assign service_variant_id = service_variant.id | default: 67830185656601 -%}
-  {%- assign service_compare_at_price = service_product.compare_at_price | default: 990 -%}
-  {%- if service_product.price and service_product.price < service_compare_at_price -%}
-    {%- assign service_price = service_product.price -%}
-  {%- else -%}
-    {%- assign service_price = 199 -%}
-  {%- endif -%}
-  {%- if service_compare_at_price <= service_price -%}
-    {%- assign service_compare_at_price = 990 -%}
-  {%- endif -%}
-
   {%- assign service_title = 'Custom Keycap Installation' -%}
+  {%- assign service_initially_hidden = false -%}
+  {%- if bundle_1_count > 0 and keycaps_option_index > 0 and initial_keycaps_is_non_original == false -%}
+    {%- assign service_initially_hidden = true -%}
+  {%- endif -%}
 
   <div
-    class="manual-service-card is-disabled{% if service_compare_at_price > service_price %} has-sale-badge{% endif %}"
+    class="manual-service-card has-sale-badge{% unless service_initially_hidden %} is-active{% endunless %}"
     id="ManualKeycapServiceCard"
     data-variant-id="{{ service_variant_id }}"
-    data-price="{{ service_price }}"
-    data-compare-at-price="{{ service_compare_at_price }}"
     tabindex="0"
     role="checkbox"
-    aria-checked="false"
-    {% if bundle_1_count > 0 and keycaps_option_index > 0 and initial_keycaps_is_non_original == false %}
+    aria-checked="{% if service_initially_hidden %}false{% else %}true{% endif %}"
+    {% if service_initially_hidden %}
       hidden
     {% endif %}
   >
-    {%- if service_compare_at_price > service_price -%}
-      <div class="manual-service-card__sale-badge" aria-hidden="true">
-        <span class="manual-service-card__sale-text">SALE</span>
-      </div>
-    {%- endif -%}
+    <div class="manual-service-card__sale-badge" aria-hidden="true">
+      <span class="manual-service-card__sale-text">FREE</span>
+    </div>
     <div class="manual-service-card__inner">
       <div class="manual-service-card__checkbox-wrap">
         <input
@@ -251,7 +241,9 @@
           class="manual-service-card__checkbox"
           data-variant-id="{{ service_variant_id }}"
           aria-label="{{ service_title }}"
-          disabled="disabled"
+          {% unless service_initially_hidden %}
+            checked="checked"
+          {% endunless %}
         >
         <span class="manual-service-card__checkbox-custom" aria-hidden="true">
           <svg viewBox="0 0 12 10" fill="none" class="manual-service-card__check-icon">
@@ -264,12 +256,6 @@
           <label for="ManualKeycapServiceCheckbox" class="manual-service-card__title">
             {{ service_title }}
           </label>
-          <div class="manual-service-card__price-wrap{% if service_compare_at_price > service_price %} has-discount{% endif %}">
-            {%- if service_compare_at_price > service_price -%}
-              <span class="manual-service-card__price--original">{{ service_compare_at_price | money }}</span>
-            {%- endif -%}
-            <span class="manual-service-card__price">+{{ service_price | money }} / set</span>
-          </div>
         </div>
         <div class="manual-service-card__desc">
           We'll professionally install your selected keycaps before shipping, so your keyboard arrives customized to your style and ready to use right out of the box. <a href="/pages/style-studio?view=style-studio" class="manual-service-card__link">Learn more about this service.</a>
@@ -1252,10 +1238,6 @@
       const checkbox = document.getElementById('ManualKeycapServiceCheckbox');
       if (!card || !checkbox) return;
 
-      const basePrice = parseInt(card.dataset.price, 10) || 199;
-      const compareAtPrice = parseInt(card.dataset.compareAtPrice, 10) || 990;
-      const priceEl = card.querySelector('.manual-service-card__price');
-      const origPriceEl = card.querySelector('.manual-service-card__price--original');
       const promptEl = document.getElementById('ManualKeycapServicePrompt');
       const promptText = promptEl ? promptEl.querySelector('.manual-service-card__prompt-text') : null;
       const assignEl = document.getElementById('ManualKeycapServiceAssign');
@@ -1264,6 +1246,8 @@
 
       // 一对多时，每把键盘（按顺序）选择安装的键帽 variantId
       let assignments = [];
+      // 记录用户是否手动取消勾选（默认勾选安装服务）
+      let userOptedOut = false;
 
       function escapeHtml(str) {
         return String(str).replace(/[&<>"']/g, ch => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch]));
@@ -1422,20 +1406,6 @@
       }
 
 
-      function updatePriceDisplay(sets) {
-        if (!priceEl) return;
-        // 未勾选或禁用时，均标注一套服务的价格（例如 +$1.99 / set），防止客户误认为是 0 元免费服务
-        const count = (!sets || sets <= 1) ? 1 : sets;
-        if (origPriceEl && compareAtPrice > basePrice) {
-          origPriceEl.innerHTML = formatMoney(compareAtPrice * count);
-        }
-        if (!sets || sets <= 1) {
-          priceEl.innerHTML = `+${formatMoney(basePrice)} / set`;
-        } else {
-          priceEl.innerHTML = `+${formatMoney(basePrice * sets)} / ${sets} sets`;
-        }
-      }
-
       function setChecked(isChecked) {
         checkbox.checked = isChecked;
         card.classList.toggle('is-active', isChecked);
@@ -1445,18 +1415,12 @@
       function render() {
         const plan = computePlan();
 
-        if (plan.mode === 'none') {
-          card.classList.remove('is-disabled');
-          checkbox.disabled = false;
-          if (promptEl) promptEl.style.display = 'none';
-        } else if (!plan.selected.length) {
-          setChecked(false);
-          checkbox.disabled = true;
-          card.classList.add('is-disabled');
+        card.classList.remove('is-disabled');
+        checkbox.disabled = false;
+
+        if (plan.mode === 'none' || !plan.selected.length) {
           if (promptEl) promptEl.style.display = 'none';
         } else {
-          card.classList.remove('is-disabled');
-          checkbox.disabled = false;
           if (promptEl && promptText) {
             if (checkbox.checked) {
               promptEl.classList.add('is-confirmed');
@@ -1477,27 +1441,24 @@
         }
 
         renderAssign(plan);
-        updatePriceDisplay(plan.sets);
         return plan;
       }
 
       // 供加购时读取当前安装方案
       card._getServicePlan = computePlan;
+      // 供键帽规格切换时同步显隐与默认勾选状态
+      card._syncModeVisibility = function (showService) {
+        card.hidden = !showService;
+        if (!showService) {
+          setChecked(false);
+        } else if (!userOptedOut) {
+          setChecked(true);
+        }
+        render();
+      };
 
       function toggleState(willBeChecked) {
-        if (card.classList.contains('is-disabled')) {
-          if (promptEl && promptText) {
-            promptEl.classList.remove('is-confirmed');
-            promptText.innerHTML = 'Please select keycaps above to enable installation service.';
-            promptEl.style.display = 'flex';
-            promptEl.style.transform = 'scale(1.02)';
-            setTimeout(() => { promptEl.style.transform = ''; }, 200);
-            setTimeout(() => {
-              if (!checkbox.checked) promptEl.style.display = 'none';
-            }, 3000);
-          }
-          return;
-        }
+        userOptedOut = !willBeChecked;
         setChecked(willBeChecked);
         render();
       }
@@ -1564,6 +1525,7 @@
         }
       });
 
+      setChecked(!card.hidden);
       render();
     }
 
@@ -1658,12 +1620,15 @@
       function syncManualServiceVisibility(mode) {
         if (!serviceCard) return;
         const showService = mode === 'custom';
+        if (typeof serviceCard._syncModeVisibility === 'function') {
+          serviceCard._syncModeVisibility(showService);
+          return;
+        }
         serviceCard.hidden = !showService;
         if (!showService && serviceCheckbox && serviceCheckbox.checked) {
           serviceCheckbox.checked = false;
           serviceCard.classList.remove('is-active');
           serviceCard.setAttribute('aria-checked', 'false');
-          serviceCheckbox.dispatchEvent(new Event('change', { bubbles: true }));
         }
       }
 

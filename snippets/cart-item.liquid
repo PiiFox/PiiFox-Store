@@ -260,27 +260,9 @@
                   </span>
                 {%- endif -%}
               {%- elsif is_service_item -%}
-                {%- assign service_orig_price = product.variant.compare_at_price | default: 0 -%}
-                {%- if product.original_price > service_orig_price -%}
-                  {%- assign service_orig_price = product.original_price -%}
-                {%- endif -%}
-                {%- if service_orig_price <= product.final_price and product.final_price < 990 -%}
-                  {%- assign service_orig_price = 990 -%}
-                {%- endif -%}
-                {%- if service_orig_price > product.final_price -%}
-                  <span class="visually-hidden">{{ 'products.general.regular_price' | t }}</span>
-                  <small class="cart__price cart__price--strikethrough" style="text-decoration: line-through; color: #999; margin-right: 6px;">
-                    {{ service_orig_price | times: product.quantity | money }}
-                  </small>
-                  <span class="visually-hidden">{{ 'products.general.sale_price' | t }}</span>
-                  <span class="cart__price cart__discount" style="color: #0A6830; font-weight: 600;">
-                    {{ product.final_price | times: product.quantity | money }}
-                  </span>
-                {%- else -%}
-                  <span class="cart__price">
-                    {{ product.final_price | times: product.quantity | money }}
-                  </span>
-                {%- endif -%}
+                <span class="cart__price">
+                  {{ product.final_price | times: product.quantity | money }}
+                </span>
               {%- elsif product.original_price != product.final_price -%}
                 <span class="visually-hidden">{{ 'products.general.regular_price' | t }}</span>
                 <small class="cart__price cart__price--strikethrough">
