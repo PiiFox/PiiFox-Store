@@ -570,7 +570,7 @@
             "cover_image": "shopify://shop_images/10ee5703-7f9d-4c63-98ff-1bdf34554770.png",
             "image_focal_point": "center",
             "default_placeholder": "keyboards",
-            "text_color": "#ffffff",
+            "text_color": "#101010",
             "desktop_card_height": 0,
             "mobile_aspect_ratio": "auto"
           }
@@ -585,7 +585,7 @@
             "cover_image": "shopify://shop_images/43f36a0d-5a4d-4e8d-a992-886c43b3b146.png",
             "image_focal_point": "center",
             "default_placeholder": "switches",
-            "text_color": "#ffffff",
+            "text_color": "#101010",
             "desktop_card_height": 0,
             "mobile_aspect_ratio": "auto"
           }
@@ -600,7 +600,7 @@
             "cover_image": "shopify://shop_images/PIIFOX_Headset_and_Keyboard_Tools.png",
             "image_focal_point": "center",
             "default_placeholder": "accessories",
-            "text_color": "#ffffff",
+            "text_color": "#101010",
             "desktop_card_height": 0,
             "mobile_aspect_ratio": "auto"
           }
@@ -612,10 +612,10 @@
             "collection_title": "Keycaps",
             "custom_link": "",
             "card_width": "full",
-            "cover_image": "shopify://shop_images/Themed_Mechanical_Keyboard_Collection_Showcase.png",
+            "cover_image": "shopify://shop_images/Ornate_Keyboards_on_Lavender_Grid.png",
             "image_focal_point": "center",
             "default_placeholder": "keycaps",
-            "text_color": "#ffffff",
+            "text_color": "#101010",
             "desktop_card_height": 0,
             "mobile_aspect_ratio": "auto"
           }
