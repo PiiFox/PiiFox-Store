@@ -1,6 +1,11 @@
 <script>
   $(function () {
     $('.custom-shopify-buy-btn').click(async function (e) {
+      if (typeof window.validateKeycapModeBeforePurchase === 'function' && !window.validateKeycapModeBeforePurchase()) {
+        e.preventDefault();
+        e.stopPropagation();
+        return;
+      }
       const appendVariants =
         typeof window.getBundleAppendVariants === 'function' ? window.getBundleAppendVariants() : [];
       if (appendVariants && appendVariants.length > 0) {
@@ -35,64 +40,33 @@
     });
   });
 </script>
-{%- assign is_keyboard = false -%}
-{%- assign is_keycap = false -%}
-{%- assign p_type = product.type | downcase | strip -%}
-{%- assign p_cat_name = product.category.name | default: product.category | downcase | strip -%}
-{%- assign p_handle = product.handle | downcase -%}
-{%- assign p_title = product.title | downcase -%}
-
-{%- comment -%} 1. 判断是否为键盘商品 {%- endcomment -%}
-{%- if p_type == 'keyboards' or p_type == 'keyboard' or p_cat_name == 'keyboards' or product.category == 'Keyboards' or product.tags contains 'keyboards' or product.tags contains 'Keyboards' or product.tags contains 'keyboard' or product.tags contains 'Keyboard' -%}
-  {%- unless p_type contains 'keycap'
-    or p_cat_name contains 'keycap'
-    or p_handle contains 'keycap'
-    or p_title contains 'keycap'
-    or product.tags contains 'keycaps'
-    or product.tags contains 'Keycaps'
-    or product.tags contains 'keycap'
-    or product.tags contains 'Keycap'
-    or p_type contains 'switch'
-    or p_cat_name contains 'switch'
-    or p_handle contains 'switch'
-    or p_type contains 'mouse'
-    or p_type contains 'mice'
-    or p_cat_name contains 'mouse'
-    or p_cat_name contains 'mice'
-    or p_handle contains 'mouse'
-    or p_type contains 'accessori'
-    or p_cat_name contains 'accessori'
-    or p_type contains 'service'
-  -%}
-    {%- assign is_keyboard = true -%}
-  {%- endunless -%}
-{%- endif -%}
-
-{%- comment -%} 2. 判断是否为键帽商品 {%- endcomment -%}
-{%- if p_type contains 'keycap'
-  or p_cat_name contains 'keycap'
-  or p_handle contains 'keycap'
-  or p_title contains 'keycap'
-  or product.tags contains 'keycaps'
-  or product.tags contains 'Keycaps'
-  or product.tags contains 'keycap'
-  or product.tags contains 'Keycap'
--%}
-  {%- unless p_type contains 'switch'
-    or p_cat_name contains 'switch'
-    or p_handle contains 'switch'
-    or p_type contains 'mouse'
-    or p_type contains 'mice'
-    or p_cat_name contains 'mouse'
-    or p_cat_name contains 'mice'
-    or p_handle contains 'mouse'
-    or p_type contains 'accessori'
-    or p_cat_name contains 'accessori'
-    or p_type contains 'service'
-  -%}
-    {%- assign is_keycap = true -%}
-  {%- endunless -%}
-{%- endif -%}
+{%- assign is_keyboard = is_keyboard | default: false -%}
+{%- assign is_keycap = is_keycap | default: false -%}
+{%- assign keycaps_option_index = 0 -%}
+{%- assign initial_keycaps_is_non_original = false -%}
+{%- for opt in product.options_with_values -%}
+  {%- assign opt_name_down = opt.name | downcase | strip -%}
+  {%- assign is_keycaps_opt = false -%}
+  {%- if opt_name_down contains 'keycap' or opt_name_down contains '键帽' -%}
+    {%- assign is_keycaps_opt = true -%}
+  {%- else -%}
+    {%- for val in opt.values -%}
+      {%- assign val_down = val | downcase | strip -%}
+      {%- if val_down contains 'non-original' or val_down contains 'non original' or val_down contains '非原装' -%}
+        {%- assign is_keycaps_opt = true -%}
+        {%- break -%}
+      {%- endif -%}
+    {%- endfor -%}
+  {%- endif -%}
+  {%- if is_keycaps_opt -%}
+    {%- assign keycaps_option_index = forloop.index -%}
+    {%- assign selected_kc_val = opt.selected_value | downcase | strip -%}
+    {%- if selected_kc_val contains 'non-original' or selected_kc_val contains 'non original' or selected_kc_val == 'custom' or selected_kc_val contains '非原装' -%}
+      {%- assign initial_keycaps_is_non_original = true -%}
+    {%- endif -%}
+    {%- break -%}
+  {%- endif -%}
+{%- endfor -%}
 
 {%- assign bundle_1_variants = product.metafields.custom.bundle_1_variants.value -%}
 {%- assign bundle_2_variants = product.metafields.custom.bundle_2_variants.value -%}
@@ -122,12 +96,31 @@
 {%- endif -%}
 
 {%- if show_complete_setup -%}
-  <div class="bundle-list">
+  <div class="bundle-list" {% if is_keyboard %}id="StyleYourBoardBox"{% endif %}>
     <div class="bundle-list-header">
       {%- if is_keyboard -%}
-        <div class="bundle-list-badge bundle-list-badge--lime">
-          STYLE YOUR BOARD
-        </div>
+        {%- if keycaps_option_index > 0 -%}
+          <div class="bundle-list-header__top">
+            <div class="bundle-list-badge bundle-list-badge--lime">
+              STYLE YOUR BOARD
+            </div>
+            <span
+              class="bundle-list-status"
+              id="StyleBoardModeStatus"
+              data-state="{% if initial_keycaps_is_non_original %}pending{% else %}neutral{% endif %}"
+            >
+              {%- if initial_keycaps_is_non_original -%}
+                Pick 1+ Keycap Set
+              {%- else -%}
+                Optional Add-on
+              {%- endif -%}
+            </span>
+          </div>
+        {%- else -%}
+          <div class="bundle-list-badge bundle-list-badge--lime">
+            STYLE YOUR BOARD
+          </div>
+        {%- endif -%}
         <div class="bundle-list-subtitle bundle-list-subtitle--lime">
           <svg class="bundle-list-subtitle__icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#70bb00" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path>
@@ -241,6 +234,9 @@
     tabindex="0"
     role="checkbox"
     aria-checked="false"
+    {% if bundle_1_count > 0 and keycaps_option_index > 0 and initial_keycaps_is_non_original == false %}
+      hidden
+    {% endif %}
   >
     {%- if service_compare_at_price > service_price -%}
       <div class="manual-service-card__sale-badge" aria-hidden="true">
@@ -347,6 +343,22 @@
 {%- endif -%}
 
 {%- form 'product', product, id: form_id, class: 'product-single__form' -%}
+  {%- if is_keyboard and show_complete_setup and keycaps_option_index > 0 -%}
+    <div
+      class="keycap-validation-notice"
+      id="KeycapValidationNotice"
+      role="alert"
+      {% unless initial_keycaps_is_non_original %}
+        hidden
+      {% endunless %}
+    >
+      <svg viewBox="0 0 16 16" fill="none" class="keycap-validation-notice__icon" aria-hidden="true">
+        <circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.35"/>
+        <path d="M8 4.75v4M8 11.25h.01" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+      <span>Please select at least 1 keycap set in <strong>STYLE YOUR BOARD</strong> for your custom build.</span>
+    </div>
+  {%- endif -%}
   <div class="product-form__actions-group">
     <div class="payment-buttons product__actions-row">
       <div class="product__quantity">
@@ -595,9 +607,11 @@
       let appendVariantIds = [];
       const serviceCheckbox = document.getElementById('ManualKeycapServiceCheckbox');
       const serviceCard = document.getElementById('ManualKeycapServiceCard');
+      const isCustomKeycapsMode =
+        typeof window.isKeycapModeCustom === 'function' ? window.isKeycapModeCustom() : true;
       const isServiceChecked = serviceCheckbox && serviceCheckbox.checked;
       const plan = serviceCard && typeof serviceCard._getServicePlan === 'function' ? serviceCard._getServicePlan() : null;
-      const isServiceActive = isServiceChecked && plan && plan.sets > 0;
+      const isServiceActive = isCustomKeycapsMode && isServiceChecked && plan && plan.sets > 0;
 
       let allVariants = document.querySelectorAll('.bundle-product-checkbox');
       for(let i = 0; i < allVariants.length; i++) {
@@ -798,6 +812,9 @@
         e.preventDefault();
         e.stopPropagation();
         if (addBtn.disabled || addBtn.classList.contains('btn--loading')) {
+          return;
+        }
+        if (typeof window.validateKeycapModeBeforePurchase === 'function' && !window.validateKeycapModeBeforePurchase()) {
           return;
         }
         const currentVariantId = getCurrentVariantId();
@@ -1550,13 +1567,190 @@
       render();
     }
 
-        initBundleAddonGroups();
+    function initNativeKeycapVariantSync() {
+      const keycapsOptionIndex = {{ keycaps_option_index | default: 0 | json }};
+      if (!keycapsOptionIndex || keycapsOptionIndex < 1) return;
+
+      const keycapsWrap =
+        document.querySelector('.variant-input-wrap[data-index="option' + keycapsOptionIndex + '"]') ||
+        document.querySelector('.variant-input-wrap[data-handle="keycaps"], .variant-input-wrap[data-handle="keycap"]');
+      const styleBox = document.getElementById('StyleYourBoardBox');
+      const statusPill = document.getElementById('StyleBoardModeStatus');
+      const serviceCard = document.getElementById('ManualKeycapServiceCard');
+      const serviceCheckbox = document.getElementById('ManualKeycapServiceCheckbox');
+      const validationNotice = document.getElementById('KeycapValidationNotice');
+      const addBtn =
+        document.querySelector('.product-single__form button.add-to-cart') ||
+        document.querySelector('button.add-to-cart');
+      const addBtnText = addBtn ? addBtn.querySelector('[data-add-to-cart-text]') : null;
+      const setup1List = document.querySelector('.bundle-product-list--1');
+      if (!setup1List || !setup1List.querySelector('.bundle-keycap-card')) return;
+
+      let variantsList = [];
+      const variantsJsonEl = document.querySelector('textarea[data-variant-json]');
+      if (variantsJsonEl) {
+        try {
+          variantsList = JSON.parse(variantsJsonEl.value || variantsJsonEl.textContent) || [];
+        } catch (e) {
+          variantsList = [];
+        }
+      }
+      let latestVariant = null;
+      let hasLatestVariantEvent = false;
+
+      function getCurrentVariantData() {
+        if (hasLatestVariantEvent) return latestVariant;
+        const currentId = getCurrentVariantId();
+        if (currentId && variantsList.length) {
+          const found = variantsList.find(v => String(v.id) === String(currentId));
+          if (found) return found;
+        }
+        return variantsList[0] || null;
+      }
+
+      function isNonOriginalValue(val) {
+        const v = String(val || '').trim().toLowerCase();
+        return v.includes('non-original') || v.includes('non original') || v === 'custom' || v.includes('非原装');
+      }
+
+      function getNativeKeycapsValue(variant) {
+        if (variant && variant['option' + keycapsOptionIndex]) {
+          return variant['option' + keycapsOptionIndex];
+        }
+        if (keycapsWrap) {
+          const checkedRadio = keycapsWrap.querySelector('input[type="radio"]:checked');
+          if (checkedRadio) return checkedRadio.value;
+          const selectEl = keycapsWrap.querySelector('select');
+          if (selectEl) return selectEl.value;
+        }
+        return '';
+      }
+
+      function getMode() {
+        const val = getNativeKeycapsValue(getCurrentVariantData());
+        return isNonOriginalValue(val) ? 'custom' : 'original';
+      }
+
+      function getSelectedKeycaps() {
+        if (!setup1List) return [];
+        return Array.from(setup1List.querySelectorAll('.bundle-keycap-card.is-selected'));
+      }
+
+      function syncStatusPill(mode, selectedKeycaps) {
+        if (!statusPill) return;
+        if (mode === 'original') {
+          if (selectedKeycaps.length > 0) {
+            statusPill.dataset.state = 'addon';
+            statusPill.textContent = `${selectedKeycaps.length} Extra Set${selectedKeycaps.length > 1 ? 's' : ''}`;
+          } else {
+            statusPill.dataset.state = 'neutral';
+            statusPill.textContent = 'Optional Add-on';
+          }
+        } else if (selectedKeycaps.length > 0) {
+          statusPill.dataset.state = 'ready';
+          statusPill.textContent = `${selectedKeycaps.length} Keycap Set${selectedKeycaps.length > 1 ? 's' : ''} Selected`;
+        } else {
+          statusPill.dataset.state = 'pending';
+          statusPill.textContent = 'Pick 1+ Keycap Set';
+        }
+      }
+
+      function syncManualServiceVisibility(mode) {
+        if (!serviceCard) return;
+        const showService = mode === 'custom';
+        serviceCard.hidden = !showService;
+        if (!showService && serviceCheckbox && serviceCheckbox.checked) {
+          serviceCheckbox.checked = false;
+          serviceCard.classList.remove('is-active');
+          serviceCard.setAttribute('aria-checked', 'false');
+          serviceCheckbox.dispatchEvent(new Event('change', { bubbles: true }));
+        }
+      }
+
+      function syncValidationNotice(mode, selectedKeycaps) {
+        if (!validationNotice) return;
+        validationNotice.hidden = !(mode === 'custom' && selectedKeycaps.length === 0);
+      }
+
+      function syncCartButtonCTA(mode, selectedKeycaps, variant) {
+        if (!addBtn || !addBtnText) return;
+        const isAvailable = variant ? !!variant.available : !addBtn.disabled;
+        if (!isAvailable) {
+          addBtn.classList.remove('is-needs-keycap');
+          return;
+        }
+
+        if (mode === 'custom' && selectedKeycaps.length === 0) {
+          addBtnText.textContent = 'PICK KEYCAPS ABOVE';
+          addBtn.classList.add('is-needs-keycap');
+        } else {
+          addBtnText.textContent = addBtnText.dataset.defaultText || 'Add to cart';
+          addBtn.classList.remove('is-needs-keycap');
+        }
+      }
+
+      function syncAll() {
+        const variant = getCurrentVariantData();
+        const mode = getMode();
+        const selectedKeycaps = getSelectedKeycaps();
+
+        syncStatusPill(mode, selectedKeycaps);
+        syncManualServiceVisibility(mode);
+        syncValidationNotice(mode, selectedKeycaps);
+        syncCartButtonCTA(mode, selectedKeycaps, variant);
+      }
+
+      function scrollToBoardIfNeeded() {
+        if (!styleBox) return;
+        const rect = styleBox.getBoundingClientRect();
+        const vh = window.innerHeight || document.documentElement.clientHeight;
+        if (rect.top < 24 || rect.top > vh * 0.65) {
+          styleBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      }
+
+      window.isKeycapModeCustom = function () {
+        return getMode() === 'custom';
+      };
+
+      window.validateKeycapModeBeforePurchase = function () {
+        const mode = getMode();
+        const selectedKeycaps = getSelectedKeycaps();
+        if (mode === 'custom' && selectedKeycaps.length === 0) {
+          if (validationNotice) validationNotice.hidden = false;
+          scrollToBoardIfNeeded();
+          return false;
+        }
+        return true;
+      };
+
+      document.addEventListener('change', function (e) {
+        if (!e.target) return;
+        if (
+          e.target.classList.contains('bundle-product-checkbox') ||
+          (keycapsWrap && keycapsWrap.contains(e.target))
+        ) {
+          setTimeout(syncAll, 0);
+        }
+      });
+
+      document.addEventListener('variant:change', function (e) {
+        hasLatestVariantEvent = true;
+        latestVariant = (e.detail && e.detail.variant) || null;
+        setTimeout(syncAll, 0);
+      });
+
+      syncAll();
+    }
+
+    initBundleAddonGroups();
     initBundleQtySelectors();
     initBundleSelection();
     initSetup1KeycapSelection();
     initAddonCardsSelection();
     initManualInstallationService();
     initBundleAnchorUrl();
+    initNativeKeycapVariantSync();
     initAddToCart();
 
     updateMobileCardGridScroll();
