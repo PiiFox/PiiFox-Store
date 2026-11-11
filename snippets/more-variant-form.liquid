@@ -52,7 +52,7 @@
   {%- else -%}
     {%- for val in opt.values -%}
       {%- assign val_down = val | downcase | strip -%}
-      {%- if val_down contains 'non-original' or val_down contains 'non original' or val_down contains '非原装' -%}
+      {%- if val_down contains 'non-original' or val_down contains 'non original' or val_down contains 'other style' or val_down contains 'other-style' or val_down contains '非原装' -%}
         {%- assign is_keycaps_opt = true -%}
         {%- break -%}
       {%- endif -%}
@@ -61,7 +61,7 @@
   {%- if is_keycaps_opt -%}
     {%- assign keycaps_option_index = forloop.index -%}
     {%- assign selected_kc_val = opt.selected_value | downcase | strip -%}
-    {%- if selected_kc_val contains 'non-original' or selected_kc_val contains 'non original' or selected_kc_val == 'custom' or selected_kc_val contains '非原装' -%}
+    {%- if selected_kc_val contains 'non-original' or selected_kc_val contains 'non original' or selected_kc_val contains 'other style' or selected_kc_val contains 'other-style' or selected_kc_val == 'custom' or selected_kc_val contains '非原装' -%}
       {%- assign initial_keycaps_is_non_original = true -%}
     {%- endif -%}
     {%- break -%}
@@ -1572,7 +1572,14 @@
 
       function isNonOriginalValue(val) {
         const v = String(val || '').trim().toLowerCase();
-        return v.includes('non-original') || v.includes('non original') || v === 'custom' || v.includes('非原装');
+        return (
+          v.includes('non-original') ||
+          v.includes('non original') ||
+          v.includes('other style') ||
+          v.includes('other-style') ||
+          v === 'custom' ||
+          v.includes('非原装')
+        );
       }
 
       function getNativeKeycapsValue(variant) {
