@@ -583,6 +583,7 @@
             "custom_link": "",
             "card_width": "half",
             "cover_image": "shopify://shop_images/999.webp",
+            "cover_image_m": "shopify://shop_images/43f36a0d-5a4d-4e8d-a992-886c43b3b146.png",
             "image_focal_point": "center",
             "default_placeholder": "switches",
             "text_color": "#ffffff",
