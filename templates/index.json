@@ -222,7 +222,7 @@
           "type": "ticker_item",
           "settings": {
             "prefix_text": "Style Your Setup",
-            "prefix_color": "#FC36AA",
+            "prefix_color": "#fc36aa",
             "suffix_text": "More Ways to Personalize.",
             "suffix_color": "",
             "link": ""
@@ -232,7 +232,7 @@
           "type": "ticker_item",
           "settings": {
             "prefix_text": "Make It Yours",
-            "prefix_color": "#CBFB07",
+            "prefix_color": "#cbfb07",
             "suffix_text": "Explore Endless Styles.",
             "suffix_color": "",
             "link": ""
@@ -242,7 +242,7 @@
           "type": "ticker_item",
           "settings": {
             "prefix_text": "Feel the performance",
-            "prefix_color": "#E03B39",
+            "prefix_color": "#e03b39",
             "suffix_text": "Smooth. Fast. Comfortable.",
             "suffix_color": "",
             "link": ""
@@ -528,7 +528,7 @@
         "title_before": "One Board.",
         "title_before_color": "#121212",
         "title_after": "Many Styles.",
-        "title_after_color": "#DA537B",
+        "title_after_color": "#da537b",
         "subtitle": "Preview how different keycap themes transform the same keyboard.",
         "style_card_button_label": "View Style",
         "style_card_bg_color": "#f9f7f5"
@@ -567,10 +567,10 @@
             "collection_title": "Keyboards",
             "custom_link": "",
             "card_width": "full",
-            "cover_image": "shopify://shop_images/sss.jpg",
+            "cover_image": "shopify://shop_images/10ee5703-7f9d-4c63-98ff-1bdf34554770.png",
             "image_focal_point": "center",
             "default_placeholder": "keyboards",
-            "text_color": "#FFFFFF",
+            "text_color": "#ffffff",
             "desktop_card_height": 0,
             "mobile_aspect_ratio": "auto"
           }
@@ -582,10 +582,10 @@
             "collection_title": "Switches",
             "custom_link": "",
             "card_width": "half",
-            "cover_image": "shopify://shop_images/999.webp",
+            "cover_image": "shopify://shop_images/43f36a0d-5a4d-4e8d-a992-886c43b3b146.png",
             "image_focal_point": "center",
             "default_placeholder": "switches",
-            "text_color": "#FFFFFF",
+            "text_color": "#ffffff",
             "desktop_card_height": 0,
             "mobile_aspect_ratio": "auto"
           }
@@ -600,7 +600,7 @@
             "cover_image": "shopify://shop_images/444.jpg",
             "image_focal_point": "center",
             "default_placeholder": "accessories",
-            "text_color": "#FFFFFF",
+            "text_color": "#ffffff",
             "desktop_card_height": 0,
             "mobile_aspect_ratio": "auto"
           }
@@ -612,10 +612,10 @@
             "collection_title": "Keycaps",
             "custom_link": "",
             "card_width": "full",
-            "cover_image": "shopify://shop_images/yyyy.jpg",
+            "cover_image": "shopify://shop_images/Themed_Mechanical_Keyboard_Collection_Showcase.png",
             "image_focal_point": "center",
             "default_placeholder": "keycaps",
-            "text_color": "#FFFFFF",
+            "text_color": "#ffffff",
             "desktop_card_height": 0,
             "mobile_aspect_ratio": "auto"
           }
@@ -758,6 +758,8 @@
         "context": "Get early access to drops, setup inspiration, support, giveaways, and real-time chatwith fellow keyboard fans.",
         "btn_link": "https://discord.gg/xPd7mmjj6D",
         "btn_bg": "shopify://shop_images/join_us_btn.png",
+        "btn_bg_color": "#000000",
+        "btn_text_color": "#ffffff",
         "btn_label": "Join Discord"
       }
     },
