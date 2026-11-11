@@ -4223,6 +4223,34 @@ button.add-to-cart:disabled,
   .product__slide-counter {
     display: none !important;
   }
+
+  /* Compact variant titles & option pills on desktop */
+  .variant-wrapper + .variant-wrapper {
+    margin-top: 16px;
+  }
+  .variant-wrapper .variant__label,
+  .variant-wrapper .variant__label[for] {
+    font-size: 13px;
+    font-weight: 400;
+    margin-bottom: 6px;
+  }
+  .variant-wrapper .variant__label-info,
+  .variant-wrapper [data-variant-color-label] {
+    font-size: 12.5px;
+  }
+  .variant-wrapper .variant-input-wrap label:not(.color-swatch) {
+    font-size: 11px;
+    padding: 2px 10px;
+    line-height: 20px;
+  }
+  .variant-wrapper .variant-input-wrap label.color-swatch {
+    width: 26px;
+    height: 26px;
+  }
+  .variant-wrapper .variant-input-wrap select {
+    font-size: 12px;
+    padding: 5px 24px 5px 10px;
+  }
 }
 
 @media only screen and (max-width: 768px) {
@@ -4397,22 +4425,31 @@ button.add-to-cart:disabled,
   .product-block:has(.variant-input-wrap) {
     margin-bottom: 12px !important;
   }
-  .variant-wrapper .variant__label {
-    font-size: 13px !important;
-    margin-bottom: 6px !important;
+  .variant-wrapper + .variant-wrapper {
+    margin-top: 14px !important;
+  }
+  .variant-wrapper .variant__label,
+  .variant-wrapper .variant__label[for] {
+    font-size: 12px !important;
+    font-weight: 400 !important;
+    margin-bottom: 5px !important;
   }
   .variant-wrapper .variant__label-info,
   .variant-wrapper [data-variant-color-label] {
-    font-size: 13px !important;
+    font-size: 12px !important;
   }
-  .variant-input-wrap label {
-    font-size: 11px !important;
-    padding: 2px 10px !important;
-    line-height: 24px !important;
+  .variant-input-wrap label:not(.color-swatch) {
+    font-size: 10px !important;
+    padding: 1px 8px !important;
+    line-height: 19px !important;
     margin-bottom: 0 !important;
   }
+  .variant-input-wrap label.color-swatch {
+    width: 25px !important;
+    height: 25px !important;
+  }
   .variant-input-wrap select {
-    font-size: 12px !important;
+    font-size: 11px !important;
   }
 
   /* 6. Moderate distance between Complete Your Setup title and cards below on mobile */
