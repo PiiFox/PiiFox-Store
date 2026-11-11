@@ -2523,9 +2523,24 @@ lazySizesConfig.expFactor = 4;
         );
       },
 
+      isDesktopDisabledNavDrawer: function () {
+        var isNavDrawer =
+          this.config.id === "NavDrawer" ||
+          (this.config.id && this.config.id.indexOf("NavSubDrawer") !== -1);
+        return (
+          isNavDrawer &&
+          window.matchMedia &&
+          window.matchMedia("(min-width: 1101px)").matches
+        );
+      },
+
       open: function (evt, returnFocusEl) {
         if (evt) {
           evt.preventDefault();
+        }
+
+        if (this.isDesktopDisabledNavDrawer()) {
+          return;
         }
 
         if (this.isOpen) {
@@ -2678,12 +2693,23 @@ lazySizesConfig.expFactor = 4;
           }.bind(this),
         );
 
+        // Close navigation drawer if viewport resizes to PC (>=1101px)
+        window.on(
+          "resize" + this.config.namespace,
+          function () {
+            if (this.isDesktopDisabledNavDrawer()) {
+              this.close();
+            }
+          }.bind(this),
+        );
+
         theme.a11y.lockMobileScrolling(this.config.namespace, this.nodes.page);
       },
 
       unbindEvents: function () {
         window.off("click" + this.config.namespace);
         window.off("keyup" + this.config.namespace);
+        window.off("resize" + this.config.namespace);
 
         theme.a11y.unlockMobileScrolling(
           this.config.namespace,
