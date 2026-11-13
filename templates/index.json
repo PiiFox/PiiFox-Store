@@ -534,29 +534,6 @@
         "style_card_bg_color": "#f9f7f5"
       }
     },
-    "single_page_width_banner_ihTf8b": {
-      "type": "single-page-width-banner",
-      "blocks": {
-        "single_page_width_banner_btfwM4": {
-          "type": "single_page_width_banner",
-          "settings": {
-            "video_url": "",
-            "banner": "shopify://shop_images/222222.webp",
-            "m_banner": "shopify://shop_images/222222.webp",
-            "banner_title": "STATE YOUR\nBOARDS",
-            "sub_title": "Browse curated PIIFOX keycap themes \nand build a setup with more personality.",
-            "text_color": "#ffffff",
-            "btn_link": "shopify://pages/keycaps-themes-lab",
-            "btn_label": "SHOP KEYCAP THEMES"
-          }
-        }
-      },
-      "block_order": [
-        "single_page_width_banner_btfwM4"
-      ],
-      "name": "Single Page Width Banner",
-      "settings": {}
-    },
     "main_collection_list_tAJGQJ": {
       "type": "main-collection-list",
       "blocks": {
@@ -637,6 +614,29 @@
         "card_radius": 24,
         "card_gap": 16
       }
+    },
+    "single_page_width_banner_ihTf8b": {
+      "type": "single-page-width-banner",
+      "blocks": {
+        "single_page_width_banner_btfwM4": {
+          "type": "single_page_width_banner",
+          "settings": {
+            "video_url": "",
+            "banner": "shopify://shop_images/222222.webp",
+            "m_banner": "shopify://shop_images/222222.webp",
+            "banner_title": "STATE YOUR\nBOARDS",
+            "sub_title": "Browse curated PIIFOX keycap themes \nand build a setup with more personality.",
+            "text_color": "#ffffff",
+            "btn_link": "shopify://pages/keycaps-themes-lab",
+            "btn_label": "SHOP KEYCAP THEMES"
+          }
+        }
+      },
+      "block_order": [
+        "single_page_width_banner_btfwM4"
+      ],
+      "name": "Single Page Width Banner",
+      "settings": {}
     },
     "video_carousel_home": {
       "type": "video-carousel",
@@ -1134,8 +1134,8 @@
     "col2_txt_section_RFrVGf",
     "collection_list_LPzqx3",
     "style_studio_theme_grid_home",
-    "single_page_width_banner_ihTf8b",
     "main_collection_list_tAJGQJ",
+    "single_page_width_banner_ihTf8b",
     "video_carousel_home",
     "joinus_section_YB8Mm3",
     "policy_list_section_pP8Ewa",
