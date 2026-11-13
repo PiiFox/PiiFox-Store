@@ -863,28 +863,89 @@
       let previewImg = null;
       const mainSlider = document.querySelector('[data-product-photos]');
 
-      function updateDefaultSlideIndex(variant) {
-        if (variant && (variant.featured_media || variant.featured_image)) {
-          const mediaId = (variant.featured_media && variant.featured_media.id) || (variant.featured_image && variant.featured_image.id);
-          if (mediaId) {
-            const slide = document.querySelector(`[data-product-photos] .product-main-slide[data-media-id$="-${mediaId}"]`)
-              || document.querySelector(`[data-product-photos] .product-main-slide[data-id="${mediaId}"]`);
-            if (slide && slide.dataset.index !== undefined) {
-              defaultSlideIndex = parseInt(slide.dataset.index, 10);
-              return;
+      function getVariantSlideIndex(variant) {
+        const currentVar = variant || (typeof getCurrentVariantData === 'function' ? getCurrentVariantData() : null);
+        if (!currentVar) return 0;
+
+        // 1. 优先根据变体绑定的 featured_media 或 featured_image ID 查找对应缩略图或幻灯片
+        const mediaId = (currentVar.featured_media && currentVar.featured_media.id) ||
+                        (currentVar.featured_image && currentVar.featured_image.id);
+        if (mediaId) {
+          const thumb = document.querySelector(`.product__thumb[data-id="${mediaId}"]`);
+          if (thumb && thumb.dataset.index !== undefined) {
+            return parseInt(thumb.dataset.index, 10);
+          }
+          const slide = document.querySelector(`[data-product-photos] .product-main-slide[data-id="${mediaId}"]`);
+          if (slide && slide.dataset.index !== undefined) {
+            return parseInt(slide.dataset.index, 10);
+          }
+        }
+
+        // 2. 根据 featured_image 的 position（Shopify 1-indexed）定位
+        if (currentVar.featured_image && currentVar.featured_image.position) {
+          const posIdx = parseInt(currentVar.featured_image.position, 10) - 1;
+          if (posIdx >= 0) {
+            const slideByPos = document.querySelector(`[data-product-photos] .product-main-slide[data-index="${posIdx}"]`);
+            if (slideByPos) return posIdx;
+          }
+        }
+
+        // 3. 兜底：查找包含当前底座颜色、且不是键帽上机图的图片（如纯底座图）
+        const currentColor = getCurrentColorValue().toLowerCase().trim();
+        if (currentColor) {
+          const slides = document.querySelectorAll('[data-product-photos] .product-main-slide');
+          for (let i = 0; i < slides.length; i++) {
+            const slide = slides[i];
+            const rawAlt = (slide.dataset.rawAlt || slide.getAttribute('data-raw-alt') || '').toLowerCase();
+            const img = slide.querySelector('img');
+            const imgAlt = ((img && (img.alt || img.getAttribute('data-alt'))) || '').toLowerCase();
+            const altText = (rawAlt + ' ' + imgAlt).trim();
+
+            if (altText.includes(currentColor)) {
+              let isKeycapCombo = false;
+              for (const card of cards) {
+                const kt = (card.dataset.keycapTitle || '').toLowerCase().trim();
+                const kh = (card.dataset.keycapHandle || '').toLowerCase().trim();
+                const st = extractShortTitle(kt);
+                if ((kt && altText.includes(kt)) || (st && st.length >= 3 && altText.includes(st)) || (kh && altText.includes(kh))) {
+                  isKeycapCombo = true;
+                  break;
+                }
+              }
+              if (!isKeycapCombo) {
+                const idx = parseInt(slide.dataset.index, 10);
+                return isNaN(idx) ? i : idx;
+              }
             }
           }
         }
-        if (mainSlider) {
-          const activeSlide = mainSlider.querySelector('.product-main-slide.is-selected');
-          if (activeSlide && activeSlide.dataset.index !== undefined) {
-            defaultSlideIndex = parseInt(activeSlide.dataset.index, 10) || 0;
-          }
+
+        return 0;
+      }
+
+      function updateDefaultSlideIndex(variant) {
+        defaultSlideIndex = getVariantSlideIndex(variant);
+      }
+
+      function showVariantDefaultImage(variant) {
+        if (previewOverlay) {
+          previewOverlay.classList.remove('is-visible');
+        }
+        const targetIndex = getVariantSlideIndex(variant);
+        defaultSlideIndex = targetIndex;
+
+        const defaultThumb = findThumb(targetIndex);
+        if (defaultThumb) {
+          defaultThumb.click();
+        } else if (window.Flickity && mainSlider) {
+          const flkty = Flickity.data(mainSlider);
+          if (flkty) flkty.select(targetIndex);
         }
       }
 
       if (isKeyboardProduct) {
-        updateDefaultSlideIndex();
+        const initialVar = (typeof getCurrentVariantData === 'function') ? getCurrentVariantData() : null;
+        updateDefaultSlideIndex(initialVar);
 
         previewOverlay = document.querySelector('.bundle-combo-preview');
         if (!previewOverlay) {
@@ -897,6 +958,14 @@
           }
         }
         previewImg = previewOverlay ? previewOverlay.querySelector('.bundle-combo-preview-img') : null;
+
+        // 如果未勾选任何键帽，确保展示该变体本身设置的图片
+        setTimeout(() => {
+          const hasSelected = setup1List.querySelectorAll('.bundle-keycap-card.is-selected').length > 0;
+          if (!hasSelected) {
+            showVariantDefaultImage(initialVar);
+          }
+        }, 80);
       }
 
       function getCurrentColorValue() {
@@ -1107,13 +1176,7 @@
         if (previewOverlay) {
           previewOverlay.classList.remove('is-visible');
         }
-        const defaultThumb = findThumb(defaultSlideIndex);
-        if (defaultThumb) {
-          defaultThumb.click();
-        } else if (window.Flickity && mainSlider) {
-          const flkty = Flickity.data(mainSlider);
-          if (flkty) flkty.select(defaultSlideIndex);
-        }
+        showVariantDefaultImage();
       }
 
       if (isKeyboardProduct) {
@@ -1187,17 +1250,26 @@
 
       function handleVariantColorSwitch(variant) {
         if (!isKeyboardProduct) return;
-        updateDefaultSlideIndex(variant);
+        const currentVar = variant || (typeof getCurrentVariantData === 'function' ? getCurrentVariantData() : null);
+        updateDefaultSlideIndex(currentVar);
 
-        // 键盘若已勾选 STYLE YOUR BOARD 中的键帽，底座颜色切换后立即自动切换到对应新颜色的搭配图
         const remainingSelected = setup1List.querySelectorAll('.bundle-keycap-card.is-selected');
         if (remainingSelected.length > 0) {
+          // 键盘若已勾选 STYLE YOUR BOARD 中的键帽，底座颜色切换后立即自动切换到对应新颜色的搭配图
           const currentCard = remainingSelected[remainingSelected.length - 1];
           setTimeout(() => {
             showKeycapImage(currentCard);
           }, 60);
           setTimeout(() => {
             showKeycapImage(currentCard);
+          }, 180);
+        } else {
+          // 没选键帽：绝不显示键帽上机图，直接显示该变体本身设置的图片（底座图/原装图）
+          setTimeout(() => {
+            showVariantDefaultImage(currentVar);
+          }, 60);
+          setTimeout(() => {
+            showVariantDefaultImage(currentVar);
           }, 180);
         }
       }
