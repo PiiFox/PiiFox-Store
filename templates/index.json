@@ -292,6 +292,61 @@
         "gap": 48
       }
     },
+    "collection_list_LPzqx3": {
+      "type": "collection-list",
+      "blocks": {
+        "collection_KMnRdc": {
+          "type": "collection",
+          "settings": {
+            "collection": "best-sellers",
+            "collection_title": "Best Sellers"
+          }
+        },
+        "collection_dgEgp4": {
+          "type": "collection",
+          "disabled": true,
+          "settings": {
+            "collection": "new-arrivals",
+            "collection_title": "New arrivals"
+          }
+        },
+        "collection_aCcJcd": {
+          "type": "collection",
+          "disabled": true,
+          "settings": {
+            "collection": "deals",
+            "collection_title": "Deals"
+          }
+        },
+        "collection_K8zLam": {
+          "type": "collection",
+          "disabled": true,
+          "settings": {
+            "collection": "recommended",
+            "collection_title": "Recommended"
+          }
+        }
+      },
+      "block_order": [
+        "collection_KMnRdc",
+        "collection_dgEgp4",
+        "collection_aCcJcd",
+        "collection_K8zLam"
+      ],
+      "name": "Best Sellers Section",
+      "settings": {
+        "title": "Best Sellers",
+        "collection": "best-sellers",
+        "products_limit": 12,
+        "btn_text": "Learn More",
+        "btn_color": "#111111",
+        "btn_text_color": "#ffffff",
+        "btn_hover_color": "#0a6830",
+        "card_bg": "#ffffff",
+        "image_bg": "#ffffff",
+        "enable_tabs": false
+      }
+    },
     "style_studio_theme_grid_home": {
       "type": "style-studio-theme-grid",
       "blocks": {
@@ -501,61 +556,6 @@
       ],
       "name": "Single Page Width Banner",
       "settings": {}
-    },
-    "collection_list_LPzqx3": {
-      "type": "collection-list",
-      "blocks": {
-        "collection_KMnRdc": {
-          "type": "collection",
-          "settings": {
-            "collection": "best-sellers",
-            "collection_title": "Best Sellers"
-          }
-        },
-        "collection_dgEgp4": {
-          "type": "collection",
-          "disabled": true,
-          "settings": {
-            "collection": "new-arrivals",
-            "collection_title": "New arrivals"
-          }
-        },
-        "collection_aCcJcd": {
-          "type": "collection",
-          "disabled": true,
-          "settings": {
-            "collection": "deals",
-            "collection_title": "Deals"
-          }
-        },
-        "collection_K8zLam": {
-          "type": "collection",
-          "disabled": true,
-          "settings": {
-            "collection": "recommended",
-            "collection_title": "Recommended"
-          }
-        }
-      },
-      "block_order": [
-        "collection_KMnRdc",
-        "collection_dgEgp4",
-        "collection_aCcJcd",
-        "collection_K8zLam"
-      ],
-      "name": "Best Sellers Section",
-      "settings": {
-        "title": "Best Sellers",
-        "collection": "best-sellers",
-        "products_limit": 12,
-        "btn_text": "Learn More",
-        "btn_color": "#111111",
-        "btn_text_color": "#ffffff",
-        "btn_hover_color": "#0a6830",
-        "card_bg": "#ffffff",
-        "image_bg": "#ffffff",
-        "enable_tabs": false
-      }
     },
     "main_collection_list_tAJGQJ": {
       "type": "main-collection-list",
@@ -1132,9 +1132,9 @@
   "order": [
     "23e7f471-8853-4933-b850-986da236297a",
     "col2_txt_section_RFrVGf",
+    "collection_list_LPzqx3",
     "style_studio_theme_grid_home",
     "single_page_width_banner_ihTf8b",
-    "collection_list_LPzqx3",
     "main_collection_list_tAJGQJ",
     "video_carousel_home",
     "joinus_section_YB8Mm3",
