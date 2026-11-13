@@ -63,7 +63,7 @@
             {%- endfor -%}
             {%- assign keycaps_discount_active = false -%}
             {%- if cart_has_keyboard and keycaps_count > 0 -%}
-              {%- assign keycaps_discount_total = keycaps_total_price | times: 0.15 | round -%}
+              {%- assign keycaps_discount_total = keycaps_total_price | times: 0.2 | round -%}
               {%- assign keycaps_discount_active = true -%}
             {%- elsif cart_has_keyboard == false and keycaps_count >= 2 -%}
               {%- assign keycaps_discount_total = keycaps_total_price | times: 0.1 | round -%}

@@ -89,7 +89,7 @@
                 {%- endif -%}
               {%- endfor -%}
               {%- if cart_has_keyboard and keycaps_count > 0 -%}
-                {%- assign keycaps_discount_total = keycaps_total_price | times: 0.15 | round -%}
+                {%- assign keycaps_discount_total = keycaps_total_price | times: 0.2 | round -%}
               {%- elsif cart_has_keyboard == false and keycaps_count >= 2 -%}
                 {%- assign keycaps_discount_total = keycaps_total_price | times: 0.1 | round -%}
               {%- endif -%}
@@ -264,7 +264,7 @@
             }
           });
 
-          // 规则 1 & 4: 有键盘（无论有无键帽），搭配键帽最高力度 85 折优先 (KEYCAP15)
+          // 规则 1 & 4: 有键盘（无论有无键帽），搭配键帽最高力度 8 折优先 (KEYCAP20)
           // 规则 2: 无键盘，满 2 把及以上键帽 9 折 (KEYCAP10)；单单只有 1 把键帽不打折
           // 规则 3: 无键盘无键帽，不打折
           let discountMode = 'none';
@@ -274,10 +274,10 @@
 
           if (hasKeyboard) {
             discountMode = 'keyboard';
-            discountRatio = 0.85;
-            discountCode = 'KEYCAP15';
+            discountRatio = 0.8;
+            discountCode = 'KEYCAP20';
             if (hasKeycap) {
-              discountAmountCents = Math.round(keycapsTotalPriceCents * 0.15);
+              discountAmountCents = Math.round(keycapsTotalPriceCents * 0.2);
             }
           } else if (hasKeycap && keycapsCount >= 2) {
             discountMode = 'keycap';
@@ -347,7 +347,7 @@
 
             if (basePrice > 0) {
               if (discountMode === 'keyboard') {
-                const discPrice = Math.round(basePrice * 0.85);
+                const discPrice = Math.round(basePrice * 0.8);
                 priceRow.innerHTML = `
                   <span class="cart-rec-item__compare-price">${formatMoney(basePrice)}</span>
                   <span class="cart-rec-item__price">${formatMoney(discPrice)}</span>

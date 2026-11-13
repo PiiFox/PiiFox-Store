@@ -44,7 +44,7 @@
           <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path>
           <line x1="7" y1="7" x2="7.01" y2="7"></line>
         </svg>
-        <span class="cart-rec-banner__text">Pair a keyboard with keycaps to get <strong class="cart-rec-banner__highlight">15% off keycaps.</strong></span>
+        <span class="cart-rec-banner__text">Pair a keyboard with keycaps to get <strong class="cart-rec-banner__highlight">20% off keycaps.</strong></span>
       </div>
     </div>
 
@@ -90,7 +90,7 @@
             <a href="{{ p.url }}" class="cart-rec-item__title" title="{{ p.title | escape }}">{{ p.title }}</a>
             {%- assign rec_orig_price = p.price -%}
             {%- if cart_has_keyboard -%}
-              {%- assign rec_disc_price = p.price | times: 0.85 | round -%}
+              {%- assign rec_disc_price = p.price | times: 0.8 | round -%}
             {%- elsif cart_has_keycap -%}
               {%- assign rec_disc_price = p.price | times: 0.9 | round -%}
             {%- else -%}
@@ -358,9 +358,9 @@
         }
       }
 
-      // 规则 1 & 4：有键盘时（无论有无键帽），最高力度 85 折优先，显示 STYLE YOUR BOARD
+      // 规则 1 & 4：有键盘时（无论有无键帽），最高力度 8 折优先，显示 STYLE YOUR BOARD
       if (hasKeyboard) {
-        return { mode: 'keyboard', discountRatio: 0.85, discountCode: 'KEYCAP15', hasKeycap: hasKeycap, keycapsCount: keycapsCount, isDiscountActive: hasKeycap };
+        return { mode: 'keyboard', discountRatio: 0.8, discountCode: 'KEYCAP20', hasKeycap: hasKeycap, keycapsCount: keycapsCount, isDiscountActive: hasKeycap };
       }
       // 规则 2：无键盘、有键帽时，显示 DOUBLE YOUR STYLE；满 2 把及以上生效 9 折 (KEYCAP10)
       else if (hasKeycap) {
@@ -413,7 +413,7 @@
       let priceRowHtml = '';
 
       if (discountState.mode === 'keyboard') {
-        const discPrice = Math.round(origPrice * 0.85);
+        const discPrice = Math.round(origPrice * 0.8);
         const discPriceText = formatMoney(discPrice);
         priceRowHtml = '<span class="cart-rec-item__compare-price">' + origPriceText + '</span><span class="cart-rec-item__price">' + discPriceText + '</span>';
       } else if (discountState.mode === 'keycap') {
