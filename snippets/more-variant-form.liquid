@@ -557,7 +557,7 @@
         <circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.35"/>
         <path d="M8 4.75v4M8 11.25h.01" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
       </svg>
-      <span>Please select 1 keycap set above for your custom build.</span>
+      <span>Please select 1 keycap set above for your custom build, otherwise the original keycaps will be shipped by default.</span>
     </div>
   {%- endif -%}
   <div class="product-form__actions-group">
@@ -2386,10 +2386,41 @@
         }
       }
 
+      let previousMode = getMode();
+
+      function triggerKeycapsAreaHighlight() {
+        if (!styleBox) return;
+        styleBox.classList.remove('is-highlighted');
+        void styleBox.offsetWidth;
+        styleBox.classList.add('is-highlighted');
+
+        const pills = document.querySelectorAll('.bundle-list-status');
+        pills.forEach(pill => {
+          pill.classList.remove('is-pulsing');
+          void pill.offsetWidth;
+          pill.classList.add('is-pulsing');
+        });
+
+        scrollToBoardIfNeeded();
+
+        clearTimeout(styleBox._highlightTimer);
+        styleBox._highlightTimer = setTimeout(() => {
+          styleBox.classList.remove('is-highlighted');
+          pills.forEach(p => p.classList.remove('is-pulsing'));
+        }, 1800);
+      }
+
       function syncAll() {
         const variant = getCurrentVariantData();
         const mode = getMode();
         let selectedKeycaps = getSelectedKeycaps();
+
+        if (mode === 'custom' && previousMode !== 'custom') {
+          triggerKeycapsAreaHighlight();
+        } else if (mode === 'original' && styleBox) {
+          styleBox.classList.remove('is-highlighted');
+        }
+        previousMode = mode;
 
         // 当处于 Other Style (custom mode) 时，限制最多只能选一套
         if (mode === 'custom' && selectedKeycaps.length > 1) {
@@ -2512,20 +2543,29 @@
 
       document.addEventListener('change', function (e) {
         if (!e.target) return;
-        if (
-          e.target.classList.contains('bundle-product-checkbox') ||
-          (keycapsWrap && keycapsWrap.contains(e.target))
-        ) {
+        if (keycapsWrap && keycapsWrap.contains(e.target)) {
+          if (isNonOriginalValue(e.target.value)) {
+            setTimeout(triggerKeycapsAreaHighlight, 30);
+          }
+          setTimeout(syncAll, 0);
+        } else if (e.target.classList.contains('bundle-product-checkbox')) {
           setTimeout(syncAll, 0);
         }
       });
 
       document.addEventListener('click', function (e) {
         if (!e.target || !e.target.closest) return;
-        if (
-          e.target.closest('.variant-input-wrap[data-index="option' + keycapsOptionIndex + '"]') ||
-          e.target.closest('.variant-input-wrap[data-handle="keycaps"], .variant-input-wrap[data-handle="keycap"]')
-        ) {
+        const keycapsTarget = e.target.closest(
+          '.variant-input-wrap[data-index="option' + keycapsOptionIndex + '"], ' +
+          '.variant-input-wrap[data-handle="keycaps"], .variant-input-wrap[data-handle="keycap"]'
+        );
+        if (keycapsTarget) {
+          const inputWrap = e.target.closest('.variant-input');
+          const radio = inputWrap ? inputWrap.querySelector('input[type="radio"]') : null;
+          const val = radio ? radio.value : (e.target.value || e.target.textContent || '');
+          if (isNonOriginalValue(val)) {
+            setTimeout(triggerKeycapsAreaHighlight, 30);
+          }
           setTimeout(syncAll, 20);
         }
       });

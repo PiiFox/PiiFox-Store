@@ -2322,10 +2322,15 @@ input.js-qty__num:focus {
   margin: 14px 0 8px 0;
 }
 
-/* 键盘页：下方紧跟人工安装服务卡片时，收紧间距 */
+/* 键盘页：下方紧跟人工安装服务卡片时，保持自然紧凑的适度间距 */
 .bundle-list:has(+ .manual-service-card:not([hidden])),
 .bundle-list:has(+ .manual-service-card[hidden] + .bundle-addons) {
-  margin-bottom: 0;
+  margin-bottom: 8px;
+}
+
+.bundle-list + .manual-service-card:not([hidden]),
+#StyleYourBoardBox + #ManualKeycapServiceCard:not([hidden]) {
+  margin-top: 8px;
 }
 
 .manual-service-card[hidden] {
@@ -3411,6 +3416,10 @@ button.add-to-cart:disabled,
   display: inline-flex;
   align-items: center;
   gap: 3px;
+}
+
+.bundle-keycap-card__price--discount::before {
+  content: '+';
 }
 
 /* Left-side Product Gallery Combo Image Preview Overlay */
@@ -7199,7 +7208,12 @@ button.add-to-cart:disabled,
   }
 
   .bundle-list:has(+ .manual-service-card:not([hidden])) {
-    margin-bottom: 0 !important;
+    margin-bottom: 6px !important;
+  }
+
+  .bundle-list + .manual-service-card:not([hidden]),
+  #StyleYourBoardBox + #ManualKeycapServiceCard:not([hidden]) {
+    margin-top: 6px !important;
   }
 
   .bundle-list-header,
@@ -8227,20 +8241,20 @@ ul.no-bullets.tag-list.tag-list--active-tags li.tag--remove .icon {
 
 #StyleYourBoardBox.bundle-list:has(+ .manual-service-card:not([hidden])),
 .bundle-list#StyleYourBoardBox:has(+ .manual-service-card:not([hidden])) {
-  margin-bottom: 0 !important;
+  margin-bottom: 8px !important;
 }
 
 @media (max-width: 768px) {
 
   #StyleYourBoardBox.bundle-list,
   .bundle-list#StyleYourBoardBox {
-    margin-top: 20px !important;
+    margin-top: 6px !important;
     margin-bottom: 4px !important;
   }
 
   #StyleYourBoardBox.bundle-list:has(+ .manual-service-card:not([hidden])),
   .bundle-list#StyleYourBoardBox:has(+ .manual-service-card:not([hidden])) {
-    margin-bottom: 0 !important;
+    margin-bottom: 4px !important;
   }
 }
 
@@ -8858,6 +8872,50 @@ ul.no-bullets.tag-list.tag-list--active-tags li.tag--remove .icon {
   .bundle-product-list--1 .bundle-keycap-card__price--discount::before,
   #StyleYourBoardBox .bundle-keycap-card__price--discount::before {
     content: '+';
+  }
+}
+
+/* ==========================================================================
+   Responsive: 490px 至 768px（移动端中大屏）搭配键帽卡片图片高度自适应
+   防止大屏手机/平板因卡片宽度增加而高度受限于 160px 导致图片过度横向拉伸
+   ========================================================================== */
+@media screen and (min-width: 490px) and (max-width: 640px) {
+  .bundle-product-list--1 .bundle-keycap-card__media,
+  .bundle-list .bundle-product-list--1 .bundle-keycap-card__media,
+  #StyleYourBoardBox .bundle-keycap-card__media {
+    aspect-ratio: 4 / 3 !important;
+    max-height: 240px !important;
+    min-height: 200px !important;
+  }
+
+  .bundle-product-list--1 .bundle-keycap-card__media img,
+  .bundle-list .bundle-product-list--1 .bundle-keycap-card__media img,
+  #StyleYourBoardBox .bundle-keycap-card__media img {
+    object-fit: cover !important;
+    width: 100% !important;
+    height: 100% !important;
+    transform: scale(0.92) !important;
+    transform-origin: center center !important;
+  }
+}
+
+@media screen and (min-width: 641px) and (max-width: 768px) {
+  .bundle-product-list--1 .bundle-keycap-card__media,
+  .bundle-list .bundle-product-list--1 .bundle-keycap-card__media,
+  #StyleYourBoardBox .bundle-keycap-card__media {
+    aspect-ratio: 4 / 3 !important;
+    max-height: 290px !important;
+    min-height: 240px !important;
+  }
+
+  .bundle-product-list--1 .bundle-keycap-card__media img,
+  .bundle-list .bundle-product-list--1 .bundle-keycap-card__media img,
+  #StyleYourBoardBox .bundle-keycap-card__media img {
+    object-fit: cover !important;
+    width: 100% !important;
+    height: 100% !important;
+    transform: scale(0.92) !important;
+    transform-origin: center center !important;
   }
 }
 
@@ -9888,16 +9946,226 @@ body.keycap-overview-modal-open {
     margin-right: 0 !important;
   }
 
-  /* 键盘商品（STYLE YOUR BOARD）：加大上边距至 20px，与上方 Keycaps 变体拉开舒适间距 */
+  /* 键盘商品（STYLE YOUR BOARD）：移动端减小与上方 Keycaps 变体的间距 */
   #StyleYourBoardBox.bundle-list,
   .bundle-list#StyleYourBoardBox {
-    margin-top: 20px !important;
+    margin-top: 6px !important;
   }
 
   /* 键帽商品（DOUBLE YOUR STYLE）：缩小 Add One More: 与上方变体的间距，使其如变体标题般紧凑自然 */
   .bundle-list:not(#StyleYourBoardBox),
   .bundle-list:not(#StyleYourBoardBox).bundle-list {
     margin-top: 6px !important;
+  }
+}
+
+/* ==========================================================================
+   Responsive: Keycap Card Price Adaptation
+   - 1320px 至 1415px：统一单行排布不换行，字号适度缩小，确保不超出边距且全部整齐在单行显示
+   - 1416px 以上大屏 PC：空间充裕，单行排布
+   - 769px 至 1319px：允许价格折行排布，保证折后价与优惠标签成组单行完整显示
+   ========================================================================== */
+@media screen and (min-width: 1320px) and (max-width: 1415px) {
+  .bundle-product-list--1,
+  .bundle-product-list--addons {
+    gap: 7px !important;
+  }
+
+  .bundle-keycap-card__info {
+    padding: 6px 5px 8px 5px !important;
+  }
+
+  .bundle-keycap-card__price {
+    display: flex !important;
+    align-items: baseline !important;
+    flex-wrap: nowrap !important;
+    white-space: nowrap !important;
+    gap: 3px !important;
+    line-height: 1.2 !important;
+  }
+
+  .bundle-keycap-card__price--original {
+    font-size: 10px !important;
+    white-space: nowrap !important;
+  }
+
+  .bundle-keycap-card__price--discount {
+    display: inline-flex !important;
+    align-items: center !important;
+    font-size: 11.5px !important;
+    white-space: nowrap !important;
+    gap: 2px !important;
+  }
+
+  .bundle-keycap-card__discount-tag {
+    font-size: 8.5px !important;
+    padding: 0.5px 3px !important;
+    margin-left: 1px !important;
+    white-space: nowrap !important;
+  }
+}
+
+@media screen and (min-width: 769px) and (max-width: 1319px) {
+  .bundle-product-list--1,
+  .bundle-product-list--addons {
+    gap: 8px !important;
+  }
+
+  .bundle-keycap-card__info {
+    padding: 6px 6px 8px 6px !important;
+  }
+
+  .bundle-keycap-card__price {
+    display: flex !important;
+    align-items: baseline !important;
+    flex-wrap: wrap !important;
+    column-gap: 5px !important;
+    row-gap: 2px !important;
+    line-height: 1.25 !important;
+    white-space: normal !important;
+  }
+
+  .bundle-keycap-card__price--original {
+    font-size: 10.5px !important;
+    white-space: nowrap !important;
+  }
+
+  .bundle-keycap-card__price--discount {
+    display: inline-flex !important;
+    align-items: center !important;
+    font-size: 12px !important;
+    white-space: nowrap !important;
+    gap: 2.5px !important;
+  }
+
+  .bundle-keycap-card__discount-tag {
+    font-size: 9px !important;
+    padding: 1px 3.5px !important;
+    margin-left: 1.5px !important;
+    white-space: nowrap !important;
+  }
+}
+
+@media screen and (min-width: 769px) and (max-width: 966px) {
+  .bundle-product-list--1,
+  .bundle-product-list--addons {
+    gap: 6px !important;
+  }
+
+  .bundle-keycap-card__info {
+    padding: 6px 4px 8px 4px !important;
+  }
+
+  .bundle-keycap-card__price {
+    column-gap: 4px !important;
+    row-gap: 2px !important;
+  }
+
+  .bundle-keycap-card__price--original {
+    font-size: 10px !important;
+  }
+
+  .bundle-keycap-card__price--discount {
+    font-size: 11.5px !important;
+    gap: 2px !important;
+  }
+
+  .bundle-keycap-card__discount-tag {
+    font-size: 8.5px !important;
+    padding: 0.5px 2.5px !important;
+    margin-left: 1px !important;
+  }
+}
+
+@media screen and (min-width: 1416px) {
+  .bundle-keycap-card__price {
+    display: flex !important;
+    align-items: baseline !important;
+    flex-wrap: nowrap !important;
+    white-space: nowrap !important;
+    gap: 4px !important;
+    line-height: 1.2 !important;
+  }
+
+  .bundle-keycap-card__price--original {
+    font-size: 11px !important;
+    white-space: nowrap !important;
+  }
+
+  .bundle-keycap-card__price--discount {
+    font-size: 12.5px !important;
+    white-space: nowrap !important;
+  }
+
+  .bundle-keycap-card__discount-tag {
+    font-size: 9px !important;
+    white-space: nowrap !important;
+  }
+}
+
+/* ==========================================================================
+   STYLE YOUR BOARD: Keycaps Area Pale Green Highlight on "Other Style" Click
+   点击 Other Style 时，对搭配键帽区域展示柔和优雅的淡绿色呼吸高亮
+   ========================================================================== */
+#StyleYourBoardBox {
+  border-radius: 14px;
+}
+
+#StyleYourBoardBox .bundle-product-list-container {
+  padding-bottom: 0 !important;
+}
+
+#StyleYourBoardBox.is-highlighted .bundle-product-list-container {
+  box-shadow: none !important;
+  border: none !important;
+  animation: none !important;
+}
+
+/* PC 端（> 768px）：高亮搭配键帽网格卡片区域 */
+@media screen and (min-width: 769px) {
+  #StyleYourBoardBox.is-highlighted .bundle-product-list--wrapper {
+    animation: keycapAreaPaleGreen 1.5s ease-out forwards;
+    border-radius: 12px;
+  }
+}
+
+/* 移动端（<= 768px）：高亮横向一整个搭配键帽模块（包含顶部状态栏/箭头与卡片），并留足舒适边距 */
+@media screen and (max-width: 768px) {
+  #StyleYourBoardBox {
+    padding: 6px 8px 8px 8px !important;
+    border-radius: 14px !important;
+    box-sizing: border-box !important;
+  }
+
+  #StyleYourBoardBox.is-highlighted {
+    animation: keycapAreaPaleGreen 1.5s ease-out forwards !important;
+  }
+
+  #StyleYourBoardBox.is-highlighted .bundle-product-list--wrapper,
+  #StyleYourBoardBox.is-highlighted .bundle-product-list-container {
+    animation: none !important;
+    box-shadow: none !important;
+    border: none !important;
+    background: transparent !important;
+  }
+}
+
+@keyframes keycapAreaPaleGreen {
+  0% {
+    background-color: transparent;
+    box-shadow: 0 0 0 0 rgba(112, 187, 0, 0);
+  }
+  25% {
+    background-color: rgba(112, 187, 0, 0.15);
+    box-shadow: 0 0 0 2px rgba(112, 187, 0, 0.55), 0 4px 18px rgba(112, 187, 0, 0.22);
+  }
+  60% {
+    background-color: rgba(112, 187, 0, 0.08);
+    box-shadow: 0 0 0 1.5px rgba(112, 187, 0, 0.32), 0 2px 12px rgba(112, 187, 0, 0.12);
+  }
+  100% {
+    background-color: transparent;
+    box-shadow: 0 0 0 0 rgba(112, 187, 0, 0);
   }
 }
 
