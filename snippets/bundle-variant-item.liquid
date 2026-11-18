@@ -27,6 +27,25 @@
   {%- assign card_image = item_variant.product.images.first | image_url: width: 360 -%}
 {%- endif -%}
 
+{%- comment -%}
+  键帽折扣比例：键盘页搭配键帽 8 折（KEYCAP20），键帽页满 2 套 9 折（KEYCAP10）
+  可由调用方通过 kc_ratio 参数传入，默认 0.9
+{%- endcomment -%}
+{%- assign kc_ratio_value = kc_ratio | default: 0.9 -%}
+{%- assign p_type = item_variant.product.type | downcase -%}
+{%- assign p_title = item_title | downcase -%}
+{%- assign is_kc = false -%}
+{%- if p_type contains 'keycap' or p_title contains 'keycap' or p_title contains 'keyset' or item_variant.product.tags contains 'keycaps' or item_variant.product.tags contains 'Keycaps' -%}
+  {%- unless p_title contains 'puller' or p_title contains 'installation' or p_title contains '人工安装' or p_title contains '安装服务' -%}
+    {%- assign is_kc = true -%}
+  {%- endunless -%}
+{%- endif -%}
+{%- assign kc_orig_price = item_variant.price -%}
+{%- assign kc_disc_price = item_variant.price -%}
+{%- if is_kc -%}
+  {%- assign kc_disc_price = item_variant.price | times: kc_ratio_value | round -%}
+{%- endif -%}
+
 <div
   class="bundle-keycap-card bundle-addon-card {% if is_available %}available{% else %}sold-out{% endif %}"
   id="bundle-card-{{ card_anchor }}"
@@ -34,6 +53,8 @@
   data-variant-id="{{ item_variant.id }}"
   data-product-title="{{ item_variant.product.title | escape }}"
   data-variant-title="{{ item_variant.title | escape }}"
+  data-price-cents="{{ item_variant.price }}"
+  data-is-keycap="{{ is_kc }}"
   role="button"
   tabindex="{% if is_available %}0{% else %}-1{% endif %}"
   aria-pressed="false"
@@ -84,20 +105,10 @@
         {{ variant_subtitle }}
       </div>
     {% endif %}
-    {%- assign p_type = item_variant.product.type | downcase -%}
-    {%- assign p_title = item_title | downcase -%}
-    {%- assign is_kc = false -%}
-    {%- if p_type contains 'keycap' or p_title contains 'keycap' or p_title contains 'keyset' or item_variant.product.tags contains 'keycaps' or item_variant.product.tags contains 'Keycaps' -%}
-      {%- unless p_title contains 'puller' or p_title contains 'installation' or p_title contains '人工安装' or p_title contains '安装服务' -%}
-        {%- assign is_kc = true -%}
-      {%- endunless -%}
-    {%- endif -%}
     <div class="bundle-keycap-card__price">
       {%- if is_kc -%}
-        {%- assign kc_orig_price = item_variant.price -%}
-        {%- assign kc_disc_price = item_variant.price | times: 0.9 | round -%}
         <span class="bundle-keycap-card__price--original">{{ kc_orig_price | money }}</span>
-        <span class="bundle-keycap-card__price--discount">{{ kc_disc_price | money }}</span>
+        <span class="bundle-keycap-card__price--discount">{{ kc_disc_price | money }}<span class="bundle-keycap-card__discount-tag">-10%</span></span>
       {%- else -%}
         {{ item_variant.price | money }}
       {%- endif -%}

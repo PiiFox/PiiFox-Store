@@ -55,11 +55,57 @@
 {%- assign display_subtotal = cart.original_total_price | minus: keycaps_discount_total -%}
 {%- assign display_orig = cart.original_total_price -%}
 
+{%- assign cart_has_custom_keyboard = false -%}
+{%- for ci in cart.items -%}
+  {%- assign ci_t = ci.product.type | downcase -%}
+  {%- assign ci_title = ci.product.title | downcase -%}
+  {%- assign ci_is_kb = false -%}
+  {%- if ci_t contains 'keyboard' or ci_title contains 'keyboard' or ci.product.tags contains 'keyboards' or ci.product.tags contains 'Keyboards' or ci.product.tags contains 'keyboard' or ci.product.tags contains 'Keyboard' -%}
+    {%- unless ci_title contains 'keycap' or ci_title contains 'switch' or ci_t contains 'keycap' or ci_t contains 'switch' or ci_title contains 'desk mat' or ci_title contains 'holder' -%}
+      {%- assign ci_is_kb = true -%}
+    {%- endunless -%}
+  {%- endif -%}
+  {%- if ci_is_kb -%}
+    {%- for option in ci.options_with_values -%}
+      {%- assign opt_val = option.value | downcase | strip -%}
+      {%- if opt_val contains 'other style' or opt_val contains 'other-style' or opt_val contains 'non-original' or opt_val contains 'non original' or opt_val == 'custom' or opt_val contains '非原装' -%}
+        {%- assign cart_has_custom_keyboard = true -%}
+        {%- break -%}
+      {%- endif -%}
+    {%- endfor -%}
+    {%- unless cart_has_custom_keyboard -%}
+      {%- assign vt_down = ci.variant.title | downcase -%}
+      {%- if vt_down contains 'other style' or vt_down contains 'other-style' or vt_down contains 'non-original' or vt_down contains 'non original' or vt_down contains '非原装' -%}
+        {%- assign cart_has_custom_keyboard = true -%}
+      {%- endif -%}
+    {%- endunless -%}
+  {%- endif -%}
+  {%- if cart_has_custom_keyboard -%}
+    {%- break -%}
+  {%- endif -%}
+{%- endfor -%}
+
 <div class="cart__items"
   data-count="{{ cart.item_count }}"
   data-cart-subtotal="{{ display_orig }}"
   data-cart-discount-total="{{ keycaps_discount_total }}"
-  data-cart-final-subtotal="{{ display_subtotal }}">
+  data-cart-final-subtotal="{{ display_subtotal }}"
+  data-has-custom-keyboard="{{ cart_has_custom_keyboard }}">
+  {%- if cart_has_custom_keyboard -%}
+    <div class="cart-custom-keycaps-notice" id="CartCustomKeycapsNotice" role="alert">
+      <div class="cart-custom-keycaps-notice__icon" aria-hidden="true">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"></circle>
+          <line x1="12" y1="8" x2="12" y2="12"></line>
+          <line x1="12" y1="16" x2="12.01" y2="16"></line>
+        </svg>
+      </div>
+      <div class="cart-custom-keycaps-notice__content">
+        <div class="cart-custom-keycaps-notice__title">Custom Keycaps Reminder</div>
+        <div class="cart-custom-keycaps-notice__text">When choosing custom keycaps for your keyboard, please do not remove the paired keycap set or installation service from your cart to ensure your keyboard is built and shipped properly.</div>
+      </div>
+    </div>
+  {%- endif -%}
   {% for item in cart.items %}
     {%- render 'cart-item', product: item, cart_has_keyboard: cart_has_keyboard, keycaps_discount_active: keycaps_discount_active -%}
   {% endfor %}

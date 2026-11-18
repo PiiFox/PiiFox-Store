@@ -299,7 +299,66 @@
           };
         }
 
+        function hasCustomKeyboardInCart() {
+          const itemEls = document.querySelectorAll('.cart__item');
+          for (let i = 0; i < itemEls.length; i++) {
+            const el = itemEls[i];
+            if (el.getAttribute('data-has-other-style-keycaps') === 'true') {
+              return true;
+            }
+            const isKb = el.getAttribute('data-is-keyboard') === 'true';
+            if (isKb) {
+              const variantsEl = el.querySelector('.cart__item--variants');
+              const vText = variantsEl ? (variantsEl.textContent || '').toLowerCase() : '';
+              if (
+                vText.includes('other style') ||
+                vText.includes('other-style') ||
+                vText.includes('non-original') ||
+                vText.includes('non original') ||
+                vText.includes('custom') ||
+                vText.includes('非原装')
+              ) {
+                return true;
+              }
+            }
+          }
+          return false;
+        }
+
+        function syncCustomKeycapsNotice() {
+          const hasCustomKb = hasCustomKeyboardInCart();
+          const noticeEls = document.querySelectorAll('.cart-custom-keycaps-notice');
+          if (hasCustomKb && !noticeEls.length) {
+            const containers = document.querySelectorAll('.cart__items, [data-products]');
+            containers.forEach(container => {
+              if (container.querySelector('.cart-custom-keycaps-notice')) return;
+              const noticeDiv = document.createElement('div');
+              noticeDiv.className = 'cart-custom-keycaps-notice';
+              noticeDiv.id = 'CartCustomKeycapsNotice';
+              noticeDiv.setAttribute('role', 'alert');
+              noticeDiv.innerHTML = `
+                <div class="cart-custom-keycaps-notice__icon" aria-hidden="true">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <line x1="12" y1="8" x2="12" y2="12"></line>
+                    <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                  </svg>
+                </div>
+                <div class="cart-custom-keycaps-notice__content">
+                  <div class="cart-custom-keycaps-notice__title">Custom Keycaps Reminder</div>
+                  <div class="cart-custom-keycaps-notice__text">When choosing custom keycaps for your keyboard, please do not remove the paired keycap set or installation service from your cart to ensure your keyboard is built and shipped properly.</div>
+                </div>
+              `;
+              container.insertBefore(noticeDiv, container.firstChild);
+            });
+          }
+          document.querySelectorAll('.cart-custom-keycaps-notice').forEach(el => {
+            el.style.display = hasCustomKb ? 'flex' : 'none';
+          });
+        }
+
         function updateBundleUI() {
+          syncCustomKeycapsNotice();
           const bundleState = scanCartBundle();
           const { hasKeyboard, hasKeycap, discountMode, discountRatio, discountCode, discountAmountCents } = bundleState;
           const itemEls = document.querySelectorAll('.cart__item');

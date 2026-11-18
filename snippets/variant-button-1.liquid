@@ -11,14 +11,50 @@
   if downcased_option contains size_trigger
     assign is_size = true
   endif
+
+  assign is_keyboard = is_keyboard | default: false
+  unless is_keyboard
+    assign p_title_down = product.title | downcase
+    assign p_handle_down = product.handle | downcase
+    assign p_type_down = product.type | downcase
+    if p_title_down contains 'keyboard' or p_handle_down contains 'keyboard' or product.tags contains 'keyboard' or product.tags contains 'keyboards' or p_type_down contains 'keyboard'
+      unless p_title_down contains 'keycap' or p_handle_down contains 'keycap' or p_type_down contains 'keycap'
+        assign is_keyboard = true
+      endunless
+    endif
+  endunless
+
+  assign opt_name_down = option.name | downcase | strip
+  assign is_keycaps_option = false
+  if opt_name_down == 'keycaps' or opt_name_down == 'keycap' or opt_name_down contains 'keycap'
+    assign is_keycaps_option = true
+  else
+    for val in option.values
+      assign val_down = val | downcase | strip
+      if val_down contains 'non-original' or val_down contains 'non original' or val_down contains 'other style' or val_down contains 'other-style' or val_down contains '非原装'
+        assign is_keycaps_option = true
+        break
+      endif
+    endfor
+  endif
+
+  assign initial_keycaps_is_non_original = false
+  if is_keycaps_option
+    assign selected_kc_val = option.selected_value | downcase | strip
+    if selected_kc_val contains 'non-original' or selected_kc_val contains 'non original' or selected_kc_val contains 'other style' or selected_kc_val contains 'other-style' or selected_kc_val == 'custom' or selected_kc_val contains '非原装'
+      assign initial_keycaps_is_non_original = true
+    endif
+  endif
 -%}
 
+{%- assign option_index = forloop.index -%}
 <div class="variant-wrapper js" data-type="button">
   <label
     class="variant__label{% if option.name == 'Default' or option.name == 'Title' %} hidden-label{% endif %}{% unless variant_labels %} hidden-label{% endunless %}"
     for="ProductSelect-{{ section_id }}-{{ product.id }}-option-{{ forloop.index0 }}"
   >
-    {{ option.name }}
+    <span class="variant__label-title">{{ option.name | remove: ':' }}:</span>
+    <span class="variant__label-value" data-variant-selected-value data-option-index="{{ option_index }}" data-option-name="{{ option.name | escape }}">{{ option.selected_value }}</span>
     {%- if connect_to_sizechart and is_size -%}
       <span class="variant__label-info">
         &mdash;
@@ -29,11 +65,9 @@
         -%}
       </span>
     {%- endif -%}
-
   </label>
-  {%- assign option_index = forloop.index -%}
   <fieldset
-    class="variant-input-wrap"
+    class="variant-input-wrap{% if is_keycaps_option and is_keyboard %} has-keycap-status{% endif %}"
     name="{{ option.name }}"
     data-index="option{{ option_index }}"
     data-handle="{{ option.name | handleize }}"
@@ -110,5 +144,18 @@
         </div>
       </div>
     {%- endfor -%}
+    {%- if is_keycaps_option and is_keyboard -%}
+      <span
+        class="bundle-list-status bundle-list-status--desktop"
+        id="StyleBoardModeStatus"
+        data-state="{% if initial_keycaps_is_non_original %}pending{% else %}neutral{% endif %}"
+      >
+        {%- if initial_keycaps_is_non_original -%}
+          Pick 1 Keycap Set
+        {%- else -%}
+          Optional Add-on
+        {%- endif -%}
+      </span>
+    {%- endif -%}
   </fieldset>
 </div>

@@ -32,8 +32,8 @@
   assign p_handle = product.handle | downcase
   assign p_title = product.title | downcase
 
-  if p_type == 'keyboards' or p_type == 'keyboard' or p_cat_name == 'keyboards' or product.category == 'Keyboards' or product.tags contains 'keyboards' or product.tags contains 'Keyboards' or product.tags contains 'keyboard' or product.tags contains 'Keyboard'
-    unless p_type contains 'keycap' or p_cat_name contains 'keycap' or p_handle contains 'keycap' or p_title contains 'keycap' or product.tags contains 'keycaps' or product.tags contains 'Keycaps' or product.tags contains 'keycap' or product.tags contains 'Keycap' or p_type contains 'switch' or p_cat_name contains 'switch' or p_handle contains 'switch' or p_type contains 'mouse' or p_type contains 'mice' or p_cat_name contains 'mouse' or p_cat_name contains 'mice' or p_handle contains 'mouse' or p_type contains 'accessori' or p_cat_name contains 'accessori' or p_type contains 'service'
+  if p_type == 'keyboards' or p_type == 'keyboard' or p_cat_name == 'keyboards' or product.category == 'Keyboards' or product.tags contains 'keyboards' or product.tags contains 'Keyboards' or product.tags contains 'keyboard' or product.tags contains 'Keyboard' or p_title contains 'keyboard' or p_handle contains 'keyboard'
+    unless p_type contains 'keycap' or p_cat_name contains 'keycap' or p_handle contains 'keycap' or p_title contains 'keycap' or product.tags contains 'keycaps' or product.tags contains 'Keycaps' or product.tags contains 'keycap' or product.tags contains 'Keycap' or p_type contains 'mouse' or p_type contains 'mice' or p_cat_name contains 'mouse' or p_cat_name contains 'mice' or p_handle contains 'mouse' or p_type contains 'accessori' or p_cat_name contains 'accessori' or p_type contains 'service'
       assign is_keyboard = true
     endunless
   endif
@@ -421,7 +421,8 @@
                               is_color: is_color,
                               color_option_index: color_option_index,
                               connect_to_sizechart: connect_to_sizechart,
-                              sizechart_index: sizechart_index
+                              sizechart_index: sizechart_index,
+                              is_keyboard: is_keyboard
                             -%}
                           {%- else -%}
                             {%- render 'variant-dropdown',
@@ -822,15 +823,18 @@
   }
   .device_bottominfo--wrapper .m_product_option .m_product_price .product__price.on-sale,
   .device_bottominfo--wrapper .m_product_option .m_product_price .product__price.on-sale .money {
-    color: #0a6830 !important;
+    color: #111111 !important;
   }
   .device_bottominfo--wrapper .m_product_option .m_product_price .product__price--compare,
-  .device_bottominfo--wrapper .m_product_option .m_product_price .product__price--compare .money {
+  .device_bottominfo--wrapper .m_product_option .m_product_price .product__price--compare .money,
+  .device_bottominfo--wrapper .m_product_option .m_product_price del,
+  .device_bottominfo--wrapper .m_product_option .m_product_price .add-to-cart__compare-price {
     color: #999999 !important;
     font-size: 14px !important;
-    text-decoration: line-through;
+    text-decoration: line-through !important;
     font-weight: 400 !important;
     margin-left: 4px;
+    display: inline-block;
   }
   .device_bottominfo--wrapper .m_product_option .m_product_addToCart {
     display: inline-flex !important;
@@ -902,11 +906,22 @@
   .device_bottominfo--wrapper .m_bottom_cart_status {
     display: none !important;
   }
+  .device_bottominfo .m_bottom_price_part {
+    display: none !important;
+  }
   body.template-product .footer-opera--wrapper {
     bottom: calc(56px + 13px) !important;
     z-index: 101 !important;
   }
   @media screen and (max-width: 768px) {
+    .device_bottominfo .m_bottom_price_part {
+      display: inline !important;
+    }
+    .device_bottominfo .m_bottom_price_part .add-to-cart__compare-price {
+      font-size: 0.86em !important;
+      margin-left: 4px !important;
+      opacity: 0.72 !important;
+    }
     .device_bottominfo {
       display: none;
       position: fixed;
@@ -1007,14 +1022,14 @@
       color: #ffffff !important;
       border-radius: 0 !important;
       border: none !important;
-      padding: 0 20px 0 0 !important;
+      padding: 0 42px 0 8px !important;
       margin: 0 !important;
       min-width: 0 !important;
       width: 100% !important;
-      font-size: 13.5px !important;
+      font-size: 12.5px !important;
       font-weight: 700 !important;
       text-transform: uppercase !important;
-      letter-spacing: 0.08em !important;
+      letter-spacing: 0.03em !important;
       white-space: nowrap !important;
       cursor: pointer !important;
       text-decoration: none !important;
@@ -1023,9 +1038,46 @@
       transition: background 0.15s ease, opacity 0.15s ease !important;
       -webkit-tap-highlight-color: transparent !important;
     }
-    @media screen and (max-width: 360px) {
+    @media screen and (max-width: 440px) {
+      .device_bottominfo {
+        background: linear-gradient(to right, #ffffff 88px, #0a6830 88px) !important;
+      }
+      .device_bottominfo--wrapper .m_product_info {
+        width: 88px !important;
+        min-width: 88px !important;
+      }
+      .device_bottominfo--wrapper .m_product_option {
+        width: calc(100% - 88px) !important;
+      }
       .device_bottominfo--wrapper .m_product_option .m_product_addToCart {
-        font-size: 12.5px !important;
+        font-size: 11.5px !important;
+        letter-spacing: 0.02em !important;
+        padding: 0 38px 0 6px !important;
+      }
+      .device_bottominfo--wrapper .m_bottom_cart_status {
+        width: 40px !important;
+        min-width: 40px !important;
+      }
+    }
+    @media screen and (max-width: 360px) {
+      .device_bottominfo {
+        background: linear-gradient(to right, #ffffff 74px, #0a6830 74px) !important;
+      }
+      .device_bottominfo--wrapper .m_product_info {
+        width: 74px !important;
+        min-width: 74px !important;
+      }
+      .device_bottominfo--wrapper .m_product_option {
+        width: calc(100% - 74px) !important;
+      }
+      .device_bottominfo--wrapper .m_product_option .m_product_addToCart {
+        font-size: 10.5px !important;
+        letter-spacing: 0.01em !important;
+        padding: 0 34px 0 4px !important;
+      }
+      .device_bottominfo--wrapper .m_bottom_cart_status {
+        width: 34px !important;
+        min-width: 34px !important;
       }
     }
     .device_bottominfo--wrapper .m_product_option .m_product_addToCart:hover {
@@ -1174,7 +1226,7 @@
       <a href="javascript:;" class="m_product_addToCart btn add-to-cart">
         <span class="m_product_addToCart_text">
           {%- if current_variant.available -%}
-            ADD TO CART
+            ADD TO CART<span class="m_bottom_price_part"> | {{ current_variant.price | money | strip_html }}</span>
           {%- else -%}
             SOLD OUT
           {%- endif -%}
@@ -1260,27 +1312,38 @@
         }
       }
 
-      const bottomPriceEl = document.querySelector('.device_bottominfo .m_product_price [data-product-price]');
-      if (bottomPriceEl && window.theme && window.theme.Currency && typeof window.theme.Currency.formatMoney === 'function') {
-        bottomPriceEl.innerHTML = window.theme.Currency.formatMoney(variant.price, window.theme.settings.moneyFormat);
-      }
-
-      const bottomAddBtn = document.querySelector('.device_bottominfo .m_product_addToCart');
-      if (bottomAddBtn) {
-        const textSpan = bottomAddBtn.querySelector('.m_product_addToCart_text');
-        if (!variant.available) {
-          bottomAddBtn.classList.add('disabled');
-          if (textSpan) {
-            textSpan.textContent = 'SOLD OUT';
+      if (typeof window.__renderAddToCartPrice === 'function') {
+        window.__renderAddToCartPrice(variant);
+      } else {
+        const bottomPriceEl = document.querySelector('.device_bottominfo .m_product_price [data-product-price]');
+        if (bottomPriceEl && window.theme && window.theme.Currency && typeof window.theme.Currency.formatMoney === 'function') {
+          bottomPriceEl.innerHTML = window.theme.Currency.formatMoney(variant.price, window.theme.settings.moneyFormat);
+        }
+        const bottomAddBtn = document.querySelector('.device_bottominfo .m_product_addToCart');
+        if (bottomAddBtn) {
+          const textSpan = bottomAddBtn.querySelector('.m_product_addToCart_text');
+          if (!variant.available) {
+            bottomAddBtn.classList.add('disabled');
+            if (textSpan) {
+              textSpan.textContent = 'SOLD OUT';
+            } else {
+              bottomAddBtn.textContent = 'SOLD OUT';
+            }
           } else {
-            bottomAddBtn.textContent = 'SOLD OUT';
-          }
-        } else {
-          bottomAddBtn.classList.remove('disabled');
-          if (textSpan) {
-            textSpan.textContent = 'ADD TO CART';
-          } else {
-            bottomAddBtn.textContent = 'ADD TO CART';
+            bottomAddBtn.classList.remove('disabled');
+            let formattedPrice = '';
+            if (window.theme && window.theme.Currency && typeof window.theme.Currency.formatMoney === 'function') {
+              const rawHtml = window.theme.Currency.formatMoney(variant.price, window.theme.settings.moneyFormat);
+              const tmp = document.createElement('div');
+              tmp.innerHTML = rawHtml;
+              formattedPrice = (tmp.textContent || tmp.innerText || '').trim();
+            }
+            const pricePart = formattedPrice ? `<span class="m_bottom_price_part"> | ${formattedPrice}</span>` : '';
+            if (textSpan) {
+              textSpan.innerHTML = 'ADD TO CART' + pricePart;
+            } else {
+              bottomAddBtn.innerHTML = 'ADD TO CART' + pricePart;
+            }
           }
         }
       }

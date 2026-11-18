@@ -41,6 +41,22 @@
   });
 </script>
 {%- assign is_keyboard = is_keyboard | default: false -%}
+{%- assign current_p_title = product.title | downcase -%}
+{%- assign current_p_handle = product.handle | downcase -%}
+{%- assign current_p_type = product.type | downcase -%}
+{%- if current_p_title contains 'keyboard'
+  or current_p_handle contains 'keyboard'
+  or product.tags contains 'keyboard'
+  or product.tags contains 'keyboards'
+  or current_p_type contains 'keyboard'
+-%}
+  {%- unless current_p_title contains 'keycap'
+    or current_p_handle contains 'keycap'
+    or current_p_type contains 'keycap'
+  -%}
+    {%- assign is_keyboard = true -%}
+  {%- endunless -%}
+{%- endif -%}
 {%- assign is_keycap = is_keycap | default: false -%}
 {%- assign keycaps_option_index = 0 -%}
 {%- assign initial_keycaps_is_non_original = false -%}
@@ -52,7 +68,12 @@
   {%- else -%}
     {%- for val in opt.values -%}
       {%- assign val_down = val | downcase | strip -%}
-      {%- if val_down contains 'non-original' or val_down contains 'non original' or val_down contains 'other style' or val_down contains 'other-style' or val_down contains '非原装' -%}
+      {%- if val_down contains 'non-original'
+        or val_down contains 'non original'
+        or val_down contains 'other style'
+        or val_down contains 'other-style'
+        or val_down contains '非原装'
+      -%}
         {%- assign is_keycaps_opt = true -%}
         {%- break -%}
       {%- endif -%}
@@ -61,7 +82,13 @@
   {%- if is_keycaps_opt -%}
     {%- assign keycaps_option_index = forloop.index -%}
     {%- assign selected_kc_val = opt.selected_value | downcase | strip -%}
-    {%- if selected_kc_val contains 'non-original' or selected_kc_val contains 'non original' or selected_kc_val contains 'other style' or selected_kc_val contains 'other-style' or selected_kc_val == 'custom' or selected_kc_val contains '非原装' -%}
+    {%- if selected_kc_val contains 'non-original'
+      or selected_kc_val contains 'non original'
+      or selected_kc_val contains 'other style'
+      or selected_kc_val contains 'other-style'
+      or selected_kc_val == 'custom'
+      or selected_kc_val contains '非原装'
+    -%}
       {%- assign initial_keycaps_is_non_original = true -%}
     {%- endif -%}
     {%- break -%}
@@ -73,7 +100,16 @@
 {%- assign all_color_values_list = '' -%}
 {%- for opt in product.options_with_values -%}
   {%- assign opt_down = opt.name | downcase | strip -%}
-  {%- if opt_down == 'color' or opt_down == 'colour' or opt_down contains 'color' or opt_down contains 'colour' or opt_down contains 'base' or opt_down contains 'case' or opt_down contains '颜色' or opt_down contains '底座' or opt_down contains '外壳' -%}
+  {%- if opt_down == 'color'
+    or opt_down == 'colour'
+    or opt_down contains 'color'
+    or opt_down contains 'colour'
+    or opt_down contains 'base'
+    or opt_down contains 'case'
+    or opt_down contains '颜色'
+    or opt_down contains '底座'
+    or opt_down contains '外壳'
+  -%}
     {%- assign color_option_index = forloop.index -%}
     {%- assign color_option_name = opt.name -%}
     {%- capture all_color_values_list -%}{%- for v in opt.values -%}{{ v | downcase | strip }}{%- unless forloop.last -%},{%- endunless -%}{%- endfor -%}{%- endcapture -%}
@@ -124,50 +160,117 @@
 {%- endif -%}
 
 {%- if show_complete_setup -%}
-  <div class="bundle-list" {% if is_keyboard %}id="StyleYourBoardBox"{% endif %}>
-    <div class="bundle-list-header">
+  <div
+    class="bundle-list"
+    {% if is_keyboard %}
+      id="StyleYourBoardBox"
+    {% endif %}
+  >
+    <div
+      class="bundle-promo-overlay"
+      id="BundlePromoOverlay"
+      data-bundle-promo-overlay
+    >
       {%- if is_keyboard -%}
-        {%- if keycaps_option_index > 0 -%}
-          <div class="bundle-list-header__top">
-            <div class="bundle-list-badge bundle-list-badge--lime">
-              STYLE YOUR BOARD
-            </div>
-            <span
-              class="bundle-list-status"
-              id="StyleBoardModeStatus"
-              data-state="{% if initial_keycaps_is_non_original %}pending{% else %}neutral{% endif %}"
-            >
-              {%- if initial_keycaps_is_non_original -%}
-                Pick 1+ Keycap Set
-              {%- else -%}
-                Optional Add-on
-              {%- endif -%}
-            </span>
-          </div>
-        {%- else -%}
-          <div class="bundle-list-badge bundle-list-badge--lime">
-            STYLE YOUR BOARD
-          </div>
-        {%- endif -%}
-        <div class="bundle-list-subtitle bundle-list-subtitle--lime">
-          <svg class="bundle-list-subtitle__icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#70bb00" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <div class="bundle-promo-overlay__badge bundle-promo-overlay__badge--lime">STYLE YOUR BOARD</div>
+        <div class="bundle-promo-overlay__subtitle bundle-promo-overlay__subtitle--lime">
+          <svg
+            class="bundle-promo-overlay__icon"
+            width="12"
+            height="12"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="#70bb00"
+            stroke-width="2.2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
             <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path>
             <line x1="7" y1="7" x2="7.01" y2="7"></line>
           </svg>
           <span>Pair a keyboard with keycaps to get <strong>20% off keycaps.</strong></span>
         </div>
       {%- else -%}
-        <div class="bundle-list-badge bundle-list-badge--pink">
-          DOUBLE YOUR STYLE
-        </div>
-        <div class="bundle-list-subtitle bundle-list-subtitle--pink">
-          <svg class="bundle-list-subtitle__icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ff007f" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <div class="bundle-promo-overlay__badge bundle-promo-overlay__badge--pink">DOUBLE YOUR STYLE</div>
+        <div class="bundle-promo-overlay__subtitle bundle-promo-overlay__subtitle--pink">
+          <svg
+            class="bundle-promo-overlay__icon"
+            width="12"
+            height="12"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="#ff007f"
+            stroke-width="2.2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
             <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path>
             <line x1="7" y1="7" x2="7.01" y2="7"></line>
           </svg>
           <span>Buy 2 keycap sets to get <strong>10% off keycaps.</strong></span>
         </div>
       {%- endif -%}
+    </div>
+    <div class="bundle-list-header">
+      <div class="bundle-list-header__top">
+        {%- if is_keyboard and keycaps_option_index > 0 -%}
+          <span
+            class="bundle-list-status bundle-list-status--mobile"
+            id="StyleBoardModeStatusMobile"
+            data-state="{% if initial_keycaps_is_non_original %}pending{% else %}neutral{% endif %}"
+          >
+            {%- if initial_keycaps_is_non_original -%}
+              Pick 1 Keycap Set
+            {%- else -%}
+              Optional Add-on
+            {%- endif -%}
+          </span>
+        {%- elsif is_keyboard == false -%}
+          <div class="bundle-list-add-more variant__label">
+            <span class="variant__label-title">Add One More:</span>
+          </div>
+        {%- endif -%}
+        <div class="bundle-list-arrows" data-bundle-arrows>
+          <button
+            type="button"
+            class="bundle-list-arrow bundle-list-arrow--prev is-disabled"
+            data-bundle-prev
+            aria-label="Previous"
+          >
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <polyline points="15 18 9 12 15 6"></polyline>
+            </svg>
+          </button>
+          <button
+            type="button"
+            class="bundle-list-arrow bundle-list-arrow--next"
+            data-bundle-next
+            aria-label="Next"
+          >
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </button>
+        </div>
+      </div>
     </div>
     <div class="bundle-product-list-container">
       <div class="bundle-product-list--wrapper">
@@ -229,6 +332,136 @@
               {%- endunless -%}
             {% endfor %}
           {%- endif -%}
+
+          {%- if is_keyboard -%}
+            <!-- Style Your Board: Selected Keycap Spec Card (单层行内展开 - 浅灰底色) -->
+            <div class="bundle-keycap-spec-card" id="BundleKeycapSpecCard" hidden>
+              <div class="bundle-keycap-spec-card__inner">
+                <div class="bundle-keycap-spec-card__main">
+                  <div class="bundle-keycap-spec-card__title" id="BundleKeycapSpecTitle">Sunset Glow Keycaps</div>
+                  <div class="bundle-keycap-spec-card__specs" id="BundleKeycapSpecDesc">
+                    PBT | 142 Keys | Cherry Profile
+                  </div>
+                </div>
+                <a
+                  class="bundle-keycap-spec-card__learn-more"
+                  id="BundleKeycapSpecLearnMore"
+                  href="#"
+                  role="button"
+                >
+                  <span>Learn More</span>
+                  <svg
+                    viewBox="0 0 12 12"
+                    fill="none"
+                    class="bundle-keycap-spec-card__learn-more-icon"
+                    aria-hidden="true"
+                  >
+                    <path d="M2.5 9.5L9.5 2.5M9.5 2.5H4.5M9.5 2.5V7.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </a>
+              </div>
+            </div>
+
+            <!-- Keycap Overview Modal (点击 Learn More 弹出) -->
+            <div
+              class="keycap-overview-modal"
+              id="KeycapOverviewModal"
+              hidden
+              aria-hidden="true"
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="KeycapOverviewModalHeader"
+            >
+              <div class="keycap-overview-modal__backdrop" data-overview-close></div>
+              <div class="keycap-overview-modal__dialog" role="document">
+                <div class="keycap-overview-modal__header">
+                  <h3 class="keycap-overview-modal__heading" id="KeycapOverviewModalHeader">Overview</h3>
+                  <button type="button" class="keycap-overview-modal__close" data-overview-close aria-label="Close">
+                    <svg
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <line x1="18" y1="6" x2="6" y2="18"></line>
+                      <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                  </button>
+                </div>
+
+                <div class="keycap-overview-modal__body">
+                  <div class="keycap-overview-modal__gallery">
+                    <div class="keycap-overview-modal__counter" id="KeycapOverviewCounter">1/1</div>
+                    <button
+                      type="button"
+                      class="keycap-overview-modal__nav keycap-overview-modal__nav--prev"
+                      id="KeycapOverviewPrev"
+                      aria-label="Previous image"
+                    >
+                      <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2.2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      >
+                        <polyline points="15 18 9 12 15 6"></polyline>
+                      </svg>
+                    </button>
+                    <div class="keycap-overview-modal__slides" id="KeycapOverviewSlides"></div>
+                    <button
+                      type="button"
+                      class="keycap-overview-modal__nav keycap-overview-modal__nav--next"
+                      id="KeycapOverviewNext"
+                      aria-label="Next image"
+                    >
+                      <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2.2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      >
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                      </svg>
+                    </button>
+                    <div class="keycap-overview-modal__dots" id="KeycapOverviewDots"></div>
+                  </div>
+
+                  <div class="keycap-overview-modal__meta">
+                    <div class="keycap-overview-modal__title" id="KeycapOverviewTitle"></div>
+                    <div class="keycap-overview-modal__price-row" id="KeycapOverviewPrice"></div>
+                  </div>
+
+                  <div class="keycap-overview-modal__points" id="KeycapOverviewPoints"></div>
+
+                  <div class="keycap-overview-modal__actions">
+                    <a
+                      href="#"
+                      class="keycap-overview-modal__btn keycap-overview-modal__btn--learn-more"
+                      id="KeycapOverviewProductLink"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      Learn more
+                    </a>
+                    <button
+                      type="button"
+                      class="keycap-overview-modal__btn keycap-overview-modal__btn--customize"
+                      id="KeycapOverviewContinueBtn"
+                      data-overview-close
+                    >
+                      Continue to customize
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          {%- endif -%}
         </div>
       </div>
     </div>
@@ -248,12 +481,12 @@
   {%- endif -%}
 
   <div
-    class="manual-service-card has-sale-badge{% unless service_initially_hidden %} is-active{% endunless %}"
+    class="manual-service-card has-sale-badge"
     id="ManualKeycapServiceCard"
     data-variant-id="{{ service_variant_id }}"
     tabindex="0"
     role="checkbox"
-    aria-checked="{% if service_initially_hidden %}false{% else %}true{% endif %}"
+    aria-checked="false"
     {% if service_initially_hidden %}
       hidden
     {% endif %}
@@ -269,9 +502,6 @@
           class="manual-service-card__checkbox"
           data-variant-id="{{ service_variant_id }}"
           aria-label="{{ service_title }}"
-          {% unless service_initially_hidden %}
-            checked="checked"
-          {% endunless %}
         >
         <span class="manual-service-card__checkbox-custom" aria-hidden="true">
           <svg viewBox="0 0 12 10" fill="none" class="manual-service-card__check-icon">
@@ -286,7 +516,11 @@
           </label>
         </div>
         <div class="manual-service-card__desc">
-          We'll professionally install your selected keycaps before shipping, so your keyboard arrives customized to your style and ready to use right out of the box. <a href="/pages/style-studio?view=style-studio" class="manual-service-card__link">Learn more about this service.</a>
+          We'll professionally install your selected keycaps before shipping, so your keyboard arrives customized to
+          your style and ready to use right out of the box.
+          <a href="/pages/style-studio?view=style-studio" class="manual-service-card__link"
+            >Learn more about this service.</a
+          >
         </div>
         <div class="manual-service-card__notice">
           <svg viewBox="0 0 16 16" fill="none" class="manual-service-card__notice-icon" aria-hidden="true">
@@ -302,59 +536,12 @@
           </svg>
           <span class="manual-service-card__prompt-text"></span>
         </div>
-        <div class="manual-service-card__assign" id="ManualKeycapServiceAssign" hidden></div>
       </div>
     </div>
   </div>
 {%- endif -%}
 
-{%- comment -%} 原 Setup 2 + Setup 3 合并为一个可折叠加购组（仅键盘展示，非键盘已整合至 Complete Your Setup） {%- endcomment -%}
-{%- assign addon_count = bundle_2_count | plus: bundle_3_count -%}
-{%- if is_keyboard and addon_count > 0 -%}
-  {%- assign addon_panel_id = 'BundleAddonPanel-' | append: product.id -%}
-  {%- assign addon_toggle_id = 'BundleAddonToggle-' | append: product.id -%}
-  <div class="bundle-addons">
-    <div class="bundle-addon-group{% if bundle_addons_open %} is-open{% endif %}" data-bundle-addon-group>
-      <button
-        type="button"
-        class="bundle-addon-group__toggle"
-        id="{{ addon_toggle_id }}"
-        aria-expanded="{{ bundle_addons_open }}"
-        aria-controls="{{ addon_panel_id }}"
-        data-bundle-addon-toggle
-      >
-        <span class="bundle-addon-group__heading">
-          <span class="bundle-addon-group__title">More Add-ons</span>
-        </span>
-        <svg class="bundle-addon-group__chevron" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-          <path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </button>
-      <div
-        class="bundle-addon-group__panel"
-        id="{{ addon_panel_id }}"
-        role="region"
-        aria-labelledby="{{ addon_toggle_id }}"
-      >
-        <div class="bundle-addon-group__panel-inner">
-          <div class="bundle-product-list bundle-product-list--addons active">
-            {%- assign addon_seen_ids = ',' -%}
-            {% for variant in bundle_2_variants %}
-              {%- assign addon_seen_ids = addon_seen_ids | append: variant.id | append: ',' -%}
-              {% render 'bundle-variant-item', variant: variant %}
-            {% endfor %}
-            {% for variant in bundle_3_variants %}
-              {%- assign addon_key = ',' | append: variant.id | append: ',' -%}
-              {%- unless addon_seen_ids contains addon_key -%}
-                {% render 'bundle-variant-item', variant: variant %}
-              {%- endunless -%}
-            {% endfor %}
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-{%- endif -%}
+{%- comment -%} 键盘商品 More Add-ons 模块已根据需求移除 {%- endcomment -%}
 
 {%- form 'product', product, id: form_id, class: 'product-single__form' -%}
   {%- if is_keyboard and show_complete_setup and keycaps_option_index > 0 -%}
@@ -370,7 +557,7 @@
         <circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.35"/>
         <path d="M8 4.75v4M8 11.25h.01" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
       </svg>
-      <span>Please select at least 1 keycap set in <strong>STYLE YOUR BOARD</strong> for your custom build.</span>
+      <span>Please select 1 keycap set above for your custom build.</span>
     </div>
   {%- endif -%}
   <div class="product-form__actions-group">
@@ -418,7 +605,11 @@
         {% endunless %}
       >
         <span data-add-to-cart-text data-default-text="{{ default_text }}">
-          {{ button_text }}
+          {%- if current_variant.available -%}
+            {{ button_text | upcase }} | {{ current_variant.price | money | strip_html }}
+          {%- else -%}
+            {{ button_text }}
+          {%- endif -%}
         </span>
       </button>
     </div>
@@ -466,6 +657,37 @@
 
 <script>
   function initMoreVariantForm() {
+    function cleanPriceText(str) {
+      if (!str) return '';
+      return String(str).replace(/<[^>]*>/g, '').trim();
+    }
+
+    function relocateBundlePromoOverlay() {
+      const overlay = document.getElementById('BundlePromoOverlay');
+      if (!overlay) return;
+      const isMobile = window.innerWidth <= 768;
+      if (isMobile) {
+        const mobileHeader = document.querySelector('.product-mobile-header') ||
+                             document.querySelector('.product-single__meta .product-block--header') ||
+                             document.querySelector('.product-single__meta');
+        if (mobileHeader && overlay.parentNode !== mobileHeader) {
+          overlay.classList.remove('is-floating');
+          overlay.classList.add('is-mobile-header');
+          mobileHeader.appendChild(overlay);
+        }
+      } else {
+        const mainPhotos = document.querySelector('.product__main-photos');
+        if (mainPhotos && overlay.parentNode !== mainPhotos) {
+          overlay.classList.remove('is-mobile-header');
+          overlay.classList.add('is-floating');
+          mainPhotos.appendChild(overlay);
+        }
+      }
+    }
+    window.__relocateBundlePromoOverlay = relocateBundlePromoOverlay;
+    relocateBundlePromoOverlay();
+    window.addEventListener('resize', relocateBundlePromoOverlay);
+
     function updateBundleListScroll(target) {
       const lists = target ? [target] : document.querySelectorAll('.bundle-product-list.active');
       lists.forEach(list => {
@@ -504,10 +726,16 @@
       });
     }
 
-    // 动态计算移动端 Complete Your Setup 和 More Add-ons 滚动可视高度（精准定位到第二排卡片标题下方）
+    // 动态计算移动端 More Add-ons 滚动可视高度（STYLE YOUR BOARD / DOUBLE YOUR STYLE 移动端已改为单行横向滑动）
     function updateMobileCardGridScroll() {
       const isMobile = window.innerWidth <= 768;
-      const cardLists = document.querySelectorAll('.bundle-product-list--1, .bundle-product-list--addons');
+      document.querySelectorAll('.bundle-product-list--1').forEach(list => {
+        list.style.removeProperty('max-height');
+        list.style.removeProperty('overflow-y');
+        list.style.removeProperty('-webkit-overflow-scrolling');
+      });
+
+      const cardLists = document.querySelectorAll('.bundle-product-list--addons');
 
       cardLists.forEach(list => {
         if (!list) return;
@@ -1096,6 +1324,7 @@
           previewOverlay.classList.remove('is-visible');
         }
       }
+      window.__showKeycapImage = showKeycapImage;
 
       function restoreDefaultImage() {
         if (previewOverlay) {
@@ -1146,8 +1375,19 @@
         });
       }
 
-      // 记录键帽勾选先后顺序，供安装服务按顺序预填下拉框
+      // 记录键帽勾选先后顺序
       let keycapSelectSeq = 0;
+
+      function getSelectedCardsByOrder() {
+        if (!setup1List) return [];
+        return Array.from(setup1List.querySelectorAll('.bundle-keycap-card.is-selected'))
+          .slice()
+          .sort((a, b) => {
+            const orderA = parseInt(a.dataset.selectedOrder || '0', 10) || 0;
+            const orderB = parseInt(b.dataset.selectedOrder || '0', 10) || 0;
+            return orderA - orderB;
+          });
+      }
 
       cards.forEach(card => {
         card.addEventListener('click', function() {
@@ -1160,35 +1400,55 @@
             // 取消勾选当前卡片（支持多选）
             this.classList.remove('is-selected');
             this.setAttribute('aria-pressed', 'false');
+            delete this.dataset.selectedOrder;
             if (checkbox) {
               checkbox.checked = false;
               checkbox.dispatchEvent(new Event('change', { bubbles: true }));
             }
-            delete this.dataset.selectedOrder;
 
-            // 键盘商品：检查是否还有其他选中的键帽以切换搭配图
+            // 键盘商品：检查是否还有其他选中的键帽以切换搭配图（按点击先后顺序取最后一个）
+            const remainingSelected = getSelectedCardsByOrder();
+            const prevClickedCard = remainingSelected.length > 0 ? remainingSelected[remainingSelected.length - 1] : null;
             if (isKeyboardProduct) {
-                            const remainingSelected = setup1List.querySelectorAll('.bundle-keycap-card.is-selected');
-              if (remainingSelected.length > 0) {
-                showKeycapImage(remainingSelected[remainingSelected.length - 1]);
+              if (prevClickedCard) {
+                showKeycapImage(prevClickedCard);
               } else {
                 restoreDefaultImage();
               }
             }
+            syncSelectedKeycapSpecCard(prevClickedCard);
           } else {
-            // 勾选当前卡片（不影响其他卡片的勾选，支持多选）
+            // 勾选当前卡片
+            const isCustom = (typeof window.isKeycapModeCustom === 'function') ? window.isKeycapModeCustom() : false;
+            if (isCustom) {
+              // Other Style 模式限制只能选择一套：先取消已勾选的其他卡片
+              const alreadySelected = setup1List.querySelectorAll('.bundle-keycap-card.is-selected');
+              alreadySelected.forEach(otherCard => {
+                if (otherCard !== this) {
+                  otherCard.classList.remove('is-selected');
+                  otherCard.setAttribute('aria-pressed', 'false');
+                  const otherCb = otherCard.querySelector('.bundle-product-checkbox');
+                  if (otherCb) {
+                    otherCb.checked = false;
+                  }
+                  delete otherCard.dataset.selectedOrder;
+                }
+              });
+            }
+
             this.classList.add('is-selected');
             this.setAttribute('aria-pressed', 'true');
+            this.dataset.selectedOrder = String(++keycapSelectSeq);
             if (checkbox) {
               checkbox.checked = true;
               checkbox.dispatchEvent(new Event('change', { bubbles: true }));
             }
-            this.dataset.selectedOrder = String(++keycapSelectSeq);
 
             // 仅键盘商品左侧切换为当前点击键帽的搭配图
             if (isKeyboardProduct) {
               showKeycapImage(this);
             }
+            syncSelectedKeycapSpecCard(this);
           }
 
           // 同步地址栏 p 参数（勾选加入，取消移除）
@@ -1205,10 +1465,333 @@
         });
       });
 
+      function syncSelectedKeycapSpecCard(explicitCard) {
+        const specCard = document.getElementById('BundleKeycapSpecCard');
+        if (!specCard) return;
+
+        const selectedCards = getSelectedCardsByOrder();
+
+        let targetCard = explicitCard || null;
+        if (!targetCard && selectedCards.length > 0) {
+          targetCard = selectedCards[selectedCards.length - 1];
+        }
+
+        if (!targetCard || !targetCard.classList.contains('is-selected')) {
+          if (selectedCards.length > 0) {
+            targetCard = selectedCards[selectedCards.length - 1];
+          } else {
+            specCard.hidden = true;
+            specCard.classList.remove('is-active');
+            if (typeof window.__syncVariantOptionLabels === 'function') {
+              window.__syncVariantOptionLabels();
+            }
+            return;
+          }
+        }
+
+        const title = (targetCard.dataset.keycapTitle || targetCard.querySelector('.bundle-keycap-card__title')?.textContent || '').trim();
+        const specs = targetCard.dataset.keycapSpecs || 'PBT | 142 Keys | Cherry Profile';
+
+        const titleEl = document.getElementById('BundleKeycapSpecTitle');
+        const specsEl = document.getElementById('BundleKeycapSpecDesc');
+        const learnMoreEl = document.getElementById('BundleKeycapSpecLearnMore');
+
+        if (titleEl && title) titleEl.textContent = title;
+        if (specsEl) specsEl.textContent = specs;
+
+        const url = targetCard.dataset.keycapUrl || (targetCard.dataset.keycapHandle ? `/products/${targetCard.dataset.keycapHandle}` : '#');
+        if (learnMoreEl) {
+          learnMoreEl.href = url || '#';
+          learnMoreEl.style.display = 'inline-flex';
+          learnMoreEl._activeKeycapCard = targetCard;
+        }
+
+        specCard.hidden = false;
+        specCard.classList.add('is-active');
+
+        // 将规格卡插入到当前选中卡片所在行的最后一张卡片下方（即该行卡片的正下方）
+        positionSpecCardUnderRow(targetCard, specCard);
+        if (typeof window.__syncVariantOptionLabels === 'function') {
+          window.__syncVariantOptionLabels();
+        }
+      }
+
+      // 初始化点击 Learn More 弹出键帽 Overview 弹窗
+      (function initKeycapOverviewModal() {
+        const modal = document.getElementById('KeycapOverviewModal');
+        const learnMoreEl = document.getElementById('BundleKeycapSpecLearnMore');
+        if (!modal || !learnMoreEl) return;
+
+        // 挂载到 body 顶层，避免受父级容器 overflow 裁剪或层级影响
+        if (modal.parentNode !== document.body) {
+          document.body.appendChild(modal);
+        }
+
+        const slidesEl = document.getElementById('KeycapOverviewSlides');
+        const counterEl = document.getElementById('KeycapOverviewCounter');
+        const prevBtn = document.getElementById('KeycapOverviewPrev');
+        const nextBtn = document.getElementById('KeycapOverviewNext');
+        const dotsEl = document.getElementById('KeycapOverviewDots');
+        const titleEl = document.getElementById('KeycapOverviewTitle');
+        const priceEl = document.getElementById('KeycapOverviewPrice');
+        const pointsEl = document.getElementById('KeycapOverviewPoints');
+
+        let currentImages = [];
+        let currentIndex = 0;
+
+        function updateSlideView() {
+          const total = currentImages.length || 1;
+          if (currentIndex < 0) currentIndex = 0;
+          if (currentIndex >= total) currentIndex = total - 1;
+
+          if (slidesEl) {
+            const imgs = slidesEl.querySelectorAll('.keycap-overview-modal__slide');
+            imgs.forEach((slide, idx) => {
+              slide.classList.toggle('is-active', idx === currentIndex);
+            });
+          }
+
+          if (counterEl) {
+            counterEl.textContent = `${currentIndex + 1}/${total}`;
+            counterEl.style.display = total > 0 ? 'inline-flex' : 'none';
+          }
+
+          if (prevBtn) {
+            prevBtn.style.display = total > 1 ? 'inline-flex' : 'none';
+            prevBtn.disabled = currentIndex <= 0;
+            prevBtn.classList.toggle('is-disabled', currentIndex <= 0);
+          }
+
+          if (nextBtn) {
+            nextBtn.style.display = total > 1 ? 'inline-flex' : 'none';
+            nextBtn.disabled = currentIndex >= total - 1;
+            nextBtn.classList.toggle('is-disabled', currentIndex >= total - 1);
+          }
+
+          if (dotsEl) {
+            dotsEl.style.display = total > 1 ? 'flex' : 'none';
+            const dots = dotsEl.querySelectorAll('.keycap-overview-modal__dot');
+            dots.forEach((dot, idx) => {
+              dot.classList.toggle('is-active', idx === currentIndex);
+            });
+          }
+        }
+
+        function openModalForCard(card) {
+          if (!card) return;
+
+          // 1. 解析产品图片列表
+          let imgs = [];
+          if (card.dataset.keycapImages) {
+            try {
+              const parsed = JSON.parse(card.dataset.keycapImages);
+              if (Array.isArray(parsed)) {
+                imgs = parsed.filter(Boolean);
+              }
+            } catch (err) {
+              imgs = [];
+            }
+          }
+          if (!imgs.length && card.dataset.keycapImage) {
+            imgs = [card.dataset.keycapImage];
+          }
+          currentImages = imgs;
+          currentIndex = 0;
+
+          const pTitle = (card.dataset.productTitle || card.dataset.keycapTitle || '').trim();
+
+          if (slidesEl) {
+            slidesEl.innerHTML = currentImages
+              .map((src, idx) => `<div class="keycap-overview-modal__slide${idx === 0 ? ' is-active' : ''}"><img src="${src}" alt="${pTitle.replace(/"/g, '&quot;')}" loading="eager"></div>`)
+              .join('');
+          }
+
+          if (dotsEl) {
+            dotsEl.innerHTML = currentImages
+              .map((_, idx) => `<button type="button" class="keycap-overview-modal__dot${idx === 0 ? ' is-active' : ''}" data-slide-idx="${idx}" aria-label="Go to slide ${idx + 1}"></button>`)
+              .join('');
+          }
+
+          updateSlideView();
+
+          // 2. 填充标题与价格
+          if (titleEl) {
+            titleEl.textContent = pTitle;
+          }
+          if (priceEl) {
+            const discPrice = (card.dataset.keycapPrice || '').trim();
+            const origPrice = (card.dataset.keycapOrigPrice || '').trim();
+            if (discPrice && origPrice && discPrice !== origPrice) {
+              priceEl.innerHTML = `<span class="keycap-overview-modal__price-current">${discPrice}</span><del class="keycap-overview-modal__price-compare">${origPrice}</del>`;
+            } else {
+              priceEl.innerHTML = `<span class="keycap-overview-modal__price-current">${discPrice || origPrice}</span>`;
+            }
+          }
+
+          // 2.1 绑定底部 Learn more 按钮的产品详情页链接
+          const modalLinkEl = document.getElementById('KeycapOverviewProductLink');
+          if (modalLinkEl) {
+            const pUrl = card.dataset.keycapUrl || (card.dataset.keycapHandle ? `/products/${card.dataset.keycapHandle}` : '#');
+            modalLinkEl.href = pUrl;
+          }
+
+          // 3. 填充详情页五点式描述
+          if (pointsEl) {
+            const tpl = card.querySelector('.bundle-keycap-card__points-tpl');
+            const tplHtml = tpl ? tpl.innerHTML.trim() : '';
+            if (tplHtml) {
+              pointsEl.innerHTML = tplHtml;
+              pointsEl.style.display = 'block';
+            } else {
+              const specsRaw = (card.dataset.keycapSpecs || '').trim();
+              if (specsRaw) {
+                const items = specsRaw.split('|').map(s => s.trim()).filter(Boolean);
+                pointsEl.innerHTML = `<ul class="keycap-overview-modal__points-list">${items.map(it => `<li class="keycap-overview-modal__point-item">${it}</li>`).join('')}</ul>`;
+                pointsEl.style.display = 'block';
+              } else {
+                pointsEl.innerHTML = '';
+                pointsEl.style.display = 'none';
+              }
+            }
+          }
+
+          modal.hidden = false;
+          modal.setAttribute('aria-hidden', 'false');
+          modal.classList.add('is-open');
+          document.body.classList.add('keycap-overview-modal-open');
+        }
+
+        function closeModal() {
+          modal.classList.remove('is-open');
+          modal.setAttribute('aria-hidden', 'true');
+          modal.hidden = true;
+          document.body.classList.remove('keycap-overview-modal-open');
+        }
+
+        learnMoreEl.addEventListener('click', function (e) {
+          e.preventDefault();
+          e.stopPropagation();
+          const activeCard = learnMoreEl._activeKeycapCard || (setup1List && setup1List.querySelector('.bundle-keycap-card.is-selected'));
+          if (activeCard) {
+            openModalForCard(activeCard);
+          }
+        });
+
+        if (prevBtn) {
+          prevBtn.addEventListener('click', function (e) {
+            e.preventDefault();
+            if (currentIndex > 0) {
+              currentIndex--;
+              updateSlideView();
+            }
+          });
+        }
+
+        if (nextBtn) {
+          nextBtn.addEventListener('click', function (e) {
+            e.preventDefault();
+            if (currentIndex < currentImages.length - 1) {
+              currentIndex++;
+              updateSlideView();
+            }
+          });
+        }
+
+        if (dotsEl) {
+          dotsEl.addEventListener('click', function (e) {
+            const dot = e.target.closest('.keycap-overview-modal__dot');
+            if (!dot) return;
+            const idx = parseInt(dot.dataset.slideIdx, 10);
+            if (!isNaN(idx)) {
+              currentIndex = idx;
+              updateSlideView();
+            }
+          });
+        }
+
+        // 支持移动端左右滑动手势切图
+        if (slidesEl) {
+          let touchStartX = 0;
+          let touchEndX = 0;
+          slidesEl.addEventListener('touchstart', function (e) {
+            if (e.changedTouches && e.changedTouches[0]) {
+              touchStartX = e.changedTouches[0].screenX;
+            }
+          }, { passive: true });
+          slidesEl.addEventListener('touchend', function (e) {
+            if (e.changedTouches && e.changedTouches[0]) {
+              touchEndX = e.changedTouches[0].screenX;
+              const diff = touchStartX - touchEndX;
+              if (Math.abs(diff) > 36) {
+                if (diff > 0 && currentIndex < currentImages.length - 1) {
+                  currentIndex++;
+                  updateSlideView();
+                } else if (diff < 0 && currentIndex > 0) {
+                  currentIndex--;
+                  updateSlideView();
+                }
+              }
+            }
+          }, { passive: true });
+        }
+
+        modal.querySelectorAll('[data-overview-close]').forEach(el => {
+          el.addEventListener('click', function (e) {
+            e.preventDefault();
+            closeModal();
+          });
+        });
+
+        document.addEventListener('keydown', function (e) {
+          if (e.key === 'Escape' && modal.classList.contains('is-open')) {
+            closeModal();
+          }
+        });
+      })();
+
+      function positionSpecCardUnderRow(card, specCard) {
+        if (!card || !specCard || !setup1List) return;
+
+        // 移动端为单行横向滑动：将规格卡放置在横向列表容器正下方，避免混入横向 flex 行中
+        if (window.innerWidth <= 768) {
+          if (specCard.previousElementSibling !== setup1List) {
+            setup1List.after(specCard);
+          }
+          return;
+        }
+
+        const allCards = Array.from(setup1List.querySelectorAll('.bundle-keycap-card'));
+        const cardIndex = allCards.indexOf(card);
+        if (cardIndex < 0) return;
+
+        // 获取当前容器列数 (4, 3, 或 2)
+        let cols = 4;
+        const style = window.getComputedStyle(setup1List);
+        const tmpl = style.gridTemplateColumns;
+        if (tmpl && tmpl !== 'none') {
+          const count = tmpl.trim().split(/\s+/).length;
+          if (count > 0) cols = count;
+        } else {
+          cols = window.innerWidth <= 440 ? 2 : (window.innerWidth <= 768 ? 3 : 4);
+        }
+
+        // 计算当前卡片所在行的最后一张卡片索引
+        const rowIndex = Math.floor(cardIndex / cols);
+        const lastIndexInRow = Math.min((rowIndex + 1) * cols - 1, allCards.length - 1);
+        const targetEndCard = allCards[lastIndexInRow];
+
+        if (targetEndCard && targetEndCard !== specCard.previousElementSibling) {
+          targetEndCard.after(specCard);
+        }
+      }
+
+      window.__syncSelectedKeycapSpecCard = syncSelectedKeycapSpecCard;
+      syncSelectedKeycapSpecCard();
+
       function handleVariantColorSwitch(variant) {
         if (!isKeyboardProduct) return;
 
-        const remainingSelected = setup1List.querySelectorAll('.bundle-keycap-card.is-selected');
+        const remainingSelected = getSelectedCardsByOrder();
         if (remainingSelected.length > 0) {
           // 仅当键盘已勾选 STYLE YOUR BOARD 中的键帽时，底座颜色切换后才自动切换到对应新颜色的键帽搭配图
           const currentCard = remainingSelected[remainingSelected.length - 1];
@@ -1388,12 +1971,16 @@
           if (toggle) toggle.click();
         }
 
-        // 对应滚动容器：清单本身可能带滚动条，需要滚动容器使其显示
+        // 对应滚动容器：清单本身可能带横向或纵向滚动条，需要滚动容器使其显示
         const list = el.closest('.bundle-product-list');
-        if (list && list.scrollHeight > list.clientHeight + 4) {
-          // 卡片在滚动容器内的相对位置
-          const cardTop = el.offsetTop - list.offsetTop + list.scrollTop;
-          list.scrollTo({ top: Math.max(0, cardTop), behavior: 'smooth' });
+        if (list) {
+          if (list.scrollWidth > list.clientWidth + 4) {
+            const cardLeft = el.offsetLeft - list.offsetLeft;
+            list.scrollTo({ left: Math.max(0, cardLeft), behavior: 'smooth' });
+          } else if (list.scrollHeight > list.clientHeight + 4) {
+            const cardTop = el.offsetTop - list.offsetTop + list.scrollTop;
+            list.scrollTo({ top: Math.max(0, cardTop), behavior: 'smooth' });
+          }
         }
         const rect = el.getBoundingClientRect();
         const inViewport = rect.top >= 0 && rect.bottom <= (window.innerHeight || document.documentElement.clientHeight);
@@ -1461,31 +2048,14 @@
 
       const promptEl = document.getElementById('ManualKeycapServicePrompt');
       const promptText = promptEl ? promptEl.querySelector('.manual-service-card__prompt-text') : null;
-      const assignEl = document.getElementById('ManualKeycapServiceAssign');
       const setup1List = document.querySelector('.bundle-product-list--1');
       const hasSetup1Keycaps = !!(setup1List && setup1List.querySelector('.bundle-keycap-card'));
 
-      // 一对多时，每把键盘（按顺序）选择安装的键帽 variantId
-      let assignments = [];
       // 记录用户是否手动取消勾选（默认勾选安装服务）
       let userOptedOut = false;
 
       function escapeHtml(str) {
         return String(str).replace(/[&<>"']/g, ch => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch]));
-      }
-
-      // 缩减下拉选项文字长度，省略末尾的冗余规格词（如 Cherry Profile Keycap Set 等）
-      function formatShortTitle(rawTitle) {
-        if (!rawTitle) return '';
-        let str = String(rawTitle).trim();
-        str = str.replace(/\s+(Cherry|OEM|XDA|MOA|MDA|DSA|KDA|ASA)?\s*(Profile\s*)?Keycaps?(\s*Set)?$/i, '');
-        str = str.replace(/\s+(Cherry|OEM|XDA|MOA|MDA|DSA|KDA|ASA)\s+Profile$/i, '');
-        str = str.replace(/\s+Keycaps?(\s+Set)?$/i, '');
-        str = str.trim();
-        if (str.length > 18) {
-          str = str.slice(0, 16).trim() + '...';
-        }
-        return str || rawTitle;
       }
 
       function getKeyboardQty() {
@@ -1509,11 +2079,10 @@
           .sort((a, b) => a.sortKey - b.sortKey);
       }
 
-      // 安装方案：
+      // 安装方案（Other Style 模式下仅可选择 1 套键帽，无需再选择安装哪套键帽）：
       // - none：页面没有 Setup 1 键帽，按键盘数量计服务
       // - empty：未选中任何 Setup 1 键帽
-      // - simple：刚好 1 把键盘 + 1 款键帽，直接全量安装，无需下拉框
-      // - choose：多把键盘 或 多款键帽，为每把键盘提供下拉选择框（包含“不安装”选项）
+      // - simple：已选 1 套键帽，直接为 1 把键盘安装该键帽
       function computePlan() {
         const keyboards = getKeyboardQty();
         const selected = getSelectedKeycaps();
@@ -1525,105 +2094,14 @@
           return { mode: 'empty', sets: 0, keyboards, selected: [], keycaps: [] };
         }
 
-        // 仅 1 把键盘 + 选 1 款键帽时，1:1 对齐，直接展示确认信息即可
-        if (keyboards === 1 && selected.length === 1) {
-          assignments = [selected[0].id];
-          return {
-            mode: 'simple',
-            sets: 1,
-            keyboards: 1,
-            selected,
-            keycaps: [{ ...selected[0], keyboardIndex: 1 }]
-          };
-        }
-
-        const validIds = selected.map(k => k.id);
-        const used = new Set();
-        const next = [];
-
-        // 1. 保留用户之前仍然有效的选择（键盘数量大于1时才允许保留显式选择的“不安装”即空字符串 ''）
-        for (let i = 0; i < keyboards; i++) {
-          const prev = assignments[i];
-          if (prev === '') {
-            if (keyboards > 1) {
-              next.push('');
-            } else {
-              next.push(null);
-            }
-          } else if (prev && validIds.includes(prev) && !used.has(prev)) {
-            next.push(prev);
-            used.add(prev);
-          } else {
-            next.push(null);
-          }
-        }
-
-        // 2. 空位按键帽勾选顺序预填未占用的键帽；键盘数量大于1且已无可用键帽时才预填“不安装”
-        for (let i = 0; i < keyboards; i++) {
-          if (next[i] === null) {
-            const free = validIds.find(id => !used.has(id));
-            if (free) {
-              next[i] = free;
-              used.add(free);
-            } else {
-              next[i] = keyboards > 1 ? '' : (validIds[0] || ''); // 仅键盘数量大于1时预填不安装
-            }
-          }
-        }
-        assignments = next;
-
-        const byId = {};
-        selected.forEach(k => { byId[k.id] = k; });
-        const keycaps = [];
-        assignments.forEach((id, idx) => {
-          if (id && byId[id]) {
-            keycaps.push({ ...byId[id], keyboardIndex: idx + 1 });
-          }
-        });
-
+        const keycap = selected[selected.length - 1];
         return {
-          mode: 'choose',
-          sets: keycaps.length,
+          mode: 'simple',
+          sets: 1,
           keyboards,
-          selected,
-          keycaps
+          selected: [keycap],
+          keycaps: [{ ...keycap, keyboardIndex: 1 }]
         };
-      }
-
-      function renderAssign(plan) {
-        if (!assignEl) return;
-        if (plan.mode !== 'choose' || !checkbox.checked) {
-          assignEl.hidden = true;
-          assignEl.innerHTML = '';
-          return;
-        }
-
-        const isMobile = window.matchMedia && window.matchMedia('(max-width: 768px)').matches;
-
-        let html = '';
-        for (let i = 0; i < plan.keyboards; i++) {
-          const current = assignments[i] || '';
-          // 仅在键盘数量大于 1 时显示 None 选项（移动端 None，PC 端显示全称 None (Do not install)）
-          const noneText = isMobile ? 'None' : 'None (Do not install)';
-          const noneOption = plan.keyboards > 1
-            ? `<option value=""${!current ? ' selected' : ''}>${noneText}</option>`
-            : '';
-          const keycapOptions = plan.selected.map(k => {
-            // 已被其他键盘选中的键帽不可再选（排除当前键盘以及“不安装”选项）
-            const takenElsewhere = assignments.some((id, j) => j !== i && id && id === k.id);
-            // 移动端缩减长度，PC 端显示全名
-            const displayTitle = isMobile ? formatShortTitle(k.title) : k.title;
-            return `<option value="${escapeHtml(k.id)}"${k.id === current ? ' selected' : ''}${takenElsewhere ? ' disabled' : ''}>${escapeHtml(displayTitle)}</option>`;
-          }).join('');
-          const options = noneOption + keycapOptions;
-          const label = plan.keyboards > 1 ? `Keyboard ${i + 1}` : 'Keyboard';
-          html += `<label class="manual-service-card__assign-row">` +
-            `<span class="manual-service-card__assign-label">${label}</span>` +
-            `<select class="manual-service-card__assign-select" data-keyboard-index="${i}">${options}</select>` +
-            `</label>`;
-        }
-        assignEl.innerHTML = html;
-        assignEl.hidden = false;
       }
 
 
@@ -1645,15 +2123,7 @@
           if (promptEl && promptText) {
             if (checkbox.checked) {
               promptEl.classList.add('is-confirmed');
-              if (plan.sets === 0) {
-                promptText.innerHTML = '<strong>0 sets</strong> selected · Please select which keycaps to install below.';
-              } else if (plan.mode === 'simple') {
-                promptText.innerHTML = `<strong>1 set</strong> of installation · Keycaps to be installed: <strong>${escapeHtml(plan.keycaps[0].title)}</strong>`;
-              } else {
-                const setsLabel = `${plan.sets} ${plan.sets > 1 ? 'sets' : 'set'}`;
-                const titles = plan.keycaps.map(k => `<strong>${escapeHtml(k.title)}</strong>${plan.keyboards > 1 ? ` (KB ${k.keyboardIndex})` : ''}`).join(', ');
-                promptText.innerHTML = `<strong>${setsLabel}</strong> of installation · Keycaps to be installed: ${titles}`;
-              }
+              promptText.innerHTML = `<strong>1 set</strong> of installation · Keycaps to be installed: <strong>${escapeHtml(plan.keycaps[0].title)}</strong>`;
               promptEl.style.display = 'flex';
             } else {
               promptEl.style.display = 'none';
@@ -1661,22 +2131,23 @@
           }
         }
 
-        renderAssign(plan);
         return plan;
       }
 
       // 供加购时读取当前安装方案
       card._getServicePlan = computePlan;
-      // 供键帽规格切换时同步显隐与默认勾选状态
-      card._syncModeVisibility = function (showService) {
+      // 供键帽规格切换与搭配键帽勾选状态变化时同步显隐与勾选状态
+      // 选择了键帽就勾选人工安装服务，没有选择键帽就不勾选
+      card._syncKeycapsState = function (showService, hasSelectedKeycap) {
         card.hidden = !showService;
         if (!showService) {
           setChecked(false);
-        } else if (!userOptedOut) {
-          setChecked(true);
+        } else {
+          setChecked(!!hasSelectedKeycap);
         }
         render();
       };
+      card._syncModeVisibility = card._syncKeycapsState;
 
       function toggleState(willBeChecked) {
         userOptedOut = !willBeChecked;
@@ -1687,8 +2158,6 @@
       card.addEventListener('click', function (e) {
         if (e.target === checkbox) return;
         if (e.target.closest && e.target.closest('.manual-service-card__link')) return;
-        // 操作下拉框时不切换勾选状态
-        if (e.target.closest && e.target.closest('.manual-service-card__assign')) return;
         e.preventDefault();
         toggleState(!checkbox.checked);
       });
@@ -1699,21 +2168,11 @@
 
       card.addEventListener('keydown', function (e) {
         if (e.target.closest && e.target.closest('.manual-service-card__link')) return;
-        if (e.target.closest && e.target.closest('.manual-service-card__assign')) return;
         if (e.key === ' ' || e.key === 'Enter') {
           e.preventDefault();
           toggleState(!checkbox.checked);
         }
       });
-
-      if (assignEl) {
-        assignEl.addEventListener('change', function (e) {
-          const select = e.target.closest('.manual-service-card__assign-select');
-          if (!select) return;
-          assignments[parseInt(select.dataset.keyboardIndex, 10)] = select.value;
-          render();
-        });
-      }
 
       document.addEventListener('input', function (e) {
         if (e.target && e.target.matches && e.target.matches('input[name="quantity"], .product__quantity input')) {
@@ -1737,20 +2196,15 @@
         });
       }
 
-      let prevIsMobile = window.matchMedia && window.matchMedia('(max-width: 768px)').matches;
-      window.addEventListener('resize', function () {
-        const currentIsMobile = window.matchMedia && window.matchMedia('(max-width: 768px)').matches;
-        if (currentIsMobile !== prevIsMobile) {
-          prevIsMobile = currentIsMobile;
-          render();
-        }
-      });
-
-      setChecked(!card.hidden);
+      const initialPlan = computePlan();
+      setChecked(!card.hidden && initialPlan.selected.length > 0);
       render();
     }
 
     function initNativeKeycapVariantSync() {
+      const isKeyboard = {{ is_keyboard | default: false | json }};
+      if (!isKeyboard) return;
+
       const keycapsOptionIndex = {{ keycaps_option_index | default: 0 | json }};
       if (!keycapsOptionIndex || keycapsOptionIndex < 1) return;
 
@@ -1758,7 +2212,21 @@
         document.querySelector('.variant-input-wrap[data-index="option' + keycapsOptionIndex + '"]') ||
         document.querySelector('.variant-input-wrap[data-handle="keycaps"], .variant-input-wrap[data-handle="keycap"]');
       const styleBox = document.getElementById('StyleYourBoardBox');
-      const statusPill = document.getElementById('StyleBoardModeStatus');
+      let statusPill = document.getElementById('StyleBoardModeStatus');
+
+      // 确保 PC 端 desktopPill 位于 Keycaps 选项容器（Original 和 Other style 选项）的水平最靠右位置
+      let desktopPill = document.getElementById('StyleBoardModeStatus');
+      if (keycapsWrap) {
+        keycapsWrap.classList.add('has-keycap-status');
+        if (!desktopPill) {
+          desktopPill = document.createElement('span');
+          desktopPill.className = 'bundle-list-status bundle-list-status--desktop';
+          desktopPill.id = 'StyleBoardModeStatus';
+          keycapsWrap.appendChild(desktopPill);
+        } else if (desktopPill.parentElement !== keycapsWrap) {
+          keycapsWrap.appendChild(desktopPill);
+        }
+      }
       const serviceCard = document.getElementById('ManualKeycapServiceCard');
       const serviceCheckbox = document.getElementById('ManualKeycapServiceCheckbox');
       const validationNotice = document.getElementById('KeycapValidationNotice');
@@ -1804,14 +2272,14 @@
       }
 
       function getNativeKeycapsValue(variant) {
-        if (variant && variant['option' + keycapsOptionIndex]) {
-          return variant['option' + keycapsOptionIndex];
-        }
         if (keycapsWrap) {
           const checkedRadio = keycapsWrap.querySelector('input[type="radio"]:checked');
-          if (checkedRadio) return checkedRadio.value;
+          if (checkedRadio && checkedRadio.value) return checkedRadio.value;
           const selectEl = keycapsWrap.querySelector('select');
-          if (selectEl) return selectEl.value;
+          if (selectEl && selectEl.value) return selectEl.value;
+        }
+        if (variant && variant['option' + keycapsOptionIndex]) {
+          return variant['option' + keycapsOptionIndex];
         }
         return '';
       }
@@ -1823,40 +2291,76 @@
 
       function getSelectedKeycaps() {
         if (!setup1List) return [];
-        return Array.from(setup1List.querySelectorAll('.bundle-keycap-card.is-selected'));
+        return Array.from(setup1List.querySelectorAll('.bundle-keycap-card.is-selected'))
+          .slice()
+          .sort((a, b) => {
+            const orderA = parseInt(a.dataset.selectedOrder || '0', 10) || 0;
+            const orderB = parseInt(b.dataset.selectedOrder || '0', 10) || 0;
+            return orderA - orderB;
+          });
       }
 
-      function syncStatusPill(mode, selectedKeycaps) {
-        if (!statusPill) return;
-        if (mode === 'original') {
-          if (selectedKeycaps.length > 0) {
-            statusPill.dataset.state = 'addon';
-            statusPill.textContent = `${selectedKeycaps.length} Extra Set${selectedKeycaps.length > 1 ? 's' : ''}`;
-          } else {
-            statusPill.dataset.state = 'neutral';
-            statusPill.textContent = 'Optional Add-on';
-          }
-        } else if (selectedKeycaps.length > 0) {
-          statusPill.dataset.state = 'ready';
-          statusPill.textContent = `${selectedKeycaps.length} Keycap Set${selectedKeycaps.length > 1 ? 's' : ''} Selected`;
-        } else {
-          statusPill.dataset.state = 'pending';
-          statusPill.textContent = 'Pick 1+ Keycap Set';
+      // 移动端放置在标题区域下方，PC 端悬浮到商品主图左上角
+      function movePromoOverlayToImages() {
+        if (typeof relocateBundlePromoOverlay === 'function') {
+          relocateBundlePromoOverlay();
         }
       }
+      movePromoOverlayToImages();
 
-      function syncManualServiceVisibility(mode) {
+      function syncStatusPill(mode, selectedKeycaps) {
+        const pills = document.querySelectorAll('.bundle-list-status');
+        if (!pills.length) return;
+        let state = 'neutral';
+        let text = 'Optional Add-on';
+        if (mode === 'original') {
+          if (selectedKeycaps.length > 0) {
+            state = 'addon';
+            text =
+              selectedKeycaps.length === 1
+                ? '1 Keycap Set Selected'
+                : `${selectedKeycaps.length} Keycap Sets Selected`;
+          } else {
+            state = 'neutral';
+            text = 'Optional Add-on';
+          }
+        } else if (selectedKeycaps.length > 0) {
+          state = 'ready';
+          text =
+            selectedKeycaps.length === 1
+              ? '1 Keycap Set Selected'
+              : `${selectedKeycaps.length} Keycap Sets Selected`;
+        } else {
+          state = 'pending';
+          text = 'Pick 1 Keycap Set';
+        }
+        pills.forEach(pill => {
+          pill.dataset.state = state;
+          pill.textContent = text;
+        });
+      }
+
+      function syncManualServiceVisibility(mode, selectedKeycaps) {
         if (!serviceCard) return;
         const showService = mode === 'custom';
+        const hasKeycap = selectedKeycaps && selectedKeycaps.length > 0;
+        if (typeof serviceCard._syncKeycapsState === 'function') {
+          serviceCard._syncKeycapsState(showService, hasKeycap);
+          return;
+        }
         if (typeof serviceCard._syncModeVisibility === 'function') {
-          serviceCard._syncModeVisibility(showService);
+          serviceCard._syncModeVisibility(showService, hasKeycap);
           return;
         }
         serviceCard.hidden = !showService;
-        if (!showService && serviceCheckbox && serviceCheckbox.checked) {
-          serviceCheckbox.checked = false;
+        if (!showService || !hasKeycap) {
+          if (serviceCheckbox) serviceCheckbox.checked = false;
           serviceCard.classList.remove('is-active');
           serviceCard.setAttribute('aria-checked', 'false');
+        } else {
+          if (serviceCheckbox) serviceCheckbox.checked = true;
+          serviceCard.classList.add('is-active');
+          serviceCard.setAttribute('aria-checked', 'true');
         }
       }
 
@@ -1865,33 +2369,128 @@
         validationNotice.hidden = !(mode === 'custom' && selectedKeycaps.length === 0);
       }
 
-      function syncCartButtonCTA(mode, selectedKeycaps, variant) {
-        if (!addBtn || !addBtnText) return;
-        const isAvailable = variant ? !!variant.available : !addBtn.disabled;
-        if (!isAvailable) {
-          addBtn.classList.remove('is-needs-keycap');
-          return;
+      function formatMoneyCents(cents) {
+        if (window.theme && window.theme.Currency && typeof window.theme.Currency.formatMoney === 'function') {
+          const format = (window.theme.settings && window.theme.settings.moneyFormat) || undefined;
+          return cleanPriceText(window.theme.Currency.formatMoney(cents, format));
         }
+        if (window.Shopify && typeof window.Shopify.formatMoney === 'function') {
+          return cleanPriceText(window.Shopify.formatMoney(cents));
+        }
+        return '$' + (Number(cents || 0) / 100).toFixed(2);
+      }
 
-        if (mode === 'custom' && selectedKeycaps.length === 0) {
-          addBtnText.textContent = 'PICK KEYCAPS ABOVE';
-          addBtn.classList.add('is-needs-keycap');
-        } else {
-          addBtnText.textContent = addBtnText.dataset.defaultText || 'Add to cart';
-          addBtn.classList.remove('is-needs-keycap');
+      function syncCartButtonCTA(mode, selectedKeycaps, variant) {
+        if (typeof window.__renderAddToCartPrice === 'function') {
+          window.__renderAddToCartPrice(variant);
         }
       }
 
       function syncAll() {
         const variant = getCurrentVariantData();
         const mode = getMode();
-        const selectedKeycaps = getSelectedKeycaps();
+        let selectedKeycaps = getSelectedKeycaps();
+
+        // 当处于 Other Style (custom mode) 时，限制最多只能选一套
+        if (mode === 'custom' && selectedKeycaps.length > 1) {
+          const keepCard = selectedKeycaps[selectedKeycaps.length - 1];
+          selectedKeycaps.forEach(card => {
+            if (card !== keepCard) {
+              card.classList.remove('is-selected');
+              card.setAttribute('aria-pressed', 'false');
+              const cb = card.querySelector('.bundle-product-checkbox');
+              if (cb) cb.checked = false;
+              delete card.dataset.selectedOrder;
+            }
+          });
+          selectedKeycaps = [keepCard];
+          if (typeof window.__showKeycapImage === 'function') {
+            window.__showKeycapImage(keepCard);
+          }
+        }
 
         syncStatusPill(mode, selectedKeycaps);
-        syncManualServiceVisibility(mode);
+        syncManualServiceVisibility(mode, selectedKeycaps);
         syncValidationNotice(mode, selectedKeycaps);
         syncCartButtonCTA(mode, selectedKeycaps, variant);
+        if (typeof window.__syncSelectedKeycapSpecCard === 'function') {
+          window.__syncSelectedKeycapSpecCard();
+        }
+        syncVariantOptionLabels();
       }
+
+      function syncVariantOptionLabels() {
+        const currentMode = getMode();
+        document.querySelectorAll('.variant-wrapper').forEach(wrapper => {
+          const inputWrap = wrapper.querySelector('.variant-input-wrap');
+          const labelVal = wrapper.querySelector('.variant__label-value');
+          if (!labelVal) return;
+
+          const optName = (
+            labelVal.dataset.optionName ||
+            inputWrap?.getAttribute('name') ||
+            ''
+          ).toLowerCase().trim();
+          const isKeycaps = optName.includes('keycap') || optName.includes('键帽');
+
+          if (isKeycaps) {
+            if (currentMode === 'original') {
+              let origVal = 'Original';
+              if (inputWrap) {
+                const checkedRadio = inputWrap.querySelector('input[type="radio"]:checked');
+                if (checkedRadio && checkedRadio.value) {
+                  origVal = checkedRadio.value;
+                }
+              }
+              labelVal.textContent = origVal;
+            } else {
+              // other style 模式：显示下方具体选中的键帽名字
+              let chosenTitle = '';
+              const selectedCards = getSelectedKeycaps();
+              if (selectedCards.length > 0) {
+                const lastCard = selectedCards[selectedCards.length - 1];
+                chosenTitle = (lastCard.dataset.keycapTitle || lastCard.querySelector('.bundle-keycap-card__title')?.textContent || '').trim();
+              }
+              if (!chosenTitle) {
+                const activeCard = document.querySelector('.bundle-product-list--1 .bundle-keycap-card.is-selected');
+                if (activeCard) {
+                  chosenTitle = (activeCard.dataset.keycapTitle || activeCard.querySelector('.bundle-keycap-card__title')?.textContent || '').trim();
+                }
+              }
+              if (chosenTitle) {
+                labelVal.textContent = chosenTitle;
+              } else {
+                let radioVal = 'Other style';
+                if (inputWrap) {
+                  const checkedRadio = inputWrap.querySelector('input[type="radio"]:checked');
+                  if (checkedRadio && checkedRadio.value) {
+                    radioVal = checkedRadio.value;
+                  }
+                }
+                labelVal.textContent = radioVal;
+              }
+            }
+          } else {
+            // 普通变体选项（如 Base Color, Switch 等）
+            let selectedVal = '';
+            if (inputWrap) {
+              const checkedRadio = inputWrap.querySelector('input[type="radio"]:checked');
+              if (checkedRadio) {
+                selectedVal = checkedRadio.value;
+              } else {
+                const selectEl = inputWrap.querySelector('select');
+                if (selectEl) {
+                  selectedVal = selectEl.value;
+                }
+              }
+            }
+            if (selectedVal) {
+              labelVal.textContent = selectedVal;
+            }
+          }
+        });
+      }
+      window.__syncVariantOptionLabels = syncVariantOptionLabels;
 
       function scrollToBoardIfNeeded() {
         if (!styleBox) return;
@@ -1907,13 +2506,7 @@
       };
 
       window.validateKeycapModeBeforePurchase = function () {
-        const mode = getMode();
-        const selectedKeycaps = getSelectedKeycaps();
-        if (mode === 'custom' && selectedKeycaps.length === 0) {
-          if (validationNotice) validationNotice.hidden = false;
-          scrollToBoardIfNeeded();
-          return false;
-        }
+        // 允许用户直接加购，不拦截结算
         return true;
       };
 
@@ -1927,6 +2520,16 @@
         }
       });
 
+      document.addEventListener('click', function (e) {
+        if (!e.target || !e.target.closest) return;
+        if (
+          e.target.closest('.variant-input-wrap[data-index="option' + keycapsOptionIndex + '"]') ||
+          e.target.closest('.variant-input-wrap[data-handle="keycaps"], .variant-input-wrap[data-handle="keycap"]')
+        ) {
+          setTimeout(syncAll, 20);
+        }
+      });
+
       document.addEventListener('variant:change', function (e) {
         hasLatestVariantEvent = true;
         latestVariant = (e.detail && e.detail.variant) || null;
@@ -1936,15 +2539,292 @@
       syncAll();
     }
 
-    initBundleAddonGroups();
-    initBundleQtySelectors();
-    initBundleSelection();
-    initSetup1KeycapSelection();
-    initAddonCardsSelection();
-    initManualInstallationService();
-    initBundleAnchorUrl();
-    initNativeKeycapVariantSync();
-    initAddToCart();
+    function initAddToCartPriceSync() {
+      const addBtn =
+        document.querySelector('.product-single__form button.add-to-cart') ||
+        document.querySelector('button.add-to-cart');
+      if (!addBtn) return;
+      const addBtnText = addBtn.querySelector('[data-add-to-cart-text]');
+      if (!addBtnText) return;
+
+      let variantsList = [];
+      const variantsJsonEl = document.querySelector('textarea[data-variant-json]');
+      if (variantsJsonEl) {
+        try {
+          variantsList = JSON.parse(variantsJsonEl.value || variantsJsonEl.textContent) || [];
+        } catch (e) {
+          variantsList = [];
+        }
+      }
+
+      let latestVariant = null;
+
+      function getActiveVariantData() {
+        if (latestVariant) return latestVariant;
+        const currentId = (typeof getCurrentVariantId === 'function') ? getCurrentVariantId() : null;
+        if (currentId && variantsList.length) {
+          const found = variantsList.find(v => String(v.id) === String(currentId));
+          if (found) return found;
+        }
+        return variantsList[0] || null;
+      }
+
+      function formatMoneyValue(cents) {
+        if (window.theme && window.theme.Currency && typeof window.theme.Currency.formatMoney === 'function') {
+          const format = (window.theme.settings && window.theme.settings.moneyFormat) || undefined;
+          return cleanPriceText(window.theme.Currency.formatMoney(cents, format));
+        }
+        if (window.Shopify && typeof window.Shopify.formatMoney === 'function') {
+          return cleanPriceText(window.Shopify.formatMoney(cents));
+        }
+        return '$' + (Number(cents || 0) / 100).toFixed(2);
+      }
+
+      let isUpdatingPrice = false;
+
+      function renderPriceOnButton(variant) {
+        if (isUpdatingPrice) return;
+        isUpdatingPrice = true;
+        try {
+          const activeVar = variant || getActiveVariantData();
+          const isAvailable = activeVar ? !!activeVar.available : !addBtn.disabled;
+          const bottomAddBtn = document.querySelector('.device_bottominfo .m_product_addToCart');
+          const bottomAddBtnText = bottomAddBtn ? bottomAddBtn.querySelector('.m_product_addToCart_text') : null;
+          const bottomPriceWrap = document.querySelector('.device_bottominfo .m_product_price');
+
+          const basePrice = (activeVar && typeof activeVar.price === 'number')
+            ? activeVar.price
+            : {{ current_variant.price | default: 0 }};
+
+          const isKeyboardPage = {{ is_keyboard | json }};
+          const isKeycapPage = !isKeyboardPage && {{ is_keycap | json }};
+          const mainQtyInput = document.querySelector('.product__quantity input[name="quantity"]') || document.querySelector('.product-single__form input[name="quantity"]');
+          const mainQty = mainQtyInput ? Math.max(1, parseInt(mainQtyInput.value, 10) || 1) : 1;
+
+          // 收集已选中的搭配商品（Style Your Board / Complete Your Setup / More Add-ons），每款固定 1 件
+          const selectedItems = [];
+          document.querySelectorAll('.bundle-product-list--1 .bundle-keycap-card.is-selected, .bundle-product-list--addons .bundle-keycap-card.is-selected').forEach(card => {
+            let orig = parseInt(card.dataset.priceCents || card.dataset.keycapOrigCents || '0', 10) || 0;
+            if (!orig && card.dataset.keycapCents) orig = parseInt(card.dataset.keycapCents, 10) || 0;
+            const isKeycap = card.hasAttribute('data-keycap-cents') || card.dataset.isKeycap === 'true';
+            selectedItems.push({ orig, isKeycap });
+          });
+
+          let totalOriginal = basePrice * mainQty;
+          let totalDiscounted = basePrice * mainQty;
+
+          if (isKeyboardPage) {
+            // 键盘 + 键帽：所有键帽 8 折（KEYCAP20）
+            selectedItems.forEach(item => {
+              totalOriginal += item.orig;
+              totalDiscounted += item.isKeycap ? Math.round(item.orig * 0.8) : item.orig;
+            });
+          } else if (isKeycapPage) {
+            // 键帽满 2 套及以上：所有键帽 9 折（KEYCAP10），包含当前键帽本身
+            const keycapCount = mainQty + selectedItems.filter(i => i.isKeycap).length;
+            const keycapRatio = keycapCount >= 2 ? 0.9 : 1;
+            totalDiscounted = Math.round(basePrice * keycapRatio) * mainQty;
+            selectedItems.forEach(item => {
+              totalOriginal += item.orig;
+              totalDiscounted += item.isKeycap ? Math.round(item.orig * keycapRatio) : item.orig;
+            });
+          } else {
+            selectedItems.forEach(item => {
+              totalOriginal += item.orig;
+              totalDiscounted += item.orig;
+            });
+          }
+
+          // 同步更新 PC 端底部吸底栏上的价格展示（选了键帽后：折后价黑色，原价划线灰色）
+          if (bottomPriceWrap) {
+            if (totalOriginal > totalDiscounted) {
+              const formattedDisc = formatMoneyValue(totalDiscounted);
+              const formattedOrig = formatMoneyValue(totalOriginal);
+              bottomPriceWrap.innerHTML = `
+                <span data-product-price class="product__price on-sale">${formattedDisc}</span>
+                <span data-product-price-wrap>
+                  <span data-compare-price class="product__price product__price--compare"><del class="add-to-cart__compare-price">${formattedOrig}</del></span>
+                </span>
+              `;
+            } else {
+              const formattedCurrent = formatMoneyValue(totalDiscounted);
+              if (activeVar && activeVar.compare_at_price && activeVar.compare_at_price > activeVar.price && (!selectedItems || !selectedItems.length)) {
+                const origVarPrice = formatMoneyValue(activeVar.compare_at_price * mainQty);
+                bottomPriceWrap.innerHTML = `
+                  <span data-product-price class="product__price on-sale">${formattedCurrent}</span>
+                  <span data-product-price-wrap>
+                    <span data-compare-price class="product__price product__price--compare"><del class="add-to-cart__compare-price">${origVarPrice}</del></span>
+                  </span>
+                `;
+              } else {
+                bottomPriceWrap.innerHTML = `
+                  <span data-product-price class="product__price">${formattedCurrent}</span>
+                `;
+              }
+            }
+          }
+
+          if (!isAvailable) {
+            addBtn.classList.remove('is-needs-keycap');
+            if (bottomAddBtn) bottomAddBtn.classList.add('disabled');
+            if (bottomAddBtnText) bottomAddBtnText.textContent = 'SOLD OUT';
+            return;
+          }
+
+          if (bottomAddBtn) bottomAddBtn.classList.remove('disabled');
+
+          addBtn.classList.remove('is-needs-keycap');
+          const defaultRaw = (addBtnText.dataset.defaultText || 'Add to cart').trim();
+          const baseTitle = defaultRaw.toUpperCase();
+
+          if (totalOriginal > totalDiscounted) {
+            const formattedDisc = formatMoneyValue(totalDiscounted);
+            const formattedOrig = formatMoneyValue(totalOriginal);
+            addBtnText.innerHTML = `${baseTitle} | ${formattedDisc} <del class="add-to-cart__compare-price">${formattedOrig}</del>`;
+            if (bottomAddBtnText) {
+              bottomAddBtnText.innerHTML = `${baseTitle}<span class="m_bottom_price_part"> | ${formattedDisc} <del class="add-to-cart__compare-price">${formattedOrig}</del></span>`;
+            }
+          } else {
+            const formattedCurrent = formatMoneyValue(totalDiscounted);
+            addBtnText.innerHTML = `${baseTitle} | ${formattedCurrent}`;
+            if (bottomAddBtnText) {
+              bottomAddBtnText.innerHTML = `${baseTitle}<span class="m_bottom_price_part"> | ${formattedCurrent}</span>`;
+            }
+          }
+        } finally {
+          setTimeout(() => {
+            isUpdatingPrice = false;
+          }, 30);
+        }
+      }
+
+      window.__renderAddToCartPrice = renderPriceOnButton;
+
+      document.addEventListener('variant:change', function (e) {
+        latestVariant = (e.detail && e.detail.variant) || null;
+        setTimeout(() => {
+          renderPriceOnButton(latestVariant);
+        }, 10);
+      });
+
+      document.addEventListener('change', function () {
+        setTimeout(() => {
+          renderPriceOnButton(null);
+        }, 10);
+      });
+
+      // 搭配卡片点击、主数量 +/- 按钮、手动输入数量时同步刷新总价
+      document.addEventListener('click', function (e) {
+        if (!e.target || !e.target.closest) return;
+        if (e.target.closest('.bundle-keycap-card') || e.target.closest('.product__quantity .js-qty__adjust')) {
+          setTimeout(() => renderPriceOnButton(null), 60);
+        }
+      });
+      document.addEventListener('input', function (e) {
+        if (e.target && e.target.closest && e.target.closest('.product__quantity')) {
+          setTimeout(() => renderPriceOnButton(null), 10);
+        }
+      });
+
+      if (window.MutationObserver) {
+        const observer = new MutationObserver(function () {
+          if (isUpdatingPrice) return;
+          const currentText = (addBtnText.textContent || '').trim();
+          if (!currentText.includes('|') && !addBtn.disabled && !currentText.toUpperCase().includes('SOLD OUT')) {
+            renderPriceOnButton(null);
+          }
+        });
+        observer.observe(addBtnText, { childList: true, characterData: true, subtree: true });
+      }
+
+      renderPriceOnButton(null);
+      setTimeout(() => renderPriceOnButton(null), 50);
+      setTimeout(() => renderPriceOnButton(null), 250);
+      setTimeout(() => renderPriceOnButton(null), 600);
+    }
+
+    // 移动端 STYLE YOUR BOARD / DOUBLE YOUR STYLE 横向滑动左右按钮控制
+    function initBundleListMobileArrows() {
+      const listEl = document.querySelector('.bundle-product-list--1');
+      const arrowsWrap = document.querySelector('[data-bundle-arrows]');
+      if (!listEl || !arrowsWrap) return;
+
+      const prevBtn = arrowsWrap.querySelector('[data-bundle-prev]');
+      const nextBtn = arrowsWrap.querySelector('[data-bundle-next]');
+      if (!prevBtn || !nextBtn) return;
+
+      function updateArrowState() {
+        const scrollLeft = Math.round(listEl.scrollLeft || 0);
+        const maxScroll = Math.max(0, (listEl.scrollWidth || 0) - (listEl.clientWidth || 0));
+
+        if (scrollLeft <= 2) {
+          prevBtn.classList.add('is-disabled');
+        } else {
+          prevBtn.classList.remove('is-disabled');
+        }
+
+        if (maxScroll <= 2 || scrollLeft >= maxScroll - 2) {
+          nextBtn.classList.add('is-disabled');
+        } else {
+          nextBtn.classList.remove('is-disabled');
+        }
+      }
+
+      function getScrollStep() {
+        const firstCard = listEl.querySelector('.bundle-keycap-card');
+        if (firstCard) {
+          const style = window.getComputedStyle(listEl);
+          const gap = parseFloat(style.columnGap || style.gap) || 10;
+          return firstCard.offsetWidth + gap;
+        }
+        return Math.round((listEl.clientWidth || 240) * 0.66);
+      }
+
+      prevBtn.addEventListener('click', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        const step = getScrollStep();
+        listEl.scrollBy({ left: -step, behavior: 'smooth' });
+        setTimeout(updateArrowState, 350);
+      });
+
+      nextBtn.addEventListener('click', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        const step = getScrollStep();
+        listEl.scrollBy({ left: step, behavior: 'smooth' });
+        setTimeout(updateArrowState, 350);
+      });
+
+      listEl.addEventListener('scroll', updateArrowState, { passive: true });
+      window.addEventListener('resize', updateArrowState, { passive: true });
+      window.addEventListener('load', updateArrowState, { passive: true });
+
+      updateArrowState();
+      setTimeout(updateArrowState, 150);
+      setTimeout(updateArrowState, 500);
+    }
+
+    // 逐个初始化，任一模块报错不影响其他模块（尤其是加购按钮价格同步）
+    [
+      initBundleAddonGroups,
+      initBundleQtySelectors,
+      initBundleSelection,
+      initSetup1KeycapSelection,
+      initAddonCardsSelection,
+      initManualInstallationService,
+      initBundleAnchorUrl,
+      initNativeKeycapVariantSync,
+      initAddToCart,
+      initAddToCartPriceSync,
+      initBundleListMobileArrows
+    ].forEach(fn => {
+      try {
+        fn();
+      } catch (err) {
+        console.error('[more-variant-form] ' + fn.name + ' failed:', err);
+      }
+    });
 
     updateMobileCardGridScroll();
     setTimeout(updateMobileCardGridScroll, 300);
@@ -1955,13 +2835,47 @@
       resizeTimer = setTimeout(() => {
         updateBundleListScroll();
         updateMobileCardGridScroll();
+        if (typeof window.__syncSelectedKeycapSpecCard === 'function') {
+          window.__syncSelectedKeycapSpecCard();
+        }
       }, 150);
     });
 
     window.addEventListener('load', function () {
+      if (typeof window.__relocateBundlePromoOverlay === 'function') { window.__relocateBundlePromoOverlay(); }
       updateBundleListScroll();
       updateMobileCardGridScroll();
+      if (typeof window.__syncVariantOptionLabels === 'function') {
+        window.__syncVariantOptionLabels();
+      }
     });
+
+    // 全局变体单选/下拉切换时，同步更新变体标题冒号后面的选项名字
+    document.addEventListener('change', function (e) {
+      if (!e.target || !e.target.closest) return;
+      if (typeof window.__syncVariantOptionLabels === 'function') {
+        window.__syncVariantOptionLabels();
+      } else {
+        const inputWrap = e.target.closest('.variant-input-wrap');
+        if (inputWrap) {
+          const wrapper = inputWrap.closest('.variant-wrapper');
+          if (wrapper) {
+            const labelVal = wrapper.querySelector('.variant__label-value');
+            if (labelVal) {
+              if (e.target.type === 'radio' && e.target.checked) {
+                labelVal.textContent = e.target.value;
+              } else if (e.target.tagName === 'SELECT') {
+                labelVal.textContent = e.target.value;
+              }
+            }
+          }
+        }
+      }
+    });
+
+    if (typeof window.__syncVariantOptionLabels === 'function') {
+      window.__syncVariantOptionLabels();
+    }
   }
 
   if (document.readyState === 'loading') {

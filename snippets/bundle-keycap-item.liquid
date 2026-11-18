@@ -18,6 +18,97 @@
 {%- assign kc_orig_price = item_variant.price -%}
 {%- assign kc_disc_price = item_variant.price | times: 0.8 | round -%}
 
+{%- comment -%} 读取键帽后台配置字段：材质 + keys个数 + profile {%- endcomment -%}
+{%- assign kc_product = item_variant.product -%}
+{%- assign kc_spec = kc_product.metafields.custom.product_spec.value | default: item_variant.metafields.custom.product_spec.value -%}
+
+{%- assign raw_material = kc_product.metafields.custom.keycap_material.value | default: kc_spec.keycap_material.value | default: item_variant.metafields.custom.keycap_material.value -%}
+{%- assign kc_material = raw_material | map: 'label' | compact | join: ', ' -%}
+{%- if kc_material == blank and raw_material.label != blank -%}
+  {%- assign kc_material = raw_material.label -%}
+{%- endif -%}
+{%- if kc_material == blank and raw_material != blank -%}
+  {%- capture kc_material_str -%}{{ raw_material | join: ', ' }}{%- endcapture -%}
+  {%- if kc_material_str == blank -%}
+    {%- capture kc_material_str -%}{{ raw_material }}{%- endcapture -%}
+  {%- endif -%}
+  {%- assign kc_material = kc_material_str -%}
+{%- endif -%}
+{%- assign kc_material = kc_material | strip -%}
+
+{%- assign kc_keys = '' -%}
+{%- for opt in kc_product.options_with_values -%}
+  {%- assign opt_name_down = opt.name | downcase | strip -%}
+  {%- if opt_name_down == 'keycap count' or opt_name_down contains 'keycap count' or opt_name_down contains 'key count' or opt_name_down contains 'keys' -%}
+    {%- assign opt_idx0 = forloop.index0 -%}
+    {%- assign kc_keys = item_variant.options[opt_idx0] | default: opt.selected_value | default: opt.values.first -%}
+    {%- break -%}
+  {%- endif -%}
+{%- endfor -%}
+{%- if kc_keys == blank and item_variant.title != 'Default Title' and item_variant.title != blank -%}
+  {%- assign kc_keys = item_variant.title -%}
+{%- endif -%}
+{%- if kc_keys == blank -%}
+  {%- assign raw_keys = kc_product.metafields.custom.number_of_keys.value | default: kc_spec.number_of_keys.value | default: item_variant.metafields.custom.number_of_keys.value -%}
+  {%- assign kc_keys = raw_keys | map: 'label' | compact | join: ', ' -%}
+  {%- if kc_keys == blank and raw_keys.label != blank -%}
+    {%- assign kc_keys = raw_keys.label -%}
+  {%- endif -%}
+  {%- if kc_keys == blank and raw_keys != blank -%}
+    {%- capture kc_keys_str -%}{{ raw_keys | join: ', ' }}{%- endcapture -%}
+    {%- if kc_keys_str == blank -%}
+      {%- capture kc_keys_str -%}{{ raw_keys }}{%- endcapture -%}
+    {%- endif -%}
+    {%- assign kc_keys = kc_keys_str -%}
+  {%- endif -%}
+{%- endif -%}
+{%- assign kc_keys = kc_keys | strip -%}
+{%- if kc_keys != blank -%}
+  {%- assign kc_keys_down = kc_keys | downcase -%}
+  {%- unless kc_keys_down contains 'key' -%}
+    {%- assign kc_keys = kc_keys | append: ' Keys' -%}
+  {%- endunless -%}
+{%- endif -%}
+
+{%- assign raw_profile = kc_product.metafields.custom.keycap_profile.value | default: kc_spec.keycap_profile.value | default: item_variant.metafields.custom.keycap_profile.value -%}
+{%- assign kc_profile = raw_profile | map: 'label' | compact | join: ', ' -%}
+{%- if kc_profile == blank and raw_profile.label != blank -%}
+  {%- assign kc_profile = raw_profile.label -%}
+{%- endif -%}
+{%- if kc_profile == blank and raw_profile != blank -%}
+  {%- capture kc_profile_str -%}{{ raw_profile | join: ', ' }}{%- endcapture -%}
+  {%- if kc_profile_str == blank -%}
+    {%- capture kc_profile_str -%}{{ raw_profile }}{%- endcapture -%}
+  {%- endif -%}
+  {%- assign kc_profile = kc_profile_str -%}
+{%- endif -%}
+{%- assign kc_profile = kc_profile | strip -%}
+{%- if kc_profile != blank -%}
+  {%- assign kc_profile_down = kc_profile | downcase -%}
+  {%- unless kc_profile_down contains 'profile' -%}
+    {%- assign kc_profile = kc_profile | append: ' Profile' -%}
+  {%- endunless -%}
+{%- endif -%}
+
+{%- assign kc_specs_str = '' -%}
+{%- if kc_material != blank -%}
+  {%- assign kc_specs_str = kc_material -%}
+{%- endif -%}
+{%- if kc_keys != blank -%}
+  {%- if kc_specs_str != blank -%}
+    {%- assign kc_specs_str = kc_specs_str | append: ' | ' | append: kc_keys -%}
+  {%- else -%}
+    {%- assign kc_specs_str = kc_keys -%}
+  {%- endif -%}
+{%- endif -%}
+{%- if kc_profile != blank -%}
+  {%- if kc_specs_str != blank -%}
+    {%- assign kc_specs_str = kc_specs_str | append: ' | ' | append: kc_profile -%}
+  {%- else -%}
+    {%- assign kc_specs_str = kc_profile -%}
+  {%- endif -%}
+{%- endif -%}
+
 {%- assign card_image = '' -%}
 {%- if item_variant.featured_image -%}
   {%- assign card_image = item_variant.featured_image | image_url: width: 360 -%}
@@ -28,6 +119,8 @@
 {%- elsif item_variant.product.images.first -%}
   {%- assign card_image = item_variant.product.images.first | image_url: width: 360 -%}
 {%- endif -%}
+
+{%- capture kc_images_json -%}[{%- if kc_product.images.size > 0 -%}{%- for img in kc_product.images -%}{{ img | image_url: width: 900 | json }}{%- unless forloop.last -%},{%- endunless -%}{%- endfor -%}{%- elsif card_image != blank -%}{{ card_image | json }}{%- endif -%}]{%- endcapture -%}
 
 {% comment %}
   Find combo image (keyboard equipped with this keycap)
@@ -60,7 +153,15 @@
   data-product-title="{{ item_variant.product.title | escape }}"
   data-variant-title="{{ item_variant.title | escape }}"
   data-keycap-handle="{{ item_variant.product.handle | escape }}"
+  data-keycap-url="{{ item_variant.product.url | default: item_variant.url }}"
   data-keycap-sku="{{ item_variant.sku | escape }}"
+  data-keycap-image="{{ card_image }}"
+  data-keycap-price="{{ kc_disc_price | money | strip_html }}"
+  data-keycap-orig-price="{{ kc_orig_price | money | strip_html }}"
+  data-keycap-cents="{{ kc_disc_price }}"
+  data-keycap-orig-cents="{{ kc_orig_price }}"
+  data-keycap-specs="{{ kc_specs_str | escape }}"
+  data-keycap-images="{{ kc_images_json | escape }}"
   {% if combo_image_url != blank %}
     data-combo-image="{{ combo_image_url }}"
   {% endif %}
@@ -69,6 +170,32 @@
   aria-pressed="false"
   aria-label="{{ keycap_title | escape }} - {{ kc_disc_price | money }}"
 >
+  <template class="bundle-keycap-card__points-tpl">
+    {%- if kc_product.metafields.custom.point_description != blank -%}
+      <ul class="keycap-overview-modal__points-list">
+        {%- for item in kc_product.metafields.custom.point_description.value -%}
+          {%- assign point = item | split: ':' -%}
+          <li class="keycap-overview-modal__point-item">
+            {%- if point.size > 1 -%}
+              <strong>{{ point[0] | strip }}:</strong> {{ item | remove_first: point[0] | remove_first: ':' | strip | newline_to_br }}
+            {%- else -%}
+              {{ item | newline_to_br }}
+            {%- endif -%}
+          </li>
+        {%- endfor -%}
+      </ul>
+    {%- elsif kc_product.metafields.custom.short_point_desc != blank -%}
+      <ul class="keycap-overview-modal__points-list">
+        {%- for item in kc_product.metafields.custom.short_point_desc.value -%}
+          <li class="keycap-overview-modal__point-item">{{ item | newline_to_br }}</li>
+        {%- endfor -%}
+      </ul>
+    {%- elsif kc_product.metafields.custom.short_introduction != blank -%}
+      <div class="keycap-overview-modal__points-rich">
+        {{ kc_product.metafields.custom.short_introduction.value | default: kc_product.metafields.custom.short_introduction }}
+      </div>
+    {%- endif -%}
+  </template>
   <input
     type="checkbox"
     class="bundle-product-checkbox bundle-keycap-checkbox"
@@ -113,7 +240,7 @@
     {%- assign kc_disc_price = item_variant.price | times: 0.8 | round -%}
     <div class="bundle-keycap-card__price">
       <span class="bundle-keycap-card__price--original">{{ kc_orig_price | money }}</span>
-      <span class="bundle-keycap-card__price--discount">{{ kc_disc_price | money }}</span>
+      <span class="bundle-keycap-card__price--discount">{{ kc_disc_price | money }}<span class="bundle-keycap-card__discount-tag">-20%</span></span>
     </div>
   </div>
 </div>

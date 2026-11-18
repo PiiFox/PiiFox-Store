@@ -92,6 +92,7 @@
         -%}
         
         <img class="{% if product_zoom_enable %}photoswipe__image{% endif %} lazyload"
+          src="{{ media.preview_image | img_url: '720x' }}"
           data-photoswipe-src="{{ zoom_img_url }}"
           data-photoswipe-width="{{ media_width }}"  
           data-photoswipe-height="{{ media_height }}"

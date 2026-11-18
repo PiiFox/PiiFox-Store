@@ -8,7 +8,7 @@
 <div class="variant-wrapper js" data-type="button">
   <label class="variant__label"
     for="ProductSelect-{{ section_id }}-{{ product.id }}-option-{{ forloop.index0 }}">
-    {{ option.name }}
+    {{ option.name }}{% unless option.name contains ':' %}:{% endunless %}
       <span class="variant__label-info">
        
         {%- render

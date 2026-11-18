@@ -1,7 +1,9 @@
+{%- assign option_index = forloop.index -%}
 <div class="variant-wrapper variant-wrapper--dropdown js" data-type="dropdown">
   <label class="variant__label{% if option.name == 'Default' or option.name == 'Title' %} hidden-label{% endif %}{% unless variant_labels %} hidden-label{% endunless %}"
     for="SingleOptionSelector-{{ section_id }}-{{ product.id }}-option-{{ forloop.index0 }}">
-    {{ option.name }}
+    <span class="variant__label-title">{{ option.name | remove: ':' }}:</span>
+    <span class="variant__label-value" data-variant-selected-value data-option-index="{{ option_index }}" data-option-name="{{ option.name | escape }}">{{ option.selected_value }}</span>
   </label>
   <div class="variant-input-wrap" data-index="option{{ forloop.index }}" data-handle="{{ option.name | handleize }}">
     <select

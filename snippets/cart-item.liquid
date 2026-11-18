@@ -20,6 +20,34 @@
   {%- endunless -%}
 {%- endif -%}
 
+{%- assign has_other_style_keycaps = false -%}
+{%- if is_keyboard -%}
+  {%- for option in product.options_with_values -%}
+    {%- assign opt_val = option.value | downcase | strip -%}
+    {%- if opt_val contains 'other style'
+      or opt_val contains 'other-style'
+      or opt_val contains 'non-original'
+      or opt_val contains 'non original'
+      or opt_val == 'custom'
+      or opt_val contains '非原装'
+    -%}
+      {%- assign has_other_style_keycaps = true -%}
+      {%- break -%}
+    {%- endif -%}
+  {%- endfor -%}
+  {%- unless has_other_style_keycaps -%}
+    {%- assign v_title_down = product.variant.title | downcase -%}
+    {%- if v_title_down contains 'other style'
+      or v_title_down contains 'other-style'
+      or v_title_down contains 'non-original'
+      or v_title_down contains 'non original'
+      or v_title_down contains '非原装'
+    -%}
+      {%- assign has_other_style_keycaps = true -%}
+    {%- endif -%}
+  {%- endunless -%}
+{%- endif -%}
+
 <div class="cart__item{% if is_service_item %} cart__item--service{% endif %}"
   data-key="{{ product.key }}"
   data-product-id="{{ product.product.id }}"
@@ -27,6 +55,7 @@
   data-is-keyboard="{{ is_keyboard }}"
   data-is-keycap="{{ is_keycap }}"
   data-is-service="{{ is_service_item }}"
+  data-has-other-style-keycaps="{{ has_other_style_keycaps }}"
   data-line-price="{{ product.original_line_price | default: product.final_line_price }}"
   data-item-price="{{ product.original_price | default: product.final_price }}"
   data-item-quantity="{{ product.quantity }}"
