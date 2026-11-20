@@ -292,6 +292,37 @@
         "gap": 48
       }
     },
+    "featured_split_banner_home": {
+      "type": "featured-split-banner",
+      "disabled": true,
+      "name": "Featured Split Banner",
+      "settings": {
+        "eyebrow": "",
+        "title": "Configure\nyour keyboard.",
+        "description": "Choose the case, plate, PCB and finish. Preview every combination before you build.",
+        "button_label": "START CONFIGURING",
+        "button_link": "shopify://collections/keycaps",
+        "show_button_arrow": true,
+        "image_focal_point": "center",
+        "enable_edge_fade": true,
+        "banner_clickable": false,
+        "desktop_height": 460,
+        "text_col_width": 38,
+        "border_radius": 20,
+        "padding_top": 16,
+        "padding_bottom": 24,
+        "mobile_image_position": "top",
+        "section_bg_color": "#ffffff",
+        "card_bg_color": "#0d0d0f",
+        "eyebrow_color": "#8f9096",
+        "title_color": "#ffffff",
+        "description_color": "#9a9aa2",
+        "btn_bg_color": "#ffffff",
+        "btn_text_color": "#111111",
+        "title_font_size": 46,
+        "mobile_title_font_size": 30
+      }
+    },
     "collection_list_LPzqx3": {
       "type": "collection-list",
       "blocks": {
@@ -1132,6 +1163,7 @@
   "order": [
     "23e7f471-8853-4933-b850-986da236297a",
     "col2_txt_section_RFrVGf",
+    "featured_split_banner_home",
     "collection_list_LPzqx3",
     "style_studio_theme_grid_home",
     "main_collection_list_tAJGQJ",

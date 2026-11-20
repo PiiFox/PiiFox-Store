@@ -1,0 +1,685 @@
+{%- liquid
+  assign section_bg = section.settings.section_bg_color | default: '#ffffff'
+  assign card_bg = section.settings.card_bg_color | default: '#0d0d0f'
+  assign eyebrow_color = section.settings.eyebrow_color | default: '#8f9096'
+  assign title_color = section.settings.title_color | default: '#ffffff'
+  assign desc_color = section.settings.description_color | default: '#9a9aa2'
+  assign btn_bg = section.settings.btn_bg_color | default: '#ffffff'
+  assign btn_text = section.settings.btn_text_color | default: '#111111'
+
+  assign desktop_height = section.settings.desktop_height | default: 460
+  assign text_col_width = section.settings.text_col_width | default: 38
+  assign media_col_width = 100 | minus: text_col_width
+  assign border_radius = section.settings.border_radius | default: 20
+  assign pad_top = section.settings.padding_top | default: 16
+  assign pad_bottom = section.settings.padding_bottom | default: 24
+  assign title_size = section.settings.title_font_size | default: 46
+  assign m_title_size = section.settings.mobile_title_font_size | default: 30
+
+  assign desktop_img = section.settings.banner_image
+  assign mobile_img = section.settings.mobile_banner_image | default: desktop_img
+  assign focal_point = section.settings.image_focal_point | default: 'center'
+  assign enable_edge_fade = section.settings.enable_edge_fade
+  assign mobile_img_pos = section.settings.mobile_image_position | default: 'top'
+  assign banner_clickable = section.settings.banner_clickable
+  assign cta_link = section.settings.button_link
+-%}
+
+{%- style -%}
+  .fsb-section-{{ section.id }} {
+    width: 100%;
+    background-color: {{ section_bg }};
+    padding: {{ pad_top }}px 0 {{ pad_bottom }}px;
+    box-sizing: border-box;
+  }
+
+  .fsb-section-{{ section.id }} *,
+  .fsb-section-{{ section.id }} *::before,
+  .fsb-section-{{ section.id }} *::after {
+    box-sizing: border-box;
+  }
+
+  .fsb-section-{{ section.id }} .fsb-card {
+    position: relative;
+    display: grid;
+    grid-template-columns: {{ text_col_width }}% {{ media_col_width }}%;
+    min-height: {{ desktop_height }}px;
+    background-color: {{ card_bg }};
+    border-radius: {{ border_radius }}px;
+    overflow: hidden;
+    isolation: isolate;
+  }
+
+  /* Left Text Column */
+  .fsb-section-{{ section.id }} .fsb-text-col {
+    position: relative;
+    z-index: 3;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 52px 36px 52px 58px;
+    background-color: {{ card_bg }};
+  }
+
+  .fsb-section-{{ section.id }} .fsb-eyebrow {
+    margin: 0 0 18px;
+    font-family: "PF_Semibold", "Manrope", -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1.3;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: {{ eyebrow_color }};
+  }
+
+  .fsb-section-{{ section.id }} .fsb-title {
+    margin: 0;
+    font-family: "PF_Bold", "PF_Semibold", "Manrope", -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: clamp(32px, 3.1vw, {{ title_size }}px);
+    font-weight: 700;
+    line-height: 1.08;
+    letter-spacing: -0.025em;
+    text-transform: none;
+    color: {{ title_color }};
+    white-space: pre-line;
+    word-break: break-word;
+  }
+
+  .fsb-section-{{ section.id }} .fsb-desc {
+    margin: 18px 0 0;
+    max-width: 380px;
+    font-family: "PF_Normal", "Manrope", -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 1.6;
+    letter-spacing: 0;
+    text-transform: none;
+    color: {{ desc_color }};
+    white-space: pre-line;
+  }
+
+  .fsb-section-{{ section.id }} .fsb-actions {
+    margin-top: 32px;
+  }
+
+  .fsb-section-{{ section.id }} .fsb-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    min-height: 48px;
+    padding: 13px 28px;
+    border-radius: 999px;
+    background-color: {{ btn_bg }};
+    color: {{ btn_text }};
+    font-family: "PF_Semibold", "Manrope", -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 12.5px;
+    font-weight: 600;
+    line-height: 1;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.25s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.25s ease, box-shadow 0.25s ease;
+  }
+
+  .fsb-section-{{ section.id }} .fsb-btn:hover {
+    transform: translateY(-2px);
+    opacity: 0.92;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.28);
+  }
+
+  .fsb-section-{{ section.id }} .fsb-btn-arrow {
+    display: inline-flex;
+    align-items: center;
+    transition: transform 0.25s cubic-bezier(0.25, 1, 0.5, 1);
+  }
+
+  .fsb-section-{{ section.id }} .fsb-btn:hover .fsb-btn-arrow {
+    transform: translateX(4px);
+  }
+
+  /* Right Banner Column */
+  .fsb-section-{{ section.id }} .fsb-media-col {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    min-height: {{ desktop_height }}px;
+    overflow: hidden;
+    background-color: {{ card_bg }};
+  }
+
+  .fsb-section-{{ section.id }} .fsb-media-link {
+    display: block;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    text-decoration: none;
+  }
+
+  .fsb-section-{{ section.id }} .fsb-media-picture {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  .fsb-section-{{ section.id }} .fsb-media-img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: {{ focal_point }};
+    transition: transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .fsb-section-{{ section.id }} .fsb-card:hover .fsb-media-img {
+    transform: scale(1.025);
+  }
+
+  {%- if enable_edge_fade -%}
+  .fsb-section-{{ section.id }} .fsb-media-col::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: -1px;
+    right: 0;
+    z-index: 2;
+    pointer-events: none;
+    background: linear-gradient(
+      90deg,
+      {{ card_bg }} 0%,
+      {{ card_bg | color_modify: 'alpha', 0.85 }} 8%,
+      {{ card_bg | color_modify: 'alpha', 0.42 }} 18%,
+      {{ card_bg | color_modify: 'alpha', 0 }} 32%
+    );
+  }
+  {%- endif -%}
+
+  /* Empty State Placeholder (visible until banner image is uploaded) */
+  .fsb-section-{{ section.id }} .fsb-placeholder {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    min-height: {{ desktop_height }}px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 32px;
+    text-align: center;
+    background:
+      radial-gradient(circle at 70% 35%, rgba(255, 255, 255, 0.08), transparent 55%),
+      linear-gradient(135deg, #17171b 0%, #222229 50%, #141418 100%);
+    color: rgba(255, 255, 255, 0.55);
+  }
+
+  .fsb-section-{{ section.id }} .fsb-placeholder-icon {
+    width: 44px;
+    height: 44px;
+    opacity: 0.55;
+  }
+
+  .fsb-section-{{ section.id }} .fsb-placeholder-title {
+    font-family: "PF_Semibold", "Manrope", sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.78);
+    margin: 0;
+  }
+
+  .fsb-section-{{ section.id }} .fsb-placeholder-hint {
+    font-family: "PF_Normal", "Manrope", sans-serif;
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.48);
+    margin: 0;
+  }
+
+  /* Tablet */
+  @media screen and (max-width: 1024px) {
+    .fsb-section-{{ section.id }} .fsb-card {
+      grid-template-columns: 44% 56%;
+      min-height: {{ desktop_height | times: 0.82 | round | at_least: 340 }}px;
+    }
+
+    .fsb-section-{{ section.id }} .fsb-media-col,
+    .fsb-section-{{ section.id }} .fsb-placeholder {
+      min-height: {{ desktop_height | times: 0.82 | round | at_least: 340 }}px;
+    }
+
+    .fsb-section-{{ section.id }} .fsb-text-col {
+      padding: 40px 28px 40px 36px;
+    }
+  }
+
+  /* Mobile */
+  @media screen and (max-width: 768px) {
+    .fsb-section-{{ section.id }} {
+      padding: {{ pad_top | times: 0.75 | round | at_least: 8 }}px 0 {{ pad_bottom | times: 0.75 | round | at_least: 12 }}px;
+    }
+
+    .fsb-section-{{ section.id }} .fsb-card {
+      grid-template-columns: 1fr;
+      min-height: auto;
+      border-radius: {{ border_radius | at_most: 20 }}px;
+    }
+
+    {%- if mobile_img_pos == 'top' -%}
+    .fsb-section-{{ section.id }} .fsb-media-col {
+      order: 1;
+    }
+    .fsb-section-{{ section.id }} .fsb-text-col {
+      order: 2;
+      padding: 24px 22px 30px;
+    }
+    {%- else -%}
+    .fsb-section-{{ section.id }} .fsb-text-col {
+      order: 1;
+      padding: 28px 22px 24px;
+    }
+    .fsb-section-{{ section.id }} .fsb-media-col {
+      order: 2;
+    }
+    {%- endif -%}
+
+    .fsb-section-{{ section.id }} .fsb-media-col {
+      min-height: 0;
+      aspect-ratio: 16 / 10;
+    }
+
+    .fsb-section-{{ section.id }} .fsb-placeholder {
+      min-height: 210px;
+    }
+
+    {%- if enable_edge_fade -%}
+    .fsb-section-{{ section.id }} .fsb-media-col::after {
+      left: 0;
+      right: 0;
+      {%- if mobile_img_pos == 'top' -%}
+      top: 0;
+      bottom: -1px;
+      background: linear-gradient(
+        0deg,
+        {{ card_bg }} 0%,
+        {{ card_bg | color_modify: 'alpha', 0.6 }} 14%,
+        {{ card_bg | color_modify: 'alpha', 0 }} 34%
+      );
+      {%- else -%}
+      top: -1px;
+      bottom: 0;
+      background: linear-gradient(
+        180deg,
+        {{ card_bg }} 0%,
+        {{ card_bg | color_modify: 'alpha', 0.6 }} 14%,
+        {{ card_bg | color_modify: 'alpha', 0 }} 34%
+      );
+      {%- endif -%}
+    }
+    {%- endif -%}
+
+    .fsb-section-{{ section.id }} .fsb-eyebrow {
+      margin-bottom: 12px;
+      font-size: 11px;
+    }
+
+    .fsb-section-{{ section.id }} .fsb-title {
+      font-size: {{ m_title_size }}px;
+      line-height: 1.12;
+    }
+
+    .fsb-section-{{ section.id }} .fsb-desc {
+      margin-top: 14px;
+      font-size: 14px;
+      max-width: 100%;
+    }
+
+    .fsb-section-{{ section.id }} .fsb-actions {
+      margin-top: 24px;
+    }
+
+    .fsb-section-{{ section.id }} .fsb-btn {
+      min-height: 44px;
+      padding: 12px 24px;
+      font-size: 12px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .fsb-section-{{ section.id }} .fsb-media-img,
+    .fsb-section-{{ section.id }} .fsb-btn,
+    .fsb-section-{{ section.id }} .fsb-btn-arrow {
+      transition: none;
+    }
+    .fsb-section-{{ section.id }} .fsb-card:hover .fsb-media-img {
+      transform: none;
+    }
+  }
+{%- endstyle -%}
+
+<section
+  id="featured-split-banner-{{ section.id }}"
+  class="fsb-section fsb-section-{{ section.id }}"
+  data-section-id="{{ section.id }}"
+  data-section-type="featured-split-banner"
+>
+  <div class="page-width">
+    <div class="fsb-card">
+      <div class="fsb-text-col">
+        {%- if section.settings.eyebrow != blank -%}
+          <p class="fsb-eyebrow">{{ section.settings.eyebrow | escape }}</p>
+        {%- endif -%}
+
+        {%- if section.settings.title != blank -%}
+          <h2 class="fsb-title">{{ section.settings.title | escape }}</h2>
+        {%- endif -%}
+
+        {%- if section.settings.description != blank -%}
+          <p class="fsb-desc">{{ section.settings.description | escape }}</p>
+        {%- endif -%}
+
+        {%- if section.settings.button_label != blank -%}
+          <div class="fsb-actions">
+            <a
+              href="{{ cta_link | default: '#' }}"
+              class="fsb-btn"
+              {%- if cta_link == blank -%}aria-disabled="true"{%- endif -%}
+            >
+              <span>{{ section.settings.button_label | escape }}</span>
+              {%- if section.settings.show_button_arrow -%}
+                <span class="fsb-btn-arrow" aria-hidden="true">
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M3.333 8H12.667M12.667 8L8.667 4M12.667 8L8.667 12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </span>
+              {%- endif -%}
+            </a>
+          </div>
+        {%- endif -%}
+      </div>
+
+      <div class="fsb-media-col">
+        {%- capture banner_media_html -%}
+          {%- if desktop_img != blank -%}
+            <picture class="fsb-media-picture">
+              {%- if mobile_img != blank and mobile_img != desktop_img -%}
+                <source
+                  media="(max-width: 768px)"
+                  srcset="
+                    {{ mobile_img | image_url: width: 600 }} 600w,
+                    {{ mobile_img | image_url: width: 900 }} 900w,
+                    {{ mobile_img | image_url: width: 1200 }} 1200w
+                  "
+                  sizes="100vw"
+                >
+              {%- endif -%}
+              {{
+                desktop_img
+                | image_url: width: 2200
+                | image_tag:
+                  widths: '800, 1200, 1600, 1920, 2200',
+                  sizes: '(max-width: 768px) 100vw, 62vw',
+                  loading: 'lazy',
+                  class: 'fsb-media-img',
+                  alt: desktop_img.alt | default: section.settings.title | escape
+              }}
+            </picture>
+          {%- else -%}
+            <div class="fsb-placeholder">
+              <svg class="fsb-placeholder-icon" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <rect x="6" y="10" width="36" height="28" rx="4" stroke="currentColor" stroke-width="2"/>
+                <circle cx="17" cy="20" r="3" stroke="currentColor" stroke-width="2"/>
+                <path d="M8 34L19 24L27 31L33 25L40 33" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <p class="fsb-placeholder-title">Upload Featured Keycap Banner</p>
+              <p class="fsb-placeholder-hint">Recommended: 1800 × 920 px (2:1 / 16:9)</p>
+            </div>
+          {%- endif -%}
+        {%- endcapture -%}
+
+        {%- if banner_clickable and cta_link != blank -%}
+          <a href="{{ cta_link }}" class="fsb-media-link" aria-label="{{ section.settings.title | default: 'Featured Banner' | escape }}">
+            {{ banner_media_html }}
+          </a>
+        {%- else -%}
+          {{ banner_media_html }}
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Featured Split Banner",
+  "class": "featured-split-banner-section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Text Content (左侧文字内容)"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow Label (顶部小标签，可选)",
+      "info": "留空则只显示标题、描述和按钮"
+    },
+    {
+      "type": "textarea",
+      "id": "title",
+      "label": "Heading (标题)",
+      "info": "支持回车换行",
+      "default": "Configure\nyour keyboard."
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description (描述文案)",
+      "default": "Choose the case, plate, PCB and finish. Preview every combination before you build."
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button Label (按钮文字)",
+      "info": "留空则隐藏按钮",
+      "default": "START CONFIGURING"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Link (按钮跳转链接)"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_button_arrow",
+      "label": "Show Right Arrow on Button (按钮显示右箭头)",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Banner Image (右侧 Banner 图片)"
+    },
+    {
+      "type": "image_picker",
+      "id": "banner_image",
+      "label": "Desktop Banner Image (桌面端 Banner 图)",
+      "info": "推荐尺寸：1800 × 920 px（约 2:1，兼容 16:9），建议 WebP/JPG，体积 500KB 以内"
+    },
+    {
+      "type": "image_picker",
+      "id": "mobile_banner_image",
+      "label": "Mobile Banner Image (移动端 Banner 图，可选)",
+      "info": "留空则自动使用桌面端图片；单独上传推荐 1200 × 750 px（16:10）"
+    },
+    {
+      "type": "select",
+      "id": "image_focal_point",
+      "label": "Image Focal Point (图片对齐位置)",
+      "options": [
+        { "value": "center", "label": "Center (居中)" },
+        { "value": "left center", "label": "Left (靠左)" },
+        { "value": "right center", "label": "Right (靠右)" },
+        { "value": "top center", "label": "Top (靠上)" },
+        { "value": "bottom center", "label": "Bottom (靠下)" }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_edge_fade",
+      "label": "Enable Edge Gradient Blend (开启边缘渐变融合)",
+      "info": "让右侧 Banner 左边缘自然融入黑色文字区背景",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "banner_clickable",
+      "label": "Make Banner Image Clickable (点击 Banner 也可跳转链接)",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Layout & Sizing (布局与尺寸)"
+    },
+    {
+      "type": "range",
+      "id": "desktop_height",
+      "label": "Desktop Card Height (桌面端卡片高度)",
+      "min": 340,
+      "max": 620,
+      "step": 10,
+      "unit": "px",
+      "default": 460
+    },
+    {
+      "type": "range",
+      "id": "text_col_width",
+      "label": "Left Text Area Width (左侧文字区占比)",
+      "min": 32,
+      "max": 50,
+      "step": 1,
+      "unit": "%",
+      "default": 38
+    },
+    {
+      "type": "range",
+      "id": "border_radius",
+      "label": "Card Border Radius (卡片圆角)",
+      "min": 0,
+      "max": 36,
+      "step": 2,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Top Padding (模块上边距)",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Bottom Padding (模块下边距)",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "select",
+      "id": "mobile_image_position",
+      "label": "Mobile Layout Order (移动端排列顺序)",
+      "options": [
+        { "value": "top", "label": "Banner Above Text (图上文下)" },
+        { "value": "bottom", "label": "Text Above Banner (文上图下)" }
+      ],
+      "default": "top"
+    },
+    {
+      "type": "header",
+      "content": "Colors & Typography (配色与字号)"
+    },
+    {
+      "type": "color",
+      "id": "section_bg_color",
+      "label": "Section Outer Background (模块外部背景色)",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "card_bg_color",
+      "label": "Card Background Color (卡片背景色)",
+      "default": "#0d0d0f"
+    },
+    {
+      "type": "color",
+      "id": "eyebrow_color",
+      "label": "Eyebrow Color (顶部小标签颜色)",
+      "default": "#8f9096"
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Heading Color (标题颜色)",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "description_color",
+      "label": "Description Color (描述文字颜色)",
+      "default": "#9a9aa2"
+    },
+    {
+      "type": "color",
+      "id": "btn_bg_color",
+      "label": "Button Background Color (按钮背景色)",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "btn_text_color",
+      "label": "Button Text Color (按钮文字颜色)",
+      "default": "#111111"
+    },
+    {
+      "type": "range",
+      "id": "title_font_size",
+      "label": "Desktop Heading Size (桌面端标题字号)",
+      "min": 28,
+      "max": 64,
+      "step": 2,
+      "unit": "px",
+      "default": 46
+    },
+    {
+      "type": "range",
+      "id": "mobile_title_font_size",
+      "label": "Mobile Heading Size (移动端标题字号)",
+      "min": 22,
+      "max": 42,
+      "step": 2,
+      "unit": "px",
+      "default": 30
+    }
+  ],
+  "presets": [
+    {
+      "name": "Featured Split Banner",
+      "settings": {
+        "title": "Configure\nyour keyboard.",
+        "description": "Choose the case, plate, PCB and finish. Preview every combination before you build.",
+        "button_label": "START CONFIGURING"
+      }
+    }
+  ]
+}
+{% endschema %}
