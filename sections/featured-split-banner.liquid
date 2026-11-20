@@ -13,11 +13,10 @@
   assign pad_top = section.settings.padding_top | default: 16
   assign pad_bottom = section.settings.padding_bottom | default: 24
   assign title_size = section.settings.title_font_size | default: 46
-  assign m_title_size = section.settings.mobile_title_font_size | default: 30
+  assign m_title_size = section.settings.mobile_title_font_size | default: 22
 
   assign desktop_img = section.settings.banner_image
   assign mobile_img = section.settings.mobile_banner_image | default: desktop_img
-  assign mobile_img_pos = section.settings.mobile_image_position | default: 'top'
   assign cta_link = section.settings.button_link
 -%}
 
@@ -213,7 +212,7 @@
     }
   }
 
-  /* Mobile */
+  /* Mobile: Fixed Image Top / Text Bottom (7:3 ratio) */
   @media screen and (max-width: 768px) {
     .fsb-section-{{ section.id }} {
       padding: {{ pad_top | times: 0.75 | round | at_least: 8 }}px 0 {{ pad_bottom | times: 0.75 | round | at_least: 12 }}px;
@@ -221,35 +220,33 @@
 
     .fsb-section-{{ section.id }} .fsb-card {
       grid-template-columns: 1fr;
+      grid-template-rows: 7fr 3fr;
       min-height: auto;
       border-radius: {{ border_radius | at_most: 20 }}px;
     }
 
-    {%- if mobile_img_pos == 'top' -%}
     .fsb-section-{{ section.id }} .fsb-media-col {
       order: 1;
-    }
-    .fsb-section-{{ section.id }} .fsb-text-col {
-      order: 2;
-      padding: 24px 22px 30px;
-    }
-    {%- else -%}
-    .fsb-section-{{ section.id }} .fsb-text-col {
-      order: 1;
-      padding: 28px 22px 24px;
-    }
-    .fsb-section-{{ section.id }} .fsb-media-col {
-      order: 2;
-    }
-    {%- endif -%}
-
-    .fsb-section-{{ section.id }} .fsb-media-col {
+      grid-row: 1;
+      position: relative;
       min-height: 0;
-      aspect-ratio: 16 / 10;
+      height: 100%;
     }
 
+    .fsb-section-{{ section.id }} .fsb-media-picture,
     .fsb-section-{{ section.id }} .fsb-placeholder {
-      min-height: 210px;
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      min-height: 0;
+    }
+
+    .fsb-section-{{ section.id }} .fsb-text-col {
+      order: 2;
+      grid-row: 2;
+      min-height: 150px;
+      padding: 16px 18px 18px;
     }
 
     .fsb-section-{{ section.id }} .fsb-title {
@@ -258,19 +255,27 @@
     }
 
     .fsb-section-{{ section.id }} .fsb-desc {
-      margin-top: 14px;
-      font-size: 14px;
+      margin-top: 8px;
+      font-size: 12px;
+      line-height: 1.45;
       max-width: 100%;
     }
 
     .fsb-section-{{ section.id }} .fsb-actions {
-      margin-top: 24px;
+      margin-top: 14px;
     }
 
     .fsb-section-{{ section.id }} .fsb-btn {
-      min-height: 44px;
-      padding: 12px 24px;
-      font-size: 12px;
+      min-height: 36px;
+      padding: 9px 18px;
+      gap: 8px;
+      font-size: 11px;
+      letter-spacing: 0.06em;
+    }
+
+    .fsb-section-{{ section.id }} .fsb-btn-arrow svg {
+      width: 13px;
+      height: 13px;
     }
   }
 
@@ -418,7 +423,7 @@
       "type": "image_picker",
       "id": "mobile_banner_image",
       "label": "Mobile Banner Image (移动端 Banner 图，可选)",
-      "info": "留空则自动使用桌面端图片；单独上传推荐 1200 × 750 px（16:10）"
+      "info": "留空则自动使用桌面端图片；单独上传推荐 1080 × 1080 px（1:1）或 1080 × 1200 px（9:10）"
     },
     {
       "type": "header",
@@ -475,16 +480,6 @@
       "default": 24
     },
     {
-      "type": "select",
-      "id": "mobile_image_position",
-      "label": "Mobile Layout Order (移动端排列顺序)",
-      "options": [
-        { "value": "top", "label": "Banner Above Text (图上文下)" },
-        { "value": "bottom", "label": "Text Above Banner (文上图下)" }
-      ],
-      "default": "top"
-    },
-    {
       "type": "header",
       "content": "Colors & Typography (配色与字号)"
     },
@@ -538,11 +533,11 @@
       "type": "range",
       "id": "mobile_title_font_size",
       "label": "Mobile Heading Size (移动端标题字号)",
-      "min": 22,
-      "max": 42,
-      "step": 2,
+      "min": 18,
+      "max": 36,
+      "step": 1,
       "unit": "px",
-      "default": 30
+      "default": 22
     }
   ],
   "presets": [

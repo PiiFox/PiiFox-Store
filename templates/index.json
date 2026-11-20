@@ -307,7 +307,6 @@
         "border_radius": 20,
         "padding_top": 16,
         "padding_bottom": 24,
-        "mobile_image_position": "top",
         "section_bg_color": "#ffffff",
         "card_bg_color": "#0d0d0f",
         "title_color": "#ffffff",
@@ -315,7 +314,7 @@
         "btn_bg_color": "#ffffff",
         "btn_text_color": "#111111",
         "title_font_size": 46,
-        "mobile_title_font_size": 30
+        "mobile_title_font_size": 22
       }
     },
     "collection_list_LPzqx3": {
