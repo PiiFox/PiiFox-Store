@@ -7234,6 +7234,7 @@ lazySizesConfig.expFactor = 4;
 
         this.queryParams.set("sort_by", this.getSortValue());
         this.queryParams.delete("page"); // Delete if it exists
+        this.queryParams.delete("sort_top"); // Clear pinned product on manual sort
 
         window.location.search = this.queryParams.toString();
       },

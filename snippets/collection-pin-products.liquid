@@ -1,0 +1,374 @@
+{% comment %}
+  Pin specific products to the top of any collection grid via URL query parameter.
+  Usage: /collections/keycaps?sort_top=product-handle
+         /collections/keycaps?sort_top=handle-1,handle-2
+{% endcomment %}
+<style>
+  [data-pin-collection-grid].is-pin-loading {
+    opacity: 0;
+    transition: opacity 0.18s ease;
+  }
+  [data-pin-collection-grid].is-pin-ready {
+    opacity: 1;
+    transition: opacity 0.18s ease;
+  }
+</style>
+
+<script>
+  (function () {
+    if (window.__piifoxPinProductsBound) {
+      return;
+    }
+    window.__piifoxPinProductsBound = true;
+
+    var MAX_PIN_COUNT = 12;
+    var FETCH_TIMEOUT_MS = 1500;
+
+    var WIDTH_CLASS_MAP = {
+      1: [],
+      2: ['medium-up--one-half'],
+      3: ['small--one-half', 'medium-up--one-third'],
+      4: ['small--one-half', 'medium-up--one-quarter'],
+      5: ['small--one-half', 'medium-up--one-fifth'],
+      6: ['small--one-half', 'medium-up--one-sixth']
+    };
+
+    function parsePinHandles() {
+      var params = new URLSearchParams(window.location.search);
+
+      // Skip pinning when visitor applies collection filters
+      var hasActiveFilter = false;
+      params.forEach(function (val, key) {
+        if (key.indexOf('filter.') === 0 && val !== '') {
+          hasActiveFilter = true;
+        }
+      });
+      if (hasActiveFilter) {
+        return [];
+      }
+
+      var rawValues = params.getAll('sort_top');
+      if (!rawValues.length) {
+        return [];
+      }
+
+      var handles = [];
+      var seen = {};
+      rawValues.forEach(function (raw) {
+        String(raw)
+          .split(',')
+          .forEach(function (part) {
+            var cleaned = part
+              .trim()
+              .replace(/^.*\/products\//i, '')
+              .split(/[?#]/)[0]
+              .replace(/^\/+|\/+$/g, '')
+              .toLowerCase();
+
+            if (cleaned && !seen[cleaned] && handles.length < MAX_PIN_COUNT) {
+              seen[cleaned] = true;
+              handles.push(cleaned);
+            }
+          });
+      });
+
+      return handles;
+    }
+
+    function getDirectGridChildren(grid) {
+      var products = [];
+      var promos = [];
+
+      Array.prototype.forEach.call(grid.children, function (child) {
+        if (!child || child.nodeType !== 1) return;
+        if (child.classList.contains('promo-grid-card')) {
+          promos.push(child);
+        } else if (
+          child.classList.contains('grid-product') &&
+          child.hasAttribute('data-product-handle')
+        ) {
+          products.push(child);
+        }
+      });
+
+      return { products: products, promos: promos };
+    }
+
+    function adaptFetchedCard(card, grid) {
+      var perRow = parseInt(grid.getAttribute('data-per-row') || '4', 10);
+      var extraClass = (grid.getAttribute('data-card-extra-class') || '').trim();
+      var btnLabel = (grid.getAttribute('data-card-btn-label') || '').trim();
+
+      // Sync column width classes if collection per_row differs from default 4
+      if (WIDTH_CLASS_MAP[perRow]) {
+        card.classList.remove(
+          'small--one-half',
+          'medium-up--one-half',
+          'medium-up--one-third',
+          'medium-up--one-quarter',
+          'medium-up--one-fifth',
+          'medium-up--one-sixth'
+        );
+        WIDTH_CLASS_MAP[perRow].forEach(function (cls) {
+          card.classList.add(cls);
+        });
+        card.setAttribute('data-aos', 'row-of-' + perRow);
+      }
+
+      // Sync extra card classes (e.g., small--one-halfs)
+      if (extraClass) {
+        extraClass.split(/\s+/).forEach(function (cls) {
+          if (cls) card.classList.add(cls);
+        });
+      }
+
+      // Sync collection-specific CTA button label while keeping SVG icon
+      if (btnLabel) {
+        var btnLink = card.querySelector('.bottom_btn a.lm_btn');
+        if (btnLink) {
+          var svg = btnLink.querySelector('svg');
+          btnLink.textContent = '';
+          if (svg) {
+            btnLink.appendChild(svg);
+          }
+          btnLink.appendChild(document.createTextNode(' ' + btnLabel));
+        }
+      }
+
+      return card;
+    }
+
+    function fetchProductCard(handle, grid) {
+      var root =
+        window.Shopify && window.Shopify.routes && window.Shopify.routes.root
+          ? window.Shopify.routes.root
+          : '/';
+      if (root.charAt(root.length - 1) !== '/') {
+        root += '/';
+      }
+
+      var url = root + 'products/' + encodeURIComponent(handle) + '?view=grid-card';
+
+      return fetch(url, { credentials: 'same-origin' })
+        .then(function (res) {
+          if (!res.ok) return null;
+          return res.text();
+        })
+        .then(function (html) {
+          if (!html) return null;
+          var temp = document.createElement('div');
+          temp.innerHTML = html;
+          var card = temp.querySelector('.grid__item.grid-product[data-product-handle]');
+          if (!card) return null;
+          return adaptFetchedCard(card, grid);
+        })
+        .catch(function () {
+          return null;
+        });
+    }
+
+    function buildMergedOrder(orderedProducts, promos, pinnedCount) {
+      if (!promos.length) {
+        return orderedProducts;
+      }
+
+      var sortedPromos = promos
+        .map(function (el, idx) {
+          var pos = parseInt(el.getAttribute('data-promo-position') || '0', 10);
+          if (!pos || pos < 1) pos = idx + 1;
+          // Ensure pinned products always occupy the very top slots first
+          if (pinnedCount > 0 && pos <= pinnedCount) {
+            pos = pinnedCount + 1;
+          }
+          return { el: el, pos: pos, origIdx: idx };
+        })
+        .sort(function (a, b) {
+          if (a.pos !== b.pos) return a.pos - b.pos;
+          return a.origIdx - b.origIdx;
+        });
+
+      var result = [];
+      var pIdx = 0;
+      var promoIdx = 0;
+      var slot = 1;
+      var maxSlots = orderedProducts.length + sortedPromos.length + 50;
+
+      while (
+        (pIdx < orderedProducts.length || promoIdx < sortedPromos.length) &&
+        slot <= maxSlots
+      ) {
+        if (promoIdx < sortedPromos.length && sortedPromos[promoIdx].pos <= slot) {
+          result.push(sortedPromos[promoIdx].el);
+          promoIdx++;
+        } else if (pIdx < orderedProducts.length) {
+          result.push(orderedProducts[pIdx]);
+          pIdx++;
+        } else {
+          result.push(sortedPromos[promoIdx].el);
+          promoIdx++;
+        }
+        slot++;
+      }
+
+      return result;
+    }
+
+    function unveilCards(cards, isFetched) {
+      cards.forEach(function (card) {
+        card.classList.add('aos-animate');
+        var imgs = card.querySelectorAll('img.lazyload');
+        imgs.forEach(function (img) {
+          if (window.lazySizes && window.lazySizes.loader) {
+            window.lazySizes.loader.unveil(img);
+          } else if (isFetched && img.dataset && img.dataset.src && !img.getAttribute('src')) {
+            img.src = img.dataset.src.replace('{width}', '540');
+            img.classList.add('lazyloaded');
+          }
+        });
+      });
+
+      if (window.theme && typeof window.theme.reinitProductGridItem === 'function') {
+        try {
+          window.theme.reinitProductGridItem();
+        } catch (e) {}
+      }
+    }
+
+    function applyOrderToGrid(grid, orderedNodes) {
+      var frag = document.createDocumentFragment();
+      orderedNodes.forEach(function (node) {
+        frag.appendChild(node);
+      });
+      grid.insertBefore(frag, grid.firstChild);
+    }
+
+    function runPinProducts() {
+      var handles = parsePinHandles();
+      if (!handles.length) {
+        return;
+      }
+
+      var grid = document.querySelector('[data-pin-collection-grid]');
+      if (!grid) {
+        return;
+      }
+
+      var currentPage = parseInt(grid.getAttribute('data-current-page') || '1', 10);
+      var children = getDirectGridChildren(grid);
+
+      // Build handle -> card map from current page
+      var handleMap = {};
+      children.products.forEach(function (card) {
+        var h = (card.getAttribute('data-product-handle') || '').toLowerCase();
+        if (h && !handleMap[h]) {
+          handleMap[h] = card;
+        }
+      });
+
+      // On Page 2+, remove pinned items so they don't appear twice
+      if (currentPage > 1) {
+        var removedAny = false;
+        var keptProducts = [];
+        children.products.forEach(function (card) {
+          var h = (card.getAttribute('data-product-handle') || '').toLowerCase();
+          if (handles.indexOf(h) !== -1) {
+            if (card.parentNode) card.parentNode.removeChild(card);
+            removedAny = true;
+          } else {
+            keptProducts.push(card);
+          }
+        });
+        if (removedAny && children.promos.length) {
+          var reorderedPageN = buildMergedOrder(keptProducts, children.promos, 0);
+          applyOrderToGrid(grid, reorderedPageN);
+        }
+        return;
+      }
+
+      // Page 1: split handles into existing on page 1 vs missing (on later pages)
+      var missingHandles = [];
+      handles.forEach(function (h) {
+        if (!handleMap[h]) {
+          missingHandles.push(h);
+        }
+      });
+
+      function finalizePinning(fetchedMap) {
+        var pinnedCards = [];
+        var pinnedSet = {};
+
+        handles.forEach(function (h) {
+          var card = handleMap[h] || (fetchedMap && fetchedMap[h]);
+          if (card && !pinnedSet[h]) {
+            pinnedSet[h] = true;
+            card.setAttribute('data-pinned-product', 'true');
+            pinnedCards.push(card);
+          }
+        });
+
+        if (!pinnedCards.length) {
+          grid.classList.remove('is-pin-loading');
+          grid.classList.add('is-pin-ready');
+          return;
+        }
+
+        var remainingProducts = children.products.filter(function (card) {
+          var h = (card.getAttribute('data-product-handle') || '').toLowerCase();
+          return !pinnedSet[h];
+        });
+
+        var orderedProducts = pinnedCards.concat(remainingProducts);
+        var finalNodes = buildMergedOrder(
+          orderedProducts,
+          children.promos,
+          pinnedCards.length
+        );
+
+        applyOrderToGrid(grid, finalNodes);
+        grid.classList.remove('is-pin-loading');
+        grid.classList.add('is-pin-ready');
+        unveilCards(pinnedCards, !!fetchedMap);
+      }
+
+      // Fast path: all pinned products are already on page 1 -> move synchronously (0ms flicker-free)
+      if (!missingHandles.length) {
+        finalizePinning(null);
+        return;
+      }
+
+      // Cross-page path: hide briefly while fetching missing product card(s)
+      grid.classList.add('is-pin-loading');
+      var settled = false;
+      var safetyTimer = setTimeout(function () {
+        if (!settled) {
+          grid.classList.remove('is-pin-loading');
+          grid.classList.add('is-pin-ready');
+        }
+      }, FETCH_TIMEOUT_MS);
+
+      Promise.all(
+        missingHandles.map(function (h) {
+          return fetchProductCard(h, grid).then(function (card) {
+            return { handle: h, card: card };
+          });
+        })
+      ).then(function (results) {
+        settled = true;
+        clearTimeout(safetyTimer);
+        var fetchedMap = {};
+        results.forEach(function (item) {
+          if (item && item.card) {
+            fetchedMap[item.handle] = item.card;
+          }
+        });
+        finalizePinning(fetchedMap);
+      });
+    }
+
+    // Run immediately since this snippet renders right after the collection grid
+    runPinProducts();
+
+    // Re-run if collection content is refreshed via AJAX (e.g., browser back button)
+    document.addEventListener('collection:reloaded', runPinProducts);
+  })();
+</script>

@@ -31,6 +31,7 @@
 
 <div
   class="grid__item grid-product promo-grid-card promo-grid-card--{{ block.type }} promo-grid-card--{{ block.id }} {{ grid_item_width }}{% if card_extra_class != blank %} {{ card_extra_class }}{% endif %}"
+  data-promo-position="{{ block.settings.position | plus: 0 }}"
   {{ block.shopify_attributes }}
 >
   {%- if block.type == 'image_card' -%}

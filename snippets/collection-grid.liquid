@@ -101,7 +101,17 @@ Snippet Arguments
       endfor
     endif
   -%}
-  <div class="grid grid--uniform{% if mobile_flush_grid %} small--grid--flush{% endif %}"{% unless enable_collection_count %} data-scroll-to{% endunless %}>
+  <div
+    class="grid grid--uniform{% if mobile_flush_grid %} small--grid--flush{% endif %}"
+    {% unless enable_collection_count %} data-scroll-to{% endunless %}
+    {% if collection.handle != blank %}
+      data-pin-collection-grid
+      data-per-row="{{ per_row | default: 4 }}"
+      data-card-extra-class="{{ card_extra_class | escape }}"
+      data-current-page="{{ current_page | default: 1 }}"
+      data-card-btn-label="{{ product_card_btn_label | default: '' | escape }}"
+    {% endif %}
+  >
     {%- if has_promo_cards -%}
       {%- liquid
         assign total_items = items.size
