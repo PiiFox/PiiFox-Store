@@ -294,6 +294,7 @@
     },
     "featured_split_banner_home": {
       "type": "featured-split-banner",
+      "disabled": true,
       "name": "Featured Split Banner",
       "settings": {
         "title": "Configure\nyour keyboard.",
