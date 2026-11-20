@@ -15,9 +15,22 @@
       assign total_products = collection.products.size
       assign product_index = 0
       assign max_slots = products_limit | plus: section.blocks.size
+      assign enable_pin_sort_top = false
+      if collection.handle == 'keycaps-new' or template.suffix == 'keycaps-new'
+        assign enable_pin_sort_top = true
+      endif
     -%}
 
-    <div class="grid grid--uniform keycaps-collection-grid">
+    <div
+      class="grid grid--uniform keycaps-collection-grid"
+      {% if enable_pin_sort_top %}
+        data-pin-collection-grid
+        data-per-row="{{ per_row }}"
+        data-card-extra-class="small--one-halfs"
+        data-current-page="1"
+        data-card-btn-label=""
+      {% endif %}
+    >
       {%- for slot in (1..max_slots) -%}
         {%- assign promo_block = nil -%}
         {%- for block in section.blocks -%}
@@ -55,6 +68,9 @@
         {%- endif -%}
       {%- endfor -%}
     </div>
+    {%- if enable_pin_sort_top -%}
+      {%- render 'collection-pin-products' -%}
+    {%- endif -%}
   </div>
 </div>
 
