@@ -15,7 +15,10 @@
   assign direction = section.settings.direction | default: 'left'
   assign pause_on_hover = section.settings.pause_on_hover
   assign gap = section.settings.gap | default: 48
-  assign padding_v = section.settings.padding_vertical | default: 36
+  assign padding_v = section.settings.padding_vertical
+  if padding_v == blank
+    assign padding_v = 36
+  endif
   assign prefix_size = section.settings.prefix_font_size | default: 20
   assign suffix_size = section.settings.suffix_font_size | default: 15
   assign m_prefix_size = section.settings.mobile_prefix_font_size | default: 16
@@ -50,7 +53,7 @@
       border-bottom: none;
     {% endif %}
     padding: {{ padding_v }}px 0;
-    min-height: 84px;
+    min-height: 0;
     display: flex;
     align-items: center;
     position: relative;
@@ -213,8 +216,8 @@
 
   @media screen and (max-width: 768px) {
     .col-txt-section-{{ section.id }}.col2-txt-section-container {
-      padding: {{ padding_v | times: 0.65 | round | at_least: 16 }}px 0;
-      min-height: 56px;
+      padding: {{ padding_v | times: 0.65 | round }}px 0;
+      min-height: 0;
     }
 
     .col-txt-section-{{ section.id }} .col2-txt-inner {
@@ -508,8 +511,8 @@
       "type": "range",
       "id": "padding_vertical",
       "label": "Vertical Padding (上下内边距 / 控制整体高度)",
-      "min": 10,
-      "max": 80,
+      "min": 0,
+      "max": 120,
       "step": 2,
       "unit": "px",
       "default": 36
