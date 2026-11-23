@@ -1379,6 +1379,15 @@
 >
   {% render 'product-description', product: product %}
 </div>
+{%- if product.category == 'Keyboard Keycaps' and product.metafields.custom.keyboard_pairings.value != blank -%}
+  <div
+    id="product-keyboard-pairing"
+    class="page-width Keyboard-Pairing"
+    data-snippet="Keyboard-Pairing"
+  >
+    {% render 'keycap-keyboard-pairing', product: product %}
+  </div>
+{%- endif -%}
 {%- assign show_product_specs = false -%}
 {%- if product.category == 'Keyboards' -%}
   {%- assign show_product_specs = true -%}

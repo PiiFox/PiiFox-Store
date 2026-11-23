@@ -1,0 +1,799 @@
+{%- assign pairings = product.metafields.custom.keyboard_pairings.value -%}
+{%- assign valid_pairing_count = 0 -%}
+{%- if pairings != blank -%}
+  {%- for pairing in pairings -%}
+    {%- assign kb_variant = pairing.keyboard_variant.value -%}
+    {%- if kb_variant != blank -%}
+      {%- assign kb_tags_joined = kb_variant.product.tags | join: ',' | downcase -%}
+      {%- assign kb_tags_wrapped = ',' | append: kb_tags_joined | append: ',' -%}
+      {%- unless kb_tags_wrapped contains ',unlisted,' -%}
+        {%- if pairing.pairing_image.value != blank or pairing.keyboard_title.value != blank -%}
+          {%- assign valid_pairing_count = valid_pairing_count | plus: 1 -%}
+        {%- endif -%}
+      {%- endunless -%}
+    {%- endif -%}
+  {%- endfor -%}
+{%- endif -%}
+
+{%- if valid_pairing_count > 0 -%}
+  <style>
+      .con.con-keycap-keyboard-pairing {
+        padding: 0;
+        margin: 0;
+      }
+
+      .con.con-keycap-keyboard-pairing .container {
+        width: 100%;
+        max-width: none;
+        padding: 0;
+        margin: 0;
+      }
+
+      .con.con-keycap-keyboard-pairing .kkp-shell {
+        width: 100%;
+        max-width: none;
+        padding: 40px;
+        border-radius: 20px;
+        background: linear-gradient(135deg, #f8f7f4 0%, #f2f1ed 100%);
+        box-sizing: border-box;
+      }
+
+      .con.con-keycap-keyboard-pairing .kkp-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 1.65fr) minmax(300px, 1fr);
+        grid-template-rows: auto 1fr;
+        grid-template-areas:
+          "header list"
+          "stage list";
+        column-gap: 36px;
+        row-gap: 24px;
+        align-items: center;
+      }
+
+      .con.con-keycap-keyboard-pairing .kkp-header {
+        grid-area: header;
+        text-align: left;
+        min-width: 0;
+      }
+
+      .con.con-keycap-keyboard-pairing .kkp-title {
+        margin: 0 0 10px;
+        font-size: clamp(1.75rem, 2.6vw, 2.5rem);
+        font-weight: 700;
+        line-height: 1.18;
+        color: #111111;
+        letter-spacing: -0.02em;
+      }
+
+      .con.con-keycap-keyboard-pairing .kkp-subtitle {
+        margin: 0;
+        font-size: 0.98rem;
+        line-height: 1.5;
+        color: #555555;
+      }
+
+      .con.con-keycap-keyboard-pairing .kkp-stage {
+        grid-area: stage;
+        position: relative;
+        width: 100%;
+        aspect-ratio: 16 / 10;
+        border-radius: 16px;
+        overflow: hidden;
+        background: #eceeed;
+        box-shadow: 0 6px 24px rgba(0, 0, 0, 0.05);
+      }
+
+      .con.con-keycap-keyboard-pairing .kkp-stage__slide {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.25s ease, visibility 0.25s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #eceeed;
+      }
+
+      .con.con-keycap-keyboard-pairing .kkp-stage__slide.is-active {
+        opacity: 1;
+        visibility: visible;
+        z-index: 1;
+      }
+
+      .con.con-keycap-keyboard-pairing .kkp-stage__img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+        border-radius: 0;
+        display: block;
+      }
+
+      .con.con-keycap-keyboard-pairing .kkp-right {
+        grid-area: list;
+        align-self: center;
+        min-width: 0;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .con.con-keycap-keyboard-pairing button.kkp-nav-btn {
+        display: none;
+        align-items: center;
+        justify-content: center;
+        width: 36px;
+        height: 36px;
+        padding: 0;
+        margin: 0;
+        border: none;
+        border-radius: 50%;
+        background: #111111;
+        background-color: #111111;
+        color: #ffffff;
+        flex-shrink: 0;
+        cursor: pointer;
+        transition: background-color 0.2s ease, transform 0.15s ease;
+      }
+
+      .con.con-keycap-keyboard-pairing button.kkp-nav-btn:hover {
+        background: #333333;
+        background-color: #333333;
+        color: #ffffff;
+      }
+
+      .con.con-keycap-keyboard-pairing button.kkp-nav-btn:active {
+        transform: scale(0.94);
+      }
+
+      .con.con-keycap-keyboard-pairing button.kkp-nav-btn svg {
+        width: 16px;
+        height: 16px;
+        display: block;
+        color: #ffffff;
+      }
+
+      .con.con-keycap-keyboard-pairing .kkp-list {
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+        height: auto;
+        max-height: 580px;
+        overflow-y: auto;
+        padding: 4px 6px 4px 4px;
+        box-sizing: border-box;
+      }
+
+      .con.con-keycap-keyboard-pairing .kkp-card {
+        position: relative;
+        display: flex;
+        align-items: center;
+        flex: 0 0 auto;
+        gap: 14px;
+        width: 100%;
+        min-height: 118px;
+        margin: 0;
+        padding: 10px 18px 10px 12px;
+        background: #ffffff;
+        border: 1.5px solid #e2e2e2;
+        border-radius: 14px;
+        cursor: pointer;
+        text-align: left;
+        overflow: hidden;
+        box-sizing: border-box;
+        transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.15s ease;
+      }
+
+      .con.con-keycap-keyboard-pairing .kkp-card:hover {
+        border-color: #999999;
+        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+      }
+
+      .con.con-keycap-keyboard-pairing .kkp-card:focus-visible {
+        outline: 2px solid #111111;
+        outline-offset: 2px;
+      }
+
+      .con.con-keycap-keyboard-pairing .kkp-card.is-active {
+        border-color: #111111;
+        box-shadow: 0 0 0 1px #111111, 0 4px 14px rgba(0, 0, 0, 0.07);
+      }
+
+      .con.con-keycap-keyboard-pairing .kkp-card__thumb {
+        width: 136px;
+        height: 88px;
+        flex-shrink: 0;
+        border-radius: 8px;
+        background: transparent;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      .con.con-keycap-keyboard-pairing .kkp-card__thumb img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        object-position: center;
+        transform: scale(1.1);
+        border-radius: 0;
+        display: block;
+      }
+
+      .con.con-keycap-keyboard-pairing .kkp-card__info {
+        flex: 1;
+        min-width: 0;
+        padding-right: 4px;
+      }
+
+      .con.con-keycap-keyboard-pairing .kkp-card__title {
+        font-size: 1rem;
+        font-weight: 600;
+        line-height: 1.3;
+        color: #111111;
+        word-break: break-word;
+      }
+
+      .con.con-keycap-keyboard-pairing .kkp-card__subtitle {
+        margin-top: 3px;
+        font-size: 0.85rem;
+        line-height: 1.35;
+        color: #666666;
+        word-break: break-word;
+      }
+
+      .con.con-keycap-keyboard-pairing a.kkp-card__view-btn,
+      .con.con-keycap-keyboard-pairing a.kkp-card__view-btn:visited {
+        display: none;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        margin-right: 0;
+        padding: 6px 16px;
+        border-radius: 999px;
+        background: #111111;
+        background-color: #111111;
+        color: #ffffff;
+        font-size: 0.82rem;
+        font-weight: 600;
+        line-height: 1.2;
+        text-decoration: none;
+        white-space: nowrap;
+        transition: background-color 0.2s ease, transform 0.15s ease;
+      }
+
+      .con.con-keycap-keyboard-pairing a.kkp-card__view-btn:hover,
+      .con.con-keycap-keyboard-pairing a.kkp-card__view-btn:focus {
+        background: #333333;
+        background-color: #333333;
+        color: #ffffff;
+      }
+
+      .con.con-keycap-keyboard-pairing .kkp-card.is-active a.kkp-card__view-btn {
+        display: inline-flex;
+      }
+
+      @media screen and (min-width: 961px) and (max-width: 1151px) {
+        .con.con-keycap-keyboard-pairing .kkp-shell {
+          padding: 32px 28px;
+        }
+
+        .con.con-keycap-keyboard-pairing .kkp-grid {
+          grid-template-columns: minmax(0, 1.45fr) minmax(320px, 1fr);
+          column-gap: 24px;
+        }
+
+        .con.con-keycap-keyboard-pairing .kkp-card {
+          min-height: 94px;
+          padding: 10px 12px 10px 10px;
+          gap: 10px;
+        }
+
+        .con.con-keycap-keyboard-pairing .kkp-card__thumb {
+          width: 90px;
+          height: 60px;
+        }
+
+        .con.con-keycap-keyboard-pairing .kkp-card__info {
+          padding-right: 0;
+        }
+
+        .con.con-keycap-keyboard-pairing .kkp-card__title {
+          font-size: 0.86rem;
+          line-height: 1.26;
+          word-break: normal;
+          overflow-wrap: break-word;
+        }
+
+        .con.con-keycap-keyboard-pairing .kkp-card__subtitle {
+          margin-top: 2px;
+          font-size: 0.75rem;
+          line-height: 1.3;
+        }
+
+        .con.con-keycap-keyboard-pairing a.kkp-card__view-btn,
+        .con.con-keycap-keyboard-pairing a.kkp-card__view-btn:visited {
+          padding: 4px 10px;
+          font-size: 0.72rem;
+        }
+      }
+
+      @media screen and (max-width: 960px) {
+        .con.con-keycap-keyboard-pairing .kkp-shell {
+          padding: 24px 16px;
+          border-radius: 16px;
+        }
+
+        .con.con-keycap-keyboard-pairing .kkp-grid {
+          grid-template-columns: 1fr;
+          grid-template-rows: auto;
+          grid-template-areas:
+            "header"
+            "list"
+            "stage";
+          column-gap: 0;
+          row-gap: 16px;
+        }
+
+        .con.con-keycap-keyboard-pairing .kkp-right {
+          position: relative;
+          display: block;
+          width: 100%;
+        }
+
+        .con.con-keycap-keyboard-pairing button.kkp-nav-btn {
+          display: inline-flex;
+          position: absolute;
+          top: 50%;
+          transform: translateY(-50%);
+          z-index: 3;
+          width: 26px;
+          height: 26px;
+        }
+
+        .con.con-keycap-keyboard-pairing button.kkp-nav-btn:active {
+          transform: translateY(-50%) scale(0.94);
+        }
+
+        .con.con-keycap-keyboard-pairing button.kkp-nav-btn svg {
+          width: 12px;
+          height: 12px;
+        }
+
+        .con.con-keycap-keyboard-pairing button.kkp-nav-btn--prev {
+          left: -6px;
+        }
+
+        .con.con-keycap-keyboard-pairing button.kkp-nav-btn--next {
+          right: -6px;
+        }
+
+        .con.con-keycap-keyboard-pairing .kkp-list {
+          width: 100%;
+          min-width: 0;
+          flex-direction: row;
+          flex-wrap: nowrap;
+          gap: 0;
+          height: auto;
+          max-height: none;
+          overflow-x: auto;
+          overflow-y: hidden;
+          scroll-snap-type: x mandatory;
+          scroll-behavior: smooth;
+          -webkit-overflow-scrolling: touch;
+          scrollbar-width: none;
+          padding: 0;
+        }
+
+        .con.con-keycap-keyboard-pairing .kkp-list::-webkit-scrollbar {
+          display: none;
+        }
+
+        .con.con-keycap-keyboard-pairing .kkp-card {
+          flex: 0 0 100%;
+          width: 100%;
+          min-width: 100%;
+          max-height: none;
+          min-height: 82px;
+          padding: 10px 28px;
+          gap: 12px;
+          scroll-snap-align: center;
+          scroll-snap-stop: always;
+          border: 1px solid #e6e6e6;
+          box-shadow: none;
+        }
+
+        .con.con-keycap-keyboard-pairing .kkp-card:hover,
+        .con.con-keycap-keyboard-pairing .kkp-card.is-active {
+          border-color: #e6e6e6;
+          box-shadow: none;
+        }
+
+        .con.con-keycap-keyboard-pairing .kkp-card__title {
+          font-size: 0.88rem;
+        }
+
+        .con.con-keycap-keyboard-pairing .kkp-card__subtitle {
+          font-size: 0.76rem;
+        }
+
+        .con.con-keycap-keyboard-pairing a.kkp-card__view-btn {
+          padding: 4px 11px;
+          font-size: 0.74rem;
+        }
+      }
+
+      @media screen and (max-width: 600px) {
+        .con.con-keycap-keyboard-pairing {
+          padding: 0;
+          margin: 0;
+        }
+
+        .con.con-keycap-keyboard-pairing .kkp-shell {
+          padding: 18px 14px;
+        }
+
+        .con.con-keycap-keyboard-pairing .kkp-title {
+          font-size: 1.45rem;
+        }
+
+        .con.con-keycap-keyboard-pairing .kkp-subtitle {
+          font-size: 0.9rem;
+        }
+
+        .con.con-keycap-keyboard-pairing button.kkp-nav-btn {
+          width: 24px;
+          height: 24px;
+        }
+
+        .con.con-keycap-keyboard-pairing button.kkp-nav-btn svg {
+          width: 11px;
+          height: 11px;
+        }
+
+        .con.con-keycap-keyboard-pairing button.kkp-nav-btn--prev {
+          left: -5px;
+        }
+
+        .con.con-keycap-keyboard-pairing button.kkp-nav-btn--next {
+          right: -5px;
+        }
+
+        .con.con-keycap-keyboard-pairing .kkp-stage {
+          aspect-ratio: 4 / 3;
+          border-radius: 12px;
+        }
+
+        .con.con-keycap-keyboard-pairing .kkp-card {
+          min-height: 72px;
+          padding: 8px 24px;
+          gap: 10px;
+          border-radius: 12px;
+        }
+
+        .con.con-keycap-keyboard-pairing .kkp-card__thumb {
+          width: 94px;
+          height: 60px;
+        }
+
+        .con.con-keycap-keyboard-pairing .kkp-card__title {
+          font-size: 0.82rem;
+        }
+
+        .con.con-keycap-keyboard-pairing .kkp-card__subtitle {
+          font-size: 0.72rem;
+        }
+
+        .con.con-keycap-keyboard-pairing a.kkp-card__view-btn {
+          margin-right: 0;
+          padding: 4px 10px;
+          font-size: 0.7rem;
+        }
+      }
+  </style>
+
+  <div
+    class="con con-keycap-keyboard-pairing"
+    data-product-category="{{ product.category }}"
+    data-kkp-root
+  >
+    <div class="container">
+      <div class="kkp-shell">
+        <div class="kkp-grid">
+          <div class="kkp-header">
+            <h2 class="kkp-title">See How It Looks on Our Keyboards</h2>
+            <p class="kkp-subtitle">Select a keyboard model to preview the keycap pairing.</p>
+          </div>
+
+          <div class="kkp-stage" aria-live="polite">
+            {%- assign slide_idx = 0 -%}
+            {%- for pairing in pairings -%}
+              {%- assign pairing_img = pairing.pairing_image.value -%}
+              {%- assign kb_title = pairing.keyboard_title.value -%}
+              {%- assign kb_variant = pairing.keyboard_variant.value -%}
+              {%- assign is_valid_pairing = false -%}
+              {%- if kb_variant != blank -%}
+                {%- assign kb_tags_joined = kb_variant.product.tags | join: ',' | downcase -%}
+                {%- assign kb_tags_wrapped = ',' | append: kb_tags_joined | append: ',' -%}
+                {%- unless kb_tags_wrapped contains ',unlisted,' -%}
+                  {%- if pairing_img != blank or kb_title != blank -%}
+                    {%- assign is_valid_pairing = true -%}
+                  {%- endif -%}
+                {%- endunless -%}
+              {%- endif -%}
+              {%- if is_valid_pairing -%}
+                {%- assign stage_img = pairing_img -%}
+                {%- if stage_img == blank and kb_variant != blank -%}
+                  {%- assign stage_img = kb_variant.featured_image
+                    | default: kb_variant.image
+                    | default: kb_variant.product.featured_image
+                  -%}
+                {%- endif -%}
+                <figure
+                  class="kkp-stage__slide{% if slide_idx == 0 %} is-active{% endif %}"
+                  data-kkp-slide="{{ slide_idx }}"
+                >
+                  {%- if stage_img != blank -%}
+                    <img
+                      class="kkp-stage__img"
+                      src="{{ stage_img | image_url: width: 1600 }}"
+                      srcset="
+                        {{ stage_img | image_url: width: 800 }} 800w,
+                        {{ stage_img | image_url: width: 1200 }} 1200w,
+                        {{ stage_img | image_url: width: 1600 }} 1600w
+                      "
+                      sizes="(max-width: 960px) 100vw, 60vw"
+                      alt="{{ kb_title | default: product.title | escape }}"
+                      width="{{ stage_img.width | default: 1200 }}"
+                      height="{{ stage_img.height | default: 750 }}"
+                      loading="{% if slide_idx == 0 %}eager{% else %}lazy{% endif %}"
+                    >
+                  {%- endif -%}
+                </figure>
+                {%- assign slide_idx = slide_idx | plus: 1 -%}
+              {%- endif -%}
+            {%- endfor -%}
+          </div>
+
+          <div class="kkp-right">
+            {%- if valid_pairing_count > 1 -%}
+              <button
+                type="button"
+                class="kkp-nav-btn kkp-nav-btn--prev"
+                aria-label="Previous keyboard"
+                data-kkp-prev
+              >
+                <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                  <path
+                    d="M10 3.5L5.5 8L10 12.5"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+              </button>
+            {%- endif -%}
+
+            <div class="kkp-list" role="listbox" aria-label="Keyboard pairing options" data-kkp-list>
+              {%- assign card_idx = 0 -%}
+              {%- for pairing in pairings -%}
+                {%- assign pairing_img = pairing.pairing_image.value -%}
+                {%- assign kb_title = pairing.keyboard_title.value -%}
+                {%- assign kb_subtitle = pairing.keyboard_subtitle.value -%}
+                {%- assign kb_variant = pairing.keyboard_variant.value -%}
+                {%- assign is_valid_pairing = false -%}
+                {%- if kb_variant != blank -%}
+                  {%- assign kb_tags_joined = kb_variant.product.tags | join: ',' | downcase -%}
+                  {%- assign kb_tags_wrapped = ',' | append: kb_tags_joined | append: ',' -%}
+                  {%- unless kb_tags_wrapped contains ',unlisted,' -%}
+                    {%- if pairing_img != blank or kb_title != blank -%}
+                      {%- assign is_valid_pairing = true -%}
+                    {%- endif -%}
+                  {%- endunless -%}
+                {%- endif -%}
+
+                {%- if is_valid_pairing -%}
+                  {%- assign kb_thumb = blank -%}
+                  {%- if kb_variant != blank -%}
+                    {%- assign kb_thumb = kb_variant.featured_image
+                      | default: kb_variant.image
+                      | default: kb_variant.product.featured_image
+                      | default: kb_variant.product.images.first
+                    -%}
+                  {%- endif -%}
+                  {%- if kb_thumb == blank -%}
+                    {%- assign kb_thumb = pairing_img -%}
+                  {%- endif -%}
+
+                  {%- assign kb_url = '' -%}
+                  {%- if kb_variant != blank -%}
+                    {%- assign kb_url = kb_variant.url | default: kb_variant.product.url -%}
+                  {%- endif -%}
+
+                  <div
+                    class="kkp-card{% if card_idx == 0 %} is-active{% endif %}"
+                    role="option"
+                    tabindex="0"
+                    aria-selected="{% if card_idx == 0 %}true{% else %}false{% endif %}"
+                    data-kkp-card="{{ card_idx }}"
+                  >
+                    {%- if kb_thumb != blank -%}
+                      <div class="kkp-card__thumb">
+                        <img
+                          src="{{ kb_thumb | image_url: width: 480 }}"
+                          alt="{{ kb_title | default: kb_variant.product.title | escape }}"
+                          width="272"
+                          height="176"
+                          loading="lazy"
+                        >
+                      </div>
+                    {%- endif -%}
+
+                    <div class="kkp-card__info">
+                      <div class="kkp-card__title">
+                        {{ kb_title | default: kb_variant.product.title | escape }}
+                      </div>
+                      {%- if kb_subtitle != blank -%}
+                        <div class="kkp-card__subtitle">{{ kb_subtitle | escape }}</div>
+                      {%- endif -%}
+                    </div>
+
+                    {%- if kb_url != blank -%}
+                      <a
+                        class="kkp-card__view-btn"
+                        href="{{ kb_url }}"
+                        aria-label="View {{ kb_title | default: kb_variant.product.title | escape }}"
+                        data-kkp-view-link
+                      >
+                        View
+                      </a>
+                    {%- endif -%}
+                  </div>
+                  {%- assign card_idx = card_idx | plus: 1 -%}
+                {%- endif -%}
+              {%- endfor -%}
+            </div>
+
+            {%- if valid_pairing_count > 1 -%}
+              <button
+                type="button"
+                class="kkp-nav-btn kkp-nav-btn--next"
+                aria-label="Next keyboard"
+                data-kkp-next
+              >
+                <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                  <path
+                    d="M6 3.5L10.5 8L6 12.5"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+              </button>
+            {%- endif -%}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      function initKeycapKeyboardPairing() {
+        var roots = document.querySelectorAll('[data-kkp-root]');
+        roots.forEach(function (root) {
+          if (root.dataset.kkpInitialized === 'true') return;
+          root.dataset.kkpInitialized = 'true';
+
+          var cards = Array.prototype.slice.call(root.querySelectorAll('[data-kkp-card]'));
+          var slides = Array.prototype.slice.call(root.querySelectorAll('[data-kkp-slide]'));
+          var list = root.querySelector('[data-kkp-list]');
+          var prevBtn = root.querySelector('[data-kkp-prev]');
+          var nextBtn = root.querySelector('[data-kkp-next]');
+          var total = cards.length;
+          if (!total) return;
+
+          var currentIndex = 0;
+          var isProgrammaticScroll = false;
+          var scrollEndTimer = null;
+          var programmaticTimer = null;
+          var mobileQuery = window.matchMedia('(max-width: 960px)');
+
+          function activate(index, shouldScroll) {
+            var nextIdx = ((index % total) + total) % total;
+            currentIndex = nextIdx;
+
+            cards.forEach(function (card, i) {
+              var isMatch = i === nextIdx;
+              card.classList.toggle('is-active', isMatch);
+              card.setAttribute('aria-selected', isMatch ? 'true' : 'false');
+            });
+
+            slides.forEach(function (slide, i) {
+              slide.classList.toggle('is-active', i === nextIdx);
+            });
+
+            if (shouldScroll && mobileQuery.matches && list && cards[nextIdx]) {
+              isProgrammaticScroll = true;
+              clearTimeout(programmaticTimer);
+              list.scrollTo({
+                left: cards[nextIdx].offsetLeft,
+                behavior: 'smooth',
+              });
+              programmaticTimer = setTimeout(function () {
+                isProgrammaticScroll = false;
+              }, 450);
+            }
+          }
+
+          cards.forEach(function (card, idx) {
+            card.addEventListener('click', function (e) {
+              if (e.target.closest('[data-kkp-view-link]')) return;
+              activate(idx, true);
+            });
+
+            card.addEventListener('keydown', function (e) {
+              if (e.target.closest('[data-kkp-view-link]')) return;
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                activate(idx, true);
+              }
+            });
+          });
+
+          if (prevBtn) {
+            prevBtn.addEventListener('click', function () {
+              activate(currentIndex - 1, true);
+            });
+          }
+
+          if (nextBtn) {
+            nextBtn.addEventListener('click', function () {
+              activate(currentIndex + 1, true);
+            });
+          }
+
+          if (list) {
+            list.addEventListener(
+              'scroll',
+              function () {
+                if (!mobileQuery.matches || isProgrammaticScroll) return;
+                clearTimeout(scrollEndTimer);
+                scrollEndTimer = setTimeout(function () {
+                  var cardWidth = list.clientWidth;
+                  if (!cardWidth) return;
+                  var visibleIdx = Math.round(list.scrollLeft / cardWidth);
+                  visibleIdx = Math.max(0, Math.min(total - 1, visibleIdx));
+                  if (visibleIdx !== currentIndex) {
+                    activate(visibleIdx, false);
+                  }
+                }, 80);
+              },
+              { passive: true }
+            );
+          }
+
+          window.addEventListener('resize', function () {
+            if (mobileQuery.matches && list && cards[currentIndex]) {
+              list.scrollLeft = cards[currentIndex].offsetLeft;
+            }
+          });
+        });
+      }
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initKeycapKeyboardPairing);
+      } else {
+        initKeycapKeyboardPairing();
+      }
+    })();
+  </script>
+{%- endif -%}
